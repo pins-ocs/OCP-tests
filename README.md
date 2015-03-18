@@ -7,11 +7,11 @@ Each test has the following structure:
     ├── test-TestName
     │   ├── model
     │   │  ├── TestName.mw
-    │   │  └── TestName.maple
+    │   │  └── TestName.maplet
     │   └── doc
     │      └── ...
 
-The `model` folder contains the Maple worksheet and the corresponding maplet file, which are used to generate the C++ files and ruby scripts.
+The `model` folder contains the Maple worksheet (`.mw`) and the corresponding `.maplet` file, which are used to generate the C++ files and ruby scripts.
 
 The `doc` folder contains a short documentation about the test itself.
 
