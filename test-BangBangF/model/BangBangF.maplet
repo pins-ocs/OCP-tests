@@ -1,0 +1,36 @@
+# 
+#            
+# Modello Massa
+# 
+# 1 controllo
+# (Problema tempo fisso, massima distanza)
+# Inizializzazione
+restart:
+with(XOptima):
+XOptimaInfo() ;
+# Equazioni del modello matematico del veicolo
+EQ1    :=  diff(x(t),t) - v(t) :
+EQ2    :=  diff(v(t),t) - F(t) :
+EQNS_T := [ EQ||(1..2) ];
+# Variabili del problema e controlli
+# Variabili
+qvars := [x(t),v(t)] ;
+# Controlli
+cvars := [F(t)] ;
+# Equazioni del modello matematico del carrello
+#infoRegisteredObjects() ;
+loadDynamicSystem(equations=EQNS_T,controls=cvars,states=qvars) ;
+# Inserisce condizioni al contorno
+addBoundaryConditions(initial=[x=0,v=0],final=[v=0]);
+infoBoundaryConditions() ;
+# Penalty
+addControlBound( F, controlType="U_COS_LOGARITHMIC", maxabs=1 ) ;
+setTarget( mayer = -x(zeta_f) ) ;
+#setFDorder([x],"forward") ;
+generateOCProblem( "BangBangF",
+                   #parameters   = [ x_i = 0, x_f=0, v_i=0,v_f=0],
+                   mesh         = [length=1, n=100],
+                   states_guess = [ v = zeta*(1-zeta) ] ) ;
+
+
+# Generazione del problema di controllo ottimo

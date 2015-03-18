@@ -1,0 +1,4 @@
+seqns := Vector(2, [2 .. -1,diff(t(zeta),zeta)*zeta_dot(zeta)-1]);
+svars := [t(zeta)];
+suvars := [u_jerk(zeta), psi_jerk(zeta)];
+SSZDOT := NULL;
