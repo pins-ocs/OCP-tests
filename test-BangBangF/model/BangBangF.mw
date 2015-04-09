@@ -373,7 +373,7 @@ Continuation
 OCP generation completed
 Generate C++ files from templates
 ---------------------------------
-Command: /usr/local/bin/mxint /Library/Frameworks/Maple.framework/Versions/18/toolbox/XOptima/lib/../XOptima_GenerateCppCode_OCP.rb BangBangF --exclude=[] --output_directory=../</Text-field>
+Command: /usr/local/bin/pins /Library/Frameworks/Maple.framework/Versions/18/toolbox/XOptima/lib/../XOptima_GenerateCppCode_OCP.rb BangBangF --exclude=[] --output_directory=../</Text-field>
 <Text-field style="Line Printed Output" layout="Line Printed Output">Project BangBangF generated correctly!
 Deleting unnecessary files!
 

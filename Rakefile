@@ -164,7 +164,7 @@ desc "Test autocompile feature".green
 task :auto do
   puts ">> Building lib#{MODEL_NAME}".green
   cd ROOT do
-    sh "mxint ./#{MODEL_NAME}_run.rb"
+    sh "pins ./#{MODEL_NAME}_run.rb"
   end
 end
 

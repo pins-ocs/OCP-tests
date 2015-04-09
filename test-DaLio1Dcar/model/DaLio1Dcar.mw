@@ -673,7 +673,7 @@ Continuation
 Generate C++ files from templates
 ---------------------------------
 controls_iterative option has be activated: control will be calculated with iterative solver
-Command: /usr/local/bin/mxint /Library/Frameworks/Maple.framework/Versions/18/toolbox/XOptima/lib/../XOptima_GenerateCppCode_OCP.rb DaLio1Dcar --controls_iterative --exclude=[] --output_directory=../</Text-field>
+Command: /usr/local/bin/pins /Library/Frameworks/Maple.framework/Versions/18/toolbox/XOptima/lib/../XOptima_GenerateCppCode_OCP.rb DaLio1Dcar --controls_iterative --exclude=[] --output_directory=../</Text-field>
 <Text-field style="Line Printed Output" layout="Line Printed Output">Project DaLio1Dcar generated correctly!
 Deleting unnecessary files!
 

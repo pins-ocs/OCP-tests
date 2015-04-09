@@ -1195,7 +1195,7 @@ Continuation
 OCP generation completed
 Generate C++ files from templates
 ---------------------------------
-Command: /usr/local/bin/mxint /Library/Frameworks/Maple.framework/Versions/18/toolbox/XOptima/lib/../XOptima_GenerateCppCode_OCP.rb CNOC --exclude=[] --output_directory=../</Text-field>
+Command: /usr/local/bin/pins /Library/Frameworks/Maple.framework/Versions/18/toolbox/XOptima/lib/../XOptima_GenerateCppCode_OCP.rb CNOC --exclude=[] --output_directory=../</Text-field>
 <Text-field style="Line Printed Output" layout="Line Printed Output">Project CNOC generated correctly!
 Deleting unnecessary files!
 
