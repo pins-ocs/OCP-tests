@@ -36,7 +36,7 @@ addUnilateralConstraint( T(zeta) > 0,
                          epsilon   = 0.1,
                          tolerance = 0.01 ) ;
 # Generazione del problema di controllo ottimo
-setFDorder([5],"backward"):
+setFDorderEquations([5],"backward"):
 setFDorderCoEquation([theta],"forward"):
 # Post processing functions
 setTarget( mayer = T(zeta_f) ) ;
