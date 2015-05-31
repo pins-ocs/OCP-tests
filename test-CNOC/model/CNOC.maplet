@@ -226,7 +226,7 @@ setInterfaceConditionAlgebraic(jump_ACC);
 # Note that the finite different scheme is associated to the i-th equation (of the dynamical system or of the adjoint equations) and not necessarily to the state variables or lagrange multipliers.
 Describe(setFDorder);
 # Upwind setting
-setFDorder([5,6],"backward"):
+setFDorderEquations([5,6],"backward"):
 setFDorderCoEquation([as,an],"forward"):
 # 
 # Set guess solution (optional)
@@ -255,15 +255,15 @@ dataOCP := [ as_max = 2.1,   #m/s^2
              v_nom  = 0.173, #m/s
              deltaFeed = v_nom,
              n_i    = 0,
-             u_i    = 0,
-             v_i    = 0,
+             #u_i    = 0,
+             #v_i    = 0,
              vs_i   = 0,
              vn_i   = 0,
              as_i   = 0,
              an_i   = 0,
              n_f    = 0,
-             u_f    = 0,
-             v_f    = 0,
+             #u_f    = 0,
+             #v_f    = 0,
              vs_f   = 0,
              vn_f   = 0,
              as_f   = 0,

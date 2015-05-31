@@ -4,6 +4,8 @@ test-*/model/OCP_tmp
 test-*/ocp-*
 test-*/*run.rb
 test-*/*run_ffi.rb
+test-*/bin/main
+
 .bundle
 dumps
 

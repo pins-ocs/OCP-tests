@@ -6,7 +6,7 @@
 # Date: 12th February 2014
 # 
 # Minimum Time with XOptima
-restart: interface(rtablesize=30): 
+restart:interface(rtablesize=30): 
 # Load model
 read("linearTire.mpl");
 read("SuperKart.mpl"):

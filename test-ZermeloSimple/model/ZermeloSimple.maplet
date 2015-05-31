@@ -1,0 +1,42 @@
+# 
+#            
+# Zermelo Boat problem
+# 
+# 1 controllo
+# Inizializzazione
+restart:
+with(XOptima):
+# Equazioni del modello matematico del veicolo
+EQ1  := diff(x(zeta),zeta)     = T(zeta)*(V*cos(theta(zeta)) + velX(x(zeta),y(zeta))) :
+EQ2  := diff(y(zeta),zeta)     = T(zeta)*(V*sin(theta(zeta)) + velY(x(zeta),y(zeta))) :
+EQ3  := diff(theta(zeta),zeta) = T(zeta)*vtheta(zeta):
+EQ4  := diff(T(zeta),zeta)     = 0:
+EQNS := convert([EQ||(1..4)],Vector) ;
+# Variabili del problema
+# Variabili
+xvars := [x(zeta),y(zeta),theta(zeta),T(zeta)] ;
+# Controlli
+uvars := [vtheta(zeta)] ;
+# BVP
+addUserFunction(velX(x,y)=0) ;
+addUserFunction(velY(x,y)=0) ;
+addUserFunction(arctan2(y,x),0) ;
+loadDynamicSystem(equations=EQNS,controls=uvars,states=xvars) ;
+addBoundaryConditions(initial=[x=x0,y=y0,theta=theta0],final=[x=0,y=0]);
+infoBoundaryConditions() ;
+setTarget( mayer = 0*T(zeta_f), lagrange = T(zeta)*(1+(vtheta(zeta)/vtheta_max)^2) ) ;
+addUnilateralConstraint( T(zeta)>=0, Tpositive, tolerance=0.1 ) ;
+Describe(setFDorder) ;
+#setFDorder([3],"backward") ;
+#setFDorderCoEquation([theta],"forward") ;
+generateOCProblem( "Zermelo",
+                    integral_post_processing = [[zeta*T(zeta),"Time"]],
+                    parameters     = [ V=1, vtheta_max=0.00001, x0=1, y0=0, theta0=evalf(Pi) ],
+                    #continuation  = [[epsi_u=1-s]],
+                    mesh           = [ length=1, n=100 ],
+                    #controls_guess = [ theta = arctan2(-lambda2(zeta),-lambda1(zeta)) ],
+                    states_guess   = [ x=x0*zeta, y=y0*zeta, T=sqrt(x0^2+y0^2)/V] ) ;
+# Riscrivo il controllo con arctan2 e cambio g_vec
+#u_vec[1] := arctan2(numer(tan(u_vec[1])),denom(tan(u_vec[1]))) ;
+#g_vec[1] := u_vars[1] - u_vec[1] ;
+
