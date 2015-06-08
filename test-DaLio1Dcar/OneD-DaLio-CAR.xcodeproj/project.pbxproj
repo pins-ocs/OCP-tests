@@ -1,0 +1,475 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D98E3AC717C41C7F00A1731B /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */; };
+		D98E3AC917C41C7F00A1731B /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */; };
+		D98E3AD917C41D6E00A1731B /* libOneD-DaLio-CAR_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D990A43F17B926570022E545 /* libOneD-DaLio-CAR_lib.a */; };
+		D98E3ADC17C41DB400A1731B /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */; };
+		D98E3ADE17C41DB400A1731B /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */; };
+		D98E3AF017C41E4400A1731B /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */; };
+		D98E3AF217C41E4400A1731B /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */; };
+		D98E3AF317C41E4A00A1731B /* libOneD-DaLio-CAR_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D990A43F17B926570022E545 /* libOneD-DaLio-CAR_lib.a */; };
+		D9BBD2131899C5A20081AF20 /* DaLio1Dcar.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD2031899C5A20081AF20 /* DaLio1Dcar.cc */; };
+		D9BBD2141899C5A20081AF20 /* DaLio1Dcar.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9BBD2041899C5A20081AF20 /* DaLio1Dcar.hh */; };
+		D9BBD2161899C5A20081AF20 /* DaLio1Dcar_c_interface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD2061899C5A20081AF20 /* DaLio1Dcar_c_interface.cc */; };
+		D9BBD2171899C5A20081AF20 /* DaLio1Dcar_c_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = D9BBD2071899C5A20081AF20 /* DaLio1Dcar_c_interface.h */; };
+		D9BBD2191899C5A20081AF20 /* DaLio1Dcar_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD2091899C5A20081AF20 /* DaLio1Dcar_Guess.cc */; };
+		D9BBD21B1899C5A20081AF20 /* DaLio1Dcar_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD20B1899C5A20081AF20 /* DaLio1Dcar_Methods.cc */; };
+		D9BBD21D1899C5A20081AF20 /* DaLio1Dcar_Pars.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9BBD20D1899C5A20081AF20 /* DaLio1Dcar_Pars.hh */; };
+		D9BBD21E1899C5A20081AF20 /* DaLio1Dcar_ruby_dll.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD20E1899C5A20081AF20 /* DaLio1Dcar_ruby_dll.cc */; };
+		D9BBD2201899C5B20081AF20 /* DaLio1Dcar_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD1FF1899C5A20081AF20 /* DaLio1Dcar_Main.cc */; };
+		D9BBD2211899C5B60081AF20 /* DaLio1Dcar_MainStandalone.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD2011899C5A20081AF20 /* DaLio1Dcar_MainStandalone.cc */; };
+		D9E67CDF17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E67CDE17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D98E3AD717C41D6700A1731B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D990A43717B926570022E545 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D990A43E17B926570022E545;
+			remoteInfo = BangBang;
+		};
+		D98E3AED17C41E3800A1731B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D990A43717B926570022E545 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D990A43E17B926570022E545;
+			remoteInfo = BangBang_lib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D98E3ACC17C41D5C00A1731B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D98E3AE117C41E1800A1731B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = "/Users/enrico/Ricerca/develop/C++/Mechatronix-2012/Mechatronix-Library/Tests-OCP-Validation/test-BANG-BANG-F/BangBang/../../../../../../../../../../Library/Frameworks/MechatronixCore.framework"; sourceTree = "<absolute>"; };
+		D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = "/Users/enrico/Ricerca/develop/C++/Mechatronix-2012/Mechatronix-Library/Tests-OCP-Validation/test-BANG-BANG-F/BangBang/../../../../../../../../../../Library/Frameworks/MechatronixSolver.framework"; sourceTree = "<absolute>"; };
+		D98E3ACE17C41D5C00A1731B /* BangBang_standalone */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = BangBang_standalone; path = "OneD-DaLio-CAR_standalone"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D98E3AE317C41E1800A1731B /* BangBang */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = BangBang; path = "OneD-DaLio-CAR"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D990A43F17B926570022E545 /* libOneD-DaLio-CAR_lib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libOneD-DaLio-CAR_lib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9BBD1FF1899C5A20081AF20 /* DaLio1Dcar_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DaLio1Dcar_Main.cc; sourceTree = "<group>"; };
+		D9BBD2011899C5A20081AF20 /* DaLio1Dcar_MainStandalone.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DaLio1Dcar_MainStandalone.cc; sourceTree = "<group>"; };
+		D9BBD2031899C5A20081AF20 /* DaLio1Dcar.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DaLio1Dcar.cc; sourceTree = "<group>"; };
+		D9BBD2041899C5A20081AF20 /* DaLio1Dcar.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DaLio1Dcar.hh; sourceTree = "<group>"; };
+		D9BBD2061899C5A20081AF20 /* DaLio1Dcar_c_interface.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DaLio1Dcar_c_interface.cc; sourceTree = "<group>"; };
+		D9BBD2071899C5A20081AF20 /* DaLio1Dcar_c_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaLio1Dcar_c_interface.h; sourceTree = "<group>"; };
+		D9BBD2091899C5A20081AF20 /* DaLio1Dcar_Guess.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DaLio1Dcar_Guess.cc; sourceTree = "<group>"; };
+		D9BBD20B1899C5A20081AF20 /* DaLio1Dcar_Methods.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DaLio1Dcar_Methods.cc; sourceTree = "<group>"; };
+		D9BBD20D1899C5A20081AF20 /* DaLio1Dcar_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DaLio1Dcar_Pars.hh; sourceTree = "<group>"; };
+		D9BBD20E1899C5A20081AF20 /* DaLio1Dcar_ruby_dll.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DaLio1Dcar_ruby_dll.cc; sourceTree = "<group>"; };
+		D9E67CDE17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D98E3ACB17C41D5C00A1731B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D98E3AD917C41D6E00A1731B /* libOneD-DaLio-CAR_lib.a in Frameworks */,
+				D98E3ADC17C41DB400A1731B /* MechatronixCore.framework in Frameworks */,
+				D98E3ADE17C41DB400A1731B /* MechatronixSolver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D98E3AE017C41E1800A1731B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D98E3AF317C41E4A00A1731B /* libOneD-DaLio-CAR_lib.a in Frameworks */,
+				D98E3AF017C41E4400A1731B /* MechatronixCore.framework in Frameworks */,
+				D98E3AF217C41E4400A1731B /* MechatronixSolver.framework in Frameworks */,
+				D9E67CDF17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D990A43C17B926570022E545 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D98E3AC717C41C7F00A1731B /* MechatronixCore.framework in Frameworks */,
+				D98E3AC917C41C7F00A1731B /* MechatronixSolver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D990A43617B926570022E545 = {
+			isa = PBXGroup;
+			children = (
+				D9E67CDE17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework */,
+				D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */,
+				D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */,
+				D990A44017B926570022E545 /* Products */,
+				D9BBD1FE1899C5A20081AF20 /* ocp-cpp */,
+			);
+			sourceTree = "<group>";
+		};
+		D990A44017B926570022E545 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D990A43F17B926570022E545 /* libOneD-DaLio-CAR_lib.a */,
+				D98E3ACE17C41D5C00A1731B /* BangBang_standalone */,
+				D98E3AE317C41E1800A1731B /* BangBang */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9BBD1FE1899C5A20081AF20 /* ocp-cpp */ = {
+			isa = PBXGroup;
+			children = (
+				D9BBD1FF1899C5A20081AF20 /* DaLio1Dcar_Main.cc */,
+				D9BBD2011899C5A20081AF20 /* DaLio1Dcar_MainStandalone.cc */,
+				D9BBD2021899C5A20081AF20 /* srcs */,
+			);
+			path = "ocp-cpp";
+			sourceTree = "<group>";
+		};
+		D9BBD2021899C5A20081AF20 /* srcs */ = {
+			isa = PBXGroup;
+			children = (
+				D9BBD2031899C5A20081AF20 /* DaLio1Dcar.cc */,
+				D9BBD2041899C5A20081AF20 /* DaLio1Dcar.hh */,
+				D9BBD2061899C5A20081AF20 /* DaLio1Dcar_c_interface.cc */,
+				D9BBD2071899C5A20081AF20 /* DaLio1Dcar_c_interface.h */,
+				D9BBD2091899C5A20081AF20 /* DaLio1Dcar_Guess.cc */,
+				D9BBD20B1899C5A20081AF20 /* DaLio1Dcar_Methods.cc */,
+				D9BBD20D1899C5A20081AF20 /* DaLio1Dcar_Pars.hh */,
+				D9BBD20E1899C5A20081AF20 /* DaLio1Dcar_ruby_dll.cc */,
+			);
+			path = srcs;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D990A43D17B926570022E545 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9BBD2171899C5A20081AF20 /* DaLio1Dcar_c_interface.h in Headers */,
+				D9BBD21D1899C5A20081AF20 /* DaLio1Dcar_Pars.hh in Headers */,
+				D9BBD2141899C5A20081AF20 /* DaLio1Dcar.hh in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D98E3ACD17C41D5C00A1731B /* OneD-DaLio-CAR_standalone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D98E3AD417C41D5C00A1731B /* Build configuration list for PBXNativeTarget "OneD-DaLio-CAR_standalone" */;
+			buildPhases = (
+				D98E3ACA17C41D5C00A1731B /* Sources */,
+				D98E3ACB17C41D5C00A1731B /* Frameworks */,
+				D98E3ACC17C41D5C00A1731B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D98E3AD817C41D6700A1731B /* PBXTargetDependency */,
+			);
+			name = "OneD-DaLio-CAR_standalone";
+			productName = BangBang_standalone;
+			productReference = D98E3ACE17C41D5C00A1731B /* BangBang_standalone */;
+			productType = "com.apple.product-type.tool";
+		};
+		D98E3AE217C41E1800A1731B /* OneD-DaLio-CAR */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D98E3AE917C41E1800A1731B /* Build configuration list for PBXNativeTarget "OneD-DaLio-CAR" */;
+			buildPhases = (
+				D98E3ADF17C41E1800A1731B /* Sources */,
+				D98E3AE017C41E1800A1731B /* Frameworks */,
+				D98E3AE117C41E1800A1731B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D98E3AEE17C41E3800A1731B /* PBXTargetDependency */,
+			);
+			name = "OneD-DaLio-CAR";
+			productName = BangBang;
+			productReference = D98E3AE317C41E1800A1731B /* BangBang */;
+			productType = "com.apple.product-type.tool";
+		};
+		D990A43E17B926570022E545 /* OneD-DaLio-CAR_lib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D990A44317B926570022E545 /* Build configuration list for PBXNativeTarget "OneD-DaLio-CAR_lib" */;
+			buildPhases = (
+				D990A43B17B926570022E545 /* Sources */,
+				D990A43C17B926570022E545 /* Frameworks */,
+				D990A43D17B926570022E545 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OneD-DaLio-CAR_lib";
+			productName = BangBang;
+			productReference = D990A43F17B926570022E545 /* libOneD-DaLio-CAR_lib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D990A43717B926570022E545 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Enrico Bertolazzi";
+			};
+			buildConfigurationList = D990A43A17B926570022E545 /* Build configuration list for PBXProject "OneD-DaLio-CAR" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D990A43617B926570022E545;
+			productRefGroup = D990A44017B926570022E545 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D990A43E17B926570022E545 /* OneD-DaLio-CAR_lib */,
+				D98E3ACD17C41D5C00A1731B /* OneD-DaLio-CAR_standalone */,
+				D98E3AE217C41E1800A1731B /* OneD-DaLio-CAR */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D98E3ACA17C41D5C00A1731B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9BBD2211899C5B60081AF20 /* DaLio1Dcar_MainStandalone.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D98E3ADF17C41E1800A1731B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9BBD2201899C5B20081AF20 /* DaLio1Dcar_Main.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D990A43B17B926570022E545 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9BBD21E1899C5A20081AF20 /* DaLio1Dcar_ruby_dll.cc in Sources */,
+				D9BBD2131899C5A20081AF20 /* DaLio1Dcar.cc in Sources */,
+				D9BBD2191899C5A20081AF20 /* DaLio1Dcar_Guess.cc in Sources */,
+				D9BBD21B1899C5A20081AF20 /* DaLio1Dcar_Methods.cc in Sources */,
+				D9BBD2161899C5A20081AF20 /* DaLio1Dcar_c_interface.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D98E3AD817C41D6700A1731B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D990A43E17B926570022E545 /* OneD-DaLio-CAR_lib */;
+			targetProxy = D98E3AD717C41D6700A1731B /* PBXContainerItemProxy */;
+		};
+		D98E3AEE17C41E3800A1731B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D990A43E17B926570022E545 /* OneD-DaLio-CAR_lib */;
+			targetProxy = D98E3AED17C41E3800A1731B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D98E3AD517C41D5C00A1731B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D98E3AD617C41D5C00A1731B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D98E3AEA17C41E1800A1731B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D98E3AEB17C41E1800A1731B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D990A44117B926570022E545 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D990A44217B926570022E545 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D990A44417B926570022E545 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D990A44517B926570022E545 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D98E3AD417C41D5C00A1731B /* Build configuration list for PBXNativeTarget "OneD-DaLio-CAR_standalone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D98E3AD517C41D5C00A1731B /* Debug */,
+				D98E3AD617C41D5C00A1731B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D98E3AE917C41E1800A1731B /* Build configuration list for PBXNativeTarget "OneD-DaLio-CAR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D98E3AEA17C41E1800A1731B /* Debug */,
+				D98E3AEB17C41E1800A1731B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D990A43A17B926570022E545 /* Build configuration list for PBXProject "OneD-DaLio-CAR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D990A44117B926570022E545 /* Debug */,
+				D990A44217B926570022E545 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D990A44317B926570022E545 /* Build configuration list for PBXNativeTarget "OneD-DaLio-CAR_lib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D990A44417B926570022E545 /* Debug */,
+				D990A44517B926570022E545 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D990A43717B926570022E545 /* Project object */;
+}

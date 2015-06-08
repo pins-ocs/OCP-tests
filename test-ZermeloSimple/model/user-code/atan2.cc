@@ -18,16 +18,16 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "Zermelo.hh"
+#include "ZermeloSimple.hh"
 
-namespace ZermeloDefine {
+namespace ZermeloSimpleDefine {
 
   using namespace std ;
   using namespace MechatronixCore ;
   using namespace MechatronixSolver ;
   
   valueType
-  Zermelo::arctan2( valueType y, valueType x ) const {
+  ZermeloSimple::arctan2( valueType y, valueType x ) const {
     return atan2(y,x) ;
   }
 
