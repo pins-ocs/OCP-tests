@@ -29,7 +29,7 @@ addUnilateralConstraint( T(zeta)>=0, Tpositive, tolerance=0.1 ) ;
 Describe(setFDorder) ;
 #setFDorder([3],"backward") ;
 #setFDorderCoEquation([theta],"forward") ;
-generateOCProblem( "Zermelo",
+generateOCProblem( "ZermeloSimple",
                     integral_post_processing = [[zeta*T(zeta),"Time"]],
                     parameters     = [ V=1, vtheta_max=0.00001, x0=1, y0=0, theta0=evalf(Pi) ],
                     #continuation  = [[epsi_u=1-s]],
@@ -39,4 +39,5 @@ generateOCProblem( "Zermelo",
 # Riscrivo il controllo con arctan2 e cambio g_vec
 #u_vec[1] := arctan2(numer(tan(u_vec[1])),denom(tan(u_vec[1]))) ;
 #g_vec[1] := u_vars[1] - u_vec[1] ;
+
 
