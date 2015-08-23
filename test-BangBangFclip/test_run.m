@@ -1,10 +1,8 @@
-global BangBangF_data ;
+global BangBangFclip_data ;
 
-addpath('matlab_scripts') ;
+if true
 
-if false
-
-fid = fopen('BangBangF_dump_JAC.mm', 'r');
+fid = fopen('BangBangFclip_dump_JAC.mm', 'r');
 line = fgetl(fid);
 line = fgetl(fid);
 r    = sscanf(line, '%d%d%d');
@@ -23,7 +21,7 @@ for k=1:nnz
 end
 fclose(fid) ;
 
-fid = fopen('BangBangF_dump_F.mm', 'r');
+fid = fopen('BangBangFclip_dump_F.mm', 'r');
 line = fgetl(fid);
 line = fgetl(fid);
 r    = sscanf(line, '%d');
@@ -36,7 +34,7 @@ for k=1:n
 end
 fclose(fid) ;
 
-fid = fopen('BangBangF_dump_Z.mm', 'r');
+fid = fopen('BangBangFclip_dump_Z.mm', 'r');
 line = fgetl(fid);
 line = fgetl(fid);
 r    = sscanf(line, '%d');
@@ -55,6 +53,8 @@ fprintf( 'READ norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
 
 end
 
+addpath('matlab_scripts') ;
+
 numNodes      = 101 ;
 nodes         = 0:1/(numNodes-1):1 ;
 nodeToSegment = ones(numNodes,1) ;
@@ -63,28 +63,34 @@ data.nodes         = nodes ;
 data.nodeToSegment = nodeToSegment ;
 data.BoundaryConditions.initial_x = true ;
 data.BoundaryConditions.initial_v = true ;
+data.BoundaryConditions.initial_F = true ;
 data.BoundaryConditions.final_v   = true ;
+data.BoundaryConditions.final_F   = true ;
 
-BangBangF_Setup( data ) ;
+BangBangFclip_Setup( data ) ;
 
-z = BangBangF_Guess() ;
-n = length(z)
+z = BangBangFclip_Guess() ;
+z = ZZ ;
 
-UM = BangBangF_u_system( z ) ;
-F  = BangBangF_system( z, UM ) ;
-J  = BangBangF_jacobian( z, UM ) ;
-%d  = J\F ;
-%fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
-for k=1:3
-  UM = BangBangF_u_system( z ) ;
-  F  = BangBangF_system( z, UM ) ;
-  J  = BangBangF_jacobian( z, UM ) ;
+UM = BangBangFclip_u_system( z ) ;
+F  = BangBangFclip_system( z, UM ) ;
+J  = BangBangFclip_jacobian( z, UM ) ;
+d  = J\F ;
+fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
+alpha = 0.1 ;
+for k=1:1000
+  UM = BangBangFclip_u_system( z ) ;
+  F  = BangBangFclip_system( z, UM ) ;
+  J  = BangBangFclip_jacobian( z, UM ) ;
   d  = J\F ;
   fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
-  z = z - d ;
+  if k > 50
+    alpha = 1 ; 
+  end
+  z = z - alpha*d ;
 end
 
-[Z,pars,omega,UM] = BangBangF_unpack( z ) ;
+[Z,pars,omega,UM] = BangBangFclip_unpack( z ) ;
 
 % Z
 % pars
@@ -101,7 +107,6 @@ title('v') ;
 
 subplot(2,2,2) ;
 plot( (nodes(2:end)+nodes(1:end-1))/2, UM, '-o' ) ;
-title('u') ;
 
 subplot(2,2,3) ;
 plot( nodes, l1, '-o' ) ;
