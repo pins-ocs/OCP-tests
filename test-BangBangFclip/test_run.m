@@ -1,8 +1,34 @@
 global BangBangFclip_data ;
 
-if true
+addpath('matlab_scripts') ;
+addpath('matlab_user_scripts') ;
 
-fid = fopen('BangBangFclip_dump_JAC.mm', 'r');
+seg1  = 0:0.1/10:0.1 ;      
+seg2  = 0:0.4/40:0.4 ;      
+nodes = [ seg1 seg2+0.1 seg2+0.5 seg1+0.9 ] ;
+numNodes = length(nodes) ;
+
+nodeToSegment = [ ones(1,11) 2*ones(1,41) 3*ones(1,41) 4*ones(1,11) ] ;
+
+data.nodes         = nodes ;
+data.nodeToSegment = nodeToSegment ;
+data.BoundaryConditions.initial_x = true ;
+data.BoundaryConditions.initial_v = true ;
+data.BoundaryConditions.initial_F = true ;
+data.BoundaryConditions.final_v   = true ;
+data.BoundaryConditions.final_F   = true ;
+
+data.Parameters.maxClip = 1 ;
+data.Parameters.minClip = -1 ;
+data.Parameters.vFmax   = 10 ;
+
+BangBangFclip_Setup( data ) ;
+
+if false
+
+fname = 'BangBangFclip_dump_' ;
+
+fid = fopen([fname 'JAC.mm'], 'r');
 line = fgetl(fid);
 line = fgetl(fid);
 r    = sscanf(line, '%d%d%d');
@@ -21,7 +47,7 @@ for k=1:nnz
 end
 fclose(fid) ;
 
-fid = fopen('BangBangFclip_dump_F.mm', 'r');
+fid = fopen([fname 'F.mm'], 'r');
 line = fgetl(fid);
 line = fgetl(fid);
 r    = sscanf(line, '%d');
@@ -34,7 +60,7 @@ for k=1:n
 end
 fclose(fid) ;
 
-fid = fopen('BangBangFclip_dump_Z.mm', 'r');
+fid = fopen([fname 'Z.mm'], 'r');
 line = fgetl(fid);
 line = fgetl(fid);
 r    = sscanf(line, '%d');
@@ -47,66 +73,44 @@ for k=1:n
 end
 fclose(fid) ;
 
+[Z_,pars_,omega_,UM_] = BangBangFclip_unpack( ZZ ) ;
 JJ = sparse( I, J, R ) ;
-d = JJ\FF ;
-fprintf( 'READ norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
-
 end
 
-addpath('matlab_scripts') ;
-
-numNodes      = 101 ;
-nodes         = 0:1/(numNodes-1):1 ;
-nodeToSegment = ones(numNodes,1) ;
-
-data.nodes         = nodes ;
-data.nodeToSegment = nodeToSegment ;
-data.BoundaryConditions.initial_x = true ;
-data.BoundaryConditions.initial_v = true ;
-data.BoundaryConditions.initial_F = true ;
-data.BoundaryConditions.final_v   = true ;
-data.BoundaryConditions.final_F   = true ;
-
-BangBangFclip_Setup( data ) ;
-
 z = BangBangFclip_Guess() ;
-z = ZZ ;
 
-UM = BangBangFclip_u_system( z ) ;
-F  = BangBangFclip_system( z, UM ) ;
-J  = BangBangFclip_jacobian( z, UM ) ;
-d  = J\F ;
-fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
-alpha = 0.1 ;
-for k=1:1000
-  UM = BangBangFclip_u_system( z ) ;
+alpha = ones(1,100) ;
+alpha(1:6) = [ 0.30678 3.05E-08 6.37E-08 2.76E-08 0.12028 0.69362 ] ;
+
+for k=1:10
+  UM = BangBangFclip_UM_eval( z ) ;
   F  = BangBangFclip_system( z, UM ) ;
   J  = BangBangFclip_jacobian( z, UM ) ;
   d  = J\F ;
   fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
-  if k > 50
-    alpha = 1 ; 
-  end
-  z = z - alpha*d ;
+  z = z - alpha(k)*d ;
 end
 
-[Z,pars,omega,UM] = BangBangFclip_unpack( z ) ;
+UM = BangBangFclip_UM_eval( z ) ;
+F  = BangBangFclip_system( z, UM ) ;
+J  = BangBangFclip_jacobian( z, UM ) ;
+fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
 
-% Z
-% pars
-% omega
-% UM
+[Z,pars,omega,UM,UC] = BangBangFclip_unpack( z ) ;
+
 x  = Z(1,:) ;
 v  = Z(2,:) ;
-l1 = Z(3,:) ;
-l2 = Z(4,:) ;
+F  = Z(3,:) ;
+l1 = Z(4,:) ;
+l2 = Z(5,:) ;
+l3 = Z(6,:) ;
 
 subplot(2,2,1) ;
 plot( nodes, v, '-o' ) ;
 title('v') ;
 
 subplot(2,2,2) ;
-plot( (nodes(2:end)+nodes(1:end-1))/2, UM, '-o' ) ;
+plot( UC(end,:), UC(1,:), '-o' ) ;
 
 subplot(2,2,3) ;
 plot( nodes, l1, '-o' ) ;

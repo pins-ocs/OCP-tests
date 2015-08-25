@@ -1,23 +1,40 @@
-global BangBangF_data ;
+global Brachiostocrona_data ;
 
 addpath('matlab_scripts') ;
-addpath('matlab_user_scripts') ;
+addpath('matlab_user_script') ;
 
-numNodes      = 101 ;
+numNodes      = 501 ;
 nodes         = 0:1/(numNodes-1):1 ;
 nodeToSegment = ones(numNodes,1) ;
 
 data.nodes         = nodes ;
 data.nodeToSegment = nodeToSegment ;
 data.BoundaryConditions.initial_x = true ;
+data.BoundaryConditions.initial_y = true ;
 data.BoundaryConditions.initial_v = true ;
-data.BoundaryConditions.final_v   = true ;
+data.BoundaryConditions.final_x   = true ;
+data.BoundaryConditions.final_y   = true ;
 
-BangBangF_Setup( data ) ;
+g  = 9.81 ;
+yf = -3 ;
+Tf = (-2.0*yf/g)^(1/2) ;
+xf = 10 ;
+Vf = sqrt(xf^2+yf^2)/sqrt(-2.0*yf/g) ;
+% Model Parameters
+data.Parameters.g = g ;
+data.Parameters.mass = 1 ;
+% Guess Parameters
+data.Parameters.Tf = Tf ;
+data.Parameters.Vf = Vf ;
+% Boundary Conditions
+data.Parameters.xf = xf ;
+data.Parameters.yf = yf ;
+
+Brachiostocrona_Setup( data ) ;
 
 if false
 
-fname = 'BangBangF_dump_' ;
+fname = 'Brachiostocrona_dump_' ;
 
 fid = fopen([fname 'JAC.mm'], 'r');
 line = fgetl(fid);
@@ -64,79 +81,54 @@ for k=1:n
 end
 fclose(fid) ;
 
-[Z_,pars_,omega_,UM_] = BangBangF_unpack( ZZ ) ;
+[Z_,pars_,omega_,UM_,UC_] = Brachiostocrona_unpack( ZZ ) ;
 JJ = sparse( I, J, R ) ;
 end
 
-%BangBangF_data.parsOmegaMapping = [ 3 1 2 ] ;
-%BangBangF_data.omegaMapping     = [ 3 1 2 ] ;
-%BangBangF_data.bcMapping        = [ 3 6 7 1 2 4 5 ] ;
-
-z = BangBangF_Guess() ;
+z = Brachiostocrona_Guess() ;
 n = length(z) ;
 
-alpha = 0.47414 ; % 0.44911 ;
-for k=1:4
-  UM = BangBangF_UM_eval( z ) ;
-  F  = BangBangF_system( z, UM ) ;
-  J  = BangBangF_jacobian( z, UM ) ;
+size(z)
+size(ZZ)
+
+norm(z-ZZ,Inf)
+
+alpha = ones(1,100) ;
+alpha(1:7) = [1,0.30377,0.46879,1.00000,1.00000,1.00000,1.00000] ;
+
+for k=1:10
+  UM = Brachiostocrona_UM_eval( z ) ;
+  F  = Brachiostocrona_system( z, UM ) ;
+  J  = Brachiostocrona_jacobian( z, UM ) ;
   d  = J\F ;
   fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
-  z = z - alpha*d ;
-  alpha = 1 ;
-  %UM = BangBangF_UM_eval( z ) ;
-  %F  = BangBangF_system( z, UM ) ;
-  %fprintf( 'norm1 = %g\n', norm(F,1)/n );
+  z = z - alpha(k)*d ;
 end
 
-UM = BangBangF_UM_eval( z ) ;
-F  = BangBangF_system( z, UM ) ;
-J  = BangBangF_jacobian( z, UM ) ;
+UM = Brachiostocrona_UM_eval( z ) ;
+F  = Brachiostocrona_system( z, UM ) ;
+J  = Brachiostocrona_jacobian( z, UM ) ;
 fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
 
-%z-ZZ
 %norm(F-FF,Inf)
 
-[Z,pars,omega,UM] = BangBangF_unpack( z ) ;
+[Z,pars,omega,UM,UC] = Brachiostocrona_unpack( z ) ;
 
 % Z
 % pars
 % omega
 % UM
-x  = Z(1,:) ;
-v  = Z(2,:) ;
-l1 = Z(3,:) ;
-l2 = Z(4,:) ;
+v  = Z(1,:) ;
+l1 = Z(1,:) ;
 
-x_  = Z(1,:) ;
-v_  = Z(2,:) ;
-l1_ = Z(3,:) ;
-l2_ = Z(4,:) ;
-UM_ = UM ;
 subplot(2,2,1) ;
-plot( nodes, v, '-o', nodes, v_ ) ;
+plot( nodes, v, '-o' ) ;
 title('v') ;
 
 subplot(2,2,2) ;
 nn = (nodes(2:end)+nodes(1:end-1))/2 ;
-plot( nn, UM, '-o', nn, UM_ ) ;
+plot( UC(end,:), UC(1,:), '-o'  ) ;
 title('u') ;
 
 subplot(2,2,3) ;
-plot( nodes, l1, '-o', nodes, l1_ ) ;
-
-subplot(2,2,4) ;
-plot( nodes, l2, '-o', nodes, l2_ ) ;
-
-if false
-  subplot(1,3,1);
-  spy(J) ;
-  title('J') ;
-  
-  subplot(1,3,2);
-  spy(JJ) ;
-  title('JJ') ;
-  
-  subplot(1,3,3);
-  spy(J-JJ) ;
-end
+plot( nodes, l1, '-o' ) ;
