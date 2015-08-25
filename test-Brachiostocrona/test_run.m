@@ -5,7 +5,7 @@ addpath('matlab_user_script') ;
 
 numNodes      = 501 ;
 nodes         = 0:1/(numNodes-1):1 ;
-nodeToSegment = ones(numNodes,1) ;
+nodeToSegment = ones(1,numNodes) ;
 
 data.nodes         = nodes ;
 data.nodeToSegment = nodeToSegment ;
@@ -32,7 +32,7 @@ data.Parameters.yf = yf ;
 
 Brachiostocrona_Setup( data ) ;
 
-if false
+if true
 
 fname = 'Brachiostocrona_dump_' ;
 
@@ -72,7 +72,7 @@ fid = fopen([fname 'Z.mm'], 'r');
 line = fgetl(fid);
 line = fgetl(fid);
 r    = sscanf(line, '%d');
-n    = r(1) ;
+n    = r(1)
 ZZ   = zeros(n,1) ;
 for k=1:n
   line = fgetl(fid) ;
@@ -84,6 +84,7 @@ fclose(fid) ;
 [Z_,pars_,omega_,UM_,UC_] = Brachiostocrona_unpack( ZZ ) ;
 JJ = sparse( I, J, R ) ;
 end
+
 
 z = Brachiostocrona_Guess() ;
 n = length(z) ;
@@ -101,7 +102,7 @@ for k=1:10
   F  = Brachiostocrona_system( z, UM ) ;
   J  = Brachiostocrona_jacobian( z, UM ) ;
   d  = J\F ;
-  fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
+  fprintf( 'iter %d norm1 = %g dnorm = %g\n', k, norm(F,1)/n, norm(d,1)/n );
   z = z - alpha(k)*d ;
 end
 
@@ -118,17 +119,26 @@ fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
 % pars
 % omega
 % UM
-v  = Z(1,:) ;
-l1 = Z(1,:) ;
+x      = Z(1,:) ;
+y      = Z(2,:) ;
+v      = Z(3,:) ;
+T      = Z(4,:) ;
+theta  = Z(5,:) ;
+l1     = Z(6,:) ;
+l2     = Z(7,:) ;
+l3     = Z(8,:) ;
+l4     = Z(9,:) ;
+l5     = Z(10,:) ;
 
 subplot(2,2,1) ;
-plot( nodes, v, '-o' ) ;
-title('v') ;
+plot( x, y, '-o' ) ;
+title('x,y') ;
 
 subplot(2,2,2) ;
 nn = (nodes(2:end)+nodes(1:end-1))/2 ;
 plot( UC(end,:), UC(1,:), '-o'  ) ;
-title('u') ;
+title('vtheta') ;
 
 subplot(2,2,3) ;
-plot( nodes, l1, '-o' ) ;
+plot( nodes, theta, '-o' ) ;
+title('theta') ;

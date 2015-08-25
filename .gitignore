@@ -5,6 +5,7 @@ test-*/ocp-*
 test-*/*run.rb
 test-*/*run_ffi.rb
 test-*/bin/main
+test-*/matlab_scripts
 
 .bundle
 dumps
