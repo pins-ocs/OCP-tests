@@ -78,20 +78,27 @@ JJ = sparse( I, J, R ) ;
 end
 
 z = BangBangFclip_Guess() ;
+UM = BangBangFclip_UM_eval( z ) ;
+%UM = BangBangFclip_NLS_Controls( z, ones(size(UM)), -10*ones(size(UM)), 10*ones(size(UM)) ) ;
+
+z  = BangBangFclip_LS_Multiplier( z, UM ) ;
 
 alpha = ones(1,100) ;
 alpha(1:6) = [ 0.30678 3.05E-08 6.37E-08 2.76E-08 0.12028 0.69362 ] ;
 
 for k=1:10
+  lambda = 1e-6/k^2 ;
   UM = BangBangFclip_UM_eval( z ) ;
   F  = BangBangFclip_system( z, UM ) ;
   J  = BangBangFclip_jacobian( z, UM ) ;
-  d  = J\F ;
-  fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
+  %d  = (J.'*J+lambda*eye(size(J)))\(J.'*F) ;
+  d  = J\F;
+  fprintf( 'iter %d, norm1 = %g dnorm = %g\n', k, norm(F,1)/n, norm(d,1)/n );
   z = z - alpha(k)*d ;
+  %z = z -d ;
 end
 
-UM = BangBangFclip_UM_eval( z ) ;
+%UM = BangBangFclip_UM_eval( z ) ;
 F  = BangBangFclip_system( z, UM ) ;
 J  = BangBangFclip_jacobian( z, UM ) ;
 fprintf( 'norm1 = %g dnorm = %g\n', norm(F,1)/n, norm(d,1)/n );
@@ -113,7 +120,8 @@ subplot(2,2,2) ;
 plot( UC(end,:), UC(1,:), '-o' ) ;
 
 subplot(2,2,3) ;
-plot( nodes, l1, '-o' ) ;
+plot( nodes, l1, '-o' , nodes, l2, '-o' , nodes, l3, '-o' ) ;
+legend('l1','l2','l3') ;
 
 subplot(2,2,4) ;
 plot( nodes, l2, '-o' ) ;

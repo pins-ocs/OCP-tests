@@ -23,8 +23,7 @@
 namespace TrainDefine {
 
   using namespace std ;
-  using namespace MechatronixCore ;
-  using namespace MechatronixSolver ;
+  using namespace MechatronixCommon ;
   
   static valueType epsilon = 0.05 ;
   static valueType ss[3] = { -2, 0, 2 } ;

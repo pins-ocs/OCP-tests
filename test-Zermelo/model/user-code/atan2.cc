@@ -23,8 +23,7 @@
 namespace ZermeloDefine {
 
   using namespace std ;
-  using namespace MechatronixCore ;
-  using namespace MechatronixSolver ;
+  using namespace MechatronixCommon ;
   
   valueType
   Zermelo::arctan2( valueType y, valueType x ) const {

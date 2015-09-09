@@ -23,7 +23,7 @@
 namespace HangGliderDefine {
 
   using namespace std ;
-  using namespace MechatronixCore ;
+  using namespace MechatronixCommon ;
   
   static valueType uM = 2.5 ;
   static valueType R  = 100 ;

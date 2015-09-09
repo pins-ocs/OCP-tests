@@ -1,19 +1,19 @@
 #!/usr/bin/env pins
- #--------------------------------------------------------------------------#
- #  file: BangBangF_run.rb                                                  #
- #                                                                          #
- #  version: 1.0   date 25/8/2015                                           #
- #                                                                          #
- #  Copyright (C) 2015                                                      #
- #                                                                          #
- #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
- #      Dipartimento di Ingegneria Industriale                              #
- #      Universita` degli Studi di Trento                                   #
- #      Via Mesiano 77, I-38050 Trento, Italy                               #
- #      email: enrico.bertolazzi@unitn.it                                   #
- #             francesco.biral@unitn.it                                     #
- #             paolo.bosetti@unitn.it                                       #
- #--------------------------------------------------------------------------#
+#--------------------------------------------------------------------------#
+#  file: BangBangF_run.rb                                                  #
+#                                                                          #
+#  version: 1.0   date 9/9/2015                                            #
+#                                                                          #
+#  Copyright (C) 2015                                                      #
+#                                                                          #
+#      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti                #
+#      Dipartimento di Ingegneria Industriale                              #
+#      Universita` degli Studi di Trento                                   #
+#      Via Sommarive 9, I-38123, Trento, Italy                             #
+#      email: enrico.bertolazzi@unitn.it                                   #
+#             francesco.biral@unitn.it                                     #
+#             paolo.bosetti@unitn.it                                       #
+#--------------------------------------------------------------------------#
 
 require 'mechatronix'
 
