@@ -117,17 +117,17 @@ end
   when :mac
     rule ".o" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} -I/usr/local/include -I#{SRC_DIR}/srcs -F/Library/Frameworks -o #{t} -c #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} -I/usr/local/include -I#{SRC_DIR}/srcs -I/Library/Frameworks/MechatronixInterfaceMruby.framework/Headers/mruby/ -F/Library/Frameworks -o #{t} -c #{t.source}"
     end
   when :linux
     rule ".o" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} -I/usr/local/include -I/usr/include/atlas -I#{SRC_DIR}/srcs -o #{t} -c #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} -I/usr/local/include -I/usr/include/atlas /usr/local/include/MechatronixInterfaceMruby/mruby -I#{SRC_DIR}/srcs -o #{t} -c #{t.source}"
     end
   when :mingw
     rule ".obj" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS}  /D \"#{MODEL_NAME.upcase}_EXPORT\"  /IC:/Mechatronix/win32/include /I#{SRC_DIR}/srcs /c /Fo#{t} #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS}  /D \"#{MODEL_NAME.upcase}_EXPORT\"  /IC:/Mechatronix/win32/include /I#{SRC_DIR}/srcs /IC:/Mechatronix/win32/include/MechatronixInterfaceMruby/mruby /c /Fo#{t} #{t.source}"
     end
   end
 end
