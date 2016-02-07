@@ -1,3 +1,4 @@
+
 # 
 # 
 # XOptima
@@ -97,7 +98,7 @@ setTarget(lagrange=lgr,mayer=myr);
 addUnilateralConstraint( coV(zeta) > 0,
                          timePositive,
                          epsilon   = 0.01, 
-                         tolerance = 0.1,
+                         tolerance = 0.01,
                          barrier   = true );
 addUnilateralConstraint( sqrt(vs(zeta)^2+vn(zeta)^2)/nominalFeed() <= 1+0.01,
                          vLimit,
@@ -135,14 +136,14 @@ addBilateralConstraint(AY/ay_max,
 # Otherwise, a numerical solution is mandatory to solve the controls.
 addControlBound( js(zeta),
                  scale       = penScale,
-                 max         = 30.0,
-                 min         = -50.0,
+                 max         = js_max, # 30.0,
+                 min         = js_min, #-50.0,
                  epsilon     = 0.01,
                  tolerance   = 0.01,
                  controlType ="U_LOGARITHMIC" ):
 addControlBound( jn(zeta),
                  scale       = penScale,
-                 maxabs      = 65,
+                 maxabs      = jn_max, # 65,
                  epsilon     = 0.01,
                  tolerance   = 0.01,
                  controlType ="U_LOGARITHMIC"):
@@ -181,6 +182,7 @@ for i from 2 to 21 do
   path := [op(path),tmp]:
 end:
 totlen; # lunghezza totale
+;
 qvars := [lenSeg()          = ssLength(),
           kappa(zeta)       = curvature(zeta),
           theta(zeta)       = angle(zeta),
@@ -188,10 +190,10 @@ qvars := [lenSeg()          = ssLength(),
           yPath(zeta)       = y(zeta),
           xTraj(zeta,tt)    = x(zeta,tt),
           yTraj(zeta,tt)    = y(zeta,tt),
-          xLimitLeft(zeta)  = x(zeta,pf_error),
-          yLimitLeft(zeta)  = y(zeta,pf_error),
-          xLimitRight(zeta) = x(zeta,-pf_error),
-          yLimitRight(zeta) = y(zeta,-pf_error),
+          xLimitLeft(zeta,pf_error)   = x(zeta,pf_error),
+          yLimitLeft(zeta,pf_error)   = y(zeta,pf_error),
+          xLimitRight(zeta,pf_error) = x(zeta,pf_error),
+          yLimitRight(zeta,pf_error) = y(zeta,pf_error),
           nominalFeed()     = feedReferenceRate()]:  
 mapUserFunctionToObject(qvars,
                         "*pToolPath2D",            # istanza class tipo pointer
@@ -226,8 +228,8 @@ setInterfaceConditionAlgebraic(jump_ACC);
 # Note that the finite different scheme is associated to the i-th equation (of the dynamical system or of the adjoint equations) and not necessarily to the state variables or lagrange multipliers.
 Describe(setFDorder);
 # Upwind setting
-setFDorderEquations([5,6],"backward"):
-setFDorderCoEquation([as,an],"forward"):
+#setFDorderEquations([5,6],"backward"):
+#setFDorderCoEquation([as,an],"forward"):
 # 
 # Set guess solution (optional)
 # A guess solution can be specified for some or all state variables. The guess solution can be a function of the independent variable "zeta". Piecewise solution are not allowed.
@@ -268,6 +270,9 @@ dataOCP := [ as_max = 2.1,   #m/s^2
              vn_f   = 0,
              as_f   = 0,
              an_f   = 0,
+             js_min = -50,
+             js_max = 30,
+             jn_max = 65,
              mesh_segments = 100,
              path_following_tolerance = 10e-6 ] ;
 # Post process variables
@@ -299,7 +304,7 @@ post_list := [[sqrt(vs(zeta)^2+vn(zeta)^2),"feed"],
 # Generate Optimal Control Equations
 # The command genereates the equations of the necessary optimality conditions by approximating Pontriagyn Principle with the penalty functions.
 # The jacobians of the optimality equations are also derived for numerical solution with Newton Solver.
-Describe(generateOCProblem) ;
+Describe(generateOCProblem):
 generateOCProblem("CNOC", 
                   integral_post_processing  = post_int_list,
                   post_processing           = post_list,
@@ -307,4 +312,5 @@ generateOCProblem("CNOC",
                   #controls_guess           = [js=0,jn=0],
                   states_guess              = guess_list,
                   clean                     = false); 
+
 
