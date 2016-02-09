@@ -1,3 +1,4 @@
+
 # 
 #            
 # Economic Growth Model
@@ -31,7 +32,7 @@ addUnilateralConstraint( T(zeta)>=0, Tpositive ) ;
 setTarget( mayer = T(zeta_f) ) ;
 #setFDorder([x],"forward") ;
 generateOCProblem( "EconomicGrowthModel",
-                   post_processing = [[lambda1(zeta)-lambda2(zeta),"switching"]],
+                   post_processing = [[lambda1__xo(zeta)-lambda2__xo(zeta),"switching"]],
                    parameters   = [x1_i = 1, x2_i=2, Qc=10],
                    mesh         = [length=1, n=1000],
                    states_guess = [ T=1, x1=x1_i, x2=x2_i ] ) ;

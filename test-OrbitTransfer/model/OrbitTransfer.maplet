@@ -1,3 +1,4 @@
+
 # 
 # 
 # XOptima
@@ -84,8 +85,8 @@ setTarget(lagrange=-0*tf*u(zeta),mayer=-r(zeta_f));
 # The jacobians of the optimality equations are also derived for numerical solution with Newton Solver.
 #pars := [op(data), tf0=tf] ;
 # Set the right guess for minimum!
-USER_GUESS := [theta=arctan(-lambda2(zeta),-lambda3(zeta))];
-STATES_GUESS := [ m=m0, alpha=tf*v0/r0*zeta, r=r0, v=v0, u=0, lambda3=1e-8];
+USER_GUESS := [theta=arctan(-lambda2__xo(zeta),-lambda3__xo(zeta))];
+STATES_GUESS := [ m=m0, alpha=tf*v0/r0*zeta, r=r0, v=v0, u=0, lambda3__xo=1e-8];
 POST := [ [r(zeta)*cos(alpha(zeta)), "X-pos"],
           [r(zeta)*sin(alpha(zeta)), "Y-pos"],
           [r0*cos(alpha(zeta)),      "X-pos0"],

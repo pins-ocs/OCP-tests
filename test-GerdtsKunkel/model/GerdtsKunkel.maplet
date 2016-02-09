@@ -1,3 +1,4 @@
+
 # Problema GERDTS
 # ad 1 controllo
 # Inizializzazione
@@ -31,6 +32,6 @@ generateOCProblem( "GerdtsKunkel",
                                   x1_f   = 0,
                                   x2_f   = -1],
                    mesh         = [length=1, n=1000],
-                   states_guess = [lambda2=0, lambda3=-1 ] ) ;
+                   states_guess = [lambda2__xo=0, lambda3__xo=-1 ] ) ;
 
 # penalty che dipendono dagli ingressi

@@ -1,3 +1,4 @@
+
 # 
 #            
 # Dadebo and McAuley 1995
@@ -28,5 +29,5 @@ setTarget( mayer = y(zeta_f)) ;
 #Describe(buildOCProblem) ;
 generateOCProblem("Dadebo1",
                    mesh         = [ length=1,n=1000], mesh_s0=0,
-                   states_guess = [ x = 1, y = 0, lambda2 = 1 ] ) ;
+                   states_guess = [ x = 1, y = 0, lambda2__xo = 1 ] ) ;
 

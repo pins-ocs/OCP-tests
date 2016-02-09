@@ -1,3 +1,4 @@
+
 # 
 #            
 # Particle Steering (test 9 di COPS)
@@ -32,8 +33,8 @@ generateOCProblem( "Zermelo",
                     parameters     = [ S=100, epsi_u=1 ],
                     continuation   = [[epsi_u=1-s]],
                     mesh           = [ length=1, n=1000 ],
-                    controls_guess = [ u = arctan2(-lambda4(zeta),-lambda3(zeta)) ],
-                    states_guess   = [ x=5*zeta, y=45*zeta, lambda3=1, T=1] ) ;
+                    controls_guess = [ u = arctan2(-lambda4__xo(zeta),                                                   -lambda3__xo(zeta)) ],
+                    states_guess   = [ x=5*zeta, y=45*zeta, lambda3__xo=1, T=1] ) ;
 # Riscrivo il controllo con arctan2 e cambio g_vec
 #u_vec[1] := arctan2(numer(tan(u_vec[1])),denom(tan(u_vec[1]))) ;
 #g_vec[1] := u_vars[1] - u_vec[1] ;

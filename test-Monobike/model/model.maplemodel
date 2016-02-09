@@ -1,4 +1,16 @@
-seqns := Vector(2, [2 .. -1,diff(t(zeta),zeta)*zeta_dot(zeta)-1]);
-svars := [t(zeta)];
+seqns := Vector(9, [-diff(alpha(zeta),zeta)*u(zeta)*cos(alpha(zeta))-psi_dot(
+zeta)*sn(zeta)*kappa(zeta)-kappa(zeta)*u(zeta)*cos(alpha(zeta))+psi_dot(zeta),
+-u(zeta)*(sin(alpha(zeta))*sn(zeta)*kappa(zeta)+diff(sn(zeta),zeta)*cos(alpha(
+zeta))-sin(alpha(zeta))),-diff(u(zeta),zeta)*u(zeta)*cos(alpha(zeta))-u_dot(
+zeta)*sn(zeta)*kappa(zeta)+u_dot(zeta),-diff(u_dot(zeta),zeta)*u(zeta)*cos(
+alpha(zeta))-u_jerk(zeta)*sn(zeta)*kappa(zeta)+u_jerk(zeta),-diff(psi_dot(zeta
+),zeta)*u(zeta)*cos(alpha(zeta))-psi_acc(zeta)*sn(zeta)*kappa(zeta)+psi_acc(
+zeta),-diff(psi_acc(zeta),zeta)*u(zeta)*cos(alpha(zeta))-psi_jerk(zeta)*sn(
+zeta)*kappa(zeta)+psi_jerk(zeta),Xcomp(eqnsE),-diff(phi(zeta),zeta)*u(zeta)*
+cos(alpha(zeta))-phi_dot(zeta)*sn(zeta)*kappa(zeta)+phi_dot(zeta),-diff(t(zeta
+),zeta)*u(zeta)*cos(alpha(zeta))-sn(zeta)*kappa(zeta)+1]);
+svars := [sn(zeta), alpha(zeta), u(zeta), u_dot(zeta), psi_dot(zeta), psi_acc(
+zeta), phi_dot(zeta), phi(zeta), t(zeta)];
 suvars := [u_jerk(zeta), psi_jerk(zeta)];
-SSZDOT := NULL;
+SSZDOT := {zeta_dot(zeta) = -u(zeta)*cos(alpha(zeta))/(-1+sn(zeta)*kappa(zeta)
+)};
