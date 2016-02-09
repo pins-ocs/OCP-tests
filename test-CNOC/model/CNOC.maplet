@@ -148,30 +148,24 @@ addControlBound( jn(zeta),
                  tolerance   = 0.01,
                  controlType ="U_LOGARITHMIC"):
 # Costruzione struttura dati 
-#addUnilateralConstraint( (js(zeta)^2+jn(zeta)^2)/jmax^2<=1,
-#                         jerkLimit,
-#                         epsilon   = 0.01,
-#                         tolerance = 0.01 );
 PTS := [[0,0],[-10,0], [20,2], [50,0 ,0],[50,10,3.1415],[20,12],[-10,10],
               [-10,20],[20,22],[50,20,0],[50,30,3.1415],[20,32],[-10,30],
               [-10,40],[20,42],[50,40,0],[50,50,3.1415],[20,52],[-10,50],
               [-10,60],[20,62],[50,60]] ;
-path := [] ;
-totlen := 0 ;
-scale_path := 1/1000.0 ;
+path       := []:
+totlen     := 0:
+scale_path := 1/1000.0:
 for i from 2 to 21 do
-  tmp := ["x0"=PTS[i][1]*scale_path,
-          "y0"=PTS[i][2]*scale_path,
-          "x1"=PTS[i+1][1]*scale_path,
-          "y1"=PTS[i+1][2]*scale_path,
-          "feedRate"=v_nom,
-          "spindleRate"=3000,
-          "crossSection"=1,
-          "n"=mesh_segments]:
-  SS  := [x0=PTS[i][1]*scale_path,
-          y0=PTS[i][2]*scale_path,
-          x1=PTS[i+1][1]*scale_path,
-          y1=PTS[i+1][2]*scale_path]:
+  tmp := ["x0"           = PTS[i][1]*scale_path,
+          "y0"           = PTS[i][2]*scale_path,
+          "x1"           = PTS[i+1][1]*scale_path,
+          "y1"           = PTS[i+1][2]*scale_path,
+          "feedRate"     = v_nom,
+          "spindleRate"  = 3000,
+          "crossSection" = 1,
+          "n"            = mesh_segments]:
+  SS  := [x0=PTS[i][1]*scale_path,   y0=PTS[i][2]*scale_path,
+          x1=PTS[i+1][1]*scale_path, y1=PTS[i+1][2]*scale_path]:
   if nops(PTS[i]) = 3 and nops(PTS[i+1]) = 3 then
     totlen := totlen + subs( SS, evalf((Pi/2)*sqrt((x1-x0)^2+(y1-y0)^2),50) ) ;
     tmp := [op(tmp),"angle0"=PTS[i][3],"angle1"=PTS[i+1][3]];
@@ -183,21 +177,21 @@ for i from 2 to 21 do
 end:
 totlen; # lunghezza totale
 ;
-qvars := [lenSeg()          = ssLength(),
-          kappa(zeta)       = curvature(zeta),
-          theta(zeta)       = angle(zeta),
-          xPath(zeta)       = x(zeta),
-          yPath(zeta)       = y(zeta),
-          xTraj(zeta,tt)    = x(zeta,tt),
-          yTraj(zeta,tt)    = y(zeta,tt),
-          xLimitLeft(zeta,pf_error)   = x(zeta,pf_error),
-          yLimitLeft(zeta,pf_error)   = y(zeta,pf_error),
+qvars := [lenSeg()                   = ssLength(),
+          kappa(zeta)                = curvature(zeta),
+          theta(zeta)                = angle(zeta),
+          xPath(zeta)                = x(zeta),
+          yPath(zeta)                = y(zeta),
+          xTraj(zeta,tt)             = x(zeta,tt),
+          yTraj(zeta,tt)             = y(zeta,tt),
+          xLimitLeft(zeta,pf_error)  = x(zeta,pf_error),
+          yLimitLeft(zeta,pf_error)  = y(zeta,pf_error),
           xLimitRight(zeta,pf_error) = x(zeta,pf_error),
           yLimitRight(zeta,pf_error) = y(zeta,pf_error),
-          nominalFeed()     = feedReferenceRate()]:  
+          nominalFeed()              = feedReferenceRate()]:  
 mapUserFunctionToObject(qvars,
-                        "*pToolPath2D",            # istanza class tipo pointer
-                        "Mechatronix#ToolPath2D",  # classe (deve essere registrata)
+                        "*pToolPath2D",
+                        "Mechatronix#ToolPath2D",
                         ["segments"=path]); 
 #infoRegisteredObjects();
 # percorso Bosetti in mm
@@ -250,61 +244,55 @@ guess_list := [ s   = zeta,
 # It is possible to define the default values for all parameters that appear in the full set of equations of the optimal control problem.
 # This is an optional command that the user may need if he wish to autonomously produce an input data file. 
 # The command can called more than one with different arguments, which will be added to a global list.
-dataOCP := [ as_max = 2.1,   #m/s^2 
-             an_max = 1.2,   #m/s^2
-             ax_max = 2.1,   #m/s^2 
-             ay_max = 2.1,   #m/s^2
-             v_nom  = 0.173, #m/s
+dataOCP := [ as_max    = 2.1,   # m/s^2 
+             an_max    = 1.2,   # m/s^2
+             ax_max    = 2.1,   # m/s^2 
+             ay_max    = 2.1,   # m/s^2
+             v_nom     = 0.173, # m/s
              deltaFeed = v_nom,
-             n_i    = 0,
-             #u_i    = 0,
-             #v_i    = 0,
-             vs_i   = 0,
-             vn_i   = 0,
-             as_i   = 0,
-             an_i   = 0,
-             n_f    = 0,
-             #u_f    = 0,
-             #v_f    = 0,
-             vs_f   = 0,
-             vn_f   = 0,
-             as_f   = 0,
-             an_f   = 0,
-             js_min = -50,
-             js_max = 30,
-             jn_max = 65,
+             n_i       = 0,
+             vs_i      = 0,
+             vn_i      = 0,
+             as_i      = 0,
+             an_i      = 0,
+             n_f       = 0,
+             vs_f      = 0,
+             vn_f      = 0,
+             as_f      = 0,
+             an_f      = 0,
+             js_min    = -50,
+             js_max    = 30,
+             jn_max    = 65,
              mesh_segments = 100,
-             path_following_tolerance = 10e-6 ] ;
+             path_following_tolerance = 10e-6,
+             pf_error = path_following_tolerance ] ;
 # Post process variables
 # Add standard post-process variables in the output of the numerical solver: state variables, lagrange multipliers, controls, penalties and mesh variables.
 post_int_list := [ [coV(zeta),"time"] ] ;
 post_list := [[sqrt(vs(zeta)^2+vn(zeta)^2),"feed"],
               [sqrt(as(zeta)^2+an(zeta)^2),"acc"],
               [sqrt(js(zeta)^2+jn(zeta)^2),"jerk"],
-              [VX,"vx"],
-              [VY,"vy"],
-              [AX,"ax"],
-              [AY,"ay"],
-              [JX,"jx"],
-              [JY,"jy"],
-              #[VX*60000,"vx_mm_min"],
-              #[VY*60000,"vy_mm_min"],
-              #[AX/ax_max,"ax_normalized"],
-              #[AY/ay_max,"ay_normalized"],
-              #[xPath(s(zeta))*1000,"X-path [mm]"],
-              #[yPath(s(zeta))*1000,"Y-path [mm]"],
-              [xPath(s(zeta)),"X-path"],
-              [yPath(s(zeta)),"Y-path"],
-              [xTraj(s(zeta),n(zeta)),"X-traj"],
-              [yTraj(s(zeta),n(zeta)),"Y-traj"],
-              [xLimitLeft(s(zeta)),"X-left"],
-              [yLimitLeft(s(zeta)),"Y-left"],
-              [xLimitRight(s(zeta)),"X-right"],
-              [yLimitRight(s(zeta)),"Y-right"] ] ;
+              [VX, "vx"], [VY, "vy"],
+              [AX, "ax"], [AY, "ay"],
+              [JX, "jx"], [JY, "jy"],
+              #[VX*60000,              "vx_mm_min"],
+              #[VY*60000,              "vy_mm_min"],
+              #[AX/ax_max,             "ax_normalized"],
+              #[AY/ay_max,             "ay_normalized"],
+              #[xPath(s(zeta))*1000,   "X-path [mm]"],
+              #[yPath(s(zeta))*1000,   "Y-path [mm]"],
+              [xPath(s(zeta)),         "X-path"],
+              [yPath(s(zeta)),         "Y-path"],
+              [xTraj(s(zeta),n(zeta)), "X-traj"],
+              [yTraj(s(zeta),n(zeta)), "Y-traj"],
+              [xLimitLeft(s(zeta),pf_error),  "X-left"],
+              [yLimitLeft(s(zeta),pf_error),  "Y-left"],
+              [xLimitRight(s(zeta),pf_error), "X-right"],
+              [yLimitRight(s(zeta),pf_error), "Y-right"] ] ;
 # Generate Optimal Control Equations
 # The command genereates the equations of the necessary optimality conditions by approximating Pontriagyn Principle with the penalty functions.
 # The jacobians of the optimality equations are also derived for numerical solution with Newton Solver.
-Describe(generateOCProblem):
+#Describe(generateOCProblem):
 generateOCProblem("CNOC", 
                   integral_post_processing  = post_int_list,
                   post_processing           = post_list,
@@ -312,5 +300,4 @@ generateOCProblem("CNOC",
                   #controls_guess           = [js=0,jn=0],
                   states_guess              = guess_list,
                   clean                     = false); 
-
 
