@@ -1,3 +1,4 @@
+
 # 
 #            
 # Economic Growth Model 2
@@ -40,10 +41,9 @@ setTarget( mayer = T(zeta_f) ) ;
 #Describe(generateOCProblem) ;
 addModelExtraParameters([epsi_max,epsi_min]) ;
 generateOCProblem( "EconomicGrowthModel2",
-                   post_processing = [[lambda4(zeta)-lambda2(zeta),"switching"]],
+                   post_processing = [[lambda4__xo(zeta)-lambda2__xo(zeta),"switching"]],
                    parameters   = [epsi_max=0.01,epsi_min=1e-9, x1_i=1, x2_i=2, y1_i=1, y2_i=2, Yc=10, T_guess=1],
                    continuation = [[ [u,"epsilon"] = (1-s)*epsi_max+s*epsi_min]],
                    mesh         = [length=1, n=5000],
                    states_guess = [ T=T_guess, x1=x1_i, x2=x2_i, y1=y1_i, y2=y2_i  ] ) ;
-
 
