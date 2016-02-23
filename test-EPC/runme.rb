@@ -135,7 +135,7 @@ Dir["./dumps/*"].each do |dump|
 end # Dir[].each...
 
 # interpolate the cross_section
-spline_cross_section = EPC::Spline.new 'pchip'
+spline_cross_section = Spline::Spline.new 'pchip'
 parsed_data[:zeta_blocks][:zeta].each_with_index do |z, i|
   spline_cross_section.push_back( z, parsed_data[:zeta_blocks][:cross_section][i] )
 end
