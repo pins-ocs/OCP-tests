@@ -106,8 +106,10 @@ begin # definitions
     CLEAN.include   ["#{SRC_DIR}/**/*.o"]
   when :win
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
-    COMPILE_FLAGS = "/nologo /MD /Zi /W3 /WX- /EHa /GS /Od " # "/D_CRT_SECURE_NO_WARNINGS /D_SCL_SECURE_NO_WARNINGS"
+    COMPILE_FLAGS = "/nologo /MD /Zi /W3 /WX- /EHa /GS /Od /D_CRT_SECURE_NO_WARNINGS /D_SCL_SECURE_NO_WARNINGS"
     LINKER_FLAGS  = "/link /DLL"
+    INC_WIN_DIR   = "/IC:/Mechatronix/include /I#{SRC_DIR}/srcs /IC:/Mechatronix/include/MechatronixInterfaceMruby/mruby"
+    LIB_WIN_DIR   = "/LIBPATH:C:/Mechatronix/lib /LIBPATH:C:/Mechatronix/dll"
     LIBS          = " msvcrt.lib"
     CC = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
     OBJS          = SOURCES.ext('obj')
@@ -194,7 +196,7 @@ file LIBRARY => OBJS do
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run_ffi.rb"  if File.exist?("#{ROOT}/#{MODEL_NAME}_run_ffi.rb")
   when :win
     lib_name = "#{MODEL_NAME}.dll"
-    sh "#{CC['.dll']} #{LINKER_FLAGS} /LIBPATH:\"C:\\Mechatronix\\lib\" #{LIBS} /OUT:#{LIBRARY}.dll #{OBJS}"
+    sh "#{CC['.dll']} #{LINKER_FLAGS} #{LIB_WIN_DIR} #{LIBS} /OUT:#{LIBRARY}.dll #{OBJS}"
     sh "#{CC['.lib']} /OUT:#{LIBRARY}.lib #{OBJS}"
   end
   puts "   built library #{LIBRARY}".green
@@ -226,7 +228,7 @@ when :mac, :linux
 when :win
   task :main => [LIBRARY, MAIN.ext('obj')] do |t|
     puts ">> Building #{MODEL_NAME}_Main".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} /IC:/Mechatronix/include /I#{SRC_DIR}/srcs #{MAIN.ext('obj')} /Fe\"#{BIN_DIR}/#{t}\" /link /LIBPATH:\"C:\\Mechatronix\\lib\" #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{INC_WIN_DIR} #{MAIN.ext('obj')} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
     puts "   built executable #{BIN_DIR}/#{t}".green  
   end
 end
@@ -242,7 +244,7 @@ when :mac, :linux
 when :win
   task :standalone => [LIBRARY, STANDALONE.ext('obj')] do |t|
     puts ">> Building #{MODEL_NAME}_MainStandalone".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} /IC:/Mechatronix/include /I#{SRC_DIR}/srcs #{STANDALONE.ext('obj')} /Fe#{BIN_DIR}/#{t} /link /LIBPATH:\"C:\\Mechatronix\lib\" #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{INC_WIN_DIR} #{STANDALONE.ext('obj')} /Fe#{BIN_DIR}/#{t} /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
 end
