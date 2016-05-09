@@ -63,6 +63,10 @@ when /mingw|mswin/
     raise RuntimeError, "Cannot determine architecture for Visual Studio #{VS_VERSION}"
   end
 
+  WSFLAGS_COMMON  = %w(/nologo /c /GS /W3 /WX- /Gm- /Gd /fp:precise /EHsc /FS /D_CRT_SECURE_NO_DEPRECATE /D_CRT_SECURE_NO_WARNINGS)
+  WSFLAGS_RELEASE = WSFLAGS_COMMON + %w(/Ox /favor:blend /MD)
+  WSFLAGS_DEBUG   = WSFLAGS_COMMON + %w(/Od /Ob0 /MDd /Zi /RTC1 /D_DEBUG)
+
 else
   raise RuntimeError, "Unsupported OS: #{RUBY_PLATFORM}"
 end
@@ -87,12 +91,17 @@ begin # definitions
   BIN_DIR = "#{ROOT}/bin"
   SOURCES = FileList["#{SRC_DIR}/srcs/*.{c,cc}"]
   HEADERS = FileList["#{SRC_DIR}/srcs/*.{h,hh}"]
+  
+  PINS_LIBS = `pins --libs`
+  PINS_HDR  = `pins --headers`
+
   case OS
   when :mac
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.dylib"
     COMPILE_FLAGS = "-msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -funroll-loops -fPIC -std=c++11 -stdlib=libc++ -arch x86_64"
     FRAMEWORKS    = %w(MechatronixCore MechatronixInterfaceLua MechatronixInterfaceMruby MechatronixODE MechatronixRoad MechatronixSolver MechatronixVehicle MechatronixManufacturing).inject("-F/Library/Frameworks") {|s,f| s + " -framework #{f}"}
-    LINKER_FLAGS  = "-std=c++11 -stdlib=libc++ #{FRAMEWORKS}"
+    LINKER_FLAGS  = "-std=c++11 -stdlib=libc++ #{FRAMEWORKS} #{PINS_LIBS}"
+    HEADERS       = "#{PINS_HDR} -I/usr/local/include -I#{SRC_DIR}/srcs -I/Library/Frameworks/MechatronixInterfaceMruby.framework/Headers/mruby/"    
     CC = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include   ["#{SRC_DIR}/**/*.o"]
@@ -100,15 +109,16 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.so"
     COMPILE_FLAGS = "-msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -funroll-loops -fPIC "
     LINKER_FLAGS  = "-module -fPIC -stdlib=libstdc++ -lstdc++ -lpthread -lreadline -ldl -lpcre -L/usr/lib/atlas-base -llapack_atlas -llapack -lcblas -Wl,-rpath=. -Wl,-rpath=./lib -Wl,-rpath=/usr/lib/openblas-base -Wl,-rpath=/usr/lib/atlas-base"
+    HEADERS       = "-I/usr/local/include -I/usr/include/atlas /usr/local/include/MechatronixInterfaceMruby/mruby -I#{SRC_DIR}/srcs"
     LIBS          = %w(MechatronixCore MechatronixSolver MechatronixInterfaceLua MechatronixInterfaceMruby MechatronixODE MechatronixRoad MechatronixVehicle MechatronixManufacturing).inject("-L/usr/local/lib -Wl,--whole-archive ") {|s,l| s + " -l#{l}"} + " -Wl,--no-whole-archive"
     CC = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include   ["#{SRC_DIR}/**/*.o"]
   when :win
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
-    COMPILE_FLAGS = "/nologo /MD /Zi /W3 /WX- /EHa /GS /Od /D_CRT_SECURE_NO_WARNINGS /D_SCL_SECURE_NO_WARNINGS"
+    COMPILE_FLAGS = WSFLAGS_RELEASE.join(' ') ;
     LINKER_FLAGS  = "/link /DLL"
-    INC_WIN_DIR   = "/IC:/Mechatronix/include /I#{SRC_DIR}/srcs /IC:/Mechatronix/include/MechatronixInterfaceMruby/mruby"
+    HEADERS       = "/IC:/Mechatronix/include /I#{SRC_DIR}/srcs /IC:/Mechatronix/include/MechatronixInterfaceMruby/mruby"
     LIB_WIN_DIR   = "/LIBPATH:C:/Mechatronix/lib /LIBPATH:C:/Mechatronix/dll"
     LIBS          = " msvcrt.lib"
     CC = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
@@ -166,17 +176,17 @@ end
   when :mac
     rule ".o" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} -I/usr/local/include -I#{SRC_DIR}/srcs -I/Library/Frameworks/MechatronixInterfaceMruby.framework/Headers/mruby/ -F/Library/Frameworks -o #{t} -c #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} #{HEADERS} -F/Library/Frameworks -o #{t} -c #{t.source}"
     end
   when :linux
     rule ".o" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} -I/usr/local/include -I/usr/include/atlas /usr/local/include/MechatronixInterfaceMruby/mruby -I#{SRC_DIR}/srcs -o #{t} -c #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} #{HEADERS} -o #{t} -c #{t.source}"
     end
   when :win
     rule ".obj" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS}  /D \"#{MODEL_NAME.upcase}_EXPORT\"  /IC:/Mechatronix/include /I#{SRC_DIR}/srcs /IC:/Mechatronix/include/MechatronixInterfaceMruby/mruby /c /Fo#{t} #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} /D \"#{MODEL_NAME.upcase}_EXPORT\" #{HEADERS} /c /Fo#{t} #{t.source}"
     end
   end
 end
@@ -222,13 +232,13 @@ case OS
 when :mac, :linux
   task :main => [LIBRARY, MAIN.ext('o')] do |t|
     puts ">> Building #{MODEL_NAME}_Main".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} -I/usr/local/include -I/usr/include/atlas -I#{SRC_DIR}/srcs -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. #{MAIN} -o #{BIN_DIR}/#{t}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. #{MAIN} -o #{BIN_DIR}/#{t}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
 when :win
   task :main => [LIBRARY, MAIN.ext('obj')] do |t|
     puts ">> Building #{MODEL_NAME}_Main".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{INC_WIN_DIR} #{MAIN.ext('obj')} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS} #{MAIN.ext('obj')} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
     puts "   built executable #{BIN_DIR}/#{t}".green  
   end
 end
@@ -238,13 +248,13 @@ case OS
 when :mac, :linux
   task :standalone => [LIBRARY, STANDALONE.ext('o')] do |t|
     puts ">> Building #{MODEL_NAME}_MainStandalone".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} -I/usr/local/include -I/usr/include/atlas -I#{SRC_DIR}/srcs -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. #{STANDALONE} -o  #{BIN_DIR}/#{t}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. #{STANDALONE} -o  #{BIN_DIR}/#{t}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
 when :win
   task :standalone => [LIBRARY, STANDALONE.ext('obj')] do |t|
     puts ">> Building #{MODEL_NAME}_MainStandalone".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{INC_WIN_DIR} #{STANDALONE.ext('obj')} /Fe#{BIN_DIR}/#{t} /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS} #{STANDALONE.ext('obj')} /Fe#{BIN_DIR}/#{t} /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
 end
