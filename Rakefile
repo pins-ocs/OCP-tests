@@ -63,7 +63,7 @@ when /mingw|mswin/
     raise RuntimeError, "Cannot determine architecture for Visual Studio #{VS_VERSION}"
   end
 
-  WSFLAGS_COMMON  = %w(/nologo /c /GS /W3 /WX- /Gm- /Gd /fp:precise /EHsc /FS /D_CRT_SECURE_NO_DEPRECATE /D_CRT_SECURE_NO_WARNINGS)
+  WSFLAGS_COMMON  = %w(/nologo /GS /W3 /WX- /Gm- /Gd /fp:precise /EHsc /FS /D_CRT_SECURE_NO_DEPRECATE /D_CRT_SECURE_NO_WARNINGS)
   WSFLAGS_RELEASE = WSFLAGS_COMMON + %w(/Ox /favor:blend /MD)
   WSFLAGS_DEBUG   = WSFLAGS_COMMON + %w(/Od /Ob0 /MDd /Zi /RTC1 /D_DEBUG)
 
