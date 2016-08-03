@@ -101,7 +101,7 @@ begin # definitions
     COMPILE_FLAGS = "-msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -funroll-loops -fPIC -std=c++11 -stdlib=libc++ -arch x86_64"
     FRAMEWORKS    = %w(MechatronixCore MechatronixInterfaceLua MechatronixInterfaceMruby MechatronixODE MechatronixRoad MechatronixSolver MechatronixVehicle MechatronixManufacturing).inject("-F/Library/Frameworks") {|s,f| s + " -framework #{f}"}
     LINKER_FLAGS  = "-std=c++11 -stdlib=libc++ #{FRAMEWORKS} #{PINS_LIBS}"
-    HEADERS       = "#{PINS_HDR} -I/usr/local/include -I#{SRC_DIR}/srcs -I/Library/Frameworks/MechatronixInterfaceMruby.framework/Headers/mruby/"    
+    HEADERS_FLAGS = "#{PINS_HDR} -I/usr/local/include -I#{SRC_DIR}/srcs -I/Library/Frameworks/MechatronixInterfaceMruby.framework/Headers/mruby/"    
     CC = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include   ["#{SRC_DIR}/**/*.o"]
@@ -109,7 +109,7 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.so"
     COMPILE_FLAGS = "-msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -funroll-loops -fPIC "
     LINKER_FLAGS  = "-module -fPIC -stdlib=libstdc++ -lstdc++ -lpthread -lreadline -ldl -lpcre -L/usr/lib/atlas-base -llapack_atlas -llapack -lcblas -Wl,-rpath=. -Wl,-rpath=./lib -Wl,-rpath=/usr/lib/openblas-base -Wl,-rpath=/usr/lib/atlas-base"
-    HEADERS       = "-I/usr/local/include -I/usr/include/atlas /usr/local/include/MechatronixInterfaceMruby/mruby -I#{SRC_DIR}/srcs"
+    HEADERS_FLAGS = "-I/usr/local/include -I/usr/include/atlas /usr/local/include/MechatronixInterfaceMruby/mruby -I#{SRC_DIR}/srcs"
     LIBS          = %w(MechatronixCore MechatronixSolver MechatronixInterfaceLua MechatronixInterfaceMruby MechatronixODE MechatronixRoad MechatronixVehicle MechatronixManufacturing).inject("-L/usr/local/lib -Wl,--whole-archive ") {|s,l| s + " -l#{l}"} + " -Wl,--no-whole-archive"
     CC = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
@@ -118,15 +118,15 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
     COMPILE_FLAGS = WSFLAGS_RELEASE.join(' ') ;
     LINKER_FLAGS  = "/link /DLL"
-    HEADERS       = "/IC:/Mechatronix/include /I#{SRC_DIR}/srcs /IC:/Mechatronix/include/MechatronixInterfaceMruby/mruby"
+    HEADERS_FLAGS = "/IC:/Mechatronix/include /I#{SRC_DIR}/srcs /IC:/Mechatronix/include/MechatronixInterfaceMruby/mruby"
     LIB_WIN_DIR   = "/LIBPATH:C:/Mechatronix/lib /LIBPATH:C:/Mechatronix/dll"
     LIBS          = " msvcrt.lib"
     CC = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
     OBJS          = SOURCES.ext('obj')
     CLEAN.include   ["#{SRC_DIR}/**/*.obj"]
   end
-  MAIN          = "#{SRC_DIR}/#{MODEL_NAME}_Main.cc"
-  STANDALONE    = "#{SRC_DIR}/#{MODEL_NAME}_MainStandalone.cc"
+  MAIN       = "#{SRC_DIR}/#{MODEL_NAME}_Main.cc"
+  STANDALONE = "#{SRC_DIR}/#{MODEL_NAME}_MainStandalone.cc"
 
   CLOBBER.include [
     "#{ROOT}/{data,lib,bin}/*",
@@ -176,17 +176,17 @@ end
   when :mac
     rule ".o" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} #{HEADERS} -F/Library/Frameworks -o #{t} -c #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} #{HEADERS_FLAGS} -F/Library/Frameworks -o #{t} -c #{t.source}"
     end
   when :linux
     rule ".o" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} #{HEADERS} -o #{t} -c #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} #{HEADERS_FLAGS} -o #{t} -c #{t.source}"
     end
   when :win
     rule ".obj" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} /D \"#{MODEL_NAME.upcase}_EXPORT\" #{HEADERS} /c /Fo#{t} #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} /D \"#{MODEL_NAME.upcase}_EXPORT\" #{HEADERS_FLAGS} /c /Fo#{t} #{t.source}"
     end
   end
 end
@@ -230,15 +230,15 @@ end
 desc "Build the #{MODEL_NAME}_Main executable".yellow
 case OS
 when :mac, :linux
-  task :main => [LIBRARY, MAIN.ext('o')] do |t|
+  task :main => [LIBRARY] do |t|
     puts ">> Building #{MODEL_NAME}_Main".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. #{MAIN} -o #{BIN_DIR}/#{t}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. #{MAIN} -o #{BIN_DIR}/#{t}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
 when :win
-  task :main => [LIBRARY, MAIN.ext('obj')] do |t|
+  task :main => [LIBRARY] do |t|
     puts ">> Building #{MODEL_NAME}_Main".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS} #{MAIN.ext('obj')} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN.ext('obj')} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
     puts "   built executable #{BIN_DIR}/#{t}".green  
   end
 end
@@ -248,13 +248,13 @@ case OS
 when :mac, :linux
   task :standalone => [LIBRARY, STANDALONE.ext('o')] do |t|
     puts ">> Building #{MODEL_NAME}_MainStandalone".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. #{STANDALONE} -o  #{BIN_DIR}/#{t}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. #{STANDALONE} -o  #{BIN_DIR}/#{t}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
 when :win
   task :standalone => [LIBRARY, STANDALONE.ext('obj')] do |t|
     puts ">> Building #{MODEL_NAME}_MainStandalone".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS} #{STANDALONE.ext('obj')} /Fe#{BIN_DIR}/#{t} /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{STANDALONE.ext('obj')} /Fe#{BIN_DIR}/#{t} /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
 end
