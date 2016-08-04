@@ -23,6 +23,7 @@ when /darwin/
   VS_VERSION = ''
   VS_ARCH    = ''
   LIBCC      = '-stdlib=libc++ -lc++'
+  MAPLECMD   = `ls -1 /Applications/Maple*/maple | tail -1`.gsub(' ','\ ').chomp
 
 when /linux/
 
@@ -33,6 +34,7 @@ when /linux/
   VS_VERSION = ''
   VS_ARCH    = ''
   LIBCC      = '-stdlib=libc++ -lc++'
+  MAPLECMD   = "maple" # da sistenare
 
 when /mingw|mswin/
 
@@ -66,6 +68,8 @@ when /mingw|mswin/
   WSFLAGS_COMMON  = %w(/nologo /GS /W3 /WX- /Gm- /Gd /fp:precise /EHsc /FS /D_CRT_SECURE_NO_DEPRECATE /D_CRT_SECURE_NO_WARNINGS)
   WSFLAGS_RELEASE = WSFLAGS_COMMON + %w(/Ox /favor:blend /MD)
   WSFLAGS_DEBUG   = WSFLAGS_COMMON + %w(/Od /Ob0 /MDd /Zi /RTC1 /D_DEBUG)
+
+  MAPLECMD   = "cmaple.exe" # da sistenare
 
 else
   raise RuntimeError, "Unsupported OS: #{RUBY_PLATFORM}"
@@ -159,9 +163,9 @@ task :maple do
     cd dir do
       case OS
       when :mac, :linux
-        sh "maple #{maplet}"
+        sh "#{MAPLECMD} #{maplet}"
       when :win
-        sh "cd model & cmaple #{maplet}"
+        sh "cd model & #{MAPLECMD} #{maplet}"
       end
     end
     puts ">> source code generated".green
