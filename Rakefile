@@ -93,8 +93,8 @@ begin # definitions
   SRC_DIR = "#{ROOT}/ocp-cpp"
   LIB_DIR = "#{ROOT}/lib"
   BIN_DIR = "#{ROOT}/bin"
-  SOURCES = FileList["#{SRC_DIR}/srcs/*.{c,cc}"]
-  HEADERS = FileList["#{SRC_DIR}/srcs/*.{h,hh}"]
+  SOURCES = FileList["#{SRC_DIR}/src/*.{c,cc}"]
+  HEADERS = FileList["#{SRC_DIR}/src/*.{h,hh}"]
   
   PINS_LIBS = `pins --libs`
   PINS_HDR  = `pins --headers`
@@ -105,7 +105,7 @@ begin # definitions
     COMPILE_FLAGS = "-msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -funroll-loops -fPIC -std=c++11 -stdlib=libc++ -arch x86_64"
     FRAMEWORKS    = %w(MechatronixCore MechatronixInterfaceLua MechatronixInterfaceMruby MechatronixODE MechatronixRoad MechatronixSolver MechatronixVehicle MechatronixManufacturing).inject("-F/Library/Frameworks") {|s,f| s + " -framework #{f}"}
     LINKER_FLAGS  = "-std=c++11 -stdlib=libc++ #{FRAMEWORKS} #{PINS_LIBS}"
-    HEADERS_FLAGS = "#{PINS_HDR} -I/usr/local/include -I#{SRC_DIR}/srcs -I/Library/Frameworks/MechatronixInterfaceMruby.framework/Headers/mruby/"    
+    HEADERS_FLAGS = "#{PINS_HDR} -I/usr/local/include -I#{SRC_DIR}/src -I/Library/Frameworks/MechatronixInterfaceMruby.framework/Headers/mruby/"    
     CC = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include   ["#{SRC_DIR}/**/*.o"]
@@ -113,7 +113,7 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.so"
     COMPILE_FLAGS = "-msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -funroll-loops -fPIC "
     LINKER_FLAGS  = "-module -fPIC -stdlib=libstdc++ -lstdc++ -lpthread -lreadline -ldl -lpcre -L/usr/lib/atlas-base -llapack_atlas -llapack -lcblas -Wl,-rpath=. -Wl,-rpath=./lib -Wl,-rpath=/usr/lib/openblas-base -Wl,-rpath=/usr/lib/atlas-base"
-    HEADERS_FLAGS = "-I/usr/local/include -I/usr/include/atlas /usr/local/include/MechatronixInterfaceMruby/mruby -I#{SRC_DIR}/srcs"
+    HEADERS_FLAGS = "-I/usr/local/include -I/usr/include/atlas /usr/local/include/MechatronixInterfaceMruby/mruby -I#{SRC_DIR}/src"
     LIBS          = %w(MechatronixCore MechatronixSolver MechatronixInterfaceLua MechatronixInterfaceMruby MechatronixODE MechatronixRoad MechatronixVehicle MechatronixManufacturing).inject("-L/usr/local/lib -Wl,--whole-archive ") {|s,l| s + " -l#{l}"} + " -Wl,--no-whole-archive"
     CC = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
@@ -122,7 +122,7 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
     COMPILE_FLAGS = WSFLAGS_RELEASE.join(' ') ;
     LINKER_FLAGS  = "/link /DLL"
-    HEADERS_FLAGS = "/IC:/Mechatronix/include /I#{SRC_DIR}/srcs /IC:/Mechatronix/include/MechatronixInterfaceMruby/mruby"
+    HEADERS_FLAGS = "/IC:/Mechatronix/include /I#{SRC_DIR}/src /IC:/Mechatronix/include/MechatronixInterfaceMruby/mruby"
     LIB_WIN_DIR   = "/LIBPATH:C:/Mechatronix/lib /LIBPATH:C:/Mechatronix/dll"
     LIBS          = " msvcrt.lib"
     CC = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
