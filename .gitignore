@@ -38,3 +38,5 @@ dumps
 *.exe
 *.out
 *.app
+test-SingleTrack_NLMPC/model/DS_tmp
+test-SingleTrack_NLMPC/ds-cpp
