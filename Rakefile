@@ -13,6 +13,7 @@ class ModelDirNotFoundError < Exception; end
 
 CXXFLAGS   = `pins --cppflags`
 CFLAGS     = `pins --cflags`
+LFLAGS     = `pins --lflags`
 LIBS       = `pins --libs`
 INCLUDES   = `pins --includes`
 FRAMEWORKS = `pins --frameworks`
@@ -104,7 +105,7 @@ begin # definitions
   when :mac
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS} -O3"
-    LINKER_FLAGS  = "#{FRAMEWORKS} #{LIBS}"
+    LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}/src"    
     CC            = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
@@ -112,9 +113,7 @@ begin # definitions
   when :linux
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS} -O3"
-    LINKER_FLAGS  = "-L/usr/local/lib -Wl,--whole-archive  #{FRAMEWORKS} -Wl,--no-whole-archive " +
-                    "-lpthread -lreadline -ldl -L/usr/lib/atlas-base/atlas -llapack -lblas " + 
-                    "-Wl,-rpath=. -Wl,-rpath=./lib -Wl,-rpath=/usr/lib/openblas-base -Wl,-rpath=/usr/lib/atlas-base/atlas #{LIBS}"   
+    LINKER_FLAGS  = "-L/usr/local/lib -Wl,--whole-archive #{FRAMEWORKS} -Wl,--no-whole-archive #{LFLAGS} #{LIBS}"   
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}/src"
     CC            = {'.c' => 'gcc', '.cc' => 'g++'}
     OBJS          = SOURCES.ext('o')
@@ -234,7 +233,7 @@ case OS
 when :mac, :linux
   task :main => [LIBRARY] do |t|
     puts ">> Building #{MODEL_NAME}_Main".green
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. #{MAIN} -o #{BIN_DIR}/#{t}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. -o #{BIN_DIR}/#{t}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
 when :win
