@@ -113,7 +113,7 @@ begin # definitions
   when :linux
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS} -O3"
-    LINKER_FLAGS  = "-L/usr/local/lib -Wl,--whole-archive #{FRAMEWORKS} -Wl,--no-whole-archive #{LFLAGS} #{LIBS}"   
+    LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"   
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}/src"
     CC            = {'.c' => 'gcc', '.cc' => 'g++'}
     OBJS          = SOURCES.ext('o')
@@ -199,11 +199,11 @@ file LIBRARY => OBJS do
   lib_name = "lib#{MODEL_NAME}.#{DYL_EXT}"
   case OS
   when :mac
-    sh "#{CC['.cc']} -arch x86_64 -dynamiclib -current_version 1.0 #{LINKER_FLAGS} -o #{LIBRARY} -install_name @rpath/../lib/#{lib_name} #{OBJS}"
+    sh "#{CC['.cc']} -dynamiclib -current_version 1.0 #{LINKER_FLAGS} -o #{LIBRARY} -install_name @rpath/../lib/#{lib_name} #{OBJS}"
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run.rb"     if File.exist?("#{ROOT}/#{MODEL_NAME}_run.rb")
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run_ffi.rb" if File.exist?("#{ROOT}/#{MODEL_NAME}_run_ffi.rb")
   when :linux
-    sh "#{CC['.cc']} -shared #{LINKER_FLAGS} -o #{LIBRARY} #{OBJS}"
+    sh "#{CC['.cc']} -shared #{OBJS} #{LINKER_FLAGS} -o #{LIBRARY} "
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run.rb"     if File.exist?("#{ROOT}/#{MODEL_NAME}_run.rb")
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run_ffi.rb" if File.exist?("#{ROOT}/#{MODEL_NAME}_run_ffi.rb")
   when :win
@@ -233,7 +233,6 @@ case OS
 when :mac, :linux
   task :main => [LIBRARY] do |t|
     puts ">> Building #{MODEL_NAME}_Main".green
-    ###sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,@loader_path/. -o #{BIN_DIR}/#{t}"
     sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN} -L#{LIB_DIR} -l#{MODEL_NAME} #{LINKER_FLAGS} -Wl,-rpath,./lib -o #{BIN_DIR}/#{t}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
