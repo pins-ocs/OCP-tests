@@ -11,10 +11,11 @@ end
 class WrongTestDirError < Exception; end
 class ModelDirNotFoundError < Exception; end
 
-CXXFLAGS = `pins --cppflags`
-CFLAGS   = `pins --cflags`
-LIBS     = `pins --libs`
-INCLUDES = `pins --includes`
+CXXFLAGS   = `pins --cppflags`
+CFLAGS     = `pins --cflags`
+LIBS       = `pins --libs`
+INCLUDES   = `pins --includes`
+FRAMEWORKS = `pins --frameworks`
 
 case RUBY_PLATFORM
 
@@ -79,16 +80,16 @@ end
 
 
 begin # definitions
-  ROOT          = Rake.original_dir
-  MODEL_DIR     = "model"
+  ROOT      = Rake.original_dir
+  MODEL_DIR = "model"
 
   raise ModelDirNotFoundError unless (Dir.exist? "#{ROOT}/#{MODEL_DIR}")
 
-  tmp_name      = ROOT.split('/')[-1].match(/^test-(\w+)$/)
+  tmp_name = ROOT.split('/')[-1].match(/^test-(\w+)$/)
 
   raise WrongTestDirError unless tmp_name
 
-  MODEL_NAME    = tmp_name[1] # meglio non capitalizzare    ------ .capitalize # non usare ! se viene assegnato
+  MODEL_NAME = tmp_name[1] # meglio non capitalizzare    ------ .capitalize # non usare ! se viene assegnato
 
   puts "Compiling model: #{MODEL_NAME}\n"
   
@@ -99,25 +100,23 @@ begin # definitions
   SOURCES = FileList["#{SRC_DIR}/src/*.{c,cc}"]
   HEADERS = FileList["#{SRC_DIR}/src/*.{h,hh}"]
 
-  FRAMEWORKS_LIST = %w(MechatronixCore MechatronixInterfaceLua MechatronixInterfaceMruby MechatronixODE MechatronixRoad MechatronixSolver MechatronixVehicle MechatronixManufacturing).reverse
-
   case OS
   when :mac
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS} -O3"
-    LINKER_FLAGS  = FRAMEWORKS_LIST.inject("-F/Library/Frameworks") {|s,f| s + " -framework #{f}"} + " " + LIBS
+    LINKER_FLAGS  = "#{FRAMEWORKS} #{LIBS}"
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}/src"    
-    CC = {'.c' => 'clang', '.cc' => 'clang++'}
+    CC            = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include ["#{SRC_DIR}/**/*.o"]
   when :linux
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS} -O3"
-    LINKER_FLAGS  = FRAMEWORKS_LIST.inject("-L/usr/local/lib -Wl,--whole-archive ") {|s,l| s + " -l#{l}"} + " -Wl,--no-whole-archive " +
+    LINKER_FLAGS  = "-L/usr/local/lib -Wl,--whole-archive  #{FRAMEWORKS} -Wl,--no-whole-archive " +
                     "-lpthread -lreadline -ldl -L/usr/lib/atlas-base/atlas -llapack -lblas " + 
                     "-Wl,-rpath=. -Wl,-rpath=./lib -Wl,-rpath=/usr/lib/openblas-base -Wl,-rpath=/usr/lib/atlas-base/atlas #{LIBS}"   
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}/src"
-    CC = {'.c' => 'gcc', '.cc' => 'g++'}
+    CC            = {'.c' => 'gcc', '.cc' => 'g++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include ["#{SRC_DIR}/**/*.o"]
   when :win
@@ -127,7 +126,7 @@ begin # definitions
     HEADERS_FLAGS = "/IC:/Mechatronix/include /I#{SRC_DIR}/src"
     LIB_WIN_DIR   = "/LIBPATH:C:/Mechatronix/lib /LIBPATH:C:/Mechatronix/dll"
     LIBS          = " msvcrt.lib"
-    CC = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
+    CC            = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
     OBJS          = SOURCES.ext('obj')
     CLEAN.include ["#{SRC_DIR}/**/*.obj"]
   end
@@ -181,7 +180,7 @@ end
   when :mac
     rule ".o" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} #{HEADERS_FLAGS} -F/Library/Frameworks -o #{t} -c #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} #{HEADERS_FLAGS} -o #{t} -c #{t.source}"
     end
   when :linux
     rule ".o" => ext do |t|
