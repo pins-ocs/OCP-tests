@@ -109,7 +109,7 @@ begin # definitions
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}/src"    
     CC            = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
-    CLEAN.include ["#{SRC_DIR}/**/*.o"]
+    CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.dylib","#{BIN_DIR}/main"]
   when :linux
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS} -O3"
@@ -117,7 +117,7 @@ begin # definitions
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}/src"
     CC            = {'.c' => 'gcc', '.cc' => 'g++'}
     OBJS          = SOURCES.ext('o')
-    CLEAN.include ["#{SRC_DIR}/**/*.o"]
+    CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.so","#{BIN_DIR}/main"]
   when :win
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
     COMPILE_FLAGS = WSFLAGS_RELEASE.join(' ') ;
@@ -126,7 +126,7 @@ begin # definitions
     LIB_WIN_DIR   = "/LIBPATH:C:/Mechatronix/lib /LIBPATH:C:/Mechatronix/dll #{FRAMEWORKS}"
     CC            = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
     OBJS          = SOURCES.ext('obj')
-    CLEAN.include ["#{SRC_DIR}/**/*.obj"]
+    CLEAN.include ["#{SRC_DIR}/**/*.obj","#{SRC_DIR}/*.obj","#{LIB_DIR}/*.{dll,lib}","#{BIN_DIR}/main.exe"]
   end
   MAIN = "#{SRC_DIR}/#{MODEL_NAME}_Main.cc"
 
