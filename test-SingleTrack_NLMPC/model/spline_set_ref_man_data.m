@@ -16,11 +16,17 @@
 table = importdata('reference_manoeuvre.txt','\t');
 
 % build tabulated data for spline
-data = [getData(table,'u'),getData(table,'Omega'),getData(table,'delta'),getData(table,'curv_trj')];
+data = [getData(table,'u'),getData(table,'Omega'),getData(table,'delta'),getData(table,'S'),getData(table,'curv_trj')];
+size(data)
 
 % build structure to setup spline object
 SplineRefMan.spline_type = { 'cubic', 'cubic' , 'cubic', 'cubic', 'cubic'  };
-SplineRefMan.headers     = { 'u', 'Omega' , 'delta', 'S', 'curv_trj'  };
+SplineRefMan.headers     = { 'u', 'Omega' , 'delta', 'S', 'curv_trj' };
 SplineRefMan.xdata       = getData(table,'zeta');
 SplineRefMan.ydata       = data;
+
+% Store spline structure data in object structure "SingleTrackOL_data".
+% Please check that the object name is correct.
+SingleTrackOL_data.SplineRefMan = SplineRefMan;
+
   
