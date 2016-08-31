@@ -17,7 +17,6 @@ table = importdata('reference_manoeuvre.txt','\t');
 
 % build tabulated data for spline
 data = [getData(table,'u'),getData(table,'Omega'),getData(table,'delta'),getData(table,'S'),getData(table,'curv_trj')];
-size(data)
 
 % build structure to setup spline object
 SplineRefMan.spline_type = { 'cubic', 'cubic' , 'cubic', 'cubic', 'cubic'  };
