@@ -29,14 +29,16 @@ mechatronix do |data|
 
   data.SplineRefMan = 
     {
-      :spline_type  => [ "cubic", "cubic" , "cubic", "cubic", "cubic"  ],
-      :headers      => [ "u", "Omega" , "delta", "S", "curv_trj" ],
+      :spline_type  => [ "cubic", "cubic" , "cubic", "cubic", "cubic" , "cubic", "cubic" ],
+      :headers      => [ "ref_u", "ref_yawrate" , "ref_steer", "ref_longforce", "ref_curv", "x", "y" ],
       :xdata         => table["zeta"],
-      :ydata         => [table["u"],
-                         table["Omega"],
-                         table["delta"],
-                         table["S"],
-                         table["curv_trj"]
+      :ydata         => [table["ref_u"],
+                         table["ref_yawrate"],
+                         table["ref_steer"],
+                         table["ref_longforce"],
+                         table["ref_curv"],
+                         table["ref_x"],
+                         table["ref_y"]
                         ],
     }
 
