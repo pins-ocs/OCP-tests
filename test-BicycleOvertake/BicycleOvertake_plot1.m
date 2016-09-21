@@ -11,20 +11,20 @@ s2   = data.data(:,find( strcmp(data.textdata,'s2') )) ;
 v2   = data.data(:,find( strcmp(data.textdata,'v2') )) ;
 u    = data.data(:,find( strcmp(data.textdata,'u') )) ;
 ds   = data.data(:,find( strcmp(data.textdata,'ds') )) ;
-scia = data.data(:,find( strcmp(data.textdata,'scia') )) ;
+scia = data.data(:,find( strcmp(data.textdata,'r') )) ;
 h1   = data.data(:,find( strcmp(data.textdata,'h1') )) ;
 h2   = data.data(:,find( strcmp(data.textdata,'h2') )) ;
 
 subplot(4,1,1) ;
-plot( t, s1-s2 ) ; %, t, ds ) ;
+plot( s1, s1-s2 ) ; %, t, ds ) ;
 title('s1-s2') ;
 
 subplot(4,1,2) ;
-plot( t, u ) ;
+plot( s1, u ) ;
 title('u') ;
 
 subplot(4,1,3) ;
-plot( t, v1, t, v2 ) ;
+plot( s1, v1, s2, v2 ) ;
 title('v1, v2') ;
 
 subplot(4,1,4) ;
