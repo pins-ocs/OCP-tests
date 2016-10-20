@@ -163,6 +163,7 @@ for i from 2 to 21 do
           "feedRate"     = v_nom,
           "spindleRate"  = 3000,
           "crossSection" = 1,
+          "tolerance"    = path_following_tolerance,
           "n"            = mesh_segments]:
   SS  := [x0=PTS[i][1]*scale_path,   y0=PTS[i][2]*scale_path,
           x1=PTS[i+1][1]*scale_path, y1=PTS[i+1][2]*scale_path]:
