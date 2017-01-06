@@ -42,3 +42,8 @@ test-SingleTrack_NLMPC/model/DS_tmp
 test-SingleTrack_NLMPC/ds-cpp
 test-SingleTrack_NLMPC/ds-interfaces
 *.sav
+*.
+test-BangBangF/DerivedData
+test-Brachiostocrona/Brachio.xcodeproj
+test-Brachiostocrona/DerivedData
+test-SingularMarchal/DerivedData
