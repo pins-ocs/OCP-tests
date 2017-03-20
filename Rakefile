@@ -94,19 +94,20 @@ begin # definitions
 
   puts "Compiling model: #{MODEL_NAME}\n"
   
-  MAPLET  = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.maplet"
-  SRC_DIR = "#{ROOT}/ocp-cpp"
-  LIB_DIR = "#{ROOT}/lib"
-  BIN_DIR = "#{ROOT}/bin"
-  SOURCES = FileList["#{SRC_DIR}/src/*.{c,cc}"]
-  HEADERS = FileList["#{SRC_DIR}/src/*.{h,hh}"]
+  MAPLET   = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.maplet"
+  SRC_DIR  = "#{ROOT}/ocp-src"
+  MAIN_DIR = "#{ROOT}/ocp-interfaces/cpp"
+  LIB_DIR  = "#{ROOT}/lib"
+  BIN_DIR  = "#{ROOT}/bin"
+  SOURCES  = FileList["#{SRC_DIR}/*.{c,cc}"]
+  HEADERS  = FileList["#{SRC_DIR}/*.{h,hh}"]
 
   case OS
   when :mac
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS} -O3"
     LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"
-    HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}/src"    
+    HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}"    
     CC            = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.dylib","#{BIN_DIR}/main"]
@@ -114,7 +115,7 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS} -O3"
     LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"   
-    HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}/src"
+    HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}"
     CC            = {'.c' => 'gcc', '.cc' => 'g++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.so","#{BIN_DIR}/main"]
@@ -122,13 +123,13 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
     COMPILE_FLAGS = WSFLAGS_RELEASE.join(' ') ;
     LINKER_FLAGS  = "/link /DLL"
-    HEADERS_FLAGS = "/IC:/Mechatronix/include /I#{SRC_DIR}/src"
+    HEADERS_FLAGS = "/IC:/Mechatronix/include /I#{SRC_DIR}"
     LIB_WIN_DIR   = "/LIBPATH:C:/Mechatronix/lib /LIBPATH:C:/Mechatronix/dll #{FRAMEWORKS}"
     CC            = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
     OBJS          = SOURCES.ext('obj')
     CLEAN.include ["#{SRC_DIR}/**/*.obj","#{SRC_DIR}/*.obj","#{LIB_DIR}/*.{dll,lib,exp}","#{BIN_DIR}/main.{obj,exe}"]
   end
-  MAIN = "#{SRC_DIR}/#{MODEL_NAME}_Main.cc"
+  MAIN = "#{MAIN_DIR}/#{MODEL_NAME}_Main.cc"
 
   CLOBBER.include [
     "#{ROOT}/{data,lib,bin}/*",
