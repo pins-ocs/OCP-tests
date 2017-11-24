@@ -94,7 +94,7 @@ begin # definitions
 
   puts "Compiling model: #{MODEL_NAME}\n"
   
-  MAPLET   = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.maplet"
+  MAPLET   = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.mpl"
   SRC_DIR  = "#{ROOT}/ocp-src"
   MAIN_DIR = "#{ROOT}/ocp-interfaces/cpp"
   LIB_DIR  = "#{ROOT}/lib"
@@ -154,17 +154,17 @@ rescue => e
   binding.pry
 end
   
-desc "Run the maplet file and generate source".green
+desc "Run the mpl file and generate source".green
 task :maple do
-  maplet = File.basename MAPLET
+  mpl = File.basename MAPLET
   dir = File.dirname MAPLET
   if File.exist?(MAPLET)
     cd dir do
       case OS
       when :mac, :linux
-        sh "#{MAPLECMD} #{maplet}"
+        sh "#{MAPLECMD} #{mpl}"
       when :win
-        sh "cd model & #{MAPLECMD} #{maplet}"
+        sh "cd model & #{MAPLECMD} #{mpl}"
       end
     end
     puts ">> source code generated".green
