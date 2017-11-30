@@ -18,6 +18,8 @@ LIBS       = `pins --libs`
 INCLUDES   = `pins --includes`
 FRAMEWORKS = `pins --frameworks`
 
+#WLIBS      = ["IPHLPAPI.lib"]
+
 case RUBY_PLATFORM
 
 when /darwin/
@@ -69,11 +71,7 @@ when /mingw|mswin/
     raise RuntimeError, "Cannot determine architecture for Visual Studio #{VS_VERSION}"
   end
 
-  WSFLAGS_COMMON  = %w(/nologo /GS /W3 /WX- /Gm- /Gd /fp:precise /EHsc /FS /D_CRT_SECURE_NO_DEPRECATE /D_CRT_SECURE_NO_WARNINGS)
-  WSFLAGS_RELEASE = WSFLAGS_COMMON + %w(/Ox /favor:blend /MD)
-  WSFLAGS_DEBUG   = WSFLAGS_COMMON + %w(/Od /Ob0 /MDd /Zi /RTC1 /D_DEBUG)
-
-  MAPLECMD   = "cmaple.exe" # da sistenare
+  MAPLECMD = "cmaple.exe" # da sistenare
 
 else
   raise RuntimeError, "Unsupported OS: #{RUBY_PLATFORM}"
@@ -121,7 +119,7 @@ begin # definitions
     CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.so","#{BIN_DIR}/main"]
   when :win
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
-    COMPILE_FLAGS = WSFLAGS_RELEASE.join(' ') ;
+    COMPILE_FLAGS = "#{CXXFLAGS}"
     LINKER_FLAGS  = "/link /DLL"
     HEADERS_FLAGS = "/IC:/Mechatronix/include /I#{SRC_DIR}"
     LIB_WIN_DIR   = "/LIBPATH:C:/Mechatronix/lib /LIBPATH:C:/Mechatronix/dll #{FRAMEWORKS}"
