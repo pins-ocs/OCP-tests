@@ -18,8 +18,6 @@ LIBS       = `pins --libs`
 INCLUDES   = `pins --includes`
 FRAMEWORKS = `pins --frameworks`
 
-#WLIBS      = ["IPHLPAPI.lib"]
-
 case RUBY_PLATFORM
 
 when /darwin/
@@ -52,6 +50,8 @@ when /mingw|mswin/
   # in windows use visual studio compiler, check version
   tmp = `#{WHICH_CMD} cl.exe`.lines.first
   case tmp
+  when /16\.0/
+    VS_VERSION = '2017'
   when /14\.0/
     VS_VERSION = '2015'
   when /12\.0/
@@ -206,7 +206,7 @@ file LIBRARY => OBJS do
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run_ffi.rb" if File.exist?("#{ROOT}/#{MODEL_NAME}_run_ffi.rb")
   when :win
     sh "#{CC['.dll']} #{LINKER_FLAGS} #{LIB_WIN_DIR} #{LIBS} /OUT:#{LIBRARY}.dll #{OBJS}"
-    sh "#{CC['.lib']} /OUT:#{LIBRARY}.lib #{OBJS}"
+    sh "#{CC['.lib']} /OUT:#{LIBRARY}_static.lib #{OBJS}"
   end
   puts "   built library #{LIBRARY}".green
 end
@@ -238,7 +238,7 @@ when :win
   task :main => [LIBRARY] do |t|
     puts ">> Building #{MODEL_NAME}_Main".green
     ##sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN.ext('obj')} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} /D \"#{MODEL_NAME.upcase}_IMPORT\" #{MAIN} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
     puts "   built executable #{BIN_DIR}/#{t}".green  
   end
 end
