@@ -237,8 +237,8 @@ when :mac, :linux
 when :win
   task :main => [LIBRARY] do |t|
     puts ">> Building #{MODEL_NAME}_Main".green
-    ##sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN.ext('obj')} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
-    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} /D \"#{MODEL_NAME.upcase}_IMPORT\" #{MAIN} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}.lib #{LIBS}"
+    #sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} /D \"#{MODEL_NAME.upcase}_IMPORT\" #{MAIN} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}_static.lib #{LIBS}"
+    sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}_static.lib #{LIBS}"
     puts "   built executable #{BIN_DIR}/#{t}".green  
   end
 end
