@@ -103,7 +103,7 @@ begin # definitions
   case OS
   when :mac
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
-    COMPILE_FLAGS = "#{CXXFLAGS} -O3"
+    COMPILE_FLAGS = "#{CXXFLAGS}"
     LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}"    
     CC            = {'.c' => 'clang', '.cc' => 'clang++'}
@@ -111,7 +111,7 @@ begin # definitions
     CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.dylib","#{BIN_DIR}/main"]
   when :linux
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
-    COMPILE_FLAGS = "#{CXXFLAGS} -O3"
+    COMPILE_FLAGS = "#{CXXFLAGS}"
     LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"   
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}"
     CC            = {'.c' => 'gcc', '.cc' => 'g++'}
