@@ -121,8 +121,8 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
     COMPILE_FLAGS = "#{CXXFLAGS}"
     LINKER_FLAGS  = "/link /DLL"
-    HEADERS_FLAGS = "/IC:/Mechatronix/include /I#{SRC_DIR}"
-    LIB_WIN_DIR   = "/LIBPATH:C:/Mechatronix/lib /LIBPATH:C:/Mechatronix/dll #{FRAMEWORKS}"
+    HEADERS_FLAGS = "#{INCLUDES} /I#{SRC_DIR}"
+    LIB_WIN_DIR   = "#{LFLAGS} #{FRAMEWORKS}"
     CC            = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
     OBJS          = SOURCES.ext('obj')
     CLEAN.include ["#{SRC_DIR}/**/*.obj","#{SRC_DIR}/*.obj","#{LIB_DIR}/*.{dll,lib,exp}","#{BIN_DIR}/main.{obj,exe}"]
@@ -187,7 +187,7 @@ end
   when :win
     rule ".obj" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} /D \"#{MODEL_NAME.upcase}_EXPORT\" #{HEADERS_FLAGS} /c /Fo#{t} #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} /D_USRDLL /D_WINDLL /D\"#{MODEL_NAME.upcase}_EXPORT\" #{HEADERS_FLAGS} /c /Fo#{t} #{t.source}"
     end
   end
 end
@@ -205,7 +205,8 @@ file LIBRARY => OBJS do
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run.rb"     if File.exist?("#{ROOT}/#{MODEL_NAME}_run.rb")
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run_ffi.rb" if File.exist?("#{ROOT}/#{MODEL_NAME}_run_ffi.rb")
   when :win
-    sh "#{CC['.dll']} #{LINKER_FLAGS} #{LIB_WIN_DIR} #{LIBS} /OUT:#{LIBRARY}.dll #{OBJS}"
+    ###sh "#{CC['.dll']} #{LINKER_FLAGS} #{LIB_WIN_DIR} #{LIBS} /OUT:#{LIBRARY}.dll #{OBJS}"
+    sh "#{CC['.cc']} /D_USRDLL /D_WINDLL #{OBJS} #{LIB_WIN_DIR} #{LIBS} #{LINKER_FLAGS} /OUT:#{LIBRARY}.dll"
     sh "#{CC['.lib']} /OUT:#{LIBRARY}_static.lib #{OBJS}"
   end
   puts "   built library #{LIBRARY}".green
