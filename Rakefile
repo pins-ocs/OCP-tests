@@ -187,7 +187,7 @@ end
   when :win
     rule ".obj" => ext do |t|
       puts ">> Compiling #{t.source}".yellow
-      sh "#{CC[ext]} #{COMPILE_FLAGS} /D_USRDLL /D_WINDLL /D\"#{MODEL_NAME.upcase}_EXPORT\" #{HEADERS_FLAGS} /c /Fo#{t} #{t.source}"
+      sh "#{CC[ext]} #{COMPILE_FLAGS} /D _USRDLL /D _WINDLL /D\"#{MODEL_NAME.upcase}_EXPORT\" #{HEADERS_FLAGS} /c /Fo#{t} #{t.source}"
     end
   end
 end
@@ -206,7 +206,7 @@ file LIBRARY => OBJS do
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run_ffi.rb" if File.exist?("#{ROOT}/#{MODEL_NAME}_run_ffi.rb")
   when :win
     ###sh "#{CC['.dll']} #{LINKER_FLAGS} #{LIB_WIN_DIR} #{LIBS} /OUT:#{LIBRARY}.dll #{OBJS}"
-    sh "#{CC['.cc']} /D_USRDLL /D_WINDLL #{OBJS} #{LIB_WIN_DIR} #{LIBS} #{LINKER_FLAGS} /OUT:#{LIBRARY}.dll"
+    sh "#{CC['.cc']} /D _USRDLL /D _WINDLL #{OBJS} #{LIB_WIN_DIR} #{LIBS} #{LINKER_FLAGS} /OUT:#{LIBRARY}.dll"
     sh "#{CC['.lib']} /OUT:#{LIBRARY}_static.lib #{OBJS}"
   end
   puts "   built library #{LIBRARY}".green
