@@ -205,8 +205,8 @@ file LIBRARY => OBJS do
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run.rb"     if File.exist?("#{ROOT}/#{MODEL_NAME}_run.rb")
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run_ffi.rb" if File.exist?("#{ROOT}/#{MODEL_NAME}_run_ffi.rb")
   when :win
-    ###sh "#{CC['.dll']} #{LINKER_FLAGS} #{LIB_WIN_DIR} #{LIBS} /OUT:#{LIBRARY}.dll #{OBJS}"
-    sh "#{CC['.cc']} /D _USRDLL /D _WINDLL #{OBJS} #{LIB_WIN_DIR} #{LIBS} #{LINKER_FLAGS} /OUT:#{LIBRARY}.dll"
+    sh "#{CC['.dll']} #{LINKER_FLAGS} #{LIB_WIN_DIR} #{LIBS} /OUT:#{LIBRARY}.dll #{OBJS}"
+    #sh "#{CC['.cc']} /D _USRDLL /D _WINDLL #{OBJS} #{LIB_WIN_DIR} #{LIBS} #{LINKER_FLAGS} /OUT:#{LIBRARY}.dll"
     sh "#{CC['.lib']} /OUT:#{LIBRARY}_static.lib #{OBJS}"
   end
   puts "   built library #{LIBRARY}".green
