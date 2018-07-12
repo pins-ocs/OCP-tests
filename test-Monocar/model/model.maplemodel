@@ -1,10 +1,10 @@
-seqns := Vector(6, [-u(zeta)*(Delta(zeta)*sn(zeta)*kappa(zeta)+diff(alpha(zeta
-),zeta)*cos(alpha(zeta))+kappa(zeta)*cos(alpha(zeta))-Delta(zeta)),-u(zeta)*
+seqns := Vector(6, [-u(zeta)*(sn(zeta)*kappa(zeta)*Delta(zeta)+kappa(zeta)*cos
+(alpha(zeta))+diff(alpha(zeta),zeta)*cos(alpha(zeta))-Delta(zeta)),-u(zeta)*
 cos(alpha(zeta))*diff(sn(zeta),zeta)-u(zeta)*sin(alpha(zeta))*(-1+sn(zeta)*
 kappa(zeta)),-diff(Delta(zeta),zeta)*u(zeta)*cos(alpha(zeta))-kDelta*jDelta(
 zeta)*(-1+sn(zeta)*kappa(zeta)),-diff(u(zeta),zeta)*u(zeta)*cos(alpha(zeta))+(
--1+sn(zeta)*kappa(zeta))*(a2*u(zeta)^2+a0-pedalMap(p(zeta))),-diff(p(zeta),
-zeta)*u(zeta)*cos(alpha(zeta))-jp(zeta)*sn(zeta)*kappa(zeta)+jp(zeta),-diff(t(
+-1+sn(zeta)*kappa(zeta))*(a2*u(zeta)^2+a0-pedalMap(p(zeta))),-sn(zeta)*kappa(
+zeta)*jp(zeta)-diff(p(zeta),zeta)*u(zeta)*cos(alpha(zeta))+jp(zeta),-diff(t(
 zeta),zeta)*u(zeta)*cos(alpha(zeta))-sn(zeta)*kappa(zeta)+1]);
 svars := [sn(zeta), alpha(zeta), u(zeta), Delta(zeta), p(zeta), t(zeta)];
 uvars := [jp(zeta), jDelta(zeta)];
