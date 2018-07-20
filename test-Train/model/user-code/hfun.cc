@@ -29,10 +29,12 @@ namespace TrainDefine {
   static valueType ss[3] = { -2, 0, 2 } ;
   static valueType zz[2] = { 2, 4 } ;
 
+  static indexType n_zz = indexType(sizeof(zz)/sizeof(zz[0])) ;
+
   valueType
   Train::h( valueType x ) const {
     valueType res = 0 ;
-    for ( indexType j = 0 ; j < sizeof(zz)/sizeof(zz[0]) ; ++j )
+    for ( indexType j = 0 ; j < n_zz ; ++j )
       res += (ss[j+1]-ss[j])*atan((x-zz[j])/epsilon) ;
     return res / m_pi ;
   }
@@ -40,7 +42,7 @@ namespace TrainDefine {
   valueType
   Train::h_D( valueType x ) const {
     valueType res = 0 ;
-    for ( indexType j = 0 ; j < sizeof(zz)/sizeof(zz[0]) ; ++j )
+    for ( indexType j = 0 ; j < n_zz ; ++j )
       res += (ss[j+1]-ss[j])/(1+power2((x-zz[j])/epsilon)) ;
     return res / m_pi / epsilon ;
   }
@@ -48,7 +50,7 @@ namespace TrainDefine {
   valueType
   Train::h_DD( valueType x ) const {
     valueType res = 0 ;
-    for ( indexType j = 0 ; j < sizeof(zz)/sizeof(zz[0]) ; ++j ) {
+    for ( indexType j = 0 ; j < n_zz ; ++j ) {
       valueType dz  = x-zz[j] ;
       valueType dz2 = power2(dz/epsilon) ;
       res += (ss[j+1]-ss[j])*dz/power2(1+dz2) ;
