@@ -20,20 +20,22 @@ xvars := [x(zeta),y(zeta),vx(zeta),vy(zeta),T(zeta)] ;
 # Controlli
 uvars := [u(zeta)] ;
 # BVP
-addUserFunction(velX(x,y)=0) ;
-addUserFunction(velY(x,y)=0) ;
-addUserFunction(arctan2(y,x),0) ;
+addUserFunction(velX(x,y)=-y) ;
+addUserFunction(velY(x,y)=x) ;
+addUserFunction(arctan2(y,x),0) ; # definita un codice utente
+;
 loadDynamicSystem(equations=EQNS,controls=uvars,states=xvars) ;
 addBoundaryConditions(initial=[x=0,y=0,vx=0,vy=0],final=[y=5,vx=45,vy=0]);
 infoBoundaryConditions() ;
-setTarget( mayer = T(zeta_f), lagrange = epsi_u*u(zeta)^2 ) ;
+setTarget( mayer = T(zeta_f), lagrange = 0 ) ;
 addUnilateralConstraint( T(zeta)>=0, Tpositive, barrier=true ) ;
 generateOCProblem( "Zermelo",
                     integral_post_processing = [[zeta*T(zeta),"Time"]],
-                    parameters     = [ S=100, epsi_u=1 ],
-                    continuation   = [[epsi_u=1-s]],
+                    parameters     = [ S=50 ],
+                    #continuation   = [[epsi_u=1-s]],
                     mesh           = [ length=1, n=1000 ],
-                    controls_guess = [ u = arctan2(-lambda4__xo(zeta),                                                   -lambda3__xo(zeta)) ],
+                    controls_guess = [ u = arctan2(-lambda4__xo(zeta),
+                                                   -lambda3__xo(zeta)) ],
                     states_guess   = [ x=5*zeta, y=45*zeta, lambda3__xo=1, T=1] ) ;
 # Riscrivo il controllo con arctan2 e cambio g_vec
 #u_vec[1] := arctan2(numer(tan(u_vec[1])),denom(tan(u_vec[1]))) ;
