@@ -10,7 +10,7 @@ svars := [sn(zeta), alpha(zeta), u(zeta), Delta(zeta), p(zeta), t(zeta)];
 uvars := [jp(zeta), jDelta(zeta)];
 SSZDOT := {zeta_dot(zeta) = -u(zeta)*cos(alpha(zeta))/(-1+sn(zeta)*kappa(zeta)
 )};
-ss_pedalMap := pedalMap(p(zeta)) = 1/2*(C1-C2)*h_p*((h_p^2+p(zeta)^2)/h_p^2)^(
-1/2)+1/2*p(zeta)*C1+1/2*p(zeta)*C2;
+ss_pedalMap := pedalMap(p(zeta)) = 1/2*p(zeta)*C1+1/2*p(zeta)*C2+1/2*(C1-C2)*
+h_p*((h_p^2+p(zeta)^2)/h_p^2)^(1/2);
 data := [kDelta = .2530364372e-1, a0 = 0, a2 = 0, C1 = 1.5, C2 = 10, h_p = .1e\
 -1];

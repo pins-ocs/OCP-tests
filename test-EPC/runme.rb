@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 # state_offline_optimization.rb
 
 # Created by Carlos Maximiliano Giorgio Bort on 2012-11-16.
@@ -13,16 +13,16 @@ CONVERGENCE = { :NOT_CONVERGED => 0, :OK => 1}
 
 
 
-# ________________________________________________                                               
-#  _____             __ _                      
-# / ____|           / _(_)                     
-#| |     ___  _ __ | |_ _  __ _ _   _ _ __ ___ 
+# ________________________________________________
+#  _____             __ _
+# / ____|           / _(_)
+#| |     ___  _ __ | |_ _  __ _ _   _ _ __ ___
 #| |    / _ \| '_ \|  _| |/ _` | | | | '__/ _ \
 #| |___| (_) | | | | | | | (_| | |_| | | |  __/
 # \_____\___/|_| |_|_| |_|\__, |\__,_|_|  \___|
-#                          __/ |               
-#                         |___/                
-# ________________________________________________                                              
+#                          __/ |
+#                         |___/
+# ________________________________________________
 params = { S: 1500, F: 1000}
 params[:machine_data] = {
   :s_max  => 1500, # (RPM)     Maximum spindle speed
@@ -40,11 +40,11 @@ params[:tool_data] = {
   :type          => :cylinder,
   :length        => 69.8,     # (mm) tool length
   :radius        => 31.5,     # (mm) tool radius
-  :helix_angle   => 0.00001,  # (rad) helix angle   
+  :helix_angle   => 0.00001,  # (rad) helix angle
   :fillet_radius => 1.2,      # (mm)
   :teeth         => 5,        # (/)
   :inertia       => 636172.5, # (mm^4) moment of inertia
-  :young_mod     => 500.0,    # (MPa) Young's modulus     
+  :young_mod     => 500.0,    # (MPa) Young's modulus
   :wear_data     => { :n => 0.17,
                       :a => 0.17,
                       :b => 0.37 }
@@ -63,13 +63,13 @@ maxFeedRate   = params[:machine_data][:f_max]*UNITS::MM/UNITS::MIN
 
 
 # ________________________________________________
-#  _____ _                 _       _             
-# / ____(_)               | |     | |            
-#| (___  _ _ __ ___  _   _| | __ _| |_ ___  _ __ 
+#  _____ _                 _       _
+# / ____(_)               | |     | |
+#| (___  _ _ __ ___  _   _| | __ _| |_ ___  _ __
 # \___ \| | '_ ` _ \| | | | |/ _` | __/ _ \| '__|
-# ____) | | | | | | | |_| | | (_| | || (_) | |   
-#|_____/|_|_| |_| |_|\__,_|_|\__,_|\__\___/|_|   
-# ________________________________________________                                               
+# ____) | | | | | | | |_| | | (_| | || (_) | |
+#|_____/|_|_| |_| |_|\__,_|_|\__,_|\__\___/|_|
+# ________________________________________________
 
 # Look for dumped block in dumps folder
 parsed_data = {
@@ -88,11 +88,11 @@ Dir["./dumps/*"].each do |dump|
   dump =~ /([0-9]+)/
   nblk = $1
   next if nblk.nil?
-  
+
   dump      =~ /([^0-9]+)/
   dump_file = $1
   dump_file.insert(-1, "#{nblk}.dump")
-  
+
   block = {}
   index = 0
   unless parsed_data[:nblk].include? nblk
@@ -108,28 +108,28 @@ Dir["./dumps/*"].each do |dump|
     dump_file_fy.insert(  -6, ".Fy")
     dump_file_fz.insert(  -6, ".Fz")
     dump_file_sld.insert( -6, ".sld")
-    
+
     block[:zeta] = File.open(dump_file_zeta, "rb") { |file| Marshal.load(file) }
     block[:mrr]  = File.open(     dump_file, "rb") { |file| Marshal.load(file) }
-    block[:Tq]   = File.open(  dump_file_tq, "rb") { |file| Marshal.load(file) } 
-    block[:Fx]   = File.open(  dump_file_fx, "rb") { |file| Marshal.load(file) } 
+    block[:Tq]   = File.open(  dump_file_tq, "rb") { |file| Marshal.load(file) }
+    block[:Fx]   = File.open(  dump_file_fx, "rb") { |file| Marshal.load(file) }
     block[:Fy]   = File.open(  dump_file_fy, "rb") { |file| Marshal.load(file) }
     block[:Fz]   = File.open(  dump_file_fz, "rb") { |file| Marshal.load(file) }
     block[:sld]  = File.open( dump_file_sld, "rb") { |file| Marshal.load(file) }
-    
+
     block[:zeta].collect!{ |s| (cumul_aux+s).to_f }
-    
+
     parsed_data[:blocks] << block
     parsed_data[:nblk]   << nblk
-    
+
     parsed_data[:zeta_blocks][:zeta].push(*block[:zeta])
     parsed_data[:zeta_blocks][:cross_section].push(*block[:mrr])
     parsed_data[:zeta_blocks][:iblk].push(*[index]*block[:zeta].size)
     parsed_data[:zeta_blocks][:init_blk][block[:N]] = cumul_aux
-    
+
     cumul_aux = block[:zeta].last
     last_mrr  = block[:mrr].last
-    
+
     index += 1
   end # unless parsed_data...
 end # Dir[].each...
@@ -160,25 +160,25 @@ def create_segment_from(block)
     :InitialEstimatedFeedRate    => zero_feed,
     :FinalEstimatedFeedRate      => zero_feed,
     :NominalEstimatedFeedRate    => (block[:type] == :rapid ? maxFeedRate : params[:F]*UNITS::MM/UNITS::MIN),
-  
+
     :ssStep                      => (block[:zeta][1] - block[:zeta][0])/10.0,
-  
+
     :PathPosition                => block[:zeta].dup,
-    :CrossSection                => block[:mrr].dup, 
+    :CrossSection                => block[:mrr].dup,
   }
 end
 
 
 
 # ________________________________________________
-#  ____        _   _           _              
-# / __ \      | | (_)         (_)             
-#| |  | |_ __ | |_ _ _ __ ___  _ _______ _ __ 
+#  ____        _   _           _
+# / __ \      | | (_)         (_)
+#| |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
 #| |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
-#| |__| | |_) | |_| | | | | | | |/ /  __/ |   
-# \____/| .__/ \__|_|_| |_| |_|_/___\___|_|   
-#       | |                                   
-#       |_|                                   
+#| |__| | |_) | |_| | | | | | | |/ /  __/ |
+# \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
+#       | |
+#       |_|
 # ________________________________________________
 
 # Initialize the offline optimizator
@@ -195,7 +195,7 @@ nominal_omega =1000*UNITS::RPM
 opt.data = {
   # Level of message
   :InfoLevel => 4,
-  
+
   # manages solver
   :Solver => {
     :max_iter  => 500,
@@ -216,7 +216,7 @@ opt.data = {
     :Tc_max                => params[:machine_data][:tc_max]*UNITS::NM,
     :a                     => params[:tool_data][:wear_data][:a],
     :b                     => params[:tool_data][:wear_data][:b],
-    
+
     :eta                   => 0.9, # rendimento, numero puro
     :f_f                   => min_feed,
     :f_i                   => zero_feed,
@@ -242,7 +242,7 @@ opt.data = {
     :wT_tw                 => 1, # minimum tool wear
     :wT_en                 => 1, # minimum energy consumption
     :wi                    => 0, # activate least square initial conditions
-    
+
     :omegaRange_weight     => 1e-4,
     :CuttingTorque_weight  => 1e-4,
   },
@@ -305,7 +305,7 @@ opt.data[:Constraints] = {
     :epsilon   => 0.1,
     :tolerance => 0.01,
   }
-  
+
   # Constraint2D
   # NONE
 }
@@ -335,7 +335,7 @@ parsed_data[:blocks].each_with_index do |block, indx|
     :ssStep                      => (block[:zeta][1] - block[:zeta][0])/10.0,
 
     :PathPosition                => block[:zeta].dup,
-    :CrossSection                => block[:mrr].dup, 
+    :CrossSection                => block[:mrr].dup,
   }
   segs << segment
 end # @params.parsed.blocks.each_with_index ...
@@ -352,4 +352,3 @@ raise OptimizationError, opt_result[:error] if opt_result.has_key? :error
 opt.write_ocp_solution("data/xoptima_solution.txt")
 
 puts "-- Optimised cut lasting #{opt_result[:data][:t].last.round(2)} s"
-

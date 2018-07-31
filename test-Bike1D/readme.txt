@@ -1,1 +1,0 @@
-NaN alle iterate 28 e 36

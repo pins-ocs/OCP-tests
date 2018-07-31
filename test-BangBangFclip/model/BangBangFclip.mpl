@@ -3,7 +3,10 @@
 # Authors: E. Bertolazzi, F. Biral
 # Description
 # Single mass moved by a bounded force from initial position to maximum distance in fixed time.
-# Initial and final velocity fixed.Bounded force is clipped with a regularized function. Force rate is the actual control and bounded.In this example it is shwon the mapping of user function with Mechatronix regularized function.
+# Initial and final velocity fixed.
+# Bounded force is clipped with a regularized function. Force rate is the actual control and bounded.
+# 
+# In this example it is shwon the mapping of user function with Mechatronix regularized function.
 # 
 # Inizializzazione
 restart:
@@ -11,7 +14,9 @@ with(XOptima):
 # Equations of motion
 EQ1 := diff(x(t),t) = v(t) ;
 EQ2 := diff(v(t),t) = clip(F(t),minClip,maxClip) ;
-EQ3 := diff(F(t),t) = vF(t) - 0*(F(t)-clip(F(t),minClip,maxClip))/tau ;ode   := [EQ||(1..3)]: Vector(%);
+EQ3 := diff(F(t),t) = vF(t) - 0*(F(t)-clip(F(t),minClip,maxClip))/tau ;
+
+ode   := [EQ||(1..3)]: Vector(%);
 xvars := [x(t),v(t),F(t)];
 uvars := [vF(t)];
 # Optimal control problem formulation
