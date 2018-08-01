@@ -1,3 +1,4 @@
+
 # 
 # 
 # XOptima
@@ -8,7 +9,8 @@
 # Date:         
 # Load library
 # Load MBSymba(c) Multibody library and others
-restart: with(plots):
+restart:
+with(plots):
 # Problem description
 # bla bla 
 # 
@@ -17,6 +19,7 @@ restart: with(plots):
 alpha(t),      # imbardata relativa
 ss(t),sn(t),   # ascissa e ordinata curvilinea
 kappa(t);  #           curvatura
+;
 # curvilinear coordinates equations (aggiornare figura)
 psi[dot](t) := u(t)*Delta(t): # curvatura traiettoria
 
@@ -55,11 +58,11 @@ uvars := subs(t=zeta,tuvars);
 seqns := [op(seqns0),seqTime]: #<%>;
 # riscrivo l'equazione del tempo, cioe la prima
 # for i from 1 to nv do i=svars[i]; seqns[i]; end do;
-seqns:=simplify(convert(convert(map(numer,seqns),list),Vector),size): <%>;
+seqns := simplify(convert(convert(map(numer,seqns),list),Vector),size): <%>;
 # Linearized model
-ff := (C1,C2,x,h)->+( (C1-C2)/2*sin(arctan(x/h))+(C1+C2)/2 ):
+ff  := (C1,C2,x,h)->+( (C1-C2)/2*sin(arctan(x/h))+(C1+C2)/2 ):
 ffi := unapply(int(ff(C1,C2,x,h),x),[C1,C2,x,h]);
-ss_pedalMap      := pedalMap(p(zeta)) = ffi(C1,C2,p(zeta),h_p);
+ss_pedalMap := pedalMap(p(zeta)) = ffi(C1,C2,p(zeta),h_p);
 data := [kDelta = 1.0/15.2/2.6,
          a0     = 0,
          a2     = 0,
@@ -67,7 +70,8 @@ data := [kDelta = 1.0/15.2/2.6,
 plot(subs(ss_pedalMap,data,p(zeta)=p,pedalMap(p(zeta))),p=-1..1,gridlines=true,thickness=2,labels=[pedal, a[x]]);
 save(seqns,svars,uvars,SSZDOT,ss_pedalMap,data,"model.maplemodel");
 # Optimal control
-restart: with(plots):
+restart:
+with(plots):
 # Load optimal control library
 with(XOptima):
 interface(rtablesize=20):
@@ -82,16 +86,23 @@ qvars := [kappa(zeta)         = isoCurvature(zeta),
           rightWidth(zeta)    = rightWidth(zeta),
           xLane(zeta)         = isoX(zeta),
           yLane(zeta)         = isoY(zeta),
+          xLeft(zeta)         = isoLeftX(zeta),
+          yLeft(zeta)         = isoLeftY(zeta),
+          xRight(zeta)        = isoRightX(zeta),
+          yRight(zeta)        = isoRightY(zeta),
           theta(zeta)         = isoAngle(zeta),
           sectionSpeedLimit() = speedLimit(),
           adherence()         = adherence()]:          
 
+mapvars := [xPos(zeta,n) = isoX(zeta,n),
+            yPos(zeta,n) = isoY(zeta,n)]:
 # Map Maple mesh functions to methods of C++ objects 
-mapUserFunctionToObject(qvars,
+mapUserFunctionToObject([op(qvars),op(mapvars)],
                         "*pRoad",              # istanza class tipo pointer
-                        "Mechatronix#Road2D"); # classe (deve essere registrata)
+                        "Mechatronix#Road2D",
+                        "../model/u_curve.rb"); # classe (deve essere registrata)
 QSUBS;
-Describe(loadDynamicSystem) ;
+#Describe(loadDynamicSystem) ;
 loadDynamicSystem( equations     = seqns,
                    states        = svars, 
                    controls      = uvars,
@@ -116,9 +127,17 @@ subs( SSZDOT ,1/(zeta_dot(zeta)+epsilon^2));
 penScale := collect(simplify( %) ,epsilon):
 # Path constraints
 # Right road boarder
-addUnilateralConstraint( sn(zeta)-vehHalfWidth >= -(rightWidth(zeta)), roadRightLateralBoundaries,scale=penScale );
+addUnilateralConstraint(
+  sn(zeta)-vehHalfWidth >= -(rightWidth(zeta)),
+  roadRightLateralBoundaries,
+  scale=penScale
+);
 # Left road boarder
-addUnilateralConstraint( sn(zeta)+vehHalfWidth <= leftWidth(zeta), roadLeftLateralBoundaries,scale=penScale );
+addUnilateralConstraint(
+  sn(zeta)+vehHalfWidth <= leftWidth(zeta),
+  roadLeftLateralBoundaries,
+  scale=penScale
+);
 # Pedal limits between [-1,1]
 addBilateralConstraint(p(zeta),
                        pedalLims,
@@ -147,7 +166,7 @@ addControlBound( jDelta,
 # User defined functions
 # In this section the user defined functions are defined. The user defined functions can be linked to methods of a C++ class that has been registered, or can be a C function that will be defined later on in the code or can be a mathematical expression that is automatically converted in C by XOptima.
 addUserFunction(pedalMap(p) = subs( ss_pedalMap, p(zeta)=p,pedalMap(p(zeta))  ));
-#addUserFunction(pedalMap(p)  );
+#addUserFunction(pedalMap(p));
 # Generation of optimal control equations and C++ code
 dataOCP := [
   vehHalfWidth = 0.75,
@@ -175,23 +194,19 @@ dataOCP := [
   minimumSpeed = 0.1 
 ];
 # Left and right wheel position:
-xLeftEdge  := xLane(zeta)-sin(theta(zeta))*(leftWidth(zeta)):
-yLeftEdge  := yLane(zeta)+cos(theta(zeta))*(leftWidth(zeta)):
-xRightEdge := xLane(zeta)+sin(theta(zeta))*(rightWidth(zeta)):
-yRightEdge := yLane(zeta)-cos(theta(zeta))*(rightWidth(zeta)):
-xLeftCar  := xLane(zeta)-sin(theta(zeta))*(sn(zeta)+vehHalfWidth):
-yLeftCar  := yLane(zeta)+cos(theta(zeta))*(sn(zeta)+vehHalfWidth):
-xRightCar := xLane(zeta)-sin(theta(zeta))*(sn(zeta)-vehHalfWidth):
-yRightCar := yLane(zeta)+cos(theta(zeta))*(sn(zeta)-vehHalfWidth):
+xLeftCar  := xPos(zeta,sn(zeta)+vehHalfWidth):
+yLeftCar  := yPos(zeta,sn(zeta)+vehHalfWidth):
+xRightCar := xPos(zeta,sn(zeta)-vehHalfWidth):
+yRightCar := yPos(zeta,sn(zeta)-vehHalfWidth):
 setTarget( lagrange = wT*penScale ) ;
 
 # A guess solution can be specified for some or all state variables. The guess solution can be a function of the indepenedent variable "zeta". Piecewise solution are not allowed.
 # Define default road
 #Describe(addRoadSegment);
-initRoad(roadWidth=3.70,theta0=0,is_SAE=false);
-addRoadSegment(length=50,gridSize=1);
-addRoadSegment(length=Pi*50,radius=50,gridSize=1);
-addRoadSegment(length=50,gridSize=1);
+#initRoad(roadWidth=3.70,theta0=0,is_SAE=false);
+#addRoadSegment(length=50,gridSize=1);
+#addRoadSegment(length=Pi*50,radius=50,gridSize=1);
+#addRoadSegment(length=50,gridSize=1);
 #initRoad(roadWidth=3.70,theta0=0,is_SAE=false) ; 
 #addRoadSegment(length=10,gridSize=1) ;
 #addRoadSegment(length=40,gridSize=5) ; 
@@ -199,26 +214,37 @@ addRoadSegment(length=50,gridSize=1);
 #addRoadSegment(length=40,gridSize=5) ; 
 #addRoadSegment(length=10,gridSize=1) ; 
 Describe(generateOCProblem) ;
-generateOCProblem( "Monocar",
-                   post_processing = [[pedalMap(p(zeta)),          "pedalMap"],
-                                     [accLong,  "ax"],
-                                     [accLat,   "ay"],
-                                     [xLane(zeta)-sin(theta(zeta))*sn(zeta),         "xTrajectory"],
-                                     [yLane(zeta)+cos(theta(zeta))*sn(zeta),         "yTrajectory"],
-                                     [xLeftCar,         "xLeftCar"],
-                                     [yLeftCar,         "yLeftCar"],
-                                     [xRightCar,         "xRightCar"],
-                                     [yRightCar,         "yRightCar"],
-                                     [xLane(zeta)-sin(theta(zeta))*leftWidth(zeta),  "xLeft"],
-                                     [yLane(zeta)+cos(theta(zeta))*leftWidth(zeta),  "yLeft"],
-                                     [xLane(zeta)+sin(theta(zeta))*rightWidth(zeta), "xRight"],
-                                     [yLane(zeta)-cos(theta(zeta))*rightWidth(zeta), "yRight"],
-                                     [xLeftEdge,  "xLeftEdge"],
-                                     [yLeftEdge,  "yLeftEdge"],
-                                     [xRightEdge, "xRightEdge"],
-                                     [yRightEdge, "yRightEdge"],
-                                     [subs(SSZDOT,1/zeta_dot(zeta)), "dtdzeta"]
-                           ],
-                    parameters = [op(dataOCP),op(data)],
-                    states_guess    = [ u = v0, t = 1/v0*zeta, sn=(leftWidth(zeta)-rightWidth(zeta))/2] ) ;
+POST := [
+  [pedalMap(p(zeta)),   "pedalMap"],
+  [accLong,             "ax"],
+  [accLat,              "ay"],
+  [xPos(zeta,sn(zeta)), "xTrajectory"],
+  [yPos(zeta,sn(zeta)), "yTrajectory"],
+  [xLeftCar,            "xLeftCar"],
+  [yLeftCar,            "yLeftCar"],
+  [xRightCar,            "xRightCar"],
+  [yRightCar,            "yRightCar"],
+  #[xLane(zeta)-sin(theta(zeta))*leftWidth(zeta),  "xLeft"],
+  #[yLane(zeta)+cos(theta(zeta))*leftWidth(zeta),  "yLeft"],
+  #[xLane(zeta)+sin(theta(zeta))*rightWidth(zeta), "xRight"],
+  #[yLane(zeta)-cos(theta(zeta))*rightWidth(zeta), "yRight"],
+  [xLeft(zeta),  "xLeftEdge"],
+  [yLeft(zeta),  "yLeftEdge"],
+  [xRight(zeta), "xRightEdge"],
+  [yRight(zeta), "yRightEdge"],
+  [subs(SSZDOT,1/zeta_dot(zeta)), "dtdzeta"]
+]
+;
+GUESS := [
+  u  = v0,
+  t  = 1/v0*zeta,
+  sn = (leftWidth(zeta)-rightWidth(zeta))/2
+];
+generateOCProblem(
+  "Monocar",
+  #clean = false,
+  post_processing = POST,
+  parameters      = [op(dataOCP),op(data)],
+  states_guess    = GUESS
+) ;
 

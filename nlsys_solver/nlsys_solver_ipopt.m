@@ -39,7 +39,7 @@ classdef nlsys_solver_ipopt < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ipopt_check( self, yesno )
-      self.ipopt_check_gradient = yesno ;
+      self.check_gradient = yesno ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function sol = solve( self )

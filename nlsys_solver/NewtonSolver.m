@@ -32,7 +32,7 @@ classdef NewtonSolver < handle
 
     function self = NewtonSolver( imerit )
       self.tolerance = 1e-8 ;
-      self.maxiter   = 400 ;
+      self.maxiter   = 1000 ;
       self.c1        = 0.001;
       self.imerit    = imerit;
     end
@@ -73,9 +73,7 @@ classdef NewtonSolver < handle
     %
     function m = Jmerit( self, alpha )
       fa = feval( self.f_eval, self.x0 + alpha * self.d0 ) ;
-      %d  = -self.R\(self.R'\(self.J0'*fa));
-      %d  = -self.J0\fa;
-      d  = -self.Q*(self.U\(self.L\(self.P*(self.R\fa))));
+      d  = -self.Jsolve(fa);
       e  = self.tolerance ;
       m  = sum( d.^2 ./ sqrt(d.^2+e) ) ;
     end
@@ -120,7 +118,7 @@ classdef NewtonSolver < handle
     %
     function m = AImerit( self, alpha )
       fa = feval( self.f_eval, self.x0 + alpha * self.d0 ) ;
-      d  = -self.R\(self.R'\(self.J0'*fa));
+      d  = -self.Jsolve(fa);
       m  = 0.5*dot( d, d ) ;
     end
 
@@ -140,20 +138,17 @@ classdef NewtonSolver < handle
     %
     function m = Omerit( self, alpha )
       fa = feval( self.f_eval, self.x0 + alpha * self.d0 ) ;
-      d  = -self.R\(self.R'\(self.J0'*fa));
-      %m  = dot( d, self.d0 )^2 ;
+      d  = -self.Jsolve(fa);
       e  = self.tolerance ;
       m  = sum( (self.d0.*d) ./ sqrt(e+self.d0.^2) )^2 ;
     end
 
     function m0 = Omerit0( self )
-      %m0 = dot(self.d0,self.d0)^2 ;
       e  = self.tolerance ;
       m0 = sum( self.d0.^2 ./ sqrt(e+self.d0.^2) )^2 ;
     end
 
     function Dm0 = Omerit0_D( self )
-      %Dm0 = -2*dot(self.d0,self.d0)^2 ;
       e   = self.tolerance ;
       bf  = sum( self.d0.^2 ./ sqrt(e+self.d0.^2) ) ;
       Dm0 = -2*bf^2 ;
@@ -210,10 +205,13 @@ classdef NewtonSolver < handle
       end
     end
 
+    function res = Jsolve( self, fa )
+      res = self.Q*(self.U\(self.L\(self.P*(self.R\fa))));
+    end
+
     function setDirection( self )
       [self.L,self.U,self.P,self.Q,self.R] = lu(self.J0); % A = R*P'*L*U*Q'
-      self.d0 = -self.Q*(self.U\(self.L\(self.P*(self.R\self.f0))));
-      %self.d0 = -self.J0\self.f0;
+      self.d0 = -self.Jsolve(self.f0);
       return ;
       if issparse(self.J0)
         self.R = qr(self.J0);
@@ -275,8 +273,11 @@ classdef NewtonSolver < handle
         normi_d = norm( self.d0, inf ) ;
 
         % do line search
-        alpha = self.linesearch() ;
-        %alpha = self.MaxStep() ;
+        if self.imerit == 0
+          alpha = self.MaxStep() ;
+        else
+          alpha = self.linesearch() ;
+        end
         if ~isfinite(alpha)
           ierr = 3 ;
           return ;
@@ -314,12 +315,19 @@ classdef NewtonSolver < handle
       mul    = 1.5 ;
       for k=1:20
         x1 = self.x0 + lambda * self.d0 ;
-        if feval( self.ck_eval, x1 ) & all(isfinite(feval( self.f_eval, x1 )))
-          break;
-        else
-          lambda = lambda/mul ;
-          mul    = mul*1.2 ;
+        if feval( self.ck_eval, x1 )
+          f1 = feval( self.f_eval, x1 );
+          if all(isfinite(f1))
+            %d1 = -self.Jsolve(f1);
+            %if all(isfinite(d1))
+            %  if norm(d1) < 1.5*norm(self.d0)
+                break;
+            %  end
+            %end
+          end
         end
+        lambda = lambda/mul ;
+        mul    = mul*1.2 ;
       end
     end
 
