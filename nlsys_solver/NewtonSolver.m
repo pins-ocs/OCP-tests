@@ -22,6 +22,7 @@ classdef NewtonSolver < handle
     P;
     Q;
     cosa;
+    minimize;
 
     f_eval;
     j_eval;
@@ -206,11 +207,23 @@ classdef NewtonSolver < handle
     end
 
     function res = Jsolve( self, fa )
-      res = self.Q*(self.U\(self.L\(self.P*(self.R\fa))));
+      if self.minimize
+        disp('warning use minimize\n');
+        res = lsqminnorm(self.J0,fa);
+      else
+        res = self.Q*(self.U\(self.L\(self.P*(self.R\fa))));
+      end
     end
 
     function setDirection( self )
       [self.L,self.U,self.P,self.Q,self.R] = lu(self.J0); % A = R*P'*L*U*Q'
+      
+      if condest(self.U) > 1e10 || condest(self.R) > 1e10
+        self.minimize = true;
+      else
+        self.minimize = false;
+      end
+      
       self.d0 = -self.Jsolve(self.f0);
       return ;
       if issparse(self.J0)
@@ -244,7 +257,7 @@ classdef NewtonSolver < handle
         self.f0 = feval( self.f_eval, self.x0 ) ;
         self.J0 = feval( self.j_eval, self.x0 ) ;
 
-        if ~all(isfinite(self.f0)) | ~all(isfinite(self.J0))
+        if ~all(isfinite(self.f0)) %| ~all(isfinite(self.J0))
           disp(self.f0) ;
           fprintf(1, 'NewtonSolver: Bad f(x)!\n' ) ;
           ierr = 2 ;

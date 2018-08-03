@@ -98,8 +98,8 @@ qvars := [Curv(s)        = curvature(s),
 #                        "Mechatronix#Road2D", # classe (deve essere registrata)
 #                        "../model/road_data.rb");
 mapUserFunctionToObject(qvars,
-                        "*pTrajectory",              # istanza class tipo pointer
-                        "Mechatronix#Trajectory2D", # classe (deve essere registrata)
+                        "*pTrajectory",       # istanza class tipo pointer
+                        "Mechatronix#Path2D", # classe (deve essere registrata)
                         "../model/trajectory_data.rb");
 # By specifying the mesh functions those will be pre-computed once for all at initialization phase reducing the computational costs.
 #Describe(loadDynamicSystem);
