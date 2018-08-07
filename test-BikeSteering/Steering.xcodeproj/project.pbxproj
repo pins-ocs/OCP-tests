@@ -7,25 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D98E3AC717C41C7F00A1731B /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */; };
-		D98E3AC917C41C7F00A1731B /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */; };
 		D98E3AD917C41D6E00A1731B /* libSteering_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D990A43F17B926570022E545 /* libSteering_lib.a */; };
-		D98E3ADC17C41DB400A1731B /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */; };
-		D98E3ADE17C41DB400A1731B /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */; };
-		D98E3AF017C41E4400A1731B /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */; };
-		D98E3AF217C41E4400A1731B /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */; };
 		D98E3AF317C41E4A00A1731B /* libSteering_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D990A43F17B926570022E545 /* libSteering_lib.a */; };
-		D9BBD1EF1899BB6D0081AF20 /* BikeSteering.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD1DF1899BB6D0081AF20 /* BikeSteering.cc */; };
-		D9BBD1F01899BB6D0081AF20 /* BikeSteering.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9BBD1E01899BB6D0081AF20 /* BikeSteering.hh */; };
-		D9BBD1F21899BB6D0081AF20 /* BikeSteering_c_interface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD1E21899BB6D0081AF20 /* BikeSteering_c_interface.cc */; };
-		D9BBD1F31899BB6D0081AF20 /* BikeSteering_c_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = D9BBD1E31899BB6D0081AF20 /* BikeSteering_c_interface.h */; };
-		D9BBD1F51899BB6D0081AF20 /* BikeSteering_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD1E51899BB6D0081AF20 /* BikeSteering_Guess.cc */; };
-		D9BBD1F71899BB6D0081AF20 /* BikeSteering_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD1E71899BB6D0081AF20 /* BikeSteering_Methods.cc */; };
-		D9BBD1F91899BB6D0081AF20 /* BikeSteering_Pars.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9BBD1E91899BB6D0081AF20 /* BikeSteering_Pars.hh */; };
-		D9BBD1FA1899BB6D0081AF20 /* BikeSteering_ruby_dll.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD1EA1899BB6D0081AF20 /* BikeSteering_ruby_dll.cc */; };
-		D9BBD1FC1899BB7C0081AF20 /* BikeSteering_MainStandalone.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD1DD1899BB6D0081AF20 /* BikeSteering_MainStandalone.cc */; };
-		D9BBD1FD1899BB800081AF20 /* BikeSteering_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BBD1DB1899BB6D0081AF20 /* BikeSteering_Main.cc */; };
-		D9E67CDF17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E67CDE17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework */; };
+		D9914A59211A1265003A5852 /* BikeSteering.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9914A50211A1265003A5852 /* BikeSteering.hh */; };
+		D9914A5A211A1265003A5852 /* BikeSteering_dll_pins.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A51211A1265003A5852 /* BikeSteering_dll_pins.cc */; };
+		D9914A5B211A1265003A5852 /* BikeSteering_dll_ruby.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A52211A1265003A5852 /* BikeSteering_dll_ruby.cc */; };
+		D9914A5C211A1265003A5852 /* BikeSteering_Pars.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9914A53211A1265003A5852 /* BikeSteering_Pars.hh */; };
+		D9914A5D211A1265003A5852 /* BikeSteering_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A54211A1265003A5852 /* BikeSteering_Methods.cc */; };
+		D9914A5E211A1265003A5852 /* BikeSteering_dll_pins.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9914A55211A1265003A5852 /* BikeSteering_dll_pins.hh */; };
+		D9914A5F211A1265003A5852 /* BikeSteering.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A56211A1265003A5852 /* BikeSteering.cc */; };
+		D9914A60211A1265003A5852 /* BikeSteering_dll_ruby.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9914A57211A1265003A5852 /* BikeSteering_dll_ruby.hh */; };
+		D9914A61211A1265003A5852 /* BikeSteering_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A58211A1265003A5852 /* BikeSteering_Guess.cc */; };
+		D9914A67211A128E003A5852 /* BikeSteering_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A66211A128E003A5852 /* BikeSteering_Main.cc */; };
+		D9914A6B211A1347003A5852 /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9914A68211A1346003A5852 /* MechatronixInterfaceMruby.framework */; };
+		D9914A6C211A1347003A5852 /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9914A69211A1347003A5852 /* MechatronixSolver.framework */; };
+		D9914A6D211A1347003A5852 /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9914A6A211A1347003A5852 /* MechatronixCore.framework */; };
+		D9914A70211A135D003A5852 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9914A6F211A135C003A5852 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,22 +64,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = "/Users/enrico/Ricerca/develop/C++/Mechatronix-2012/Mechatronix-Library/Tests-OCP-Validation/test-BANG-BANG-F/BangBang/../../../../../../../../../../Library/Frameworks/MechatronixCore.framework"; sourceTree = "<absolute>"; };
-		D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = "/Users/enrico/Ricerca/develop/C++/Mechatronix-2012/Mechatronix-Library/Tests-OCP-Validation/test-BANG-BANG-F/BangBang/../../../../../../../../../../Library/Frameworks/MechatronixSolver.framework"; sourceTree = "<absolute>"; };
 		D98E3ACE17C41D5C00A1731B /* Steering_standalone */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Steering_standalone; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98E3AE317C41E1800A1731B /* Steering */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Steering; sourceTree = BUILT_PRODUCTS_DIR; };
 		D990A43F17B926570022E545 /* libSteering_lib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSteering_lib.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9BBD1DB1899BB6D0081AF20 /* BikeSteering_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_Main.cc; sourceTree = "<group>"; };
-		D9BBD1DD1899BB6D0081AF20 /* BikeSteering_MainStandalone.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_MainStandalone.cc; sourceTree = "<group>"; };
-		D9BBD1DF1899BB6D0081AF20 /* BikeSteering.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering.cc; sourceTree = "<group>"; };
-		D9BBD1E01899BB6D0081AF20 /* BikeSteering.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BikeSteering.hh; sourceTree = "<group>"; };
-		D9BBD1E21899BB6D0081AF20 /* BikeSteering_c_interface.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_c_interface.cc; sourceTree = "<group>"; };
-		D9BBD1E31899BB6D0081AF20 /* BikeSteering_c_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BikeSteering_c_interface.h; sourceTree = "<group>"; };
-		D9BBD1E51899BB6D0081AF20 /* BikeSteering_Guess.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_Guess.cc; sourceTree = "<group>"; };
-		D9BBD1E71899BB6D0081AF20 /* BikeSteering_Methods.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_Methods.cc; sourceTree = "<group>"; };
-		D9BBD1E91899BB6D0081AF20 /* BikeSteering_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BikeSteering_Pars.hh; sourceTree = "<group>"; };
-		D9BBD1EA1899BB6D0081AF20 /* BikeSteering_ruby_dll.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_ruby_dll.cc; sourceTree = "<group>"; };
-		D9E67CDE17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
+		D9914A50211A1265003A5852 /* BikeSteering.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BikeSteering.hh; sourceTree = "<group>"; };
+		D9914A51211A1265003A5852 /* BikeSteering_dll_pins.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_dll_pins.cc; sourceTree = "<group>"; };
+		D9914A52211A1265003A5852 /* BikeSteering_dll_ruby.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_dll_ruby.cc; sourceTree = "<group>"; };
+		D9914A53211A1265003A5852 /* BikeSteering_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BikeSteering_Pars.hh; sourceTree = "<group>"; };
+		D9914A54211A1265003A5852 /* BikeSteering_Methods.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_Methods.cc; sourceTree = "<group>"; };
+		D9914A55211A1265003A5852 /* BikeSteering_dll_pins.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BikeSteering_dll_pins.hh; sourceTree = "<group>"; };
+		D9914A56211A1265003A5852 /* BikeSteering.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering.cc; sourceTree = "<group>"; };
+		D9914A57211A1265003A5852 /* BikeSteering_dll_ruby.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BikeSteering_dll_ruby.hh; sourceTree = "<group>"; };
+		D9914A58211A1265003A5852 /* BikeSteering_Guess.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_Guess.cc; sourceTree = "<group>"; };
+		D9914A66211A128E003A5852 /* BikeSteering_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BikeSteering_Main.cc; sourceTree = "<group>"; };
+		D9914A68211A1346003A5852 /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../Products/os_mac/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
+		D9914A69211A1347003A5852 /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = ../../../Products/os_mac/MechatronixSolver.framework; sourceTree = "<group>"; };
+		D9914A6A211A1347003A5852 /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = ../../../Products/os_mac/MechatronixCore.framework; sourceTree = "<group>"; };
+		D9914A6F211A135C003A5852 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,9 +88,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9914A70211A135D003A5852 /* Accelerate.framework in Frameworks */,
 				D98E3AD917C41D6E00A1731B /* libSteering_lib.a in Frameworks */,
-				D98E3ADC17C41DB400A1731B /* MechatronixCore.framework in Frameworks */,
-				D98E3ADE17C41DB400A1731B /* MechatronixSolver.framework in Frameworks */,
+				D9914A6D211A1347003A5852 /* MechatronixCore.framework in Frameworks */,
+				D9914A6B211A1347003A5852 /* MechatronixInterfaceMruby.framework in Frameworks */,
+				D9914A6C211A1347003A5852 /* MechatronixSolver.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,9 +101,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D98E3AF317C41E4A00A1731B /* libSteering_lib.a in Frameworks */,
-				D98E3AF017C41E4400A1731B /* MechatronixCore.framework in Frameworks */,
-				D98E3AF217C41E4400A1731B /* MechatronixSolver.framework in Frameworks */,
-				D9E67CDF17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,8 +108,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D98E3AC717C41C7F00A1731B /* MechatronixCore.framework in Frameworks */,
-				D98E3AC917C41C7F00A1731B /* MechatronixSolver.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,11 +117,13 @@
 		D990A43617B926570022E545 = {
 			isa = PBXGroup;
 			children = (
-				D9E67CDE17C584D900FA7BD0 /* MechatronixInterfaceMruby.framework */,
-				D98E3AC317C41C7F00A1731B /* MechatronixCore.framework */,
-				D98E3AC517C41C7F00A1731B /* MechatronixSolver.framework */,
+				D9914A6A211A1347003A5852 /* MechatronixCore.framework */,
+				D9914A68211A1346003A5852 /* MechatronixInterfaceMruby.framework */,
+				D9914A69211A1347003A5852 /* MechatronixSolver.framework */,
 				D990A44017B926570022E545 /* Products */,
-				D9BBD1DA1899BB6D0081AF20 /* ocp-cpp */,
+				D9914A4F211A1265003A5852 /* ocp-src */,
+				D9914A65211A128E003A5852 /* cpp */,
+				D9914A6E211A135C003A5852 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,29 +137,37 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D9BBD1DA1899BB6D0081AF20 /* ocp-cpp */ = {
+		D9914A4F211A1265003A5852 /* ocp-src */ = {
 			isa = PBXGroup;
 			children = (
-				D9BBD1DB1899BB6D0081AF20 /* BikeSteering_Main.cc */,
-				D9BBD1DD1899BB6D0081AF20 /* BikeSteering_MainStandalone.cc */,
-				D9BBD1DE1899BB6D0081AF20 /* srcs */,
+				D9914A50211A1265003A5852 /* BikeSteering.hh */,
+				D9914A51211A1265003A5852 /* BikeSteering_dll_pins.cc */,
+				D9914A52211A1265003A5852 /* BikeSteering_dll_ruby.cc */,
+				D9914A53211A1265003A5852 /* BikeSteering_Pars.hh */,
+				D9914A54211A1265003A5852 /* BikeSteering_Methods.cc */,
+				D9914A55211A1265003A5852 /* BikeSteering_dll_pins.hh */,
+				D9914A56211A1265003A5852 /* BikeSteering.cc */,
+				D9914A57211A1265003A5852 /* BikeSteering_dll_ruby.hh */,
+				D9914A58211A1265003A5852 /* BikeSteering_Guess.cc */,
 			);
-			path = "ocp-cpp";
+			path = "ocp-src";
 			sourceTree = "<group>";
 		};
-		D9BBD1DE1899BB6D0081AF20 /* srcs */ = {
+		D9914A65211A128E003A5852 /* cpp */ = {
 			isa = PBXGroup;
 			children = (
-				D9BBD1DF1899BB6D0081AF20 /* BikeSteering.cc */,
-				D9BBD1E01899BB6D0081AF20 /* BikeSteering.hh */,
-				D9BBD1E21899BB6D0081AF20 /* BikeSteering_c_interface.cc */,
-				D9BBD1E31899BB6D0081AF20 /* BikeSteering_c_interface.h */,
-				D9BBD1E51899BB6D0081AF20 /* BikeSteering_Guess.cc */,
-				D9BBD1E71899BB6D0081AF20 /* BikeSteering_Methods.cc */,
-				D9BBD1E91899BB6D0081AF20 /* BikeSteering_Pars.hh */,
-				D9BBD1EA1899BB6D0081AF20 /* BikeSteering_ruby_dll.cc */,
+				D9914A66211A128E003A5852 /* BikeSteering_Main.cc */,
 			);
-			path = srcs;
+			name = cpp;
+			path = "ocp-interfaces/cpp";
+			sourceTree = "<group>";
+		};
+		D9914A6E211A135C003A5852 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9914A6F211A135C003A5852 /* Accelerate.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,9 +177,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9BBD1F31899BB6D0081AF20 /* BikeSteering_c_interface.h in Headers */,
-				D9BBD1F01899BB6D0081AF20 /* BikeSteering.hh in Headers */,
-				D9BBD1F91899BB6D0081AF20 /* BikeSteering_Pars.hh in Headers */,
+				D9914A59211A1265003A5852 /* BikeSteering.hh in Headers */,
+				D9914A5C211A1265003A5852 /* BikeSteering_Pars.hh in Headers */,
+				D9914A60211A1265003A5852 /* BikeSteering_dll_ruby.hh in Headers */,
+				D9914A5E211A1265003A5852 /* BikeSteering_dll_pins.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +246,7 @@
 		D990A43717B926570022E545 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Enrico Bertolazzi";
 			};
 			buildConfigurationList = D990A43A17B926570022E545 /* Build configuration list for PBXProject "Steering" */;
@@ -267,7 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9BBD1FC1899BB7C0081AF20 /* BikeSteering_MainStandalone.cc in Sources */,
+				D9914A67211A128E003A5852 /* BikeSteering_Main.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,7 +281,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9BBD1FD1899BB800081AF20 /* BikeSteering_Main.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,11 +288,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9BBD1F71899BB6D0081AF20 /* BikeSteering_Methods.cc in Sources */,
-				D9BBD1F21899BB6D0081AF20 /* BikeSteering_c_interface.cc in Sources */,
-				D9BBD1EF1899BB6D0081AF20 /* BikeSteering.cc in Sources */,
-				D9BBD1FA1899BB6D0081AF20 /* BikeSteering_ruby_dll.cc in Sources */,
-				D9BBD1F51899BB6D0081AF20 /* BikeSteering_Guess.cc in Sources */,
+				D9914A5D211A1265003A5852 /* BikeSteering_Methods.cc in Sources */,
+				D9914A5B211A1265003A5852 /* BikeSteering_dll_ruby.cc in Sources */,
+				D9914A5A211A1265003A5852 /* BikeSteering_dll_pins.cc in Sources */,
+				D9914A5F211A1265003A5852 /* BikeSteering.cc in Sources */,
+				D9914A61211A1265003A5852 /* BikeSteering_Guess.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +315,7 @@
 		D98E3AD517C41D5C00A1731B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
@@ -322,6 +328,7 @@
 		D98E3AD617C41D5C00A1731B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
@@ -334,6 +341,7 @@
 		D98E3AEA17C41E1800A1731B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
@@ -346,6 +354,7 @@
 		D98E3AEB17C41E1800A1731B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
@@ -359,19 +368,33 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -380,7 +403,9 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -392,22 +417,37 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
@@ -417,6 +457,7 @@
 		D990A44417B926570022E545 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = Steering_lib;
 			};
@@ -425,6 +466,7 @@
 		D990A44517B926570022E545 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = Steering_lib;
 			};

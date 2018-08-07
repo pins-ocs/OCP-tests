@@ -1,0 +1,351 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D9914A98211A4C24003A5852 /* atan2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A89211A4C23003A5852 /* atan2.cc */; };
+		D9914A9A211A4C24003A5852 /* Zermelo_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A8D211A4C23003A5852 /* Zermelo_Guess.cc */; };
+		D9914A9B211A4C24003A5852 /* Zermelo_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A8F211A4C23003A5852 /* Zermelo_Methods.cc */; };
+		D9914A9C211A4C24003A5852 /* Zermelo.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A90211A4C23003A5852 /* Zermelo.cc */; };
+		D9914A9E211A4C24003A5852 /* Zermelo_dll_pins.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A92211A4C23003A5852 /* Zermelo_dll_pins.cc */; };
+		D9914A9F211A4C24003A5852 /* Zermelo_dll_ruby.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914A93211A4C23003A5852 /* Zermelo_dll_ruby.cc */; };
+		D9914AA3211A4C2F003A5852 /* Zermelo_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9914AA2211A4C2F003A5852 /* Zermelo_Main.cc */; };
+		D9914AB2211A4D18003A5852 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9914AB1211A4D18003A5852 /* Accelerate.framework */; };
+		D9EBED9A211A4E9B0010C2B6 /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EBED97211A4E9B0010C2B6 /* MechatronixInterfaceMruby.framework */; };
+		D9EBED9B211A4E9B0010C2B6 /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EBED98211A4E9B0010C2B6 /* MechatronixSolver.framework */; };
+		D9EBED9C211A4E9B0010C2B6 /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EBED99211A4E9B0010C2B6 /* MechatronixCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D9914A78211A4C0A003A5852 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D9914A7A211A4C0A003A5852 /* Zermelo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Zermelo; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9914A87211A4C23003A5852 /* Zermelo_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Zermelo_Pars.hh; sourceTree = "<group>"; };
+		D9914A89211A4C23003A5852 /* atan2.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = atan2.cc; sourceTree = "<group>"; };
+		D9914A8A211A4C23003A5852 /* Zermelo_dll_pins.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Zermelo_dll_pins.hh; sourceTree = "<group>"; };
+		D9914A8C211A4C23003A5852 /* Zermelo_dll_ruby.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Zermelo_dll_ruby.hh; sourceTree = "<group>"; };
+		D9914A8D211A4C23003A5852 /* Zermelo_Guess.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Zermelo_Guess.cc; sourceTree = "<group>"; };
+		D9914A8E211A4C23003A5852 /* Zermelo.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Zermelo.hh; sourceTree = "<group>"; };
+		D9914A8F211A4C23003A5852 /* Zermelo_Methods.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Zermelo_Methods.cc; sourceTree = "<group>"; };
+		D9914A90211A4C23003A5852 /* Zermelo.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Zermelo.cc; sourceTree = "<group>"; };
+		D9914A92211A4C23003A5852 /* Zermelo_dll_pins.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Zermelo_dll_pins.cc; sourceTree = "<group>"; };
+		D9914A93211A4C23003A5852 /* Zermelo_dll_ruby.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Zermelo_dll_ruby.cc; sourceTree = "<group>"; };
+		D9914AA2211A4C2F003A5852 /* Zermelo_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Zermelo_Main.cc; sourceTree = "<group>"; };
+		D9914AB1211A4D18003A5852 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		D9EBED97211A4E9B0010C2B6 /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
+		D9EBED98211A4E9B0010C2B6 /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixSolver.framework; sourceTree = "<group>"; };
+		D9EBED99211A4E9B0010C2B6 /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixCore.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9914A77211A4C0A003A5852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9EBED9C211A4E9B0010C2B6 /* MechatronixCore.framework in Frameworks */,
+				D9914AB2211A4D18003A5852 /* Accelerate.framework in Frameworks */,
+				D9EBED9A211A4E9B0010C2B6 /* MechatronixInterfaceMruby.framework in Frameworks */,
+				D9EBED9B211A4E9B0010C2B6 /* MechatronixSolver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D9914A71211A4C0A003A5852 = {
+			isa = PBXGroup;
+			children = (
+				D9914A7B211A4C0A003A5852 /* Products */,
+				D9914A84211A4C23003A5852 /* ocp-src */,
+				D9914AA1211A4C2F003A5852 /* cpp */,
+				D9914AB0211A4D18003A5852 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D9914A7B211A4C0A003A5852 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9914A7A211A4C0A003A5852 /* Zermelo */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9914A84211A4C23003A5852 /* ocp-src */ = {
+			isa = PBXGroup;
+			children = (
+				D9914A87211A4C23003A5852 /* Zermelo_Pars.hh */,
+				D9914A89211A4C23003A5852 /* atan2.cc */,
+				D9914A8A211A4C23003A5852 /* Zermelo_dll_pins.hh */,
+				D9914A8C211A4C23003A5852 /* Zermelo_dll_ruby.hh */,
+				D9914A8D211A4C23003A5852 /* Zermelo_Guess.cc */,
+				D9914A8E211A4C23003A5852 /* Zermelo.hh */,
+				D9914A8F211A4C23003A5852 /* Zermelo_Methods.cc */,
+				D9914A90211A4C23003A5852 /* Zermelo.cc */,
+				D9914A92211A4C23003A5852 /* Zermelo_dll_pins.cc */,
+				D9914A93211A4C23003A5852 /* Zermelo_dll_ruby.cc */,
+			);
+			path = "ocp-src";
+			sourceTree = "<group>";
+		};
+		D9914AA1211A4C2F003A5852 /* cpp */ = {
+			isa = PBXGroup;
+			children = (
+				D9914AA2211A4C2F003A5852 /* Zermelo_Main.cc */,
+			);
+			path = cpp;
+			sourceTree = SOURCE_ROOT;
+		};
+		D9914AB0211A4D18003A5852 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9EBED99211A4E9B0010C2B6 /* MechatronixCore.framework */,
+				D9EBED97211A4E9B0010C2B6 /* MechatronixInterfaceMruby.framework */,
+				D9EBED98211A4E9B0010C2B6 /* MechatronixSolver.framework */,
+				D9914AB1211A4D18003A5852 /* Accelerate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9914A79211A4C0A003A5852 /* Zermelo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9914A81211A4C0A003A5852 /* Build configuration list for PBXNativeTarget "Zermelo" */;
+			buildPhases = (
+				D9914A76211A4C0A003A5852 /* Sources */,
+				D9914A77211A4C0A003A5852 /* Frameworks */,
+				D9914A78211A4C0A003A5852 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Zermelo;
+			productName = Zermelo;
+			productReference = D9914A7A211A4C0A003A5852 /* Zermelo */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9914A72211A4C0A003A5852 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Enrico Bertolazzi";
+				TargetAttributes = {
+					D9914A79211A4C0A003A5852 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = D9914A75211A4C0A003A5852 /* Build configuration list for PBXProject "Zermelo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D9914A71211A4C0A003A5852;
+			productRefGroup = D9914A7B211A4C0A003A5852 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9914A79211A4C0A003A5852 /* Zermelo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9914A76211A4C0A003A5852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9914A9C211A4C24003A5852 /* Zermelo.cc in Sources */,
+				D9914A9F211A4C24003A5852 /* Zermelo_dll_ruby.cc in Sources */,
+				D9914A9A211A4C24003A5852 /* Zermelo_Guess.cc in Sources */,
+				D9914AA3211A4C2F003A5852 /* Zermelo_Main.cc in Sources */,
+				D9914A9B211A4C24003A5852 /* Zermelo_Methods.cc in Sources */,
+				D9914A98211A4C24003A5852 /* atan2.cc in Sources */,
+				D9914A9E211A4C24003A5852 /* Zermelo_dll_pins.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D9914A7F211A4C0A003A5852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D9914A80211A4C0A003A5852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D9914A82211A4C0A003A5852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9914A83211A4C0A003A5852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9914A75211A4C0A003A5852 /* Build configuration list for PBXProject "Zermelo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9914A7F211A4C0A003A5852 /* Debug */,
+				D9914A80211A4C0A003A5852 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9914A81211A4C0A003A5852 /* Build configuration list for PBXNativeTarget "Zermelo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9914A82211A4C0A003A5852 /* Debug */,
+				D9914A83211A4C0A003A5852 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9914A72211A4C0A003A5852 /* Project object */;
+}
