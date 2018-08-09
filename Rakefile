@@ -133,7 +133,8 @@ begin # definitions
     "#{ROOT}/{data,lib,bin}/*",
     "#{ROOT}/ocp-*",
     "#{ROOT}/*_run*.rb",
-    "#{ROOT}/#{MODEL_DIR}/bvpOut"
+    "#{ROOT}/#{MODEL_DIR}/bvpOut",
+    "#{LIBRARY}",
   ]
 
   include FileUtils

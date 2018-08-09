@@ -42,6 +42,10 @@ classdef NewtonSolver < handle
       %% Destroy the C++ class instance
     end
 
+    function setMaxIter( self, miter )
+      self.maxiter = miter;
+    end
+
     %  ____                      _ _
     % / ___| _ __ ___   ___ _ __(_) |_
     % \___ \| '_ ` _ \ / _ \ '__| | __|
@@ -217,13 +221,13 @@ classdef NewtonSolver < handle
 
     function setDirection( self )
       [self.L,self.U,self.P,self.Q,self.R] = lu(self.J0); % A = R*P'*L*U*Q'
-      
+
       if condest(self.U) > 1e10 || condest(self.R) > 1e10
         self.minimize = true;
       else
         self.minimize = false;
       end
-      
+
       self.d0 = -self.Jsolve(self.f0);
       return ;
       if issparse(self.J0)

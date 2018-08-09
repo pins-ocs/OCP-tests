@@ -1,0 +1,29 @@
+seqns := Vector(9, [-sn(zeta)*kappa(zeta)*psi_dot(zeta)-kappa(zeta)*u(zeta)*
+cos(alpha(zeta))-diff(alpha(zeta),zeta)*u(zeta)*cos(alpha(zeta))+psi_dot(zeta)
+,-u(zeta)*(sn(zeta)*kappa(zeta)*sin(alpha(zeta))+diff(sn(zeta),zeta)*cos(alpha
+(zeta))-sin(alpha(zeta))),-sn(zeta)*kappa(zeta)*u_dot(zeta)-diff(u(zeta),zeta)
+*u(zeta)*cos(alpha(zeta))+u_dot(zeta),-sn(zeta)*kappa(zeta)*u_jerk(zeta)-diff(
+u_dot(zeta),zeta)*u(zeta)*cos(alpha(zeta))+u_jerk(zeta),-sn(zeta)*kappa(zeta)*
+psi_acc(zeta)-diff(psi_dot(zeta),zeta)*u(zeta)*cos(alpha(zeta))+psi_acc(zeta),
+-sn(zeta)*kappa(zeta)*psi_jerk(zeta)-diff(psi_acc(zeta),zeta)*u(zeta)*cos(
+alpha(zeta))+psi_jerk(zeta),-sn(zeta)*kappa(zeta)*psi_dot(zeta)^2*sin(phi(zeta
+))*cos(phi(zeta))*h1^2*m*rr-sn(zeta)*kappa(zeta)*psi_dot(zeta)^2*sin(phi(zeta)
+)*h1*m*rr*rt-sn(zeta)*kappa(zeta)*sin(phi(zeta))*phi_dot(zeta)^2*h1*m*rr*rt-IY
+*sn(zeta)*kappa(zeta)*psi_dot(zeta)^2*sin(phi(zeta))*cos(phi(zeta))*rr+sn(zeta
+)*kappa(zeta)*u(zeta)*psi_dot(zeta)*cos(phi(zeta))*h1*m*rr-u(zeta)*cos(alpha(
+zeta))*cos(phi(zeta))*diff(phi_dot(zeta),zeta)*h1*m*rr*rt+psi_dot(zeta)^2*sin(
+phi(zeta))*cos(phi(zeta))*h1^2*m*rr+sn(zeta)*kappa(zeta)*u(zeta)*psi_dot(zeta)
+*m*rr*rt-sn(zeta)*kappa(zeta)*sin(phi(zeta))*g*h1*m*rr-u(zeta)*cos(alpha(zeta)
+)*diff(phi_dot(zeta),zeta)*h1^2*m*rr+psi_dot(zeta)^2*sin(phi(zeta))*h1*m*rr*rt
++phi_dot(zeta)^2*sin(phi(zeta))*h1*m*rt*rr+IY*sn(zeta)*kappa(zeta)*u(zeta)*
+psi_dot(zeta)*cos(phi(zeta))+IY*psi_dot(zeta)^2*sin(phi(zeta))*cos(phi(zeta))*
+rr-u(zeta)*psi_dot(zeta)*cos(phi(zeta))*h1*m*rr-IX*u(zeta)*cos(alpha(zeta))*
+diff(phi_dot(zeta),zeta)*rr-u(zeta)*psi_dot(zeta)*m*rr*rt+sin(phi(zeta))*h1*m*
+g*rr-IY*u(zeta)*psi_dot(zeta)*cos(phi(zeta)),-sn(zeta)*kappa(zeta)*phi_dot(
+zeta)-diff(phi(zeta),zeta)*u(zeta)*cos(alpha(zeta))+phi_dot(zeta),-diff(t(zeta
+),zeta)*u(zeta)*cos(alpha(zeta))-sn(zeta)*kappa(zeta)+1]);
+svars := [sn(zeta), alpha(zeta), u(zeta), u_dot(zeta), psi_dot(zeta), psi_acc(
+zeta), phi_dot(zeta), phi(zeta), t(zeta)];
+suvars := [u_jerk(zeta), psi_jerk(zeta)];
+SSZDOT := {zeta_dot(zeta) = -u(zeta)*cos(alpha(zeta))/(-1+sn(zeta)*kappa(zeta)
+)};

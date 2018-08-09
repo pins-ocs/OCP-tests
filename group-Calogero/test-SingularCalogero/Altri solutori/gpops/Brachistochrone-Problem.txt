@@ -1,0 +1,41 @@
+-----------------------------------------------------------------------------------------
+GPOPS Version 4.1 alpha Running with the Radau Pseudospectral Method and SNOPT 7.1       
+Copyright (c) 2008-2011 Anil V. Rao, David Benson, Geoffrey T. Huntington, Christopher   
+L. Darby, Michael A. Patterson, Camila Francolin, and Ilyssa Sanders.                    
+-----------------------------------------------------------------------------------------
+SNOPT (c) Copyright Regents of the University of California and Stanford University.     
+-----------------------------------------------------------------------------------------
+Downloading, using, copying, or modifying the GPOPS code constitutes an agreement to ALL 
+of the terms of the GPOPS license. Please see the LICENSE page on the GPOPS website at   
+http://www.gpops.org.                                                                    
+-----------------------------------------------------------------------------------------
+                                                                                         
+
+===========================================
+---------- Information in Phase 1
+----------===========================================
+
+State 	1
+	 Start of Phase:    	0 <= State 1 <= 0
+	 During Phase:      	0 <= State 1 <= 11
+	 Terminus of Phase: 	10 <= State 1 <= 10
+State 	2
+	 Start of Phase:    	0 <= State 2 <= 0
+	 During Phase:      	-5 <= State 2 <= 1
+	 Terminus of Phase: 	-3 <= State 2 <= -3
+State 	3
+	 Start of Phase:    	0 <= State 3 <= 0
+	 During Phase:      	-0.1 <= State 3 <= 11
+	 Terminus of Phase: 	-0.1 <= State 3 <= 11
+
+Control 	1
+	 During Phase:    	-12.5664 <= Control 1 <= 12.5664
+
+No Parameters in Phase 1
+
+No Path Constraints in Phase 1
+
+No Event Constraints in Phase 1
+
+Phase Duration:  <= duration <= 
+

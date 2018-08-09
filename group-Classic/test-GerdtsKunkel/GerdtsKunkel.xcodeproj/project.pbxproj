@@ -1,0 +1,587 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D9174DD317E7368A00E5E831 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD217E7368A00E5E831 /* Accelerate.framework */; };
+		D9174DD917E736C100E5E831 /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD517E736C100E5E831 /* MechatronixCore.framework */; };
+		D9174DDA17E736C100E5E831 /* MechatronixInterfaceMRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD617E736C100E5E831 /* MechatronixInterfaceMRuby.framework */; };
+		D9174DDB17E736C100E5E831 /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD717E736C100E5E831 /* MechatronixSolver.framework */; };
+		D9174DDD17E736D300E5E831 /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD517E736C100E5E831 /* MechatronixCore.framework */; };
+		D9174DDE17E736D300E5E831 /* MechatronixInterfaceMRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD617E736C100E5E831 /* MechatronixInterfaceMRuby.framework */; };
+		D9174DDF17E736D300E5E831 /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD717E736C100E5E831 /* MechatronixSolver.framework */; };
+		D9174DE017E736D300E5E831 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD217E7368A00E5E831 /* Accelerate.framework */; };
+		D9174DE717E736FC00E5E831 /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD517E736C100E5E831 /* MechatronixCore.framework */; };
+		D9174DE817E736FC00E5E831 /* MechatronixInterfaceMRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD617E736C100E5E831 /* MechatronixInterfaceMRuby.framework */; };
+		D9174DE917E736FC00E5E831 /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD717E736C100E5E831 /* MechatronixSolver.framework */; };
+		D9174DEA17E736FC00E5E831 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9174DD217E7368A00E5E831 /* Accelerate.framework */; };
+		D98E3AD917C41D6E00A1731B /* libGerdtsKunkel_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D990A43F17B926570022E545 /* libGerdtsKunkel_lib.a */; };
+		D98E3AF317C41E4A00A1731B /* libGerdtsKunkel_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D990A43F17B926570022E545 /* libGerdtsKunkel_lib.a */; };
+		D995A6F017E52F0900CE99B2 /* libGerdtsKunkel.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9DF164E17E509CF000AB656 /* libGerdtsKunkel.dylib */; };
+		D9B342C517E8922700C93CE5 /* GerdtsKunkel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342B917E8922700C93CE5 /* GerdtsKunkel.cc */; };
+		D9B342C617E8922700C93CE5 /* GerdtsKunkel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342B917E8922700C93CE5 /* GerdtsKunkel.cc */; };
+		D9B342C717E8922700C93CE5 /* GerdtsKunkel.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9B342BA17E8922700C93CE5 /* GerdtsKunkel.hh */; };
+		D9B342C817E8922700C93CE5 /* GerdtsKunkel.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9B342BA17E8922700C93CE5 /* GerdtsKunkel.hh */; };
+		D9B342C917E8922700C93CE5 /* GerdtsKunkel_c_interface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342BB17E8922700C93CE5 /* GerdtsKunkel_c_interface.cc */; };
+		D9B342CA17E8922700C93CE5 /* GerdtsKunkel_c_interface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342BB17E8922700C93CE5 /* GerdtsKunkel_c_interface.cc */; };
+		D9B342CB17E8922700C93CE5 /* GerdtsKunkel_c_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = D9B342BC17E8922700C93CE5 /* GerdtsKunkel_c_interface.h */; };
+		D9B342CC17E8922700C93CE5 /* GerdtsKunkel_c_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = D9B342BC17E8922700C93CE5 /* GerdtsKunkel_c_interface.h */; };
+		D9B342CD17E8922700C93CE5 /* GerdtsKunkel_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342BD17E8922700C93CE5 /* GerdtsKunkel_Guess.cc */; };
+		D9B342CE17E8922700C93CE5 /* GerdtsKunkel_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342BD17E8922700C93CE5 /* GerdtsKunkel_Guess.cc */; };
+		D9B342CF17E8922700C93CE5 /* GerdtsKunkel_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342BE17E8922700C93CE5 /* GerdtsKunkel_Methods.cc */; };
+		D9B342D017E8922700C93CE5 /* GerdtsKunkel_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342BE17E8922700C93CE5 /* GerdtsKunkel_Methods.cc */; };
+		D9B342D117E8922700C93CE5 /* GerdtsKunkel_Pars.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9B342BF17E8922700C93CE5 /* GerdtsKunkel_Pars.hh */; };
+		D9B342D217E8922700C93CE5 /* GerdtsKunkel_Pars.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9B342BF17E8922700C93CE5 /* GerdtsKunkel_Pars.hh */; };
+		D9B342D317E8922700C93CE5 /* GerdtsKunkel_ruby_dll.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342C017E8922700C93CE5 /* GerdtsKunkel_ruby_dll.cc */; };
+		D9B342D417E8922700C93CE5 /* GerdtsKunkel_ruby_dll.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342C017E8922700C93CE5 /* GerdtsKunkel_ruby_dll.cc */; };
+		D9B342D517E8922F00C93CE5 /* GerdtsKunkel_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9B342B617E8922700C93CE5 /* GerdtsKunkel_Main.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D98E3AD717C41D6700A1731B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D990A43717B926570022E545 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D990A43E17B926570022E545;
+			remoteInfo = BangBang;
+		};
+		D98E3AED17C41E3800A1731B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D990A43717B926570022E545 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D990A43E17B926570022E545;
+			remoteInfo = BangBang_lib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D98E3ACC17C41D5C00A1731B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D98E3AE117C41E1800A1731B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D9CB074217E52A0C00957647 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "/Users/enrico/Ricerca/develop/C++/Mechatronix-2012/Mechatronix-Library/Tests-OCP-Validation/test-TRENO";
+			dstSubfolderSpec = 0;
+			files = (
+				D995A6F017E52F0900CE99B2 /* libGerdtsKunkel.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D9174DD217E7368A00E5E831 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		D9174DD517E736C100E5E831 /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixCore.framework; sourceTree = "<group>"; };
+		D9174DD617E736C100E5E831 /* MechatronixInterfaceMRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMRuby.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixInterfaceMRuby.framework; sourceTree = "<group>"; };
+		D9174DD717E736C100E5E831 /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixSolver.framework; sourceTree = "<group>"; };
+		D98E3ACE17C41D5C00A1731B /* GerdtsKunkel_standalone */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GerdtsKunkel_standalone; sourceTree = BUILT_PRODUCTS_DIR; };
+		D98E3AE317C41E1800A1731B /* GerdtsKunkel */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GerdtsKunkel; sourceTree = BUILT_PRODUCTS_DIR; };
+		D990A43F17B926570022E545 /* libGerdtsKunkel_lib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGerdtsKunkel_lib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9B342B617E8922700C93CE5 /* GerdtsKunkel_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GerdtsKunkel_Main.cc; sourceTree = "<group>"; };
+		D9B342B917E8922700C93CE5 /* GerdtsKunkel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GerdtsKunkel.cc; sourceTree = "<group>"; };
+		D9B342BA17E8922700C93CE5 /* GerdtsKunkel.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GerdtsKunkel.hh; sourceTree = "<group>"; };
+		D9B342BB17E8922700C93CE5 /* GerdtsKunkel_c_interface.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GerdtsKunkel_c_interface.cc; sourceTree = "<group>"; };
+		D9B342BC17E8922700C93CE5 /* GerdtsKunkel_c_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GerdtsKunkel_c_interface.h; sourceTree = "<group>"; };
+		D9B342BD17E8922700C93CE5 /* GerdtsKunkel_Guess.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GerdtsKunkel_Guess.cc; sourceTree = "<group>"; };
+		D9B342BE17E8922700C93CE5 /* GerdtsKunkel_Methods.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GerdtsKunkel_Methods.cc; sourceTree = "<group>"; };
+		D9B342BF17E8922700C93CE5 /* GerdtsKunkel_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GerdtsKunkel_Pars.hh; sourceTree = "<group>"; };
+		D9B342C017E8922700C93CE5 /* GerdtsKunkel_ruby_dll.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GerdtsKunkel_ruby_dll.cc; sourceTree = "<group>"; };
+		D9DF164E17E509CF000AB656 /* libGerdtsKunkel.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libGerdtsKunkel.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D98E3ACB17C41D5C00A1731B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9174DD917E736C100E5E831 /* MechatronixCore.framework in Frameworks */,
+				D9174DDA17E736C100E5E831 /* MechatronixInterfaceMRuby.framework in Frameworks */,
+				D9174DDB17E736C100E5E831 /* MechatronixSolver.framework in Frameworks */,
+				D9174DD317E7368A00E5E831 /* Accelerate.framework in Frameworks */,
+				D98E3AD917C41D6E00A1731B /* libGerdtsKunkel_lib.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D98E3AE017C41E1800A1731B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D98E3AF317C41E4A00A1731B /* libGerdtsKunkel_lib.a in Frameworks */,
+				D9174DDD17E736D300E5E831 /* MechatronixCore.framework in Frameworks */,
+				D9174DDE17E736D300E5E831 /* MechatronixInterfaceMRuby.framework in Frameworks */,
+				D9174DDF17E736D300E5E831 /* MechatronixSolver.framework in Frameworks */,
+				D9174DE017E736D300E5E831 /* Accelerate.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D990A43C17B926570022E545 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9DF164B17E509CF000AB656 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9174DE717E736FC00E5E831 /* MechatronixCore.framework in Frameworks */,
+				D9174DE817E736FC00E5E831 /* MechatronixInterfaceMRuby.framework in Frameworks */,
+				D9174DE917E736FC00E5E831 /* MechatronixSolver.framework in Frameworks */,
+				D9174DEA17E736FC00E5E831 /* Accelerate.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D990A43617B926570022E545 = {
+			isa = PBXGroup;
+			children = (
+				D9174DD517E736C100E5E831 /* MechatronixCore.framework */,
+				D9174DD617E736C100E5E831 /* MechatronixInterfaceMRuby.framework */,
+				D9174DD717E736C100E5E831 /* MechatronixSolver.framework */,
+				D9174DD217E7368A00E5E831 /* Accelerate.framework */,
+				D990A44017B926570022E545 /* Products */,
+				D9B342B517E8922700C93CE5 /* ocp-cpp */,
+			);
+			sourceTree = "<group>";
+		};
+		D990A44017B926570022E545 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D990A43F17B926570022E545 /* libGerdtsKunkel_lib.a */,
+				D98E3ACE17C41D5C00A1731B /* GerdtsKunkel_standalone */,
+				D98E3AE317C41E1800A1731B /* GerdtsKunkel */,
+				D9DF164E17E509CF000AB656 /* libGerdtsKunkel.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9B342B517E8922700C93CE5 /* ocp-cpp */ = {
+			isa = PBXGroup;
+			children = (
+				D9B342B617E8922700C93CE5 /* GerdtsKunkel_Main.cc */,
+				D9B342B817E8922700C93CE5 /* srcs */,
+			);
+			path = "ocp-cpp";
+			sourceTree = "<group>";
+		};
+		D9B342B817E8922700C93CE5 /* srcs */ = {
+			isa = PBXGroup;
+			children = (
+				D9B342B917E8922700C93CE5 /* GerdtsKunkel.cc */,
+				D9B342BA17E8922700C93CE5 /* GerdtsKunkel.hh */,
+				D9B342BB17E8922700C93CE5 /* GerdtsKunkel_c_interface.cc */,
+				D9B342BC17E8922700C93CE5 /* GerdtsKunkel_c_interface.h */,
+				D9B342BD17E8922700C93CE5 /* GerdtsKunkel_Guess.cc */,
+				D9B342BE17E8922700C93CE5 /* GerdtsKunkel_Methods.cc */,
+				D9B342BF17E8922700C93CE5 /* GerdtsKunkel_Pars.hh */,
+				D9B342C017E8922700C93CE5 /* GerdtsKunkel_ruby_dll.cc */,
+			);
+			path = srcs;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D990A43D17B926570022E545 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B342C717E8922700C93CE5 /* GerdtsKunkel.hh in Headers */,
+				D9B342CB17E8922700C93CE5 /* GerdtsKunkel_c_interface.h in Headers */,
+				D9B342D117E8922700C93CE5 /* GerdtsKunkel_Pars.hh in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9DF164C17E509CF000AB656 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B342C817E8922700C93CE5 /* GerdtsKunkel.hh in Headers */,
+				D9B342CC17E8922700C93CE5 /* GerdtsKunkel_c_interface.h in Headers */,
+				D9B342D217E8922700C93CE5 /* GerdtsKunkel_Pars.hh in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D98E3ACD17C41D5C00A1731B /* GerdtsKunkel_standalone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D98E3AD417C41D5C00A1731B /* Build configuration list for PBXNativeTarget "GerdtsKunkel_standalone" */;
+			buildPhases = (
+				D98E3ACA17C41D5C00A1731B /* Sources */,
+				D98E3ACB17C41D5C00A1731B /* Frameworks */,
+				D98E3ACC17C41D5C00A1731B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D98E3AD817C41D6700A1731B /* PBXTargetDependency */,
+			);
+			name = GerdtsKunkel_standalone;
+			productName = BangBang_standalone;
+			productReference = D98E3ACE17C41D5C00A1731B /* GerdtsKunkel_standalone */;
+			productType = "com.apple.product-type.tool";
+		};
+		D98E3AE217C41E1800A1731B /* GerdtsKunkel_exe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D98E3AE917C41E1800A1731B /* Build configuration list for PBXNativeTarget "GerdtsKunkel_exe" */;
+			buildPhases = (
+				D98E3ADF17C41E1800A1731B /* Sources */,
+				D98E3AE017C41E1800A1731B /* Frameworks */,
+				D98E3AE117C41E1800A1731B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D98E3AEE17C41E3800A1731B /* PBXTargetDependency */,
+			);
+			name = GerdtsKunkel_exe;
+			productName = BangBang;
+			productReference = D98E3AE317C41E1800A1731B /* GerdtsKunkel */;
+			productType = "com.apple.product-type.tool";
+		};
+		D990A43E17B926570022E545 /* GerdtsKunkel_lib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D990A44317B926570022E545 /* Build configuration list for PBXNativeTarget "GerdtsKunkel_lib" */;
+			buildPhases = (
+				D990A43B17B926570022E545 /* Sources */,
+				D990A43C17B926570022E545 /* Frameworks */,
+				D990A43D17B926570022E545 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GerdtsKunkel_lib;
+			productName = BangBang;
+			productReference = D990A43F17B926570022E545 /* libGerdtsKunkel_lib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D9DF164D17E509CF000AB656 /* GerdtsKunkel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9DF165117E509D0000AB656 /* Build configuration list for PBXNativeTarget "GerdtsKunkel" */;
+			buildPhases = (
+				D9DF164A17E509CF000AB656 /* Sources */,
+				D9DF164B17E509CF000AB656 /* Frameworks */,
+				D9DF164C17E509CF000AB656 /* Headers */,
+				D9CB074217E52A0C00957647 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GerdtsKunkel;
+			productName = libTreno;
+			productReference = D9DF164E17E509CF000AB656 /* libGerdtsKunkel.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D990A43717B926570022E545 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Enrico Bertolazzi";
+			};
+			buildConfigurationList = D990A43A17B926570022E545 /* Build configuration list for PBXProject "GerdtsKunkel" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D990A43617B926570022E545;
+			productRefGroup = D990A44017B926570022E545 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D990A43E17B926570022E545 /* GerdtsKunkel_lib */,
+				D9DF164D17E509CF000AB656 /* GerdtsKunkel */,
+				D98E3ACD17C41D5C00A1731B /* GerdtsKunkel_standalone */,
+				D98E3AE217C41E1800A1731B /* GerdtsKunkel_exe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D98E3ACA17C41D5C00A1731B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D98E3ADF17C41E1800A1731B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B342D517E8922F00C93CE5 /* GerdtsKunkel_Main.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D990A43B17B926570022E545 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B342C517E8922700C93CE5 /* GerdtsKunkel.cc in Sources */,
+				D9B342C917E8922700C93CE5 /* GerdtsKunkel_c_interface.cc in Sources */,
+				D9B342CD17E8922700C93CE5 /* GerdtsKunkel_Guess.cc in Sources */,
+				D9B342CF17E8922700C93CE5 /* GerdtsKunkel_Methods.cc in Sources */,
+				D9B342D317E8922700C93CE5 /* GerdtsKunkel_ruby_dll.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9DF164A17E509CF000AB656 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B342C617E8922700C93CE5 /* GerdtsKunkel.cc in Sources */,
+				D9B342CA17E8922700C93CE5 /* GerdtsKunkel_c_interface.cc in Sources */,
+				D9B342CE17E8922700C93CE5 /* GerdtsKunkel_Guess.cc in Sources */,
+				D9B342D017E8922700C93CE5 /* GerdtsKunkel_Methods.cc in Sources */,
+				D9B342D417E8922700C93CE5 /* GerdtsKunkel_ruby_dll.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D98E3AD817C41D6700A1731B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D990A43E17B926570022E545 /* GerdtsKunkel_lib */;
+			targetProxy = D98E3AD717C41D6700A1731B /* PBXContainerItemProxy */;
+		};
+		D98E3AEE17C41E3800A1731B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D990A43E17B926570022E545 /* GerdtsKunkel_lib */;
+			targetProxy = D98E3AED17C41E3800A1731B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D98E3AD517C41D5C00A1731B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = GerdtsKunkel_standalone;
+			};
+			name = Debug;
+		};
+		D98E3AD617C41D5C00A1731B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = GerdtsKunkel_standalone;
+			};
+			name = Release;
+		};
+		D98E3AEA17C41E1800A1731B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = GerdtsKunkel;
+			};
+			name = Debug;
+		};
+		D98E3AEB17C41E1800A1731B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = GerdtsKunkel;
+			};
+			name = Release;
+		};
+		D990A44117B926570022E545 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D990A44217B926570022E545 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D990A44417B926570022E545 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = GerdtsKunkel_lib;
+			};
+			name = Debug;
+		};
+		D990A44517B926570022E545 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = GerdtsKunkel_lib;
+			};
+			name = Release;
+		};
+		D9DF164F17E509CF000AB656 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = GerdtsKunkel;
+			};
+			name = Debug;
+		};
+		D9DF165017E509CF000AB656 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+				);
+				PRODUCT_NAME = GerdtsKunkel;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D98E3AD417C41D5C00A1731B /* Build configuration list for PBXNativeTarget "GerdtsKunkel_standalone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D98E3AD517C41D5C00A1731B /* Debug */,
+				D98E3AD617C41D5C00A1731B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D98E3AE917C41E1800A1731B /* Build configuration list for PBXNativeTarget "GerdtsKunkel_exe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D98E3AEA17C41E1800A1731B /* Debug */,
+				D98E3AEB17C41E1800A1731B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D990A43A17B926570022E545 /* Build configuration list for PBXProject "GerdtsKunkel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D990A44117B926570022E545 /* Debug */,
+				D990A44217B926570022E545 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D990A44317B926570022E545 /* Build configuration list for PBXNativeTarget "GerdtsKunkel_lib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D990A44417B926570022E545 /* Debug */,
+				D990A44517B926570022E545 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9DF165117E509D0000AB656 /* Build configuration list for PBXNativeTarget "GerdtsKunkel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9DF164F17E509CF000AB656 /* Debug */,
+				D9DF165017E509CF000AB656 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D990A43717B926570022E545 /* Project object */;
+}
