@@ -1,10 +1,8 @@
 
+# Optimal Control Problem: single mass moved with bounded control 
+# Authors: E. Bertolazzi, F. Biral
 # 
-#            
-# Modello Massa
 # 
-# 1 controllo
-# (Problema tempo fisso, tempo minimo)
 # Inizializzazione
 restart:
 with(XOptima):

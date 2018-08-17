@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "15E32BFFDEBBFF94339947B047412B31CFDB29ED",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9E21871DBA534B5102DB16EF840D1D6D50FA47D9" : 0,
+    "15E32BFFDEBBFF94339947B047412B31CFDB29ED" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "8FF6CD12-4E74-4F80-B574-1DF8FD9C396B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9E21871DBA534B5102DB16EF840D1D6D50FA47D9" : "..",
+    "15E32BFFDEBBFF94339947B047412B31CFDB29ED" : "OCP\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "train",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "test-Train\/train.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git@github.com:pins-ocs\/OCP-tests.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "15E32BFFDEBBFF94339947B047412B31CFDB29ED"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git@bitbucket.org:pins-ocp\/pins-mechatronix.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9E21871DBA534B5102DB16EF840D1D6D50FA47D9"
+    }
+  ]
+}

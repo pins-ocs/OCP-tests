@@ -33,7 +33,7 @@ classdef NewtonSolver < handle
 
     function self = NewtonSolver( imerit )
       self.tolerance = 1e-8 ;
-      self.maxiter   = 1000 ;
+      self.maxiter   = 400 ;
       self.c1        = 0.001;
       self.imerit    = imerit;
     end

@@ -1,28 +1,23 @@
 
-# 
-#            
-# Modello Massa
-# 
-# 1 controllo
-# (Problema tempo fisso, massima distanza)
-# Inizializzazione
+# Optimal Control Problem: single mass moved with bounded control 
+# Authors: E. Bertolazzi, F. Biral
 restart:
 with(XOptima):
-# Equazioni del modello matematico del veicolo
+# Equations of motion
 EQ1 := diff(x(t),t) - v(t) ;
 EQ2 := diff(v(t),t) - (Fp(t)-Fm(t)) ;
 EQNS_T := [EQ||(1..2)];
-# Variabili del problema e controlli
-# Variabili
+# Optimal control problem formulation
+# States
 qvars := [x(t),v(t)] ;
-# Controlli
+# Controls
 cvars := [Fp(t),Fm(t)] ;
-# Equazioni del modello matematico del carrello
+# Optimal control problem formulation
 loadDynamicSystem(equations=EQNS_T,controls=cvars,states=qvars) ;
-# Inserisce condizioni al contorno
+# Boundary conditions
 addBoundaryConditions(initial=[x=0,v=0],final=[x=1,v=0]);
 infoBoundaryConditions() ;
-# Penalty
+# Penalties
 addControlBound( Fp, label = "controlP", min = 0, max = FpMax, controlType="U_CUBIC" ) ;
 addControlBound( Fm, label = "controlM", min = 0, max = FmMax, controlType="U_CUBIC" ) ;
 setTarget(lagrange = Fp(zeta)+Fm(zeta)) ;

@@ -84,14 +84,14 @@ begin # definitions
 
   raise ModelDirNotFoundError unless (Dir.exist? "#{ROOT}/#{MODEL_DIR}")
 
-  tmp_name = ROOT.split('/')[-1].match(/^test-(\w+)$/)
+  tmp_name = ROOT.split('/')[-1].match(/^\d*test\d*-(\w+)$/)
 
   raise WrongTestDirError unless tmp_name
 
   MODEL_NAME = tmp_name[1] # meglio non capitalizzare    ------ .capitalize # non usare ! se viene assegnato
 
   puts "Compiling model: #{MODEL_NAME}\n"
-  
+
   MAPLET   = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.mpl"
   SRC_DIR  = "#{ROOT}/ocp-src"
   MAIN_DIR = "#{ROOT}/ocp-interfaces/cpp"
@@ -105,14 +105,14 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS}"
     LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"
-    HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}"    
+    HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}"
     CC            = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.dylib","#{BIN_DIR}/main"]
   when :linux
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS}"
-    LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"   
+    LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}"
     CC            = {'.c' => 'gcc', '.cc' => 'g++'}
     OBJS          = SOURCES.ext('o')
@@ -152,7 +152,7 @@ rescue => e
   require 'pry'
   binding.pry
 end
-  
+
 desc "Run the mpl file and generate source".green
 task :maple do
   mpl = File.basename MAPLET
@@ -241,7 +241,7 @@ when :win
     puts ">> Building #{MODEL_NAME}_Main".green
     #sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} /D \"#{MODEL_NAME.upcase}_IMPORT\" #{MAIN} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}_static.lib #{LIBS}"
     sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}_static.lib #{LIBS}"
-    puts "   built executable #{BIN_DIR}/#{t}".green  
+    puts "   built executable #{BIN_DIR}/#{t}".green
   end
 end
 

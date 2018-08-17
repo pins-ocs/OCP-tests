@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "15E32BFFDEBBFF94339947B047412B31CFDB29ED",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9E21871DBA534B5102DB16EF840D1D6D50FA47D9" : 0,
+    "15E32BFFDEBBFF94339947B047412B31CFDB29ED" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2133423D-7AFE-4DF9-8F57-9DD033135083",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9E21871DBA534B5102DB16EF840D1D6D50FA47D9" : "..",
+    "15E32BFFDEBBFF94339947B047412B31CFDB29ED" : "OCP\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "BanfBanfF",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "group-BangBang\/test-BangBangF\/BanfBanfF\/BanfBanfF.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git@github.com:pins-ocs\/OCP-tests.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "15E32BFFDEBBFF94339947B047412B31CFDB29ED"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git@bitbucket.org:pins-ocp\/pins-mechatronix.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9E21871DBA534B5102DB16EF840D1D6D50FA47D9"
+    }
+  ]
+}

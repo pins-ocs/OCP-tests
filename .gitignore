@@ -7,15 +7,15 @@ test-*/*run.rb
 test-*/*run_ffi.rb
 test-*/bin/main
 test-*/matlab_scripts
-*/test-*/data
-*/test-*/lib
-*/test-*/bin
-*/test-*/model/OCP_tmp
-*/test-*/ocp-*
-*/test-*/*run.rb
-*/test-*/*run_ffi.rb
-*/test-*/bin/main
-*/test-*/matlab_scripts
+*/*test*-*/data
+*/*test*-*/lib
+*/*test*-*/bin
+*/*test*-*/model/OCP_tmp
+*/*test*-*/ocp-*
+*/*test*-*/*run.rb
+*/*test*-*/*run_ffi.rb
+*/*test*-*/bin/main
+*/*test*-*/matlab_scripts
 *_run.m
 
 .bundle
@@ -51,3 +51,6 @@ dumps
 *.app
 *.sav
 
+group-CarLike/00test-DubinsCar/ocp-src
+group-Calogero/0test-SingularCalogeroModified/data
+group-Calogero/0test-SingularCalogeroModified/bin

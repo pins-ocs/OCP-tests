@@ -16,6 +16,8 @@ EQ2 := diff(v(t),t) - g*(mur(t)+muf(t)) ;
 # Coordinate change, use x as independent coordinte
 1/diff(t(x),x) - v(t) ;
 EQ1 := v(x)*diff(v(x),x) - g*(mur(x)+muf(x)) ;
+#EQ1 := diff(v(x),x) - g*(mur(x)+muf(x))/v(x) ; # avoid mass matrix
+;
 vars := [v(x)];
 ctrl := [mur(x),muf(x)];
 eqns := [EQ1];
@@ -69,37 +71,35 @@ mapUserFunctionToRegularized(clip,"ClipIntervalWithSinAtan",["h"=0.01,"delta"=0]
 addUserFunction(Tmax_normalized(v)=Pmax/(m*g)*(1-v/vmax));
 #addUserFunction(clip(v,mi,ma)=Pmax/(m*g)*(1-v/vmax));
 # Generation of optimal control equations and C++ code
-Describe(buildOCProblem);
 # Set default parameters (optional)
 # It is possible to define the default values for all parameters that appear in the full set of equations of the optimal control problem.
 # This is an optional command that the user may need if he wish to automatically produce a file data. 
 # The command can called more than onec with different arguments which will be added to a global list.
 data := [
-  g        = 9.81,
-  m        = 275,
-  mur_max  = 1,
-  mur_min  = -1,
-  muf_min  = -1,
+  g         = 9.81,
+  m         = 275,
+  mur_max   = 1,
+  mur_min   = -1,
+  muf_min   = -1,
   #vmur_min = -0.5,
   #vmur_max =  0.5,
   #vmuf_min = -0.5,
   #vmuf_max =  0.5,
-  v_i      = 10,
-  v_f      = 10,
+  v_i       = 10,
+  v_f       = 10,
   #mur_i    = 0,
   #mur_f    = 0,
   #muf_i    = 0,
   #muf_f    = 0,
-  Pmax     = 50*1000, # Kwatt
-  vmax     = 100
+  Pmax      = 50*1000, # Kwatt
+  vmax      = 100
 ]:
 # Post process variables
 # Add standard post process variables in the output of the numerical solver: state variables, lagrange multipliers, controls, penalties and mesh variables.
-post_list := [[Tmax_normalized(v(zeta)), "Tmax_norma"]] :
-
+post_list := [
+  [Tmax_normalized(v(zeta)), "Tmax_norma"]
+] :
 # Select upwind
-#setFDorder([2,3],"backward");
-#setFDorderCoEquation([mur,muf],"forward") ;
 generateOCProblem( "Bike1D",
                     integral_post_processing  = [[1/v(zeta),"time"]],
                     post_processing = post_list,

@@ -1,10 +1,8 @@
 
+# Optimal Control Problem: single mass moved with bounded control 
+# Authors: E. Bertolazzi, F. Biral
 # 
-#            
-# Modello Massa
 # 
-# 1 controllo
-# (Problema tempo fisso, massima distanza)
 # Inizializzazione
 restart:
 with(XOptima):
@@ -12,19 +10,13 @@ with(XOptima):
 EQ1    := diff(x(t),t) - v(t) :
 EQ2    := diff(v(t),t) - F(t) :
 EQNS_T := [ EQ||(1..2) ];
-# Variabili del problema e controlli
-# Variabili
+# States and Controls
 qvars := [x(t),v(t)] ;
-# Controlli
 cvars := [F(t)] ;
 # OCP
-# Inserisce equazioni del modello
 loadDynamicSystem(equations=EQNS_T,controls=cvars,states=qvars) ;
-# Inserisce condizioni al contorno
 addBoundaryConditions(initial=[x=0,v=0],final=[v=0]);
 infoBoundaryConditions() ;
-# Funzioni definite dall'utente
-# Penalty che dipendono dagli ingressi
 addControlBound( F, label=Fcontrol, min = -fMax(zeta), max = fMax(zeta) ) ;
 # Target
 #Describe(addUserFunction);
