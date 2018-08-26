@@ -12,11 +12,11 @@
 		D960AA322120D8C400FE6027 /* BangBangF_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D960AA262120D8C400FE6027 /* BangBangF_Guess.cc */; };
 		D960AA342120D8C400FE6027 /* BangBangF.cc in Sources */ = {isa = PBXBuildFile; fileRef = D960AA2A2120D8C400FE6027 /* BangBangF.cc */; };
 		D960AA352120D8C400FE6027 /* BangBangF_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D960AA2B2120D8C400FE6027 /* BangBangF_Methods.cc */; };
-		D960AA3B2120D8CE00FE6027 /* BangBangF_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D960AA3A2120D8CE00FE6027 /* BangBangF_Main.cc */; };
 		D960AA3F2120D91100FE6027 /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D960AA3C2120D91100FE6027 /* MechatronixInterfaceMruby.framework */; };
 		D960AA402120D91100FE6027 /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D960AA3D2120D91100FE6027 /* MechatronixSolver.framework */; };
 		D960AA412120D91100FE6027 /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D960AA3E2120D91100FE6027 /* MechatronixCore.framework */; };
 		D960AA442120D94D00FE6027 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D960AA432120D94D00FE6027 /* Accelerate.framework */; };
+		D9BFE980212B70E8006D878B /* BangBangF_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BFE97F212B70E8006D878B /* BangBangF_Main.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,11 +42,11 @@
 		D960AA292120D8C400FE6027 /* BangBangF_dll_pins.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BangBangF_dll_pins.hh; sourceTree = "<group>"; };
 		D960AA2A2120D8C400FE6027 /* BangBangF.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BangBangF.cc; sourceTree = "<group>"; };
 		D960AA2B2120D8C400FE6027 /* BangBangF_Methods.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BangBangF_Methods.cc; sourceTree = "<group>"; };
-		D960AA3A2120D8CE00FE6027 /* BangBangF_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BangBangF_Main.cc; sourceTree = "<group>"; };
 		D960AA3C2120D91100FE6027 /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../../../../../../../../../Library/Frameworks/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
 		D960AA3D2120D91100FE6027 /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = ../../../../../../../../../../../Library/Frameworks/MechatronixSolver.framework; sourceTree = "<group>"; };
 		D960AA3E2120D91100FE6027 /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = ../../../../../../../../../../../Library/Frameworks/MechatronixCore.framework; sourceTree = "<group>"; };
 		D960AA432120D94D00FE6027 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		D9BFE97F212B70E8006D878B /* BangBangF_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BangBangF_Main.cc; path = "../ocp-interfaces/cpp/BangBangF_Main.cc"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +71,7 @@
 				D960AA3C2120D91100FE6027 /* MechatronixInterfaceMruby.framework */,
 				D960AA3D2120D91100FE6027 /* MechatronixSolver.framework */,
 				D960AA172120D89700FE6027 /* Products */,
-				D960AA392120D8CE00FE6027 /* cpp */,
+				D9BFE97F212B70E8006D878B /* BangBangF_Main.cc */,
 				D960AA202120D8C400FE6027 /* ocp-src */,
 				D960AA422120D94C00FE6027 /* Frameworks */,
 			);
@@ -100,14 +100,6 @@
 			);
 			name = "ocp-src";
 			path = "../ocp-src";
-			sourceTree = "<group>";
-		};
-		D960AA392120D8CE00FE6027 /* cpp */ = {
-			isa = PBXGroup;
-			children = (
-				D960AA3A2120D8CE00FE6027 /* BangBangF_Main.cc */,
-			);
-			path = cpp;
 			sourceTree = "<group>";
 		};
 		D960AA422120D94C00FE6027 /* Frameworks */ = {
@@ -174,10 +166,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9BFE980212B70E8006D878B /* BangBangF_Main.cc in Sources */,
 				D960AA2F2120D8C400FE6027 /* BangBangF_dll_ruby.cc in Sources */,
 				D960AA322120D8C400FE6027 /* BangBangF_Guess.cc in Sources */,
 				D960AA342120D8C400FE6027 /* BangBangF.cc in Sources */,
-				D960AA3B2120D8CE00FE6027 /* BangBangF_Main.cc in Sources */,
 				D960AA352120D8C400FE6027 /* BangBangF_Methods.cc in Sources */,
 				D960AA312120D8C400FE6027 /* BangBangF_dll_pins.cc in Sources */,
 			);

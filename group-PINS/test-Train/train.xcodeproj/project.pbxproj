@@ -15,9 +15,9 @@
 		D994612120A5B8C80017D350 /* Train.cc in Sources */ = {isa = PBXBuildFile; fileRef = D994611720A5B8C80017D350 /* Train.cc */; };
 		D994612320A5B8C80017D350 /* Train_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D994611B20A5B8C80017D350 /* Train_Methods.cc */; };
 		D994612420A5B8C80017D350 /* hfun.cc in Sources */ = {isa = PBXBuildFile; fileRef = D994611C20A5B8C80017D350 /* hfun.cc */; };
-		D9E15D8120A84B7A005077D9 /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E15D7E20A84B7A005077D9 /* MechatronixSolver.framework */; };
-		D9E15D8220A84B7A005077D9 /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E15D7F20A84B7A005077D9 /* MechatronixCore.framework */; };
-		D9E15D8320A84B7A005077D9 /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E15D8020A84B7A005077D9 /* MechatronixInterfaceMruby.framework */; };
+		D9D0C209212BF2B7009AD1CE /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D0C206212BF2B7009AD1CE /* MechatronixSolver.framework */; };
+		D9D0C20A212BF2B7009AD1CE /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D0C207212BF2B7009AD1CE /* MechatronixCore.framework */; };
+		D9D0C20B212BF2B7009AD1CE /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D0C208212BF2B7009AD1CE /* MechatronixInterfaceMruby.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,9 +44,9 @@
 		D994611820A5B8C80017D350 /* Train_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Train_Pars.hh; sourceTree = "<group>"; };
 		D994611B20A5B8C80017D350 /* Train_Methods.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train_Methods.cc; sourceTree = "<group>"; };
 		D994611C20A5B8C80017D350 /* hfun.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hfun.cc; sourceTree = "<group>"; };
-		D9E15D7E20A84B7A005077D9 /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixSolver.framework; sourceTree = "<group>"; };
-		D9E15D7F20A84B7A005077D9 /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixCore.framework; sourceTree = "<group>"; };
-		D9E15D8020A84B7A005077D9 /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
+		D9D0C206212BF2B7009AD1CE /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixSolver.framework; sourceTree = "<group>"; };
+		D9D0C207212BF2B7009AD1CE /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixCore.framework; sourceTree = "<group>"; };
+		D9D0C208212BF2B7009AD1CE /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,9 +54,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9E15D8120A84B7A005077D9 /* MechatronixSolver.framework in Frameworks */,
-				D9E15D8220A84B7A005077D9 /* MechatronixCore.framework in Frameworks */,
-				D9E15D8320A84B7A005077D9 /* MechatronixInterfaceMruby.framework in Frameworks */,
+				D9D0C209212BF2B7009AD1CE /* MechatronixSolver.framework in Frameworks */,
+				D9D0C20A212BF2B7009AD1CE /* MechatronixCore.framework in Frameworks */,
+				D9D0C20B212BF2B7009AD1CE /* MechatronixInterfaceMruby.framework in Frameworks */,
 				D994610A20A5B85D0017D350 /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,9 +85,9 @@
 		D994610820A5B85D0017D350 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D9E15D7F20A84B7A005077D9 /* MechatronixCore.framework */,
-				D9E15D8020A84B7A005077D9 /* MechatronixInterfaceMruby.framework */,
-				D9E15D7E20A84B7A005077D9 /* MechatronixSolver.framework */,
+				D9D0C207212BF2B7009AD1CE /* MechatronixCore.framework */,
+				D9D0C208212BF2B7009AD1CE /* MechatronixInterfaceMruby.framework */,
+				D9D0C206212BF2B7009AD1CE /* MechatronixSolver.framework */,
 				D994610920A5B85D0017D350 /* Accelerate.framework */,
 			);
 			name = Frameworks;
