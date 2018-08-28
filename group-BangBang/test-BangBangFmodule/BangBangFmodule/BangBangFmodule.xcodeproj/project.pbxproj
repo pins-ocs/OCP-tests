@@ -1,0 +1,338 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D9CCCA8C21340B7500ABEFF6 /* BangBangFmodule_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9CCCA7E21340B7400ABEFF6 /* BangBangFmodule_Methods.cc */; };
+		D9CCCA8D21340B7500ABEFF6 /* BangBangFmodule_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9CCCA7F21340B7400ABEFF6 /* BangBangFmodule_Guess.cc */; };
+		D9CCCA9221340B7500ABEFF6 /* BangBangFmodule_dll_ruby.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9CCCA8821340B7400ABEFF6 /* BangBangFmodule_dll_ruby.cc */; };
+		D9CCCA9421340B7500ABEFF6 /* BangBangFmodule.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9CCCA8A21340B7400ABEFF6 /* BangBangFmodule.cc */; };
+		D9CCCA9521340B7500ABEFF6 /* BangBangFmodule_dll_pins.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9CCCA8B21340B7400ABEFF6 /* BangBangFmodule_dll_pins.cc */; };
+		D9CCCA9721340B8B00ABEFF6 /* BangBangFmodule_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9CCCA9621340B8B00ABEFF6 /* BangBangFmodule_Main.cc */; };
+		D9CCCA9A21340BA200ABEFF6 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CCCA9921340BA200ABEFF6 /* Accelerate.framework */; };
+		D9CCCA9E21340BE400ABEFF6 /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CCCA9B21340BE300ABEFF6 /* MechatronixSolver.framework */; };
+		D9CCCA9F21340BE400ABEFF6 /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CCCA9C21340BE400ABEFF6 /* MechatronixCore.framework */; };
+		D9CCCAA021340BE400ABEFF6 /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CCCA9D21340BE400ABEFF6 /* MechatronixInterfaceMruby.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D9B5643121340B59003B8A99 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D9B5643321340B59003B8A99 /* BangBangFmodule */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BangBangFmodule; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9CCCA7E21340B7400ABEFF6 /* BangBangFmodule_Methods.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BangBangFmodule_Methods.cc; sourceTree = "<group>"; };
+		D9CCCA7F21340B7400ABEFF6 /* BangBangFmodule_Guess.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BangBangFmodule_Guess.cc; sourceTree = "<group>"; };
+		D9CCCA8421340B7400ABEFF6 /* BangBangFmodule_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BangBangFmodule_Pars.hh; sourceTree = "<group>"; };
+		D9CCCA8521340B7400ABEFF6 /* BangBangFmodule_dll_ruby.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BangBangFmodule_dll_ruby.hh; sourceTree = "<group>"; };
+		D9CCCA8621340B7400ABEFF6 /* BangBangFmodule.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BangBangFmodule.hh; sourceTree = "<group>"; };
+		D9CCCA8721340B7400ABEFF6 /* BangBangFmodule_dll_pins.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BangBangFmodule_dll_pins.hh; sourceTree = "<group>"; };
+		D9CCCA8821340B7400ABEFF6 /* BangBangFmodule_dll_ruby.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BangBangFmodule_dll_ruby.cc; sourceTree = "<group>"; };
+		D9CCCA8A21340B7400ABEFF6 /* BangBangFmodule.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BangBangFmodule.cc; sourceTree = "<group>"; };
+		D9CCCA8B21340B7400ABEFF6 /* BangBangFmodule_dll_pins.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BangBangFmodule_dll_pins.cc; sourceTree = "<group>"; };
+		D9CCCA9621340B8B00ABEFF6 /* BangBangFmodule_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BangBangFmodule_Main.cc; sourceTree = "<group>"; };
+		D9CCCA9921340BA200ABEFF6 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		D9CCCA9B21340BE300ABEFF6 /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = ../../../../../../../../../../../Library/Frameworks/MechatronixSolver.framework; sourceTree = "<group>"; };
+		D9CCCA9C21340BE400ABEFF6 /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = ../../../../../../../../../../../Library/Frameworks/MechatronixCore.framework; sourceTree = "<group>"; };
+		D9CCCA9D21340BE400ABEFF6 /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../../../../../../../../../Library/Frameworks/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9B5643021340B59003B8A99 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9CCCA9A21340BA200ABEFF6 /* Accelerate.framework in Frameworks */,
+				D9CCCA9E21340BE400ABEFF6 /* MechatronixSolver.framework in Frameworks */,
+				D9CCCA9F21340BE400ABEFF6 /* MechatronixCore.framework in Frameworks */,
+				D9CCCAA021340BE400ABEFF6 /* MechatronixInterfaceMruby.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D9B5642A21340B59003B8A99 = {
+			isa = PBXGroup;
+			children = (
+				D9B5643421340B59003B8A99 /* Products */,
+				D9CCCA9621340B8B00ABEFF6 /* BangBangFmodule_Main.cc */,
+				D9CCCA7D21340B7400ABEFF6 /* ocp-src */,
+				D9CCCA9821340BA200ABEFF6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D9B5643421340B59003B8A99 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9B5643321340B59003B8A99 /* BangBangFmodule */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9CCCA7D21340B7400ABEFF6 /* ocp-src */ = {
+			isa = PBXGroup;
+			children = (
+				D9CCCA7E21340B7400ABEFF6 /* BangBangFmodule_Methods.cc */,
+				D9CCCA7F21340B7400ABEFF6 /* BangBangFmodule_Guess.cc */,
+				D9CCCA8421340B7400ABEFF6 /* BangBangFmodule_Pars.hh */,
+				D9CCCA8521340B7400ABEFF6 /* BangBangFmodule_dll_ruby.hh */,
+				D9CCCA8621340B7400ABEFF6 /* BangBangFmodule.hh */,
+				D9CCCA8721340B7400ABEFF6 /* BangBangFmodule_dll_pins.hh */,
+				D9CCCA8821340B7400ABEFF6 /* BangBangFmodule_dll_ruby.cc */,
+				D9CCCA8A21340B7400ABEFF6 /* BangBangFmodule.cc */,
+				D9CCCA8B21340B7400ABEFF6 /* BangBangFmodule_dll_pins.cc */,
+			);
+			name = "ocp-src";
+			path = "../ocp-src";
+			sourceTree = "<group>";
+		};
+		D9CCCA9821340BA200ABEFF6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9CCCA9C21340BE400ABEFF6 /* MechatronixCore.framework */,
+				D9CCCA9D21340BE400ABEFF6 /* MechatronixInterfaceMruby.framework */,
+				D9CCCA9B21340BE300ABEFF6 /* MechatronixSolver.framework */,
+				D9CCCA9921340BA200ABEFF6 /* Accelerate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9B5643221340B59003B8A99 /* BangBangFmodule */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9B5643A21340B59003B8A99 /* Build configuration list for PBXNativeTarget "BangBangFmodule" */;
+			buildPhases = (
+				D9B5642F21340B59003B8A99 /* Sources */,
+				D9B5643021340B59003B8A99 /* Frameworks */,
+				D9B5643121340B59003B8A99 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BangBangFmodule;
+			productName = BangBangFmodule;
+			productReference = D9B5643321340B59003B8A99 /* BangBangFmodule */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9B5642B21340B59003B8A99 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Enrico Bertolazzi";
+				TargetAttributes = {
+					D9B5643221340B59003B8A99 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = D9B5642E21340B59003B8A99 /* Build configuration list for PBXProject "BangBangFmodule" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D9B5642A21340B59003B8A99;
+			productRefGroup = D9B5643421340B59003B8A99 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9B5643221340B59003B8A99 /* BangBangFmodule */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9B5642F21340B59003B8A99 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9CCCA8D21340B7500ABEFF6 /* BangBangFmodule_Guess.cc in Sources */,
+				D9CCCA9521340B7500ABEFF6 /* BangBangFmodule_dll_pins.cc in Sources */,
+				D9CCCA9221340B7500ABEFF6 /* BangBangFmodule_dll_ruby.cc in Sources */,
+				D9CCCA9421340B7500ABEFF6 /* BangBangFmodule.cc in Sources */,
+				D9CCCA8C21340B7500ABEFF6 /* BangBangFmodule_Methods.cc in Sources */,
+				D9CCCA9721340B8B00ABEFF6 /* BangBangFmodule_Main.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D9B5643821340B59003B8A99 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D9B5643921340B59003B8A99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D9B5643B21340B59003B8A99 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9B5643C21340B59003B8A99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9B5642E21340B59003B8A99 /* Build configuration list for PBXProject "BangBangFmodule" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9B5643821340B59003B8A99 /* Debug */,
+				D9B5643921340B59003B8A99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9B5643A21340B59003B8A99 /* Build configuration list for PBXNativeTarget "BangBangFmodule" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9B5643B21340B59003B8A99 /* Debug */,
+				D9B5643C21340B59003B8A99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9B5642B21340B59003B8A99 /* Project object */;
+}
