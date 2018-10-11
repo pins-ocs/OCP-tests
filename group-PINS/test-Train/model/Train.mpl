@@ -43,10 +43,13 @@ addControlBound( ub, controlType="U_COS_LOGARITHMIC", min=0, max=ubMax,
 #addPenaltyGT( v(zeta), positiveVelocity ):
 setTarget( lagrange = ua(zeta)*v(zeta) ) ;
 #Describe(generateOCProblem) ;
-POST := [  [uaControl(uvars[1],0, uaMax),"uaControl"],
+POST := [
+  [uaControl(uvars[1],0, uaMax),"uaControl"],
   [ubControl(uvars[2],0, ubMax),"ubControl"],
-  [h(x(zeta)),"Profile"]];
-PARS := [  x_i   = 0,
+  [h(x(zeta)),"Profile"]
+];
+PARS := [
+  x_i   = 0,
   x_f   = 6,
   v_i   = 0,
   v_f   = 0,
@@ -56,20 +59,26 @@ PARS := [  x_i   = 0,
   uaMax = 10,
   ubMax = 2,
   epsi_max = 0.01, epsi_min = 0.0001,
-  tol_max = 0.01,  tol_min = 0.001];
+  tol_max = 0.01,  tol_min = 0.001
+];
 UGUESS := [ua = uaMax/2, ub = ubMax/2 ];
 GUESS := [x=x_i+(x_f-x_i)*zeta/4.8,v=1];
-CONT :=[  [ [ua,"epsilon"]   = epsi_max*(1-s) + epsi_min*s,
+CONT :=[
+  [ [ua,"epsilon"]   = epsi_max*(1-s) + epsi_min*s,
     [ub,"epsilon"]   = epsi_max*(1-s) + epsi_min*s,
     [ua,"tolerance"] = tol_max*(1-s) + tol_min*s,
     [ub,"tolerance"] = tol_max*(1-s) + tol_min*s ] ];
-generateOCProblem(  "Train",
+generateOCProblem(
+  "Train",
    post_processing = POST,
    parameters      = PARS,
-   #controls_guess  = UGUESS, # uncomment to force iterative control computation   states_guess    = GUESS,
+   controls_guess  = UGUESS, # uncomment to force iterative control computation
+   states_guess    = GUESS,
    continuation    = CONT,
    mesh = [ [length=0.25, n=25],
             [length=0.75, n=3000],
-            [length=3.8,  n=100]],   clean=true);
+            [length=3.8,  n=100]],
+   clean=true
+);
 #Describe(generateOCProblem);
 

@@ -25,34 +25,34 @@ namespace TrainDefine {
   using namespace std ;
   using namespace MechatronixCommon ;
   
-  static valueType epsilon = 0.05 ;
-  static valueType ss[3] = { -2, 0, 2 } ;
-  static valueType zz[2] = { 2, 4 } ;
+  static real_type epsilon = 0.05 ;
+  static real_type ss[3] = { -2, 0, 2 } ;
+  static real_type zz[2] = { 2, 4 } ;
 
-  static indexType n_zz = indexType(sizeof(zz)/sizeof(zz[0])) ;
+  static integer n_zz = integer(sizeof(zz)/sizeof(zz[0])) ;
 
-  valueType
-  Train::h( valueType x ) const {
-    valueType res = 0 ;
-    for ( indexType j = 0 ; j < n_zz ; ++j )
+  real_type
+  Train::h( real_type x ) const {
+    real_type res = 0 ;
+    for ( integer j = 0 ; j < n_zz ; ++j )
       res += (ss[j+1]-ss[j])*atan((x-zz[j])/epsilon) ;
     return res / m_pi ;
   }
 
-  valueType
-  Train::h_D( valueType x ) const {
-    valueType res = 0 ;
-    for ( indexType j = 0 ; j < n_zz ; ++j )
+  real_type
+  Train::h_D( real_type x ) const {
+    real_type res = 0 ;
+    for ( integer j = 0 ; j < n_zz ; ++j )
       res += (ss[j+1]-ss[j])/(1+power2((x-zz[j])/epsilon)) ;
     return res / m_pi / epsilon ;
   }
   
-  valueType
-  Train::h_DD( valueType x ) const {
-    valueType res = 0 ;
-    for ( indexType j = 0 ; j < n_zz ; ++j ) {
-      valueType dz  = x-zz[j] ;
-      valueType dz2 = power2(dz/epsilon) ;
+  real_type
+  Train::h_DD( real_type x ) const {
+    real_type res = 0 ;
+    for ( integer j = 0 ; j < n_zz ; ++j ) {
+      real_type dz  = x-zz[j] ;
+      real_type dz2 = power2(dz/epsilon) ;
       res += (ss[j+1]-ss[j])*dz/power2(1+dz2) ;
     }
     return -2 * res / m_pi / epsilon / epsilon/ epsilon ;
