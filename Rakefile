@@ -50,6 +50,8 @@ when /mingw|mswin/
   # in windows use visual studio compiler, check version
   tmp = `#{WHICH_CMD} cl.exe`.lines.first
   case tmp
+  when /2017/
+    VS_VERSION = '2017'
   when /16\.0/
     VS_VERSION = '2017'
   when /14\.0/
@@ -63,12 +65,14 @@ when /mingw|mswin/
   end
   # check architecture
   case tmp
+  when /x64\\cl\.exe/
+    VS_ARCH = 'x64'
   when /amd64\\cl\.exe/
     VS_ARCH = 'x64'
   when /bin\\cl\.exe/
     VS_ARCH = 'x86'
   else
-    raise RuntimeError, "Cannot determine architecture for Visual Studio #{VS_VERSION}"
+    raise RuntimeError, "Cannot determine architecture for Visual Studio #{VS_VERSION}".red
   end
 
   MAPLECMD = "cmaple.exe" # da sistenare
