@@ -17,6 +17,7 @@ LFLAGS     = `pins --lflags`
 LIBS       = `pins --libs`
 INCLUDES   = `pins --includes`
 FRAMEWORKS = `pins --frameworks`
+PATHLIB    = `pins --path`
 
 case RUBY_PLATFORM
 
@@ -113,6 +114,7 @@ begin # definitions
     CC            = {'.c' => 'clang', '.cc' => 'clang++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.dylib","#{BIN_DIR}/main"]
+    RUN           = "cd #{ROOT}\n./bin/main"
   when :linux
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
     COMPILE_FLAGS = "#{CXXFLAGS}"
@@ -121,6 +123,7 @@ begin # definitions
     CC            = {'.c' => 'gcc', '.cc' => 'g++'}
     OBJS          = SOURCES.ext('o')
     CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.so","#{BIN_DIR}/main"]
+    RUN           = "cd #{ROOT}\n./bin/main"
   when :win
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
     COMPILE_FLAGS = "#{CXXFLAGS}"
@@ -130,6 +133,7 @@ begin # definitions
     CC            = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
     OBJS          = SOURCES.ext('obj')
     CLEAN.include ["#{SRC_DIR}/**/*.obj","#{SRC_DIR}/*.obj","#{LIB_DIR}/*.{dll,lib,exp}","#{BIN_DIR}/main.{obj,exe}"]
+    RUN           = "set path=%%#{PATHLIB}\ncd #{ROOT}}\nbin\\main"
   end
   MAIN = "#{MAIN_DIR}/#{MODEL_NAME}_Main.cc"
 
@@ -247,6 +251,11 @@ when :win
     sh "#{CC['.cc']} #{COMPILE_FLAGS} #{HEADERS_FLAGS} #{MAIN} /Fe\"#{BIN_DIR}/#{t}\" /link #{LIB_WIN_DIR} #{ROOT}/lib/lib#{MODEL_NAME}_static.lib #{LIBS}"
     puts "   built executable #{BIN_DIR}/#{t}".green
   end
+end
+
+desc "Run executable".green
+task :run => [:main] do
+  sh RUN
 end
 
 task :default => LIBRARY
