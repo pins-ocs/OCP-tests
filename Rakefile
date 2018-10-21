@@ -133,7 +133,8 @@ begin # definitions
     CC            = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
     OBJS          = SOURCES.ext('obj')
     CLEAN.include ["#{SRC_DIR}/**/*.obj","#{SRC_DIR}/*.obj","#{LIB_DIR}/*.{dll,lib,exp}","#{BIN_DIR}/main.{obj,exe}"]
-    RUN           = "set path=%%#{PATHLIB}\ncd #{ROOT}}\nbin\\main"
+    $RUN           = "(set path=%path%;#{PATHLIB} & bin\\main)"
+    RUN           = "bin\\main"
   end
   MAIN = "#{MAIN_DIR}/#{MODEL_NAME}_Main.cc"
 
@@ -255,6 +256,9 @@ end
 
 desc "Run executable".green
 task :run => [:main] do
+  puts "Run executable #{RUN}".yellow
+  ENV['PATH'] = ENV['PATH']+PATHLIB
+  cd ROOT
   sh RUN
 end
 
