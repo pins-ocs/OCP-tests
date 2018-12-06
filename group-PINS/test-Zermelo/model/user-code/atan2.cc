@@ -22,12 +22,12 @@
 
 namespace ZermeloDefine {
 
-  using namespace std ;
-  using namespace MechatronixCommon ;
+  using namespace std;
+  using namespace MechatronixLoad;
   
   valueType
   Zermelo::arctan2( valueType y, valueType x ) const {
-    return atan2(y,x) ;
+    return atan2(y,x);
   }
 
 }

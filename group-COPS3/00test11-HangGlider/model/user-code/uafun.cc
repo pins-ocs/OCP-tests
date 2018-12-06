@@ -22,30 +22,30 @@
 
 namespace HangGliderDefine {
 
-  using namespace std ;
-  using namespace MechatronixCommon ;
+  using namespace std;
+  using namespace MechatronixLoad;
   
-  static valueType uM = 2.5 ;
-  static valueType R  = 100 ;
+  static valueType uM = 2.5;
+  static valueType R  = 100;
 
   valueType
   HangGlider::ua( valueType x ) const {
-    valueType X = power2(x/R-2.5) ;
-    return uM*(1-X)*exp(-X) ;
+    valueType X = power2(x/R-2.5);
+    return uM*(1-X)*exp(-X);
   }
 
   valueType
   HangGlider::ua_D( valueType x ) const {
-    valueType X   = power2(x/R-2.5) ;
-    valueType X_D = (x/R-2.5)*2/R ;
-    return (uM*(X-2)*exp(-X))*X_D ;
+    valueType X   = power2(x/R-2.5);
+    valueType X_D = (x/R-2.5)*2/R;
+    return (uM*(X-2)*exp(-X))*X_D;
   }
   
   valueType
   HangGlider::ua_DD( valueType x ) const {
-    valueType X    = power2(x/R-2.5) ;
-    valueType X_DD = 2/(R*R) ;
-    return -(uM*(X-3)*exp(-X))*X_DD ;
+    valueType X    = power2(x/R-2.5);
+    valueType X_DD = 2/(R*R);
+    return -(uM*(X-3)*exp(-X))*X_DD;
   }
 
 }
