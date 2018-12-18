@@ -1,9 +1,15 @@
 
-# BRACHIOSTOCRONA 
+# 
+# XOPTIMA Automatic Code Generation for Optimal Control Problems 
+# 
+# Optimal Control Problem: Brachiostocrona
 # Authors: E. Bertolazzi, F. Biral
-restart:
+# Date: December 18, 2018
+# 
+# Load Packages
+# Load maple packages
+restart: with(plots):
 with(XOptima):
-#XOptimaInfo() ;
 # Equations of motion
 EQ1    :=      diff(x(zeta),zeta)     = T*v(zeta)*sin(theta(zeta)):
 EQ2    :=      diff(y(zeta),zeta)     = T*v(zeta)*cos(theta(zeta)):

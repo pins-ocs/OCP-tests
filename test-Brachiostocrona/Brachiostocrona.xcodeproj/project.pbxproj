@@ -1,0 +1,346 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D967BBAF21C9B24E0055D837 /* Brachiostocrona_Methods.cc in Sources */ = {isa = PBXBuildFile; fileRef = D967BBA921C9B24E0055D837 /* Brachiostocrona_Methods.cc */; };
+		D967BBB021C9B24E0055D837 /* Brachiostocrona_dll_ruby.cc in Sources */ = {isa = PBXBuildFile; fileRef = D967BBAA21C9B24E0055D837 /* Brachiostocrona_dll_ruby.cc */; };
+		D967BBB121C9B24E0055D837 /* Brachiostocrona_dll_pins.cc in Sources */ = {isa = PBXBuildFile; fileRef = D967BBAB21C9B24E0055D837 /* Brachiostocrona_dll_pins.cc */; };
+		D967BBB221C9B24E0055D837 /* Brachiostocrona_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D967BBAC21C9B24E0055D837 /* Brachiostocrona_Guess.cc */; };
+		D967BBB321C9B24E0055D837 /* Brachiostocrona.cc in Sources */ = {isa = PBXBuildFile; fileRef = D967BBAE21C9B24E0055D837 /* Brachiostocrona.cc */; };
+		D967BBB621C9B25B0055D837 /* Brachiostocrona_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D967BBB521C9B25B0055D837 /* Brachiostocrona_Main.cc */; };
+		D967BBB921C9B2810055D837 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D967BBB821C9B2810055D837 /* Accelerate.framework */; };
+		D967BBC921C9B3660055D837 /* MechatronixAstro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D967BBC021C9B2AE0055D837 /* MechatronixAstro.framework */; };
+		D967BBCA21C9B3660055D837 /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D967BBBC21C9B2AE0055D837 /* MechatronixCore.framework */; };
+		D967BBCB21C9B3660055D837 /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D967BBC121C9B2AE0055D837 /* MechatronixInterfaceMruby.framework */; };
+		D967BBCC21C9B3660055D837 /* MechatronixManufacturing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D967BBBD21C9B2AE0055D837 /* MechatronixManufacturing.framework */; };
+		D967BBCD21C9B3660055D837 /* MechatronixODE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D967BBBB21C9B2AE0055D837 /* MechatronixODE.framework */; };
+		D967BBCE21C9B3660055D837 /* MechatronixRoad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D967BBBE21C9B2AE0055D837 /* MechatronixRoad.framework */; };
+		D967BBCF21C9B3660055D837 /* MechatronixVehicle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D967BBBF21C9B2AE0055D837 /* MechatronixVehicle.framework */; };
+		D967BBD121C9B3660055D837 /* MechatronixSolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D967BBD021C9B3660055D837 /* MechatronixSolver.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D98E3ACC17C41D5C00A1731B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D967BBA621C9B24E0055D837 /* Brachiostocrona_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Brachiostocrona_Pars.hh; sourceTree = "<group>"; };
+		D967BBA721C9B24E0055D837 /* Brachiostocrona_dll_ruby.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Brachiostocrona_dll_ruby.hh; sourceTree = "<group>"; };
+		D967BBA821C9B24E0055D837 /* Brachiostocrona_dll_pins.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Brachiostocrona_dll_pins.hh; sourceTree = "<group>"; };
+		D967BBA921C9B24E0055D837 /* Brachiostocrona_Methods.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Brachiostocrona_Methods.cc; sourceTree = "<group>"; };
+		D967BBAA21C9B24E0055D837 /* Brachiostocrona_dll_ruby.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Brachiostocrona_dll_ruby.cc; sourceTree = "<group>"; };
+		D967BBAB21C9B24E0055D837 /* Brachiostocrona_dll_pins.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Brachiostocrona_dll_pins.cc; sourceTree = "<group>"; };
+		D967BBAC21C9B24E0055D837 /* Brachiostocrona_Guess.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Brachiostocrona_Guess.cc; sourceTree = "<group>"; };
+		D967BBAD21C9B24E0055D837 /* Brachiostocrona.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Brachiostocrona.hh; sourceTree = "<group>"; };
+		D967BBAE21C9B24E0055D837 /* Brachiostocrona.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Brachiostocrona.cc; sourceTree = "<group>"; };
+		D967BBB521C9B25B0055D837 /* Brachiostocrona_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Brachiostocrona_Main.cc; sourceTree = "<group>"; };
+		D967BBB821C9B2810055D837 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		D967BBBB21C9B2AE0055D837 /* MechatronixODE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixODE.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixODE.framework; sourceTree = "<group>"; };
+		D967BBBC21C9B2AE0055D837 /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixCore.framework; sourceTree = "<group>"; };
+		D967BBBD21C9B2AE0055D837 /* MechatronixManufacturing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixManufacturing.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixManufacturing.framework; sourceTree = "<group>"; };
+		D967BBBE21C9B2AE0055D837 /* MechatronixRoad.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixRoad.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixRoad.framework; sourceTree = "<group>"; };
+		D967BBBF21C9B2AE0055D837 /* MechatronixVehicle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixVehicle.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixVehicle.framework; sourceTree = "<group>"; };
+		D967BBC021C9B2AE0055D837 /* MechatronixAstro.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixAstro.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixAstro.framework; sourceTree = "<group>"; };
+		D967BBC121C9B2AE0055D837 /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
+		D967BBD021C9B3660055D837 /* MechatronixSolver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixSolver.framework; path = ../../../../../../../../../Library/Frameworks/MechatronixSolver.framework; sourceTree = "<group>"; };
+		D98E3ACE17C41D5C00A1731B /* Brachiostocrona */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Brachiostocrona; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D98E3ACB17C41D5C00A1731B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D967BBB921C9B2810055D837 /* Accelerate.framework in Frameworks */,
+				D967BBD121C9B3660055D837 /* MechatronixSolver.framework in Frameworks */,
+				D967BBC921C9B3660055D837 /* MechatronixAstro.framework in Frameworks */,
+				D967BBCA21C9B3660055D837 /* MechatronixCore.framework in Frameworks */,
+				D967BBCB21C9B3660055D837 /* MechatronixInterfaceMruby.framework in Frameworks */,
+				D967BBCC21C9B3660055D837 /* MechatronixManufacturing.framework in Frameworks */,
+				D967BBCD21C9B3660055D837 /* MechatronixODE.framework in Frameworks */,
+				D967BBCE21C9B3660055D837 /* MechatronixRoad.framework in Frameworks */,
+				D967BBCF21C9B3660055D837 /* MechatronixVehicle.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D967BBA521C9B24E0055D837 /* ocp-src */ = {
+			isa = PBXGroup;
+			children = (
+				D967BBA621C9B24E0055D837 /* Brachiostocrona_Pars.hh */,
+				D967BBA721C9B24E0055D837 /* Brachiostocrona_dll_ruby.hh */,
+				D967BBA821C9B24E0055D837 /* Brachiostocrona_dll_pins.hh */,
+				D967BBA921C9B24E0055D837 /* Brachiostocrona_Methods.cc */,
+				D967BBAA21C9B24E0055D837 /* Brachiostocrona_dll_ruby.cc */,
+				D967BBAB21C9B24E0055D837 /* Brachiostocrona_dll_pins.cc */,
+				D967BBAC21C9B24E0055D837 /* Brachiostocrona_Guess.cc */,
+				D967BBAD21C9B24E0055D837 /* Brachiostocrona.hh */,
+				D967BBAE21C9B24E0055D837 /* Brachiostocrona.cc */,
+			);
+			path = "ocp-src";
+			sourceTree = "<group>";
+		};
+		D967BBB421C9B25B0055D837 /* cpp */ = {
+			isa = PBXGroup;
+			children = (
+				D967BBB521C9B25B0055D837 /* Brachiostocrona_Main.cc */,
+			);
+			name = cpp;
+			path = "ocp-interfaces/cpp";
+			sourceTree = "<group>";
+		};
+		D967BBB721C9B2810055D837 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D967BBD021C9B3660055D837 /* MechatronixSolver.framework */,
+				D967BBC021C9B2AE0055D837 /* MechatronixAstro.framework */,
+				D967BBBC21C9B2AE0055D837 /* MechatronixCore.framework */,
+				D967BBC121C9B2AE0055D837 /* MechatronixInterfaceMruby.framework */,
+				D967BBBD21C9B2AE0055D837 /* MechatronixManufacturing.framework */,
+				D967BBBB21C9B2AE0055D837 /* MechatronixODE.framework */,
+				D967BBBE21C9B2AE0055D837 /* MechatronixRoad.framework */,
+				D967BBBF21C9B2AE0055D837 /* MechatronixVehicle.framework */,
+				D967BBB821C9B2810055D837 /* Accelerate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D990A43617B926570022E545 = {
+			isa = PBXGroup;
+			children = (
+				D990A44017B926570022E545 /* Products */,
+				D967BBB421C9B25B0055D837 /* cpp */,
+				D967BBA521C9B24E0055D837 /* ocp-src */,
+				D967BBB721C9B2810055D837 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D990A44017B926570022E545 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D98E3ACE17C41D5C00A1731B /* Brachiostocrona */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D98E3ACD17C41D5C00A1731B /* Brachiostocrona */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D98E3AD417C41D5C00A1731B /* Build configuration list for PBXNativeTarget "Brachiostocrona" */;
+			buildPhases = (
+				D98E3ACA17C41D5C00A1731B /* Sources */,
+				D98E3ACB17C41D5C00A1731B /* Frameworks */,
+				D98E3ACC17C41D5C00A1731B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Brachiostocrona;
+			productName = BangBang_standalone;
+			productReference = D98E3ACE17C41D5C00A1731B /* Brachiostocrona */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D990A43717B926570022E545 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "Enrico Bertolazzi";
+			};
+			buildConfigurationList = D990A43A17B926570022E545 /* Build configuration list for PBXProject "Brachiostocrona" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D990A43617B926570022E545;
+			productRefGroup = D990A44017B926570022E545 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D98E3ACD17C41D5C00A1731B /* Brachiostocrona */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D98E3ACA17C41D5C00A1731B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D967BBB121C9B24E0055D837 /* Brachiostocrona_dll_pins.cc in Sources */,
+				D967BBB321C9B24E0055D837 /* Brachiostocrona.cc in Sources */,
+				D967BBB621C9B25B0055D837 /* Brachiostocrona_Main.cc in Sources */,
+				D967BBB021C9B24E0055D837 /* Brachiostocrona_dll_ruby.cc in Sources */,
+				D967BBAF21C9B24E0055D837 /* Brachiostocrona_Methods.cc in Sources */,
+				D967BBB221C9B24E0055D837 /* Brachiostocrona_Guess.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D98E3AD517C41D5C00A1731B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D98E3AD617C41D5C00A1731B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/../../../../Library/Frameworks\"",
+					/Library/Frameworks,
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D990A44117B926570022E545 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D990A44217B926570022E545 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D98E3AD417C41D5C00A1731B /* Build configuration list for PBXNativeTarget "Brachiostocrona" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D98E3AD517C41D5C00A1731B /* Debug */,
+				D98E3AD617C41D5C00A1731B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D990A43A17B926570022E545 /* Build configuration list for PBXProject "Brachiostocrona" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D990A44117B926570022E545 /* Debug */,
+				D990A44217B926570022E545 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D990A43717B926570022E545 /* Project object */;
+}
