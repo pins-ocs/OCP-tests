@@ -52,3 +52,5 @@ dumps
 *.out
 *.app
 *.sav
+*.bak
+test-BangBangFmodule/Xcode

@@ -18,34 +18,16 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "HangGlider.hh"
+#include "Zermelo.hh"
 
-namespace HangGliderDefine {
+namespace ZermeloDefine {
 
   using namespace std;
   using namespace MechatronixLoad;
   
-  static real_type uM = 2.5;
-  static real_type R  = 100;
-
   real_type
-  HangGlider::ua( real_type x ) const {
-    real_type X = power2(x/R-2.5);
-    return uM*(1-X)*exp(-X);
-  }
-
-  real_type
-  HangGlider::ua_D( real_type x ) const {
-    real_type X   = power2(x/R-2.5);
-    real_type X_D = (x/R-2.5)*2/R;
-    return (uM*(X-2)*exp(-X))*X_D;
-  }
-  
-  real_type
-  HangGlider::ua_DD( real_type x ) const {
-    real_type X    = power2(x/R-2.5);
-    real_type X_DD = 2/(R*R);
-    return -(uM*(X-3)*exp(-X))*X_DD;
+  Zermelo::arctan2( real_type y, real_type x ) const {
+    return atan2(y,x);
   }
 
 }

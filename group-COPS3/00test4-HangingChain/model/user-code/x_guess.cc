@@ -18,34 +18,17 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "HangGlider.hh"
+#include "HangingChain.hh"
+#include "HangingChain_Pars.hh"
 
-namespace HangGliderDefine {
+namespace HangingChainDefine {
 
-  using namespace std;
-  using namespace MechatronixLoad;
-  
-  static real_type uM = 2.5;
-  static real_type R  = 100;
+  using Mechatronix::real_type;
 
   real_type
-  HangGlider::ua( real_type x ) const {
-    real_type X = power2(x/R-2.5);
-    return uM*(1-X)*exp(-X);
+  HangingChain::x_guess( real_type t ) const {
+    real_type a = ModelPars[iM_a];
+    real_type b = ModelPars[iM_b];
+    return 2*std::abs(b-a)*t*(t-2*(0.25+(b<a)*0.5))+1;
   }
-
-  real_type
-  HangGlider::ua_D( real_type x ) const {
-    real_type X   = power2(x/R-2.5);
-    real_type X_D = (x/R-2.5)*2/R;
-    return (uM*(X-2)*exp(-X))*X_D;
-  }
-  
-  real_type
-  HangGlider::ua_DD( real_type x ) const {
-    real_type X    = power2(x/R-2.5);
-    real_type X_DD = 2/(R*R);
-    return -(uM*(X-3)*exp(-X))*X_DD;
-  }
-
 }
