@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: farmer_problem_main.m                                          %
 %                                                                       %
-%  version: 1.0   date 6/5/2019                                         %
+%  version: 1.0   date 16/6/2019                                        %
 %                                                                       %
 %  Copyright (C) 2019                                                   %
 %                                                                       %
@@ -39,10 +39,42 @@ ocp = farmer_problem( 'farmer_problem' );
 ocp.setup('../../data/farmer_problem_Data.rb');
 ocp.infoLevel(4);
 
-ocp.set_guess(); % use default guess
+ocp.set_guess(); % use default guess generated in MAPLE
+%
+% in alternative
+% ocp.set_guess( struct );
+%
+% initialize the guess using the following criteria
+% struct.initialize = 'zero'           % fill the guess with all zero
+% struct.initialize = 'none' or 'warm' % do not fill the guess
+%
+% after initialization fill the guess
+%
+% struct.guess_type = 'none'
+% in this case none is done
+%
+% fill the guess with the guess generated in MAPLE
+% struct.guess_type = 'default'
+%
+% struct.guess_type             = 'spline' % use spline to initialize states/multiplers
+% struct.spline_set             = structure with the spline table to initialize states/multiplers/controls
+% struct.spline_set.headers     = cell array of strings with name of the splines (name of states/multiplers/controls)
+% struct.spline_set.spline_type = cell array of strings with the type of splines ('pchip','cubic','quintic')
+% struct.spline_set.xdata:      = vector of 'x' samples of the splines
+% struct.spline_set.ydata:      = matrix npts x data of 'y' of the splines
+%
+% the data of the guess are updated ONLY in the 'x' range of the spline
+%
+% struct.guess_type  = 'table' % use spline to initialize states/multiplers
+% struct.states      =  structure of vectors, each field is the name of the state
+% struct.multipliers =  structure of vectors, each field is the name of the multiplier
+% struct.controls    =  structure of vectors, each field is the name of the control
+%
+% the length of the vector must be compatible with the mesh
+%
 
 epsi = 1e-5;
-ocp.check_jacobian(ocp.get_raw_solution(),epsi);
+ocp.check_jacobian( ocp.get_raw_solution(), epsi );
 
 names = ocp.names();
 

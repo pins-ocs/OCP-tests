@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: farmer_problem_dll_ruby.cc                                     |
  |                                                                       |
- |  version: 1.0   date 6/5/2019                                         |
+ |  version: 1.0   date 16/6/2019                                        |
  |                                                                       |
  |  Copyright (C) 2019                                                   |
  |                                                                       |
@@ -101,7 +101,7 @@ namespace farmer_problemDefine {
     if ( it == problems.end() ) {
       return false;
     } else {
-      it->second->guess( gc_data );
+      it->second->guess( gc_data("Guess", "farmer_problem_ocp_guess missing field `Guess`" ) );
       return true;
     }
   }

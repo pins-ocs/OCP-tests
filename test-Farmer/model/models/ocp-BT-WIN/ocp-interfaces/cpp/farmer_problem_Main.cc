@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: farmer_problem_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 6/5/2019                                         |
+ |  version: 1.0   date 16/6/2019                                        |
  |                                                                       |
  |  Copyright (C) 2019                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ main() {
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data );
+    model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
     bool ok = model.solve(); // no spline

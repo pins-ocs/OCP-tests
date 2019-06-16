@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: farmer_problem_fsolve_main.m                                   %
 %                                                                       %
-%  version: 1.0   date 6/5/2019                                         %
+%  version: 1.0   date 16/6/2019                                        %
 %                                                                       %
 %  Copyright (C) 2019                                                   %
 %                                                                       %
@@ -35,7 +35,7 @@ ocp = farmer_problem( 'farmer_problem', infolevel );
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
 ocp.setup('../../data/farmer_problem_Data.rb');
-ocp.guess(); % use default guess
+ocp.set_guess(); % use default guess
 %ocp.updateContinuation(0,1);
 
 solver = nlsys_solver_ipopt(ocp);

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: farmer_problem_Mex.cc                                          |
  |                                                                       |
- |  version: 1.0   date 6/5/2019                                         |
+ |  version: 1.0   date 16/6/2019                                        |
  |                                                                       |
  |  Copyright (C) 2019                                                   |
  |                                                                       |
@@ -144,6 +144,53 @@ public:
 
   integer nnz() const { return MODEL_CLASS::eval_JF_nnz(); }
 
+  void
+  read( string const & fname, GenericContainer & gc ) {
+    if ( fname.find_last_of(".rb") ) {
+      Mechatronix::MrubyInterpreter mrb;
+      MEX_ASSERT(
+        mrb.load( fname.c_str() ) != EXIT_FAILURE,
+        "Failed to load: ``" << fname << "''"
+      );
+      mrb.expr_to_GC( "Mechatronix.content", gc );
+    } else if ( fname.find_last_of(".lua") ) {
+      using GenericContainerNamespace::LuaInterpreter;
+      LuaInterpreter lua;
+      Mechatronix::lua_set_constants( lua );
+      lua.do_file( fname.c_str() );
+      lua.global_to_GC( "content", gc );
+    } else {
+      MEX_ASSERT(
+        false,
+        "unknown suffix for filename `" << fname << "` use `.rb` or `.lua`"
+      );
+    }
+  }
+
+  /*\
+   |                          _
+   |  _ __  _____ __  ___ ___| |_ _  _ _ __
+   | | '  \/ -_) \ / (_-</ -_)  _| || | '_ \
+   | |_|_|_\___/_\_\_/__/\___|\__|\_,_| .__/
+   |              |___|               |_|
+  \*/
+  void
+  mex_read( int nlhs, mxArray       *plhs[],
+            int nrhs, mxArray const *prhs[] ) {
+    #define CMD MODEL_NAME "_Mex('read',obj,filename): "
+    CHECK_IN(3);
+    CHECK_OUT(1);
+    MEX_ASSERT(
+      mxIsChar(arg_in_2),
+      CMD "filename must be a string, found " << mxGetClassName( arg_in_2 )
+    );
+    string fname = mxArrayToString(arg_in_2);
+    GenericContainer gc;
+    this->read( fname, gc );
+    GenericContainer_to_mxArray( gc, arg_out_0 );
+    #undef CMD
+  }
+
   /*\
    |                          _
    |  _ __  _____ __  ___ ___| |_ _  _ _ __
@@ -159,25 +206,7 @@ public:
     CHECK_OUT(0);
     if ( mxIsChar(arg_in_2) ) { // read from file
       string fname = mxArrayToString(arg_in_2);
-      if ( fname.find_last_of(".rb") ) {
-        Mechatronix::MrubyInterpreter mrb;
-        MEX_ASSERT(
-          mrb.load( fname.c_str() ) != EXIT_FAILURE,
-          "Failed to load: ``" << fname << "''"
-        );
-        mrb.expr_to_GC( "Mechatronix.content", gc_data );
-      } else if ( fname.find_last_of(".lua") ) {
-        using GenericContainerNamespace::LuaInterpreter;
-        LuaInterpreter lua;
-        Mechatronix::lua_set_constants( lua );
-        lua.do_file( fname.c_str() );
-        lua.global_to_GC( "content", gc_data );
-      } else {
-        MEX_ASSERT(
-          false,
-          "unknown suffix for filename `" << fname << "` use `.rb` or `.lua`"
-        );
-      }
+      this->read( fname, gc_data );
     } else { // setup using MATLAB structure
       mxArray_to_GenericContainer( arg_in_2, gc_data );
     }
@@ -210,25 +239,22 @@ public:
   void
   mex_set_guess( int nlhs, mxArray       *plhs[],
                  int nrhs, mxArray const *prhs[] ) {
-    #define CMD MODEL_NAME "_Mex('set_guess',obj): "
+    #define CMD MODEL_NAME "_Mex('set_guess',obj[,userguess]): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'set_guess'" );
-    CHECK_IN( 2 );
+    MEX_ASSERT( nrhs == 2 || nrhs == 3, CMD "Expected 2 or 3 input argument(s), nrhs = "  << nrhs )
     CHECK_OUT( 0 );
-    MODEL_CLASS::guess( gc_data );
+    GenericContainer & gc_guess = gc_data["Guess"];
+    gc_guess.clear();
+    if ( nrhs == 2 ) {
+      // inizializza guess di default
+      gc_guess["initialize"] = "zero";
+      gc_guess["guess_type"] = "default";
+    } else {
+      // sovrascrive guess nei dati del problema
+      mxArray_to_GenericContainer( arg_in_2, gc_guess );
+    }
+    MODEL_CLASS::guess( gc_guess );
     this->doneGuess();
-    #undef CMD
-  }
-
-  void
-  mex_change_guess( int nlhs, mxArray       *plhs[],
-                    int nrhs, mxArray const *prhs[] ) {
-    #define CMD MODEL_NAME "_Mex('change_guess',obj,guess): "
-    MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'change_guess'" );
-    CHECK_OUT( 0 );
-    CHECK_IN( 3 );
-    // sovrascrive guess nei dati del problema
-    GenericContainer & gc_guess = gc_data("Guess");
-    mxArray_to_GenericContainer( arg_in_2, gc_guess );
     #undef CMD
   }
 
@@ -735,9 +761,9 @@ typedef enum {
   CMD_NEW,
   CMD_HELP,
   CMD_DELETE,
+  CMD_READ,
   CMD_SETUP,
   CMD_SET_GUESS,
-  CMD_CHANGE_GUESS,
   CMD_GET_GUESS,
   CMD_GET_SOLUTION_AS_GUESS,
   CMD_SOLVE,
@@ -762,9 +788,9 @@ static map<string,unsigned> cmd_to_idx = {
   {"new",CMD_NEW},
   {"help",CMD_HELP},
   {"delete",CMD_DELETE},
+  {"read",CMD_READ},
   {"setup",CMD_SETUP},
   {"set_guess",CMD_SET_GUESS},
-  {"change_guess",CMD_CHANGE_GUESS},
   {"get_guess",CMD_GET_GUESS},
   {"get_solution_as_guess",CMD_GET_SOLUTION_AS_GUESS},
   {"solve",CMD_SOLVE},
@@ -853,6 +879,10 @@ mexFunction( int nlhs, mxArray       *plhs[],
       DATA_DELETE( arg_in_1 );
       #undef CMD
       break;
+    case CMD_READ:
+      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      ptr->mex_read( nlhs, plhs, nrhs, prhs );
+      break;
     case CMD_SETUP:
       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       ptr->mex_setup( nlhs, plhs, nrhs, prhs );
@@ -860,10 +890,6 @@ mexFunction( int nlhs, mxArray       *plhs[],
     case CMD_SET_GUESS:
       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       ptr->mex_set_guess( nlhs, plhs, nrhs, prhs );
-      break;
-    case CMD_CHANGE_GUESS:
-      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      ptr->mex_change_guess( nlhs, plhs, nrhs, prhs );
       break;
     case CMD_GET_GUESS:
       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: farmer_problem_Data.rb                                         %
 %                                                                       %
-%  version: 1.0   date 6/5/2019                                         %
+%  version: 1.0   date 16/6/2019                                        %
 %                                                                       %
 %  Copyright (C) 2019                                                   %
 %                                                                       %
@@ -51,6 +51,7 @@ function [mex_name,lib_name] = CompileOctave()
     '-lMechatronixRoad ', ...
     '-lMechatronixODE ', ...
     '-lMechatronixVehicle ', ...
+    '-lMechatronixAstro ', ...
     '-lMechatronixInterfaceMruby ' ...
   ];
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: farmer_problem_Pars.hh                                         |
  |                                                                       |
- |  version: 1.0   date 6/5/2019                                         |
+ |  version: 1.0   date 16/6/2019                                        |
  |                                                                       |
  |  Copyright (C) 2019                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #define numPvars                 0
 #define numPostProcess           2
 #define numIntegratedPostProcess 0
+#define numContinuationSteps     0
 
 // Xvars
 #define iX_x1          0

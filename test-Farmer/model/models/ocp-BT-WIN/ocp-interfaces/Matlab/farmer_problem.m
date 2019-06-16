@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: farmer_problem.m                                               %
 %                                                                       %
-%  version: 1.0   date 6/5/2019                                         %
+%  version: 1.0   date 16/6/2019                                        %
 %                                                                       %
 %  Copyright (C) 2019                                                   %
 %                                                                       %
@@ -38,6 +38,10 @@ classdef farmer_problem < handle
     % -------------------------------------------------------------------------
     % INITIALIZATION
     % -------------------------------------------------------------------------
+    function data = read( self, fname )
+      data = farmer_problem_Mex( 'read', self.objectHandle, fname );
+    end
+
     function setup( self, fname_or_struct )
       farmer_problem_Mex( 'setup', self.objectHandle, fname_or_struct );
     end
@@ -64,11 +68,8 @@ classdef farmer_problem < handle
     % -------------------------------------------------------------------------
     % GUESS
     % -------------------------------------------------------------------------
-    function set_guess( self )
-      farmer_problem_Mex( 'set_guess', self.objectHandle );
-    end
-    function change_guess( self, new_guess )
-      farmer_problem_Mex( 'change_guess', self.objectHandle, new_guess );
+    function set_guess( self, varargin )
+      farmer_problem_Mex( 'set_guess', self.objectHandle, varargin{:} );
     end
     function guess = get_guess( self )
       guess = farmer_problem_Mex( 'get_guess', self.objectHandle );
@@ -115,55 +116,55 @@ classdef farmer_problem < handle
     % -------------------------------------------------------------------------
     % STATES
     % -------------------------------------------------------------------------
-    function res = x1( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x1' );
+    function res = x1( self, varargin  )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x1', varargin{:} );
     end
-    function res = x2( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x2' );
+    function res = x2( self, varargin  )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x2', varargin{:} );
     end
-    function res = x3( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x3' );
+    function res = x3( self, varargin  )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x3', varargin{:} );
     end
-    function res = res( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'res' );
+    function res = res( self, varargin  )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'res', varargin{:} );
     end
-    function res = x4( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x4' );
+    function res = x4( self, varargin  )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x4', varargin{:} );
     end
 
     % -------------------------------------------------------------------------
     % MULTIPLIER
     % -------------------------------------------------------------------------
-    function res = lambda1( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda1__xo' );
+    function res = lambda1( self, varargin )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda1__xo', varargin{:} );
     end
-    function res = lambda2( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda2__xo' );
+    function res = lambda2( self, varargin )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda2__xo', varargin{:} );
     end
-    function res = lambda3( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda3__xo' );
+    function res = lambda3( self, varargin )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda3__xo', varargin{:} );
     end
-    function res = lambda4( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda4__xo' );
+    function res = lambda4( self, varargin )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda4__xo', varargin{:} );
     end
-    function res = lambda5( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda5__xo' );
+    function res = lambda5( self, varargin )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'lambda5__xo', varargin{:} );
     end
 
     % -------------------------------------------------------------------------
     % CONTROLS
     % -------------------------------------------------------------------------
-    function res = x1__o( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x1__o' );
+    function res = x1__o( self, varargin )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x1__o', varargin{:} );
     end
-    function res = x2__o( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x2__o' );
+    function res = x2__o( self, varargin )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x2__o', varargin{:} );
     end
-    function res = x3__o( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x3__o' );
+    function res = x3__o( self, varargin )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x3__o', varargin{:} );
     end
-    function res = x4__o( self )
-      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x4__o' );
+    function res = x4__o( self, varargin )
+      res = farmer_problem_Mex( 'get_solution', self.objectHandle, 'x4__o', varargin{:} );
     end
 
     % -------------------------------------------------------------------------

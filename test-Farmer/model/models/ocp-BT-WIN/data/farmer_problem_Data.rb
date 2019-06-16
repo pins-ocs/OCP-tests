@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: farmer_problem_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 6/5/2019                                         #
+#  version: 1.0   date 16/6/2019                                        #
 #                                                                       #
 #  Copyright (C) 2019                                                   #
 #                                                                       #
@@ -57,7 +57,7 @@ mechatronix do |data|
   # setup solver
   data.Solver = {
     # Linear algebra factorization selection:
-    # 'LU', 'QR', 'QRP'
+    # 'LU', 'QR', 'QRP', 'SUPERLU'
     # =================
     :factorization => 'LU',
     # =================
@@ -74,16 +74,18 @@ mechatronix do |data|
     # ===================================
 
     # solver parameters
-    :max_iter             => 120,
-    :max_step_iter        => 40,
-    :max_accumulated_iter => 800,
-    :tolerance            => 9.999999999999999e-10,
+    :max_iter              => 120,
+    :max_step_iter         => 40,
+    :max_accumulated_iter  => 800,
+    :tolerance             => 9.999999999999999e-10,
     # continuation parameters
-    :initial_step   => 0.2,   # initial step for continuation
-    :min_step       => 0.001, # minimum accepted step for continuation
-    :reduce_factor  => 0.5,   # p fails, reduce step by this factor
-    :augment_factor => 1.5,   # if step successful in less than few_iteration augment step by this factor
-    :few_iterations => 8      #
+    :initial_step          => 0.2,   # initial step for continuation
+    :min_step              => 0.001, # minimum accepted step for continuation
+    :reduce_factor         => 0.5,   # p fails, reduce step by this factor
+    :augment_factor        => 1.5,   # if step successful in less than few_iteration augment step by this factor
+    :few_iterations        => 8,     #
+    :ns_continuation_begin => 0,
+    :ns_continuation_end   => 0
   }
 
   # Boundary Conditions
@@ -98,7 +100,7 @@ mechatronix do |data|
   # Guess
   data.Guess = {
     # possible value: zero, default, none, warm
-    :initialize => 'default',
+    :initialize => 'zero',
     # possible value: default, none, warm, spline, table
     :guess_type => 'default',
   }
@@ -197,8 +199,8 @@ mechatronix do |data|
     :segments => [
       
       {
-        :n      => 40,
         :length => 2,
+        :n      => 400,
       },
     ],
   };

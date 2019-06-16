@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: farmer_problem_dll_pins.hh                                     |
  |                                                                       |
- |  version: 1.0   date 6/5/2019                                         |
+ |  version: 1.0   date 16/6/2019                                        |
  |                                                                       |
  |  Copyright (C) 2019                                                   |
  |                                                                       |
@@ -56,12 +56,6 @@
 #include "farmer_problem_Pars.hh"
 
 #ifdef MECHATRONIX_OS_WINDOWS
-  //#pragma comment(lib, "IPHLPAPI.lib")
-  //#pragma comment(lib, "ws2_32.lib")
-  //#pragma comment(lib, "Shlwapi.lib")
-  //#pragma comment(lib, "Advapi32.lib")
-  //#pragma comment(lib, "Shell32.lib")
-  //#pragma comment(lib, "kernel32.lib")
   #ifndef _SCL_SECURE_NO_WARNINGS
     #define _SCL_SECURE_NO_WARNINGS 1
   #endif
@@ -161,8 +155,8 @@ using Mechatronix::MeshStd;
 
     FARMER_PROBLEM_API_DLL
     void
-    guess( GenericContainer const & gc_data ) {
-      model.guess( gc_data );
+    guess( GenericContainer const & gc_guess ) {
+      model.guess( gc_guess );
     }
 
     FARMER_PROBLEM_API_DLL

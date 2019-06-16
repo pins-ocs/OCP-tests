@@ -102,8 +102,6 @@ begin # definitions
   MAIN_DIR = "#{ROOT}/ocp-interfaces/cpp"
   LIB_DIR  = "#{ROOT}/lib"
   BIN_DIR  = "#{ROOT}/bin"
-  SOURCES  = FileList["#{SRC_DIR}/*.{c,cc}"]
-  HEADERS  = FileList["#{SRC_DIR}/*.{h,hh}"]
 
   case OS
   when :mac
@@ -112,8 +110,6 @@ begin # definitions
     LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}"
     CC            = {'.c' => 'clang', '.cc' => 'clang++'}
-    OBJS          = SOURCES.ext('o')
-    CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.dylib","#{BIN_DIR}/main"]
     RUN           = "cd #{ROOT}\n./bin/main"
   when :linux
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}.#{DYL_EXT}"
@@ -121,8 +117,6 @@ begin # definitions
     LINKER_FLAGS  = "#{FRAMEWORKS} #{LFLAGS} #{LIBS}"
     HEADERS_FLAGS = "#{INCLUDES} -I#{SRC_DIR}"
     CC            = {'.c' => 'gcc', '.cc' => 'g++'}
-    OBJS          = SOURCES.ext('o')
-    CLEAN.include ["#{SRC_DIR}/**/*.o","#{SRC_DIR}/*.o","#{LIB_DIR}/*.so","#{BIN_DIR}/main"]
     RUN           = "cd #{ROOT}\n./bin/main"
   when :win
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
@@ -131,8 +125,6 @@ begin # definitions
     HEADERS_FLAGS = "#{INCLUDES} /I#{SRC_DIR}"
     LIB_WIN_DIR   = "#{LFLAGS} #{FRAMEWORKS}"
     CC            = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
-    OBJS          = SOURCES.ext('obj')
-    CLEAN.include ["#{SRC_DIR}/**/*.obj","#{SRC_DIR}/*.obj","#{LIB_DIR}/*.{dll,lib,exp}","#{BIN_DIR}/main.{obj,exe}"]
     RUN           = "bin\\main"
   end
   MAIN = "#{MAIN_DIR}/#{MODEL_NAME}_Main.cc"
@@ -201,24 +193,66 @@ end
   end
 end
 
-file LIBRARY => OBJS do
+file LIBRARY do
+
+  sources = FileList["#{SRC_DIR}/*.{c,cc}"]
+  headers = FileList["#{SRC_DIR}/*.{h,hh}"]
+
+  puts "LIBRARY"
+  puts "sources = #{sources}"
+
+  case OS
+  when :mac
+    objs = sources.ext('o')
+  when :linux
+    objs = sources.ext('o')
+  when :win
+    objs = sources.ext('obj')
+  end
+  objs.each do |oo|
+    Rake::Task[oo].invoke
+  end
+
   puts ">> Building lib#{MODEL_NAME}".green
   lib_name = "lib#{MODEL_NAME}.#{DYL_EXT}"
   case OS
   when :mac
-    sh "#{CC['.cc']} -dynamiclib -current_version 1.0 #{LINKER_FLAGS} -o #{LIBRARY} -install_name @rpath/../lib/#{lib_name} #{OBJS}"
+    sh "#{CC['.cc']} -dynamiclib -current_version 1.0 #{LINKER_FLAGS} -o #{LIBRARY} -install_name @rpath/../lib/#{lib_name} #{objs}"
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run.rb"     if File.exist?("#{ROOT}/#{MODEL_NAME}_run.rb")
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run_ffi.rb" if File.exist?("#{ROOT}/#{MODEL_NAME}_run_ffi.rb")
   when :linux
-    sh "#{CC['.cc']} -shared #{OBJS} #{LINKER_FLAGS} -o #{LIBRARY} "
+    sh "#{CC['.cc']} -shared #{objs} #{LINKER_FLAGS} -o #{LIBRARY} "
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run.rb"     if File.exist?("#{ROOT}/#{MODEL_NAME}_run.rb")
     sh "chmod u+x #{ROOT}/#{MODEL_NAME}_run_ffi.rb" if File.exist?("#{ROOT}/#{MODEL_NAME}_run_ffi.rb")
   when :win
-    sh "#{CC['.dll']} #{LINKER_FLAGS} #{LIB_WIN_DIR} #{LIBS} /OUT:#{LIBRARY}.dll #{OBJS}"
-    #sh "#{CC['.cc']} /D _USRDLL /D _WINDLL #{OBJS} #{LIB_WIN_DIR} #{LIBS} #{LINKER_FLAGS} /OUT:#{LIBRARY}.dll"
-    sh "#{CC['.lib']} /OUT:#{LIBRARY}_static.lib #{OBJS}"
+    sh "#{CC['.dll']} #{LINKER_FLAGS} #{LIB_WIN_DIR} #{LIBS} /OUT:#{LIBRARY}.dll #{objs}"
+    #sh "#{CC['.cc']} /D _USRDLL /D _WINDLL #{objs} #{LIB_WIN_DIR} #{LIBS} #{LINKER_FLAGS} /OUT:#{LIBRARY}.dll"
+    sh "#{CC['.lib']} /OUT:#{LIBRARY}_static.lib #{objs}"
   end
   puts "   built library #{LIBRARY}".green
+end
+
+
+desc "Remove OBJS and LIBS".green
+task :clean do
+  puts "PASSA"
+  FileList.new("#{SRC_DIR}/*.{o,obj}") do |f|
+    puts "f = #{f}"
+    rm_f f 
+  end
+  FileList.new("#{SRC_DIR}/**/*.{o,obj}") do |f|
+    puts "f = #{f}"
+    rm_f f 
+  end
+  FileList.new("#{LIB_DIR}/*.{dll,lib,exp,dylib}") do |f|
+    puts "f = #{f}"
+    rm_f f 
+  end
+  FileList.new("#{BIN_DIR}/main.*") do |f|
+    puts "f = #{f}"
+    rm_f f 
+  end
+  puts "PASSA2"
 end
 
 desc "Build the dynamic library #{MODEL_NAME}".green
@@ -266,4 +300,17 @@ task :default => LIBRARY
 task :pry do
   require 'pry'
   binding.pry
+end
+
+task :all do
+  puts "\n\n\nCLOBBER\n\n".green
+  Rake::Task[:clobber].invoke
+  puts "\n\nMAPLE\n\n".green
+  Rake::Task[:maple].invoke
+  puts "\n\nCLEAN\n\n".green
+  Rake::Task[:clean].invoke
+  puts "\n\nMAIN\n\n".green
+  Rake::Task[:main].invoke
+  puts "\n\nRUN\n\n".green
+  Rake::Task[:run].invoke
 end

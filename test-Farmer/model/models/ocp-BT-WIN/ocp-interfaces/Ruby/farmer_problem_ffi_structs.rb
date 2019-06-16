@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: farmer_problem_ffi_structs.rb                                     #
 #                                                                          #
-#  version: 1.0   date 6/5/2019                                            #
+#  version: 1.0   date 16/6/2019                                           #
 #                                                                          #
 #  Copyright (C) 2019                                                      #
 #                                                                          #

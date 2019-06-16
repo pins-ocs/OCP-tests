@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: farmer_problem.cc                                              |
  |                                                                       |
- |  version: 1.0   date 6/5/2019                                         |
+ |  version: 1.0   date 16/6/2019                                        |
  |                                                                       |
  |  Copyright (C) 2019                                                   |
  |                                                                       |
@@ -407,11 +407,12 @@ namespace farmer_problemDefine {
     if ( Indirect_OCP::infoLevel >= 3 ) this->infoClasses( *Indirect_OCP::pCout );
     GenericContainer const & gc_control = gc("ControlSolver");
     this->setupControlSolver(gc_control);
-    if ( gc_control.exists("Iterative") )
-      this->u_solve_iterative = gc_control("Iterative").get_bool();
+    gc_control.get_if_exists( "Iterative", this->u_solve_iterative );
 
     // setup nonlinear system with object handling mesh domain
     GenericContainer const & gc_solver = gc("Solver");
+    gc_solver.get_if_exists( "ns_continuation_begin", this->ns_continuation_begin );
+    gc_solver.get_if_exists( "ns_continuation_end", this->ns_continuation_end );
     this->setup( pMesh, gc_solver );
 
     // setup solver
@@ -626,6 +627,15 @@ namespace farmer_problemDefine {
       this->checkJacobian( pSolver->solution(), epsi, *Indirect_OCP::pCout );
     }
   }
+
+  // save model parameters
+  void
+  farmer_problem::save_OCP_info( GenericContainer & gc ) const {
+    for ( integer i = 0; i < numModelPars; ++i )
+      gc[namesModelPars[i]] = ModelPars[i]; 
+
+  }
+
 }
 
 // EOF: farmer_problem.cc

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: farmer_problem_fsolve_main.m                                   %
 %                                                                       %
-%  version: 1.0   date 6/5/2019                                         %
+%  version: 1.0   date 16/6/2019                                        %
 %                                                                       %
 %  Copyright (C) 2019                                                   %
 %                                                                       %
@@ -42,7 +42,7 @@ nlsys = @(x) deal(ocp.eval_F(x),ocp.eval_JF(x));
 %ocp.setup(farmer_problem_data);
 %ocp.setup('../../data/farmer_problem_Data.lua');
 ocp.setup('../../data/farmer_problem_Data.rb');
-ocp.guess(); % use default guess
+ocp.set_guess(); % use default guess
 
 
 algo = {'trust-region-dogleg', 'trust-region','levenberg-marquardt'};

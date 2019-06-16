@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: farmer_problem.hh                                              |
  |                                                                       |
- |  version: 1.0   date 6/5/2019                                         |
+ |  version: 1.0   date 16/6/2019                                        |
  |                                                                       |
  |  Copyright (C) 2019                                                   |
  |                                                                       |
@@ -130,6 +130,9 @@ namespace farmer_problemDefine {
     farmer_problem( farmer_problem const & );
     farmer_problem const & operator = ( farmer_problem const & );
 
+    // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
+    integer ns_continuation_begin;
+    integer ns_continuation_end;
 
     FARMER_PROBLEM_API_DLL
     void
@@ -266,8 +269,8 @@ namespace farmer_problemDefine {
     // set initial solution of the nonlinear system
     FARMER_PROBLEM_API_DLL
     void
-    guess( GenericContainer const & gc ) {
-      this->guess( gc("Guess"), pSolver->solution() );
+    guess( GenericContainer const & gc_guess ) {
+      this->guess( gc_guess, pSolver->solution() );
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -413,6 +416,12 @@ namespace farmer_problemDefine {
     FARMER_PROBLEM_API_DLL
     void
     updateContinuation( integer phase, real_type s );
+
+    // save model parameters
+    FARMER_PROBLEM_API_DLL
+    virtual
+    void
+    save_OCP_info( GenericContainer & gc ) const;
 
   };
 }
