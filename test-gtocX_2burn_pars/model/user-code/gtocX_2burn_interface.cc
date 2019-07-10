@@ -70,31 +70,31 @@ namespace gtocX_2burn_parsDefine {
   }
 
   real_type
-  CLASS::p_guess( real_type t ) const {
+  CLASS::p_guess( real_type ) const {
     guess_setup();
     return Guess.pOrbital();
   }
 
   real_type
-  CLASS::f_guess( real_type t ) const {
+  CLASS::f_guess( real_type ) const {
     guess_setup();
     return Guess.fOrbital();
   }
 
   real_type
-  CLASS::g_guess( real_type t ) const {
+  CLASS::g_guess( real_type ) const {
     guess_setup();
     return Guess.gOrbital();
   }
 
   real_type
-  CLASS::h_guess( real_type t ) const {
+  CLASS::h_guess( real_type ) const {
     guess_setup();
     return Guess.hOrbital();
   }
 
   real_type
-  CLASS::k_guess( real_type t ) const {
+  CLASS::k_guess( real_type ) const {
     guess_setup();
     return Guess.kOrbital();
   }
