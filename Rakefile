@@ -235,7 +235,6 @@ end
 
 desc "Remove OBJS and LIBS".green
 task :clean do
-  puts "PASSA"
   FileList.new("#{SRC_DIR}/*.{o,obj}") do |f|
     puts "f = #{f}"
     rm_f f 
@@ -252,7 +251,6 @@ task :clean do
     puts "f = #{f}"
     rm_f f 
   end
-  puts "PASSA2"
 end
 
 desc "Build the dynamic library #{MODEL_NAME}".green

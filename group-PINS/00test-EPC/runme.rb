@@ -270,13 +270,13 @@ opt.data[:MappedObjects] = {
 opt.data[:Constraints] = {
   # Constraint1D
 
-  # Barrier1DGreaterThan
+  # PenaltyBarrier1DGreaterThan
   :CuttingTorqueLimit => {
     :subType   => Barrier1D::LOG_EXP,
     :epsilon   => 0.01,
     :tolerance => opt.data[:Parameters][:Tc_max]*0.1,
   },
-  # Barrier1DGreaterThan
+  # PenaltyBarrier1DGreaterThan
   :CuttingPowerLimit => {
     :subType   => Barrier1D::LOG_EXP,
     :weight    => 1,
@@ -301,7 +301,7 @@ opt.data[:Constraints] = {
   },
   # Penalty1DGreaterThan
   :FeedRateLimit => {
-    :subType   => Penalty1D::SMOOTH,
+    :subType   => PenaltyBarrier1D::SMOOTH,
     :epsilon   => 0.1,
     :tolerance => 0.01,
   }

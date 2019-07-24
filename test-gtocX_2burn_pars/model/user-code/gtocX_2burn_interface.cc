@@ -37,7 +37,7 @@ namespace gtocX_2burn_parsDefine {
   real_type
   CLASS::guess_setup() const {
     if ( do_setup ) {
-      gtocX::loadStars( "./model/user-code/stars.txt" );
+      gtocX::loadStars( "./data/stars.txt" );
       From = &gtocX::stars[0];
       To   = &gtocX::stars[12003];
 
