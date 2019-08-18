@@ -177,7 +177,11 @@ EQNS_T := [ EQ1 ] : &lt;%&gt; ;</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Optimal Contol Problem</Text-field></Title>
 <Group hide-input="false" labelreference="L10718" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">loadDynamicSystem(  equations = EQNS_T,  controls  = cvars,  states    = qvars);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">loadDynamicSystem(
+  equations = EQNS_T,
+  controls  = cvars,
+  states    = qvars
+);</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkmbXRleHRHNiMvSSttb2R1bGVuYW1lRzYiSSxUeXBlc2V0dGluZ0dJKF9zeXNsaWJHRic2KFFUSW5kZXBlbmRlbnR+dmFyaWFibGV+dH5oYXN+YmVlbn5yZWRlZmluZWR+dG9+YHpldGFgRicvJSVib2xkR1EldHJ1ZUYnLyUrZm9yZWdyb3VuZEdRLFsyNTUsMCwyNTVdRicvJSdvcGFxdWVHRi4vJSxtYXRodmFyaWFudEdRJWJvbGRGJy8lK2ZvbnR3ZWlnaHRHRjY=">LUkmbXRleHRHNiMvSSttb2R1bGVuYW1lRzYiSSxUeXBlc2V0dGluZ0dJKF9zeXNsaWJHRic2KFFUSW5kZXBlbmRlbnR+dmFyaWFibGV+dH5oYXN+YmVlbn5yZWRlZmluZWR+dG9+YHpldGFgRicvJSVib2xkR1EldHJ1ZUYnLyUrZm9yZWdyb3VuZEdRLFsyNTUsMCwyNTVdRicvJSdvcGFxdWVHRi4vJSxtYXRodmFyaWFudEdRJWJvbGRGJy8lK2ZvbnR3ZWlnaHRHRjY=</Equation></Text-field>
 </Output>
@@ -203,18 +207,20 @@ EQNS_T := [ EQ1 ] : &lt;%&gt; ;</Text-field>
 </Input>
 </Group>
 <Group labelreference="L612" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addControlBound(  u,
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addControlBound(
+  u,
   controlType = &quot;U_COS_LOGARITHMIC&quot;,
   min         = 0,
   max         = 1,
   epsilon     = 0.0001,
   tolerance   = 0.0001,
-  scale       = 1);</Text-field>
+  scale       = 1
+);</Text-field>
 </Input>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added the following penalty constraint
   name      = uControl
-  class     = PenaltyU
+  class     = PenaltyBarrierU
   u         = u(zeta)
   [min,max] = [0,1]
   scale     = 1

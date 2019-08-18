@@ -181,7 +181,11 @@ EQNS_T := [ EQ||(1..2) ];</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L602" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">loadDynamicSystem(  equations = EQNS_T,  controls  = cvars,  states    = qvars);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">loadDynamicSystem(
+  equations = EQNS_T,
+  controls  = cvars,
+  states    = qvars
+);</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkmbXRleHRHNiMvSSttb2R1bGVuYW1lRzYiSSxUeXBlc2V0dGluZ0dJKF9zeXNsaWJHRic2KFFUSW5kZXBlbmRlbnR+dmFyaWFibGV+dH5oYXN+YmVlbn5yZWRlZmluZWR+dG9+YHpldGFgRicvJSVib2xkR1EldHJ1ZUYnLyUrZm9yZWdyb3VuZEdRLFsyNTUsMCwyNTVdRicvJSdvcGFxdWVHRi4vJSxtYXRodmFyaWFudEdRJWJvbGRGJy8lK2ZvbnR3ZWlnaHRHRjY=">LUkmbXRleHRHNiMvSSttb2R1bGVuYW1lRzYiSSxUeXBlc2V0dGluZ0dJKF9zeXNsaWJHRic2KFFUSW5kZXBlbmRlbnR+dmFyaWFibGV+dH5oYXN+YmVlbn5yZWRlZmluZWR+dG9+YHpldGFgRicvJSVib2xkR1EldHJ1ZUYnLyUrZm9yZWdyb3VuZEdRLFsyNTUsMCwyNTVdRicvJSdvcGFxdWVHRi4vJSxtYXRodmFyaWFudEdRJWJvbGRGJy8lK2ZvbnR3ZWlnaHRHRjY=</Equation></Text-field>
 </Output>
@@ -193,7 +197,9 @@ EQNS_T := [ EQ||(1..2) ];</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L10689" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addBoundaryConditions(  initial=[y1=0,y2=1]);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addBoundaryConditions(
+  initial=[y1=0,y2=1]
+);</Text-field>
 </Input>
 </Group>
 <Group labelreference="L10329" drawlabel="true">
@@ -207,13 +213,19 @@ EQNS_T := [ EQ||(1..2) ];</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L612" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addControlBound(  u,  controlType = &quot;U_COS_LOGARITHMIC&quot;,  maxabs      = 1,  epsilon     = 1e-10,  tolerance   = 1e-10,
-  scale       = 1);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addControlBound(
+  u,
+  controlType = &quot;U_COS_LOGARITHMIC&quot;,
+  maxabs      = 1,
+  epsilon     = 1e-10,
+  tolerance   = 1e-10,
+  scale       = 1
+);</Text-field>
 </Input>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added the following penalty constraint
   name      = uControl
-  class     = PenaltyU
+  class     = PenaltyBarrierU
   u         = u(zeta)
   [min,max] = [-1,1]
   scale     = 1
@@ -252,7 +264,8 @@ Lagrange term = </Text-field>
 <Group hide-input="false" labelreference="L10715" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">generateOCProblem(
   &quot;AliChan&quot;, clean=true,
-  parameters   = [ epsilon=1e-4, L=Pi/2 ],  mesh         = [ length=L, n=1000 ],
+  parameters   = [ epsilon=1e-4, L=Pi/2 ],
+  mesh         = [ length=L, n=1000 ],
   states_guess = [ y2 = 1 ]
 );</Text-field>
 </Input>

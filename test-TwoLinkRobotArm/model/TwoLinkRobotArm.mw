@@ -148,7 +148,9 @@
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Equations of motion</Text-field></Title>
 <Group hide-input="false" labelreference="L36830" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">C3 := cos(x3(t));S3 := sin(x3(t));U1 := u1(t);
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">C3 := cos(x3(t));
+S3 := sin(x3(t));
+U1 := u1(t);
 U2 := u2(t);</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYoLUkjbWlHRiQ2JVEjQzNGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtb0dGJDYtUSkmQXNzaWduO0YnL0YzUSdub3JtYWxGJy8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdGPS8lKXN0cmV0Y2h5R0Y9LyUqc3ltbWV0cmljR0Y9LyUobGFyZ2VvcEdGPS8lLm1vdmFibGVsaW1pdHNHRj0vJSdhY2NlbnRHRj0vJSdsc3BhY2VHUSwwLjI3Nzc3NzhlbUYnLyUncnNwYWNlR0ZMLUYsNiVRJGNvc0YnL0YwRj1GOS1GNjYtUTAmQXBwbHlGdW5jdGlvbjtGJ0Y5RjtGPkZARkJGREZGRkgvRktRJjAuMGVtRicvRk5GVy1JKG1mZW5jZWRHRiQ2JC1GIzYmLUYsNiVRI3gzRidGL0YyRlMtRlo2JC1GIzYnLUYsNiVRInRGJ0YvRjIvJSVzaXplR1EjMTJGJy8lK2ZvcmVncm91bmRHUShbMCwwLDBdRicvJSlyZWFkb25seUdGPUY5RjlGOUY5Rjk=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSNDM0dGKC1JJGNvc0dGJTYjLUkjeDNHRig2I0kidEdGKDcjRi4=</Equation></Text-field>
@@ -167,13 +169,15 @@ U2 := u2(t);</Text-field>
 </Output>
 </Group>
 <Group hide-input="false" labelreference="L36829" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rhs1 := S3*((9/4)*C3*x1(t)^2+2*x2(t)^2) +         (4/3)*(U1-U2)-(3/2)*C3*U2;</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rhs1 := S3*((9/4)*C3*x1(t)^2+2*x2(t)^2) + 
+        (4/3)*(U1-U2)-(3/2)*C3*U2;</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYsLUkjbWlHRiQ2JVElcmhzMUYnLyUnaXRhbGljR1EldHJ1ZUYnLyUsbWF0aHZhcmlhbnRHUSdpdGFsaWNGJy1JI21vR0YkNi1RKSZBc3NpZ247RicvRjNRJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0Y9LyUpc3RyZXRjaHlHRj0vJSpzeW1tZXRyaWNHRj0vJShsYXJnZW9wR0Y9LyUubW92YWJsZWxpbWl0c0dGPS8lJ2FjY2VudEdGPS8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRkwtRiM2Ji1GIzYmLUYsNiVRJHNpbkYnL0YwRj1GOS1GNjYtUTAmQXBwbHlGdW5jdGlvbjtGJ0Y5RjtGPkZARkJGREZGRkgvRktRJjAuMGVtRicvRk5GZW4tSShtZmVuY2VkR0YkNiQtRiM2Ji1GLDYlUSN4M0YnRi9GMkZXLUZobjYkLUYjNictRiw2JVEidEYnRi9GMi8lJXNpemVHUSMxMkYnLyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0Y9RjlGOUY5RjlGOS1GNjYwUTEmSW52aXNpYmxlVGltZXM7RidGZm9GaW9GXHBGOUY7Rj5GQEZCRkRGRkZIRlpGZm4tRmhuNiQtRiM2Ji1JJm1mcmFjR0YkNigtRiM2KC1JI21uR0YkNiRRIjlGJ0Y5Rl5wLUYjNiYtRiw2JVEkY29zRidGVkY5RldGZ25GOUZecC1JJW1zdXBHRiQ2JS1GIzYmLUYsNiVRI3gxRidGL0YyRldGX29GOS1GW3E2JFEiMkYnRjkvJTFzdXBlcnNjcmlwdHNoaWZ0R1EiMEYnRjktRltxNiRRIjRGJ0Y5LyUubGluZXRoaWNrbmVzc0dRIjFGJy8lK2Rlbm9tYWxpZ25HUSdjZW50ZXJGJy8lKW51bWFsaWduR0Zpci8lKWJldmVsbGVkR0Y9LUY2Ni1RJyZwbHVzO0YnRjlGO0Y+RkBGQkZERkZGSC9GS1EsMC4yMjIyMjIyZW1GJy9GTkZicy1GIzYmRltyRl5wLUZkcTYlLUYjNiYtRiw2JVEjeDJGJ0YvRjJGV0Zfb0Y5RltyRl5yRjlGOUY5RjlGXnMtRmZwNigtRiM2JkZhckZecC1GIzYmLUYsNiVRI3UxRidGL0YyRldGX29GOUY5LUZbcTYkUSIzRidGOUZkckZnckZqckZccy1GNjYtUSgmbWludXM7RidGOUY7Rj5GQEZCRkRGRkZIRmFzRmNzLUZmcDYoLUYjNiZGYXJGXnAtRiM2Ji1GLDYlUSN1MkYnRi9GMkZXRl9vRjlGOUZmdEZkckZnckZqckZcc0ZpdC1GZnA2KC1GIzYoRmZ0Rl5wRl5xRl5wRmB1RjlGW3JGZHJGZ3JGanJGXHNGOQ==">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSVyaHMxR0YoLCoqJi1JJHNpbkdGJTYjLUkjeDNHRig2I0kidEdGKCIiIiwmKiYtSSRjb3NHRiVGMkY3LUkjeDFHRihGNSIiIyMiIioiIiUqJC1JI3gyR0YoRjVGPkY+RjdGNy1JI3UxR0YoRjUjRkEiIiQtSSN1MkdGKEY1IyEiJUZIKiZGOkY3RklGNyMhIiRGPjcjRi4=</Equation></Text-field>
 </Output>
 </Group>
 <Group hide-input="false" labelreference="L36831" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rhs2 := S3*((7/2)*x1(t)^2+(9/4)*C3*x2(t)^2)-(7/3)*U2+        (3/2)*C3*(U1-U2);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rhs2 := S3*((7/2)*x1(t)^2+(9/4)*C3*x2(t)^2)-(7/3)*U2+
+        (3/2)*C3*(U1-U2);</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYqLUkjbWlHRiQ2JVElcmhzMkYnLyUnaXRhbGljR1EldHJ1ZUYnLyUsbWF0aHZhcmlhbnRHUSdpdGFsaWNGJy1JI21vR0YkNi1RKSZBc3NpZ247RicvRjNRJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0Y9LyUpc3RyZXRjaHlHRj0vJSpzeW1tZXRyaWNHRj0vJShsYXJnZW9wR0Y9LyUubW92YWJsZWxpbWl0c0dGPS8lJ2FjY2VudEdGPS8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRkwtRiM2Ji1GIzYmLUYsNiVRJHNpbkYnL0YwRj1GOS1GNjYtUTAmQXBwbHlGdW5jdGlvbjtGJ0Y5RjtGPkZARkJGREZGRkgvRktRJjAuMGVtRicvRk5GZW4tSShtZmVuY2VkR0YkNiQtRiM2Ji1GLDYlUSN4M0YnRi9GMkZXLUZobjYkLUYjNictRiw2JVEidEYnRi9GMi8lJXNpemVHUSMxMkYnLyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0Y9RjlGOUY5RjlGOS1GNjYwUTEmSW52aXNpYmxlVGltZXM7RidGZm9GaW9GXHBGOUY7Rj5GQEZCRkRGRkZIRlpGZm4tRmhuNiQtRiM2Ji1JJm1mcmFjR0YkNigtRiM2Ji1JI21uR0YkNiRRIjdGJ0Y5Rl5wLUklbXN1cEdGJDYlLUYjNiYtRiw2JVEjeDFGJ0YvRjJGV0Zfb0Y5LUZbcTYkUSIyRidGOS8lMXN1cGVyc2NyaXB0c2hpZnRHUSIwRidGOUZmcS8lLmxpbmV0aGlja25lc3NHUSIxRicvJStkZW5vbWFsaWduR1EnY2VudGVyRicvJSludW1hbGlnbkdGYXIvJSliZXZlbGxlZEdGPS1GNjYtUScmcGx1cztGJ0Y5RjtGPkZARkJGREZGRkgvRktRLDAuMjIyMjIyMmVtRicvRk5GanItRmZwNigtRiM2KC1GW3E2JFEiOUYnRjlGXnAtRiM2Ji1GLDYlUSRjb3NGJ0ZWRjlGV0ZnbkY5Rl5wLUZfcTYlLUYjNiYtRiw2JVEjeDJGJ0YvRjJGV0Zfb0Y5RmZxRmlxRjktRltxNiRRIjRGJ0Y5RlxyRl9yRmJyRmRyRjlGOUY5LUY2Ni1RKCZtaW51cztGJ0Y5RjtGPkZARkJGREZGRkhGaXJGW3MtRmZwNigtRiM2JkZqcEZecC1GIzYmLUYsNiVRI3UyRidGL0YyRldGX29GOUY5LUZbcTYkUSIzRidGOUZcckZfckZickZkckZmci1GZnA2KC1GIzYoRl51Rl5wRmNzRl5wLUZobjYkLUYjNiYtRiM2Ji1GLDYlUSN1MUYnRi9GMkZXRl9vRjlGYnRGaXRGOUY5RjlGZnFGXHJGX3JGYnJGZHJGOQ==">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSVyaHMyR0YoLCgqJi1JJHNpbkdGJTYjLUkjeDNHRig2I0kidEdGKCIiIiwmKiQtSSN4MUdGKEY1IiIjIyIiKEY8KiYtSSRjb3NHRiVGMkY3LUkjeDJHRihGNUY8IyIiKiIiJUY3RjctSSN1MkdGKEY1IyEiKCIiJComRkBGNywmLUkjdTFHRihGNUY3RkchIiJGNyNGS0Y8NyNGLg==</Equation></Text-field>
 </Output>
@@ -229,7 +233,8 @@ EQNS_T := [ EQ||(1..4)]: &lt;%&gt;;</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L10689" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addBoundaryConditions(
-  initial = [x1=0,x2=0,x3=0.5,x4=0],  final   = [x1=0,x2=0,x3=0.5,x4=0.522]
+  initial = [x1=0,x2=0,x3=0.5,x4=0],
+  final   = [x1=0,x2=0,x3=0.5,x4=0.522]
 );</Text-field>
 </Input>
 </Group>
@@ -281,7 +286,7 @@ Lagrange term = </Text-field>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added the following penalty constraint
   name      = u1Control
-  class     = PenaltyU
+  class     = PenaltyBarrierU
   u         = u1(zeta)
   [min,max] = [-1,1]
   scale     = 1
@@ -304,7 +309,7 @@ Added the following penalty constraint
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added the following penalty constraint
   name      = u2Control
-  class     = PenaltyU
+  class     = PenaltyBarrierU
   u         = u2(zeta)
   [min,max] = [-1,1]
   scale     = 1
@@ -322,16 +327,21 @@ Added the following penalty constraint
   u_tolerance1 = 0.00001,
   u_epsilon    = u_epsilon0,
   u_tolerance  = u_tolerance0,
-  Tguess       = 10,  W            = 0];</Text-field>
+  Tguess       = 10,
+  W            = 0
+];</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUkjbWlHRiQ2JVElcGFyc0YnLyUnaXRhbGljR1EldHJ1ZUYnLyUsbWF0aHZhcmlhbnRHUSdpdGFsaWNGJy1JI21vR0YkNi1RKSZBc3NpZ247RicvRjNRJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0Y9LyUpc3RyZXRjaHlHRj0vJSpzeW1tZXRyaWNHRj0vJShsYXJnZW9wR0Y9LyUubW92YWJsZWxpbWl0c0dGPS8lJ2FjY2VudEdGPS8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRkwtSShtZmVuY2VkR0YkNiYtRiM2NS1GIzYmLUYsNiVRK3VfZXBzaWxvbjBGJ0YvRjItRjY2LVEpJmVxdWFscztGJ0Y5RjtGPkZARkJGREZGRkhGSkZNLUkjbW5HRiQ2JFElMC4wMUYnRjlGOS1GNjYtUSIsRidGOUY7L0Y/RjFGQEZCRkRGRkZIL0ZLUSYwLjBlbUYnL0ZOUSwwLjMzMzMzMzNlbUYnLUYjNiYtRiw2JVEtdV90b2xlcmFuY2UwRidGL0YyRllGZm5GOUZqbi1GIzYmLUYsNiVRK3VfZXBzaWxvbjFGJ0YvRjJGWS1GZ242JFEoMC4wMDAwMUYnRjlGOUZqbi1GIzYmLUYsNiVRLXVfdG9sZXJhbmNlMUYnRi9GMkZZRlxwRjlGam4tRiM2Ji1GLDYlUSp1X2Vwc2lsb25GJ0YvRjJGWUZWRjlGam4tRiM2Ji1GLDYlUSx1X3RvbGVyYW5jZUYnRi9GMkZZRmRvRjlGam4tRiM2Ji1GLDYlUSdUZ3Vlc3NGJ0YvRjJGWS1GZ242JFEjMTBGJ0Y5RjlGam4tRiM2Ji1GLDYlUSJXRidGL0YyRlktRmduNiRRIjBGJ0Y5RjkvJSVzaXplR1EjMTJGJy8lK2ZvcmVncm91bmRHUShbMCwwLDBdRicvJSlyZWFkb25seUdGPUY5RjkvJSVvcGVuR1EnJmxzcWI7RicvJSZjbG9zZUdRJyZyc3FiO0YnRjk=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSVwYXJzR0YoNyovSSt1X2Vwc2lsb24wR0YoJCIiIiEiIy9JLXVfdG9sZXJhbmNlMEdGKEYxL0krdV9lcHNpbG9uMUdGKCRGMiEiJi9JLXVfdG9sZXJhbmNlMUdGKEY4L0kqdV9lcHNpbG9uR0YoRjAvSSx1X3RvbGVyYW5jZUdGKEY1L0knVGd1ZXNzR0YoIiM1L0kiV0dGKCIiITcjRi4=</Equation></Text-field>
 </Output>
 </Group>
 <Group hide-input="false" labelreference="L11116" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GUESS := [
-  x3 = 0.5,  x4 = zeta*0.522];
+  x3 = 0.5,
+  x4 = zeta*0.522
+];
 PGUESS := [
-  T = Tguess];</Text-field>
+  T = Tguess
+];</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUkjbWlHRiQ2JVEmR1VFU1NGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtb0dGJDYtUSkmQXNzaWduO0YnL0YzUSdub3JtYWxGJy8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdGPS8lKXN0cmV0Y2h5R0Y9LyUqc3ltbWV0cmljR0Y9LyUobGFyZ2VvcEdGPS8lLm1vdmFibGVsaW1pdHNHRj0vJSdhY2NlbnRHRj0vJSdsc3BhY2VHUSwwLjI3Nzc3NzhlbUYnLyUncnNwYWNlR0ZMLUkobWZlbmNlZEdGJDYmLUYjNiktRiM2Ji1GLDYlUSN4M0YnRi9GMi1GNjYtUSkmZXF1YWxzO0YnRjlGO0Y+RkBGQkZERkZGSEZKRk0tSSNtbkdGJDYkUSQwLjVGJ0Y5RjktRjY2LVEiLEYnRjlGOy9GP0YxRkBGQkZERkZGSC9GS1EmMC4wZW1GJy9GTlEsMC4zMzMzMzMzZW1GJy1GIzYmLUYsNiVRI3g0RidGL0YyRlktRiM2Ji1GZ242JFEmMC41MjJGJ0Y5LUY2NjBRMSZJbnZpc2libGVUaW1lcztGJy8lJXNpemVHUSMxMkYnLyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0Y9RjlGO0Y+RkBGQkZERkZGSEZeby9GTkZfby1GLDYlUSV6ZXRhRicvRjBGPUY5RjlGOUZfcEZicEZlcEY5RjkvJSVvcGVuR1EnJmxzcWI7RicvJSZjbG9zZUdRJyZyc3FiO0YnRjk=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSZHVUVTU0dGKDckL0kjeDNHRigkIiImISIiL0kjeDRHRigsJEklemV0YUdGKCQiJEEmISIkNyNGLg==</Equation></Text-field>
 </Output>
@@ -340,7 +350,11 @@ PGUESS := [
 </Group>
 <Group hide-input="false" labelreference="L11123" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">CONT := [
-  [ W = s ],  [    [&quot;u1&quot;,&quot;epsilon&quot;]   = u_epsilon0^(1-s)*u_epsilon1^s,    [&quot;u1&quot;,&quot;tolerance&quot;] = u_tolerance0^(1-s)*u_tolerance1^s,    [&quot;u2&quot;,&quot;epsilon&quot;]   = u_epsilon0^(1-s)*u_epsilon1^s,
+  [ W = s ],
+  [
+    [&quot;u1&quot;,&quot;epsilon&quot;]   = u_epsilon0^(1-s)*u_epsilon1^s,
+    [&quot;u1&quot;,&quot;tolerance&quot;] = u_tolerance0^(1-s)*u_tolerance1^s,
+    [&quot;u2&quot;,&quot;epsilon&quot;]   = u_epsilon0^(1-s)*u_epsilon1^s,
     [&quot;u2&quot;,&quot;tolerance&quot;] = u_tolerance0^(1-s)*u_tolerance1^s
   ]
 ];</Text-field>

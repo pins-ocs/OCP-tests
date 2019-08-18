@@ -170,7 +170,11 @@ EQNS_T := [ EQ||(1..2)]: &lt;%&gt; ;</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Optimal Control: problem definition</Text-field></Title>
 <Group hide-input="false" labelreference="L602" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">loadDynamicSystem(  equations = EQNS_T,  controls  = cvars,  states    = qvars);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">loadDynamicSystem(
+  equations = EQNS_T,
+  controls  = cvars,
+  states    = qvars
+);</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkmbXRleHRHNiMvSSttb2R1bGVuYW1lRzYiSSxUeXBlc2V0dGluZ0dJKF9zeXNsaWJHRic2KFFUSW5kZXBlbmRlbnR+dmFyaWFibGV+dH5oYXN+YmVlbn5yZWRlZmluZWR+dG9+YHpldGFgRicvJSVib2xkR1EldHJ1ZUYnLyUrZm9yZWdyb3VuZEdRLFsyNTUsMCwyNTVdRicvJSdvcGFxdWVHRi4vJSxtYXRodmFyaWFudEdRJWJvbGRGJy8lK2ZvbnR3ZWlnaHRHRjY=">LUkmbXRleHRHNiMvSSttb2R1bGVuYW1lRzYiSSxUeXBlc2V0dGluZ0dJKF9zeXNsaWJHRic2KFFUSW5kZXBlbmRlbnR+dmFyaWFibGV+dH5oYXN+YmVlbn5yZWRlZmluZWR+dG9+YHpldGFgRicvJSVib2xkR1EldHJ1ZUYnLyUrZm9yZWdyb3VuZEdRLFsyNTUsMCwyNTVdRicvJSdvcGFxdWVHRi4vJSxtYXRodmFyaWFudEdRJWJvbGRGJy8lK2ZvbnR3ZWlnaHRHRjY=</Equation></Text-field>
 </Output>
@@ -193,18 +197,20 @@ initial_x2 : Enabled</Text-field>
 </Output>
 </Group>
 <Group labelreference="L10844" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addControlBound(  u,
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addControlBound(
+  u,
   controlType = &quot;U_COS_LOGARITHMIC&quot;,
   min         = -20,
   max         = 20,
   epsilon     = epsi_ctrl,
   tolerance   = tol_ctrl,
-  scale       = 1);</Text-field>
+  scale       = 1
+);</Text-field>
 </Input>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added the following penalty constraint
   name      = uControl
-  class     = PenaltyU
+  class     = PenaltyBarrierU
   u         = u(zeta)
   [min,max] = [-20,20]
   scale     = 1
@@ -219,7 +225,8 @@ Added the following penalty constraint
   8*(zeta-0.5)^2-0.5-x2(zeta)&gt;0,
   x2bound,
   epsilon   = epsi_ctrl,
-  tolerance = tol_ctrl);</Text-field>
+  tolerance = tol_ctrl
+);</Text-field>
 </Input>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added the following penalty constraint
@@ -235,8 +242,10 @@ Added the following penalty constraint
 </Output>
 </Group>
 <Group hide-input="false" labelreference="L10773" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">setTarget(  mayer    = 0,
-  lagrange = 0.005*u(zeta)^2+x1(zeta)^2+x2(zeta)^2);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">setTarget(
+  mayer    = 0,
+  lagrange = 0.005*u(zeta)^2+x1(zeta)^2+x2(zeta)^2
+);</Text-field>
 </Input>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added target definition
@@ -272,9 +281,13 @@ Lagrange term = </Text-field>
 </Output>
 </Group>
 <Group hide-input="false" labelreference="L36768" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">CONT := [  [    [&quot;x2bound&quot;, &quot;epsilon&quot;]   = epsi_ctrl0^(1-s)*epsi_ctrl1^s,    [&quot;x2bound&quot;, &quot;tolerance&quot;] = tol_ctrl0^(1-s)*tol_ctrl1^s,
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">CONT := [
+  [
+    [&quot;x2bound&quot;, &quot;epsilon&quot;]   = epsi_ctrl0^(1-s)*epsi_ctrl1^s,
+    [&quot;x2bound&quot;, &quot;tolerance&quot;] = tol_ctrl0^(1-s)*tol_ctrl1^s,
     [&quot;u&quot;, &quot;epsilon&quot;]   = epsi_ctrl0^(1-s)*epsi_ctrl1^s,
-    [&quot;u&quot;, &quot;tolerance&quot;] = tol_ctrl0^(1-s)*tol_ctrl1^s  ]
+    [&quot;u&quot;, &quot;tolerance&quot;] = tol_ctrl0^(1-s)*tol_ctrl1^s
+  ]
 ]</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUkjbWlHRiQ2JVElQ09OVEYnLyUnaXRhbGljR1EldHJ1ZUYnLyUsbWF0aHZhcmlhbnRHUSdpdGFsaWNGJy1JI21vR0YkNi1RKSZBc3NpZ247RicvRjNRJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0Y9LyUpc3RyZXRjaHlHRj0vJSpzeW1tZXRyaWNHRj0vJShsYXJnZW9wR0Y9LyUubW92YWJsZWxpbWl0c0dGPS8lJ2FjY2VudEdGPS8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRkwtSShtZmVuY2VkR0YkNiYtRlA2Ji1GIzYtLUYjNiYtRlA2Ji1GIzYpLUkjbXNHRiQ2I1EoeDJib3VuZEYnLUY2Ni1RIixGJ0Y5RjsvRj9GMUZARkJGREZGRkgvRktRJjAuMGVtRicvRk5RLDAuMzMzMzMzM2VtRictRmduNiNRKGVwc2lsb25GJy8lJXNpemVHUSMxMkYnLyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0Y9RjlGOS8lJW9wZW5HUScmbHNxYjtGJy8lJmNsb3NlR1EnJnJzcWI7RictRjY2LVEpJmVxdWFscztGJ0Y5RjtGPkZARkJGREZGRkhGSkZNLUYjNiYtSSVtc3VwR0YkNiUtRiw2JVErZXBzaV9jdHJsMEYnRi9GMi1GIzYmLUkjbW5HRiQ2JFEiMUYnRjktRjY2LVEoJm1pbnVzO0YnRjlGO0Y+RkBGQkZERkZGSC9GS1EsMC4yMjIyMjIyZW1GJy9GTkZocS1GLDYlUSJzRidGL0YyRjkvJTFzdXBlcnNjcmlwdHNoaWZ0R1EiMEYnLUY2Ni1RMSZJbnZpc2libGVUaW1lcztGJ0Y5RjtGPkZARkJGREZGRkhGXm8vRk5GX28tRmlwNiUtRiw2JVErZXBzaV9jdHJsMUYnRi9GMkZqcUZdckY5RjlGam4tRiM2Ji1GUDYmLUYjNilGZm5Gam4tRmduNiNRKnRvbGVyYW5jZUYnRmVvRmhvRltwRjlGOUZdcEZgcEZjcC1GIzYmLUZpcDYlLUYsNiVRKnRvbF9jdHJsMEYnRi9GMkZecUZdckZgci1GaXA2JS1GLDYlUSp0b2xfY3RybDFGJ0YvRjJGanFGXXJGOUY5RmpuLUYjNiYtRlA2Ji1GIzYpLUZnbjYjUSJ1RidGam5GYm9GZW9GaG9GW3BGOUY5Rl1wRmBwRmNwRmZwRjlGam4tRiM2Ji1GUDYmLUYjNilGZHRGam5GX3NGZW9GaG9GW3BGOUY5Rl1wRmBwRmNwRmJzRjlGZW9GaG9GW3BGOUY5Rl1wRmBwRjlGXXBGYHBGOQ==">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSVDT05UR0YoNyM3Ji83JFEoeDJib3VuZEYoUShlcHNpbG9uRigqJilJK2Vwc2lfY3RybDBHRigsJiIiIkY4SSJzR0YoISIiRjgpSStlcHNpX2N0cmwxR0YoRjlGOC83JEYyUSp0b2xlcmFuY2VGKComKUkqdG9sX2N0cmwwR0YoRjdGOClJKnRvbF9jdHJsMUdGKEY5RjgvNyRRInVGKEYzRjQvNyRGR0Y/RkA3I0Yu</Equation></Text-field>
@@ -292,14 +305,17 @@ Lagrange term = </Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L10772" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">generateOCProblem(  &quot;PathConstrained&quot;,
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">generateOCProblem(
+  &quot;PathConstrained&quot;,
   #post_processing  = [[T(zeta),&quot;minTime&quot;]],
   parameters        = pars,
   mesh              = [length=1,n=400],
   continuation      = [],
   controls_guess    = [u=0],
   states_guess      = GUESS,
-  continuation      = CONT,  admissible_region = REGION);</Text-field>
+  continuation      = CONT,
+  admissible_region = REGION
+);</Text-field>
 </Input>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Step 1: add check for admissible regions</Text-field><Text-field style="Line Printed Output" layout="Line Printed Output">----------------------------------------

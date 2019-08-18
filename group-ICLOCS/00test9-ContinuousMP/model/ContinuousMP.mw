@@ -178,7 +178,12 @@ EQNS_T := [ EQ||(1..4)]: &lt;%&gt; ;</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Optimal Control: problem definition</Text-field></Title>
 <Group hide-input="false" labelreference="L602" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">loadDynamicSystem(  equations  = EQNS_T,  controls   = cvars,  states     = qvars,  parameters = pars);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">loadDynamicSystem(
+  equations  = EQNS_T,
+  controls   = cvars,
+  states     = qvars,
+  parameters = pars
+);</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkmbXRleHRHNiMvSSttb2R1bGVuYW1lRzYiSSxUeXBlc2V0dGluZ0dJKF9zeXNsaWJHRic2KFFUSW5kZXBlbmRlbnR+dmFyaWFibGV+dH5oYXN+YmVlbn5yZWRlZmluZWR+dG9+YHpldGFgRicvJSVib2xkR1EldHJ1ZUYnLyUrZm9yZWdyb3VuZEdRLFsyNTUsMCwyNTVdRicvJSdvcGFxdWVHRi4vJSxtYXRodmFyaWFudEdRJWJvbGRGJy8lK2ZvbnR3ZWlnaHRHRjY=">LUkmbXRleHRHNiMvSSttb2R1bGVuYW1lRzYiSSxUeXBlc2V0dGluZ0dJKF9zeXNsaWJHRic2KFFUSW5kZXBlbmRlbnR+dmFyaWFibGV+dH5oYXN+YmVlbn5yZWRlZmluZWR+dG9+YHpldGFgRicvJSVib2xkR1EldHJ1ZUYnLyUrZm9yZWdyb3VuZEdRLFsyNTUsMCwyNTVdRicvJSdvcGFxdWVHRi4vJSxtYXRodmFyaWFudEdRJWJvbGRGJy8lK2ZvbnR3ZWlnaHRHRjY=</Equation></Text-field>
 </Output>
@@ -192,7 +197,10 @@ EQNS_T := [ EQ||(1..4)]: &lt;%&gt; ;</Text-field>
 <Group hide-input="false" labelreference="L10689" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">addBoundaryConditions(
   initial=[x1=1,x2=1,xx1=1,xx2=1],
-  generic=[    [x1(zeta_f)-xx1(zeta_f),&quot;final_x1&quot;],    [x2(zeta_f)-xx2(zeta_f),&quot;final_x2&quot;]  ]
+  generic=[
+    [x1(zeta_f)-xx1(zeta_f),&quot;final_x1&quot;],
+    [x2(zeta_f)-xx2(zeta_f),&quot;final_x2&quot;]
+  ]
 );</Text-field>
 </Input>
 </Group>
@@ -220,7 +228,7 @@ final_x2    : Enabled</Text-field>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added the following penalty constraint
   name      = uControl
-  class     = PenaltyU
+  class     = PenaltyBarrierU
   u         = u(zeta)
   [min,max] = [-10,10]
   scale     = 1
@@ -231,8 +239,10 @@ Added the following penalty constraint
 </Output>
 </Group>
 <Group hide-input="false" labelreference="L10773" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">setTarget(  mayer    = 0,
-  lagrange = x1(zeta)^2+x2(zeta)^2+u(zeta)^2);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">setTarget(
+  mayer    = 0,
+  lagrange = x1(zeta)^2+x2(zeta)^2+u(zeta)^2
+);</Text-field>
 </Input>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added target definition
@@ -246,7 +256,10 @@ Lagrange term = </Text-field>
 </Output>
 </Group>
 <Group hide-input="false" labelreference="L10832" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pars := [  epsi_ctrl = 0.01,  tol_ctrl  = 0.01];</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pars := [
+  epsi_ctrl = 0.01,
+  tol_ctrl  = 0.01
+];</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUkjbWlHRiQ2JVElcGFyc0YnLyUnaXRhbGljR1EldHJ1ZUYnLyUsbWF0aHZhcmlhbnRHUSdpdGFsaWNGJy1JI21vR0YkNi1RKSZBc3NpZ247RicvRjNRJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0Y9LyUpc3RyZXRjaHlHRj0vJSpzeW1tZXRyaWNHRj0vJShsYXJnZW9wR0Y9LyUubW92YWJsZWxpbWl0c0dGPS8lJ2FjY2VudEdGPS8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRkwtSShtZmVuY2VkR0YkNiYtRiM2KS1GIzYmLUYsNiVRKmVwc2lfY3RybEYnRi9GMi1GNjYtUSkmZXF1YWxzO0YnRjlGO0Y+RkBGQkZERkZGSEZKRk0tSSNtbkdGJDYkUSUwLjAxRidGOUY5LUY2Ni1RIixGJ0Y5RjsvRj9GMUZARkJGREZGRkgvRktRJjAuMGVtRicvRk5RLDAuMzMzMzMzM2VtRictRiM2Ji1GLDYlUSl0b2xfY3RybEYnRi9GMkZZRmZuRjkvJSVzaXplR1EjMTJGJy8lK2ZvcmVncm91bmRHUShbMCwwLDBdRicvJSlyZWFkb25seUdGPUY5RjkvJSVvcGVuR1EnJmxzcWI7RicvJSZjbG9zZUdRJyZyc3FiO0YnRjk=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSVwYXJzR0YoNyQvSSplcHNpX2N0cmxHRigkIiIiISIjL0kpdG9sX2N0cmxHRihGMTcjRi4=</Equation></Text-field>
 </Output>
@@ -255,7 +268,9 @@ Lagrange term = </Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GUESS := [
   x1 = 0,
   x2 = 0
-];PGUESS := [];</Text-field>
+];
+PGUESS := [
+];</Text-field>
 </Input>
 <Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUkjbWlHRiQ2JVEmR1VFU1NGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtb0dGJDYtUSkmQXNzaWduO0YnL0YzUSdub3JtYWxGJy8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdGPS8lKXN0cmV0Y2h5R0Y9LyUqc3ltbWV0cmljR0Y9LyUobGFyZ2VvcEdGPS8lLm1vdmFibGVsaW1pdHNHRj0vJSdhY2NlbnRHRj0vJSdsc3BhY2VHUSwwLjI3Nzc3NzhlbUYnLyUncnNwYWNlR0ZMLUkobWZlbmNlZEdGJDYmLUYjNiktRiM2Ji1GLDYlUSN4MUYnRi9GMi1GNjYtUSkmZXF1YWxzO0YnRjlGO0Y+RkBGQkZERkZGSEZKRk0tSSNtbkdGJDYkUSIwRidGOUY5LUY2Ni1RIixGJ0Y5RjsvRj9GMUZARkJGREZGRkgvRktRJjAuMGVtRicvRk5RLDAuMzMzMzMzM2VtRictRiM2Ji1GLDYlUSN4MkYnRi9GMkZZRmZuRjkvJSVzaXplR1EjMTJGJy8lK2ZvcmVncm91bmRHUShbMCwwLDBdRicvJSlyZWFkb25seUdGPUY5RjkvJSVvcGVuR1EnJmxzcWI7RicvJSZjbG9zZUdRJyZyc3FiO0YnRjk=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSZHVUVTU0dGKDckL0kjeDFHRigiIiEvSSN4MkdGKEYxNyNGLg==</Equation></Text-field>
 </Output>

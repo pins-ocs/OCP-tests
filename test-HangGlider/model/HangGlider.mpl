@@ -1,115 +1,115 @@
 
 # 
-#            
-# HANG GLIDER (Test 11 di COPS, pag 282 libro Betts)
+# XOPTIMA Automatic Code Generation for Optimal Control Problems 
 # 
-# 1 controllo
-# Inizializzazione
+# Optimal Control Problem: HANG GLIDER (Test 11 di COPS, pag 282 libro Betts)
+# Authors: E. Bertolazzi, F. Biral
+# Date:
+# 
 restart:
 with(XOptima):
-# Equazioni del modello Hang Glider nel tempo
-EQ1  := diff(x(t),t)  = vx(t) :
-EQ2  := diff(y(t),t)  = vy(t) :
-EQ3  := diff(vx(t),t) = (-LL*sin_eta-DD*cos_eta)/m :
-EQ4  := diff(vy(t),t) = (LL*cos_eta-DD*sin_eta)/m-g:
-<EQ||(1..4)> ;
-CD := C0 + k * CL(t)^2;
-DD := (1/2) * CD * rho * S * vr^2 ;
-LL := (1/2) * CL(t) * rho * S * vr^2 ;
-Vy := vy(t) - theta*ua(x(t)) ;
-vr := sqrt( vx(t)^2 + Vy^2 ) ;
-sin_eta := Vy / vr ;
-cos_eta := vx(t) / vr ;
-# Cambio di coordinate da tempo a x come variabile indipendente
-# Dalla condizione x(t(x)) = x --> vx(t(x)) t'(x) = 1 
-# Inoltre diff( f(t(x)), x) = f'(t(x)) t'(x) = f'(t(x))/vx(x)
-EQX1 := diff(t(x),x)  = 1/vx(x) :
-EQX2 := diff(y(x),x)  = 1/vx(x)*subs(x(x)=x,subs(t=x,rhs(EQ2))) :
-EQX3 := diff(vx(x),x) = 1/vx(x)*subs(x(x)=x,subs(t=x,rhs(EQ3))) :
-EQX4 := diff(vy(x),x) = 1/vx(x)*subs(x(x)=x,subs(t=x,rhs(EQ4))) :
-<EQX||(1..4)> ;
-vr := subs(x(x)=x,subs(t=x,vr)) ;
-# Cambio di coordinate x = zeta X
-# Dalla condizione x = x0 + zeta * X(zeta) con X'(zeta) =0 
-# Inoltre diff( f(x(zeta)), zeta) = f'(x(zeta)) x'(zeta) = f'(x(zeta)) X(zeta)
-SUBS := t(x)=Tm(zeta),
-        y(x)=y(zeta),
-        vx(x)=vx(zeta),
-        vy(x)=vy(zeta),
-        CL(x)=CL(zeta) ;
-EQXF1 := diff(Tm(zeta),zeta)  - L(zeta)*subs(SUBS,x=zeta*L(zeta),rhs(EQX1)) :
-EQXF2 := diff(y(zeta),zeta)  - L(zeta)*subs(SUBS,x=zeta*L(zeta),rhs(EQX2)) :
-EQXF3 := diff(vx(zeta),zeta) - L(zeta)*subs(SUBS,x=zeta*L(zeta),rhs(EQX3)) :
-EQXF4 := diff(vy(zeta),zeta) - L(zeta)*subs(SUBS,x=zeta*L(zeta),rhs(EQX4)) :
-EQXF5 := diff(L(zeta),zeta) :
-<EQXF||(1..5)> ;
-vr := subs(ua(x)=ua(zeta*L(zeta)),x=zeta,vr) ;
-# Variabili del problema
-Describe(addUserFunction);
-addUserFunction(ua(x)) ;
-# Variabili
-xvars := [Tm(zeta),y(zeta),vx(zeta),vy(zeta),L(zeta)] ;
-# Controlli
-uvars := [CL(zeta)] ;
-ode := [EQXF||(1..5)] :
-# Equazioni del modello matematico del carrello
-loadDynamicSystem(equations=ode,
-                  controls=uvars,
-                  states=xvars) ;
-addBoundaryConditions(initial=[Tm,y,vx,vy],final=[y,vx,vy]);
-infoBoundaryConditions() ;
-addControlBound( CL,
-                 controlType="U_COS_LOGARITHMIC", 
-                 min=0, max=1.4,
-                 tolerance = tol_max, epsilon=epsi_max,
-                 scale=L(zeta)/1000 ) ;
-addUnilateralConstraint( L(zeta) >0, positiveLen, 
-                         tolerance = 1, epsilon=0.01 );
-# Target function
-setTarget( lagrange=0, mayer = -L(zeta_f)/1000 ) ;
-#setFDorder([6],"backward"):
-#setFDorderCoEquation([xtau(zeta)],"forward");
-addModelExtraParameters([epsi_max,epsi_min,tol_max,tol_min]) ;
-PARS := [ Tm_i     = 0,
-          epsi_min = 0.0001,
-          epsi_max = 0.01,
-          tol_min  = 0.0001,
-          tol_max  = 0.01,
-          y_i      = 1000,
-          y_f      = 900,
-          vx_i     = 13.2275675,
-          vx_f     = 13.2275675,
-          vy_i     = -1.28750052,
-          vy_f     = -1.28750052,
-          m        = 100,
-          S        = 14,
-          C0       = 0.034,
-          rho      = 1.13,
-          k        = 0.069662,
-          g        = 9.80665,
-          theta    = 0 ];
-POST := [  [ua(zeta*L(zeta)),"ua"],
-  [vr,"vr"],
-  [zeta*L(zeta),"x"]];
-CONT := [  [theta=s],
-  [[CL,"epsilon"]=(1-s)*epsi_max+s*epsi_min],
-  [[CL,"tolerance"]=(1-s)*tol_max+s*tol_min]];
-GUESS := [  Tm = zeta*100,
-  y  = y_i+zeta*(y_f-y_i),
-  vx = vx_i,
-  vy = vy_i, 
-  L  = 1000];
-generateOCProblem( "HangGlider",
-                   post_processing = POST,
-                   parameters      = PARS,
-                   continuation    = CONT,
-                   # scalature
-                   states_scaling    = [y=1000,Tm=100],
-                   equations_scaling = [3=Iz],
-                   #
+# ODE model
+addUserFunction(r(x)=(x/rc-2.5)^2);addUserFunction(u(x)=uc*(1-r(x))*exp(-r(x)));
+addUserFunction(w(x,y1)=y1-u(x));addUserFunction(v2(x,x1,y1)=x1^2+w(x,y1)^2);addUserFunction(v(x,x1,y1)=sqrt(v2(x,x1,y1)));
+addUserFunction(Dfun(x,x1,y1)=0.5*rho*S*v2(x,x1,y1));
+addUserFunction(Lfun(x,x1,y1)=0.5*rho*S*v2(x,x1,y1));
+sin_eta := w(x(t),vy(t)) / v(x(t),vx(t),vy(t));
+cos_eta := vx(t) / v(x(t),vx(t),vy(t));DD      := (c0+c1*cL(t)^2)*Dfun(x(t),vx(t),vy(t));LL      := cL(t)*Lfun(x(t),vx(t),vy(t));
 
-                   mesh           = [length=1, n=400],
-                   controls_guess = [CL=1],
-                   states_guess   = GUESS
-                ) ;
+EQ1 := diff(x(t),t)  = T*vx(t):
+EQ2 := diff(y(t),t)  = T*vy(t):
+EQ3 := diff(vx(t),t) = T/m*simplify(-LL*sin_eta-DD*cos_eta):
+EQ4 := diff(vy(t),t) = T/m*simplify(LL*cos_eta-DD*sin_eta)-T*g:
+ode := [EQ||(1..4)]: <%>;
+# OCP variables
+xvars := map([x,y,vx,vy],(t));
+uvars := [cL(t)];
+pvars := [T];
+# OCP
+loadDynamicSystem(
+  equations  = ode,
+  controls   = uvars,
+  states     = xvars,
+  parameters = pvars);
+addBoundaryConditions(  initial=[x,y,vx,vy],  final=[y,vx,vy]);
+infoBoundaryConditions() ;
+addControlBound(
+  cL,
+  controlType = "QUADRATIC2", 
+  min         = cL_min,
+  max         = cL_max,
+  tolerance   = tol_max,  epsilon     = epsi_max,
+  scale       = 1
+);
+#addUnilateralConstraint(
+#  vx(zeta)>=0,
+#  VXbound,
+#  epsilon   = epsi_max, 
+#  tolerance = tol_max,
+#  scale     = 1, 
+#  barrier   = true
+#);
+addUnilateralConstraint(
+  T>=0,
+  Tbound,
+  epsilon   = 0.1, 
+  tolerance = 0.5,
+  scale     = 1, 
+  barrier   = true
+);
+# Target function
+setTarget(  lagrange = W*(cL(zeta)-0.7)^2,  mayer    = -x(zeta_f));
+PARS := [
+  uc       = 2.5,  rc       = 100,  c0       = 0.034,
+  c1       = 0.069662,
+  S        = 14,
+  rho      = 1.13,
+  m        = 100,
+  g        = 9.80665,
+  Tguess   = 105,
+  epsi_min = 0.0001,
+  epsi_max = 0.01,
+  tol_min  = 0.0001,
+  tol_max  = 0.01,  #  cL_min   = 0,  cL_max   = 1.4,  # BC
+  x_i      = 0,  y_i      = 1000,
+  y_f      = 900,
+  vx_i     = 13.2275675,
+  vx_f     = 13.2275675,
+  vy_i     = -1.28750052,
+  vy_f     = -1.28750052,  W0       = 1000,
+  W1       = 0,
+  W        = W0
+];
+POST := [];
+CONT := [
+  [ W = (1-s)*W0+s*W1 ],
+  [    [cL,"epsilon"]   = epsi_max^(1-s)*epsi_min^s,
+    [cL,"tolerance"] = tol_max^(1-s)*tol_min^s  ] 
+];
+GUESS := [
+  x  = x_i+zeta*Tguess*vx_i,
+  y  = y_i+zeta*Tguess*vy_i,
+  vx = vx_i,
+  vy = vy_i
+  #lambda2__xo = -10,  #lambda3__xo = -10
+];PGUESS := [  T = Tguess];
+generateOCProblem(
+  "HangGlider",
+  post_processing    = POST,
+  parameters         = PARS,
+  continuation       = CONT,
+  # scalature
+  #states_scaling    = [y=1000,Tm=100],
+  #equations_scaling = [3=Iz],
+  #
+  mesh               = [length=1, n=400],
+  controls_iterative = true,
+  controls_guess     = [cL=0.7],
+  states_guess       = GUESS,
+  parameters_guess   = PGUESS
+);
+ocp := getOCProblem();
+eval(ocp["controls"]);
+CF1 := simplify(epsilon/log(cos(m_pi_2*(1-h))));P   := CF1*log(cos(m_pi_2*x));
+simplify(diff(P,x))/CF1;
 

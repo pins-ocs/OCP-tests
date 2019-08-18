@@ -218,7 +218,7 @@ final_x2   : Enabled</Text-field>
 <Output><Text-field style="Line Printed Output" layout="Line Printed Output">
 Added the following penalty constraint
   name      = uControl
-  class     = PenaltyU
+  class     = PenaltyBarrierU
   u         = u(zeta)
   [min,max] = [0,2]
   scale     = 1
