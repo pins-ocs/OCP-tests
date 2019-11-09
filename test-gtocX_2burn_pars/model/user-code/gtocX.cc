@@ -98,7 +98,7 @@ namespace gtocX {
     From.position( t0, P0 );
     To.position( t1, P1 );
     integer ok = Lambert( P0, P1, t1-t0, m, muS, V0, V1 );
-    ASSERT( ok >= 0, "guess_setup, Lambert failed" );
+    LW_ASSERT0( ok >= 0, "guess_setup, Lambert failed" );
     guess.setupUsingPointAndVelocity( P0, V0, muS, t0 );
     return true;
   }
@@ -116,7 +116,7 @@ namespace gtocX {
     integer m = 0;
     To.position( t1, P1 );
     integer ok = Lambert( P0, P1, t1-t0, m, muS, V0, V1 );
-    ASSERT( ok >= 0, "guess_setup, Lambert failed" );
+    LW_ASSERT0( ok >= 0, "guess_setup, Lambert failed" );
     guess.setupUsingPointAndVelocity( P0, V0, muS, t0 );
     return true;
   }
@@ -150,9 +150,9 @@ namespace gtocX {
     star_ray.reserve(100002);
 
     ifstream file(fname);
-    ASSERT(
+    LW_ASSERT(
       file.good(),
-      "loadStars('" << fname << "',asteroids) cannot open file"
+      "loadStars('{}',asteroids) cannot open file", fname
     );
 
     file >> eatline; // skip headers
@@ -177,9 +177,10 @@ namespace gtocX {
       istringstream istr( line );
       istr >> ID >> R >> i >> Omega >> phi >> th_f;
 
-      ASSERT(
+      LW_ASSERT(
         R > 0,
-        "loadStars, Bad R = " << R << " at line " << nline << " star ID " << ID
+        "loadStars, Bad R = {} at line {} star ID {}",
+        R, nline, ID
       );
 
       real_type v  = vc(R);
