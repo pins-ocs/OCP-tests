@@ -243,7 +243,7 @@ task :clean do
     puts "f = #{f}"
     rm_f f 
   end
-  FileList.new("#{LIB_DIR}/*.{dll,lib,exp,dylib}") do |f|
+  FileList.new("#{LIB_DIR}/*.{so,dll,lib,exp,dylib}") do |f|
     puts "f = #{f}"
     rm_f f 
   end

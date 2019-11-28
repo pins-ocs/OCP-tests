@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-               BuildableName = "Train"
-               BlueprintName = "Train"
-               ReferencedContainer = "container:Train.xcodeproj">
+               BlueprintIdentifier = "D935747C238C6F850005CB5A"
+               BuildableName = "Underwater"
+               BlueprintName = "Underwater"
+               ReferencedContainer = "container:Underwater.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,10 +31,11 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      disableMainThreadChecker = "YES"
+      enableThreadSanitizer = "YES"
+      enableUBSanitizer = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
       customWorkingDirectory = "$SOURCE_ROOT/.."
@@ -46,12 +47,19 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-            BuildableName = "Train"
-            BlueprintName = "Train"
-            ReferencedContainer = "container:Train.xcodeproj">
+            BlueprintIdentifier = "D935747C238C6F850005CB5A"
+            BuildableName = "Underwater"
+            BlueprintName = "Underwater"
+            ReferencedContainer = "container:Underwater.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <AdditionalOptions>
+         <AdditionalOption
+            key = "NSZombieEnabled"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -63,10 +71,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-            BuildableName = "Train"
-            BlueprintName = "Train"
-            ReferencedContainer = "container:Train.xcodeproj">
+            BlueprintIdentifier = "D935747C238C6F850005CB5A"
+            BuildableName = "Underwater"
+            BlueprintName = "Underwater"
+            ReferencedContainer = "container:Underwater.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

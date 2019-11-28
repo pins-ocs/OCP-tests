@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-               BuildableName = "Train"
-               BlueprintName = "Train"
-               ReferencedContainer = "container:Train.xcodeproj">
+               BuildableName = "Farmer"
+               BlueprintName = "Farmer"
+               ReferencedContainer = "container:Farmer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,10 +31,12 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      disableMainThreadChecker = "YES"
+      enableAddressSanitizer = "YES"
+      enableASanStackUseAfterReturn = "YES"
+      enableUBSanitizer = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
       customWorkingDirectory = "$SOURCE_ROOT/.."
@@ -47,11 +49,23 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-            BuildableName = "Train"
-            BlueprintName = "Train"
-            ReferencedContainer = "container:Train.xcodeproj">
+            BuildableName = "Farmer"
+            BlueprintName = "Farmer"
+            ReferencedContainer = "container:Farmer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <AdditionalOptions>
+         <AdditionalOption
+            key = "NSZombieEnabled"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "MallocScribble"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -64,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-            BuildableName = "Train"
-            BlueprintName = "Train"
-            ReferencedContainer = "container:Train.xcodeproj">
+            BuildableName = "Farmer"
+            BlueprintName = "Farmer"
+            ReferencedContainer = "container:Farmer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

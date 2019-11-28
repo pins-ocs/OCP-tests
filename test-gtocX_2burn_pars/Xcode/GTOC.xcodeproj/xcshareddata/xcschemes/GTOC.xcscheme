@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-               BuildableName = "Train"
-               BlueprintName = "Train"
-               ReferencedContainer = "container:Train.xcodeproj">
+               BuildableName = "GTOC"
+               BlueprintName = "GTOC"
+               ReferencedContainer = "container:GTOC.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,6 +34,7 @@
       buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      enableASanStackUseAfterReturn = "YES"
       disableMainThreadChecker = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
@@ -47,9 +48,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-            BuildableName = "Train"
-            BlueprintName = "Train"
-            ReferencedContainer = "container:Train.xcodeproj">
+            BuildableName = "GTOC"
+            BlueprintName = "GTOC"
+            ReferencedContainer = "container:GTOC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -64,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-            BuildableName = "Train"
-            BlueprintName = "Train"
-            ReferencedContainer = "container:Train.xcodeproj">
+            BuildableName = "GTOC"
+            BlueprintName = "GTOC"
+            ReferencedContainer = "container:GTOC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

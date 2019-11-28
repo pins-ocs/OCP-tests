@@ -20,17 +20,6 @@
 		D90B7810238FDA02000F8BB0 /* Discretized_Indirect_OCP_NLSYS.cc in Sources */ = {isa = PBXBuildFile; fileRef = D90B77F1238FDA02000F8BB0 /* Discretized_Indirect_OCP_NLSYS.cc */; };
 		D90B7813238FDA2A000F8BB0 /* libsuperlu_osx_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D90B7811238FDA2A000F8BB0 /* libsuperlu_osx_static.a */; };
 		D90B7814238FDA2A000F8BB0 /* libAlglin_osx_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D90B7812238FDA2A000F8BB0 /* libAlglin_osx_static.a */; };
-		D915B394238B1FD7008E520D /* Train_Methods_problem.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B387238B1FD7008E520D /* Train_Methods_problem.cc */; };
-		D915B395238B1FD7008E520D /* Train_Methods_boundary_conditions.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B388238B1FD7008E520D /* Train_Methods_boundary_conditions.cc */; };
-		D915B396238B1FD7008E520D /* Train_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B389238B1FD7008E520D /* Train_Guess.cc */; };
-		D915B397238B1FD7008E520D /* Train_dll_ruby.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B38A238B1FD7008E520D /* Train_dll_ruby.cc */; };
-		D915B398238B1FD7008E520D /* Train_dll_pins.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B38B238B1FD7008E520D /* Train_dll_pins.cc */; };
-		D915B399238B1FD7008E520D /* Train_Methods_controls.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B38E238B1FD7008E520D /* Train_Methods_controls.cc */; };
-		D915B39A238B1FD7008E520D /* Train.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B38F238B1FD7008E520D /* Train.cc */; };
-		D915B39B238B1FD7008E520D /* hfun.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B391238B1FD7008E520D /* hfun.cc */; };
-		D915B39C238B1FD7008E520D /* Train_Methods_AdjointODE.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B392238B1FD7008E520D /* Train_Methods_AdjointODE.cc */; };
-		D915B39D238B1FD7008E520D /* Train_Methods_ODE.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B393238B1FD7008E520D /* Train_Methods_ODE.cc */; };
-		D915B39F238B1FE3008E520D /* Train_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D915B39E238B1FE3008E520D /* Train_Main.cc */; };
 		D915B3A8238B2004008E520D /* MechatronixVehicle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D915B3A0238B2004008E520D /* MechatronixVehicle.framework */; };
 		D915B3A9238B2004008E520D /* MechatronixRoad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D915B3A1238B2004008E520D /* MechatronixRoad.framework */; };
 		D915B3AA238B2004008E520D /* MechatronixManufacturing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D915B3A2238B2004008E520D /* MechatronixManufacturing.framework */; };
@@ -39,6 +28,16 @@
 		D915B3AE238B2004008E520D /* MechatronixInterfaceMruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D915B3A6238B2004008E520D /* MechatronixInterfaceMruby.framework */; };
 		D915B3AF238B2004008E520D /* MechatronixCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D915B3A7238B2004008E520D /* MechatronixCore.framework */; };
 		D915B3B2238B2050008E520D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D915B3B1238B2050008E520D /* Accelerate.framework */; };
+		D9C430CF2392957E00B724DB /* MinimumEnergyProblem.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430B92392957E00B724DB /* MinimumEnergyProblem.cc */; };
+		D9C430D12392957E00B724DB /* MinimumEnergyProblem_Methods_controls.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430BB2392957E00B724DB /* MinimumEnergyProblem_Methods_controls.cc */; };
+		D9C430D22392957E00B724DB /* MinimumEnergyProblem_Methods_boundary_conditions.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430BC2392957E00B724DB /* MinimumEnergyProblem_Methods_boundary_conditions.cc */; };
+		D9C430D52392957E00B724DB /* MinimumEnergyProblem_dll_pins.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430C02392957E00B724DB /* MinimumEnergyProblem_dll_pins.cc */; };
+		D9C430D72392957E00B724DB /* MinimumEnergyProblem_dll_ruby.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430C22392957E00B724DB /* MinimumEnergyProblem_dll_ruby.cc */; };
+		D9C430D82392957E00B724DB /* MinimumEnergyProblem_Methods_AdjointODE.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430C32392957E00B724DB /* MinimumEnergyProblem_Methods_AdjointODE.cc */; };
+		D9C430DB2392957E00B724DB /* MinimumEnergyProblem_Guess.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430C72392957E00B724DB /* MinimumEnergyProblem_Guess.cc */; };
+		D9C430DC2392957E00B724DB /* MinimumEnergyProblem_Methods_problem.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430C82392957E00B724DB /* MinimumEnergyProblem_Methods_problem.cc */; };
+		D9C430DE2392957E00B724DB /* MinimumEnergyProblem_Methods_ODE.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430CA2392957E00B724DB /* MinimumEnergyProblem_Methods_ODE.cc */; };
+		D9C430E22392958700B724DB /* MinimumEnergyProblem_Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C430E12392958700B724DB /* MinimumEnergyProblem_Main.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,21 +72,6 @@
 		D90B77F2238FDA02000F8BB0 /* Indirect_OCP.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Indirect_OCP.hh; sourceTree = "<group>"; };
 		D90B7811238FDA2A000F8BB0 /* libsuperlu_osx_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsuperlu_osx_static.a; path = ../../../../LibSources/os_mac/lib/libsuperlu_osx_static.a; sourceTree = "<group>"; };
 		D90B7812238FDA2A000F8BB0 /* libAlglin_osx_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAlglin_osx_static.a; path = ../../../../LibSources/os_mac/lib/libAlglin_osx_static.a; sourceTree = "<group>"; };
-		D915B386238B1FD7008E520D /* Train.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Train.hh; sourceTree = "<group>"; };
-		D915B387238B1FD7008E520D /* Train_Methods_problem.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train_Methods_problem.cc; sourceTree = "<group>"; };
-		D915B388238B1FD7008E520D /* Train_Methods_boundary_conditions.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train_Methods_boundary_conditions.cc; sourceTree = "<group>"; };
-		D915B389238B1FD7008E520D /* Train_Guess.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train_Guess.cc; sourceTree = "<group>"; };
-		D915B38A238B1FD7008E520D /* Train_dll_ruby.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train_dll_ruby.cc; sourceTree = "<group>"; };
-		D915B38B238B1FD7008E520D /* Train_dll_pins.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train_dll_pins.cc; sourceTree = "<group>"; };
-		D915B38C238B1FD7008E520D /* Train_dll_ruby.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Train_dll_ruby.hh; sourceTree = "<group>"; };
-		D915B38D238B1FD7008E520D /* Train_dll_pins.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Train_dll_pins.hh; sourceTree = "<group>"; };
-		D915B38E238B1FD7008E520D /* Train_Methods_controls.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train_Methods_controls.cc; sourceTree = "<group>"; };
-		D915B38F238B1FD7008E520D /* Train.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train.cc; sourceTree = "<group>"; };
-		D915B390238B1FD7008E520D /* Train_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Train_Pars.hh; sourceTree = "<group>"; };
-		D915B391238B1FD7008E520D /* hfun.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hfun.cc; sourceTree = "<group>"; };
-		D915B392238B1FD7008E520D /* Train_Methods_AdjointODE.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train_Methods_AdjointODE.cc; sourceTree = "<group>"; };
-		D915B393238B1FD7008E520D /* Train_Methods_ODE.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Train_Methods_ODE.cc; sourceTree = "<group>"; };
-		D915B39E238B1FE3008E520D /* Train_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Train_Main.cc; path = "../ocp-interfaces/cpp/Train_Main.cc"; sourceTree = "<group>"; };
 		D915B3A0238B2004008E520D /* MechatronixVehicle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixVehicle.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixVehicle.framework; sourceTree = "<group>"; };
 		D915B3A1238B2004008E520D /* MechatronixRoad.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixRoad.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixRoad.framework; sourceTree = "<group>"; };
 		D915B3A2238B2004008E520D /* MechatronixManufacturing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixManufacturing.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixManufacturing.framework; sourceTree = "<group>"; };
@@ -96,7 +80,21 @@
 		D915B3A6238B2004008E520D /* MechatronixInterfaceMruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixInterfaceMruby.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixInterfaceMruby.framework; sourceTree = "<group>"; };
 		D915B3A7238B2004008E520D /* MechatronixCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MechatronixCore.framework; path = ../../../../../../../../../../Library/Frameworks/MechatronixCore.framework; sourceTree = "<group>"; };
 		D915B3B1238B2050008E520D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		D95CE56C238B1F84004B795F /* Train */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Train; sourceTree = BUILT_PRODUCTS_DIR; };
+		D95CE56C238B1F84004B795F /* MinimumEnergyProblem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MinimumEnergyProblem; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9C430B92392957E00B724DB /* MinimumEnergyProblem.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimumEnergyProblem.cc; sourceTree = "<group>"; };
+		D9C430BB2392957E00B724DB /* MinimumEnergyProblem_Methods_controls.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimumEnergyProblem_Methods_controls.cc; sourceTree = "<group>"; };
+		D9C430BC2392957E00B724DB /* MinimumEnergyProblem_Methods_boundary_conditions.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimumEnergyProblem_Methods_boundary_conditions.cc; sourceTree = "<group>"; };
+		D9C430BE2392957E00B724DB /* MinimumEnergyProblem.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MinimumEnergyProblem.hh; sourceTree = "<group>"; };
+		D9C430C02392957E00B724DB /* MinimumEnergyProblem_dll_pins.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimumEnergyProblem_dll_pins.cc; sourceTree = "<group>"; };
+		D9C430C22392957E00B724DB /* MinimumEnergyProblem_dll_ruby.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimumEnergyProblem_dll_ruby.cc; sourceTree = "<group>"; };
+		D9C430C32392957E00B724DB /* MinimumEnergyProblem_Methods_AdjointODE.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimumEnergyProblem_Methods_AdjointODE.cc; sourceTree = "<group>"; };
+		D9C430C62392957E00B724DB /* MinimumEnergyProblem_Pars.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MinimumEnergyProblem_Pars.hh; sourceTree = "<group>"; };
+		D9C430C72392957E00B724DB /* MinimumEnergyProblem_Guess.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimumEnergyProblem_Guess.cc; sourceTree = "<group>"; };
+		D9C430C82392957E00B724DB /* MinimumEnergyProblem_Methods_problem.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimumEnergyProblem_Methods_problem.cc; sourceTree = "<group>"; };
+		D9C430CA2392957E00B724DB /* MinimumEnergyProblem_Methods_ODE.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimumEnergyProblem_Methods_ODE.cc; sourceTree = "<group>"; };
+		D9C430CB2392957E00B724DB /* MinimumEnergyProblem_dll_pins.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MinimumEnergyProblem_dll_pins.hh; sourceTree = "<group>"; };
+		D9C430CE2392957E00B724DB /* MinimumEnergyProblem_dll_ruby.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MinimumEnergyProblem_dll_ruby.hh; sourceTree = "<group>"; };
+		D9C430E12392958700B724DB /* MinimumEnergyProblem_Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MinimumEnergyProblem_Main.cc; path = "../ocp-interfaces/cpp/MinimumEnergyProblem_Main.cc"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,28 +143,6 @@
 			path = ../../../../LibSources/src/MechatronixSolver;
 			sourceTree = "<group>";
 		};
-		D915B385238B1FD7008E520D /* ocp-src */ = {
-			isa = PBXGroup;
-			children = (
-				D915B386238B1FD7008E520D /* Train.hh */,
-				D915B390238B1FD7008E520D /* Train_Pars.hh */,
-				D915B38F238B1FD7008E520D /* Train.cc */,
-				D915B389238B1FD7008E520D /* Train_Guess.cc */,
-				D915B387238B1FD7008E520D /* Train_Methods_problem.cc */,
-				D915B388238B1FD7008E520D /* Train_Methods_boundary_conditions.cc */,
-				D915B392238B1FD7008E520D /* Train_Methods_AdjointODE.cc */,
-				D915B393238B1FD7008E520D /* Train_Methods_ODE.cc */,
-				D915B38A238B1FD7008E520D /* Train_dll_ruby.cc */,
-				D915B38B238B1FD7008E520D /* Train_dll_pins.cc */,
-				D915B38C238B1FD7008E520D /* Train_dll_ruby.hh */,
-				D915B38D238B1FD7008E520D /* Train_dll_pins.hh */,
-				D915B38E238B1FD7008E520D /* Train_Methods_controls.cc */,
-				D915B391238B1FD7008E520D /* hfun.cc */,
-			);
-			name = "ocp-src";
-			path = "../ocp-src";
-			sourceTree = "<group>";
-		};
 		D915B3B0238B2050008E520D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,12 +161,12 @@
 				D915B3A5238B2004008E520D /* MechatronixODE.framework */,
 				D915B3A1238B2004008E520D /* MechatronixRoad.framework */,
 				D915B3A0238B2004008E520D /* MechatronixVehicle.framework */,
-				D915B39E238B1FE3008E520D /* Train_Main.cc */,
+				D9C430E12392958700B724DB /* MinimumEnergyProblem_Main.cc */,
 				D90B7812238FDA2A000F8BB0 /* libAlglin_osx_static.a */,
 				D90B7811238FDA2A000F8BB0 /* libsuperlu_osx_static.a */,
+				D9C430B82392957E00B724DB /* ocp-src */,
 				D95CE56D238B1F84004B795F /* Products */,
 				D90B77AC238FDA02000F8BB0 /* MechatronixSolver */,
-				D915B385238B1FD7008E520D /* ocp-src */,
 				D915B3B0238B2050008E520D /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -198,17 +174,38 @@
 		D95CE56D238B1F84004B795F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D95CE56C238B1F84004B795F /* Train */,
+				D95CE56C238B1F84004B795F /* MinimumEnergyProblem */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D9C430B82392957E00B724DB /* ocp-src */ = {
+			isa = PBXGroup;
+			children = (
+				D9C430BE2392957E00B724DB /* MinimumEnergyProblem.hh */,
+				D9C430C62392957E00B724DB /* MinimumEnergyProblem_Pars.hh */,
+				D9C430B92392957E00B724DB /* MinimumEnergyProblem.cc */,
+				D9C430C82392957E00B724DB /* MinimumEnergyProblem_Methods_problem.cc */,
+				D9C430C72392957E00B724DB /* MinimumEnergyProblem_Guess.cc */,
+				D9C430BB2392957E00B724DB /* MinimumEnergyProblem_Methods_controls.cc */,
+				D9C430CA2392957E00B724DB /* MinimumEnergyProblem_Methods_ODE.cc */,
+				D9C430C32392957E00B724DB /* MinimumEnergyProblem_Methods_AdjointODE.cc */,
+				D9C430BC2392957E00B724DB /* MinimumEnergyProblem_Methods_boundary_conditions.cc */,
+				D9C430CB2392957E00B724DB /* MinimumEnergyProblem_dll_pins.hh */,
+				D9C430C02392957E00B724DB /* MinimumEnergyProblem_dll_pins.cc */,
+				D9C430CE2392957E00B724DB /* MinimumEnergyProblem_dll_ruby.hh */,
+				D9C430C22392957E00B724DB /* MinimumEnergyProblem_dll_ruby.cc */,
+			);
+			name = "ocp-src";
+			path = "../ocp-src";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D95CE56B238B1F84004B795F /* Train */ = {
+		D95CE56B238B1F84004B795F /* MinimumEnergyProblem */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D95CE573238B1F84004B795F /* Build configuration list for PBXNativeTarget "Train" */;
+			buildConfigurationList = D95CE573238B1F84004B795F /* Build configuration list for PBXNativeTarget "MinimumEnergyProblem" */;
 			buildPhases = (
 				D95CE568238B1F84004B795F /* Sources */,
 				D95CE569238B1F84004B795F /* Frameworks */,
@@ -218,9 +215,9 @@
 			);
 			dependencies = (
 			);
-			name = Train;
+			name = MinimumEnergyProblem;
 			productName = Train;
-			productReference = D95CE56C238B1F84004B795F /* Train */;
+			productReference = D95CE56C238B1F84004B795F /* MinimumEnergyProblem */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -237,7 +234,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D95CE567238B1F84004B795F /* Build configuration list for PBXProject "Train" */;
+			buildConfigurationList = D95CE567238B1F84004B795F /* Build configuration list for PBXProject "MinimumEnergyProblem" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -250,7 +247,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D95CE56B238B1F84004B795F /* Train */,
+				D95CE56B238B1F84004B795F /* MinimumEnergyProblem */,
 			);
 		};
 /* End PBXProject section */
@@ -261,27 +258,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				D90B7810238FDA02000F8BB0 /* Discretized_Indirect_OCP_NLSYS.cc in Sources */,
-				D915B394238B1FD7008E520D /* Train_Methods_problem.cc in Sources */,
+				D9C430E22392958700B724DB /* MinimumEnergyProblem_Main.cc in Sources */,
 				D90B77F4238FDA02000F8BB0 /* Discretized_Indirect_OCP_FD.cc in Sources */,
+				D9C430D82392957E00B724DB /* MinimumEnergyProblem_Methods_AdjointODE.cc in Sources */,
 				D90B77FA238FDA02000F8BB0 /* Indirect_OCP_BC.cc in Sources */,
-				D915B39F238B1FE3008E520D /* Train_Main.cc in Sources */,
-				D915B399238B1FD7008E520D /* Train_Methods_controls.cc in Sources */,
 				D90B77FC238FDA02000F8BB0 /* Discretized_Indirect_OCP.cc in Sources */,
-				D915B395238B1FD7008E520D /* Train_Methods_boundary_conditions.cc in Sources */,
-				D915B39A238B1FD7008E520D /* Train.cc in Sources */,
 				D90B77F3238FDA02000F8BB0 /* Discretized_Indirect_OCP_Guess.cc in Sources */,
-				D915B39D238B1FD7008E520D /* Train_Methods_ODE.cc in Sources */,
 				D90B77F8238FDA02000F8BB0 /* Indirect_OCP.cc in Sources */,
+				D9C430CF2392957E00B724DB /* MinimumEnergyProblem.cc in Sources */,
+				D9C430DE2392957E00B724DB /* MinimumEnergyProblem_Methods_ODE.cc in Sources */,
+				D9C430DB2392957E00B724DB /* MinimumEnergyProblem_Guess.cc in Sources */,
 				D90B77F6238FDA02000F8BB0 /* Discretized_Indirect_OCP_NLBLOCKS.cc in Sources */,
+				D9C430D52392957E00B724DB /* MinimumEnergyProblem_dll_pins.cc in Sources */,
 				D90B77F9238FDA02000F8BB0 /* Indirect_OCP_U.cc in Sources */,
 				D90B77F5238FDA02000F8BB0 /* Discretized_Indirect_OCP_Check.cc in Sources */,
 				D90B77FB238FDA02000F8BB0 /* Discretized_Indirect_OCP_IO.cc in Sources */,
-				D915B39B238B1FD7008E520D /* hfun.cc in Sources */,
-				D915B396238B1FD7008E520D /* Train_Guess.cc in Sources */,
+				D9C430D12392957E00B724DB /* MinimumEnergyProblem_Methods_controls.cc in Sources */,
 				D90B77F7238FDA02000F8BB0 /* OCP.cc in Sources */,
-				D915B397238B1FD7008E520D /* Train_dll_ruby.cc in Sources */,
-				D915B398238B1FD7008E520D /* Train_dll_pins.cc in Sources */,
-				D915B39C238B1FD7008E520D /* Train_Methods_AdjointODE.cc in Sources */,
+				D9C430D72392957E00B724DB /* MinimumEnergyProblem_dll_ruby.cc in Sources */,
+				D9C430D22392957E00B724DB /* MinimumEnergyProblem_Methods_boundary_conditions.cc in Sources */,
+				D9C430DC2392957E00B724DB /* MinimumEnergyProblem_Methods_problem.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,7 +424,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D95CE567238B1F84004B795F /* Build configuration list for PBXProject "Train" */ = {
+		D95CE567238B1F84004B795F /* Build configuration list for PBXProject "MinimumEnergyProblem" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D95CE571238B1F84004B795F /* Debug */,
@@ -437,7 +433,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D95CE573238B1F84004B795F /* Build configuration list for PBXNativeTarget "Train" */ = {
+		D95CE573238B1F84004B795F /* Build configuration list for PBXNativeTarget "MinimumEnergyProblem" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D95CE574238B1F84004B795F /* Debug */,

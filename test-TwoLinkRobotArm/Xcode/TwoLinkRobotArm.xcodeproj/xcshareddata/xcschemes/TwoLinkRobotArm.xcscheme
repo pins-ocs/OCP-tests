@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-               BuildableName = "Train"
-               BlueprintName = "Train"
-               ReferencedContainer = "container:Train.xcodeproj">
+               BlueprintIdentifier = "D93573B8238C39390005CB5A"
+               BuildableName = "TwoLinkRobotArm"
+               BlueprintName = "TwoLinkRobotArm"
+               ReferencedContainer = "container:TwoLinkRobotArm.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,10 +46,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-            BuildableName = "Train"
-            BlueprintName = "Train"
-            ReferencedContainer = "container:Train.xcodeproj">
+            BlueprintIdentifier = "D93573B8238C39390005CB5A"
+            BuildableName = "TwoLinkRobotArm"
+            BlueprintName = "TwoLinkRobotArm"
+            ReferencedContainer = "container:TwoLinkRobotArm.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,10 +63,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95CE56B238B1F84004B795F"
-            BuildableName = "Train"
-            BlueprintName = "Train"
-            ReferencedContainer = "container:Train.xcodeproj">
+            BlueprintIdentifier = "D93573B8238C39390005CB5A"
+            BuildableName = "TwoLinkRobotArm"
+            BlueprintName = "TwoLinkRobotArm"
+            ReferencedContainer = "container:TwoLinkRobotArm.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
