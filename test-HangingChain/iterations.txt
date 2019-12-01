@@ -1,0 +1,51 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_z
+[ 2] final_x
+
+
+
+User class (pointer)
+User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 401
+Segment N.0
+s0 = 0 length = 1 npts = 401 no data set
+
+Model Parameters
+.......................................L = 2.23606797749979
+......................................L0 = 2.23606797749979
+......................................L1 = 4.0
+.......................................a = 1.0
+.......................................b = 3.0
+......................................u0 = 2.0
+INFO CLASS = HangingChain
+  dim_u        = 1
+  dim_q        = 1
+  dim_x        = 2
+  dim_p        = 0
+  dim_omega    = 3
+  dim_big_bc   = 7
+  numNodes     = 401
+  InitialBC    = 4
+  FinalBC      = 3
+  CyclicBC     = 0
+  InitialOMEGA = 2
+  FinalOMEGA   = 1
+  CyclicOMEGA  = 0
+  nZ_total     = 2007
+  nQ_total     = 401
+  FD jacobian  = NO
+END INFO
+Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
+Solver Controls: LU, N.threads: 6
+
+
+Hyness::computeCorrection():
+NewtonDumped[solverControl0]::eval_merit0
+Cannot compute initial merit function:
+merit_0  = inf
+Dmerit_0 = -inf
+
+On File:/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixCore/NewtonDumped.cc:193
+

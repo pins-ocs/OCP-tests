@@ -1,0 +1,129 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_y
+[ 2] initial_z
+[ 3] final_x
+[ 4] final_y
+[ 5] final_z
+
+
+
+Constraints 1D
+ray_positive = {
+  Type      = GREATER THAN
+  SubType   = BARRIER_LOG
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+
+User class (pointer)
+User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 51
+Segment N.0
+s0 = 0 length = 1 npts = 51 no data set
+
+Model Parameters
+.....................................muS = 0.575874
+..................................time_f = 27.0
+..................................time_i = 0.0
+.................................w_guess = 0.0
+...............................epsi_norm = 0.01
+..............................retrograde = -1.0
+................................w_nonlin = 0.0
+INFO CLASS = gtocX_2burn_pars
+  dim_u        = 0
+  dim_q        = 1
+  dim_x        = 3
+  dim_p        = 3
+  dim_omega    = 6
+  dim_big_bc   = 12
+  numNodes     = 51
+  InitialBC    = 6
+  FinalBC      = 0
+  CyclicBC     = 6
+  InitialOMEGA = 3
+  FinalOMEGA   = 0
+  CyclicOMEGA  = 3
+  nZ_total     = 315
+  nQ_total     = 51
+  FD jacobian  = NO
+END INFO
+Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
+Solver Controls: LU, N.threads: 6
+
+
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  1,  1] ( 4.73e-06, 7.71e-09) [ 0.000368,  9.7e-08]      1.00 ( 0: 0): 0: 0: 0 G
+[  2,  1] ( 7.71e-09, 2.59e-16) [  9.7e-08, 4.13e-15]      1.00 ( 1: 0): 0: 0: 0 G
+
+Continuation step N.0 s = 0.2
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  3,  1] ( 6.98e-07, 6.42e-17) [ 5.99e-05, 1.46e-16]      1.00 ( 0: 0): 0: 0: 0 G
+[  4,  1] ( 6.42e-17, 6.52e-17) [ 1.46e-16, 6.73e-17]      1.00 ( 1: 0): 0: 0: 0 G
+
+Continuation step N.0 s = 0.5
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  5,  1] ( 1.05e-06, 6.72e-17) [ 8.98e-05, 1.07e-16]      1.00 ( 2: 2): 0: 0: 0 G
+[  6,  1] ( 6.72e-17, 6.65e-17) [ 1.07e-16, 1.31e-16]      1.00 ( 1: 2): 0: 0: 0 G
+
+Continuation step N.0 s = 0.9500000000000001
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  7,  1] ( 1.57e-06, 5.64e-17) [ 0.000135, 1.05e-16]      1.00 ( 2: 2): 0: 0: 0 G
+[  8,  1] ( 5.64e-17, 6.83e-17) [ 1.05e-16, 5.08e-17]      1.00 ( 1: 2): 0: 0: 0 G
+
+Continuation step N.0 s = 1.0
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  9,  1] ( 1.75e-07, 5.94e-17) [  1.5e-05, 4.56e-17]      1.00 ( 2: 2): 0: 0: 0 G
+
+Continuation step N.1 s = 0.2
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[ 10,  1] ( 0.000702, 7.36e-06) [  0.00925, 0.000173]      1.00 ( 1: 1): 0: 0: 0 G
+[ 11,  1] ( 7.36e-06, 2.17e-09) [ 0.000167, 9.46e-08]      1.00 ( 1: 1): 0: 0: 0 G
+[ 12,  1] ( 2.17e-09, 4.13e-16) [ 9.47e-08,    1e-14]      1.00 ( 2: 1): 0: 0: 0 G
+
+Continuation step N.1 s = 0.5
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[ 13,  1] (  0.00108,  3.2e-05) [   0.0155, 0.000587]      1.00 ( 3: 3): 0: 0: 0 G
+[ 14,  1] (  3.2e-05,  2.8e-08) [ 0.000555, 9.22e-07]      1.00 ( 1: 3): 0: 0: 0 G
+[ 15,  1] (  2.8e-08, 4.82e-14) [ 9.23e-07, 8.06e-13]      1.00 ( 2: 3): 0: 0: 0 G
+
+Continuation step N.1 s = 0.9500000000000001
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[ 16,  1] (  0.00169, 0.000207) [   0.0283,  0.00302]      1.00 ( 3: 3): 0: 0: 0 G
+[ 17,  1] ( 0.000207, 8.03e-07) [  0.00281,    2e-05]      1.00 ( 1: 3): 0: 0: 0 G
+[ 18,  1] ( 8.03e-07, 4.41e-11) [ 2.02e-05,  5.4e-10]      1.00 ( 2: 3): 0: 0: 0 G
+
+Continuation step N.1 s = 1.0
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[ 19,  1] ( 0.000204, 5.99e-06) [   0.0043, 8.01e-05]      1.00 ( 3: 3): 0: 0: 0 G
+[ 20,  1] ( 5.99e-06, 6.96e-10) [ 7.96e-05, 1.66e-08]      1.00 ( 1: 3): 0: 0: 0 G
+[ 21,  1] ( 6.96e-10, 9.08e-17) [ 1.66e-08, 4.35e-16]      1.00 ( 2: 3): 0: 0: 0 G
+
+----------------------------- STATISTIC ------------------------------
+Elapsed Time           = 15.0    ms    iteration           = 21        
+Total Equations        = 315           tolerance           = 1e-09     
+max iterations         = 300           max accumul. iter.  = 800       
+---------------------------- Continuation ----------------------------
+Initial Step           = 0.2           Minimum Step        = 0.001     
+Reduce Factor          = 0.5           Augment Factor      = 1.5       
+---------------------------- valutations -----------------------------
+Merit Function         = 0             Function Evaluation = 30        
+Jacobian Factorization = 21            Jacobian Inversion  = 42        
+----------------------------------------------------------------------
+
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+last ||d||_inf =  2.807e-15      last `new' ||d||_inf  = 1.7728e-07
+last ||f||_inf = 8.0102e-09      last ||f||_1          = 6.9614e-10
+
+target [Lagrange,Mayer]        = [      0.00000,      0.00000]
+[Penalties/Barriers, Controls] = [ 3.03004e-102,      0.00000]
+Parameters:
+h: -0.0655370757577170421
+k: 3.23748474378138439e-32
+p: 1.85767113762416103
+All Done Folks!

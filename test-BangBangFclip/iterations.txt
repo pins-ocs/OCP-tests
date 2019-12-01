@@ -1,0 +1,93 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_v
+[ 2] initial_F
+[ 3] final_v
+[ 4] final_F
+
+
+
+Controls
+controlForce = {
+  type    = PENALTY QUADRATIC,
+  epsilon = 0.001,
+  size    = 0.001
+}
+
+User class (pointer)
+User function `pMesh`: Mesh: mesh  num. segments = 4 num. nodes = 104
+Segment N.0
+s0 = 0 length = 0.1 npts = 11 no data set
+Segment N.1
+s0 = 0.1 length = 0.4 npts = 41 no data set
+Segment N.2
+s0 = 0.5 length = 0.4 npts = 41 no data set
+Segment N.3
+s0 = 0.9 length = 0.1 npts = 11 no data set
+
+User mapped functions
+ClipIntervalWithErf, h = 0.1, delta = 0.1
+
+Model Parameters
+.................................maxClip = 1.0
+.................................minClip = -1.0
+...................................vFmax = 10.0
+INFO CLASS = BangBangFclip
+  dim_u        = 1
+  dim_q        = 1
+  dim_x        = 3
+  dim_p        = 0
+  dim_omega    = 5
+  dim_big_bc   = 11
+  numNodes     = 104
+  InitialBC    = 6
+  FinalBC      = 5
+  CyclicBC     = 0
+  InitialOMEGA = 3
+  FinalOMEGA   = 2
+  CyclicOMEGA  = 0
+  nZ_total     = 732
+  nQ_total     = 104
+  FD jacobian  = NO
+END INFO
+Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
+Solver Controls: LU, N.threads: 6
+
+
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  1,  2] (  0.00546,    0.753) [     51.0,     6.81]     0.305 ( 0: 0): 0: 0: 0 G
+[  2, 31] (    0.753,    0.753) [ 4.64e+03, 3.48e+03]  2.99e-08 ( 0: 0): 0: 1: 1 G
+[  3,  9] (    0.753,    0.754) [ 3.48e+03, 2.33e+03]  2.78e-08 ( 0: 0): 4: 2: 5 G
+[  4,  9] (    0.754,    0.754) [ 2.33e+03, 1.17e+03]  3.86e-08 ( 0: 0): 8: 3: 9 G
+[  5,  9] (    0.754,    0.754) [ 1.17e+03, 1.17e+03]   4.2e-08 ( 0: 0):12: 4:13 G
+[  6,  9] (    0.754,    0.754) [ 1.17e+03,    703.0]  2.24e-08 ( 0: 0):16: 4:17 G
+[  7, 18] (    0.754,    0.673) [     15.5,     13.8]     0.108 ( 6: 0): 4: 0: 4 G
+[  8,  1] (    0.673,     0.23) [     13.8,     4.73]     0.658 ( 7: 0): 1: 0: 1 G
+[  9,  1] (     0.23, 0.000575) [     4.73,   0.0112]      1.00 ( 8: 0): 1: 0: 1 G
+[ 10,  1] ( 0.000575, 6.18e-15) [   0.0111, 8.02e-13]      1.00 ( 9: 0): 0: 0: 0 G
+[ 11,  1] ( 6.18e-15, 1.05e-17) [ 8.02e-13, 9.03e-18]      1.00 (10: 0): 0: 0: 0 G
+
+----------------------------- STATISTIC ------------------------------
+Elapsed Time           = 29.5    ms    iteration           = 11        
+Total Equations        = 732           tolerance           = 1e-09     
+max iterations         = 300           max accumul. iter.  = 800       
+---------------------------- Continuation ----------------------------
+Initial Step           = 0.2           Minimum Step        = 0.001     
+Reduce Factor          = 0.5           Augment Factor      = 1.5       
+---------------------------- valutations -----------------------------
+Merit Function         = 0             Function Evaluation = 92        
+Jacobian Factorization = 11            Jacobian Inversion  = 102       
+----------------------------------------------------------------------
+
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+last ||d||_inf = 2.1352e-16      last `new' ||d||_inf  = 2.3987e-10
+last ||f||_inf = 9.8064e-13      last ||f||_1          = 6.1836e-15
+
+target [Lagrange,Mayer]        = [      0.00000,    -0.208362]
+[Penalties/Barriers, Controls] = [      0.00000,  0.000975598]
+All Done Folks!

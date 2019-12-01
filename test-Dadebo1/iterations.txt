@@ -1,0 +1,62 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_y
+[ 2] final_x
+
+
+
+User class (pointer)
+User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 1001
+Segment N.0
+s0 = 0 length = 1 npts = 1001 no data set
+INFO CLASS = Dadebo1
+  dim_u        = 1
+  dim_q        = 1
+  dim_x        = 2
+  dim_p        = 0
+  dim_omega    = 3
+  dim_big_bc   = 7
+  numNodes     = 1001
+  InitialBC    = 4
+  FinalBC      = 3
+  CyclicBC     = 0
+  InitialOMEGA = 2
+  FinalOMEGA   = 1
+  CyclicOMEGA  = 0
+  nZ_total     = 5007
+  nQ_total     = 1001
+  FD jacobian  = NO
+END INFO
+Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
+Solver Controls: LU, N.threads: 6
+
+
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  1,  1] ( 0.000799, 1.51e-05) [    0.191,  0.00757]      1.00 ( 0: 0): 0: 0: 0 G
+[  2,  1] ( 1.51e-05, 1.66e-17) [  0.00757,  1.3e-17]      1.00 ( 1: 0): 0: 0: 0 G
+[  3,  1] ( 1.66e-17, 1.65e-17) [  1.3e-17, 1.25e-17]      1.00 ( 2: 0): 0: 0: 0 G
+
+----------------------------- STATISTIC ------------------------------
+Elapsed Time           = 6.79    ms    iteration           = 3         
+Total Equations        = 5007          tolerance           = 1e-09     
+max iterations         = 300           max accumul. iter.  = 800       
+---------------------------- Continuation ----------------------------
+Initial Step           = 0.2           Minimum Step        = 0.001     
+Reduce Factor          = 0.5           Augment Factor      = 1.5       
+---------------------------- valutations -----------------------------
+Merit Function         = 0             Function Evaluation = 4         
+Jacobian Factorization = 3             Jacobian Inversion  = 6         
+----------------------------------------------------------------------
+
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+last ||d||_inf = 5.6022e-17      last `new' ||d||_inf  = 8.3327e-17
+last ||f||_inf = 1.1184e-16      last ||f||_1          =  1.655e-17
+
+target [Lagrange,Mayer]        = [      0.00000,     0.924234]
+[Penalties/Barriers, Controls] = [      0.00000,      0.00000]
+All Done Folks!

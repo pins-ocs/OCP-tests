@@ -1,0 +1,109 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_v
+[ 2] final_v
+
+
+
+Controls
+aF1Control = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+aF2Control = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+
+Constraints 1D
+Flim = {
+  Type      = INTERVAL
+  SubType   = PENALTY_REGULAR
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  MinValue  = -1.0
+  MaxValue  = 1.0
+  Active    = YES
+}
+
+User class (pointer)
+User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 101
+Segment N.0
+s0 = 0 length = 1 npts = 101 no data set
+
+Model Parameters
+...................................maxAF = 10.0
+.....................................w_F = 10.0
+INFO CLASS = BangBangFredundant
+  dim_u        = 2
+  dim_q        = 1
+  dim_x        = 6
+  dim_p        = 0
+  dim_omega    = 3
+  dim_big_bc   = 15
+  numNodes     = 101
+  InitialBC    = 8
+  FinalBC      = 7
+  CyclicBC     = 0
+  InitialOMEGA = 2
+  FinalOMEGA   = 1
+  CyclicOMEGA  = 0
+  nZ_total     = 1415
+  nQ_total     = 101
+  FD jacobian  = NO
+END INFO
+Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
+Solver Controls: LU, N.threads: 6
+
+
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  1,  9] (  0.00118,  0.00118) [ 2.59e+04, 2.59e+04]  9.45e-05 ( 0: 0): 0: 0: 0 G
+[  2,  4] (  0.00118,  0.00118) [    461.0,    459.0]  0.000437 ( 1: 0): 4: 0: 4 G
+[  3,  3] (  0.00118,  0.00201) [     49.3,     49.5]   0.00314 ( 2: 0): 4: 0: 4 G
+[  4,  4] (  0.00201,  0.00274) [     4.78,     3.88]   0.00955 ( 3: 0): 3: 0: 3 G
+[  5,  2] (  0.00274,  0.00477) [     0.86,    0.766]    0.0489 ( 4: 0): 3: 0: 3 G
+[  6,  2] (  0.00477,  0.00511) [     0.21,    0.179]     0.111 ( 5: 0): 2: 0: 2 G
+[  7,  2] (  0.00511,  0.00456) [     0.11,    0.102]     0.166 ( 6: 0): 1: 0: 1 G
+[  8,  1] (  0.00456,  0.00245) [    0.231,   0.0473]     0.815 ( 7: 0): 1: 0: 1 G
+[  9,  2] (  0.00245,    0.002) [   0.0601,   0.0384]      0.25 ( 8: 0): 1: 0: 1 G
+[ 10,  2] (    0.002,  0.00168) [   0.0205,   0.0161]      0.25 ( 9: 0): 1: 0: 1 G
+[ 11,  2] (  0.00168,  0.00131) [   0.0216,   0.0136]      0.25 (10: 0): 1: 0: 1 G
+[ 12,  2] (  0.00131,  0.00109) [   0.0129,  0.00932]      0.25 (11: 0): 1: 0: 1 G
+[ 13,  1] (  0.00109,  0.00076) [    0.011,  0.00786]      1.00 (12: 0): 1: 0: 1 G
+[ 14,  1] (  0.00076, 0.000297) [  0.00208,  0.00053]      1.00 (13: 0): 0: 0: 0 G
+[ 15,  1] ( 0.000297, 0.000113) [  0.00114, 0.000525]      1.00 (14: 0): 0: 0: 0 G
+[ 16,  1] ( 0.000113, 2.67e-05) [ 0.000393, 0.000248]      1.00 (15: 0): 0: 0: 0 G
+[ 17,  1] ( 2.67e-05, 2.37e-06) [  0.00331,  0.00139]      1.00 (16: 0): 0: 0: 0 G
+[ 18,  3] ( 2.37e-06, 5.28e-07) [ 0.000507, 0.000455]     0.784 (17: 0): 0: 0: 0 G
+[ 19,  1] ( 5.28e-07, 1.42e-09) [ 3.92e-05, 0.000102]      1.00 (18: 0): 1: 0: 1 G
+[ 20,  2] ( 1.42e-09, 2.83e-11) [ 5.64e-05, 0.000409]      0.98 (19: 0): 0: 0: 0 G
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[ 21,  1] ( 2.83e-11, 1.79e-16) [ 0.000848,  0.00019]      1.00 (20: 0): 0: 0: 0 G
+[ 22,  1] ( 1.79e-16,  1.5e-16) [ 0.000215, 0.000303]      1.00 (21: 0): 0: 0: 0 G
+
+----------------------------- STATISTIC ------------------------------
+Elapsed Time           = 26.8    ms    iteration           = 22        
+Total Equations        = 1415          tolerance           = 1e-09     
+max iterations         = 300           max accumul. iter.  = 800       
+---------------------------- Continuation ----------------------------
+Initial Step           = 0.2           Minimum Step        = 0.001     
+Reduce Factor          = 0.5           Augment Factor      = 1.5       
+---------------------------- valutations -----------------------------
+Merit Function         = 0             Function Evaluation = 49        
+Jacobian Factorization = 22            Jacobian Inversion  = 70        
+----------------------------------------------------------------------
+
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+last ||d||_inf =  0.0018395      last `new' ||d||_inf  =  0.0011917
+last ||f||_inf = 9.3713e-15      last ||f||_1          = 1.7885e-16
+
+target [Lagrange,Mayer]        = [      0.00000,    -0.231993]
+[Penalties/Barriers, Controls] = [  0.000949353,  0.000764002]
+All Done Folks!

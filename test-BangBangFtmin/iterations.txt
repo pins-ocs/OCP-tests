@@ -1,0 +1,80 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_v
+[ 2] final_x
+[ 3] final_v
+
+
+
+Controls
+Fcontrol = {
+  type    = PENALTY QUADRATIC,
+  epsilon = 0.001,
+  size    = 0.001
+}
+
+User class (pointer)
+User function `pMesh`: Mesh: mesh  num. segments = 4 num. nodes = 104
+Segment N.0
+s0 = 0 length = 0.1 npts = 11 no data set
+Segment N.1
+s0 = 0.1 length = 0.4 npts = 41 no data set
+Segment N.2
+s0 = 0.5 length = 0.4 npts = 41 no data set
+Segment N.3
+s0 = 0.9 length = 0.1 npts = 11 no data set
+INFO CLASS = BangBangFtmin
+  dim_u        = 1
+  dim_q        = 1
+  dim_x        = 3
+  dim_p        = 0
+  dim_omega    = 4
+  dim_big_bc   = 10
+  numNodes     = 104
+  InitialBC    = 5
+  FinalBC      = 5
+  CyclicBC     = 0
+  InitialOMEGA = 2
+  FinalOMEGA   = 2
+  CyclicOMEGA  = 0
+  nZ_total     = 731
+  nQ_total     = 104
+  FD jacobian  = NO
+END INFO
+Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
+Solver Controls: LU, N.threads: 6
+
+
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  1,  6] (  0.00547,  0.00605) [     12.0,     11.8]   0.00707 ( 0: 0): 0: 0: 0 G
+[  2,  1] (  0.00605,   0.0079) [    0.611,    0.475]     0.168 ( 1: 0): 3: 0: 3 G
+[  3,  1] (   0.0079,  0.00358) [    0.519,    0.185]      0.82 ( 2: 0): 1: 0: 1 G
+[  4,  1] (  0.00358, 0.000569) [    0.302,   0.0297]      1.00 ( 3: 0): 1: 0: 1 G
+[  5,  1] ( 0.000569, 5.57e-06) [   0.0223, 0.000225]      1.00 ( 4: 0): 0: 0: 0 G
+[  6,  1] ( 5.57e-06, 1.06e-09) [ 0.000231, 4.05e-08]      1.00 ( 5: 0): 0: 0: 0 G
+[  7,  1] ( 1.06e-09, 4.17e-17) [ 4.05e-08, 1.08e-15]      1.00 ( 6: 0): 0: 0: 0 G
+
+----------------------------- STATISTIC ------------------------------
+Elapsed Time           = 7.46    ms    iteration           = 7         
+Total Equations        = 731           tolerance           = 1e-09     
+max iterations         = 300           max accumul. iter.  = 800       
+---------------------------- Continuation ----------------------------
+Initial Step           = 0.2           Minimum Step        = 0.001     
+Reduce Factor          = 0.5           Augment Factor      = 1.5       
+---------------------------- valutations -----------------------------
+Merit Function         = 0             Function Evaluation = 11        
+Jacobian Factorization = 7             Jacobian Inversion  = 17        
+----------------------------------------------------------------------
+
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+last ||d||_inf = 5.1239e-15      last `new' ||d||_inf  = 1.5076e-07
+last ||f||_inf = 5.0094e-09      last ||f||_1          = 1.0596e-09
+
+target [Lagrange,Mayer]        = [      0.00000,      2.82984]
+[Penalties/Barriers, Controls] = [      0.00000,   0.00283008]
+All Done Folks!

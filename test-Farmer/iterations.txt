@@ -1,0 +1,120 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x1
+[ 1] initial_x2
+[ 2] initial_x3
+[ 3] initial_res
+[ 4] initial_x4
+
+
+
+Controls
+x1__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+x2__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+x3__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+x4__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+
+Constraints 1D
+LimitX2X4 = {
+  Type      = GREATER THAN
+  SubType   = PENALTY_REGULAR
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+
+User class (pointer)
+User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 401
+Segment N.0
+s0 = 0 length = 2 npts = 401 no data set
+
+Model Parameters
+......................................P1 = 0.1
+......................................P2 = 0.1
+....................................res0 = 0.001
+......................................t1 = 0.0
+......................................t2 = 60.0
+..................................tau__1 = 3.0
+..................................tau__2 = 25.0
+..................................tau__3 = 10.0
+..................................tau__4 = 60.0
+..................................tau__5 = 120.0
+......................................w1 = 1.3
+......................................w2 = 0.1
+......................................w3 = 1.2
+......................................w4 = 0.9
+.....................................wJ1 = 1.0
+.....................................wJ2 = 1.0
+.....................................wJ3 = 1.0
+.....................................wJ4 = 1.0
+......................................wP = 1.0
+.....................................x10 = 0.001
+.....................................x20 = 0.001
+.....................................x30 = 0.001
+.....................................x40 = 0.001
+INFO CLASS = Farmer
+  dim_u        = 4
+  dim_q        = 1
+  dim_x        = 5
+  dim_p        = 0
+  dim_omega    = 5
+  dim_big_bc   = 15
+  numNodes     = 401
+  InitialBC    = 10
+  FinalBC      = 5
+  CyclicBC     = 0
+  InitialOMEGA = 5
+  FinalOMEGA   = 0
+  CyclicOMEGA  = 0
+  nZ_total     = 5615
+  nQ_total     = 401
+  FD jacobian  = NO
+END INFO
+Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
+Solver Controls: LU, N.threads: 6
+
+
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  1,  1] ( 0.000266,    3e-06) [    0.118,  0.00265]      1.00 ( 0: 0): 0: 0: 0 G
+[  2,  1] (    3e-06, 5.31e-10) [  0.00255, 3.85e-07]      1.00 ( 1: 0): 0: 0: 0 G
+[  3,  1] ( 5.31e-10, 2.06e-17) [ 3.85e-07, 1.11e-14]      1.00 ( 2: 0): 0: 0: 0 G
+
+----------------------------- STATISTIC ------------------------------
+Elapsed Time           = 12.1    ms    iteration           = 3         
+Total Equations        = 5615          tolerance           = 1e-09     
+max iterations         = 120           max accumul. iter.  = 800       
+---------------------------- Continuation ----------------------------
+Initial Step           = 0.2           Minimum Step        = 0.001     
+Reduce Factor          = 0.5           Augment Factor      = 1.5       
+---------------------------- valutations -----------------------------
+Merit Function         = 0             Function Evaluation = 4         
+Jacobian Factorization = 3             Jacobian Inversion  = 6         
+----------------------------------------------------------------------
+
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+last ||d||_inf = 1.4916e-13      last `new' ||d||_inf  = 6.0664e-06
+last ||f||_inf = 8.3931e-09      last ||f||_1          = 5.3087e-10
+
+target [Lagrange,Mayer]        = [     0.012202,      0.00000]
+[Penalties/Barriers, Controls] = [  1.71678e-05,   0.00928353]
+All Done Folks!

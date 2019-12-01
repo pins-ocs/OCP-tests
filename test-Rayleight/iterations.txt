@@ -1,0 +1,65 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x1
+[ 1] initial_x2
+
+
+
+User class (pointer)
+User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 1001
+Segment N.0
+s0 = 0 length = 2.5 npts = 1001 no data set
+INFO CLASS = Rayleight
+  dim_u        = 1
+  dim_q        = 1
+  dim_x        = 2
+  dim_p        = 0
+  dim_omega    = 2
+  dim_big_bc   = 6
+  numNodes     = 1001
+  InitialBC    = 4
+  FinalBC      = 2
+  CyclicBC     = 0
+  InitialOMEGA = 2
+  FinalOMEGA   = 0
+  CyclicOMEGA  = 0
+  nZ_total     = 5006
+  nQ_total     = 1001
+  FD jacobian  = NO
+END INFO
+Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
+Solver Controls: LU, N.threads: 6
+
+
+[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
+[  1,  3] (    0.002,  0.00221) [     1.71,     0.74]     0.686 ( 0: 0): 0: 0: 0 G
+[  2,  4] (  0.00221,  0.00189) [     1.49,    0.481]     0.296 ( 1: 0): 1: 0: 1 G
+[  3,  1] (  0.00189, 0.000523) [    0.595,    0.107]      1.00 ( 2: 0): 1: 0: 1 G
+[  4,  1] ( 0.000523,    3e-05) [   0.0828,   0.0177]      1.00 ( 3: 0): 0: 0: 0 G
+[  5,  1] (    3e-05, 6.89e-07) [   0.0144, 5.39e-05]      1.00 ( 4: 0): 0: 0: 0 G
+[  6,  1] ( 6.89e-07, 4.39e-11) [ 5.47e-05, 4.29e-09]      1.00 ( 5: 0): 0: 0: 0 G
+[  7,  1] ( 4.39e-11, 8.65e-17) [ 4.29e-09, 7.03e-17]      1.00 ( 6: 0): 0: 0: 0 G
+
+----------------------------- STATISTIC ------------------------------
+Elapsed Time           = 17.8    ms    iteration           = 7         
+Total Equations        = 5006          tolerance           = 1e-09     
+max iterations         = 300           max accumul. iter.  = 800       
+---------------------------- Continuation ----------------------------
+Initial Step           = 0.2           Minimum Step        = 0.001     
+Reduce Factor          = 0.5           Augment Factor      = 1.5       
+---------------------------- valutations -----------------------------
+Merit Function         = 0             Function Evaluation = 13        
+Jacobian Factorization = 7             Jacobian Inversion  = 19        
+----------------------------------------------------------------------
+
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+last ||d||_inf = 1.0778e-15      last `new' ||d||_inf  = 1.6391e-07
+last ||f||_inf = 3.4156e-09      last ||f||_1          = 4.3947e-11
+
+target [Lagrange,Mayer]        = [      29.3762,      0.00000]
+[Penalties/Barriers, Controls] = [      0.00000,      0.00000]
+All Done Folks!
