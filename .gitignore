@@ -7,6 +7,8 @@
 /*test*-*/*run_ffi.rb
 /*test*-*/bin/main
 /*test*-*/matlab_scripts
+/*test*-*/CMakeLists.txt
+/*test*-*/build
 /*/*test*-*/data
 /*/*test*-*/lib
 /*/*test*-*/bin
@@ -16,6 +18,8 @@
 /*/*test*-*/*run_ffi.rb
 /*/*test*-*/bin/main
 /*/*test*-*/matlab_scripts
+/*/*test*-*/CMakeLists.txt
+/*/*test*-*/build
 *_run.m
 
 DerivedData
@@ -54,4 +58,3 @@ dumps
 *.app
 *.sav
 *.bak
-test-BangBangFmodule/Xcode
