@@ -122,7 +122,7 @@ begin # definitions
     LIBRARY       = "#{LIB_DIR}/lib#{MODEL_NAME}"
     COMPILE_FLAGS = "#{CXXFLAGS}"
     LINKER_FLAGS  = "/link /DLL"
-    HEADERS_FLAGS = "#{INCLUDES} /I#{SRC_DIR}"
+    HEADERS_FLAGS = "#{INCLUDES} /I\"#{SRC_DIR}\""
     LIB_WIN_DIR   = "#{LFLAGS} #{FRAMEWORKS}"
     CC            = {'.c' => 'cl.exe', '.cc' => 'cl.exe', '.lib' => 'lib.exe', '.dll' => 'link.exe'}
     RUN           = "bin\\main"
