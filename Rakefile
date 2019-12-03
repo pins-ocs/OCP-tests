@@ -76,7 +76,7 @@ when /mingw|mswin/
     raise RuntimeError, "Cannot determine architecture for Visual Studio #{VS_VERSION}".red
   end
 
-  MAPLECMD = 'C:\Program Files\Maple 2017\bin.X86_64_WINDOWS\cmaple.exe' # da sistenare
+  MAPLECMD = '"C:\Program Files\Maple 2017\bin.X86_64_WINDOWS\cmaple.exe"' # da sistenare
 
 else
   raise RuntimeError, "Unsupported OS: #{RUBY_PLATFORM}"
