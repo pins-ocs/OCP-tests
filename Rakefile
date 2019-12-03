@@ -76,7 +76,7 @@ when /mingw|mswin/
     raise RuntimeError, "Cannot determine architecture for Visual Studio #{VS_VERSION}".red
   end
 
-  MAPLECMD = "cmaple.exe" # da sistenare
+  MAPLECMD = 'C:\Program Files\Maple 2017\bin.X86_64_WINDOWS\cmaple.exe' # da sistenare
 
 else
   raise RuntimeError, "Unsupported OS: #{RUBY_PLATFORM}"
@@ -159,12 +159,7 @@ task :maple do
   dir = File.dirname MAPLET
   if File.exist?(MAPLET)
     cd dir do
-      case OS
-      when :mac, :linux
-        sh "#{MAPLECMD} #{mpl}"
-      when :win
-        sh "cd model & #{MAPLECMD} #{mpl}"
-      end
+      sh "#{MAPLECMD} #{mpl}"
     end
     puts ">> source code generated".green
   else
