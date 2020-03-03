@@ -1,0 +1,9 @@
+
+; mexFunction.def : Declares the module parameters for the DLL.
+
+LIBRARY      "BangBangFmodule_Mex"
+DESCRIPTION  'Mex file for BangBangFmodule'
+
+EXPORTS
+    ; Explicit exports can go here
+    mexFunction

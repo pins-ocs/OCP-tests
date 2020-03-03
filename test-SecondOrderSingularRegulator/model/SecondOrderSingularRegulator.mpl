@@ -11,7 +11,9 @@ restart:
 with(XOptima):
 XOptimaInfo();
 # Equations of motion
-# M. S. Aronna, J. F. Bonnans, and P. Martinon, “A shooting algorithm for optimal control problems with singular arcs,” J. Optim. Theory Appl., vol. 158, no. 2, pp. 419–459, 2013. Available: https://doi.org/10.1007/s10957-012-0254-8
+# M. S. Aronna, J. F. Bonnans, and P. Martinon, “A shooting algorithm for optimal control problems with singular arcs,
+# ” J. Optim. Theory Appl., vol. 158, no. 2, pp. 419–459, 2013. 
+# Available: https://doi.org/10.1007/s10957-012-0254-8
 EQ1    :=  diff(y1(t),t) - y2(t) :
 EQ2    :=  diff(y2(t),t) - u(t) :
 EQNS_T := [ EQ||(1..2) ];

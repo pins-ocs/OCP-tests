@@ -1,24 +1,16 @@
-/*test*-*/data
 /*test*-*/lib
 /*test*-*/bin
+/*test*-*/data/*_result.txt
 /*test*-*/model/OCP_tmp
-/*test*-*/ocp-*
-/*test*-*/*run.rb
-/*test*-*/*run_ffi.rb
 /*test*-*/bin/main
 /*test*-*/matlab_scripts
-/*test*-*/CMakeLists.txt
 /*test*-*/build
-/*/*test*-*/data
 /*/*test*-*/lib
 /*/*test*-*/bin
+/*/*test*-*/data/*_result.txt
 /*/*test*-*/model/OCP_tmp
-/*/*test*-*/ocp-*
-/*/*test*-*/*run.rb
-/*/*test*-*/*run_ffi.rb
 /*/*test*-*/bin/main
 /*/*test*-*/matlab_scripts
-/*/*test*-*/CMakeLists.txt
 /*/*test*-*/build
 *_run.m
 

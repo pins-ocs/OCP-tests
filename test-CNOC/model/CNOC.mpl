@@ -61,9 +61,9 @@ u_vars := subs(t=zeta,uvars_CNOC) ;
 # Load the ODE dynamic system: list of controls, state variables and differential equations.
 # By default the command sets the independent variable to "zeta".
 #Describe(loadDynamicSystem);
-loadDynamicSystem(controls  = u_vars,
-                  states    = x_vars,
-                  equations = eqns_s);
+loadDynamicSystem(  controls  = u_vars,
+  states    = x_vars,
+  equations = eqns_s);
 # Boundary conditions and jump conditions
 # Specify the standard boundary conditions and the additional boundary conditions, if needed.
 # Here it is possible to activate some boundary conditions for automatic generation of input data file.
@@ -74,10 +74,10 @@ AX := subs(t=zeta,as(t)*Tdir[1] + an(t)*Ndir[1]) ;
 AY := subs(t=zeta,as(t)*Tdir[2] + an(t)*Ndir[2]) ;
 JX := subs(t=zeta,js(t)*Tdir[1] + jn(t)*Ndir[1]) ;
 JY := subs(t=zeta,js(t)*Tdir[2] + jn(t)*Ndir[2]) ;
-addBoundaryConditions(initial =[n,vs,vn,as,an],
-                      final   =[n,vs,vn,as,an],
-                      generic =[[s(zeta_i)-zeta_i,"initial_s"],
-                               [s(zeta_f)-zeta_f,"final_s"]]);
+addBoundaryConditions(  initial = [n,vs,vn,as,an],
+  final   = [n,vs,vn,as,an],
+  generic = [    [s(zeta_i)-zeta_i,"initial_s"],
+    [s(zeta_f)-zeta_f,"final_s"]  ]);
 setStatusBoundaryConditions(generic=["initial_s"="enabled","final_s"="enabled"]);
 # Display the boundary condition activation status:
 infoBoundaryConditions();
@@ -95,58 +95,58 @@ setTarget(lagrange=lgr,mayer=myr);
 # Path constraint are uni-lateral and bi-lateral  constraints functions of state variables, controls, and independent variable "zeta".
 # pf_error = path following error
 #Describe(addUnilateralConstraint);
-addUnilateralConstraint( coV(zeta) > 0,
-                         timePositive,
-                         epsilon   = 0.01, 
-                         tolerance = 0.01,
-                         barrier   = true );
-addUnilateralConstraint( sqrt(vs(zeta)^2+vn(zeta)^2)/nominalFeed() <= 1+0.01,
-                         vLimit,
-                         subtype   = "PENALTY_PIECEWISE",
-                         scale     = penScale,
-                         epsilon   = 0.01,
-                         tolerance = 0.01 );
-addBilateralConstraint( n(zeta)/path_following_tolerance,
-                        PathFollowingTolerance,
-                        scale     = penScale,
-                        epsilon   = 0.01,
-                        tolerance = 0.1 );
-addBilateralConstraint(as(zeta)/as_max,
-                       as_limit,
-                       scale     = penScale,
-                       epsilon   = 0.01,
-                       tolerance = 0.01);
-addBilateralConstraint(an(zeta)/an_max,
-                       an_limit,
-                       scale     = penScale,
-                       epsilon   = 0.01,
-                       tolerance = 0.01);
-addBilateralConstraint(AX/ax_max,
-                       ax_limit,
-                       scale     = penScale,
-                       epsilon   = 0.01,
-                       tolerance = 0.01);
-addBilateralConstraint(AY/ay_max,
-                       ay_limit,
-                       scale     = penScale,
-                       epsilon   = 0.01,
-                       tolerance = 0.01);
+addUnilateralConstraint(  coV(zeta) > 0,
+  timePositive,
+  epsilon   = 0.01, 
+  tolerance = 0.01,
+  barrier   = true);
+addUnilateralConstraint(  sqrt(vs(zeta)^2+vn(zeta)^2)/nominalFeed() <= 1+0.01,
+  vLimit,
+  subtype   = "PENALTY_PIECEWISE",
+  scale     = penScale,
+  epsilon   = 0.01,
+  tolerance = 0.01);
+addBilateralConstraint(  n(zeta)/path_following_tolerance,
+  PathFollowingTolerance,
+  scale     = penScale,
+  epsilon   = 0.01,
+  tolerance = 0.1);
+addBilateralConstraint(  as(zeta)/as_max,
+  as_limit,
+  scale     = penScale,
+  epsilon   = 0.01,
+  tolerance = 0.01);
+addBilateralConstraint(  an(zeta)/an_max,
+  an_limit,
+  scale     = penScale,
+  epsilon   = 0.01,
+  tolerance = 0.01);
+addBilateralConstraint(  AX/ax_max,
+  ax_limit,
+  scale     = penScale,
+  epsilon   = 0.01,
+  tolerance = 0.01);
+addBilateralConstraint(  AY/ay_max,
+  ay_limit,
+  scale     = penScale,
+  epsilon   = 0.01,
+  tolerance = 0.01);
 # Constraints on Controls
 # The following command sets the limits to the controls. If the control variable does not appear in the taget function nor in the other constraints, it is very likely that an explicit solution of the controls can be obtained from the hamiltonian with respect to the controls.
 # Otherwise, a numerical solution is mandatory to solve the controls.
-addControlBound( js(zeta),
-                 scale       = penScale,
-                 max         = js_max, # 30.0,
-                 min         = js_min, #-50.0,
-                 epsilon     = 0.01,
-                 tolerance   = 0.01,
-                 controlType ="U_LOGARITHMIC" ):
-addControlBound( jn(zeta),
-                 scale       = penScale,
-                 maxabs      = jn_max, # 65,
-                 epsilon     = 0.01,
-                 tolerance   = 0.01,
-                 controlType ="U_LOGARITHMIC"):
+addControlBound(  js(zeta),
+  scale       = penScale,
+  max         = js_max, # 30.0,
+  min         = js_min, #-50.0,
+  epsilon     = 0.01,
+  tolerance   = 0.01,
+  controlType = "U_LOGARITHMIC"):
+addControlBound(  jn(zeta),
+  scale       = penScale,
+  maxabs      = jn_max, # 65,
+  epsilon     = 0.01,
+  tolerance   = 0.01,
+  controlType = "U_LOGARITHMIC"):
 # Costruzione struttura dati 
 PTS := [[0,0],[-10,0], [20,2], [50,0 ,0],[50,10,3.1415],[20,12],[-10,10],
               [-10,20],[20,22],[50,20,0],[50,30,3.1415],[20,32],[-10,30],
@@ -178,22 +178,22 @@ for i from 2 to 21 do
 end:
 totlen; # lunghezza totale
 ;
-qvars := [lenSeg()                   = ssLength(),
-          kappa(zeta)                = curvature(zeta),
-          theta(zeta)                = angle(zeta),
-          xPath(zeta)                = x(zeta),
-          yPath(zeta)                = y(zeta),
-          xTraj(zeta,tt)             = x(zeta,tt),
-          yTraj(zeta,tt)             = y(zeta,tt),
-          xLimitLeft(zeta,pf_error)  = x(zeta,pf_error),
-          yLimitLeft(zeta,pf_error)  = y(zeta,pf_error),
-          xLimitRight(zeta,pf_error) = x(zeta,pf_error),
-          yLimitRight(zeta,pf_error) = y(zeta,pf_error),
-          nominalFeed()              = feedReferenceRate()]:  
-mapUserFunctionToObject(qvars,
-                        "*pToolPath2D",
-                        "Mechatronix#ToolPath2D",
-                        ["segments"=path]); 
+qvars := [  lenSeg()                   = ssLength(),
+  kappa(zeta)                = curvature(zeta),
+  theta(zeta)                = angle(zeta),
+  xPath(zeta)                = x(zeta),
+  yPath(zeta)                = y(zeta),
+  xTraj(zeta,tt)             = x_ISO(zeta,tt),
+  yTraj(zeta,tt)             = y_ISO(zeta,tt),
+  xLimitLeft(zeta,pf_error)  = x_ISO(zeta,pf_error),
+  yLimitLeft(zeta,pf_error)  = y_ISO(zeta,pf_error),
+  xLimitRight(zeta,pf_error) = x_ISO(zeta,pf_error),
+  yLimitRight(zeta,pf_error) = y_ISO(zeta,pf_error),
+  nominalFeed()              = feedReferenceRate()]:  
+mapUserFunctionToObject(  qvars,
+  "*pToolPath2D",
+  "Mechatronix#ToolPath2D",
+  ["segments"=path]); 
 #infoRegisteredObjects();
 # percorso Bosetti in mm
 # Generation of optimal control equations and C++ code
@@ -229,13 +229,13 @@ Describe(setFDorder);
 # Set guess solution (optional)
 # A guess solution can be specified for some or all state variables. The guess solution can be a function of the independent variable "zeta". Piecewise solution are not allowed.
 # Note that the lambda3 multiplier cannot vanish, otherwise the corresponding control goes to infinity.
-guess_list := [ s   = zeta,
-                n   = 0,
-                vs  = nominalFeed(),
-                vn  = 0,
-                as  = 0,
-                an  = 0,
-                coV = 1/nominalFeed() ] ;
+guess_list := [  s   = zeta,
+  n   = 0,
+  vs  = nominalFeed(),
+  vn  = 0,
+  as  = 0,
+  an  = 0,
+  coV = 1/nominalFeed()];
 # Explicit controls
 # The command tries to solve explicitly the set of equations given by the derivative of the hamiltonian with respect to the control vector.
 # If a solution is found, the explicit controls are formally substituted and eliminated from the equations. This produce a faster code.
@@ -245,60 +245,60 @@ guess_list := [ s   = zeta,
 # It is possible to define the default values for all parameters that appear in the full set of equations of the optimal control problem.
 # This is an optional command that the user may need if he wish to autonomously produce an input data file. 
 # The command can called more than one with different arguments, which will be added to a global list.
-dataOCP := [ as_max    = 2.1,   # m/s^2 
-             an_max    = 1.2,   # m/s^2
-             ax_max    = 2.1,   # m/s^2 
-             ay_max    = 2.1,   # m/s^2
-             v_nom     = 0.173, # m/s
-             deltaFeed = v_nom,
-             n_i       = 0,
-             vs_i      = 0,
-             vn_i      = 0,
-             as_i      = 0,
-             an_i      = 0,
-             n_f       = 0,
-             vs_f      = 0,
-             vn_f      = 0,
-             as_f      = 0,
-             an_f      = 0,
-             js_min    = -50,
-             js_max    = 30,
-             jn_max    = 65,
-             mesh_segments = 100,
-             path_following_tolerance = 10e-6,
-             pf_error = path_following_tolerance ] ;
+dataOCP := [  as_max    = 2.1,   # m/s^2 
+  an_max    = 1.2,   # m/s^2
+  ax_max    = 2.1,   # m/s^2 
+  ay_max    = 2.1,   # m/s^2
+  v_nom     = 0.173, # m/s
+  deltaFeed = v_nom,
+  n_i       = 0,
+  vs_i      = 0,
+  vn_i      = 0,
+  as_i      = 0,
+  an_i      = 0,
+  n_f       = 0,
+  vs_f      = 0,
+  vn_f      = 0,
+  as_f      = 0,
+  an_f      = 0,
+  js_min    = -50,
+  js_max    = 30,
+  jn_max    = 65,
+  mesh_segments            = 100,
+  path_following_tolerance = 10e-6,
+  pf_error                 = path_following_tolerance];
 # Post process variables
 # Add standard post-process variables in the output of the numerical solver: state variables, lagrange multipliers, controls, penalties and mesh variables.
 post_int_list := [ [coV(zeta),"time"] ] ;
-post_list := [[sqrt(vs(zeta)^2+vn(zeta)^2),"feed"],
-              [sqrt(as(zeta)^2+an(zeta)^2),"acc"],
-              [sqrt(js(zeta)^2+jn(zeta)^2),"jerk"],
-              [VX, "vx"], [VY, "vy"],
-              [AX, "ax"], [AY, "ay"],
-              [JX, "jx"], [JY, "jy"],
-              #[VX*60000,              "vx_mm_min"],
-              #[VY*60000,              "vy_mm_min"],
-              #[AX/ax_max,             "ax_normalized"],
-              #[AY/ay_max,             "ay_normalized"],
-              #[xPath(s(zeta))*1000,   "X-path [mm]"],
-              #[yPath(s(zeta))*1000,   "Y-path [mm]"],
-              [xPath(s(zeta)),         "X-path"],
-              [yPath(s(zeta)),         "Y-path"],
-              [xTraj(s(zeta),n(zeta)), "X-traj"],
-              [yTraj(s(zeta),n(zeta)), "Y-traj"],
-              [xLimitLeft(s(zeta),pf_error),  "X-left"],
-              [yLimitLeft(s(zeta),pf_error),  "Y-left"],
-              [xLimitRight(s(zeta),pf_error), "X-right"],
-              [yLimitRight(s(zeta),pf_error), "Y-right"] ] ;
+post_list := [  [sqrt(vs(zeta)^2+vn(zeta)^2),"feed"],
+  [sqrt(as(zeta)^2+an(zeta)^2),"acc"],
+  [sqrt(js(zeta)^2+jn(zeta)^2),"jerk"],
+  [VX, "vx"], [VY, "vy"],
+  [AX, "ax"], [AY, "ay"],
+  [JX, "jx"], [JY, "jy"],
+  #[VX*60000,              "vx_mm_min"],
+  #[VY*60000,              "vy_mm_min"],
+  #[AX/ax_max,             "ax_normalized"],
+  #[AY/ay_max,             "ay_normalized"],
+  #[xPath(s(zeta))*1000,   "X-path [mm]"],
+  #[yPath(s(zeta))*1000,   "Y-path [mm]"],
+  [xPath(s(zeta)),         "X-path"],
+  [yPath(s(zeta)),         "Y-path"],
+  [xTraj(s(zeta),n(zeta)), "X-traj"],
+  [yTraj(s(zeta),n(zeta)), "Y-traj"],
+  [xLimitLeft(s(zeta),pf_error),  "X-left"],
+  [yLimitLeft(s(zeta),pf_error),  "Y-left"],
+  [xLimitRight(s(zeta),pf_error), "X-right"],
+  [yLimitRight(s(zeta),pf_error), "Y-right"]];
 # Generate Optimal Control Equations
 # The command genereates the equations of the necessary optimality conditions by approximating Pontriagyn Principle with the penalty functions.
 # The jacobians of the optimality equations are also derived for numerical solution with Newton Solver.
 #Describe(generateOCProblem):
-generateOCProblem("CNOC", 
-                  integral_post_processing  = post_int_list,
-                  post_processing           = post_list,
-                  parameters                = dataOCP,
-                  #controls_guess           = [js=0,jn=0],
-                  states_guess              = guess_list,
-                  clean                     = false); 
+generateOCProblem(  "CNOC", 
+  integral_post_processing  = post_int_list,
+  post_processing           = post_list,
+  parameters                = dataOCP,
+  #controls_guess           = [js=0,jn=0],
+  states_guess              = guess_list,
+  clean                     = false); 
 

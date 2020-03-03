@@ -1,0 +1,9 @@
+
+; mexFunction.def : Declares the module parameters for the DLL.
+
+LIBRARY      "vanDerPol_Mex"
+DESCRIPTION  'Mex file for vanDerPol'
+
+EXPORTS
+    ; Explicit exports can go here
+    mexFunction

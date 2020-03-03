@@ -8,7 +8,8 @@
 # 
 # 
 # Users Guide for dyn.Opt, Example 4
-# Schwartz, A. L., Theory and Implementation of Numerical Methods based on Runge-Kutta Integration for Solving Optimal Control Problems. Ph.D. Dissertation, University of California, Berkeley, 1989
+# Schwartz, A. L., Theory and Implementation of Numerical Methods based on Runge-Kutta Integration for Solving Optimal Control Problems. 
+# Ph.D. Dissertation, University of California, Berkeley, 1989
 restart:
 with(XOptima):
 XOptimaInfo();
@@ -31,8 +32,11 @@ loadDynamicSystem(
 # Boundary conditions
 addBoundaryConditions(
   initial = [ x1=1, x2=1 ],
-  generic = [    [x1(zeta_f)=x3(zeta_i), "x13"],    [x2(zeta_f)=x4(zeta_i), "x24"]
-  ]);
+  generic = [
+    [x1(zeta_f)=x3(zeta_i), "x13"],
+    [x2(zeta_f)=x4(zeta_i), "x24"]
+  ]
+);
 infoBoundaryConditions() ;
 # Constraints on control
 addControlBound(
@@ -60,7 +64,8 @@ addUnilateralConstraint(
 );
 # Cost function: target
 setTarget(
-  lagrange = epsilon*u2(zeta)^2,   mayer    = 5*(x3(zeta_f)^2+x4(zeta_f)^2)
+  lagrange = epsilon*u2(zeta)^2, 
+  mayer    = 5*(x3(zeta_f)^2+x4(zeta_f)^2)
 );
 PARS := [
   epsi0    = 0.1,
@@ -69,15 +74,20 @@ PARS := [
   tol0     = 0.1,
   tol1     = 0.001,
   tol      = tol0,
-  T2       = 1.9,  epsilon0 = 0.001,
-  epsilon1 = 1e-10,  epsilon  = epsilon0];
+  T2       = 1.9,
+  epsilon0 = 0.001,
+  epsilon1 = 1e-10,
+  epsilon  = epsilon0
+];
 GUESS := [
   x1 = 1,
   x2 = 1,
   x3 = 1,
-  x4 = 1];
+  x4 = 1
+];
 CONT := [
-  [    epsilon = epsilon0^(1-s)*epsilon1^s,
+  [
+    epsilon = epsilon0^(1-s)*epsilon1^s,
     ["bound1","epsilon"]   = epsi0*(1-s)+epsi1*s,
     ["bound1","tolerance"] = tol0*(1-s)+tol1*s,
     ["bound2","epsilon"]   = epsi0*(1-s)+epsi1*s,
@@ -88,7 +98,8 @@ CONT := [
 ];
 # Problem generation
 #Describe(generateOCProblem);
-POST := [  [1+T2*zeta, "Time2"]
+POST := [
+  [1+T2*zeta, "Time2"]
 ];
 Mesh := [
   [length=1, n=100]
@@ -96,7 +107,8 @@ Mesh := [
 generateOCProblem(
   "TwoPhaseSchwartz", clean=true,
   parameters           = PARS,
-  post_processing      = POST,  mesh                 = Mesh,
+  post_processing      = POST,
+  mesh                 = Mesh,
   states_guess         = GUESS,
   controls_guess       = [u1=0,u2=0],
   controls_iterative   = true,
