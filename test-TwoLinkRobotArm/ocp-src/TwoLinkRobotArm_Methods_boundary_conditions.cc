@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -110,7 +110,6 @@ namespace TwoLinkRobotArmDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   TwoLinkRobotArm::DboundaryConditionsDx_numRows() const
   { return 8; }
@@ -167,7 +166,6 @@ namespace TwoLinkRobotArmDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   TwoLinkRobotArm::DboundaryConditionsDp_numRows() const
@@ -242,7 +240,6 @@ namespace TwoLinkRobotArmDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   TwoLinkRobotArm::DadjointBCDx_numRows() const
   { return 9; }
@@ -275,7 +272,6 @@ namespace TwoLinkRobotArmDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   TwoLinkRobotArm::DadjointBCDp_numRows() const

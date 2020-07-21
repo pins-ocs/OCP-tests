@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BrysonDenham_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 28/3/2020                                        #
+#  version: 1.0   date 21/7/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,8 +18,8 @@
 include Mechatronix
 
 # Auxiliary values
-tol  = 0.0001
 epsi = 0.0001
+tol  = 0.0001
 
 mechatronix do |data|
 
@@ -160,8 +160,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 400,
+        :length => 1,
       },
     ],
   };

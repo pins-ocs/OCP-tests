@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFredundant_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 28/3/2020                                        #
+#  version: 1.0   date 21/7/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -177,8 +177,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 100,
         :length => 1,
+        :n      => 100,
       },
     ],
   };

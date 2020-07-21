@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -90,7 +90,6 @@ namespace OrbitTransferDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   OrbitTransfer::DboundaryConditionsDx_numRows() const
   { return 7; }
@@ -151,7 +150,6 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   OrbitTransfer::DboundaryConditionsDp_numRows() const
@@ -230,7 +228,6 @@ namespace OrbitTransferDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   OrbitTransfer::DadjointBCDx_numRows() const
   { return 10; }
@@ -284,7 +281,6 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   OrbitTransfer::DadjointBCDp_numRows() const

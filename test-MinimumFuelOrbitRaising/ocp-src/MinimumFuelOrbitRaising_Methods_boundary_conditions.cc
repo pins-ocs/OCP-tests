@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods.cc                             |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -88,7 +88,6 @@ namespace MinimumFuelOrbitRaisingDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   MinimumFuelOrbitRaising::DboundaryConditionsDx_numRows() const
   { return 5; }
@@ -142,7 +141,6 @@ namespace MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   MinimumFuelOrbitRaising::DboundaryConditionsDp_numRows() const
@@ -215,7 +213,6 @@ namespace MinimumFuelOrbitRaisingDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   MinimumFuelOrbitRaising::DadjointBCDx_numRows() const
   { return 6; }
@@ -266,7 +263,6 @@ namespace MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   MinimumFuelOrbitRaising::DadjointBCDp_numRows() const

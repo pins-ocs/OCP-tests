@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods.cc                                  |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -107,7 +107,6 @@ namespace BangBangFredundantDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   BangBangFredundant::DboundaryConditionsDx_numRows() const
   { return 3; }
@@ -154,7 +153,6 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   BangBangFredundant::DboundaryConditionsDp_numRows() const
@@ -232,7 +230,6 @@ namespace BangBangFredundantDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   BangBangFredundant::DadjointBCDx_numRows() const
   { return 12; }
@@ -292,7 +289,6 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   BangBangFredundant::DadjointBCDp_numRows() const

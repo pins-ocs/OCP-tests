@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Data.rb                                       |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -20,6 +20,7 @@
 
 #include "mex.h"
 #include <map>
+#include <cmath>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -74,8 +75,10 @@ getScalarValue( mxArray const * arg, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
-  MEX_ASSERT( dims[0] == 1 && dims[1] == 1,
-              msg << ", found " << dims[0] << " x " << dims[1] << " matrix" );
+  MEX_ASSERT(
+    dims[0] == 1 && dims[1] == 1,
+    msg << ", found " << dims[0] << " x " << dims[1] << " matrix"
+  );
   return mxGetScalar(arg);
 }
 
@@ -94,8 +97,10 @@ getInt( mxArray const * arg, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
-  MEX_ASSERT( dims[0] == 1 && dims[1] == 1,
-              msg << ", found " << dims[0] << " x " << dims[1] << " matrix" );
+  MEX_ASSERT(
+    dims[0] == 1 && dims[1] == 1,
+    msg << ", found " << dims[0] << " x " << dims[1] << " matrix"
+  );
   mxClassID category = mxGetClassID(arg);
   int64_t res = 0;
   void *ptr = mxGetData(arg);
@@ -134,9 +139,10 @@ getVectorPointer( mxArray const * arg, mwSize & sz, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
-  MEX_ASSERT( dims[0] == 1 || dims[1] == 1,
-              msg << "\nExpect (1 x n or n x 1) matrix, found " <<
-              dims[0] << " x " << dims[1] );
+  MEX_ASSERT(
+    dims[0] == 1 || dims[1] == 1,
+    msg << "\nExpect (1 x n or n x 1) matrix, found " << dims[0] << " x " << dims[1]
+  );
   sz = dims[0]*dims[1];
   return mxGetPr(arg);
 }
@@ -255,7 +261,9 @@ template <typename base>
 inline
 class_handle<base> *
 convertMat2HandlePtr(const mxArray *in) {
-  if ( mxGetNumberOfElements(in) != 1 || mxGetClassID(in) != mxUINT64_CLASS || mxIsComplex(in))
+  if ( mxGetNumberOfElements(in) != 1 ||
+       mxGetClassID(in) != mxUINT64_CLASS ||
+       mxIsComplex(in) )
     mexErrMsgTxt("Input must be an uint64 scalar.");
   class_handle<base> *ptr = reinterpret_cast<class_handle<base> *>(*((uint64_t *)mxGetData(in)));
   if (!ptr->isValid())

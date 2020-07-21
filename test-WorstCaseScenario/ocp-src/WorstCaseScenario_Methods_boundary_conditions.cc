@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods.cc                                   |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -94,7 +94,6 @@ namespace WorstCaseScenarioDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   WorstCaseScenario::DboundaryConditionsDx_numRows() const
   { return 1; }
@@ -137,7 +136,6 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   WorstCaseScenario::DboundaryConditionsDp_numRows() const
@@ -203,7 +201,6 @@ namespace WorstCaseScenarioDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   WorstCaseScenario::DadjointBCDx_numRows() const
   { return 2; }
@@ -236,7 +233,6 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   WorstCaseScenario::DadjointBCDp_numRows() const

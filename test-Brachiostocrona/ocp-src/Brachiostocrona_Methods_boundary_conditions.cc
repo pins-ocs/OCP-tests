@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -98,7 +98,6 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Brachiostocrona::DboundaryConditionsDx_numRows() const
   { return 5; }
@@ -149,7 +148,6 @@ namespace BrachiostocronaDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Brachiostocrona::DboundaryConditionsDp_numRows() const
@@ -223,7 +221,6 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Brachiostocrona::DadjointBCDx_numRows() const
   { return 9; }
@@ -256,7 +253,6 @@ namespace BrachiostocronaDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Brachiostocrona::DadjointBCDp_numRows() const

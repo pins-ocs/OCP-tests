@@ -87,17 +87,16 @@ INFO CLASS = Farmer
   nQ_total     = 401
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
 [  1,  1] ( 0.000266,    3e-06) [    0.118,  0.00265]      1.00 ( 0: 0): 0: 0: 0 G
 [  2,  1] (    3e-06, 5.31e-10) [  0.00255, 3.85e-07]      1.00 ( 1: 0): 0: 0: 0 G
-[  3,  1] ( 5.31e-10, 2.06e-17) [ 3.85e-07, 1.11e-14]      1.00 ( 2: 0): 0: 0: 0 G
+[  3,  1] ( 5.31e-10, 2.03e-17) [ 3.85e-07, 1.12e-14]      1.00 ( 2: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 12.1    ms    iteration           = 3         
+Elapsed Time           = 8.64    ms    iteration           = 3         
 Total Equations        = 5615          tolerance           = 1e-09     
 max iterations         = 120           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------
@@ -112,7 +111,7 @@ Jacobian Factorization = 3             Jacobian Inversion  = 6
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 1.4916e-13      last `new' ||d||_inf  = 6.0664e-06
+last ||d||_inf = 1.4912e-13      last `new' ||d||_inf  = 6.0664e-06
 last ||f||_inf = 8.3931e-09      last ||f||_1          = 5.3087e-10
 
 target [Lagrange,Mayer]        = [     0.012202,      0.00000]

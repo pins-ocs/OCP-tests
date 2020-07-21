@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,9 +18,9 @@
 --]]
 
 -- Auxiliary values
-epsi_ctrl0 = 0.01
 tol_ctrl0  = 0.01
 tol_ctrl   = tol_ctrl0
+epsi_ctrl0 = 0.01
 epsi_ctrl  = epsi_ctrl0
 
 content = {

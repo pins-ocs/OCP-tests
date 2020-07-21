@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods.cc                                      |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -84,7 +84,6 @@ namespace HyperSensitiveDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   HyperSensitive::DboundaryConditionsDx_numRows() const
   { return 2; }
@@ -129,7 +128,6 @@ namespace HyperSensitiveDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   HyperSensitive::DboundaryConditionsDp_numRows() const
@@ -195,7 +193,6 @@ namespace HyperSensitiveDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   HyperSensitive::DadjointBCDx_numRows() const
   { return 2; }
@@ -228,7 +225,6 @@ namespace HyperSensitiveDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   HyperSensitive::DadjointBCDp_numRows() const

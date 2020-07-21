@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,8 +52,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type tol = 0.0001;
    real_type epsi = 0.0001;
+   real_type tol = 0.0001;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -167,14 +167,13 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BrysonDenham_data.Mesh["s0"] = 0;
-BrysonDenham_data.Mesh["segments"][0]["length"] = 1;
 BrysonDenham_data.Mesh["segments"][0]["n"] = 400;
+BrysonDenham_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-
     LW_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
@@ -189,6 +188,7 @@ BrysonDenham_data.Mesh["segments"][0]["n"] = 400;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
+    // pModel->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

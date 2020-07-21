@@ -54,8 +54,7 @@ INFO CLASS = Bike1D
   nQ_total     = 1001
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -75,10 +74,10 @@ Solver Controls: LU, N.threads: 6
 [ 14,  1] (   0.0471,  0.00238) [  0.00123,  1.9e-05]      1.00 (13: 0): 0: 0: 0 G
 [ 15,  1] (  0.00238, 2.18e-06) [ 2.01e-05, 2.01e-08]      1.00 (14: 0): 0: 0: 0 G
 [ 16,  1] ( 2.18e-06, 3.83e-11) [ 1.99e-08, 5.26e-13]      1.00 (15: 0): 0: 0: 0 G
-[ 17,  1] ( 3.83e-11, 8.01e-14) [ 5.26e-13, 7.59e-16]      1.00 (16: 0): 0: 0: 0 G
+[ 17,  1] ( 3.83e-11, 7.86e-14) [ 5.26e-13, 7.58e-16]      1.00 (16: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 34.5    ms    iteration           = 17        
+Elapsed Time           = 63.9    ms    iteration           = 17        
 Total Equations        = 4004          tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------
@@ -93,8 +92,8 @@ Jacobian Factorization = 17            Jacobian Inversion  = 34
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 8.4111e-15      last `new' ||d||_inf  = 7.1794e-10
-last ||f||_inf = 5.4878e-08      last ||f||_1          = 3.8331e-11
+last ||d||_inf = 8.3642e-15      last `new' ||d||_inf  = 7.1792e-10
+last ||f||_inf = 5.4877e-08      last ||f||_1          = 3.8329e-11
 
 target [Lagrange,Mayer]        = [      16.2112,      0.00000]
 [Penalties/Barriers, Controls] = [      0.00000,    0.0335423]

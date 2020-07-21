@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -103,7 +103,6 @@ namespace GoddardRocketDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   GoddardRocket::DboundaryConditionsDx_numRows() const
   { return 4; }
@@ -152,7 +151,6 @@ namespace GoddardRocketDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   GoddardRocket::DboundaryConditionsDp_numRows() const
@@ -223,7 +221,6 @@ namespace GoddardRocketDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   GoddardRocket::DadjointBCDx_numRows() const
   { return 7; }
@@ -256,7 +253,6 @@ namespace GoddardRocketDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   GoddardRocket::DadjointBCDp_numRows() const

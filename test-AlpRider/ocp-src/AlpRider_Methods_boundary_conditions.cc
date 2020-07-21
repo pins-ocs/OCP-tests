@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -94,7 +94,6 @@ namespace AlpRiderDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   AlpRider::DboundaryConditionsDx_numRows() const
   { return 8; }
@@ -151,7 +150,6 @@ namespace AlpRiderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   AlpRider::DboundaryConditionsDp_numRows() const
@@ -223,7 +221,6 @@ namespace AlpRiderDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   AlpRider::DadjointBCDx_numRows() const
   { return 8; }
@@ -256,7 +253,6 @@ namespace AlpRiderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   AlpRider::DadjointBCDp_numRows() const

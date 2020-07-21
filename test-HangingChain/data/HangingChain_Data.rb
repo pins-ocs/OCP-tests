@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: HangingChain_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 28/3/2020                                        #
+#  version: 1.0   date 21/7/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,8 +18,8 @@
 include Mechatronix
 
 # Auxiliary values
-b  = 3
 a  = 1
+b  = 3
 u0 = b-a
 L0 = (u0**2+1)**(1/2.0)
 L  = L0

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -118,7 +118,6 @@ namespace gtocX_2burnDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   gtocX_2burn::DboundaryConditionsDx_numRows() const
@@ -246,7 +245,6 @@ namespace gtocX_2burnDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   gtocX_2burn::DboundaryConditionsDp_numRows() const
   { return 6; }
@@ -335,7 +333,7 @@ namespace gtocX_2burnDefine {
     real_type t46  = xPosition_D_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t48  = yPosition_D_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t50  = zPosition_D_6(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 5   ] = t1 * t46 + t11 * t48 + t14 * t50 + LL__[5];
+    result__[ 5   ] = t46 * t1 + t48 * t11 + t50 * t14 + LL__[5];
     real_type t53  = OMEGA__[3];
     real_type t54  = XR__[0];
     real_type t55  = XR__[1];
@@ -348,34 +346,33 @@ namespace gtocX_2burnDefine {
     real_type t63  = yPosition_D_1(t54, t55, t56, t57, t58, t59, t8);
     real_type t65  = OMEGA__[5];
     real_type t66  = zPosition_D_1(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 6   ] = t53 * t60 + t62 * t63 + t65 * t66 - LR__[0];
+    result__[ 6   ] = t60 * t53 + t63 * t62 + t66 * t65 - LR__[0];
     real_type t69  = xPosition_D_2(t54, t55, t56, t57, t58, t59, t8);
     real_type t71  = yPosition_D_2(t54, t55, t56, t57, t58, t59, t8);
     real_type t73  = zPosition_D_2(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 7   ] = t53 * t69 + t62 * t71 + t65 * t73 - LR__[1];
+    result__[ 7   ] = t69 * t53 + t71 * t62 + t73 * t65 - LR__[1];
     real_type t76  = xPosition_D_3(t54, t55, t56, t57, t58, t59, t8);
     real_type t78  = yPosition_D_3(t54, t55, t56, t57, t58, t59, t8);
     real_type t80  = zPosition_D_3(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 8   ] = t53 * t76 + t62 * t78 + t65 * t80 - LR__[2];
+    result__[ 8   ] = t76 * t53 + t78 * t62 + t80 * t65 - LR__[2];
     real_type t83  = xPosition_D_4(t54, t55, t56, t57, t58, t59, t8);
     real_type t85  = yPosition_D_4(t54, t55, t56, t57, t58, t59, t8);
     real_type t87  = zPosition_D_4(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 9   ] = t53 * t83 + t62 * t85 + t65 * t87 - LR__[3];
+    result__[ 9   ] = t83 * t53 + t85 * t62 + t87 * t65 - LR__[3];
     real_type t90  = xPosition_D_5(t54, t55, t56, t57, t58, t59, t8);
     real_type t92  = yPosition_D_5(t54, t55, t56, t57, t58, t59, t8);
     real_type t94  = zPosition_D_5(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 10  ] = t53 * t90 + t62 * t92 + t65 * t94 - LR__[4];
+    result__[ 10  ] = t90 * t53 + t92 * t62 + t94 * t65 - LR__[4];
     real_type t97  = xPosition_D_6(t54, t55, t56, t57, t58, t59, t8);
     real_type t99  = yPosition_D_6(t54, t55, t56, t57, t58, t59, t8);
     real_type t101 = zPosition_D_6(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 11  ] = t101 * t65 + t53 * t97 + t62 * t99 - LR__[5];
+    result__[ 11  ] = t101 * t65 + t97 * t53 + t99 * t62 - LR__[5];
     #ifdef MECHATRONIX_DEBUG
     CHECK_NAN(result__,"adjointBC_eval",12);
     #endif
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   gtocX_2burn::DadjointBCDx_numRows() const
@@ -709,7 +706,6 @@ namespace gtocX_2burnDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   gtocX_2burn::DadjointBCDp_numRows() const

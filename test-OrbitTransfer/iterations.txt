@@ -42,8 +42,7 @@ INFO CLASS = OrbitTransfer
   nQ_total     = 1001
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -55,10 +54,10 @@ Solver Controls: LU, N.threads: 6
 [  6,  1] ( 0.000313,  1.8e-05) [   0.0974,  0.00985]      1.00 ( 5: 0): 1: 0: 1 G
 [  7,  1] (  1.8e-05, 1.67e-07) [   0.0105, 0.000166]      1.00 ( 6: 0): 0: 0: 0 G
 [  8,  1] ( 1.67e-07,  4.7e-11) [ 0.000159, 9.68e-08]      1.00 ( 7: 0): 0: 0: 0 G
-[  9,  1] (  4.7e-11, 8.66e-17) [ 9.69e-08,  5.2e-14]      1.00 ( 8: 0): 0: 0: 0 G
+[  9,  1] (  4.7e-11, 8.68e-17) [ 9.69e-08, 5.23e-14]      1.00 ( 8: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 52.6    ms    iteration           = 9         
+Elapsed Time           = 47.7    ms    iteration           = 9         
 Total Equations        = 11017         tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------
@@ -73,7 +72,7 @@ Jacobian Factorization = 9             Jacobian Inversion  = 34
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 5.5055e-13      last `new' ||d||_inf  =  1.026e-06
+last ||d||_inf = 5.5301e-13      last `new' ||d||_inf  =  1.026e-06
 last ||f||_inf = 5.9127e-09      last ||f||_1          = 4.6989e-11
 
 target [Lagrange,Mayer]        = [      0.00000,     -1.69756]

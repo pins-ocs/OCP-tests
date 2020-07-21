@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -89,12 +89,12 @@ namespace HangGliderDefine {
     real_type t7   = X__[0];
     real_type t8   = v(t7, t2, t3);
     real_type t9   = 1.0 / t8;
-    real_type t10  = U__[0];
-    real_type t11  = t10 * t10;
+    real_type t11  = U__[0];
+    real_type t12  = t11 * t11;
     real_type t16  = Dfun(t7, t2, t3);
-    real_type t17  = t16 * (ModelPars[6] * t11 + ModelPars[5]);
+    real_type t17  = t16 * (t12 * ModelPars[6] + ModelPars[5]);
     real_type t19  = Lfun(t7, t2, t3);
-    real_type t20  = t19 * t10;
+    real_type t20  = t19 * t11;
     real_type t21  = w(t7, t3);
     result__[ 2   ] = (-t2 * t17 - t21 * t20) * t9 * t6;
     result__[ 3   ] = (-t21 * t17 + t2 * t20) * t9 * t6 - ModelPars[9] * t1;
@@ -154,13 +154,13 @@ namespace HangGliderDefine {
     real_type t7   = v(t4, t5, t6);
     real_type t8   = t7 * t7;
     real_type t9   = 1.0 / t8;
-    real_type t10  = U__[0];
-    real_type t11  = t10 * t10;
-    real_type t15  = ModelPars[6] * t11 + ModelPars[5];
+    real_type t11  = U__[0];
+    real_type t12  = t11 * t11;
+    real_type t15  = t12 * ModelPars[6] + ModelPars[5];
     real_type t16  = Dfun(t4, t5, t6);
     real_type t17  = t16 * t15;
     real_type t19  = Lfun(t4, t5, t6);
-    real_type t20  = t19 * t10;
+    real_type t20  = t19 * t11;
     real_type t21  = w(t4, t6);
     real_type t24  = (-t5 * t17 - t21 * t20) * t9;
     real_type t25  = v_D_1(t4, t5, t6);
@@ -168,20 +168,20 @@ namespace HangGliderDefine {
     real_type t29  = Dfun_D_1(t4, t5, t6);
     real_type t30  = t29 * t15;
     real_type t32  = Lfun_D_1(t4, t5, t6);
-    real_type t33  = t32 * t10;
+    real_type t33  = t32 * t11;
     real_type t35  = w_D_1(t4, t6);
     result__[ 2   ] = -t25 * t24 * t3 + (-t35 * t20 - t21 * t33 - t5 * t30) * t28 * t3;
     real_type t40  = v_D_2(t4, t5, t6);
     real_type t43  = Dfun_D_2(t4, t5, t6);
     real_type t44  = t43 * t15;
     real_type t46  = Lfun_D_2(t4, t5, t6);
-    real_type t47  = t46 * t10;
+    real_type t47  = t46 * t11;
     result__[ 3   ] = -t40 * t24 * t3 + (-t21 * t47 - t5 * t44 - t17) * t28 * t3;
     real_type t52  = v_D_3(t4, t5, t6);
     real_type t55  = Dfun_D_3(t4, t5, t6);
     real_type t56  = t55 * t15;
     real_type t58  = Lfun_D_3(t4, t5, t6);
-    real_type t59  = t58 * t10;
+    real_type t59  = t58 * t11;
     real_type t61  = w_D_2(t4, t6);
     result__[ 4   ] = -t52 * t24 * t3 + (-t61 * t20 - t21 * t59 - t5 * t56) * t28 * t3;
     real_type t69  = (-t21 * t17 + t5 * t20) * t9;
@@ -236,12 +236,12 @@ namespace HangGliderDefine {
     real_type t3   = X__[0];
     real_type t4   = v(t3, result__[0], result__[1]);
     real_type t6   = 1.0 / t4 / ModelPars[10];
-    real_type t7   = U__[0];
-    real_type t8   = t7 * t7;
+    real_type t8   = U__[0];
+    real_type t9   = t8 * t8;
     real_type t13  = Dfun(t3, result__[0], result__[1]);
-    real_type t14  = t13 * (ModelPars[6] * t8 + ModelPars[5]);
+    real_type t14  = t13 * (t9 * ModelPars[6] + ModelPars[5]);
     real_type t16  = Lfun(t3, result__[0], result__[1]);
-    real_type t17  = t16 * t7;
+    real_type t17  = t16 * t8;
     real_type t18  = w(t3, result__[1]);
     result__[ 2   ] = (-result__[0] * t14 - t18 * t17) * t6;
     result__[ 3   ] = (-t18 * t14 + result__[0] * t17) * t6 - ModelPars[9];

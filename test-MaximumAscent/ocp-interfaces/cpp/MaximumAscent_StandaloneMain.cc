@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,18 +52,18 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+   real_type u0 = 0;
    real_type days = 1;
-   real_type days1 = 30;
    real_type tf = 86400*days;
    real_type T = 0.68;
-   real_type u0 = 0;
+   real_type days1 = 30;
+   real_type Isp = 1500;
    real_type mu = 398600441800000;
    real_type g0 = 9.80665;
-   real_type Isp = 1500;
-   real_type mdot = T/g0/Isp;
    real_type r0 = 6678140;
    real_type v0 = (mu/r0)^(1/2);
    real_type u0_bar = u0/v0;
+   real_type mdot = T/g0/Isp;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -183,14 +183,13 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 MaximumAscent_data.Mesh["s0"] = 0;
-MaximumAscent_data.Mesh["segments"][0]["n"] = 1000*days1;
 MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
+MaximumAscent_data.Mesh["segments"][0]["n"] = 1000*days1;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-
     LW_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
@@ -205,6 +204,7 @@ MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
+    // pModel->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

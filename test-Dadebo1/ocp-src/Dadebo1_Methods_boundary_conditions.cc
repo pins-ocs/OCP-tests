@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Methods.cc                                             |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -85,7 +85,6 @@ namespace Dadebo1Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Dadebo1::DboundaryConditionsDx_numRows() const
   { return 3; }
@@ -132,7 +131,6 @@ namespace Dadebo1Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Dadebo1::DboundaryConditionsDp_numRows() const
@@ -200,7 +198,6 @@ namespace Dadebo1Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Dadebo1::DadjointBCDx_numRows() const
   { return 4; }
@@ -233,7 +230,6 @@ namespace Dadebo1Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Dadebo1::DadjointBCDp_numRows() const

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Train_main.m                                                   %
 %                                                                       %
-%  version: 1.0   date 28/3/2020                                        %
+%  version: 1.0   date 21/7/2020                                        %
 %                                                                       %
 %  Copyright (C) 2020                                                   %
 %                                                                       %
@@ -45,36 +45,42 @@ ocp.set_guess(); % use default guess generated in MAPLE
 % ocp.set_guess( struct );
 %
 % initialize the guess using the following criteria
-% struct.initialize = 'zero'           % fill the guess with all zero
-% struct.initialize = 'none' or 'warm' % do not fill the guess
+%
+% struct.initialize
+% 'zero'           % fill the guess with all zero
+% 'none' or 'warm' % do not fill the guess, use existing guess in memory
 %
 % after initialization fill the guess
+% struct.guess_type
+% 'none'      % in this case none is done
+% 'default'   % fill the guess with the guess generated in MAPLE
+% 'spline'    % use spline to initialize states/multiplers
+%             expected extra fields
+%             struct.spline_set             = structure with the spline table to
+%                                             initialize states/multipliers/controls
+%             struct.spline_set.spline_type = cell array of strings with the type of
+%                                             splines ('pchip','cubic','quintic')
+%             struct.spline_set.xdata       = vector of 'x' samples of the splines
+%             struct.spline_set.ydata       = matrix npts x data of 'y' of the splines
+%             struct.spline_set.headers     = cell array of strings with name of
+%                                             the splines (name of states/multipliers/controls)
 %
-% struct.guess_type = 'none'
-% in this case none is done
+%             the data of the guess are updated ONLY in the 'x' range of the spline
 %
-% fill the guess with the guess generated in MAPLE
-% struct.guess_type = 'default'
+% 'table'     % use sampled values to initialize states/multiplers
+%             struct.states      =  structure of vectors, each field is the name of the state
+%             struct.multipliers =  structure of vectors, each field is the name of the multiplier
+%             struct.controls    =  structure of vectors, each field is the name of the control
 %
-% struct.guess_type             = 'spline' % use spline to initialize states/multiplers
-% struct.spline_set             = structure with the spline table to initialize states/multiplers/controls
-% struct.spline_set.headers     = cell array of strings with name of the splines (name of states/multiplers/controls)
-% struct.spline_set.spline_type = cell array of strings with the type of splines ('pchip','cubic','quintic')
-% struct.spline_set.xdata:      = vector of 'x' samples of the splines
-% struct.spline_set.ydata:      = matrix npts x data of 'y' of the splines
-%
-% the data of the guess are updated ONLY in the 'x' range of the spline
-%
-% struct.guess_type  = 'table' % use spline to initialize states/multiplers
-% struct.states      =  structure of vectors, each field is the name of the state
-% struct.multipliers =  structure of vectors, each field is the name of the multiplier
-% struct.controls    =  structure of vectors, each field is the name of the control
-%
-% the length of the vector must be compatible with the mesh
+%             the length of the vector must be compatible with the mesh
 %
 
-epsi = 1e-5;
-ocp.check_jacobian( ocp.get_raw_solution(), epsi );
+check_jacobian = false; % set true if you want to check jacobian matrix
+if check_jacobian
+  % check the jacobian of initial guess
+  epsi = 1e-5;
+  ocp.check_jacobian( ocp.get_raw_solution(), epsi );
+end
 
 names = ocp.names();
 
@@ -88,11 +94,15 @@ names = ocp.names();
 % -------------------------------------------------------------------------
 % COMPUTE SOLUTION
 % -------------------------------------------------------------------------
-ok = ocp.solve();
+timeout_ms = 0; % if > 0 set a timeout in ms
+ok = ocp.solve( timeout_ms );
 % ok = false if computation failed
 % ok = true if computation is succesfull
-%epsi = 1e-5;
-%ocp.check_jacobian(ocp.get_raw_solution(),epsi);
+if check_jacobian
+  % check the jacobian of the computed solution
+  epsi = 1e-5;
+  ocp.check_jacobian( ocp.get_raw_solution(), epsi );
+end
 
 % -------------------------------------------------------------------------
 % GET SOLUTION
@@ -113,7 +123,6 @@ ocp.plot_multipliers();
 subplot(3,1,3);
 ocp.plot_controls();
 
-%%clear mex
 %x = Train_Mex('get_raw_solution',obj);
 %J = Train_Mex('eval_JF',obj,x);
 %f = Train_Mex('eval_F',obj,x);

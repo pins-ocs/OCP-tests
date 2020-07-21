@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,9 +18,9 @@
 --]]
 
 -- Auxiliary values
-Tf        = 6
-u_epsi    = 0.01
 u_tol     = 0.01
+u_epsi    = 0.01
+Tf        = 6
 epsilon_X = 1e-07
 
 content = {

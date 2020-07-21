@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -100,7 +100,6 @@ namespace SingularArcDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SingularArc::DboundaryConditionsDx_numRows() const
   { return 5; }
@@ -151,7 +150,6 @@ namespace SingularArcDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SingularArc::DboundaryConditionsDp_numRows() const
@@ -222,7 +220,6 @@ namespace SingularArcDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SingularArc::DadjointBCDx_numRows() const
   { return 7; }
@@ -255,7 +252,6 @@ namespace SingularArcDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SingularArc::DadjointBCDp_numRows() const

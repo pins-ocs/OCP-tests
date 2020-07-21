@@ -46,8 +46,7 @@ INFO CLASS = BangBangFmodule
   nQ_total     = 101
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -62,11 +61,11 @@ Solver Controls: LU, N.threads: 6
 [  9,  7] (  0.00526,  0.00531) [     84.0,     41.2]  1.59e-06 ( 8: 0): 4: 0: 4 G
 [ 10, 12] (  0.00531,   0.0047) [    0.169,     0.15]     0.114 ( 9: 0): 4: 0: 4 G
 [ 11,  1] (   0.0047,  0.00152) [     0.15,   0.0485]     0.676 (10: 0): 1: 0: 1 G
-[ 12,  1] (  0.00152, 9.02e-16) [   0.0485, 4.54e-15]      1.00 (11: 0): 1: 0: 1 G
-[ 13,  1] ( 9.02e-16, 4.89e-17) [ 4.54e-15, 2.93e-17]      1.00 (12: 0): 0: 0: 0 G
+[ 12,  1] (  0.00152, 9.03e-16) [   0.0485, 4.54e-15]      1.00 (11: 0): 1: 0: 1 G
+[ 13,  1] ( 9.03e-16, 4.89e-17) [ 4.54e-15, 2.93e-17]      1.00 (12: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 32.7    ms    iteration           = 13        
+Elapsed Time           = 11.0    ms    iteration           = 13        
 Total Equations        = 608           tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------
@@ -82,7 +81,7 @@ Jacobian Factorization = 13            Jacobian Inversion  = 91
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 last ||d||_inf = 1.2731e-16      last `new' ||d||_inf  = 1.4919e-13
-last ||f||_inf = 6.8301e-14      last ||f||_1          = 9.0225e-16
+last ||f||_inf = 6.8301e-14      last ||f||_1          = 9.0314e-16
 
 target [Lagrange,Mayer]        = [      2.26438,      0.00000]
 [Penalties/Barriers, Controls] = [      0.00000,   0.00215276]

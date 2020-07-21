@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Mex.cc                                            |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -146,25 +146,17 @@ public:
 
   void
   read( string const & fname, GenericContainer & gc ) {
-    if ( fname.find_last_of(".rb") ) {
-      Mechatronix::MrubyInterpreter mrb;
-      MEX_ASSERT(
-        mrb.load( fname.c_str() ) != EXIT_FAILURE,
-        "Failed to load: ``" << fname << "''"
-      );
-      mrb.expr_to_GC( "Mechatronix.content", gc );
-    } else if ( fname.find_last_of(".lua") ) {
-      using GenericContainerNamespace::LuaInterpreter;
-      LuaInterpreter lua;
-      Mechatronix::lua_set_constants( lua );
-      lua.do_file( fname.c_str() );
-      lua.global_to_GC( "content", gc );
-    } else {
-      MEX_ASSERT(
-        false,
-        "unknown suffix for filename `" << fname << "` use `.rb` or `.lua`"
-      );
-    }
+    MEX_ASSERT(
+      Mechatronix::checkIfFileExists( fname.c_str() ),
+      "Cant find: ``" << fname << "''"
+    );
+    // redirect output
+    Mechatronix::STDOUT_redirect rd;
+    rd.start();
+    Mechatronix::load_script( fname, gc );
+    rd.stop();
+    if ( rd.str().length() > 0 )
+      mexPrintf( "Mechatronix::load_script return:\n%s\n", rd.str().c_str() );
   }
 
   /*\
@@ -208,11 +200,17 @@ public:
     #define CMD MODEL_NAME "_Mex('setup',obj,struct_or_filename): "
     CHECK_IN(3);
     CHECK_OUT(0);
-    if ( mxIsChar(arg_in_2) ) { // read from file
+    if ( mxIsStruct(arg_in_2) ) { // read from file
+      mxArray_to_GenericContainer( arg_in_2, gc_data );
+    } else if ( mxIsChar(arg_in_2) ) {
       string fname = mxArrayToString(arg_in_2);
       this->read( fname, gc_data );
     } else { // setup using MATLAB structure
-      mxArray_to_GenericContainer( arg_in_2, gc_data );
+      MEX_ASSERT(
+        false,
+        MODEL_NAME "3rd argument must be a struct or a string, found: " <<
+        mxGetClassName(arg_in_2)
+      );
     }
 
 
@@ -306,10 +304,16 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('solve',obj): "
+    #define CMD MODEL_NAME "_Mex('solve',obj[,timeout]): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'solve'" );
-    CHECK_IN( 2 );
+    MEX_ASSERT(
+      nrhs == 2 || nrhs == 3, CMD "Expected 2 or 3 argument(s), nrhs = "  << nrhs
+    );
     CHECK_OUT( 1 );
+    if ( nrhs == 3 ) {
+      real_type ms = getScalarValue( arg_in_2, CMD " timeout" );
+      MODEL_CLASS::set_timeout_ms( ms );
+    }
     solve_ok = MODEL_CLASS::solve();
     setScalarBool( arg_out_0, solve_ok );
     this->doneSolve();
@@ -328,7 +332,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-
     #define CMD MODEL_NAME "_Mex('dims',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'dims'" );
     CHECK_IN( 2 );
@@ -505,7 +508,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-
     #define CMD MODEL_NAME "_Mex('get_solution',obj[,column_name]): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_solution'" );
     CHECK_OUT( 1 );
@@ -758,7 +760,7 @@ public:
    |              |___|
   \*/
   void
-  mex_changeInfoLevel(
+  mex_infoLevel(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -811,9 +813,6 @@ DATA_DELETE( mxArray const * & mx_id ) {
 \*/
 
 typedef enum {
-  CMD_NEW,
-  CMD_HELP,
-  CMD_DELETE,
   CMD_READ,
   CMD_SETUP,
   CMD_SET_GUESS,
@@ -822,7 +821,7 @@ typedef enum {
   CMD_SOLVE,
   CMD_DIMS,
   CMD_NAMES,
-  CMD_UPDATE_CONTINUATION,
+  CMD_UPDATECONTINUATION,
   CMD_GET_RAW_SOLUTION,
   CMD_SET_RAW_SOLUTION,
   CMD_CHECK_RAW_SOLUTION,
@@ -834,13 +833,13 @@ typedef enum {
   CMD_EVAL_JF_PATTERN,
   CMD_PACK,
   CMD_UNPACK,
-  CMD_INFO_LEVEL
+  CMD_INFOLEVEL,
+  CMD_NEW,
+  CMD_DELETE,
+  CMD_HELP
 } CMD_LIST;
 
 static map<string,unsigned> cmd_to_idx = {
-  {"new",CMD_NEW},
-  {"help",CMD_HELP},
-  {"delete",CMD_DELETE},
   {"read",CMD_READ},
   {"setup",CMD_SETUP},
   {"set_guess",CMD_SET_GUESS},
@@ -849,7 +848,7 @@ static map<string,unsigned> cmd_to_idx = {
   {"solve",CMD_SOLVE},
   {"dims",CMD_DIMS},
   {"names",CMD_NAMES},
-  {"updateContinuation",CMD_UPDATE_CONTINUATION},
+  {"updateContinuation",CMD_UPDATECONTINUATION},
   {"get_raw_solution",CMD_GET_RAW_SOLUTION},
   {"set_raw_solution",CMD_SET_RAW_SOLUTION},
   {"check_raw_solution",CMD_CHECK_RAW_SOLUTION},
@@ -861,7 +860,10 @@ static map<string,unsigned> cmd_to_idx = {
   {"eval_JF_pattern",CMD_EVAL_JF_PATTERN},
   {"pack",CMD_PACK},
   {"unpack",CMD_UNPACK},
-  {"infoLevel",CMD_INFO_LEVEL}
+  {"infoLevel",CMD_INFOLEVEL},
+  {"new",CMD_NEW},
+  {"delete",CMD_DELETE},
+  {"help",CMD_HELP}
 };
 
 void
@@ -875,6 +877,8 @@ mexFunction(
 
   if ( pTP      == nullptr ) pTP      = new ThreadPool(std::thread::hardware_concurrency());
   if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
+
+  pConsole->setOff();
 
   MEX_ASSERT(
     nrhs > 0,
@@ -977,7 +981,7 @@ mexFunction(
       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       ptr->mex_names( nlhs, plhs, nrhs, prhs );
       break;
-    case CMD_UPDATE_CONTINUATION:
+    case CMD_UPDATECONTINUATION:
       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       ptr->mex_updateContinuation( nlhs, plhs, nrhs, prhs );
       break;
@@ -1025,58 +1029,11 @@ mexFunction(
       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       ptr->mex_unpack( nlhs, plhs, nrhs, prhs );
       break;
-    case CMD_INFO_LEVEL:
+    case CMD_INFOLEVEL:
       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      ptr->mex_changeInfoLevel( nlhs, plhs, nrhs, prhs );
+      ptr->mex_infoLevel( nlhs, plhs, nrhs, prhs );
       break;
     }
-
-    /*
-    //  _
-    // | |__ _ __ _ _ _ __ _ _ _  __ _ ___
-    // | / _` / _` | '_/ _` | ' \/ _` / -_)
-    // |_\__,_\__, |_| \__,_|_||_\__, \___|
-    //        |___/              |___/
-    */
-    /*
-    //  _ __  __ _ _  _ ___ _ _
-    // | '  \/ _` | || / -_) '_|
-    // |_|_|_\__,_|\_, \___|_|
-    //             |__/
-    */
-    /*
-    //   ___
-    //  / _ \
-    // | (_) |
-    //  \__\_\
-    */
-    /*
-    //  _
-    // | |__  __
-    // | '_ \/ _|
-    // |_.__/\__|
-    */
-    /*
-    //  ___  _        ___
-    // |   \| |__  __|   \__ ___ __
-    // | |) | '_ \/ _| |) \ \ / '_ \
-    // |___/|_.__/\__|___//_\_\ .__/
-    //                        |_|
-    */
-    /*
-    //  _        ___ _
-    // | |__  __| _ |_)__ _
-    // | '_ \/ _| _ \ / _` |
-    // |_.__/\__|___/_\__, |
-    //                |___/
-    */
-    /*
-    //  ___  _        ___ _      ___
-    // |   \| |__  __| _ |_)__ _|   \__ ___ __
-    // | |) | '_ \/ _| _ \ / _` | |) \ \ / '_ \
-    // |___/|_.__/\__|___/_\__, |___//_\_\ .__/
-    //                     |___/         |_|
-    */
   }
   catch ( std::out_of_range const & exc ) {
     string errmsg = string("Unknown command: ")+exc.what();

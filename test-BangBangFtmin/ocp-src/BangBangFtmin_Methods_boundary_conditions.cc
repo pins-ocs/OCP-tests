@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -97,7 +97,6 @@ namespace BangBangFtminDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   BangBangFtmin::DboundaryConditionsDx_numRows() const
   { return 4; }
@@ -146,7 +145,6 @@ namespace BangBangFtminDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   BangBangFtmin::DboundaryConditionsDp_numRows() const
@@ -216,7 +214,6 @@ namespace BangBangFtminDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   BangBangFtmin::DadjointBCDx_numRows() const
   { return 6; }
@@ -249,7 +246,6 @@ namespace BangBangFtminDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   BangBangFtmin::DadjointBCDp_numRows() const

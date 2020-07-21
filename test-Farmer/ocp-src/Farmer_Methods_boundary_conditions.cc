@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -127,7 +127,6 @@ namespace FarmerDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Farmer::DboundaryConditionsDx_numRows() const
   { return 5; }
@@ -178,7 +177,6 @@ namespace FarmerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Farmer::DboundaryConditionsDp_numRows() const
@@ -252,7 +250,6 @@ namespace FarmerDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Farmer::DadjointBCDx_numRows() const
   { return 10; }
@@ -285,7 +282,6 @@ namespace FarmerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Farmer::DadjointBCDp_numRows() const

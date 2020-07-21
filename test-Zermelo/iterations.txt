@@ -45,8 +45,7 @@ INFO CLASS = Zermelo
   nQ_total     = 1001
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -63,7 +62,7 @@ Solver Controls: LU, N.threads: 6
 [ 11,  1] (  2.6e-09, 9.01e-16) [ 8.41e-07, 3.88e-13]      1.00 (10: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 58.4    ms    iteration           = 11        
+Elapsed Time           = 44.2    ms    iteration           = 11        
 Total Equations        = 11017         tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------

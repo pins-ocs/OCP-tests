@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods1.cc                                          |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -118,9 +118,9 @@ namespace CrossroadDefine {
     real_type t17  = ModelPars[13] * ModelPars[13];
     real_type t21  = AccBound(1 - 1.0 / t6 * t4 - 1.0 / t17 * t14 * t11);
     real_type t22  = VelBound(t9);
-    real_type t24  = U__[0];
-    real_type t25  = t24 * t24;
-    return t2 + t21 + t22 + t1 * (t25 * ModelPars[11] + ModelPars[12]) + t9 * t1 * L__[0] + t3 * t1 * L__[1] + t24 * t1 * L__[2];
+    real_type t23  = U__[0];
+    real_type t24  = t23 * t23;
+    return t2 + t21 + t22 + t1 * (ModelPars[11] * t24 + ModelPars[12]) + t9 * t1 * L__[0] + t3 * t1 * L__[1] + t23 * t1 * L__[2];
   }
 
   /*\

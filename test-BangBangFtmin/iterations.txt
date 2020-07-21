@@ -43,8 +43,7 @@ INFO CLASS = BangBangFtmin
   nQ_total     = 104
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -54,10 +53,10 @@ Solver Controls: LU, N.threads: 6
 [  4,  1] (  0.00358, 0.000569) [    0.302,   0.0297]      1.00 ( 3: 0): 1: 0: 1 G
 [  5,  1] ( 0.000569, 5.57e-06) [   0.0223, 0.000225]      1.00 ( 4: 0): 0: 0: 0 G
 [  6,  1] ( 5.57e-06, 1.06e-09) [ 0.000231, 4.05e-08]      1.00 ( 5: 0): 0: 0: 0 G
-[  7,  1] ( 1.06e-09, 4.17e-17) [ 4.05e-08, 1.08e-15]      1.00 ( 6: 0): 0: 0: 0 G
+[  7,  1] ( 1.06e-09, 4.16e-17) [ 4.05e-08, 1.08e-15]      1.00 ( 6: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 7.46    ms    iteration           = 7         
+Elapsed Time           = 4.30    ms    iteration           = 7         
 Total Equations        = 731           tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------
@@ -72,7 +71,7 @@ Jacobian Factorization = 7             Jacobian Inversion  = 17
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 5.1239e-15      last `new' ||d||_inf  = 1.5076e-07
+last ||d||_inf =  5.132e-15      last `new' ||d||_inf  = 1.5076e-07
 last ||f||_inf = 5.0094e-09      last ||f||_1          = 1.0596e-09
 
 target [Lagrange,Mayer]        = [      0.00000,      2.82984]

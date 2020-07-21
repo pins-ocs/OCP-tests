@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -145,8 +145,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 100,
+        length = 1,
       },
     },
   },

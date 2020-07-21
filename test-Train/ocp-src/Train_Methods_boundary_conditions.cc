@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods.cc                                               |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -106,7 +106,6 @@ namespace TrainDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Train::DboundaryConditionsDx_numRows() const
   { return 4; }
@@ -155,7 +154,6 @@ namespace TrainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Train::DboundaryConditionsDp_numRows() const
@@ -223,7 +221,6 @@ namespace TrainDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Train::DadjointBCDx_numRows() const
   { return 4; }
@@ -256,7 +253,6 @@ namespace TrainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Train::DadjointBCDp_numRows() const

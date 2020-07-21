@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods1.cc                                         |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -138,12 +138,12 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::u_DD( real_type x__XO ) const {
-    real_type t2   = r(x__XO);
-    real_type t3   = exp(-t2);
-    real_type t6   = r_DD(x__XO);
-    real_type t8   = r_D(x__XO);
-    real_type t9   = t8 * t8;
-    return -(t6 * (-t2 + 2) + (t2 - 3) * t9) * t3 * ModelPars[15];
+    real_type t1   = r(x__XO);
+    real_type t2   = exp(-t1);
+    real_type t4   = r_DD(x__XO);
+    real_type t6   = r_D(x__XO);
+    real_type t7   = t6 * t6;
+    return -ModelPars[15] * (t4 * (-t1 + 2) + (t1 - 3) * t7) * t2;
   }
 
   real_type
@@ -489,9 +489,9 @@ namespace HangGliderDefine {
     real_type t20  = X__[0];
     real_type t21  = v(t20, t10, t14);
     real_type t22  = 1.0 / t21;
-    real_type t24  = t4 * t4;
+    real_type t25  = t4 * t4;
     real_type t29  = Dfun(t20, t10, t14);
-    real_type t30  = t29 * (ModelPars[6] * t24 + ModelPars[5]);
+    real_type t30  = t29 * (t25 * ModelPars[6] + ModelPars[5]);
     real_type t32  = Lfun(t20, t10, t14);
     real_type t33  = t32 * t4;
     real_type t34  = w(t20, t14);

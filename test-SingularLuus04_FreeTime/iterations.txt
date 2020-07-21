@@ -53,8 +53,7 @@ INFO CLASS = SingularLuus04_FreeTime
   nQ_total     = 5001
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -76,7 +75,7 @@ Continuation step N.0 s = 0.2
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
 [ 14,  1] (  2.8e-05, 1.12e-08) [    0.312, 4.06e-05]      1.00 ( 0: 0): 0: 0: 0 G
 [ 15,  1] ( 1.12e-08, 4.51e-12) [ 3.75e-05, 8.15e-10]      1.00 ( 1: 0): 0: 0: 0 G
-[ 16,  1] ( 4.51e-12, 8.04e-17) [ 8.15e-10, 7.91e-17]      1.00 ( 2: 0): 0: 0: 0 G
+[ 16,  1] ( 4.51e-12, 8.04e-17) [ 8.15e-10, 7.98e-17]      1.00 ( 2: 0): 0: 0: 0 G
 
 Continuation step N.0 s = 0.5
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -97,7 +96,7 @@ Continuation step N.0 s = 1.0
 [ 25,  1] (    8e-09, 1.73e-14) [ 4.18e-07, 7.54e-13]      1.00 ( 2: 3): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 288.0   ms    iteration           = 25        
+Elapsed Time           = 308.0   ms    iteration           = 25        
 Total Equations        = 45014         tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------

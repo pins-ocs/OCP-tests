@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus04_FreeTime_Data.rb                                #
 #                                                                       #
-#  version: 1.0   date 28/3/2020                                        #
+#  version: 1.0   date 21/7/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,10 +18,10 @@
 include Mechatronix
 
 # Auxiliary values
-u_tol  = 0.01
-u_epsi = 0.01
 theta0 = 1
 theta  = theta0
+u_epsi = 0.01
+u_tol  = 0.01
 
 mechatronix do |data|
 
@@ -176,8 +176,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 5000,
         :length => 1,
+        :n      => 5000,
       },
     ],
   };

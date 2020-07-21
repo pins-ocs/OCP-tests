@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -107,7 +107,6 @@ namespace BangBangFclipDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   BangBangFclip::DboundaryConditionsDx_numRows() const
   { return 5; }
@@ -158,7 +157,6 @@ namespace BangBangFclipDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   BangBangFclip::DboundaryConditionsDp_numRows() const
@@ -228,7 +226,6 @@ namespace BangBangFclipDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   BangBangFclip::DadjointBCDx_numRows() const
   { return 6; }
@@ -261,7 +258,6 @@ namespace BangBangFclipDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   BangBangFclip::DadjointBCDp_numRows() const

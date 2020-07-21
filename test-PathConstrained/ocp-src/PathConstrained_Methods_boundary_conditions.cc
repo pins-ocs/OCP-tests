@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -97,7 +97,6 @@ namespace PathConstrainedDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   PathConstrained::DboundaryConditionsDx_numRows() const
   { return 2; }
@@ -142,7 +141,6 @@ namespace PathConstrainedDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   PathConstrained::DboundaryConditionsDp_numRows() const
@@ -210,7 +208,6 @@ namespace PathConstrainedDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   PathConstrained::DadjointBCDx_numRows() const
   { return 4; }
@@ -243,7 +240,6 @@ namespace PathConstrainedDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   PathConstrained::DadjointBCDp_numRows() const

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: gtocX_2burn_Data.rb                                            #
 #                                                                       #
-#  version: 1.0   date 28/3/2020                                        #
+#  version: 1.0   date 21/7/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,8 +18,8 @@
 include Mechatronix
 
 # Auxiliary values
-ray_tol  = 0.001
 ray_epsi = 0.001
+ray_tol  = 0.001
 
 mechatronix do |data|
 

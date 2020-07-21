@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -85,7 +85,6 @@ namespace HangingChainDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   HangingChain::DboundaryConditionsDx_numRows() const
   { return 3; }
@@ -132,7 +131,6 @@ namespace HangingChainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   HangingChain::DboundaryConditionsDp_numRows() const
@@ -200,7 +198,6 @@ namespace HangingChainDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   HangingChain::DadjointBCDx_numRows() const
   { return 4; }
@@ -246,7 +243,6 @@ namespace HangingChainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   HangingChain::DadjointBCDp_numRows() const

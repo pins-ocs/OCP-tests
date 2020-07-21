@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -116,7 +116,6 @@ namespace gtocX_2burn_parsDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   gtocX_2burn_pars::DboundaryConditionsDx_numRows() const
   { return 6; }
@@ -203,7 +202,6 @@ namespace gtocX_2burn_parsDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   gtocX_2burn_pars::DboundaryConditionsDp_numRows() const
@@ -383,7 +381,6 @@ namespace gtocX_2burn_parsDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   gtocX_2burn_pars::DadjointBCDx_numRows() const
   { return 9; }
@@ -562,7 +559,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t137 = xPosition_D_4_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t139 = yPosition_D_4_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t141 = zPosition_D_4_6(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 26  ] = t137 * t1 + t139 * t11 + t141 * t14;
+    result__[ 26  ] = t1 * t137 + t11 * t139 + t14 * t141;
     real_type t143 = xPosition_D_2_4(t2, t48, t49, t5, t6, t50, t8);
     real_type t145 = yPosition_D_2_4(t2, t48, t49, t5, t6, t50, t8);
     real_type t147 = zPosition_D_2_4(t2, t48, t49, t5, t6, t50, t8);
@@ -578,15 +575,15 @@ namespace gtocX_2burn_parsDefine {
     real_type t161 = xPosition_D_2_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t163 = yPosition_D_2_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t165 = zPosition_D_2_5(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 30  ] = t161 * t1 + t163 * t11 + t165 * t14;
+    result__[ 30  ] = t1 * t161 + t11 * t163 + t14 * t165;
     real_type t167 = xPosition_D_3_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t169 = yPosition_D_3_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t171 = zPosition_D_3_5(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 31  ] = t167 * t1 + t169 * t11 + t171 * t14;
+    result__[ 31  ] = t1 * t167 + t11 * t169 + t14 * t171;
     real_type t173 = xPosition_D_5_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t175 = yPosition_D_5_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t177 = zPosition_D_5_6(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 32  ] = t173 * t1 + t175 * t11 + t177 * t14;
+    result__[ 32  ] = t1 * t173 + t11 * t175 + t14 * t177;
     real_type t179 = xPosition_D_2_5(t2, t48, t49, t5, t6, t50, t8);
     real_type t181 = yPosition_D_2_5(t2, t48, t49, t5, t6, t50, t8);
     real_type t183 = zPosition_D_2_5(t2, t48, t49, t5, t6, t50, t8);
@@ -605,7 +602,6 @@ namespace gtocX_2burn_parsDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   gtocX_2burn_pars::DadjointBCDp_numRows() const
@@ -772,7 +768,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t143 = xPosition_D_1_4(t2, t66, t67, t5, t6, t68, t8);
     real_type t145 = yPosition_D_1_4(t2, t66, t67, t5, t6, t68, t8);
     real_type t147 = zPosition_D_1_4(t2, t66, t67, t5, t6, t68, t8);
-    result__[ 19  ] = t137 * t1 + t139 * t11 + t141 * t14 + t143 * t65 + t145 * t71 + t147 * t74;
+    result__[ 19  ] = t1 * t137 + t11 * t139 + t14 * t141 + t143 * t65 + t145 * t71 + t147 * t74;
     real_type t149 = xPosition_D_1_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t151 = yPosition_D_1_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t153 = zPosition_D_1_5(t2, t3, t4, t5, t6, t7, t8);
@@ -787,14 +783,14 @@ namespace gtocX_2burn_parsDefine {
     real_type t167 = xPosition_D_4_4(t2, t66, t67, t5, t6, t68, t8);
     real_type t169 = yPosition_D_4_4(t2, t66, t67, t5, t6, t68, t8);
     real_type t171 = zPosition_D_4_4(t2, t66, t67, t5, t6, t68, t8);
-    result__[ 22  ] = t161 * t1 + t163 * t11 + t165 * t14 + t167 * t65 + t169 * t71 + t171 * t74;
+    result__[ 22  ] = t1 * t161 + t11 * t163 + t14 * t165 + t167 * t65 + t169 * t71 + t171 * t74;
     real_type t173 = xPosition_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t175 = yPosition_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t177 = zPosition_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t179 = xPosition_D_4_5(t2, t66, t67, t5, t6, t68, t8);
     real_type t181 = yPosition_D_4_5(t2, t66, t67, t5, t6, t68, t8);
     real_type t183 = zPosition_D_4_5(t2, t66, t67, t5, t6, t68, t8);
-    result__[ 23  ] = t173 * t1 + t175 * t11 + t177 * t14 + t179 * t65 + t181 * t71 + t183 * t74;
+    result__[ 23  ] = t1 * t173 + t11 * t175 + t14 * t177 + t179 * t65 + t181 * t71 + t183 * t74;
     result__[ 24  ] = result__[20];
     result__[ 25  ] = result__[23];
     real_type t185 = xPosition_D_5_5(t2, t3, t4, t5, t6, t7, t8);

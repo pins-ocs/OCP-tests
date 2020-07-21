@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -101,7 +101,6 @@ namespace TwoPhaseSchwartzDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   TwoPhaseSchwartz::DboundaryConditionsDx_numRows() const
   { return 4; }
@@ -154,7 +153,6 @@ namespace TwoPhaseSchwartzDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   TwoPhaseSchwartz::DboundaryConditionsDp_numRows() const
@@ -228,7 +226,6 @@ namespace TwoPhaseSchwartzDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   TwoPhaseSchwartz::DadjointBCDx_numRows() const
   { return 8; }
@@ -276,7 +273,6 @@ namespace TwoPhaseSchwartzDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   TwoPhaseSchwartz::DadjointBCDp_numRows() const

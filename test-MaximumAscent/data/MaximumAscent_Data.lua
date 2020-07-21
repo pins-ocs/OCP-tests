@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,18 +18,18 @@
 --]]
 
 -- Auxiliary values
+u0     = 0
 days   = 1
-days1  = 30
 tf     = 86400*days
 T      = 0.68
-u0     = 0
+days1  = 30
+Isp    = 1500
 mu     = 398600441800000
 g0     = 9.80665
-Isp    = 1500
-mdot   = T/g0/Isp
 r0     = 6678140
 v0     = (mu/r0)^(1/2)
 u0_bar = u0/v0
+mdot   = T/g0/Isp
 
 content = {
 
@@ -171,8 +171,8 @@ content = {
     segments = {
       
       {
-        n      = 1000*days1,
         length = 1,
+        n      = 1000*days1,
       },
     },
   },

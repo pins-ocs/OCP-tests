@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -166,14 +166,13 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 GunnAndThomas_data.Mesh["s0"] = 0;
-GunnAndThomas_data.Mesh["segments"][0]["n"] = 200;
 GunnAndThomas_data.Mesh["segments"][0]["length"] = 1;
+GunnAndThomas_data.Mesh["segments"][0]["n"] = 200;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-
     LW_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
@@ -188,6 +187,7 @@ GunnAndThomas_data.Mesh["segments"][0]["length"] = 1;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
+    // pModel->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

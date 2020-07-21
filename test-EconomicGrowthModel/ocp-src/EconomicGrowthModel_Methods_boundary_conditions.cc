@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -99,7 +99,6 @@ namespace EconomicGrowthModelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   EconomicGrowthModel::DboundaryConditionsDx_numRows() const
   { return 3; }
@@ -150,7 +149,6 @@ namespace EconomicGrowthModelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   EconomicGrowthModel::DboundaryConditionsDp_numRows() const
@@ -225,7 +223,6 @@ namespace EconomicGrowthModelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   EconomicGrowthModel::DadjointBCDx_numRows() const
   { return 6; }
@@ -283,7 +280,6 @@ namespace EconomicGrowthModelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   EconomicGrowthModel::DadjointBCDp_numRows() const

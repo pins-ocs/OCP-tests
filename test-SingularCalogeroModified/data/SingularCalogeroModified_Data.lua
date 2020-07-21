@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Data.lua                              |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -159,8 +159,8 @@ content = {
     segments = {
       
       {
-        n      = 100,
         length = 2,
+        n      = 100,
       },
     },
   },

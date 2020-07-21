@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -105,7 +105,6 @@ namespace CrossroadDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Crossroad::DboundaryConditionsDx_numRows() const
   { return 6; }
@@ -158,7 +157,6 @@ namespace CrossroadDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Crossroad::DboundaryConditionsDp_numRows() const
@@ -230,7 +228,6 @@ namespace CrossroadDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Crossroad::DadjointBCDx_numRows() const
   { return 8; }
@@ -263,7 +260,6 @@ namespace CrossroadDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Crossroad::DadjointBCDp_numRows() const

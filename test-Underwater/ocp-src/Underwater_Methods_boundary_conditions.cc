@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -121,7 +121,6 @@ namespace UnderwaterDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Underwater::DboundaryConditionsDx_numRows() const
   { return 10; }
@@ -182,7 +181,6 @@ namespace UnderwaterDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Underwater::DboundaryConditionsDp_numRows() const
@@ -259,7 +257,6 @@ namespace UnderwaterDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Underwater::DadjointBCDx_numRows() const
   { return 13; }
@@ -292,7 +289,6 @@ namespace UnderwaterDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Underwater::DadjointBCDp_numRows() const

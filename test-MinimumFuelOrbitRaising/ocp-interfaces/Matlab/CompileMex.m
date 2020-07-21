@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: MinimumFuelOrbitRaising_Data.rb                                %
 %                                                                       %
-%  version: 1.0   date 28/3/2020                                        %
+%  version: 1.0   date 21/7/2020                                        %
 %                                                                       %
 %  Copyright (C) 2020                                                   %
 %                                                                       %
@@ -21,7 +21,7 @@ function [mex_name,lib_name] = CompileMex()
   SRCS_BASE = '../../ocp-src/';
   SRCS      = [ MODEL '_Mex.cc GenericContainerMatlabInterface.cc ' ];
 
-  % get library sources
+  % get library sources (NOW SKIPPED)
   fdir = dir([SRCS_BASE '*.cc']);
   for n=1:length(fdir)
     if strfind(fdir(n).name, '_dll.cc') > 0

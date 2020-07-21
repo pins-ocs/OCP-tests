@@ -37,8 +37,7 @@ INFO CLASS = WorstCaseScenario
   nQ_total     = 401
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -47,7 +46,7 @@ Solver Controls: LU, N.threads: 6
 [  3,  1] ( 1.35e-08, 7.26e-19) [ 2.72e-06, 5.77e-19]      1.00 ( 2: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 4.42    ms    iteration           = 3         
+Elapsed Time           = 2.67    ms    iteration           = 3         
 Total Equations        = 1203          tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------

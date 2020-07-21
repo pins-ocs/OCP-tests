@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -89,7 +89,6 @@ namespace MaximumAscentDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   MaximumAscent::DboundaryConditionsDx_numRows() const
   { return 6; }
@@ -145,7 +144,6 @@ namespace MaximumAscentDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   MaximumAscent::DboundaryConditionsDp_numRows() const
@@ -219,7 +217,6 @@ namespace MaximumAscentDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   MaximumAscent::DadjointBCDx_numRows() const
   { return 8; }
@@ -272,7 +269,6 @@ namespace MaximumAscentDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   MaximumAscent::DadjointBCDp_numRows() const

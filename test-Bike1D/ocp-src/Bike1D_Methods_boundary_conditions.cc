@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -113,7 +113,6 @@ namespace Bike1DDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Bike1D::DboundaryConditionsDx_numRows() const
   { return 2; }
@@ -158,7 +157,6 @@ namespace Bike1DDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Bike1D::DboundaryConditionsDp_numRows() const
@@ -224,7 +222,6 @@ namespace Bike1DDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   Bike1D::DadjointBCDx_numRows() const
   { return 2; }
@@ -272,7 +269,6 @@ namespace Bike1DDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   Bike1D::DadjointBCDp_numRows() const

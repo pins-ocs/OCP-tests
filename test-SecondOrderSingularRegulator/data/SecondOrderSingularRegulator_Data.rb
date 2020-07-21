@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SecondOrderSingularRegulator_Data.rb                           #
 #                                                                       #
-#  version: 1.0   date 28/3/2020                                        #
+#  version: 1.0   date 21/7/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -83,7 +83,7 @@ mechatronix do |data|
     # ===================================
 
     # solver parameters
-    :max_iter             => 3000,
+    :max_iter             => 300,
     :max_step_iter        => 40,
     :max_accumulated_iter => 800,
     :tolerance            => 9.999999999999999e-10,
@@ -157,8 +157,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => L,
         :n      => 500,
+        :length => L,
       },
     ],
   };

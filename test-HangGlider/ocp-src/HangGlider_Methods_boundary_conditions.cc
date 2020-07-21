@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -102,7 +102,6 @@ namespace HangGliderDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   HangGlider::DboundaryConditionsDx_numRows() const
   { return 7; }
@@ -157,7 +156,6 @@ namespace HangGliderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   HangGlider::DboundaryConditionsDp_numRows() const
@@ -230,7 +228,6 @@ namespace HangGliderDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   HangGlider::DadjointBCDx_numRows() const
   { return 9; }
@@ -263,7 +260,6 @@ namespace HangGliderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   HangGlider::DadjointBCDp_numRows() const

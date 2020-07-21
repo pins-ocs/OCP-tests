@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Data.lua                                           |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,12 +18,12 @@
 --]]
 
 -- Auxiliary values
-tol_ctrl0  = 0.01
-epsi_T     = 0.01
-tol_T      = 0.1
 epsi_ctrl0 = 0.01
 epsi_ctrl  = epsi_ctrl0
+tol_ctrl0  = 0.01
 tol_ctrl   = tol_ctrl0
+epsi_T     = 0.01
+tol_T      = 0.1
 
 content = {
 
@@ -177,8 +177,8 @@ content = {
     segments = {
       
       {
-        n      = 400,
         length = 1,
+        n      = 400,
       },
     },
   },

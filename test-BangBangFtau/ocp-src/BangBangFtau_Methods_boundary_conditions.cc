@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -106,7 +106,6 @@ namespace BangBangFtauDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   BangBangFtau::DboundaryConditionsDx_numRows() const
   { return 5; }
@@ -157,7 +156,6 @@ namespace BangBangFtauDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   BangBangFtau::DboundaryConditionsDp_numRows() const
@@ -229,7 +227,6 @@ namespace BangBangFtauDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   BangBangFtau::DadjointBCDx_numRows() const
   { return 8; }
@@ -262,7 +259,6 @@ namespace BangBangFtauDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   BangBangFtau::DadjointBCDp_numRows() const

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,14 +52,14 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
-   real_type js_min = -50;
-   real_type js_max = 30;
-   real_type jn_max = 65;
-   real_type path_following_tolerance = 1.0e-05;
-   real_type pf_error = path_following_tolerance;
-   real_type mesh_segments = 100;
    real_type v_nom = 0.173;
    real_type deltaFeed = v_nom;
+   real_type js_min = -50;
+   real_type js_max = 30;
+   real_type mesh_segments = 100;
+   real_type path_following_tolerance = 1.0e-05;
+   real_type pf_error = path_following_tolerance;
+   real_type jn_max = 65;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -453,7 +453,6 @@ CNOC_data.ToolPath2D["segments"][19]["n"] = mesh_segments;
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-
     LW_ASSERT0(
       gc_data.exists("ToolPath2D"),
       "missing key: ``ToolPath2D'' in gc_data\n"
@@ -468,6 +467,7 @@ CNOC_data.ToolPath2D["segments"][19]["n"] = mesh_segments;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
+    // pModel->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

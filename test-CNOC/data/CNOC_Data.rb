@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 28/3/2020                                        #
+#  version: 1.0   date 21/7/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,14 +18,14 @@
 include Mechatronix
 
 # Auxiliary values
-js_min                   = -50
-js_max                   = 30
-jn_max                   = 65
-path_following_tolerance = 1.0e-05
-pf_error                 = path_following_tolerance
-mesh_segments            = 100
 v_nom                    = 0.173
 deltaFeed                = v_nom
+js_min                   = -50
+js_max                   = 30
+mesh_segments            = 100
+path_following_tolerance = 1.0e-05
+pf_error                 = path_following_tolerance
+jn_max                   = 65
 
 mechatronix do |data|
 

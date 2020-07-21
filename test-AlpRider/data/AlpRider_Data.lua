@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,9 @@
 
 -- Auxiliary values
 epsi0 = 0.1
+epsi  = epsi0
 tol0  = 0.1
 tol   = tol0
-epsi  = epsi0
 
 content = {
 
@@ -174,18 +174,18 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
       
       {
+        n      = 400,
         length = 18,
-        n      = 400,
       },
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

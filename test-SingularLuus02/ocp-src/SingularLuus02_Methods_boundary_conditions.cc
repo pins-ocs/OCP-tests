@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus02_Methods.cc                                      |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -95,7 +95,6 @@ namespace SingularLuus02Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SingularLuus02::DboundaryConditionsDx_numRows() const
   { return 2; }
@@ -140,7 +139,6 @@ namespace SingularLuus02Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SingularLuus02::DboundaryConditionsDp_numRows() const
@@ -208,7 +206,6 @@ namespace SingularLuus02Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SingularLuus02::DadjointBCDx_numRows() const
   { return 4; }
@@ -241,7 +238,6 @@ namespace SingularLuus02Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SingularLuus02::DadjointBCDp_numRows() const

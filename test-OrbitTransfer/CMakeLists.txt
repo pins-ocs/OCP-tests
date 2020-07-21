@@ -17,7 +17,7 @@ SET( CMAKE_VERBOSE_MAKEFILE FALSE )
 SET( CMAKE_INSTALL_MESSAGE NEVER )
 SET( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON )
 
-SET( CXX_WARN   "-Weverything -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-unreachable-code-break -Wno-format-nonliteral -Wno-cast-qual -Wno-unused-macros -Wno-switch-enum -Wno-conversion -Wno-cast-align -Wno-sign-conversion -Wno-documentation" )
+SET( CXX_WARN   "-Weverything -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-unreachable-code-break -Wno-format-nonliteral -Wno-cast-qual -Wno-unused-macros -Wno-switch-enum -Wno-conversion -Wno-cast-align -Wno-sign-conversion -Wno-documentation -Wno-c++2a-compat" )
 SET( CLANG_WARN "-Wall -Wno-float-equal -Wno-padded" )
 SET( VS_WARN    "" )
 

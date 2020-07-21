@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SlidingMode_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -96,7 +96,6 @@ namespace SlidingModeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SlidingMode::DboundaryConditionsDx_numRows() const
   { return 3; }
@@ -143,7 +142,6 @@ namespace SlidingModeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SlidingMode::DboundaryConditionsDp_numRows() const
@@ -211,7 +209,6 @@ namespace SlidingModeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SlidingMode::DadjointBCDx_numRows() const
   { return 4; }
@@ -244,7 +241,6 @@ namespace SlidingModeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SlidingMode::DadjointBCDp_numRows() const

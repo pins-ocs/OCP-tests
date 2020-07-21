@@ -80,8 +80,7 @@ INFO CLASS = BangBangFtau
   nQ_total     = 104
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -107,11 +106,11 @@ Solver Controls: LU, N.threads: 6
 [ 20,  1] (  0.00039, 3.67e-05) [ 0.000329, 1.21e-05]      1.00 (19: 0): 0: 0: 0 G
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
 [ 21,  1] ( 3.67e-05, 3.94e-07) [ 1.42e-05, 2.48e-07]      1.00 (20: 0): 0: 0: 0 G
-[ 22,  1] ( 3.94e-07,  8.4e-11) [ 2.58e-07,  9.1e-11]      1.00 (21: 0): 0: 0: 0 G
-[ 23,  1] (  8.4e-11, 7.66e-16) [  9.1e-11, 5.37e-17]      1.00 (22: 0): 0: 0: 0 G
+[ 22,  1] ( 3.94e-07, 8.41e-11) [ 2.58e-07,  9.1e-11]      1.00 (21: 0): 0: 0: 0 G
+[ 23,  1] ( 8.41e-11,  2.7e-15) [  9.1e-11, 5.19e-16]      1.00 (22: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 88.5    ms    iteration           = 23        
+Elapsed Time           = 33.6    ms    iteration           = 23        
 Total Equations        = 1043          tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------
@@ -126,8 +125,8 @@ Jacobian Factorization = 23            Jacobian Inversion  = 95
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 2.3982e-15      last `new' ||d||_inf  = 6.8066e-09
-last ||f||_inf = 7.1626e-08      last ||f||_1          = 8.4044e-11
+last ||d||_inf = 3.2029e-14      last `new' ||d||_inf  = 6.8062e-09
+last ||f||_inf = 7.1626e-08      last ||f||_1          = 8.4056e-11
 
 target [Lagrange,Mayer]        = [   0.00193128,    -0.222062]
 [Penalties/Barriers, Controls] = [  0.000397847,      0.00000]

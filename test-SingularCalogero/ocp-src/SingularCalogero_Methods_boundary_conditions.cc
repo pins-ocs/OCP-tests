@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -94,7 +94,6 @@ namespace SingularCalogeroDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SingularCalogero::DboundaryConditionsDx_numRows() const
   { return 0; }
@@ -126,7 +125,6 @@ namespace SingularCalogeroDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SingularCalogero::DboundaryConditionsDp_numRows() const
@@ -192,7 +190,6 @@ namespace SingularCalogeroDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SingularCalogero::DadjointBCDx_numRows() const
   { return 2; }
@@ -225,7 +222,6 @@ namespace SingularCalogeroDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SingularCalogero::DadjointBCDp_numRows() const

@@ -46,8 +46,7 @@ INFO CLASS = Brachiostocrona
   nQ_total     = 501
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -61,7 +60,7 @@ Solver Controls: LU, N.threads: 6
 [  8,  1] ( 4.15e-08, 4.37e-13) [ 7.31e-06,  6.1e-11]      1.00 ( 7: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 23.5    ms    iteration           = 8         
+Elapsed Time           = 19.8    ms    iteration           = 8         
 Total Equations        = 4514          tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------

@@ -50,8 +50,7 @@ INFO CLASS = TwoStageCSTR
   nQ_total     = 401
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, N.threads (LU): 6, N.threads (F/J): 6
-Solver Controls: LU, N.threads: 6
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
@@ -61,7 +60,7 @@ Solver Controls: LU, N.threads: 6
 [  4,  1] ( 8.12e-09, 1.91e-13) [ 1.14e-06, 1.31e-11]      1.00 ( 3: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 8.81    ms    iteration           = 4         
+Elapsed Time           = 8.29    ms    iteration           = 4         
 Total Equations        = 4012          tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------

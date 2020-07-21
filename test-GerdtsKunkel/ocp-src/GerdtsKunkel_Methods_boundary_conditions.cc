@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -91,7 +91,6 @@ namespace GerdtsKunkelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   GerdtsKunkel::DboundaryConditionsDx_numRows() const
   { return 5; }
@@ -142,7 +141,6 @@ namespace GerdtsKunkelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   GerdtsKunkel::DboundaryConditionsDp_numRows() const
@@ -212,7 +210,6 @@ namespace GerdtsKunkelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   GerdtsKunkel::DadjointBCDx_numRows() const
   { return 6; }
@@ -245,7 +242,6 @@ namespace GerdtsKunkelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   GerdtsKunkel::DadjointBCDp_numRows() const

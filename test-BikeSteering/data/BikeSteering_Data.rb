@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BikeSteering_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 28/3/2020                                        #
+#  version: 1.0   date 21/7/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,9 +18,9 @@
 include Mechatronix
 
 # Auxiliary values
+g    = 9.81
 mu   = 1
 m    = 250
-g    = 9.81
 Fmax = m*g*mu
 
 mechatronix do |data|

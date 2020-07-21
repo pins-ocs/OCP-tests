@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods.cc                             |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -99,7 +99,6 @@ namespace SingularLuus04_FreeTimeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SingularLuus04_FreeTime::DboundaryConditionsDx_numRows() const
   { return 6; }
@@ -152,7 +151,6 @@ namespace SingularLuus04_FreeTimeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SingularLuus04_FreeTime::DboundaryConditionsDp_numRows() const
@@ -224,7 +222,6 @@ namespace SingularLuus04_FreeTimeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   SingularLuus04_FreeTime::DadjointBCDx_numRows() const
   { return 8; }
@@ -257,7 +254,6 @@ namespace SingularLuus04_FreeTimeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   SingularLuus04_FreeTime::DadjointBCDp_numRows() const

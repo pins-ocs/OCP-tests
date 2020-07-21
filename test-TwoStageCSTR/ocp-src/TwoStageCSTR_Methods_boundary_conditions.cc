@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -106,7 +106,6 @@ namespace TwoStageCSTRDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   TwoStageCSTR::DboundaryConditionsDx_numRows() const
   { return 4; }
@@ -155,7 +154,6 @@ namespace TwoStageCSTRDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   TwoStageCSTR::DboundaryConditionsDp_numRows() const
@@ -227,7 +225,6 @@ namespace TwoStageCSTRDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   TwoStageCSTR::DadjointBCDx_numRows() const
   { return 8; }
@@ -260,7 +257,6 @@ namespace TwoStageCSTRDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   TwoStageCSTR::DadjointBCDp_numRows() const

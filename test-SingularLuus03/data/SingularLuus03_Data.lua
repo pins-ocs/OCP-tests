@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus03_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -157,8 +157,8 @@ content = {
     segments = {
       
       {
-        length = Tf,
         n      = 5000,
+        length = Tf,
       },
     },
   },

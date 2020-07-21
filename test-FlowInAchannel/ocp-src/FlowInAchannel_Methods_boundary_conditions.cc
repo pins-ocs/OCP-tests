@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods.cc                                      |
  |                                                                       |
- |  version: 1.0   date 28/3/2020                                        |
+ |  version: 1.0   date 21/7/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -86,7 +86,6 @@ namespace FlowInAchannelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   FlowInAchannel::DboundaryConditionsDx_numRows() const
   { return 4; }
@@ -135,7 +134,6 @@ namespace FlowInAchannelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   FlowInAchannel::DboundaryConditionsDp_numRows() const
@@ -207,7 +205,6 @@ namespace FlowInAchannelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   integer
   FlowInAchannel::DadjointBCDx_numRows() const
   { return 8; }
@@ -240,7 +237,6 @@ namespace FlowInAchannelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
   integer
   FlowInAchannel::DadjointBCDp_numRows() const
