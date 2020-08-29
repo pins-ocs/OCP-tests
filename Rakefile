@@ -51,9 +51,9 @@ when /mingw|mswin/
   # in windows use visual studio compiler, check version
   tmp = `#{WHICH_CMD} cl.exe`.lines.first
   case tmp
+  when /2019/
+    VS_VERSION = '2019'
   when /2017/
-    VS_VERSION = '2017'
-  when /16\.0/
     VS_VERSION = '2017'
   when /14\.0/
     VS_VERSION = '2015'
