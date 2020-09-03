@@ -39,7 +39,9 @@ when /linux/
   PREFIX     = '/usr/local'
   VS_VERSION = ''
   VS_ARCH    = ''
-  MAPLECMD   = "maple" # da sistenare
+  V1         = Dir.glob("/usr/local/maple*/bin/maple").map { |d| d }
+  V2         = Dir.glob("/opt/maple*/bin/maple").map { |d| d }
+  MAPLECMD   = V1.push(V2.flatten!).sort.last # da sistenare
 
 when /mingw|mswin/
 
@@ -76,7 +78,7 @@ when /mingw|mswin/
     raise RuntimeError, "Cannot determine architecture for Visual Studio #{VS_VERSION}".red
   end
 
-  MAPLECMD = '"C:\Program Files\Maple 2017\bin.X86_64_WINDOWS\cmaple.exe"' # da sistenare
+  MAPLECMD = '"' + Dir.glob("C:/Program Files*/Maple*/bin*/cmaple.exe").map { |d| d }.sort.last + '"'
 
 else
   raise RuntimeError, "Unsupported OS: #{RUBY_PLATFORM}"
