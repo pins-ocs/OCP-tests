@@ -1,5 +1,5 @@
-# Date:             16:43:23 2020-07-21
-# MX Version:       osx_10.15.5-1.4.5-d175dirty
+# Date:             17:08:11 2020-09-13
+# MX Version:       1.4.5-d204dirty-osx_10.15.6
 # Computation type: Optimal control solution
 # Model name:       Brake
 #
@@ -14,7 +14,7 @@
 # max_accumulated_iter = 800
 # tolerance            = 9.999999999999999e-10
 # iterations           = 301
-# cpu_time             = 717.521 ms
+# cpu_time             = 1.4224290000000002 s
 # solver_type          = CyclicReduction+LU and LastBlock LU
 # lapack version       = Accelerate
 #

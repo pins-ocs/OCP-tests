@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,9 +52,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+   real_type epsi_ctrl0 = 0.01;
    real_type tol_ctrl0 = 0.01;
    real_type tol_ctrl = tol_ctrl0;
-   real_type epsi_ctrl0 = 0.01;
    real_type epsi_ctrl = epsi_ctrl0;
     integer InfoLevel = 4;
 

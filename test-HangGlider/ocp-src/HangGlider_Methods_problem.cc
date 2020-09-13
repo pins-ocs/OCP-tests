@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods1.cc                                         |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -139,11 +139,11 @@ namespace HangGliderDefine {
   real_type
   HangGlider::u_DD( real_type x__XO ) const {
     real_type t1   = r(x__XO);
-    real_type t2   = exp(-t1);
-    real_type t4   = r_DD(x__XO);
-    real_type t6   = r_D(x__XO);
-    real_type t7   = t6 * t6;
-    return -ModelPars[15] * (t4 * (-t1 + 2) + (t1 - 3) * t7) * t2;
+    real_type t3   = r_DD(x__XO);
+    real_type t5   = r_D(x__XO);
+    real_type t6   = t5 * t5;
+    real_type t10  = exp(-t1);
+    return -ModelPars[15] * t10 * (t3 * (-t1 + 2) + (t1 - 3) * t6);
   }
 
   real_type

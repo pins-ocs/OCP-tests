@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularConstrainedCalogero_Data.rb                            #
 #                                                                       #
-#  version: 1.0   date 21/7/2020                                        #
+#  version: 1.0   date 13/9/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,8 +18,8 @@
 include Mechatronix
 
 # Auxiliary values
-tol_max  = 0.01
 epsi_max = 0.01
+tol_max  = 0.01
 
 mechatronix do |data|
 

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,12 +19,12 @@
 
 -- Auxiliary values
 mu   = 1
-r0   = 1
-v0   = (mu/r0)^(1/2)
 m0   = 1
+r0   = 1
 T    = .1405e-1*m0*mu/r0^2
-mdot = .533*T*(mu/r0)^(1/2)
+v0   = (mu/r0)^(1/2)
 tf   = 16.60*(r0^3/mu)^(1/2)
+mdot = .533*T*(mu/r0)^(1/2)
 
 content = {
 
@@ -161,8 +161,8 @@ content = {
     segments = {
       
       {
-        n      = 1000,
         length = 1,
+        n      = 1000,
       },
     },
   },

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Bike1D_Data.rb                                                 #
 #                                                                       #
-#  version: 1.0   date 21/7/2020                                        #
+#  version: 1.0   date 13/9/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,9 +18,9 @@
 include Mechatronix
 
 # Auxiliary values
-mur_max = 1
-mur_min = -1
 muf_min = -1
+mur_min = -1
+mur_max = 1
 
 mechatronix do |data|
 
@@ -146,7 +146,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithSinAtan
-  data.MappedObjects[:clip] = { :delta => 0, :h => 0.01 }
+  data.MappedObjects[:clip] = { :h => 0.01, :delta => 0 }
 
   # Controls
   # Penalty type controls: "QUADRATIC", "QUADRATIC2", "PARABOLA", "CUBIC"
@@ -177,8 +177,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1000,
         :n      => 1000,
+        :length => 1000,
       },
     ],
   };

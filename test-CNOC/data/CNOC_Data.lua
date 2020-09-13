@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Data.lua                                                  |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,14 +18,14 @@
 --]]
 
 -- Auxiliary values
-v_nom                    = 0.173
-deltaFeed                = v_nom
-js_min                   = -50
+jn_max                   = 65
 js_max                   = 30
 mesh_segments            = 100
 path_following_tolerance = 1.0e-05
+v_nom                    = 0.173
+deltaFeed                = v_nom
 pf_error                 = path_following_tolerance
-jn_max                   = 65
+js_min                   = -50
 
 content = {
 

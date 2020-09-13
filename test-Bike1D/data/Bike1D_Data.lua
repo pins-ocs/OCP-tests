@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,9 +18,9 @@
 --]]
 
 -- Auxiliary values
-mur_max = 1
-mur_min = -1
 muf_min = -1
+mur_min = -1
+mur_max = 1
 
 content = {
 
@@ -138,8 +138,8 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithSinAtan
-    clipdelta = 0,
     cliph = 0.01,
+    clipdelta = 0,
   },
 
   -- Controls
@@ -172,8 +172,8 @@ content = {
     segments = {
       
       {
-        length = 1000,
         n      = 1000,
+        length = 1000,
       },
     },
   },

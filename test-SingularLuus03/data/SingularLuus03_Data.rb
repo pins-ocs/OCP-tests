@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus03_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 21/7/2020                                        #
+#  version: 1.0   date 13/9/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -161,8 +161,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 5000,
         :length => Tf,
+        :n      => 5000,
       },
     ],
   };

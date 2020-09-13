@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: MaximumAscent_Data.rb                                          %
 %                                                                       %
-%  version: 1.0   date 21/7/2020                                        %
+%  version: 1.0   date 13/9/2020                                        %
 %                                                                       %
 %  Copyright (C) 2020                                                   %
 %                                                                       %
@@ -20,6 +20,22 @@ function [mex_name,lib_name] = CompileMex()
   lib_name  = [MODEL, '.m'];
   SRCS_BASE = '../../ocp-src/';
   SRCS      = [ MODEL '_Mex.cc GenericContainerMatlabInterface.cc ' ];
+  OBJS      = '';
+  LIBS      = [];
+  INC       = ['-I' SRCS_BASE ' '];
+
+  if ismac
+    [status,CMD_MEX] = system('/usr/local/bin/pins --mex');
+    mex_name = [ MODEL,'_Mex.mexmaci64' ];
+  elseif isunix
+    [status,CMD_MEX] = system('(export LD_LIBRARY_PATH="";/usr/local/bin/pins --mex)');
+    mex_name = [ MODEL,'_Mex.mexa64' ];
+  elseif ispc
+    [status,CMD_MEX] = system("pins.exe --mex");
+    mex_name = [ MODEL,'_Mex.mexw64' ];
+  else
+    error('unsupported OS!');
+  end
 
   % get library sources (NOW SKIPPED)
   fdir = dir([SRCS_BASE '*.cc']);
@@ -27,33 +43,22 @@ function [mex_name,lib_name] = CompileMex()
     if strfind(fdir(n).name, '_dll.cc') > 0
       % skip dll interface with ruby and pins
     else
-      SRCS = [ SRCS, SRCS_BASE, fdir(n).name, ' ' ];
+      if ispc
+        SRCS = [ SRCS, SRCS_BASE, fdir(n).name, ' ' ];
+      else
+        OBJS = [ OBJS extractBefore(fdir(n).name,'.cc'), '.o ' ];
+        CMD  = [ 'mex -largeArrayDims -c ' CMD_MEX ' ' INC ' ' SRCS_BASE fdir(n).name ];
+        disp('---------------------------------------------------------');
+        disp(CMD);
+        eval(CMD);
+      end
     end
   end
-
-  LIBS = [];
-  INC  = ['-I' SRCS_BASE ' '];
 
   disp('---------------------------------------------------------');
   fprintf(1,'Compiling: %s\n',MODEL);
 
-  CMD = [ 'mex -largeArrayDims -output ' MODEL '_Mex ' ];
-  if isunix || ismac
-    [status,CMD_MEX] = system("/usr/local/bin/pins --mex");
-    CMD = [ CMD ' ' CMD_MEX ' ' INC ' ' SRCS ];
-    if ismac
-      mex_name = [ MODEL,'_Mex.mexmaci64' ];
-    else
-      mex_name = [ MODEL,'_Mex.mexa64' ];
-    end
-    %CMD  = [ CMD ' ' LIBS ];
-  elseif ispc
-    [status,CMD_MEX]  = system("pins.exe --mex");
-    CMD = [ CMD ' ' CMD_MEX ' ' INC ' ' SRCS ];
-    mex_name = [ MODEL,'_Mex.mexw64' ];
-  else
-    error('unsupported OS!')
-  end
+  CMD = [ 'mex -largeArrayDims -output ' MODEL '_Mex ' CMD_MEX ' ' INC ' ' SRCS ' ' OBJS ];
   disp(CMD);
   eval(CMD);
   disp('----------------------- DONE ----------------------------');

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,8 +18,8 @@
 --]]
 
 -- Auxiliary values
-epsi = 0.0001
 tol  = 0.0001
+epsi = 0.0001
 
 content = {
 
@@ -154,8 +154,8 @@ content = {
     segments = {
       
       {
-        n      = 400,
         length = 1,
+        n      = 400,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,8 +52,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type tol_ctrl = 1e-05;
    real_type epsi_ctrl = 1e-05;
+   real_type tol_ctrl = 1e-05;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

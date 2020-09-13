@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan_Data.lua                                               |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -153,8 +153,8 @@ content = {
     segments = {
       
       {
-        length = L,
         n      = 1000,
+        length = L,
       },
     },
   },

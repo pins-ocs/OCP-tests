@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -217,8 +217,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Farmer_data.Mesh["s0"] = 0;
-Farmer_data.Mesh["segments"][0]["length"] = 2;
 Farmer_data.Mesh["segments"][0]["n"] = 400;
+Farmer_data.Mesh["segments"][0]["length"] = 2;
 
 
     // alias for user object classes passed as pointers

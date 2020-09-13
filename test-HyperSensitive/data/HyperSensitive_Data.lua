@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -144,11 +144,11 @@ content = {
     segments = {
       
       {
+        length           = 10000,
         density_function = {
           C   = 50,
           rho = 0.8,
         },
-        length           = 10000,
       },
     },
   },

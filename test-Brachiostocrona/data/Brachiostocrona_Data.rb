@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 21/7/2020                                        #
+#  version: 1.0   date 13/9/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -21,8 +21,8 @@ include Mechatronix
 yf = -2
 xf = 5
 g  = 9.81
-Tf = (-2.0*yf/g)**(1/2.0)
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+Tf = (-2.0*yf/g)**(1/2.0)
 
 mechatronix do |data|
 

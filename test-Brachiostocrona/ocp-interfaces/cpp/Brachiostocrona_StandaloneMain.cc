@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -55,8 +55,8 @@ main() {
    real_type yf = -2;
    real_type xf = 5;
    real_type g = 9.81;
-   real_type Tf = (-2.*yf/g)^(1/2);
    real_type Vf = (xf^2+yf^2)^(1/2)/(-2.*yf/g)^(1/2);
+   real_type Tf = (-2.*yf/g)^(1/2);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

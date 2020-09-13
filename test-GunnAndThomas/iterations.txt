@@ -79,7 +79,7 @@ Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
 [ 33,  1] ( 6.91e-10, 5.48e-15) [  8.8e-10,  7.6e-15]      1.00 (32: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 19.8    ms    iteration           = 33        
+Elapsed Time           = 19.5    ms    iteration           = 33        
 Total Equations        = 1006          tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------

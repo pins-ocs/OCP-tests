@@ -85,7 +85,7 @@ Continuation step N.0 s = 1.0
 [ 34,  1] ( 2.13e-11, 5.07e-17) [  1.3e-08, 4.91e-14]      1.00 (16: 5): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 57.5    ms    iteration           = 34        
+Elapsed Time           = 62.1    ms    iteration           = 34        
 Total Equations        = 5006          tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 800       
 ---------------------------- Continuation ----------------------------

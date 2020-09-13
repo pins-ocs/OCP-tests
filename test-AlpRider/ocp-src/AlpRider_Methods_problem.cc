@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods1.cc                                           |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -108,16 +108,16 @@ namespace AlpRiderDefine {
   AlpRider::p_D_1_1( real_type t__XO, real_type a__XO, real_type b__XO ) const {
     real_type t2   = pow(-t__XO + a__XO, 2);
     real_type t3   = t2 * b__XO;
-    real_type t4   = exp(-t3);
-    return 4 * b__XO * (-1.0 / 2.0 + t3) * t4;
+    real_type t6   = exp(-t3);
+    return 4 * t6 * (-1.0 / 2.0 + t3) * b__XO;
   }
 
   real_type
   AlpRider::p_D_1_2( real_type t__XO, real_type a__XO, real_type b__XO ) const {
     real_type t2   = pow(-t__XO + a__XO, 2);
     real_type t3   = t2 * b__XO;
-    real_type t4   = exp(-t3);
-    return -4 * b__XO * (-1.0 / 2.0 + t3) * t4;
+    real_type t6   = exp(-t3);
+    return -4 * t6 * (-1.0 / 2.0 + t3) * b__XO;
   }
 
   real_type
@@ -142,8 +142,8 @@ namespace AlpRiderDefine {
   AlpRider::p_D_2_2( real_type t__XO, real_type a__XO, real_type b__XO ) const {
     real_type t2   = pow(-t__XO + a__XO, 2);
     real_type t3   = t2 * b__XO;
-    real_type t4   = exp(-t3);
-    return 4 * b__XO * (-1.0 / 2.0 + t3) * t4;
+    real_type t6   = exp(-t3);
+    return 4 * t6 * (-1.0 / 2.0 + t3) * b__XO;
   }
 
   real_type

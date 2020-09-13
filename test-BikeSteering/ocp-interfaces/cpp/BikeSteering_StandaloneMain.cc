@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,8 +52,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type g = 9.81;
    real_type mu = 1;
+   real_type g = 9.81;
    real_type m = 250;
    real_type Fmax = m*g*mu;
     integer InfoLevel = 4;
@@ -188,14 +188,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BikeSteering_data.Mesh["s0"] = 0;
-BikeSteering_data.Mesh["segments"][0]["length"] = 0.1;
 BikeSteering_data.Mesh["segments"][0]["n"] = 10;
-BikeSteering_data.Mesh["segments"][1]["length"] = 0.4;
+BikeSteering_data.Mesh["segments"][0]["length"] = 0.1;
 BikeSteering_data.Mesh["segments"][1]["n"] = 40;
-BikeSteering_data.Mesh["segments"][2]["length"] = 0.4;
+BikeSteering_data.Mesh["segments"][1]["length"] = 0.4;
 BikeSteering_data.Mesh["segments"][2]["n"] = 40;
-BikeSteering_data.Mesh["segments"][3]["length"] = 0.1;
+BikeSteering_data.Mesh["segments"][2]["length"] = 0.4;
 BikeSteering_data.Mesh["segments"][3]["n"] = 10;
+BikeSteering_data.Mesh["segments"][3]["length"] = 0.1;
 
 
     // alias for user object classes passed as pointers

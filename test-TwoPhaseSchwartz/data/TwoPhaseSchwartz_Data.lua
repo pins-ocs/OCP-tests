@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,12 +18,12 @@
 --]]
 
 -- Auxiliary values
-tol0     = 0.1
-epsi0    = 0.1
-tol      = tol0
-epsi     = epsi0
 epsilon0 = 0.001
+epsi0    = 0.1
+epsi     = epsi0
 epsilon  = epsilon0
+tol0     = 0.1
+tol      = tol0
 
 content = {
 

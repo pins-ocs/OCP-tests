@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods1.cc                               |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -143,12 +143,12 @@ namespace EconomicGrowthModel2Define {
 
   real_type
   EconomicGrowthModel2::explog_D_1_3( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t1   = pow(b__XO, s__XO);
-    real_type t2   = pow(a__XO, -s__XO);
-    real_type t4   = -1 + s__XO;
-    real_type t5   = log(a__XO);
-    real_type t8   = log(b__XO);
-    return (t5 * t4 - t8 * t4 - 1) * t2 * t1;
+    real_type t1   = -1 + s__XO;
+    real_type t2   = log(a__XO);
+    real_type t5   = log(b__XO);
+    real_type t8   = pow(b__XO, s__XO);
+    real_type t10  = pow(a__XO, -s__XO);
+    return t10 * t8 * (t2 * t1 - t5 * t1 - 1);
   }
 
   real_type

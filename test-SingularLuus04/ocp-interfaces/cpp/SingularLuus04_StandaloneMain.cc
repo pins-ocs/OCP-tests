@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,10 +52,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type u_tol = 0.01;
-   real_type u_epsi = 0.01;
-   real_type Tf = 6;
    real_type epsilon_X = 1e-07;
+   real_type u_tol = 0.01;
+   real_type Tf = 6;
+   real_type u_epsi = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

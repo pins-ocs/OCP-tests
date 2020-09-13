@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Data.lua                                             |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,12 +18,12 @@
 --]]
 
 -- Auxiliary values
-jerk_max = 10
-v_max    = 30
-jerk_min = -10
 L        = 100
+jerk_max = 10
 s_f      = L
 wJ       = 1/jerk_max^2
+v_max    = 30
+jerk_min = -10
 
 content = {
 
@@ -201,13 +201,13 @@ content = {
     segments = {
       
       {
-        n      = 100,
         length = 0.5,
+        n      = 100,
       },
       
       {
-        n      = 100,
         length = 0.5,
+        n      = 100,
       },
     },
   },

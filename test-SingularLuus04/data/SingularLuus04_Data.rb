@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus04_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 21/7/2020                                        #
+#  version: 1.0   date 13/9/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,10 +18,10 @@
 include Mechatronix
 
 # Auxiliary values
-u_tol     = 0.01
-u_epsi    = 0.01
-Tf        = 6
 epsilon_X = 1e-07
+u_tol     = 0.01
+Tf        = 6
+u_epsi    = 0.01
 
 mechatronix do |data|
 

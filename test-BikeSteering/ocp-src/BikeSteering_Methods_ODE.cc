@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -83,7 +83,7 @@ namespace BikeSteeringDefine {
     real_type t1   = X__[2];
     result__[ 0   ] = X__[0] * t1;
     real_type t6   = ModelPars[3];
-    result__[ 1   ] = X__[1] * t6 * ModelPars[2] * ModelPars[4] * t1 - U__[0] * t6 * t1;
+    result__[ 1   ] = t1 * t6 * X__[1] * ModelPars[2] * ModelPars[4] - t1 * t6 * U__[0];
     result__[ 2   ] = 0;
     #ifdef MECHATRONIX_DEBUG
     CHECK_NAN(result__,"rhs_ode",3);

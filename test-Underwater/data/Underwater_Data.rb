@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Underwater_Data.rb                                             #
 #                                                                       #
-#  version: 1.0   date 21/7/2020                                        #
+#  version: 1.0   date 13/9/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -19,8 +19,8 @@ include Mechatronix
 
 # Auxiliary values
 epsi_penalty = 0.1
-epsi_max     = epsi_penalty
 tol_penalty  = 0.01
+epsi_max     = epsi_penalty
 
 mechatronix do |data|
 

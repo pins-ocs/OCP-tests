@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: EconomicGrowthModel2_fsolve_main.m                             %
 %                                                                       %
-%  version: 1.0   date 21/7/2020                                        %
+%  version: 1.0   date 13/9/2020                                        %
 %                                                                       %
 %  Copyright (C) 2020                                                   %
 %                                                                       %

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Brachiostocrona2_Data.rb                                       %
 %                                                                       %
-%  version: 1.0   date 21/7/2020                                        %
+%  version: 1.0   date 13/9/2020                                        %
 %                                                                       %
 %  Copyright (C) 2020                                                   %
 %                                                                       %
@@ -15,68 +15,33 @@
 %-----------------------------------------------------------------------%
 
 
-function [mex_name,lib_name] = CompileOctave()
+function [lib_name] = CompileOctave()
   MODEL     = 'Brachiostocrona2';
   lib_name  = [MODEL, '.m'];
   SRCS_BASE = '../../ocp-src/';
   SRCS      = [ MODEL '_Mex.cc GenericContainerMatlabInterface.cc ' ];
+  LIBS      = [];
+  INC       = ['-I' SRCS_BASE ' '];
 
-  % get library sources
+  % get library sources (NOW SKIPPED)
   fdir = dir([SRCS_BASE '*.cc']);
   for n=1:length(fdir)
-    if strfind(fdir(n).name, '_dll.cc') > 0
+    nn = fdir(n).name;
+    if strfind(nn, '_dll.cc') > 0
       % skip dll interface with ruby and pins
     else
-      SRCS = [ SRCS, SRCS_BASE, fdir(n).name, ' ' ];
+      SRCS = [ SRCS, SRCS_BASE, nn, ' ' ];
     end
   end
 
-  [flg,HDR] = system('pins --includes');
-
-  LIBS = [];
-  INC  = [ '-I' SRCS_BASE ];
-
-  % user defined libraries
   disp('---------------------------------------------------------');
   fprintf(1,'Compiling: %s\n',MODEL);
-
-  CMD  = [ 'mkoctfile --mex -output ' MODEL '_Mex ' ];
-
-  % compiler options
-
-  LIBS = [ ...
-    ' -lMechatronixCore ', ...
-    '-lMechatronixSolver ', ...
-    '-lMechatronixManufacturing ', ...
-    '-lMechatronixRoad ', ...
-    '-lMechatronixODE ', ...
-    '-lMechatronixVehicle ', ...
-    '-lMechatroniAstro ' ...
-    '-lMechatronixInterfaceMruby ' ...
-  ];
-
-  if ispc
-    MKL_BASE_PATH = 'C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl';
-    MKL_HDR_PATH  = [ MKL_BASE_PATH '/include' ];
-    MKL_LIB_PATH  = [ MKL_BASE_PATH '/lib/intel64' ];
-    PINS_PATH     = 'C:/PINS/';
-    PINS_PATH_LIB = [ PINS_PATH 'lib'];
-    PINS_PATH_INC = [ PINS_PATH 'include'];
-
-    LIBS     = [ LIBS ' -L"' PINS_PATH_LIB '" -L"' MKL_LIB_PATH '" '];
-    INC      = [ INC  ' -I"' PINS_PATH_INC '" -I"' MKL_HDR_PATH '" '];
-    CXXFLAGS = '' ;
-  else
-    [flg,CXXFLAGS] = system('pins --cppflags');
-    [flg,LIBS2]    = system('pins --libs');
-    [flg,HDR]      = system('pins --includes');
-    INC  = [ INC ' ' HDR ];
-    LIBS = [ LIBS, ' ', LIBS2 ];
-  end
-
-  mex_name = [ MODEL,'_Mex.mex' ];
-  CMD      = [ CMD, INC, ' ', CXXFLAGS, ' ', SRCS, ' ', LIBS ];
-
+  [status,CMD1] = system('/usr/local/bin/pins --includes');
+  [status,CMD2] = system('/usr/local/bin/pins --lflags');
+  [status,CMD3] = system('/usr/local/bin/pins --frameworks');
+  [status,CMD4] = system('/usr/local/bin/pins --libs');
+  CMD_MEX = [ CMD1, CMD3, CMD4, ' -L/usr/local/PINS/lib -L/usr/lib/llvm-10/lib ' ];
+  CMD     = [ 'mkoctfile --mex -output ' MODEL '_Mex ' CMD_MEX ' ' INC ' ' SRCS ];
   disp(CMD);
   eval(CMD);
   disp('----------------------- DONE ----------------------------');

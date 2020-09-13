@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtminP_Mex.cc                                          |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -34,6 +34,41 @@ using Mechatronix::MeshStd;
 using namespace BangBangFtminPLoad;
 using namespace GenericContainerNamespace;
 using namespace MechatronixLoad;
+
+/*
+// redirect stdout, found at
+// https://it.mathworks.com/matlabcentral/answers/132527-in-mex-files-where-does-output-to-stdout-and-stderr-go
+*/
+
+#ifdef MECHATRONIX_OS_LINUX
+
+class mystream : public std::streambuf {
+protected:
+  virtual
+  std::streamsize
+  xsputn(const char *s, std::streamsize n) override
+  { mexPrintf("%.*s", n, s); mexEvalString("drawnow;"); return n; }
+
+  virtual
+  int
+  overflow(int c=EOF) override
+  { if (c != EOF) { mexPrintf("%.1s", &c); } return 1; }
+
+};
+
+class scoped_redirect_cout {
+public:
+  scoped_redirect_cout()
+  { old_buf = std::cout.rdbuf(); std::cout.rdbuf(&mout); }
+  ~scoped_redirect_cout()
+  { std::cout.rdbuf(old_buf); }
+private:
+  mystream mout;
+  std::streambuf *old_buf;
+};
+static scoped_redirect_cout mycout_redirect;
+
+#endif
 
 
 static char const help_msg[] =
@@ -771,6 +806,91 @@ public:
     this->changeInfoLevel( ilev );
     #undef CMD
   }
+
+  /*\
+   |   _ __  _____ __  __ _
+   |  | '  \/ -_) \ / / _` |
+   |  |_|_|_\___/_\_\_\__,_|
+   |               |___|
+  \*/
+  void
+  mex_a(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('a',obj,iseg_L,Q1,X1,L1,iseg_R,Q2,X2,L2,P,U): "
+    CHECK_IN( 12 );
+    CHECK_OUT( 2 );
+
+    mwSize nQ, nX, nL, nP, nU;
+    Q_const_pointer_type QL(getVectorPointer( arg_in_3, nQ, CMD "argument q_L" ));
+    LW_ASSERT( nQ == this->dim_Q(), "|Q1| = {} expected to be {}\n", CMD, nQ, this->dim_Q() );
+
+    X_const_pointer_type XL(getVectorPointer( arg_in_4, nX, CMD "argument x_L" ));
+    LW_ASSERT( nX == this->dim_X(), "|X1| = {} expected to be {}\n", CMD, nX, this->dim_X() );
+
+    L_const_pointer_type LL(getVectorPointer( arg_in_5, nL, CMD "argument lambda_L" ));
+    LW_ASSERT( nL == this->dim_X(), "|L1| = {} expected to be {}\n", CMD, nL, this->dim_X() );
+
+    Q_const_pointer_type QR(getVectorPointer( arg_in_7, nQ, CMD "argument q_R" ));
+    LW_ASSERT( nQ == this->dim_Q(), "|Q2| = {} expected to be {}\n", CMD, nQ, this->dim_Q() );
+
+    X_const_pointer_type XR(getVectorPointer( arg_in_8, nX, CMD "argument x_R" ));
+    LW_ASSERT( nX == this->dim_X(), "|X2| = {} expected to be {}\n", CMD, nX, this->dim_X() );
+
+    L_const_pointer_type LR(getVectorPointer( arg_in_9, nL, CMD "argument lambda_R" ));
+    LW_ASSERT( nL == this->dim_X(), "|L2| = {} expected to be {}\n", CMD, nL, this->dim_X() );
+
+    P_const_pointer_type P(getVectorPointer( arg_in_10, nP, CMD "argument pars" ));
+    LW_ASSERT( nP == this->dim_Pars(), "|P| = {} expected to be {}\n", CMD, nP, this->dim_Pars() );
+
+    U_const_pointer_type U(getVectorPointer( arg_in_11, nU, CMD "argument U" ));
+    LW_ASSERT( nU == this->dim_U(), "|U| = {} expected to be {}\n", CMD, nU, this->dim_U() );
+
+    integer n_thread = 0;
+    integer L_i_segment = integer( getInt( arg_in_2, CMD " L_segment" ) );
+    integer R_i_segment = integer( getInt( arg_in_6, CMD " R_segment" ) );
+
+    LW_ASSERT(
+      L_i_segment >= 0 && L_i_segment < this->nNodes(),
+      "iseg_L = {} expected to be in [0,{})\n", CMD, L_i_segment, this->nNodes()
+    );
+
+    LW_ASSERT(
+      R_i_segment >= 0 && R_i_segment < this->nNodes(),
+      "iseg_R = {} expected to be in [0,{})\n", CMD, R_i_segment, this->nNodes()
+    );
+
+    NodeType2 L;
+    L.i_segment = L_i_segment;
+    L.q         = QL.pointer();
+    L.x         = XL.pointer();
+    L.lambda    = LL.pointer();
+    NodeType2 R;
+    R.i_segment = R_i_segment;
+    R.q         = QR.pointer();
+    R.x         = XR.pointer();
+    R.lambda    = LR.pointer();
+
+    double * a = createMatrixValue( arg_out_0, this->dim_X(), 1 );
+    double * c = createMatrixValue( arg_out_1, this->dim_Pars(), 1 );
+
+    this->ac_eval( n_thread, L, R, P, U, a, c );
+
+    // void
+    // DacDxlp_eval(
+    //   integer                    n_thread,
+    //   integer                    i_cell,
+    //   NodeType2 const          & L,
+    //   NodeType2 const          & R,
+    //   P_const_pointer_type       p,
+    //   U_const_pointer_type       uM, // passato da altro calcolo
+    //   MatrixWrapper<real_type> & DaDxlp,
+    //   MatrixWrapper<real_type> & DcDxlp
+    // ) const;
+
+    #undef CMD
+  }
 };
 
 /*\
@@ -834,6 +954,7 @@ typedef enum {
   CMD_PACK,
   CMD_UNPACK,
   CMD_INFOLEVEL,
+  CMD_A,
   CMD_NEW,
   CMD_DELETE,
   CMD_HELP
@@ -861,6 +982,7 @@ static map<string,unsigned> cmd_to_idx = {
   {"pack",CMD_PACK},
   {"unpack",CMD_UNPACK},
   {"infoLevel",CMD_INFOLEVEL},
+  {"a",CMD_A},
   {"new",CMD_NEW},
   {"delete",CMD_DELETE},
   {"help",CMD_HELP}
@@ -1032,6 +1154,10 @@ mexFunction(
     case CMD_INFOLEVEL:
       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       ptr->mex_infoLevel( nlhs, plhs, nrhs, prhs );
+      break;
+    case CMD_A:
+      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      ptr->mex_a( nlhs, plhs, nrhs, prhs );
       break;
     }
   }

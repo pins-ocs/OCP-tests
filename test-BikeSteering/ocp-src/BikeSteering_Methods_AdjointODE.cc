@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -88,12 +88,11 @@ namespace BikeSteeringDefine {
     real_type t2   = X__[2];
     result__[ 0   ] = t2 * t1;
     real_type t3   = L__[1];
-    real_type t5   = ModelPars[4];
-    real_type t6   = ModelPars[2];
+    real_type t7   = ModelPars[4] * ModelPars[2];
     real_type t8   = ModelPars[3];
-    result__[ 1   ] = t8 * t6 * t5 * t2 * t3;
+    result__[ 1   ] = t8 * t7 * t2 * t3;
     real_type t10  = ALIAS_minimumTimeSize_D(t2);
-    result__[ 2   ] = t10 + X__[0] * t1 + (t5 * t8 * t6 * X__[1] - t8 * U__[0]) * t3;
+    result__[ 2   ] = t10 + X__[0] * t1 + (X__[1] * t8 * t7 - U__[0] * t8) * t3;
     #ifdef MECHATRONIX_DEBUG
     CHECK_NAN(result__,"Hx_eval",3);
     #endif

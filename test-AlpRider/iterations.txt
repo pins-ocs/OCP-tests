@@ -4036,7 +4036,7 @@ Continuation step N.1 s = 1.0
 [3411,  1] ( 1.11e-09, 4.53e-12) [ 6.68e-10, 1.38e-12]      1.00 ( 4:32): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 12.2   sec    iteration           = 3411      
+Elapsed Time           = 21.2   sec    iteration           = 3411      
 Total Equations        = 12036         tolerance           = 1e-09     
 max iterations         = 300           max accumul. iter.  = 4000      
 ---------------------------- Continuation ----------------------------

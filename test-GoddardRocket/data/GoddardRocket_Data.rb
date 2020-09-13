@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 21/7/2020                                        #
+#  version: 1.0   date 13/9/2020                                        #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,23 +18,23 @@
 include Mechatronix
 
 # Auxiliary values
-h_i       = 1
-mc        = 0.6
 vc        = 620
-tol_mass  = 0.01
-epsi_T    = 0.01
+m_i       = 1
 g0        = 1
+Tmax      = 3.5*g0*m_i
+epsi_mass = 0.01
+mc        = 0.6
+m_f       = mc*m_i
+Dc        = 0.5*vc*m_i/g0
+epsi_TS   = 0.01
+epsi_v    = 0.01
+tol_mass  = 0.01
+tol_v     = 0.01
+epsi_T    = 0.01
+h_i       = 1
 c         = 0.5*(g0*h_i)**(1/2.0)
 tol_TS    = 0.01
 tol_T     = 0.01
-epsi_mass = 0.01
-epsi_TS   = 0.01
-epsi_v    = 0.01
-m_i       = 1
-Dc        = 0.5*vc*m_i/g0
-Tmax      = 3.5*g0*m_i
-m_f       = mc*m_i
-tol_v     = 0.01
 
 mechatronix do |data|
 
@@ -215,8 +215,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 1000,
+        :length => 1,
       },
     ],
   };

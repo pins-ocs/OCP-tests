@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods1.cc                                   |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -170,10 +170,10 @@ namespace gtocX_2burn_parsDefine {
     real_type t7   = k__XO * k__XO;
     real_type t8   = -t6 + t7 - 1;
     real_type t9   = sin(L__XO);
-    real_type t16  = f__XO * f__XO;
-    real_type t17  = g__XO * g__XO;
-    real_type t19  = t1 * t1;
-    return 1.0 / (t6 + t7 + 1) / (t19 * (t16 - t17) + t1 * (2 * t9 * g__XO * f__XO + 2 * f__XO) + t17 + 2 * t9 * g__XO + 1) * (2 * t3 * f__XO * h__XO + 2 * t3 * h__XO * t1 + g__XO * t8 + t9 * t8);
+    real_type t19  = f__XO * f__XO;
+    real_type t20  = g__XO * g__XO;
+    real_type t22  = t1 * t1;
+    return 1.0 / (t22 * (t19 - t20) + t1 * (2 * t9 * g__XO * f__XO + 2 * f__XO) + t20 + 2 * t9 * g__XO + 1) / (t6 + t7 + 1) * (2 * t3 * f__XO * h__XO + 2 * t3 * h__XO * t1 + g__XO * t8 + t9 * t8);
   }
 
   real_type
@@ -231,11 +231,11 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = k__XO * k__XO;
     real_type t5   = sin(L__XO);
     real_type t7   = cos(L__XO);
-    real_type t15  = pow(t1 + t2 + 1, 2);
-    real_type t18  = f__XO * f__XO;
-    real_type t19  = g__XO * g__XO;
-    real_type t21  = t7 * t7;
-    return 2 / (t21 * (t18 - t19) + t7 * (2 * t5 * g__XO * f__XO + 2 * f__XO) + t19 + 2 * t5 * g__XO + 1) / t15 * t7 * k__XO * p__XO * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
+    real_type t14  = f__XO * f__XO;
+    real_type t15  = g__XO * g__XO;
+    real_type t17  = t7 * t7;
+    real_type t30  = pow(t1 + t2 + 1, 2);
+    return 2 / t30 / (t17 * (t14 - t15) + t7 * (2 * t5 * g__XO * f__XO + 2 * f__XO) + t15 + 2 * t5 * g__XO + 1) * t7 * p__XO * k__XO * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
   }
 
   real_type
@@ -244,11 +244,11 @@ namespace gtocX_2burn_parsDefine {
     real_type t5   = cos(L__XO);
     real_type t8   = k__XO * k__XO;
     real_type t10  = sin(L__XO);
-    real_type t16  = pow(t1 + t8 + 1, 2);
-    real_type t19  = f__XO * f__XO;
-    real_type t20  = g__XO * g__XO;
-    real_type t22  = t5 * t5;
-    return -2 / (t22 * (t19 - t20) + t5 * (2 * t10 * g__XO * f__XO + 2 * f__XO) + t20 + 2 * t10 * g__XO + 1) / t16 * t5 * p__XO * (t5 * (-2 * k__XO * t1 - 2 * k__XO) + t10 * (t1 - t8 + 1) * h__XO * retrograde__XO);
+    real_type t15  = f__XO * f__XO;
+    real_type t16  = g__XO * g__XO;
+    real_type t18  = t5 * t5;
+    real_type t31  = pow(t1 + t8 + 1, 2);
+    return -2 / t31 / (t18 * (t15 - t16) + t5 * (2 * t10 * g__XO * f__XO + 2 * f__XO) + t16 + 2 * t10 * g__XO + 1) * t5 * (t5 * (-2 * k__XO * t1 - 2 * k__XO) + t10 * (t1 - t8 + 1) * h__XO * retrograde__XO) * p__XO;
   }
 
   real_type
@@ -298,40 +298,40 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = k__XO * k__XO;
     real_type t4   = cos(L__XO);
     real_type t7   = sin(L__XO);
-    real_type t12  = t7 * t7;
+    real_type t13  = t7 * t7;
     real_type t14  = f__XO * f__XO;
     real_type t16  = g__XO * g__XO;
     real_type t20  = t4 * t4;
     real_type t25  = t16 * g__XO;
     real_type t29  = 3 * t16;
-    return 2 / (t1 + t2 + 1) / (t20 * t4 * (t14 * f__XO - 3 * t16 * f__XO) + t20 * (t7 * (3 * t14 * g__XO - t25) + 3 * t14 - t29) + 3 * t4 * (2 * t7 * g__XO + t16 + 1) * f__XO + t7 * (t25 + 3 * g__XO) + t29 + 1) * p__XO * t12 * (t4 * (t1 - t2 + 1) + 2 * t7 * k__XO * retrograde__XO * h__XO);
+    return 2 / (t1 + t2 + 1) / (t20 * t4 * (t14 * f__XO - 3 * t16 * f__XO) + t20 * (t7 * (3 * t14 * g__XO - t25) + 3 * t14 - t29) + 3 * t4 * (2 * t7 * g__XO + t16 + 1) * f__XO + t7 * (t25 + 3 * g__XO) + t29 + 1) * t13 * p__XO * (t4 * (t1 - t2 + 1) + 2 * t7 * k__XO * retrograde__XO * h__XO);
   }
 
   real_type
   gtocX_2burn_pars::xPosition_D_3_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = sin(L__XO);
-    real_type t2   = h__XO * h__XO;
-    real_type t3   = k__XO * k__XO;
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
+    real_type t5   = sin(L__XO);
     real_type t7   = cos(L__XO);
-    real_type t15  = pow(t2 + t3 + 1, 2);
-    real_type t18  = f__XO * t7;
-    real_type t23  = f__XO * f__XO;
-    real_type t24  = g__XO * g__XO;
-    real_type t26  = t7 * t7;
-    return 2 / (t1 * (2 * t18 * g__XO + 2 * g__XO) + t26 * (t23 - t24) + 2 * t18 + t24 + 1) / t15 * k__XO * p__XO * (t1 * (t2 - t3 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7) * t1;
+    real_type t14  = f__XO * t7;
+    real_type t19  = f__XO * f__XO;
+    real_type t20  = g__XO * g__XO;
+    real_type t22  = t7 * t7;
+    real_type t29  = pow(t1 + t2 + 1, 2);
+    return 2 / t29 / (t5 * (2 * t14 * g__XO + 2 * g__XO) + t22 * (t19 - t20) + 2 * t14 + t20 + 1) * t5 * p__XO * k__XO * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
   }
 
   real_type
   gtocX_2burn_pars::xPosition_D_3_5( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
     real_type t1   = sin(L__XO);
-    real_type t2   = h__XO * h__XO;
-    real_type t6   = cos(L__XO);
-    real_type t9   = k__XO * k__XO;
-    real_type t16  = pow(t2 + t9 + 1, 2);
-    real_type t19  = f__XO * f__XO;
-    real_type t20  = g__XO * g__XO;
-    real_type t22  = t6 * t6;
-    return -2 / (t22 * (t19 - t20) + t6 * (2 * t1 * g__XO * f__XO + 2 * f__XO) + t20 + 2 * t1 * g__XO + 1) / t16 * p__XO * (t6 * (-2 * k__XO * t2 - 2 * k__XO) + t1 * (t2 - t9 + 1) * h__XO * retrograde__XO) * t1;
+    real_type t3   = h__XO * h__XO;
+    real_type t7   = cos(L__XO);
+    real_type t10  = k__XO * k__XO;
+    real_type t15  = f__XO * f__XO;
+    real_type t16  = g__XO * g__XO;
+    real_type t18  = t7 * t7;
+    real_type t31  = pow(t3 + t10 + 1, 2);
+    return -2 / t31 / (t18 * (t15 - t16) + t7 * (2 * t1 * g__XO * f__XO + 2 * f__XO) + t16 + 2 * t1 * g__XO + 1) * (t7 * (-2 * k__XO * t3 - 2 * k__XO) + t1 * (t3 - t10 + 1) * h__XO * retrograde__XO) * t1 * p__XO;
   }
 
   real_type
@@ -369,7 +369,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t5   = sin(L__XO);
     real_type t7   = cos(L__XO);
     real_type t19  = pow(t1 + t2 + 1, 2);
-    return -2 / t19 / (t7 * f__XO + t5 * g__XO + 1) * k__XO * p__XO * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
+    return -2 / t19 / (t7 * f__XO + t5 * g__XO + 1) * p__XO * k__XO * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
   }
 
   real_type
@@ -380,7 +380,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t11  = sin(L__XO);
     real_type t22  = t2 + t5 + 1;
     real_type t23  = t22 * t22;
-    return 4 / t23 / t22 / (t8 * f__XO + t11 * g__XO + 1) * (t8 * (-3 * k__XO * t2 + t5 * k__XO + k__XO) + (t2 - 3 * t5 - 3) * t11 * retrograde__XO * h__XO) * p__XO * k__XO;
+    return 4 / t23 / t22 / (t8 * f__XO + t11 * g__XO + 1) * (t8 * (-3 * k__XO * t2 + t5 * k__XO + k__XO) + (t2 - 3 * t5 - 3) * t11 * retrograde__XO * h__XO) * k__XO * p__XO;
   }
 
   real_type
@@ -403,11 +403,11 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = t1 - t2 - 1;
     real_type t5   = cos(L__XO);
     real_type t8   = sin(L__XO);
-    real_type t19  = pow(t1 + t2 + 1, 2);
-    real_type t22  = f__XO * f__XO;
-    real_type t23  = g__XO * g__XO;
-    real_type t25  = t5 * t5;
-    return -2 / (t25 * (t22 - t23) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t23 + 2 * t8 * g__XO + 1) / t19 * k__XO * p__XO * (retrograde__XO * t3 * f__XO + 2 * g__XO * h__XO * k__XO + 2 * t8 * k__XO * h__XO + t5 * t3 * retrograde__XO);
+    real_type t18  = f__XO * f__XO;
+    real_type t19  = g__XO * g__XO;
+    real_type t21  = t5 * t5;
+    real_type t34  = pow(t1 + t2 + 1, 2);
+    return -2 / t34 / (t21 * (t18 - t19) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t19 + 2 * t8 * g__XO + 1) * p__XO * k__XO * (retrograde__XO * t3 * f__XO + 2 * g__XO * h__XO * k__XO + 2 * t8 * k__XO * h__XO + t5 * t3 * retrograde__XO);
   }
 
   real_type
@@ -417,7 +417,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t4   = sin(L__XO);
     real_type t7   = cos(L__XO);
     real_type t14  = pow(t1 + t2 + 1, 2);
-    return -2 / t14 / (t7 * f__XO + t4 * g__XO + 1) * k__XO * p__XO * t4 * (t1 - t2 - 1);
+    return -2 / t14 / (t7 * f__XO + t4 * g__XO + 1) * p__XO * k__XO * t4 * (t1 - t2 - 1);
   }
 
   real_type
@@ -427,7 +427,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t5   = sin(L__XO);
     real_type t8   = cos(L__XO);
     real_type t20  = pow(t2 + t3 + 1, 2);
-    return 2 / t20 / (t8 * f__XO + t5 * g__XO + 1) * p__XO * (t5 * (t2 - t3 + 1) * h__XO * retrograde__XO - 2 * (t2 + 1) * t8 * k__XO);
+    return 2 / t20 / (t8 * f__XO + t5 * g__XO + 1) * (t5 * (t2 - t3 + 1) * h__XO * retrograde__XO - 2 * (t2 + 1) * t8 * k__XO) * p__XO;
   }
 
   real_type
@@ -438,7 +438,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t9   = sin(L__XO);
     real_type t23  = t1 + t3 + 1;
     real_type t24  = t23 * t23;
-    return -4 / t24 / t23 / (t7 * f__XO + t9 * g__XO + 1) * (t7 * (t1 - 3 * t3 + 1) * (t1 + 1) + 3 * h__XO * retrograde__XO * (t1 - t3 / 3 + 1) * k__XO * t9) * p__XO;
+    return -4 / t24 / t23 / (t7 * f__XO + t9 * g__XO + 1) * (t7 * (t1 - 3 * t3 + 1) * (t1 + 1) + 3 * retrograde__XO * h__XO * (t1 - t3 / 3 + 1) * t9 * k__XO) * p__XO;
   }
 
   real_type
@@ -447,21 +447,21 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = k__XO * k__XO;
     real_type t5   = cos(L__XO);
     real_type t11  = sin(L__XO);
-    real_type t29  = pow(t2 + t3 + 1, 2);
-    real_type t31  = f__XO * f__XO;
-    real_type t32  = g__XO * g__XO;
-    real_type t34  = t5 * t5;
-    return 2 / (t34 * (t31 - t32) + t5 * (2 * t11 * g__XO * f__XO + 2 * f__XO) + t32 + 2 * t11 * g__XO + 1) / t29 * p__XO * (t5 * (t2 - t3 + 1) * h__XO * retrograde__XO + t11 * (2 * k__XO * t2 + 2 * k__XO) + retrograde__XO * t2 * h__XO * f__XO + 2 * k__XO * t2 * g__XO + h__XO * (-retrograde__XO * t3 * f__XO + f__XO * retrograde__XO) + 2 * g__XO * k__XO);
+    real_type t28  = f__XO * f__XO;
+    real_type t29  = g__XO * g__XO;
+    real_type t31  = t5 * t5;
+    real_type t43  = pow(t2 + t3 + 1, 2);
+    return 2 / t43 / (t31 * (t28 - t29) + t5 * (2 * t11 * g__XO * f__XO + 2 * f__XO) + t29 + 2 * t11 * g__XO + 1) * p__XO * (t5 * (t2 - t3 + 1) * h__XO * retrograde__XO + t11 * (2 * k__XO * t2 + 2 * k__XO) + retrograde__XO * t2 * h__XO * f__XO + 2 * k__XO * t2 * g__XO + h__XO * (-retrograde__XO * t3 * f__XO + f__XO * retrograde__XO) + 2 * g__XO * k__XO);
   }
 
   real_type
   gtocX_2burn_pars::xPosition_D_5_7( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = h__XO * h__XO;
-    real_type t2   = k__XO * k__XO;
-    real_type t5   = sin(L__XO);
+    real_type t2   = h__XO * h__XO;
+    real_type t3   = k__XO * k__XO;
+    real_type t6   = sin(L__XO);
     real_type t7   = cos(L__XO);
-    real_type t14  = pow(t1 + t2 + 1, 2);
-    return 2 / t14 / (t7 * f__XO + t5 * g__XO + 1) * p__XO * t5 * (t1 - t2 + 1) * h__XO;
+    real_type t14  = pow(t2 + t3 + 1, 2);
+    return 2 / t14 / (t7 * f__XO + t6 * g__XO + 1) * t6 * (t2 - t3 + 1) * h__XO * p__XO;
   }
 
   real_type
@@ -471,10 +471,10 @@ namespace gtocX_2burn_parsDefine {
     real_type t8   = k__XO * k__XO;
     real_type t10  = (-t7 + t8 - 1) * p__XO;
     real_type t11  = sin(L__XO);
-    real_type t23  = f__XO * f__XO;
-    real_type t24  = g__XO * g__XO;
-    real_type t26  = t3 * t3;
-    return 1.0 / (t26 * (t23 - t24) + t3 * (2 * t11 * g__XO * f__XO + 2 * f__XO) + t24 + 2 * t11 * g__XO + 1) / (t7 + t8 + 1) * (2 * p__XO * f__XO * h__XO * k__XO * retrograde__XO + 2 * t3 * retrograde__XO * k__XO * p__XO * h__XO + g__XO * t10 + t11 * t10);
+    real_type t20  = f__XO * f__XO;
+    real_type t21  = g__XO * g__XO;
+    real_type t23  = t3 * t3;
+    return 1.0 / (t7 + t8 + 1) / (t23 * (t20 - t21) + t3 * (2 * t11 * g__XO * f__XO + 2 * f__XO) + t21 + 2 * t11 * g__XO + 1) * (2 * p__XO * f__XO * h__XO * k__XO * retrograde__XO + 2 * t3 * retrograde__XO * k__XO * p__XO * h__XO + g__XO * t10 + t11 * t10);
   }
 
   real_type
@@ -552,23 +552,23 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = h__XO * h__XO;
     real_type t3   = k__XO * k__XO;
     real_type t6   = sin(L__XO);
-    real_type t13  = f__XO * f__XO;
-    real_type t14  = g__XO * g__XO;
-    real_type t16  = t1 * t1;
-    return 1.0 / (t2 + t3 + 1) / (t16 * (t13 - t14) + t1 * (2 * t6 * g__XO * f__XO + 2 * f__XO) + t14 + 2 * t6 * g__XO + 1) * (t6 * (t2 - t3 - 1) * retrograde__XO - 2 * k__XO * h__XO * t1) * t1;
+    real_type t15  = f__XO * f__XO;
+    real_type t16  = g__XO * g__XO;
+    real_type t18  = t1 * t1;
+    return 1.0 / (t18 * (t15 - t16) + t1 * (2 * t6 * g__XO * f__XO + 2 * f__XO) + t16 + 2 * t6 * g__XO + 1) / (t2 + t3 + 1) * (t6 * (t2 - t3 - 1) * retrograde__XO - 2 * k__XO * h__XO * t1) * t1;
   }
 
   real_type
   gtocX_2burn_pars::yPosition_D_1_3( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = h__XO * h__XO;
-    real_type t2   = k__XO * k__XO;
-    real_type t5   = sin(L__XO);
+    real_type t1   = sin(L__XO);
+    real_type t2   = h__XO * h__XO;
+    real_type t3   = k__XO * k__XO;
     real_type t7   = cos(L__XO);
-    real_type t13  = t7 * f__XO;
-    real_type t18  = f__XO * f__XO;
-    real_type t19  = g__XO * g__XO;
-    real_type t21  = t7 * t7;
-    return 1.0 / (t1 + t2 + 1) / (t5 * (2 * g__XO * t13 + 2 * g__XO) + t21 * (t18 - t19) + 2 * t13 + t19 + 1) * t5 * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
+    real_type t15  = t7 * f__XO;
+    real_type t20  = f__XO * f__XO;
+    real_type t21  = g__XO * g__XO;
+    real_type t23  = t7 * t7;
+    return 1.0 / (t1 * (2 * g__XO * t15 + 2 * g__XO) + t23 * (t20 - t21) + 2 * t15 + t21 + 1) / (t2 + t3 + 1) * (t1 * (t2 - t3 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7) * t1;
   }
 
   real_type
@@ -598,10 +598,10 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = t1 - t2 - 1;
     real_type t5   = cos(L__XO);
     real_type t8   = sin(L__XO);
-    real_type t17  = f__XO * f__XO;
-    real_type t18  = g__XO * g__XO;
-    real_type t20  = t5 * t5;
-    return 1.0 / (t1 + t2 + 1) / (t20 * (t17 - t18) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t18 + 2 * t8 * g__XO + 1) * (-retrograde__XO * t3 * f__XO - 2 * g__XO * h__XO * k__XO - 2 * t8 * k__XO * h__XO - t5 * t3 * retrograde__XO);
+    real_type t20  = f__XO * f__XO;
+    real_type t21  = g__XO * g__XO;
+    real_type t23  = t5 * t5;
+    return 1.0 / (t23 * (t20 - t21) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t21 + 2 * t8 * g__XO + 1) / (t1 + t2 + 1) * (-retrograde__XO * t3 * f__XO - 2 * g__XO * h__XO * k__XO - 2 * t8 * k__XO * h__XO - t5 * t3 * retrograde__XO);
   }
 
   real_type
@@ -619,10 +619,10 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = k__XO * k__XO;
     real_type t5   = sin(L__XO);
     real_type t7   = cos(L__XO);
-    real_type t16  = f__XO * f__XO;
-    real_type t17  = g__XO * g__XO;
-    real_type t19  = t7 * t7;
-    return 1.0 / (t19 * (t16 - t17) + t7 * (2 * t5 * g__XO * f__XO + 2 * f__XO) + t17 + 2 * t5 * g__XO + 1) / (t1 + t2 + 1) * t7 * p__XO * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
+    real_type t13  = f__XO * f__XO;
+    real_type t14  = g__XO * g__XO;
+    real_type t16  = t7 * t7;
+    return 1.0 / (t1 + t2 + 1) / (t16 * (t13 - t14) + t7 * (2 * t5 * g__XO * f__XO + 2 * f__XO) + t14 + 2 * t5 * g__XO + 1) * t7 * p__XO * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
   }
 
   real_type
@@ -651,7 +651,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t17  = g__XO * g__XO;
     real_type t25  = t17 * g__XO;
     real_type t29  = 3 * t17;
-    return 2 / (t1 + t2 + 1) / (t6 * t5 * (t15 * f__XO - 3 * t17 * f__XO) + t6 * (t8 * (3 * t15 * g__XO - t25) + 3 * t15 - t29) + 3 * t5 * (2 * t8 * g__XO + t17 + 1) * f__XO + t8 * (t25 + 3 * g__XO) + t29 + 1) * t5 * (2 * h__XO * k__XO * t8 * t5 + t6 * t4 - t4) * p__XO;
+    return 2 / (t1 + t2 + 1) / (t6 * t5 * (t15 * f__XO - 3 * t17 * f__XO) + t6 * (t8 * (3 * t15 * g__XO - t25) + 3 * t15 - t29) + 3 * t5 * (2 * t8 * g__XO + t17 + 1) * f__XO + t8 * (t25 + 3 * g__XO) + t29 + 1) * t5 * p__XO * (2 * h__XO * k__XO * t8 * t5 + t6 * t4 - t4);
   }
 
   real_type
@@ -660,11 +660,11 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = k__XO * k__XO;
     real_type t5   = cos(L__XO);
     real_type t8   = sin(L__XO);
-    real_type t16  = pow(t1 + t2 + 1, 2);
-    real_type t19  = f__XO * f__XO;
-    real_type t20  = g__XO * g__XO;
-    real_type t22  = t5 * t5;
-    return 2 / (t22 * (t19 - t20) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t20 + 2 * t8 * g__XO + 1) / t16 * t5 * p__XO * (t5 * (t1 - t2 - 1) * k__XO + 2 * (t2 + 1) * t8 * retrograde__XO * h__XO);
+    real_type t15  = f__XO * f__XO;
+    real_type t16  = g__XO * g__XO;
+    real_type t18  = t5 * t5;
+    real_type t31  = pow(t1 + t2 + 1, 2);
+    return 2 / t31 / (t18 * (t15 - t16) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t16 + 2 * t8 * g__XO + 1) * t5 * p__XO * (t5 * (t1 - t2 - 1) * k__XO + 2 * (t2 + 1) * t8 * retrograde__XO * h__XO);
   }
 
   real_type
@@ -716,39 +716,39 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = k__XO * k__XO;
     real_type t5   = sin(L__XO);
     real_type t7   = cos(L__XO);
-    real_type t16  = f__XO * t7;
-    real_type t21  = f__XO * f__XO;
-    real_type t22  = g__XO * g__XO;
-    real_type t24  = t7 * t7;
-    return 1.0 / (t5 * (2 * g__XO * t16 + 2 * g__XO) + t24 * (t21 - t22) + 2 * t16 + t22 + 1) / (t1 + t2 + 1) * p__XO * t5 * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
+    real_type t13  = f__XO * t7;
+    real_type t18  = f__XO * f__XO;
+    real_type t19  = g__XO * g__XO;
+    real_type t21  = t7 * t7;
+    return 1.0 / (t1 + t2 + 1) / (t5 * (2 * g__XO * t13 + 2 * g__XO) + t21 * (t18 - t19) + 2 * t13 + t19 + 1) * t5 * p__XO * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
   }
 
   real_type
   gtocX_2burn_pars::yPosition_D_3_3( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = sin(L__XO);
-    real_type t2   = t1 * t1;
-    real_type t3   = h__XO * h__XO;
-    real_type t4   = k__XO * k__XO;
-    real_type t8   = cos(L__XO);
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
+    real_type t5   = sin(L__XO);
+    real_type t7   = cos(L__XO);
+    real_type t13  = t5 * t5;
     real_type t14  = f__XO * f__XO;
     real_type t16  = g__XO * g__XO;
-    real_type t20  = t8 * t8;
-    real_type t25  = g__XO * t16;
+    real_type t20  = t7 * t7;
+    real_type t25  = t16 * g__XO;
     real_type t29  = 3 * t16;
-    return -2 / (t3 + t4 + 1) / (t20 * t8 * (t14 * f__XO - 3 * t16 * f__XO) + t20 * (t1 * (3 * t14 * g__XO - t25) + 3 * t14 - t29) + 3 * t8 * (2 * t1 * g__XO + t16 + 1) * f__XO + t1 * (t25 + 3 * g__XO) + t29 + 1) * p__XO * (t1 * (t3 - t4 - 1) * retrograde__XO - 2 * k__XO * h__XO * t8) * t2;
+    return -2 / (t1 + t2 + 1) / (t20 * t7 * (t14 * f__XO - 3 * t16 * f__XO) + t20 * (t5 * (3 * t14 * g__XO - t25) + 3 * t14 - t29) + 3 * t7 * (2 * t5 * g__XO + t16 + 1) * f__XO + t5 * (t25 + 3 * g__XO) + t29 + 1) * t13 * p__XO * (t5 * (t1 - t2 - 1) * retrograde__XO - 2 * k__XO * h__XO * t7);
   }
 
   real_type
   gtocX_2burn_pars::yPosition_D_3_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = sin(L__XO);
-    real_type t2   = h__XO * h__XO;
-    real_type t3   = k__XO * k__XO;
-    real_type t6   = cos(L__XO);
-    real_type t16  = pow(t2 + t3 + 1, 2);
-    real_type t19  = f__XO * f__XO;
-    real_type t20  = g__XO * g__XO;
-    real_type t22  = t6 * t6;
-    return 2 / (t22 * (t19 - t20) + t6 * (2 * t1 * g__XO * f__XO + 2 * f__XO) + t20 + 2 * t1 * g__XO + 1) / t16 * p__XO * (t6 * (t2 - t3 - 1) * k__XO + 2 * (t3 + 1) * t1 * retrograde__XO * h__XO) * t1;
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
+    real_type t5   = cos(L__XO);
+    real_type t8   = sin(L__XO);
+    real_type t15  = f__XO * f__XO;
+    real_type t16  = g__XO * g__XO;
+    real_type t18  = t5 * t5;
+    real_type t31  = pow(t1 + t2 + 1, 2);
+    return 2 / t31 / (t18 * (t15 - t16) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t16 + 2 * t8 * g__XO + 1) * t8 * p__XO * (t5 * (t1 - t2 - 1) * k__XO + 2 * (t2 + 1) * t8 * retrograde__XO * h__XO);
   }
 
   real_type
@@ -761,7 +761,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t18  = t7 * t7;
     real_type t19  = f__XO * f__XO;
     real_type t21  = g__XO * g__XO;
-    return -2 / (2 * f__XO * g__XO * t1 * t7 + 2 * f__XO * t7 + 2 * t1 * g__XO + t19 * t18 - t21 * t18 + t21 + 1) / t15 * h__XO * (2 * t1 * k__XO * retrograde__XO * h__XO - t10 * t7 + t8 * t7 + t7) * p__XO * t1;
+    return -2 / (2 * f__XO * g__XO * t1 * t7 + 2 * f__XO * t7 + 2 * t1 * g__XO + t19 * t18 - t21 * t18 + t21 + 1) / t15 * h__XO * (2 * t1 * k__XO * retrograde__XO * h__XO - t10 * t7 + t8 * t7 + t7) * t1 * p__XO;
   }
 
   real_type
@@ -776,7 +776,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t27  = g__XO * g__XO;
     real_type t35  = t27 * g__XO;
     real_type t39  = 3 * t27;
-    return 2 / (t6 + t7 + 1) / (t2 * t1 * (t25 * f__XO - 3 * t27 * f__XO) + t2 * (t10 * (3 * t25 * g__XO - t35) + 3 * t25 - t39) + 3 * t1 * (2 * t10 * g__XO + t27 + 1) * f__XO + t10 * (t35 + 3 * g__XO) + t39 + 1) * (-2 * k__XO * h__XO * t2 + t1 * (-f__XO * h__XO * k__XO + t10 * t8 * retrograde__XO) + t10 * (retrograde__XO * t8 * f__XO + g__XO * h__XO * k__XO) + h__XO * k__XO) * p__XO;
+    return 2 / (t6 + t7 + 1) / (t2 * t1 * (t25 * f__XO - 3 * t27 * f__XO) + t2 * (t10 * (3 * t25 * g__XO - t35) + 3 * t25 - t39) + 3 * t1 * (2 * t10 * g__XO + t27 + 1) * f__XO + t10 * (t35 + 3 * g__XO) + t39 + 1) * p__XO * (-2 * k__XO * h__XO * t2 + t1 * (-f__XO * h__XO * k__XO + t10 * t8 * retrograde__XO) + t10 * (retrograde__XO * t8 * f__XO + g__XO * h__XO * k__XO) + h__XO * k__XO);
   }
 
   real_type
@@ -804,13 +804,13 @@ namespace gtocX_2burn_parsDefine {
 
   real_type
   gtocX_2burn_pars::yPosition_D_4_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = k__XO * k__XO;
-    real_type t3   = h__XO * h__XO;
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
     real_type t7   = sin(L__XO);
     real_type t11  = cos(L__XO);
-    real_type t23  = t3 + t1 + 1;
+    real_type t23  = t1 + t2 + 1;
     real_type t24  = t23 * t23;
-    return 4 / t24 / t23 / (t11 * f__XO + t7 * g__XO + 1) * (3 * t7 * retrograde__XO * (t3 - t1 / 3 - 1.0 / 3.0) * (t1 + 1) + (t3 - 3 * t1 - 3) * k__XO * h__XO * t11) * p__XO;
+    return 4 / t24 / t23 / (t11 * f__XO + t7 * g__XO + 1) * (3 * t7 * retrograde__XO * (t2 + 1) * (t1 - t2 / 3 - 1.0 / 3.0) + (t1 - 3 * t2 - 3) * k__XO * h__XO * t11) * p__XO;
   }
 
   real_type
@@ -833,11 +833,11 @@ namespace gtocX_2burn_parsDefine {
     real_type t7   = h__XO * h__XO;
     real_type t10  = sin(L__XO);
     real_type t16  = f__XO * h__XO;
-    real_type t27  = pow(t7 + t3 + 1, 2);
-    real_type t29  = f__XO * f__XO;
-    real_type t30  = g__XO * g__XO;
-    real_type t32  = t2 * t2;
-    return -4 / (t32 * (t29 - t30) + t2 * (2 * t10 * g__XO * f__XO + 2 * f__XO) + t30 + 2 * t10 * g__XO + 1) / t27 * ((t3 + 1) * t2 * retrograde__XO * h__XO - t10 * (t7 - t3 - 1) * k__XO / 2 + t3 * k__XO * g__XO / 2 + retrograde__XO * t3 * t16 + k__XO * (-t7 / 2 + 1.0 / 2.0) * g__XO + retrograde__XO * t16) * p__XO;
+    real_type t26  = f__XO * f__XO;
+    real_type t27  = g__XO * g__XO;
+    real_type t29  = t2 * t2;
+    real_type t41  = pow(t7 + t3 + 1, 2);
+    return -4 / t41 / (t29 * (t26 - t27) + t2 * (2 * t10 * g__XO * f__XO + 2 * f__XO) + t27 + 2 * t10 * g__XO + 1) * ((t3 + 1) * t2 * retrograde__XO * h__XO - t10 * (t7 - t3 - 1) * k__XO / 2 + t3 * k__XO * g__XO / 2 + retrograde__XO * t3 * t16 + k__XO * (-t7 / 2 + 1.0 / 2.0) * g__XO + retrograde__XO * t16) * p__XO;
   }
 
   real_type
@@ -902,10 +902,10 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = t1 - t2 - 1;
     real_type t5   = cos(L__XO);
     real_type t8   = sin(L__XO);
-    real_type t20  = f__XO * f__XO;
-    real_type t21  = g__XO * g__XO;
-    real_type t23  = t5 * t5;
-    return -1.0 / (t23 * (t20 - t21) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t21 + 2 * t8 * g__XO + 1) / (t1 + t2 + 1) * p__XO * (retrograde__XO * t3 * f__XO + 2 * g__XO * h__XO * k__XO + 2 * t8 * k__XO * h__XO + t5 * t3 * retrograde__XO);
+    real_type t18  = f__XO * f__XO;
+    real_type t19  = g__XO * g__XO;
+    real_type t21  = t5 * t5;
+    return -1.0 / (t1 + t2 + 1) / (t21 * (t18 - t19) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t19 + 2 * t8 * g__XO + 1) * p__XO * (retrograde__XO * t3 * f__XO + 2 * g__XO * h__XO * k__XO + 2 * t8 * k__XO * h__XO + t5 * t3 * retrograde__XO);
   }
 
   real_type
@@ -913,8 +913,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t1   = h__XO * h__XO;
     real_type t2   = k__XO * k__XO;
     real_type t3   = t1 - t2 - 1;
-    real_type t4   = t3 * retrograde__XO;
-    real_type t6   = g__XO * t4 / 2;
+    real_type t6   = g__XO * t3 * retrograde__XO / 2;
     real_type t8   = f__XO * h__XO * k__XO;
     real_type t10  = cos(L__XO);
     real_type t11  = t10 * t10;
@@ -923,9 +922,9 @@ namespace gtocX_2burn_parsDefine {
     real_type t21  = g__XO * g__XO;
     real_type t27  = h__XO * k__XO;
     real_type t33  = f__XO * f__XO;
-    real_type t49  = t21 * g__XO;
-    real_type t53  = 3 * t21;
-    return -2 / (t1 + t2 + 1) / (t11 * t10 * (-3 * t21 * f__XO + t33 * f__XO) + t11 * (t19 * (3 * t33 * g__XO - t49) + 3 * t33 - t53) + 3 * t10 * (2 * t19 * g__XO + t21 + 1) * f__XO + t19 * (t49 + 3 * g__XO) + t53 + 1) * (t11 * (-t6 - t8) + t10 * (t19 * (-g__XO * h__XO * k__XO + retrograde__XO * t15 / 2) - 2 * k__XO * h__XO * t21 - retrograde__XO * g__XO * t15 + t27) + t19 * (2 * t27 * f__XO * g__XO + (t33 - 1.0 / 2.0) * t4) - t6 + 2 * t8) * p__XO;
+    real_type t50  = t21 * g__XO;
+    real_type t54  = 3 * t21;
+    return -2 / (t1 + t2 + 1) / (t11 * t10 * (-3 * t21 * f__XO + t33 * f__XO) + t11 * (t19 * (3 * t33 * g__XO - t50) + 3 * t33 - t54) + 3 * t10 * (2 * t19 * g__XO + t21 + 1) * f__XO + t19 * (t50 + 3 * g__XO) + t54 + 1) * (t11 * (-t6 - t8) + t10 * (t19 * (-g__XO * h__XO * k__XO + retrograde__XO * t15 / 2) - 2 * k__XO * h__XO * t21 - retrograde__XO * g__XO * t15 + t27) + t19 * (2 * t27 * f__XO * g__XO + retrograde__XO * (t33 - 1.0 / 2.0) * t3) - t6 + 2 * t8) * p__XO;
   }
 
   real_type
@@ -946,7 +945,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = k__XO * k__XO;
     real_type t4   = sin(L__XO);
     real_type t6   = cos(L__XO);
-    return -1.0 / (t1 + t2 + 1) / (t6 * f__XO + g__XO * t4 + 1) * p__XO * t4 * (t1 - t2 - 1);
+    return -1.0 / (t1 + t2 + 1) / (t6 * f__XO + t4 * g__XO + 1) * p__XO * t4 * (t1 - t2 - 1);
   }
 
   real_type
@@ -960,7 +959,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t4   = sin(L__XO);
     real_type t12  = h__XO * h__XO;
     real_type t13  = k__XO * k__XO;
-    return 2 / (t12 + t13 + 1) / (t1 * f__XO + g__XO * t4 + 1) * (-retrograde__XO * k__XO * t1 + t4 * h__XO) * p__XO;
+    return 2 / (t12 + t13 + 1) / (t1 * f__XO + t4 * g__XO + 1) * (-retrograde__XO * k__XO * t1 + t4 * h__XO) * p__XO;
   }
 
   real_type
@@ -969,7 +968,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t4   = sin(L__XO);
     real_type t13  = h__XO * h__XO;
     real_type t14  = k__XO * k__XO;
-    return 1.0 / (t13 + t14 + 1) / (t1 * f__XO + g__XO * t4 + 1) * (-2 * retrograde__XO * k__XO * t1 + 2 * t4 * h__XO);
+    return 1.0 / (t13 + t14 + 1) / (t1 * f__XO + t4 * g__XO + 1) * (-2 * retrograde__XO * k__XO * t1 + 2 * t4 * h__XO);
   }
 
   real_type
@@ -1101,11 +1100,11 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = k__XO * k__XO;
     real_type t5   = cos(L__XO);
     real_type t8   = sin(L__XO);
-    real_type t14  = pow(t1 + t2 + 1, 2);
-    real_type t17  = f__XO * f__XO;
-    real_type t18  = g__XO * g__XO;
-    real_type t20  = t5 * t5;
-    return 2 / (t20 * (t17 - t18) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t18 + 2 * t8 * g__XO + 1) / t14 * t5 * (t5 * (t1 - t2 + 1) * retrograde__XO + 2 * t8 * k__XO * h__XO) * p__XO;
+    real_type t13  = f__XO * f__XO;
+    real_type t14  = g__XO * g__XO;
+    real_type t16  = t5 * t5;
+    real_type t29  = pow(t1 + t2 + 1, 2);
+    return 2 / t29 / (t16 * (t13 - t14) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t14 + 2 * t8 * g__XO + 1) * t5 * (t5 * (t1 - t2 + 1) * retrograde__XO + 2 * t8 * k__XO * h__XO) * p__XO;
   }
 
   real_type
@@ -1176,15 +1175,15 @@ namespace gtocX_2burn_parsDefine {
 
   real_type
   gtocX_2burn_pars::zPosition_D_3_5( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = sin(L__XO);
-    real_type t3   = h__XO * h__XO;
-    real_type t4   = k__XO * k__XO;
-    real_type t7   = cos(L__XO);
-    real_type t14  = pow(t3 + t4 + 1, 2);
-    real_type t17  = f__XO * f__XO;
-    real_type t18  = g__XO * g__XO;
-    real_type t20  = t7 * t7;
-    return 2 / (t20 * (t17 - t18) + t7 * (2 * t1 * g__XO * f__XO + 2 * f__XO) + t18 + 2 * t1 * g__XO + 1) / t14 * (t7 * (t3 - t4 + 1) * retrograde__XO + 2 * t1 * k__XO * h__XO) * p__XO * t1;
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
+    real_type t5   = cos(L__XO);
+    real_type t8   = sin(L__XO);
+    real_type t13  = f__XO * f__XO;
+    real_type t14  = g__XO * g__XO;
+    real_type t16  = t5 * t5;
+    real_type t29  = pow(t1 + t2 + 1, 2);
+    return 2 / t29 / (t16 * (t13 - t14) + t5 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t14 + 2 * t8 * g__XO + 1) * t8 * (t5 * (t1 - t2 + 1) * retrograde__XO + 2 * t8 * k__XO * h__XO) * p__XO;
   }
 
   real_type
@@ -1222,7 +1221,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t7   = k__XO * k__XO;
     real_type t9   = sin(L__XO);
     real_type t18  = pow(t6 + t7 + 1, 2);
-    return -2 / t18 / (t1 * f__XO + t9 * g__XO + 1) * (-2 * k__XO * retrograde__XO * h__XO * t1 + t9 * (t6 - t7 - 1)) * p__XO;
+    return -2 / t18 / (t1 * f__XO + t9 * g__XO + 1) * p__XO * (-2 * k__XO * retrograde__XO * h__XO * t1 + t9 * (t6 - t7 - 1));
   }
 
   real_type
@@ -1241,10 +1240,10 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = h__XO * h__XO;
     real_type t3   = k__XO * k__XO;
     real_type t6   = cos(L__XO);
-    real_type t9   = sin(L__XO);
+    real_type t12  = sin(L__XO);
     real_type t21  = t2 + t3 + 1;
     real_type t22  = t21 * t21;
-    return 4 / t22 / t21 / (t6 * f__XO + t9 * g__XO + 1) * (t6 * (t2 - 3 * t3 + 1) * h__XO * retrograde__XO + 3 * k__XO * (t2 - t3 / 3 - 1.0 / 3.0) * t9) * p__XO;
+    return 4 / t22 / t21 / (t6 * f__XO + t12 * g__XO + 1) * (t6 * (t2 - 3 * t3 + 1) * h__XO * retrograde__XO + 3 * t12 * k__XO * (t2 - t3 / 3 - 1.0 / 3.0)) * p__XO;
   }
 
   real_type
@@ -1254,11 +1253,11 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = t1 - t2 - 1;
     real_type t4   = cos(L__XO);
     real_type t7   = sin(L__XO);
-    real_type t19  = pow(t1 + t2 + 1, 2);
-    real_type t21  = f__XO * f__XO;
-    real_type t22  = g__XO * g__XO;
-    real_type t24  = t4 * t4;
-    return -2 / (t24 * (t21 - t22) + t4 * (2 * t7 * g__XO * f__XO + 2 * f__XO) + t22 + 2 * t7 * g__XO + 1) / t19 * (2 * g__XO * h__XO * k__XO * retrograde__XO + 2 * t7 * k__XO * retrograde__XO * h__XO + t3 * f__XO + t4 * t3) * p__XO;
+    real_type t18  = f__XO * f__XO;
+    real_type t19  = g__XO * g__XO;
+    real_type t21  = t4 * t4;
+    real_type t33  = pow(t1 + t2 + 1, 2);
+    return -2 / t33 / (t21 * (t18 - t19) + t4 * (2 * t7 * g__XO * f__XO + 2 * f__XO) + t19 + 2 * t7 * g__XO + 1) * (2 * g__XO * h__XO * k__XO * retrograde__XO + 2 * t7 * k__XO * retrograde__XO * h__XO + t3 * f__XO + t4 * t3) * p__XO;
   }
 
   real_type
@@ -1268,7 +1267,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t10  = h__XO * h__XO;
     real_type t11  = k__XO * k__XO;
     real_type t13  = pow(t10 + t11 + 1, 2);
-    return 4 / t13 / (t1 * f__XO + t5 * g__XO + 1) * k__XO * h__XO * t1 * p__XO;
+    return 4 / t13 / (t1 * f__XO + t5 * g__XO + 1) * p__XO * k__XO * h__XO * t1;
   }
 
   real_type
@@ -1299,11 +1298,11 @@ namespace gtocX_2burn_parsDefine {
     real_type t5   = k__XO * k__XO;
     real_type t7   = (t4 - t5 + 1) * retrograde__XO;
     real_type t8   = sin(L__XO);
-    real_type t18  = pow(t4 + t5 + 1, 2);
-    real_type t20  = f__XO * f__XO;
-    real_type t21  = g__XO * g__XO;
-    real_type t23  = t1 * t1;
-    return -4 / (t23 * (t20 - t21) + t1 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t21 + 2 * t8 * g__XO + 1) / t18 * p__XO * (k__XO * h__XO * t1 - t8 * t7 / 2 - g__XO * t7 / 2 + f__XO * h__XO * k__XO);
+    real_type t17  = f__XO * f__XO;
+    real_type t18  = g__XO * g__XO;
+    real_type t20  = t1 * t1;
+    real_type t32  = pow(t4 + t5 + 1, 2);
+    return -4 / t32 / (t20 * (t17 - t18) + t1 * (2 * t8 * g__XO * f__XO + 2 * f__XO) + t18 + 2 * t8 * g__XO + 1) * (k__XO * h__XO * t1 - t8 * t7 / 2 - g__XO * t7 / 2 + f__XO * h__XO * k__XO) * p__XO;
   }
 
   real_type
@@ -1343,7 +1342,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t46  = 3 * t16;
     real_type t60  = h__XO * h__XO;
     real_type t61  = k__XO * k__XO;
-    return 4 / (t60 + t61 + 1) / (t7 * t6 * (-3 * t16 * f__XO + t26 * f__XO) + t7 * (t14 * (3 * t26 * g__XO - t42) + 3 * t26 - t46) + 3 * t6 * (2 * t14 * g__XO + t16 + 1) * f__XO + t14 * (t42 + 3 * g__XO) + t46 + 1) * (t7 * (-t2 / 2 - t3 / 2) + t6 * (t14 * (-g__XO * k__XO * retrograde__XO / 2 + f__XO * h__XO / 2) - retrograde__XO * k__XO * t16 - h__XO * t19 + t21 / 2) + t14 * (t21 * t19 + h__XO * t26 - h__XO / 2) + t2 - t3 / 2) * p__XO;
+    return 4 / (t60 + t61 + 1) / (t7 * t6 * (-3 * t16 * f__XO + t26 * f__XO) + t7 * (t14 * (3 * t26 * g__XO - t42) + 3 * t26 - t46) + 3 * t6 * (2 * t14 * g__XO + t16 + 1) * f__XO + t14 * (t42 + 3 * g__XO) + t46 + 1) * p__XO * (t7 * (-t2 / 2 - t3 / 2) + t6 * (t14 * (-g__XO * k__XO * retrograde__XO / 2 + f__XO * h__XO / 2) - retrograde__XO * k__XO * t16 - h__XO * t19 + t21 / 2) + t14 * (t21 * t19 + h__XO * t26 - h__XO / 2) + t2 - t3 / 2);
   }
 
   real_type
@@ -1434,22 +1433,22 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = t1 - t2 - 1;
     real_type t5   = cos(L__XO);
     real_type t8   = sin(L__XO);
-    real_type t18  = sqrt(ModelPars[0]);
+    real_type t19  = sqrt(ModelPars[0]);
     real_type t20  = sqrt(p__XO);
     real_type t25  = pow(t1 + t2 + 1, 2);
-    return 1.0 / t25 / t20 / p__XO * k__XO * t18 * (retrograde__XO * t3 * f__XO + 2 * g__XO * h__XO * k__XO + 2 * t8 * k__XO * h__XO + t5 * t3 * retrograde__XO);
+    return 1.0 / t25 / t20 / p__XO * t19 * (retrograde__XO * t3 * f__XO + 2 * g__XO * h__XO * k__XO + 2 * t8 * k__XO * h__XO + t5 * t3 * retrograde__XO) * k__XO;
   }
 
   real_type
   gtocX_2burn_pars::xVelocity_D_1_5( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t2   = sqrt(ModelPars[0]);
-    real_type t4   = h__XO * h__XO;
-    real_type t5   = k__XO * k__XO;
-    real_type t7   = cos(L__XO);
-    real_type t13  = sin(L__XO);
+    real_type t2   = h__XO * h__XO;
+    real_type t3   = k__XO * k__XO;
+    real_type t5   = cos(L__XO);
+    real_type t11  = sin(L__XO);
+    real_type t28  = sqrt(ModelPars[0]);
     real_type t30  = sqrt(p__XO);
-    real_type t34  = pow(t4 + t5 + 1, 2);
-    return -1.0 / t34 / t30 / p__XO * (t7 * (t4 - t5 + 1) * h__XO * retrograde__XO + t13 * (2 * k__XO * t4 + 2 * k__XO) + retrograde__XO * t4 * h__XO * f__XO + 2 * k__XO * t4 * g__XO + h__XO * (-retrograde__XO * t5 * f__XO + f__XO * retrograde__XO) + 2 * g__XO * k__XO) * t2;
+    real_type t34  = pow(t2 + t3 + 1, 2);
+    return -1.0 / t34 / t30 / p__XO * t28 * (t5 * (t2 - t3 + 1) * h__XO * retrograde__XO + t11 * (2 * k__XO * t2 + 2 * k__XO) + retrograde__XO * t2 * h__XO * f__XO + 2 * k__XO * t2 * g__XO + h__XO * (-retrograde__XO * t3 * f__XO + f__XO * retrograde__XO) + 2 * g__XO * k__XO);
   }
 
   real_type
@@ -1577,10 +1576,10 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = t1 - t2 - 1;
     real_type t5   = cos(L__XO);
     real_type t8   = sin(L__XO);
-    real_type t18  = sqrt(ModelPars[0]);
+    real_type t19  = sqrt(ModelPars[0]);
     real_type t20  = sqrt(p__XO);
     real_type t24  = pow(t1 + t2 + 1, 2);
-    return -2 / t24 / t20 * k__XO * t18 * (retrograde__XO * t3 * f__XO + 2 * g__XO * h__XO * k__XO + 2 * t8 * k__XO * h__XO + t5 * t3 * retrograde__XO);
+    return -2 / t24 / t20 * t19 * (retrograde__XO * t3 * f__XO + 2 * g__XO * h__XO * k__XO + 2 * t8 * k__XO * h__XO + t5 * t3 * retrograde__XO) * k__XO;
   }
 
   real_type
@@ -1595,7 +1594,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t31  = sqrt(p__XO);
     real_type t34  = t5 + t6 + 1;
     real_type t35  = t34 * t34;
-    return 4 / t35 / t34 / t31 * (t9 * (t5 - 3 * t6 - 3) * retrograde__XO * h__XO + t16 * (3 * k__XO * t5 - k__XO - t14) - t14 * g__XO - 3 * retrograde__XO * t6 * t19 + k__XO * (3 * t5 * g__XO - g__XO) + (t5 - 3) * retrograde__XO * t19) * k__XO * t2;
+    return 4 / t35 / t34 / t31 * (t9 * (t5 - 3 * t6 - 3) * retrograde__XO * h__XO + t16 * (3 * k__XO * t5 - k__XO - t14) - t14 * g__XO - 3 * retrograde__XO * t6 * t19 + k__XO * (3 * t5 * g__XO - g__XO) + (t5 - 3) * retrograde__XO * t19) * t2 * k__XO;
   }
 
   real_type
@@ -1622,7 +1621,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t9   = cos(L__XO);
     real_type t15  = sqrt(p__XO);
     real_type t19  = pow(t3 + t4 + 1, 2);
-    return 2 / t19 * k__XO / t15 * (t7 * (t3 - t4 - 1) * retrograde__XO - 2 * k__XO * h__XO * t9) * t2;
+    return 2 / t19 / t15 * k__XO * (t7 * (t3 - t4 - 1) * retrograde__XO - 2 * k__XO * h__XO * t9) * t2;
   }
 
   real_type
@@ -1633,19 +1632,19 @@ namespace gtocX_2burn_parsDefine {
     real_type t8   = k__XO * k__XO;
     real_type t10  = pow(t7 + t8 + 1, 2);
     real_type t14  = cos(L__XO);
-    return -2 * (t14 + f__XO) * (t7 - t8 - 1) / t10 / t4 * k__XO * t2;
+    return -2 * (t14 + f__XO) * (t7 - t8 - 1) / t10 / t4 * t2 * k__XO;
   }
 
   real_type
   gtocX_2burn_pars::xVelocity_D_5( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t2   = sqrt(ModelPars[0]);
-    real_type t4   = h__XO * h__XO;
-    real_type t5   = k__XO * k__XO;
-    real_type t7   = cos(L__XO);
-    real_type t13  = sin(L__XO);
+    real_type t2   = h__XO * h__XO;
+    real_type t3   = k__XO * k__XO;
+    real_type t5   = cos(L__XO);
+    real_type t11  = sin(L__XO);
+    real_type t28  = sqrt(ModelPars[0]);
     real_type t30  = sqrt(p__XO);
-    real_type t33  = pow(t4 + t5 + 1, 2);
-    return 2 / t33 / t30 * (t7 * (t4 - t5 + 1) * h__XO * retrograde__XO + t13 * (2 * k__XO * t4 + 2 * k__XO) + retrograde__XO * t4 * h__XO * f__XO + 2 * k__XO * t4 * g__XO + h__XO * (-retrograde__XO * t5 * f__XO + f__XO * retrograde__XO) + 2 * g__XO * k__XO) * t2;
+    real_type t33  = pow(t2 + t3 + 1, 2);
+    return 2 / t33 / t30 * t28 * (t5 * (t2 - t3 + 1) * h__XO * retrograde__XO + t11 * (2 * k__XO * t2 + 2 * k__XO) + retrograde__XO * t2 * h__XO * f__XO + 2 * k__XO * t2 * g__XO + h__XO * (-retrograde__XO * t3 * f__XO + f__XO * retrograde__XO) + 2 * g__XO * k__XO);
   }
 
   real_type
@@ -1735,13 +1734,13 @@ namespace gtocX_2burn_parsDefine {
   real_type
   gtocX_2burn_pars::yVelocity( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
     real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = h__XO * h__XO;
-    real_type t4   = k__XO * k__XO;
-    real_type t5   = t3 - t4 - 1;
-    real_type t7   = cos(L__XO);
-    real_type t11  = sin(L__XO);
-    real_type t20  = sqrt(p__XO);
-    return -2 / (t3 + t4 + 1) / t20 * (t7 * t5 * retrograde__XO / 2 + t11 * k__XO * h__XO + retrograde__XO * t5 * f__XO / 2 + g__XO * h__XO * k__XO) * t2;
+    real_type t3   = sqrt(p__XO);
+    real_type t6   = h__XO * h__XO;
+    real_type t7   = k__XO * k__XO;
+    real_type t8   = t6 - t7 - 1;
+    real_type t10  = cos(L__XO);
+    real_type t14  = sin(L__XO);
+    return -2 / (t6 + t7 + 1) * (t10 * t8 * retrograde__XO / 2 + t14 * k__XO * h__XO + retrograde__XO * t8 * f__XO / 2 + g__XO * h__XO * k__XO) / t3 * t2;
   }
 
   real_type
@@ -1789,15 +1788,15 @@ namespace gtocX_2burn_parsDefine {
 
   real_type
   gtocX_2burn_pars::yVelocity_D_1_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = h__XO * h__XO;
-    real_type t4   = k__XO * k__XO;
-    real_type t7   = sin(L__XO);
-    real_type t11  = cos(L__XO);
-    real_type t18  = f__XO * h__XO;
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
+    real_type t5   = sin(L__XO);
+    real_type t9   = cos(L__XO);
+    real_type t16  = f__XO * h__XO;
+    real_type t26  = sqrt(ModelPars[0]);
     real_type t28  = sqrt(p__XO);
-    real_type t32  = pow(t3 + t4 + 1, 2);
-    return 2 / t32 / t28 / p__XO * (-t7 * (t3 - t4 - 1) * k__XO / 2 + (t4 + 1) * t11 * retrograde__XO * h__XO + t4 * k__XO * g__XO / 2 + retrograde__XO * t4 * t18 + k__XO * (-t3 * g__XO / 2 + g__XO / 2) + retrograde__XO * t18) * t2;
+    real_type t32  = pow(t1 + t2 + 1, 2);
+    return 2 / t32 / t28 / p__XO * t26 * (-t5 * (t1 - t2 - 1) * k__XO / 2 + (t2 + 1) * t9 * retrograde__XO * h__XO + t2 * k__XO * g__XO / 2 + retrograde__XO * t2 * t16 + k__XO * (-t1 * g__XO / 2 + g__XO / 2) + retrograde__XO * t16);
   }
 
   real_type
@@ -1836,10 +1835,10 @@ namespace gtocX_2burn_parsDefine {
   real_type
   gtocX_2burn_pars::yVelocity_D_2( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
     real_type t2   = sqrt(ModelPars[0]);
-    real_type t4   = h__XO * h__XO;
-    real_type t5   = k__XO * k__XO;
-    real_type t7   = sqrt(p__XO);
-    return -1.0 / (t4 + t5 + 1) / t7 * (t4 - t5 - 1) * retrograde__XO * t2;
+    real_type t3   = sqrt(p__XO);
+    real_type t6   = h__XO * h__XO;
+    real_type t7   = k__XO * k__XO;
+    return -1.0 / (t6 + t7 + 1) * (t6 - t7 - 1) * retrograde__XO / t3 * t2;
   }
 
   real_type
@@ -1880,10 +1879,10 @@ namespace gtocX_2burn_parsDefine {
   real_type
   gtocX_2burn_pars::yVelocity_D_2_7( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
     real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = h__XO * h__XO;
-    real_type t4   = k__XO * k__XO;
-    real_type t7   = sqrt(p__XO);
-    return -1.0 / (t3 + t4 + 1) / t7 * (t3 - t4 - 1) * t2;
+    real_type t3   = sqrt(p__XO);
+    real_type t6   = h__XO * h__XO;
+    real_type t7   = k__XO * k__XO;
+    return -1.0 / (t6 + t7 + 1) * (t6 - t7 - 1) / t3 * t2;
   }
 
   real_type
@@ -1932,31 +1931,31 @@ namespace gtocX_2burn_parsDefine {
 
   real_type
   gtocX_2burn_pars::yVelocity_D_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = h__XO * h__XO;
-    real_type t4   = k__XO * k__XO;
-    real_type t7   = sin(L__XO);
-    real_type t11  = cos(L__XO);
-    real_type t18  = f__XO * h__XO;
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
+    real_type t5   = sin(L__XO);
+    real_type t9   = cos(L__XO);
+    real_type t16  = f__XO * h__XO;
+    real_type t26  = sqrt(ModelPars[0]);
     real_type t28  = sqrt(p__XO);
-    real_type t31  = pow(t3 + t4 + 1, 2);
-    return -4 / t31 / t28 * (-t7 * (t3 - t4 - 1) * k__XO / 2 + (t4 + 1) * t11 * retrograde__XO * h__XO + t4 * k__XO * g__XO / 2 + retrograde__XO * t4 * t18 + k__XO * (-t3 * g__XO / 2 + g__XO / 2) + retrograde__XO * t18) * t2;
+    real_type t31  = pow(t1 + t2 + 1, 2);
+    return -4 / t31 / t28 * t26 * (-t5 * (t1 - t2 - 1) * k__XO / 2 + (t2 + 1) * t9 * retrograde__XO * h__XO + t2 * k__XO * g__XO / 2 + retrograde__XO * t2 * t16 + k__XO * (-t1 * g__XO / 2 + g__XO / 2) + retrograde__XO * t16);
   }
 
   real_type
   gtocX_2burn_pars::yVelocity_D_4_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = h__XO * h__XO;
-    real_type t2   = k__XO * k__XO;
-    real_type t7   = cos(L__XO);
-    real_type t13  = sin(L__XO);
-    real_type t17  = t2 * t2;
-    real_type t21  = g__XO * h__XO;
-    real_type t24  = f__XO * retrograde__XO;
-    real_type t36  = sqrt(ModelPars[0]);
+    real_type t2   = sqrt(ModelPars[0]);
+    real_type t3   = k__XO * k__XO;
+    real_type t6   = h__XO * h__XO;
+    real_type t9   = cos(L__XO);
+    real_type t15  = sin(L__XO);
+    real_type t19  = t3 * t3;
+    real_type t23  = g__XO * h__XO;
+    real_type t26  = f__XO * retrograde__XO;
     real_type t38  = sqrt(p__XO);
-    real_type t40  = t1 + t2 + 1;
+    real_type t40  = t6 + t3 + 1;
     real_type t41  = t40 * t40;
-    return 12 / t41 / t40 / t38 * t36 * (t7 * retrograde__XO * (t2 + 1) * (t1 - t2 / 3 - 1.0 / 3.0) - t13 * (t1 - 3 * t2 - 3) * k__XO * h__XO / 3 - retrograde__XO * t17 * f__XO / 3 + t2 * k__XO * t21 + t2 * (t1 - 2.0 / 3.0) * t24 - k__XO * (t1 - 3) * t21 / 3 + (t1 - 1.0 / 3.0) * t24);
+    return 12 / t41 / t40 / t38 * (t9 * (t6 - t3 / 3 - 1.0 / 3.0) * (t3 + 1) * retrograde__XO - t15 * (t6 - 3 * t3 - 3) * k__XO * h__XO / 3 - retrograde__XO * t19 * f__XO / 3 + t3 * k__XO * t23 + t3 * (t6 - 2.0 / 3.0) * t26 - k__XO * (t6 - 3) * t23 / 3 + (t6 - 1.0 / 3.0) * t26) * t2;
   }
 
   real_type
@@ -1969,21 +1968,21 @@ namespace gtocX_2burn_parsDefine {
     real_type t12  = sin(L__XO);
     real_type t17  = cos(L__XO);
     real_type t39  = sqrt(p__XO);
-    real_type t41  = t3 + t6 + 1;
+    real_type t41  = t6 + t3 + 1;
     real_type t42  = t41 * t41;
     return -8 / t42 / t41 / t39 * (t12 * (-t4 / 4 + 3.0 / 2.0 * t6 * t3 - t9 / 4 + 1.0 / 4.0) + t17 * (t3 - t6 - 1) * k__XO * retrograde__XO * h__XO - t4 * g__XO / 4 + k__XO * retrograde__XO * t3 * h__XO * f__XO + 3.0 / 2.0 * t6 * t3 * g__XO - h__XO * (t6 + 1) * retrograde__XO * f__XO * k__XO - t9 * g__XO / 4 + g__XO / 4) * t2;
   }
 
   real_type
   gtocX_2burn_pars::yVelocity_D_4_6( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = h__XO * h__XO;
-    real_type t4   = k__XO * k__XO;
-    real_type t7   = cos(L__XO);
-    real_type t11  = sin(L__XO);
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
+    real_type t5   = cos(L__XO);
+    real_type t9   = sin(L__XO);
+    real_type t15  = sqrt(ModelPars[0]);
     real_type t17  = sqrt(p__XO);
-    real_type t20  = pow(t3 + t4 + 1, 2);
-    return 4 / t20 / t17 * (t7 * (t3 - t4 - 1) * k__XO / 2 + (t4 + 1) * t11 * retrograde__XO * h__XO) * t2;
+    real_type t20  = pow(t1 + t2 + 1, 2);
+    return 4 / t20 / t17 * t15 * (t5 * (t1 - t2 - 1) * k__XO / 2 + (t2 + 1) * t9 * retrograde__XO * h__XO);
   }
 
   real_type
@@ -2013,15 +2012,14 @@ namespace gtocX_2burn_parsDefine {
   real_type
   gtocX_2burn_pars::yVelocity_D_5_5( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
     real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = h__XO * retrograde__XO;
-    real_type t4   = h__XO * h__XO;
-    real_type t5   = k__XO * k__XO;
-    real_type t8   = cos(L__XO);
-    real_type t16  = sin(L__XO);
-    real_type t33  = sqrt(p__XO);
-    real_type t36  = t4 + t5 + 1;
-    real_type t37  = t36 * t36;
-    return 4 / t37 / t36 / t33 * h__XO * (t8 * (t4 - 3 * t5 + 1) * t3 + t16 * (3 * k__XO * t4 - t5 * k__XO + 3 * k__XO) + retrograde__XO * t4 * h__XO * f__XO + 3 * k__XO * t4 * g__XO - 3 * t3 * f__XO * (t5 - 1.0 / 3.0) - (t5 - 3) * k__XO * g__XO) * t2;
+    real_type t5   = h__XO * h__XO;
+    real_type t6   = k__XO * k__XO;
+    real_type t9   = cos(L__XO);
+    real_type t17  = sin(L__XO);
+    real_type t34  = sqrt(p__XO);
+    real_type t37  = t5 + t6 + 1;
+    real_type t38  = t37 * t37;
+    return 4 / t38 / t37 / t34 * (t9 * (t5 - 3 * t6 + 1) * h__XO * retrograde__XO + t17 * (3 * k__XO * t5 - t6 * k__XO + 3 * k__XO) + retrograde__XO * t5 * h__XO * f__XO + 3 * k__XO * t5 * g__XO - 3 * h__XO * (t6 - 1.0 / 3.0) * f__XO * retrograde__XO - (t6 - 3) * k__XO * g__XO) * t2 * h__XO;
   }
 
   real_type
@@ -2148,27 +2146,27 @@ namespace gtocX_2burn_parsDefine {
 
   real_type
   gtocX_2burn_pars::zVelocity_D_1_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = sqrt(p__XO);
-    real_type t8   = sin(L__XO);
-    real_type t12  = h__XO * h__XO;
-    real_type t13  = k__XO * k__XO;
-    real_type t15  = cos(L__XO);
-    real_type t25  = pow(t12 + t13 + 1, 2);
-    return 1.0 / t25 * (2 * t8 * k__XO * retrograde__XO * h__XO + t15 * (t12 - t13 - 1) + 2 * g__XO * h__XO * k__XO * retrograde__XO + t12 * f__XO - t13 * f__XO - f__XO) / t3 / p__XO * t2;
+    real_type t2   = sin(L__XO);
+    real_type t6   = h__XO * h__XO;
+    real_type t7   = k__XO * k__XO;
+    real_type t9   = cos(L__XO);
+    real_type t19  = sqrt(ModelPars[0]);
+    real_type t21  = sqrt(p__XO);
+    real_type t25  = pow(t6 + t7 + 1, 2);
+    return 1.0 / t25 / t21 / p__XO * t19 * (2 * t2 * k__XO * retrograde__XO * h__XO + t9 * (t6 - t7 - 1) + 2 * g__XO * h__XO * k__XO * retrograde__XO + t6 * f__XO - t7 * f__XO - f__XO);
   }
 
   real_type
   gtocX_2burn_pars::zVelocity_D_1_5( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = cos(L__XO);
-    real_type t4   = h__XO * h__XO;
-    real_type t5   = k__XO * k__XO;
-    real_type t7   = (t4 - t5 + 1) * retrograde__XO;
-    real_type t8   = sin(L__XO);
-    real_type t17  = sqrt(ModelPars[0]);
+    real_type t2   = sqrt(ModelPars[0]);
+    real_type t3   = cos(L__XO);
+    real_type t6   = h__XO * h__XO;
+    real_type t7   = k__XO * k__XO;
+    real_type t9   = (t6 - t7 + 1) * retrograde__XO;
+    real_type t10  = sin(L__XO);
     real_type t19  = sqrt(p__XO);
-    real_type t23  = pow(t4 + t5 + 1, 2);
-    return 2 / t23 / t19 / p__XO * t17 * (k__XO * h__XO * t1 - t8 * t7 / 2 - g__XO * t7 / 2 + f__XO * h__XO * k__XO);
+    real_type t23  = pow(t6 + t7 + 1, 2);
+    return 2 / t23 / t19 / p__XO * (k__XO * h__XO * t3 - t10 * t9 / 2 - g__XO * t9 / 2 + f__XO * h__XO * k__XO) * t2;
   }
 
   real_type
@@ -2291,40 +2289,41 @@ namespace gtocX_2burn_parsDefine {
 
   real_type
   gtocX_2burn_pars::zVelocity_D_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = sqrt(p__XO);
-    real_type t7   = sin(L__XO);
-    real_type t11  = h__XO * h__XO;
-    real_type t12  = k__XO * k__XO;
-    real_type t14  = cos(L__XO);
-    real_type t24  = pow(t11 + t12 + 1, 2);
-    return -2 / t24 * (2 * t7 * k__XO * retrograde__XO * h__XO + t14 * (t11 - t12 - 1) + 2 * g__XO * h__XO * k__XO * retrograde__XO + t11 * f__XO - t12 * f__XO - f__XO) / t3 * t2;
+    real_type t2   = sin(L__XO);
+    real_type t6   = h__XO * h__XO;
+    real_type t7   = k__XO * k__XO;
+    real_type t9   = cos(L__XO);
+    real_type t19  = sqrt(ModelPars[0]);
+    real_type t21  = sqrt(p__XO);
+    real_type t24  = pow(t6 + t7 + 1, 2);
+    return -2 / t24 / t21 * t19 * (2 * t2 * k__XO * retrograde__XO * h__XO + t9 * (t6 - t7 - 1) + 2 * g__XO * h__XO * k__XO * retrograde__XO + t6 * f__XO - t7 * f__XO - f__XO);
   }
 
   real_type
   gtocX_2burn_pars::zVelocity_D_4_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
     real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = sqrt(p__XO);
-    real_type t6   = h__XO * h__XO;
-    real_type t7   = k__XO * k__XO;
-    real_type t11  = cos(L__XO);
-    real_type t16  = sin(L__XO);
-    real_type t35  = t6 + t7 + 1;
-    real_type t36  = t35 * t35;
-    return 4 / t36 / t35 * (t11 * (t6 - 3 * t7 - 3) * h__XO + 3 * t16 * retrograde__XO * k__XO * (t6 - t7 / 3 - 1.0 / 3.0) + t6 * h__XO * f__XO + 3 * k__XO * retrograde__XO * t6 * g__XO + h__XO * (-3 * t7 * f__XO - 3 * f__XO) - (t7 + 1) * retrograde__XO * g__XO * k__XO) / t3 * t2;
+    real_type t3   = h__XO * h__XO;
+    real_type t4   = k__XO * k__XO;
+    real_type t8   = cos(L__XO);
+    real_type t10  = k__XO * retrograde__XO;
+    real_type t13  = sin(L__XO);
+    real_type t32  = sqrt(p__XO);
+    real_type t34  = t3 + t4 + 1;
+    real_type t35  = t34 * t34;
+    return 4 / t35 / t34 / t32 * (t8 * (t3 - 3 * t4 - 3) * h__XO + 3 * t13 * (t3 - t4 / 3 - 1.0 / 3.0) * t10 + t3 * h__XO * f__XO + 3 * t10 * t3 * g__XO + h__XO * (-3 * t4 * f__XO - 3 * f__XO) - (t4 + 1) * retrograde__XO * g__XO * k__XO) * t2;
   }
 
   real_type
   gtocX_2burn_pars::zVelocity_D_4_5( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = sqrt(p__XO);
-    real_type t6   = h__XO * h__XO;
-    real_type t7   = k__XO * k__XO;
-    real_type t11  = cos(L__XO);
-    real_type t14  = sin(L__XO);
-    real_type t35  = t6 + t7 + 1;
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
+    real_type t6   = cos(L__XO);
+    real_type t9   = sin(L__XO);
+    real_type t31  = sqrt(ModelPars[0]);
+    real_type t33  = sqrt(p__XO);
+    real_type t35  = t1 + t2 + 1;
     real_type t36  = t35 * t35;
-    return 12 / t36 / t35 * (t11 * k__XO * (t6 - t7 / 3 - 1.0 / 3.0) - (t6 - 3 * t7 + 1) * t14 * retrograde__XO * h__XO / 3 - retrograde__XO * t6 * h__XO * g__XO / 3 + k__XO * t6 * f__XO + h__XO * (t7 - 1.0 / 3.0) * g__XO * retrograde__XO - (t7 + 1) * k__XO * f__XO / 3) / t3 * t2;
+    return 12 / t36 / t35 / t33 * t31 * (t6 * (t1 - t2 / 3 - 1.0 / 3.0) * k__XO - (t1 - 3 * t2 + 1) * t9 * retrograde__XO * h__XO / 3 - retrograde__XO * t1 * h__XO * g__XO / 3 + k__XO * t1 * f__XO + h__XO * (t2 - 1.0 / 3.0) * g__XO * retrograde__XO - (t2 + 1) * k__XO * f__XO / 3);
   }
 
   real_type
@@ -2352,40 +2351,40 @@ namespace gtocX_2burn_parsDefine {
 
   real_type
   gtocX_2burn_pars::zVelocity_D_5( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t1   = cos(L__XO);
-    real_type t4   = h__XO * h__XO;
-    real_type t5   = k__XO * k__XO;
-    real_type t7   = (t4 - t5 + 1) * retrograde__XO;
-    real_type t8   = sin(L__XO);
-    real_type t17  = sqrt(ModelPars[0]);
+    real_type t2   = sqrt(ModelPars[0]);
+    real_type t3   = cos(L__XO);
+    real_type t6   = h__XO * h__XO;
+    real_type t7   = k__XO * k__XO;
+    real_type t9   = (t6 - t7 + 1) * retrograde__XO;
+    real_type t10  = sin(L__XO);
     real_type t19  = sqrt(p__XO);
-    real_type t22  = pow(t4 + t5 + 1, 2);
-    return -4 / t22 / t19 * t17 * (k__XO * h__XO * t1 - t8 * t7 / 2 - g__XO * t7 / 2 + f__XO * h__XO * k__XO);
+    real_type t22  = pow(t6 + t7 + 1, 2);
+    return -4 / t22 / t19 * (k__XO * h__XO * t3 - t10 * t9 / 2 - g__XO * t9 / 2 + f__XO * h__XO * k__XO) * t2;
   }
 
   real_type
   gtocX_2burn_pars::zVelocity_D_5_5( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
-    real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = sqrt(p__XO);
-    real_type t6   = h__XO * h__XO;
-    real_type t7   = k__XO * k__XO;
-    real_type t11  = cos(L__XO);
-    real_type t16  = sin(L__XO);
-    real_type t35  = t6 + t7 + 1;
+    real_type t1   = h__XO * h__XO;
+    real_type t2   = k__XO * k__XO;
+    real_type t6   = cos(L__XO);
+    real_type t11  = sin(L__XO);
+    real_type t31  = sqrt(ModelPars[0]);
+    real_type t33  = sqrt(p__XO);
+    real_type t35  = t1 + t2 + 1;
     real_type t36  = t35 * t35;
-    return -4 / t36 / t35 * (t11 * (t6 - 3 * t7 + 1) * h__XO + 3 * t16 * retrograde__XO * (t6 - t7 / 3 + 1) * k__XO + t6 * h__XO * f__XO + 3 * k__XO * retrograde__XO * t6 * g__XO + h__XO * (-3 * t7 * f__XO + f__XO) - (t7 - 3) * retrograde__XO * g__XO * k__XO) / t3 * t2;
+    return -4 / t36 / t35 / t33 * t31 * (t6 * (t1 - 3 * t2 + 1) * h__XO + 3 * t11 * retrograde__XO * k__XO * (t1 - t2 / 3 + 1) + t1 * h__XO * f__XO + 3 * k__XO * retrograde__XO * t1 * g__XO + h__XO * (-3 * t2 * f__XO + f__XO) - (t2 - 3) * retrograde__XO * g__XO * k__XO);
   }
 
   real_type
   gtocX_2burn_pars::zVelocity_D_5_6( real_type p__XO, real_type f__XO, real_type g__XO, real_type h__XO, real_type k__XO, real_type L__XO, real_type retrograde__XO ) const {
     real_type t2   = sqrt(ModelPars[0]);
-    real_type t3   = h__XO * h__XO;
-    real_type t4   = k__XO * k__XO;
-    real_type t7   = cos(L__XO);
-    real_type t10  = sin(L__XO);
-    real_type t15  = sqrt(p__XO);
-    real_type t18  = pow(t3 + t4 + 1, 2);
-    return 2 / t18 / t15 * (t7 * (t3 - t4 + 1) * retrograde__XO + 2 * t10 * k__XO * h__XO) * t2;
+    real_type t3   = sqrt(p__XO);
+    real_type t6   = h__XO * h__XO;
+    real_type t7   = k__XO * k__XO;
+    real_type t10  = cos(L__XO);
+    real_type t13  = sin(L__XO);
+    real_type t18  = pow(t6 + t7 + 1, 2);
+    return 2 / t18 * (t10 * (t6 - t7 + 1) * retrograde__XO + 2 * t13 * k__XO * h__XO) / t3 * t2;
   }
 
   real_type
@@ -2546,7 +2545,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = y__XO * y__XO;
     real_type t4   = ModelPars[4] * ModelPars[4];
     real_type t6   = z__XO * z__XO;
-    real_type t7   = t1 + t2 + t6 + t4;
+    real_type t7   = t6 + t1 + t2 + t4;
     real_type t8   = sqrt(t7);
     return 1.0 / t8 / t7 * (t1 + t2 + t4);
   }
@@ -2678,7 +2677,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t13  = g__XO * g__XO;
     real_type t21  = t13 * g__XO;
     real_type t25  = 3 * t13;
-    return 1.0 / (t2 * t1 * (t11 * f__XO - 3 * t13 * f__XO) + t2 * (t4 * (3 * t11 * g__XO - t21) + 3 * t11 - t25) + 3 * t1 * (t13 + 2 * t5 + 1) * f__XO + t4 * (t21 + 3 * g__XO) + t25 + 1) * p__XO * (f__XO * t2 + t1 * (t5 - 1) - 2 * f__XO);
+    return 1.0 / (t2 * t1 * (t11 * f__XO - 3 * t13 * f__XO) + t2 * (t4 * (3 * t11 * g__XO - t21) + 3 * t11 - t25) + 3 * t1 * (t13 + 2 * t5 + 1) * f__XO + t4 * (t21 + 3 * g__XO) + t25 + 1) * (t2 * f__XO + t1 * (t5 - 1) - 2 * f__XO) * p__XO;
   }
 
   real_type
@@ -2688,7 +2687,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t7   = f__XO * f__XO;
     real_type t8   = g__XO * g__XO;
     real_type t10  = t3 * t3;
-    return 1.0 / (t10 * (t7 - t8) + t3 * (2 * t1 * g__XO * f__XO + 2 * f__XO) + t8 + 2 * t1 * g__XO + 1) * (t1 * f__XO - g__XO * t3) * p__XO;
+    return 1.0 / (t10 * (t7 - t8) + t3 * (2 * t1 * g__XO * f__XO + 2 * f__XO) + t8 + 2 * t1 * g__XO + 1) * (t1 * f__XO - t3 * g__XO) * p__XO;
   }
 
   real_type
@@ -2701,7 +2700,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t14  = t8 * g__XO;
     real_type t25  = t2 * g__XO;
     real_type t29  = 3 * t2;
-    return -1.0 / (t5 * t4 * (t1 * f__XO - 3 * f__XO * t2) + t5 * (t8 * (3 * t1 * g__XO - t25) + 3 * t1 - t29) + 3 * t4 * (t2 + 2 * t14 + 1) * f__XO + t8 * (t25 + 3 * g__XO) + t29 + 1) * p__XO * (t5 * (t1 - t2) + t4 * (2 * t8 * g__XO * f__XO - f__XO) - 2 * t1 - t2 - t14);
+    return -1.0 / (t5 * t4 * (t1 * f__XO - 3 * t2 * f__XO) + t5 * (t8 * (3 * t1 * g__XO - t25) + 3 * t1 - t29) + 3 * t4 * (t2 + 2 * t14 + 1) * f__XO + t8 * (t25 + 3 * g__XO) + t29 + 1) * p__XO * (t5 * (t1 - t2) + t4 * (2 * t8 * g__XO * f__XO - f__XO) - 2 * t1 - t2 - t14);
   }
 
   real_type
@@ -2792,7 +2791,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t9   = sin(L__XO);
     real_type t12  = f__XO * f__XO;
     real_type t13  = g__XO * g__XO;
-    real_type t15  = sqrt(2 * f__XO * t2 + 2 * t9 * g__XO + t12 + t13 + 1);
+    real_type t15  = sqrt(2 * t2 * f__XO + 2 * t9 * g__XO + t12 + t13 + 1);
     return 1.0 / t15 / t5 * (t2 + f__XO) * t1;
   }
 
@@ -2806,7 +2805,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t7   = g__XO * g__XO;
     real_type t10  = sqrt(p__XO);
     real_type t14  = f__XO * f__XO;
-    real_type t15  = 2 * f__XO * t2 + t14 + t6 + t7 + 1;
+    real_type t15  = 2 * t2 * f__XO + t14 + t6 + t7 + 1;
     real_type t16  = sqrt(t15);
     return 1.0 / t16 / t15 / t10 * (-t3 + t6 + t7 + 1) * t1;
   }
@@ -2826,16 +2825,16 @@ namespace gtocX_2burn_parsDefine {
 
   real_type
   gtocX_2burn_pars::vel_D_2_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type L__XO, real_type muS__XO ) const {
-    real_type t1   = cos(L__XO);
-    real_type t4   = sin(L__XO);
-    real_type t7   = f__XO * f__XO;
-    real_type t8   = g__XO * g__XO;
-    real_type t9   = 2 * t1 * f__XO + 2 * t4 * g__XO + t7 + t8 + 1;
-    real_type t10  = sqrt(t9);
-    real_type t13  = sqrt(p__XO);
-    real_type t16  = sqrt(muS__XO);
-    real_type t17  = t1 * t1;
-    return -(-g__XO * t17 + t1 * (t4 + g__XO) * f__XO + t8 * t4 + 2 * g__XO + t4) * t16 / t13 / t10 / t9;
+    real_type t1   = sqrt(p__XO);
+    real_type t3   = cos(L__XO);
+    real_type t4   = t3 * t3;
+    real_type t6   = sin(L__XO);
+    real_type t10  = g__XO * g__XO;
+    real_type t19  = f__XO * f__XO;
+    real_type t20  = 2 * t3 * f__XO + 2 * t6 * g__XO + t10 + t19 + 1;
+    real_type t21  = sqrt(t20);
+    real_type t24  = sqrt(muS__XO);
+    return -t24 / t21 / t20 * (-t4 * g__XO + t3 * (t6 + g__XO) * f__XO + t10 * t6 + 2 * g__XO + t6) / t1;
   }
 
   real_type
@@ -2912,22 +2911,22 @@ namespace gtocX_2burn_parsDefine {
     real_type t14  = f__XO * f__XO;
     real_type t15  = g__XO * g__XO;
     real_type t17  = sqrt(2 * t4 * f__XO + 2 * t2 * g__XO + t14 + t15 + 1);
-    return 1.0 / t17 / t8 * (-t2 * f__XO + t4 * g__XO) * t1;
+    return 1.0 / t17 / t8 * (-t2 * f__XO + g__XO * t4) * t1;
   }
 
   real_type
   gtocX_2burn_pars::vel_D_4_4( real_type p__XO, real_type f__XO, real_type g__XO, real_type L__XO, real_type muS__XO ) const {
-    real_type t1   = f__XO * f__XO;
-    real_type t2   = g__XO * g__XO;
-    real_type t4   = cos(L__XO);
-    real_type t5   = t4 * t4;
-    real_type t7   = sin(L__XO);
-    real_type t9   = 2 * t7 * g__XO;
-    real_type t20  = 2 * t4 * f__XO + t1 + t2 + t9 + 1;
-    real_type t21  = sqrt(t20);
-    real_type t25  = sqrt(p__XO);
+    real_type t1   = sqrt(p__XO);
+    real_type t3   = f__XO * f__XO;
+    real_type t4   = g__XO * g__XO;
+    real_type t6   = cos(L__XO);
+    real_type t7   = t6 * t6;
+    real_type t9   = sin(L__XO);
+    real_type t11  = 2 * t9 * g__XO;
+    real_type t23  = 2 * t6 * f__XO + t11 + t3 + t4 + 1;
+    real_type t24  = sqrt(t23);
     real_type t27  = sqrt(muS__XO);
-    return -t27 / t25 / t21 / t20 * (t5 * (t1 - t2) + t4 * (t1 + t2 + t9 + 1) * f__XO + t7 * (t1 + t2 + 1) * g__XO + t1 + 2 * t2);
+    return -t27 / t24 / t23 * (t7 * (t3 - t4) + t6 * (t3 + t4 + t11 + 1) * f__XO + t9 * (t3 + t4 + 1) * g__XO + t3 + 2 * t4) / t1;
   }
 
   real_type
@@ -2948,7 +2947,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t4   = sin(L__XO);
     real_type t7   = f__XO * f__XO;
     real_type t8   = g__XO * g__XO;
-    real_type t10  = sqrt(2 * t1 * f__XO + 2 * t4 * g__XO + t7 + t8 + 1);
+    real_type t10  = sqrt(2 * t1 * f__XO + 2 * g__XO * t4 + t7 + t8 + 1);
     real_type t11  = sqrt(muS__XO);
     real_type t14  = sqrt(p__XO);
     return 1.0 / t14 / t11 * t10 / 2;
@@ -2960,7 +2959,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t4   = sin(L__XO);
     real_type t7   = f__XO * f__XO;
     real_type t8   = g__XO * g__XO;
-    real_type t10  = sqrt(2 * t1 * f__XO + 2 * t4 * g__XO + t7 + t8 + 1);
+    real_type t10  = sqrt(2 * t1 * f__XO + 2 * g__XO * t4 + t7 + t8 + 1);
     real_type t11  = sqrt(muS__XO);
     real_type t15  = sqrt(p__XO);
     return -1.0 / t15 / t11 / muS__XO * t10 / 4;

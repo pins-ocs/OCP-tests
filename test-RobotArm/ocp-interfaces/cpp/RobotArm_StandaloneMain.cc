@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -53,9 +53,9 @@ main() {
 
     // Auxiliary values
    real_type u_tolerance0 = 0.01;
+   real_type u_tolerance = u_tolerance0;
    real_type u_epsilon0 = 0.01;
    real_type u_epsilon = u_epsilon0;
-   real_type u_tolerance = u_tolerance0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

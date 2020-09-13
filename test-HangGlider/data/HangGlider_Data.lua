@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Data.lua                                            |
  |                                                                       |
- |  version: 1.0   date 21/7/2020                                        |
+ |  version: 1.0   date 13/9/2020                                        |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,12 +18,12 @@
 --]]
 
 -- Auxiliary values
-W0       = 1000
-cL_min   = 0
-W        = W0
 tol_max  = 0.01
 cL_max   = 1.4
 epsi_max = 0.01
+W0       = 1000
+cL_min   = 0
+W        = W0
 
 content = {
 
