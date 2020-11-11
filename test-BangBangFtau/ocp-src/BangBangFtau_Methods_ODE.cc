@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -92,9 +92,8 @@ namespace BangBangFtauDefine {
     result__[ 1   ] = clip(t1 - t2, ModelPars[3], ModelPars[1]);
     result__[ 2   ] = -1.0 / ModelPars[5] * (t1 - U__[0]);
     result__[ 3   ] = -1.0 / ModelPars[4] * (t2 - U__[1]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -141,9 +140,8 @@ namespace BangBangFtauDefine {
     result__[ 2   ] = -result__[1];
     result__[ 3   ] = -1.0 / ModelPars[5];
     result__[ 4   ] = -1.0 / ModelPars[4];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -217,9 +215,8 @@ namespace BangBangFtauDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1.0 / ModelPars[5];
     result__[ 1   ] = 1.0 / ModelPars[4];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -268,9 +265,8 @@ namespace BangBangFtauDefine {
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 4, i_segment );
   }
 
 }

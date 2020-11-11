@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: OrbitTransfer_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 13/9/2020                                        #
+#  version: 1.0   date 12/11/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -19,11 +19,11 @@ include Mechatronix
 
 # Auxiliary values
 mu   = 1
-m0   = 1
 r0   = 1
-T    = 0.1405e-1*m0*mu/r0**2
 v0   = (mu/r0)**(1/2.0)
 tf   = 16.60*(r0**3/mu)**(1/2.0)
+m0   = 1
+T    = 0.1405e-1*m0*mu/r0**2
 mdot = 0.533*T*(mu/r0)**(1/2.0)
 
 mechatronix do |data|
@@ -31,8 +31,11 @@ mechatronix do |data|
   # Level of message
   data.InfoLevel = 4
 
+  # Activate dynamic debugging
+  data.Debug = false
+
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = 4
+  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
   data.U_threaded  = true
   data.F_threaded  = true
   data.JF_threaded = true
@@ -46,9 +49,6 @@ mechatronix do |data|
   data.JacobianCheckFull        = false
   data.JacobianCheck_epsilon    = 1e-4
   data.FiniteDifferenceJacobian = false
-
-  # Redirect output to GenericContainer["stream_output"]
-  data.RedirectStreamToString = false
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "OrbitTransfer_dump"
@@ -166,8 +166,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 1000,
+        :length => 1,
       },
     ],
   };

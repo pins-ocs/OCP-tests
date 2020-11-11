@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -94,9 +94,8 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 1   ] = XL__[1] - 1;
     result__[ 2   ] = XR__[0] - XL__[2];
     result__[ 3   ] = XR__[1] - XL__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -147,9 +146,8 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 3   ] = 1;
     result__[ 4   ] = -1;
     result__[ 5   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -219,9 +217,8 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 5   ] = t7 - LR__[1];
     result__[ 6   ] = 10 * XR__[2] - LR__[2];
     result__[ 7   ] = 10 * XR__[3] - LR__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -267,9 +264,8 @@ namespace TwoPhaseSchwartzDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     result__[ 0   ] = 10;
     result__[ 1   ] = 10;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DadjointBCDxp_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -89,9 +89,8 @@ namespace gtocX_2burn_parsDefine {
     result__[ 1   ] = -t20 * t17 * t10;
     real_type t26  = pow(t20 * t12 + t18 * t13 + 1, 2);
     result__[ 2   ] = t8 / t5 / t4 * t26 * t3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -168,9 +167,8 @@ namespace gtocX_2burn_parsDefine {
     result__[ 6   ] = 2 * t31 * t51 * t48;
     result__[ 7   ] = 2 * t19 * t51 * t48;
     result__[ 8   ] = 2 * (-t19 * t12 + t31 * t13) * t51 * t48;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",9);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -235,9 +233,8 @@ namespace gtocX_2burn_parsDefine {
     real_type t41  = pow(t31 * t13 + t19 * t14 + 1, 2);
     real_type t43  = t4 * t4;
     result__[ 2   ] = -3.0 / 2.0 * t9 / t5 / t43 * t41 * t3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -317,9 +314,8 @@ namespace gtocX_2burn_parsDefine {
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 3, i_segment );
   }
 
 }

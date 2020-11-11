@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -103,9 +103,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 5   ] = XR__[1];
     result__[ 6   ] = XR__[2] - 0.5e0;
     result__[ 7   ] = XR__[3] - 0.522e0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -160,9 +159,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 5   ] = 1;
     result__[ 6   ] = 1;
     result__[ 7   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -233,9 +231,8 @@ namespace TwoLinkRobotArmDefine {
     real_type t17  = P__[0];
     real_type t18  = ModelPars[1];
     result__[ 8   ] = -2 * t18 * t17 + 2 * t17 + 21 * t18 - 20;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",9);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 9, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -312,9 +309,8 @@ namespace TwoLinkRobotArmDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     result__[ 0   ] = -2 * ModelPars[1] + 2;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DadjointBCDxp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 1, i_segment_left, i_segment_right );
   }
 
 }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_dll_pins.hh                                   |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -110,7 +110,7 @@ namespace gtocX_2burn_parsDefine {
   public:
 
     GTOCX_2BURN_PARS_API_DLL
-    gtocX_2burn_pars_Problem( ThreadPool * pTP, Console * pConsole )
+    gtocX_2burn_pars_Problem( ThreadPool * pTP, Console const * pConsole )
     : model("gtocX_2burn_pars",pTP,pConsole)
     , mesh( "mesh" )
     {
@@ -141,7 +141,7 @@ namespace gtocX_2burn_parsDefine {
         ok    = true;
         error = "no error";
       }
-      catch ( exception const & exc ) {
+      catch ( std::exception const & exc ) {
         error = exc.what();
       }
       catch ( char const exc[] ) {

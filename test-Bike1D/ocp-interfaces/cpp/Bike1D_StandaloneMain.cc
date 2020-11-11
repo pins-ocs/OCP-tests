@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,9 +52,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type muf_min = -1;
-   real_type mur_min = -1;
-   real_type mur_max = 1;
+    real_type mur_max = 1;
+    real_type muf_min = -1;
+    real_type mur_min = -1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -76,9 +76,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "Bike1D_dump";
@@ -121,7 +118,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_v"] = SET;
     data_BoundaryConditions["final_v"] = SET;
 
@@ -157,9 +154,10 @@ main() {
     // Constraints Parameters
 
     // functions mapped on objects
+    GenericContainer & gc_MappedObjects = gc_data["MappedObjects"];
 
     // ClipIntervalWithSinAtan
-    GenericContainer & data_clip = dc_data("clip");
+    GenericContainer & data_clip = gc_MappedObjects["clip"];
     data_clip["h"] = 0.01;
     data_clip["delta"] = 0;
 
@@ -187,14 +185,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Bike1D_data.Mesh["s0"] = 0;
-Bike1D_data.Mesh["segments"][0]["n"] = 1000;
 Bike1D_data.Mesh["segments"][0]["length"] = 1000;
+Bike1D_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -215,7 +213,7 @@ Bike1D_data.Mesh["segments"][0]["length"] = 1000;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/Bike1D_OCP_result.txt" );
     } else {
@@ -237,12 +235,12 @@ Bike1D_data.Mesh["segments"][0]["length"] = 1000;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -99,9 +99,8 @@ namespace TwoStageCSTRDefine {
     result__[ 1   ] = XL__[1] - ModelPars[3];
     result__[ 2   ] = XL__[2] - ModelPars[4];
     result__[ 3   ] = XL__[3] - ModelPars[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,9 +147,8 @@ namespace TwoStageCSTRDefine {
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -218,9 +216,8 @@ namespace TwoStageCSTRDefine {
     result__[ 5   ] = -LR__[1];
     result__[ 6   ] = -LR__[2];
     result__[ 7   ] = -LR__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

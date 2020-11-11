@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,18 +18,18 @@
 --]]
 
 -- Auxiliary values
+days1  = 30
 mu     = 398600441800000
-r0     = 6678140
-g0     = 9.80665
-T      = 0.68
-v0     = (mu/r0)^(1/2)
+u0     = 0
 Isp    = 1500
+T      = 0.68
+r0     = 6678140
+v0     = (mu/r0)**(1/2.0)
+u0_bar = u0/v0
+g0     = 9.80665
 mdot   = T/g0/Isp
 days   = 1
-days1  = 30
 tf     = 86400*days
-u0     = 0
-u0_bar = u0/v0
 
 content = {
 
@@ -37,7 +37,7 @@ content = {
   InfoLevel = 4,
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
+  N_threads   = [1,$MAX_THREAD_NUM-1].max,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -46,23 +46,20 @@ content = {
   -- Enable doctor
   Doctor = false,
 
+  -- Activate dynamic debugging
+  Debug = false,
+
   -- Enable check jacobian
   JacobianCheck            = false,
   JacobianCheckFull        = false,
   JacobianCheck_epsilon    = 1e-4,
   FiniteDifferenceJacobian = false,
 
-  -- Redirect output to GenericContainer["stream_output"]
-  RedirectStreamToString = false,
-
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "MaximumAscent_dump",
 
   -- spline output (all values as function of "s")
   -- OutputSplines = [0],
-
-  -- Redirect output to GenericContainer["stream_output"]
-  RedirectStreamToString = false,
 
   ControlSolver = {
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"

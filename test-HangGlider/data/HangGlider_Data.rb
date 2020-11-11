@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: HangGlider_Data.rb                                             #
 #                                                                       #
-#  version: 1.0   date 13/9/2020                                        #
+#  version: 1.0   date 12/11/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,20 +18,23 @@
 include Mechatronix
 
 # Auxiliary values
-tol_max  = 0.01
-cL_max   = 1.4
-epsi_max = 0.01
 W0       = 1000
-cL_min   = 0
+cL_max   = 1.4
+tol_max  = 0.01
+epsi_max = 0.01
 W        = W0
+cL_min   = 0
 
 mechatronix do |data|
 
   # Level of message
   data.InfoLevel = 4
 
+  # Activate dynamic debugging
+  data.Debug = false
+
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = 4
+  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
   data.U_threaded  = true
   data.F_threaded  = true
   data.JF_threaded = true
@@ -45,9 +48,6 @@ mechatronix do |data|
   data.JacobianCheckFull        = false
   data.JacobianCheck_epsilon    = 1e-4
   data.FiniteDifferenceJacobian = false
-
-  # Redirect output to GenericContainer["stream_output"]
-  data.RedirectStreamToString = false
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "HangGlider_dump"
@@ -170,8 +170,8 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # Controls
-  # Penalty type controls: "QUADRATIC", "QUADRATIC2", "PARABOLA", "CUBIC"
-  # Barrier type controls: "LOGARITHMIC", "COS_LOGARITHMIC", "TAN2", "HYPERBOLIC"
+  # Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
+  # Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
 
   data.Controls = {}
   data.Controls[:cLControl] = {
@@ -185,6 +185,7 @@ mechatronix do |data|
   # Constraint1D
   # Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
   # Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:Tbound] = {
     :subType   => 'BARRIER_LOG',

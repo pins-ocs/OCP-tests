@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods.cc                                                |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -169,9 +169,8 @@ namespace CNOCDefine {
     real_type t12  = ModelPars[8];
     real_type t13  = ALIAS_jnControl_D_1(U__[1], -t12, t12);
     result__[ 1   ] = t13 * t2 + t2 * L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -218,9 +217,8 @@ namespace CNOCDefine {
     real_type t9   = ALIAS_jnControl_D_1(U__[1], -t8, t8);
     result__[ 2   ] = L__[5] + t9;
     result__[ 3   ] = result__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -264,9 +262,8 @@ namespace CNOCDefine {
     real_type t7   = ModelPars[8];
     real_type t8   = ALIAS_jnControl_D_1_1(U__[1], -t7, t7);
     result__[ 1   ] = t8 * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -466,7 +463,7 @@ namespace CNOCDefine {
     DuDxlp( DgDxlp_I[ 1 ], DgDxlp_J[ 1] ) = -DgDxlp_V[1];
     DuDxlp( DgDxlp_I[ 2 ], DgDxlp_J[ 2] ) = -DgDxlp_V[2];
     DuDxlp( DgDxlp_I[ 3 ], DgDxlp_J[ 3] ) = -DgDxlp_V[3];
-    integer info = alglin::gesv( 2, 14, DgDu.get_data(), 2, ipiv, DuDxlp.get_data(), 2 );
+    integer info = alglin::gesv( 2, 14, DgDu.data(), 2, ipiv, DuDxlp.data(), 2 );
     return info == 0;
   }
 
@@ -527,7 +524,7 @@ namespace CNOCDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -549,7 +546,7 @@ namespace CNOCDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -559,7 +556,7 @@ namespace CNOCDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -620,9 +617,8 @@ namespace CNOCDefine {
     result__[ 11  ] = -t11 * t37 - t8 * t35 + LL__[4];
     result__[ 12  ] = -t11 * t35 + t8 * t37 + LL__[5];
     result__[ 13  ] = LR__[6];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",14);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 14, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -727,9 +723,8 @@ namespace CNOCDefine {
     result__[ 27  ] = result__[21];
     result__[ 28  ] = result__[24];
     result__[ 29  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",30);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 30, i_segment_left, i_segment_right );
   }
 
 }

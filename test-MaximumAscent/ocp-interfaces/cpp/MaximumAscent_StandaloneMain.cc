@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,18 +52,18 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type mu = 398600441800000;
-   real_type r0 = 6678140;
-   real_type g0 = 9.80665;
-   real_type T = 0.68;
-   real_type v0 = (mu/r0)^(1/2);
-   real_type Isp = 1500;
-   real_type mdot = T/g0/Isp;
-   real_type days = 1;
-   real_type days1 = 30;
-   real_type tf = 86400*days;
-   real_type u0 = 0;
-   real_type u0_bar = u0/v0;
+    real_type days1 = 30;
+    real_type mu = 398600441800000;
+    real_type u0 = 0;
+    real_type Isp = 1500;
+    real_type T = 0.68;
+    real_type r0 = 6678140;
+    real_type v0 = (mu/r0)^(1/2.0);
+    real_type u0_bar = u0/v0;
+    real_type g0 = 9.80665;
+    real_type mdot = T/g0/Isp;
+    real_type days = 1;
+    real_type tf = 86400*days;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -85,9 +85,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "MaximumAscent_dump";
@@ -130,7 +127,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_r"] = SET;
     data_BoundaryConditions["initial_u"] = SET;
     data_BoundaryConditions["initial_v"] = SET;
@@ -190,7 +187,7 @@ MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -211,7 +208,7 @@ MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/MaximumAscent_OCP_result.txt" );
     } else {
@@ -233,12 +230,12 @@ MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

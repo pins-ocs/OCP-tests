@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -95,9 +95,8 @@ namespace HangGliderDefine {
     real_type t24  = w(t11, t13);
     real_type t40  = ALIAS_cLControl_D_1(t2, ModelPars[8], ModelPars[7]);
     result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[2] + (-2 * t12 * t19 * t18 - t24 * t23) * t16 * t7 * L__[2] + (-2 * t24 * t19 * t18 + t12 * t23) * t16 * t7 * L__[3] + t40;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -183,9 +182,8 @@ namespace HangGliderDefine {
     real_type t113 = t48 * t28;
     result__[ 4   ] = t113 * t111;
     result__[ 5   ] = t112 * t5 * t1 + t113 * t5 * t41;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -233,9 +231,8 @@ namespace HangGliderDefine {
     real_type t24  = w(t9, t11);
     real_type t32  = ALIAS_cLControl_D_1_1(U__[0], ModelPars[8], ModelPars[7]);
     result__[ 0   ] = -2 * t10 * t16 * t15 * t7 * t4 * L__[2] - 2 * t24 * t16 * t15 * t7 * t4 * L__[3] + t32 + 2 * ModelPars[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
 
   /*\
@@ -403,7 +400,7 @@ namespace HangGliderDefine {
     DuDxlp( DgDxlp_I[ 3 ], DgDxlp_J[ 3] ) = -DgDxlp_V[3];
     DuDxlp( DgDxlp_I[ 4 ], DgDxlp_J[ 4] ) = -DgDxlp_V[4];
     DuDxlp( DgDxlp_I[ 5 ], DgDxlp_J[ 5] ) = -DgDxlp_V[5];
-    integer info = alglin::gesv( 1, 9, DgDu.get_data(), 1, ipiv, DuDxlp.get_data(), 1 );
+    integer info = alglin::gesv( 1, 9, DgDu.data(), 1, ipiv, DuDxlp.data(), 1 );
     return info == 0;
   }
 
@@ -458,7 +455,7 @@ namespace HangGliderDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -480,7 +477,7 @@ namespace HangGliderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -490,7 +487,7 @@ namespace HangGliderDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -530,9 +527,8 @@ namespace HangGliderDefine {
     result__[ 5   ] = LR__[1] - LL__[1];
     result__[ 6   ] = LR__[2] - LL__[2];
     result__[ 7   ] = LR__[3] - LL__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -605,9 +601,8 @@ namespace HangGliderDefine {
     result__[ 13  ] = 1;
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",16);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
 }

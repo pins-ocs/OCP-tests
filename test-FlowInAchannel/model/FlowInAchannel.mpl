@@ -18,17 +18,16 @@ EQNS_T := [ EQ||(1..4)]: <%>;
 # State variables and controls
 qvars := map([u,u1,u2,u3],(t));
 cvars := [];
-pars := [];
 # Optimal Control: problem definition
 loadDynamicSystem(
-  equations  = EQNS_T,
-  controls   = cvars,
-  states     = qvars,
-  parameters = pars
+  equations = EQNS_T,
+  controls  = cvars,
+  states    = qvars
 );
 #Describe(addBoundaryConditions);
 addBoundaryConditions(
-  initial=[u=0,u1=0],  final=[u=1,u1=0]
+  initial=[u=0,u1=0],
+  final=[u=1,u1=0]
 );
 infoBoundaryConditions();
 setTarget(
@@ -46,8 +45,6 @@ GUESS := [
   u2 = diff(GG,zeta,zeta),
   u3 = diff(GG,zeta,zeta,zeta)
 ];
-PGUESS := [
-];
 CONT := [];
 #Describe(generateOCProblem);
 generateOCProblem(
@@ -56,8 +53,7 @@ generateOCProblem(
   mesh             = [[length=1,n=100]],
   continuation     = CONT,
   #controls_guess   = [u=1],
-  states_guess     = GUESS,
-  parameters_guess = PGUESS
+  states_guess     = GUESS
 );
 #ocp := getOCProblem();
 #eval(ocp);

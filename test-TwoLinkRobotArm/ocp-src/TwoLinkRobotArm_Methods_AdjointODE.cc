@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -116,9 +116,8 @@ namespace TwoLinkRobotArmDefine {
     real_type t73  = t53 - t46;
     result__[ 2   ] = t13 * (t42 * t7 - 9.0 / 4.0 * t37 * t10 + 3.0 / 2.0 * t46 * t5) * t3 - 9.0 / 2.0 * t63 * (t42 * t5 + 4.0 / 3.0 * t53 - 4.0 / 3.0 * t46 - 3.0 / 2.0 * t46 * t7) * t3 - t13 * (t69 * t7 - 9.0 / 4.0 * t40 * t10 - 3.0 / 2.0 * t73 * t5) * t18 + 9.0 / 2.0 * t63 * (t69 * t5 - 7.0 / 3.0 * t46 + 3.0 / 2.0 * t73 * t7) * t18;
     result__[ 3   ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -215,9 +214,8 @@ namespace TwoLinkRobotArmDefine {
     real_type t144 = t125 - 7.0 / 3.0 * t86 + t130;
     real_type t148 = t32 * t144;
     result__[ 6   ] = t11 * (-t83 - 0.27e2 / 4.0 * t77 * t7 + t88) * t3 - 9 * t100 * (t82 * t6 - 9.0 / 4.0 * t77 * t8 + 3.0 / 2.0 * t86 * t5) * t3 + 0.81e2 / 2.0 * t111 * t106 * t3 - 9.0 / 2.0 * t20 * t114 * t3 + 9.0 / 2.0 * t8 * t114 * t3 - t11 * (-t125 - 0.27e2 / 4.0 * t80 * t7 - t130) * t16 + 9 * t100 * (t124 * t6 - 9.0 / 4.0 * t80 * t8 - 3.0 / 2.0 * t128 * t5) * t16 - 0.81e2 / 2.0 * t111 * t144 * t16 + 9.0 / 2.0 * t20 * t148 * t16 - 9.0 / 2.0 * t8 * t148 * t16;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -284,9 +282,8 @@ namespace TwoLinkRobotArmDefine {
     real_type t62  = 7.0 / 2.0 * t30 + 9.0 / 4.0 * t33 * t5;
     real_type t66  = t46 - t39;
     result__[ 2   ] = t11 * (t35 * t5 - 9.0 / 4.0 * t30 * t8 + 3.0 / 2.0 * t39 * t3) * t1 - 9.0 / 2.0 * t56 * (t35 * t3 + 4.0 / 3.0 * t46 - 4.0 / 3.0 * t39 - 3.0 / 2.0 * t39 * t5) * t1 - t11 * (t62 * t5 - 9.0 / 4.0 * t33 * t8 - 3.0 / 2.0 * t66 * t3) * t15 + 9.0 / 2.0 * t56 * (t62 * t3 - 7.0 / 3.0 * t39 + 3.0 / 2.0 * t66 * t5) * t15;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }
 
   /*\
@@ -325,9 +322,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 0   ] = 4.0 / 3.0 * t9 * t3 - 3.0 / 2.0 * t9 * t14 * t13;
     real_type t18  = 3.0 / 2.0 * t14;
     result__[ 1   ] = t9 * (-4.0 / 3.0 - t18) * t3 - t9 * (-7.0 / 3.0 - t18) * t13;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -384,9 +380,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 0   ] = -6 * t13 * t3 + t21 + 0.27e2 / 4.0 * t5 * t10 * t22 * t17;
     real_type t29  = 3.0 / 2.0 * t12;
     result__[ 1   ] = 3.0 / 2.0 * t19 * t3 - 9.0 / 2.0 * t13 * (-4.0 / 3.0 - t29) * t3 - t21 + 9.0 / 2.0 * t13 * (-7.0 / 3.0 - t29) * t17;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDx_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -436,9 +431,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 0   ] = 4.0 / 3.0 * t7 * t1 - 3.0 / 2.0 * t7 * t11 * t10;
     real_type t15  = 3.0 / 2.0 * t11;
     result__[ 1   ] = t7 * (-4.0 / 3.0 - t15) * t1 - t7 * (-7.0 / 3.0 - t15) * t10;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDp_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHuDp_sparse", 2, i_segment );
   }
 
   /*\
@@ -479,9 +473,8 @@ namespace TwoLinkRobotArmDefine {
     real_type t22  = t3 * t3;
     real_type t25  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t22);
     result__[ 0   ] = t25 * ((9.0 / 4.0 * t6 * t4 + 2 * t10) * t3 + 4.0 / 3.0 * t14 - 4.0 / 3.0 * t16 - 3.0 / 2.0 * t16 * t4) * L__[0] - t25 * ((7.0 / 2.0 * t6 + 9.0 / 4.0 * t10 * t4) * t3 - 7.0 / 3.0 * t16 + 3.0 / 2.0 * (t14 - t16) * t4) * L__[1] + (t9 - t5) * L__[2] + t5 * L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -545,9 +538,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 1   ] = L__[1];
     result__[ 2   ] = L__[2];
     result__[ 3   ] = L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -640,9 +632,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];
     result__[ 3   ] = V__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

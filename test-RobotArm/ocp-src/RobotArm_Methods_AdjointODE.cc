@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -114,9 +114,8 @@ namespace RobotArmDefine {
     result__[ 3   ] = t17 * L__[3];
     result__[ 4   ] = t17 * L__[4];
     result__[ 5   ] = t17 * L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -169,9 +168,8 @@ namespace RobotArmDefine {
     result__[ 2   ] = result__[1];
     real_type t16  = I_theta_D_2_2(t2, t3);
     result__[ 3   ] = -t6 * t16 * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -216,9 +214,8 @@ namespace RobotArmDefine {
     result__[ 0   ] = L__[3];
     result__[ 1   ] = L__[4];
     result__[ 2   ] = L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }
 
   /*\
@@ -250,9 +247,8 @@ namespace RobotArmDefine {
     result__[ 0   ] = t2 * L__[0];
     result__[ 1   ] = t2 * L__[1];
     result__[ 2   ] = t2 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -329,9 +325,8 @@ namespace RobotArmDefine {
     result__[ 0   ] = L__[0];
     result__[ 1   ] = L__[1];
     result__[ 2   ] = L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHuDp_sparse", 3, i_segment );
   }
 
   /*\
@@ -361,9 +356,8 @@ namespace RobotArmDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = L__[0] * U__[0] + L__[1] * U__[1] + L__[2] * U__[2] + L__[3] * X__[3] + L__[4] * X__[4] + L__[5] * X__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -432,9 +426,8 @@ namespace RobotArmDefine {
     result__[ 4   ] = L__[1] * t5;
     real_type t7   = I_phi(t3);
     result__[ 5   ] = L__[2] * t7;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -483,9 +476,8 @@ namespace RobotArmDefine {
     result__[ 1   ] = t4 * t5;
     real_type t6   = I_phi_D(t1);
     result__[ 2   ] = L__[2] * t6;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DetaDx_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DetaDx_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -551,9 +543,8 @@ namespace RobotArmDefine {
     result__[ 3   ] = V__[0];
     result__[ 4   ] = V__[1];
     result__[ 5   ] = V__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -602,9 +593,8 @@ namespace RobotArmDefine {
     result__[ 1   ] = t4 * t5;
     real_type t6   = I_phi_D(t1);
     result__[ 2   ] = V__[5] * t6;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DnuDx_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DnuDx_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

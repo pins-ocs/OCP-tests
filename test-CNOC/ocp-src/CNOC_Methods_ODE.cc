@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods.cc                                                |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -177,9 +177,8 @@ namespace CNOCDefine {
     result__[ 4   ] = -t9 * (-t13 * t17 * t1 - U__[0]);
     result__[ 5   ] = -t9 * (t13 * t11 * t1 - U__[1]);
     result__[ 6   ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -293,9 +292,8 @@ namespace CNOCDefine {
     result__[ 24  ] = -result__[2] * t4 * t30;
     result__[ 25  ] = -result__[20];
     result__[ 26  ] = -t31 * t55 + U__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",27);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 27, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -369,9 +367,8 @@ namespace CNOCDefine {
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
     result__[ 0   ] = X__[6];
     result__[ 1   ] = result__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -426,9 +423,8 @@ namespace CNOCDefine {
     result__[ 4   ] = 1;
     result__[ 5   ] = 1;
     result__[ 6   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 7, i_segment );
   }
 
 }

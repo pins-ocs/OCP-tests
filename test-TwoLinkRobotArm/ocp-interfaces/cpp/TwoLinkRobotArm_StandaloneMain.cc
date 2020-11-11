@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,10 +52,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type u_epsilon0 = 0.01;
-   real_type u_epsilon = u_epsilon0;
-   real_type u_tolerance0 = 0.01;
-   real_type u_tolerance = u_tolerance0;
+    real_type u_epsilon0 = 0.01;
+    real_type u_tolerance0 = 0.01;
+    real_type u_tolerance = u_tolerance0;
+    real_type u_epsilon = u_epsilon0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -77,9 +77,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "TwoLinkRobotArm_dump";
@@ -122,7 +119,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_x1"] = SET;
     data_BoundaryConditions["initial_x2"] = SET;
     data_BoundaryConditions["initial_x3"] = SET;
@@ -143,7 +140,7 @@ main() {
     // Model Parameters
 
     // Guess Parameters
-    data_Parameters[Tguess] = 10;
+    data_Parameters["Tguess"] = 10;
 
     // Boundary Conditions
     data_Parameters["W"] = 0;
@@ -186,14 +183,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 TwoLinkRobotArm_data.Mesh["s0"] = 0;
-TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 400;
 TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
+TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -214,7 +211,7 @@ TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/TwoLinkRobotArm_OCP_result.txt" );
     } else {
@@ -236,12 +233,12 @@ TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 13/9/2020                                        #
+#  version: 1.0   date 12/11/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,26 +18,29 @@
 include Mechatronix
 
 # Auxiliary values
+days1  = 30
 mu     = 398600441800000
-r0     = 6678140
-g0     = 9.80665
-T      = 0.68
-v0     = (mu/r0)**(1/2.0)
+u0     = 0
 Isp    = 1500
+T      = 0.68
+r0     = 6678140
+v0     = (mu/r0)**(1/2.0)
+u0_bar = u0/v0
+g0     = 9.80665
 mdot   = T/g0/Isp
 days   = 1
-days1  = 30
 tf     = 86400*days
-u0     = 0
-u0_bar = u0/v0
 
 mechatronix do |data|
 
   # Level of message
   data.InfoLevel = 4
 
+  # Activate dynamic debugging
+  data.Debug = false
+
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = 4
+  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
   data.U_threaded  = true
   data.F_threaded  = true
   data.JF_threaded = true
@@ -51,9 +54,6 @@ mechatronix do |data|
   data.JacobianCheckFull        = false
   data.JacobianCheck_epsilon    = 1e-4
   data.FiniteDifferenceJacobian = false
-
-  # Redirect output to GenericContainer["stream_output"]
-  data.RedirectStreamToString = false
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "MaximumAscent_dump"

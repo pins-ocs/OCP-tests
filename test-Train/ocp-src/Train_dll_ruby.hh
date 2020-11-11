@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_dll_ruby.hh                                              |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -134,7 +134,7 @@ namespace TrainDefine {
 
         model.setup( gc_data );
       }
-      catch ( exception const & exc ) {
+      catch ( std::exception const & exc ) {
         error = exc.what();
         ok    = false;
       }

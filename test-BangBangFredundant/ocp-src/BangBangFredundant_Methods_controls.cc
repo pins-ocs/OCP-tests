@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods.cc                                  |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -96,9 +96,8 @@ namespace BangBangFredundantDefine {
     result__[ 0   ] = L__[4] + t4;
     real_type t7   = ALIAS_aF2Control_D_1(U__[1], -t3, t3);
     result__[ 1   ] = L__[5] + t7;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -138,9 +137,8 @@ namespace BangBangFredundantDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -181,9 +179,8 @@ namespace BangBangFredundantDefine {
     real_type t2   = ModelPars[0];
     result__[ 0   ] = ALIAS_aF1Control_D_1_1(U__[0], -t2, t2);
     result__[ 1   ] = ALIAS_aF2Control_D_1_1(U__[1], -t2, t2);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -373,7 +370,7 @@ namespace BangBangFredundantDefine {
     // fill DgDxlp
     DuDxlp( DgDxlp_I[ 0 ], DgDxlp_J[ 0] ) = -DgDxlp_V[0];
     DuDxlp( DgDxlp_I[ 1 ], DgDxlp_J[ 1] ) = -DgDxlp_V[1];
-    integer info = alglin::gesv( 2, 12, DgDu.get_data(), 2, ipiv, DuDxlp.get_data(), 2 );
+    integer info = alglin::gesv( 2, 12, DgDu.data(), 2, ipiv, DuDxlp.data(), 2 );
     return info == 0;
   }
 
@@ -432,7 +429,7 @@ namespace BangBangFredundantDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -454,7 +451,7 @@ namespace BangBangFredundantDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -464,7 +461,7 @@ namespace BangBangFredundantDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -508,9 +505,8 @@ namespace BangBangFredundantDefine {
     result__[ 9   ] = LR__[3] - LL__[3];
     result__[ 10  ] = LR__[4] - LL__[4];
     result__[ 11  ] = LR__[5] - LL__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",12);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 12, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -599,9 +595,8 @@ namespace BangBangFredundantDefine {
     result__[ 21  ] = 1;
     result__[ 22  ] = -1;
     result__[ 23  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",24);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 24, i_segment_left, i_segment_right );
   }
 
 }

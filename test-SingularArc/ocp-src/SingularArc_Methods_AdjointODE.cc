@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -91,9 +91,8 @@ namespace SingularArcDefine {
     result__[ 0   ] = -t5 * t2 * L__[1] + t9 * t2 * L__[2];
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -136,9 +135,8 @@ namespace SingularArcDefine {
     real_type t5   = cos(t4);
     real_type t9   = sin(t4);
     result__[ 0   ] = -t5 * t2 * L__[1] - t9 * t2 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,9 +180,8 @@ namespace SingularArcDefine {
     real_type t3   = sin(t2);
     real_type t6   = cos(t2);
     result__[ 0   ] = -t3 * L__[1] + t6 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDp_sparse", 1, i_segment );
   }
 
   /*\
@@ -213,9 +210,8 @@ namespace SingularArcDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = L__[0] * P__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -288,9 +284,8 @@ namespace SingularArcDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = L__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
 
   /*\
@@ -324,9 +319,8 @@ namespace SingularArcDefine {
     real_type t8   = cos(t7);
     real_type t11  = sin(t7);
     result__[ 0   ] = t11 * L__[2] + t8 * L__[1] + L__[0] * U__[0] + t2;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -367,9 +361,8 @@ namespace SingularArcDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = ALIAS_tfbound_DD(P__[0]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHpDp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,1, i_segment );
   }
 
   /*\
@@ -398,9 +391,8 @@ namespace SingularArcDefine {
     result__[ 0   ] = L__[0];
     result__[ 1   ] = L__[1];
     result__[ 2   ] = L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -492,9 +484,8 @@ namespace SingularArcDefine {
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

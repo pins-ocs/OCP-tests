@@ -25,8 +25,7 @@ cvars := [vtheta(zeta)] ;
 loadDynamicSystem(
   equations  = EQNS_T,
   controls   = cvars,
-  states     = qvars,
-  parameters = [T]
+  states     = qvars
 );
 addBoundaryConditions(
   initial = [x=0,y=0,v=0],
@@ -68,10 +67,10 @@ GUESS := [
 ];
 generateOCProblem(
   "Brachiostocrona",
-   admissible_region = [T>0],
-   parameters        = PARS,
-   mesh              = [length=1,n=500],
-   parameters_guess  = [T=Tf],
-   states_guess      = GUESS
+   admissible_region       = [T>0],
+   parameters              = PARS,
+   mesh                    = [length=1,n=500],
+   optimization_parameters = [T=Tf],
+   states_guess            = GUESS
 ) ;
 

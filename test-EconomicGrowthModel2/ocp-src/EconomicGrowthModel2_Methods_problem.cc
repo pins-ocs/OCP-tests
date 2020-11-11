@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods1.cc                               |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -67,7 +67,7 @@ namespace EconomicGrowthModel2Define {
   void
   EconomicGrowthModel2::continuationStep0( real_type s ) {
     int msg_level = 3;
-    pConsole->message(
+    m_console->message(
       fmt::format( "\nContinuation step N.0 s = {}\n", s ),
       msg_level
     );
@@ -143,12 +143,12 @@ namespace EconomicGrowthModel2Define {
 
   real_type
   EconomicGrowthModel2::explog_D_1_3( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t1   = -1 + s__XO;
-    real_type t2   = log(a__XO);
-    real_type t5   = log(b__XO);
-    real_type t8   = pow(b__XO, s__XO);
+    real_type t1   = pow(b__XO, s__XO);
+    real_type t2   = -1 + s__XO;
+    real_type t3   = log(a__XO);
+    real_type t6   = log(b__XO);
     real_type t10  = pow(a__XO, -s__XO);
-    return t10 * t8 * (t2 * t1 - t5 * t1 - 1);
+    return t10 * (t3 * t2 - t6 * t2 - 1) * t1;
   }
 
   real_type
@@ -325,9 +325,7 @@ namespace EconomicGrowthModel2Define {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -354,9 +352,8 @@ namespace EconomicGrowthModel2Define {
       MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_u ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   void
@@ -439,9 +436,7 @@ namespace EconomicGrowthModel2Define {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = L__[3] - L__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",1);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

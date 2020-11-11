@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -74,9 +74,6 @@ main() {
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
 
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
-
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "Farmer_dump";
 
@@ -118,7 +115,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_x1"] = SET;
     data_BoundaryConditions["initial_x2"] = SET;
     data_BoundaryConditions["initial_x3"] = SET;
@@ -205,10 +202,11 @@ main() {
     // Constraint1D
     // Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
     // Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_LimitX2X4 = data_Constraints["LimitX2X4"];
-    data_LimitX2X4["subType"]   = 'PENALTY_REGULAR';
+    data_LimitX2X4["subType"]   = "PENALTY_REGULAR";
     data_LimitX2X4["epsilon"]   = 0.001;
     data_LimitX2X4["tolerance"] = 0.001;
     data_LimitX2X4["active"]    = true;
@@ -217,14 +215,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Farmer_data.Mesh["s0"] = 0;
-Farmer_data.Mesh["segments"][0]["n"] = 400;
 Farmer_data.Mesh["segments"][0]["length"] = 2;
+Farmer_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -245,7 +243,7 @@ Farmer_data.Mesh["segments"][0]["length"] = 2;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/Farmer_OCP_result.txt" );
     } else {
@@ -267,12 +265,12 @@ Farmer_data.Mesh["segments"][0]["length"] = 2;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

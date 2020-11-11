@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods1.cc                                             |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -225,9 +225,7 @@ namespace Bike1DDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -255,9 +253,8 @@ namespace Bike1DDefine {
     std::fill_n( UGUESS__.pointer(), 2, 0 );
     UGUESS__[ iU_mur ] = 0;
     UGUESS__[ iU_muf ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
 
   void
@@ -335,9 +332,7 @@ namespace Bike1DDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = Tmax_normalized(X__[0]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",1);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -359,9 +354,7 @@ namespace Bike1DDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1.0 / X__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"integrated_post_eval",1);
-    #endif
+    Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 
 }

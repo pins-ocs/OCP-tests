@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -134,9 +134,8 @@ namespace FarmerDefine {
     result__[ 2   ] = 2 * t11 * t32 + 2 * t12 * t10 - 2 * (-t12 + U__[2]) * ModelPars[16] - L__[2] / ModelPars[7] + t77;
     result__[ 3   ] = 0;
     result__[ 4   ] = -t47 + 2 * t15 * t32 + 2 * t16 * t14 - 2 * (-t16 + U__[3]) * ModelPars[17] - t77 - L__[4] / ModelPars[9];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -220,9 +219,8 @@ namespace FarmerDefine {
     result__[ 14  ] = result__[11];
     real_type t41  = t17 * t17;
     result__[ 15  ] = t24 + 2 / t41 * t1 + 2 * t17 + 2 * ModelPars[17];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",16);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 16, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -288,9 +286,8 @@ namespace FarmerDefine {
     result__[ 1   ] = 2 * ModelPars[15] * (-X__[1] + U__[1]) + L__[1] / ModelPars[6];
     result__[ 2   ] = 2 * ModelPars[16] * (-X__[2] + U__[2]) + L__[2] / ModelPars[7];
     result__[ 3   ] = 2 * ModelPars[17] * (-X__[4] + U__[3]) + L__[4] / ModelPars[9];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -336,9 +333,8 @@ namespace FarmerDefine {
     result__[ 1   ] = -2 * ModelPars[15];
     result__[ 2   ] = -2 * ModelPars[16];
     result__[ 3   ] = -2 * ModelPars[17];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDx_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -401,9 +397,8 @@ namespace FarmerDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
 
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",0);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -468,9 +463,8 @@ namespace FarmerDefine {
     result__[ 2   ] = L__[2];
     result__[ 3   ] = L__[3];
     result__[ 4   ] = L__[4];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -564,9 +558,8 @@ namespace FarmerDefine {
     result__[ 2   ] = V__[2];
     result__[ 3   ] = V__[3];
     result__[ 4   ] = V__[4];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

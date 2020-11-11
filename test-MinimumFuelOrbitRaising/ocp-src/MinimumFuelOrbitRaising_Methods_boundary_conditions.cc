@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods.cc                             |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -81,9 +81,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     result__[ 3   ] = XR__[1];
     real_type t5   = XR__[2] * XR__[2];
     result__[ 4   ] = t5 * XR__[0] - 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 5, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -135,9 +134,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type t1   = XR__[2];
     result__[ 4   ] = t1 * t1;
     result__[ 5   ] = 2 * t1 * XR__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -206,9 +204,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     result__[ 3   ] = t9 * t7 - LR__[0];
     result__[ 4   ] = OMEGA__[3] - LR__[1];
     result__[ 5   ] = 2 * t8 * XR__[0] * t7 - LR__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -257,9 +254,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     result__[ 0   ] = 2 * XR__[2] * t1;
     result__[ 1   ] = result__[0];
     result__[ 2   ] = 2 * t1 * XR__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DadjointBCDxp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 3, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

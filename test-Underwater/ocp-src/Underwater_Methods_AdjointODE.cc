@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -124,9 +124,8 @@ namespace UnderwaterDefine {
     real_type t43  = 1.0 / t24;
     result__[ 4   ] = -t43 * t26 * t23 * t41 + t35 * t32 * t8 * t31 + t6 * t14 + t9 * t3;
     result__[ 5   ] = t27 * t24 * t8 * t22 - t43 * t26 * t4 * t41 + t2 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -195,9 +194,8 @@ namespace UnderwaterDefine {
     result__[ 8   ] = -1.0 / t26 * t25 * t2 * L__[3];
     result__[ 9   ] = result__[5];
     result__[ 10  ] = result__[8];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",11);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 11, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -260,9 +258,8 @@ namespace UnderwaterDefine {
     real_type t38  = 1.0 / t21 * t22;
     result__[ 2   ] = -t38 * t19 * t35 + t31 * t6 * t26 + t7 * t1 + t4 * t11;
     result__[ 3   ] = t24 * t6 * t18 - t38 * t2 * t35 + L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDp_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDp_sparse", 4, i_segment );
   }
 
   /*\
@@ -294,9 +291,8 @@ namespace UnderwaterDefine {
     result__[ 0   ] = 1.0 / ModelPars[2] * t2 * L__[3];
     result__[ 1   ] = 1.0 / ModelPars[3] * t2 * L__[4];
     result__[ 2   ] = 1.0 / ModelPars[1] * t2 * L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -373,9 +369,8 @@ namespace UnderwaterDefine {
     result__[ 0   ] = 1.0 / ModelPars[2] * L__[3];
     result__[ 1   ] = 1.0 / ModelPars[3] * L__[4];
     result__[ 2   ] = 1.0 / ModelPars[1] * L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHuDp_sparse", 3, i_segment );
   }
 
   /*\
@@ -416,9 +411,8 @@ namespace UnderwaterDefine {
     real_type t32  = 1.0 / t25;
     real_type t42  = 1.0 / ModelPars[1];
     result__[ 0   ] = (t4 * t2 + t7 * t6) * L__[0] + (-t7 * t2 + t4 * t6) * L__[1] + t17 * L__[2] + (-t22 * t25 * t17 * t6 + t22 * U__[0]) * L__[3] + (t32 * t21 * t17 * t2 + t32 * U__[1]) * L__[4] + (t42 * U__[2] + t42 * (t25 - t21) * t6 * t2) * L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -484,9 +478,8 @@ namespace UnderwaterDefine {
     result__[ 3   ] = L__[3];
     result__[ 4   ] = L__[4];
     result__[ 5   ] = L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -581,9 +574,8 @@ namespace UnderwaterDefine {
     result__[ 3   ] = V__[3];
     result__[ 4   ] = V__[4];
     result__[ 5   ] = V__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,12 +52,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type L = 100;
-   real_type jerk_max = 10;
-   real_type s_f = L;
-   real_type wJ = 1/jerk_max^2;
-   real_type v_max = 30;
-   real_type jerk_min = -10;
+    real_type jerk_max = 10;
+    real_type jerk_min = -10;
+    real_type v_max = 30;
+    real_type L = 100;
+    real_type s_f = L;
+    real_type wJ = 1/jerk_max^2;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -79,9 +79,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "Crossroad_dump";
@@ -124,7 +121,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_s"] = SET;
     data_BoundaryConditions["initial_v"] = SET;
     data_BoundaryConditions["initial_a"] = SET;
@@ -150,7 +147,7 @@ main() {
     data_Parameters["jerk_min"] = jerk_min;
 
     // Guess Parameters
-    data_Parameters[Vmean] = 2;
+    data_Parameters["Vmean"] = 2;
 
     // Boundary Conditions
     data_Parameters["a_f"] = 0;
@@ -164,8 +161,8 @@ main() {
 
     // User Function Parameters
     data_Parameters["kappa0"] = 0;
-    data_Parameters["kappa1"] = 1/10.0;
-    data_Parameters["kappa2"] = 1/10.0;
+    data_Parameters["kappa1"] = 1/10.00;
+    data_Parameters["kappa2"] = 1/10.00;
 
     // Continuation Parameters
 
@@ -188,16 +185,17 @@ main() {
     // Constraint1D
     // Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
     // Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_Tpositive = data_Constraints["Tpositive"];
-    data_Tpositive["subType"]   = 'PENALTY_REGULAR';
+    data_Tpositive["subType"]   = "PENALTY_REGULAR";
     data_Tpositive["epsilon"]   = 0.01;
     data_Tpositive["tolerance"] = 0.01;
     data_Tpositive["active"]    = true;
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_AccBound = data_Constraints["AccBound"];
-    data_AccBound["subType"]   = 'PENALTY_REGULAR';
+    data_AccBound["subType"]   = "PENALTY_REGULAR";
     data_AccBound["epsilon"]   = 0.01;
     data_AccBound["tolerance"] = 0.01;
     data_AccBound["active"]    = true;
@@ -214,16 +212,16 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Crossroad_data.Mesh["s0"] = 0;
-Crossroad_data.Mesh["segments"][0]["length"] = 0.5;
 Crossroad_data.Mesh["segments"][0]["n"] = 100;
-Crossroad_data.Mesh["segments"][1]["length"] = 0.5;
+Crossroad_data.Mesh["segments"][0]["length"] = 0.5;
 Crossroad_data.Mesh["segments"][1]["n"] = 100;
+Crossroad_data.Mesh["segments"][1]["length"] = 0.5;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -244,7 +242,7 @@ Crossroad_data.Mesh["segments"][1]["n"] = 100;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/Crossroad_OCP_result.txt" );
     } else {
@@ -266,12 +264,12 @@ Crossroad_data.Mesh["segments"][1]["n"] = 100;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

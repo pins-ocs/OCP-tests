@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: MinimumEnergyProblem_pins_run.rb                               #
 #                                                                       #
-#  version: 1.0   date 13/9/2020                                        #
+#  version: 1.0   date 12/11/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #

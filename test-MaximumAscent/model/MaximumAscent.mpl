@@ -26,7 +26,7 @@ xvars := [r(zeta),u(zeta),v(zeta),theta(zeta)] ;
 # Controlli
 uvars := [alpha(zeta)] ;
 # BVP
-loadDynamicSystem(equations=EQNS,controls=uvars,states=xvars,parameters=[]) ;
+loadDynamicSystem(  equations = EQNS,  controls  = uvars,  states    = xvars);
 # Initial conditions
 # Launch from zero altitude with zero initial velocity
 # All Boundary Conditions are non-dimensional
@@ -36,9 +36,9 @@ addUserFunction(Tbar(tf)=T*tf/v0) ;
 addUserFunction(tf(days)=days*24*3600);
 
 #Describe(addBoundaryConditions) ;
-addBoundaryConditions(initial=[r=r0_bar,u=u0_bar,v=v0_bar,theta=theta0],
-                      final=[u=uf_bar],
-                      generic=[[v(zeta_f)*sqrt(r(zeta_f))-1,"final_velocity"]]);
+addBoundaryConditions(  initial = [r=r0_bar,u=u0_bar,v=v0_bar,theta=theta0],
+  final   = [u=uf_bar],
+  generic = [[v(zeta_f)*sqrt(r(zeta_f))-1,"final_velocity"]]);
 infoBoundaryConditions() ;
 setTarget( mayer = -r(zeta_f), lagrange = 0) ;
 # Control deduced minimizing Hamiltonian
@@ -66,7 +66,8 @@ POST := [ [sqrt(lambda2__xo(zeta)^2+lambda3__xo(zeta)^2),"sqrtl12"],
           [u(zeta)*v0, "U"],
           [v(zeta)*v0, "V"]] ;
 #Describe(generateOCProblem) ;
-generateOCProblem(  "MaximumAscent",
+generateOCProblem(
+  "MaximumAscent",
   parameters      = PARAMETERS,
   post_processing = POST,
   continuation    = [[days=(1-s)*days0+s*days1]],
@@ -74,4 +75,6 @@ generateOCProblem(  "MaximumAscent",
   controls_user_defined = CONTROL,
   #controls_guess = [ theta = arctan2(-lambda2__xo(zeta),-lambda1__xo(zeta)) ],
   #parameters_guess = [ T=sqrt((x1-x0)^2+(y1-y0)^2)/V],
-  states_guess    = GUESS);
+  states_guess    = GUESS
+);
+

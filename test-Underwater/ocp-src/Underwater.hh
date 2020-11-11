@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater.hh                                                  |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -102,9 +102,6 @@ namespace UnderwaterDefine {
 
   class Underwater : public Mechatronix::Discretized_Indirect_OCP {
 
-    // redirect output to a string in GenericContainer - - - - - - - - - - - - -
-    stringstream ss_redirected_stream;
-
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     real_type ModelPars[16];
 
@@ -167,9 +164,9 @@ namespace UnderwaterDefine {
     UNDERWATER_API_DLL
     explicit
     Underwater(
-      string const & name,
-      ThreadPool   * _TP,
-      Console      * _pConsole
+      string  const & name,
+      ThreadPool    * _TP,
+      Console const * _pConsole
     );
 
     UNDERWATER_API_DLL virtual

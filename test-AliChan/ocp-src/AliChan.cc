@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan.cc                                                     |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -119,9 +119,9 @@ namespace AliChanDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   AliChan::AliChan(
-    string const & name,
-    ThreadPool   * _TP,
-    Console      * _pConsole
+    string  const & name,
+    ThreadPool    * _TP,
+    Console const * _pConsole
   )
   : Discretized_Indirect_OCP( name, _TP, _pConsole )
   // Controls
@@ -236,7 +236,7 @@ namespace AliChanDefine {
   void
   AliChan::setupControls( GenericContainer const & gc_data ) {
     // initialize Control penalties
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Controls"),
       "AliChan::setupClasses: Missing key `Controls` in data\n"
     );
@@ -257,7 +257,7 @@ namespace AliChanDefine {
   void
   AliChan::setupPointers( GenericContainer const & gc_data ) {
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Pointers"),
       "AliChan::setupPointers: Missing key `Pointers` in data\n"
     );
@@ -265,7 +265,7 @@ namespace AliChanDefine {
 
     // Initialize user classes
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("pMesh"),
       "in AliChan::setupPointers(gc) cant find key `pMesh' in gc\n"
     );
@@ -284,14 +284,16 @@ namespace AliChanDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    pConsole->message("\nControls\n",msg_level);
-    mstr.str(""); uControl.info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nControls\n",msg_level);
+    mstr.str("");
+    uControl.info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nUser class (pointer)\n",msg_level);
-    pConsole->message("User function `pMesh`: ",msg_level);
-    mstr.str(""); pMesh->info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nUser class (pointer)\n",msg_level);
+    mstr.str("");
+    mstr << "User function `pMesh`: ";
+    pMesh->info(mstr);
+    m_console->message(mstr.str(),msg_level);
   }
 
   /* --------------------------------------------------------------------------
@@ -305,10 +307,8 @@ namespace AliChanDefine {
   void
   AliChan::setup( GenericContainer const & gc ) {
 
-    if ( gc.get_map_bool("RedirectStreamToString") ) {
-      ss_redirected_stream.str("");
-      pConsole->changeStream(&ss_redirected_stream);
-    }
+    if ( gc.exists("Debug") )
+      m_debug = gc("Debug").get_bool("AliChan::setup, Debug");
 
     this->setupParameters( gc );
     this->setupClasses( gc );

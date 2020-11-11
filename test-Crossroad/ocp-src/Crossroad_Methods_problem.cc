@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods1.cc                                          |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -118,9 +118,9 @@ namespace CrossroadDefine {
     real_type t17  = ModelPars[13] * ModelPars[13];
     real_type t21  = AccBound(1 - 1.0 / t6 * t4 - 1.0 / t17 * t14 * t11);
     real_type t22  = VelBound(t9);
-    real_type t23  = U__[0];
-    real_type t24  = t23 * t23;
-    return t2 + t21 + t22 + t1 * (ModelPars[11] * t24 + ModelPars[12]) + t9 * t1 * L__[0] + t3 * t1 * L__[1] + t23 * t1 * L__[2];
+    real_type t24  = U__[0];
+    real_type t25  = t24 * t24;
+    return t2 + t21 + t22 + t1 * (t25 * ModelPars[11] + ModelPars[12]) + t9 * t1 * L__[0] + t3 * t1 * L__[1] + t24 * t1 * L__[2];
   }
 
   /*\
@@ -234,9 +234,7 @@ namespace CrossroadDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -263,9 +261,8 @@ namespace CrossroadDefine {
       MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_jerk ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   void
@@ -349,9 +346,7 @@ namespace CrossroadDefine {
     result__[ 1   ] = X__[2] / ModelPars[14];
     real_type t6   = X__[1] * X__[1];
     result__[ 2   ] = 1.0 / ModelPars[13] * result__[0] * t6;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",3);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

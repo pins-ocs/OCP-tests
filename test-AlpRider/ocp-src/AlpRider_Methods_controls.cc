@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -79,9 +79,8 @@ namespace AlpRiderDefine {
     real_type t6   = L__[3];
     result__[ 0   ] = 0.2e-1 * U__[0] + t3 + t4 + t5 + t6;
     result__[ 1   ] = 0.2e-1 * U__[1] + t3 + 2 * t4 - t5 + 3 * t6;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -133,9 +132,8 @@ namespace AlpRiderDefine {
     result__[ 5   ] = 2;
     result__[ 6   ] = -1;
     result__[ 7   ] = 3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -175,9 +173,8 @@ namespace AlpRiderDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 0.2e-1;
     result__[ 1   ] = 0.2e-1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -360,7 +357,7 @@ namespace AlpRiderDefine {
     DuDxlp( DgDxlp_I[ 5 ], DgDxlp_J[ 5] ) = -DgDxlp_V[5];
     DuDxlp( DgDxlp_I[ 6 ], DgDxlp_J[ 6] ) = -DgDxlp_V[6];
     DuDxlp( DgDxlp_I[ 7 ], DgDxlp_J[ 7] ) = -DgDxlp_V[7];
-    integer info = alglin::gesv( 2, 8, DgDu.get_data(), 2, ipiv, DuDxlp.get_data(), 2 );
+    integer info = alglin::gesv( 2, 8, DgDu.data(), 2, ipiv, DuDxlp.data(), 2 );
     return info == 0;
   }
 
@@ -415,7 +412,7 @@ namespace AlpRiderDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -437,7 +434,7 @@ namespace AlpRiderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -447,7 +444,7 @@ namespace AlpRiderDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -487,9 +484,8 @@ namespace AlpRiderDefine {
     result__[ 5   ] = LR__[1] - LL__[1];
     result__[ 6   ] = LR__[2] - LL__[2];
     result__[ 7   ] = LR__[3] - LL__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -562,9 +558,8 @@ namespace AlpRiderDefine {
     result__[ 13  ] = 1;
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",16);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
 }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -110,12 +110,11 @@ namespace CrossroadDefine {
     real_type t38  = L__[1];
     result__[ 2   ] = -2 * t5 * t1 * t19 + t33 * t38;
     real_type t40  = ALIAS_Tpositive_D(t33);
-    real_type t42  = U__[0];
-    real_type t43  = t42 * t42;
-    result__[ 3   ] = t1 * t38 + t7 * t32 + t42 * L__[2] + ModelPars[11] * t43 + t40 + ModelPars[12];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",4);
-    #endif
+    real_type t43  = U__[0];
+    real_type t44  = t43 * t43;
+    result__[ 3   ] = t1 * t38 + t7 * t32 + t43 * L__[2] + t44 * ModelPars[11] + t40 + ModelPars[12];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -208,9 +207,8 @@ namespace CrossroadDefine {
     result__[ 11  ] = result__[6];
     result__[ 12  ] = result__[10];
     result__[ 13  ] = ALIAS_Tpositive_DD(X__[3]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",14);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 14, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -274,9 +272,8 @@ namespace CrossroadDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t4   = X__[3];
     result__[ 0   ] = 2 * t4 * ModelPars[11] * U__[0] + t4 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -316,9 +313,8 @@ namespace CrossroadDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 2 * U__[0] * ModelPars[11] + L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDx_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -381,9 +377,8 @@ namespace CrossroadDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
 
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",0);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -447,9 +442,8 @@ namespace CrossroadDefine {
     result__[ 1   ] = L__[1];
     result__[ 2   ] = L__[2];
     result__[ 3   ] = L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -542,9 +536,8 @@ namespace CrossroadDefine {
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];
     result__[ 3   ] = V__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

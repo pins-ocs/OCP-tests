@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Data.lua                                            |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,8 +19,8 @@
 
 -- Auxiliary values
 epsi_penalty = 0.1
-tol_penalty  = 0.01
 epsi_max     = epsi_penalty
+tol_penalty  = 0.01
 
 content = {
 
@@ -28,7 +28,7 @@ content = {
   InfoLevel = 4,
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
+  N_threads   = [1,$MAX_THREAD_NUM-1].max,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -37,23 +37,20 @@ content = {
   -- Enable doctor
   Doctor = false,
 
+  -- Activate dynamic debugging
+  Debug = false,
+
   -- Enable check jacobian
   JacobianCheck            = false,
   JacobianCheckFull        = false,
   JacobianCheck_epsilon    = 1e-4,
   FiniteDifferenceJacobian = false,
 
-  -- Redirect output to GenericContainer["stream_output"]
-  RedirectStreamToString = false,
-
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "Underwater_dump",
 
   -- spline output (all values as function of "s")
   -- OutputSplines = [0],
-
-  -- Redirect output to GenericContainer["stream_output"]
-  RedirectStreamToString = false,
 
   ControlSolver = {
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"
@@ -156,7 +153,7 @@ content = {
 
   -- Controls
   -- Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
-  -- Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', HYPERBOLIC'
+  -- Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
 
   Controls = {
     u1Control = {

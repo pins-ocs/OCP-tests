@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -92,9 +92,8 @@ namespace AlpRiderDefine {
     real_type t30  = L__[3];
     result__[ 2   ] = 2 * t5 * t12 + 2 * t5 * t15 - 3 * t28 + 5 * t30;
     result__[ 3   ] = 2 * t7 * t12 + 2 * t7 * t15 + 5 * t28 - 3 * t30;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -179,9 +178,8 @@ namespace AlpRiderDefine {
     result__[ 13  ] = result__[7];
     result__[ 14  ] = result__[11];
     result__[ 15  ] = 4 * t8 * t12 + t16 + t18;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",16);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 16, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -249,9 +247,8 @@ namespace AlpRiderDefine {
     real_type t6   = L__[3];
     result__[ 0   ] = 0.2e-1 * U__[0] + t3 + t4 + t5 + t6;
     result__[ 1   ] = 0.2e-1 * U__[1] + t3 + 2 * t4 - t5 + 3 * t6;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -347,9 +344,8 @@ namespace AlpRiderDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
 
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",0);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -413,9 +409,8 @@ namespace AlpRiderDefine {
     result__[ 1   ] = L__[1];
     result__[ 2   ] = L__[2];
     result__[ 3   ] = L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -508,9 +503,8 @@ namespace AlpRiderDefine {
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];
     result__[ 3   ] = V__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

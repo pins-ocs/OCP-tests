@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas.hh                                               |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -102,9 +102,6 @@ namespace GunnAndThomasDefine {
 
   class GunnAndThomas : public Mechatronix::Discretized_Indirect_OCP {
 
-    // redirect output to a string in GenericContainer - - - - - - - - - - - - -
-    stringstream ss_redirected_stream;
-
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     real_type ModelPars[2];
 
@@ -163,9 +160,9 @@ namespace GunnAndThomasDefine {
     GUNNANDTHOMAS_API_DLL
     explicit
     GunnAndThomas(
-      string const & name,
-      ThreadPool   * _TP,
-      Console      * _pConsole
+      string  const & name,
+      ThreadPool    * _TP,
+      Console const * _pConsole
     );
 
     GUNNANDTHOMAS_API_DLL virtual

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods1.cc                                           |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -58,7 +58,7 @@ namespace AlpRiderDefine {
   void
   AlpRider::continuationStep0( real_type s ) {
     int msg_level = 3;
-    pConsole->message(
+    m_console->message(
       fmt::format( "\nContinuation step N.0 s = {}\n", s ),
       msg_level
     );
@@ -74,7 +74,7 @@ namespace AlpRiderDefine {
   void
   AlpRider::continuationStep1( real_type s ) {
     int msg_level = 3;
-    pConsole->message(
+    m_console->message(
       fmt::format( "\nContinuation step N.1 s = {}\n", s ),
       msg_level
     );
@@ -108,16 +108,16 @@ namespace AlpRiderDefine {
   AlpRider::p_D_1_1( real_type t__XO, real_type a__XO, real_type b__XO ) const {
     real_type t2   = pow(-t__XO + a__XO, 2);
     real_type t3   = t2 * b__XO;
-    real_type t6   = exp(-t3);
-    return 4 * t6 * (-1.0 / 2.0 + t3) * b__XO;
+    real_type t4   = exp(-t3);
+    return 4 * (-1.0 / 2.0 + t3) * t4 * b__XO;
   }
 
   real_type
   AlpRider::p_D_1_2( real_type t__XO, real_type a__XO, real_type b__XO ) const {
     real_type t2   = pow(-t__XO + a__XO, 2);
     real_type t3   = t2 * b__XO;
-    real_type t6   = exp(-t3);
-    return -4 * t6 * (-1.0 / 2.0 + t3) * b__XO;
+    real_type t4   = exp(-t3);
+    return -4 * (-1.0 / 2.0 + t3) * t4 * b__XO;
   }
 
   real_type
@@ -142,8 +142,8 @@ namespace AlpRiderDefine {
   AlpRider::p_D_2_2( real_type t__XO, real_type a__XO, real_type b__XO ) const {
     real_type t2   = pow(-t__XO + a__XO, 2);
     real_type t3   = t2 * b__XO;
-    real_type t6   = exp(-t3);
-    return 4 * t6 * (-1.0 / 2.0 + t3) * b__XO;
+    real_type t4   = exp(-t3);
+    return 4 * (-1.0 / 2.0 + t3) * t4 * b__XO;
   }
 
   real_type
@@ -346,9 +346,7 @@ namespace AlpRiderDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -376,9 +374,8 @@ namespace AlpRiderDefine {
     std::fill_n( UGUESS__.pointer(), 2, 0 );
     UGUESS__[ iU_u1 ] = 0;
     UGUESS__[ iU_u2 ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
 
   void
@@ -463,9 +460,7 @@ namespace AlpRiderDefine {
     real_type t8   = X__[3] * X__[3];
     result__[ 0   ] = t2 + t4 + t6 + t8;
     result__[ 1   ] = q(Q__[0]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",2);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham.cc                                                |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -123,9 +123,9 @@ namespace BrysonDenhamDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   BrysonDenham::BrysonDenham(
-    string const & name,
-    ThreadPool   * _TP,
-    Console      * _pConsole
+    string  const & name,
+    ThreadPool    * _TP,
+    Console const * _pConsole
   )
   : Discretized_Indirect_OCP( name, _TP, _pConsole )
   // Controls
@@ -200,13 +200,13 @@ namespace BrysonDenhamDefine {
   */
   void
   BrysonDenham::setupClasses( GenericContainer const & gc_data ) {
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Constraints"),
       "BrysonDenham::setupClasses: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("X1bound"),
       "in BrysonDenham::setupClasses(gc) missing key: ``X1bound''\n"
     );
@@ -266,7 +266,7 @@ namespace BrysonDenhamDefine {
   void
   BrysonDenham::setupPointers( GenericContainer const & gc_data ) {
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Pointers"),
       "BrysonDenham::setupPointers: Missing key `Pointers` in data\n"
     );
@@ -274,7 +274,7 @@ namespace BrysonDenhamDefine {
 
     // Initialize user classes
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("pMesh"),
       "in BrysonDenham::setupPointers(gc) cant find key `pMesh' in gc\n"
     );
@@ -293,14 +293,16 @@ namespace BrysonDenhamDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    pConsole->message("\nConstraints 1D\n",msg_level);
-    mstr.str(""); X1bound.info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nConstraints 1D\n",msg_level);
+    mstr.str("");
+    X1bound.info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nUser class (pointer)\n",msg_level);
-    pConsole->message("User function `pMesh`: ",msg_level);
-    mstr.str(""); pMesh->info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nUser class (pointer)\n",msg_level);
+    mstr.str("");
+    mstr << "User function `pMesh`: ";
+    pMesh->info(mstr);
+    m_console->message(mstr.str(),msg_level);
   }
 
   /* --------------------------------------------------------------------------
@@ -314,10 +316,8 @@ namespace BrysonDenhamDefine {
   void
   BrysonDenham::setup( GenericContainer const & gc ) {
 
-    if ( gc.get_map_bool("RedirectStreamToString") ) {
-      ss_redirected_stream.str("");
-      pConsole->changeStream(&ss_redirected_stream);
-    }
+    if ( gc.exists("Debug") )
+      m_debug = gc("Debug").get_bool("BrysonDenham::setup, Debug");
 
     this->setupParameters( gc );
     this->setupClasses( gc );

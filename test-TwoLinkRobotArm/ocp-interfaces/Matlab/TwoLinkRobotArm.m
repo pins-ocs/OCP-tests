@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: TwoLinkRobotArm.m                                              %
 %                                                                       %
-%  version: 1.0   date 13/9/2020                                        %
+%  version: 1.0   date 12/11/2020                                       %
 %                                                                       %
 %  Copyright (C) 2020                                                   %
 %                                                                       %
@@ -144,6 +144,14 @@ classdef TwoLinkRobotArm < handle
     end
 
     % -------------------------------------------------------------------------
+    % NUM THREAD
+    % -------------------------------------------------------------------------
+    function N_thread( self, nt )
+      % set information level
+      TwoLinkRobotArm_Mex( 'N_thread', self.objectHandle, nt );
+    end
+
+    % -------------------------------------------------------------------------
     % GUESS
     % -------------------------------------------------------------------------
     function set_guess( self, varargin )
@@ -273,6 +281,20 @@ classdef TwoLinkRobotArm < handle
 
     function check_jacobian( self, x, epsi )
       TwoLinkRobotArm_Mex( 'check_jacobian', self.objectHandle, x, epsi );
+    end
+
+    function [a,c] = get_ac( self, iseg_L, q_L, x_L, lambda_L, ...
+                                   iseg_R, q_R, x_R, lambda_R, pars, U )
+      [a,c] = TwoLinkRobotArm_Mex( 'a', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
+      );
+    end
+
+    function [h,c] = get_hc( self, iseg_L, q_L, x_L, lambda_L, ...
+                                   iseg_R, q_R, x_R, lambda_R, pars )
+      [h,c] = TwoLinkRobotArm_Mex( 'hc', self.objectHandle, ...
+        iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+      );
     end
 
     % -------------------------------------------------------------------------

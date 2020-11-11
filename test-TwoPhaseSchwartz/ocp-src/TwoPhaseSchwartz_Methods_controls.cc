@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -87,9 +87,8 @@ namespace TwoPhaseSchwartzDefine {
     real_type t3   = ALIAS_u1Control_D_1(U__[0], -1, 1);
     result__[ 0   ] = L__[1] + t3;
     result__[ 1   ] = L__[3] * ModelPars[0] + 2 * ModelPars[3] * U__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -129,9 +128,8 @@ namespace TwoPhaseSchwartzDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = ModelPars[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -171,9 +169,8 @@ namespace TwoPhaseSchwartzDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = ALIAS_u1Control_D_1_1(U__[0], -1, 1);
     result__[ 1   ] = 2 * ModelPars[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -346,7 +343,7 @@ namespace TwoPhaseSchwartzDefine {
     // fill DgDxlp
     DuDxlp( DgDxlp_I[ 0 ], DgDxlp_J[ 0] ) = -DgDxlp_V[0];
     DuDxlp( DgDxlp_I[ 1 ], DgDxlp_J[ 1] ) = -DgDxlp_V[1];
-    integer info = alglin::gesv( 2, 8, DgDu.get_data(), 2, ipiv, DuDxlp.get_data(), 2 );
+    integer info = alglin::gesv( 2, 8, DgDu.data(), 2, ipiv, DuDxlp.data(), 2 );
     return info == 0;
   }
 
@@ -401,7 +398,7 @@ namespace TwoPhaseSchwartzDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -423,7 +420,7 @@ namespace TwoPhaseSchwartzDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -433,7 +430,7 @@ namespace TwoPhaseSchwartzDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -473,9 +470,8 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 5   ] = LR__[1] - LL__[1];
     result__[ 6   ] = LR__[2] - LL__[2];
     result__[ 7   ] = LR__[3] - LL__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -548,9 +544,8 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 13  ] = 1;
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",16);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
 }

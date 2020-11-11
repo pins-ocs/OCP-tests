@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -104,9 +104,8 @@ namespace GoddardRocketDefine {
     real_type t20  = DD(t4, t5);
     real_type t22  = t7 * t7;
     result__[ 2   ] = t18 - 1.0 / t22 * (U__[0] - t20) * t3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -177,9 +176,8 @@ namespace GoddardRocketDefine {
     real_type t25  = ALIAS_massPositive_DD(t7);
     real_type t27  = DD(t4, t5);
     result__[ 8   ] = t25 + 2 / t16 / t7 * (U__[0] - t27) * t3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",9);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -234,9 +232,8 @@ namespace GoddardRocketDefine {
     real_type t15  = DD(t2, t3);
     real_type t18  = t5 * t5;
     result__[ 2   ] = -1.0 / t18 * (U__[0] - t15) * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }
 
   /*\
@@ -266,9 +263,8 @@ namespace GoddardRocketDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = P__[0];
     result__[ 0   ] = 1.0 / X__[2] * t2 * L__[1] - 1.0 / ModelPars[2] * t2 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -309,9 +305,8 @@ namespace GoddardRocketDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t5   = X__[2] * X__[2];
     result__[ 0   ] = -1.0 / t5 * P__[0] * L__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDx_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -351,9 +346,8 @@ namespace GoddardRocketDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = L__[1] / X__[2] - L__[2] / ModelPars[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
 
   /*\
@@ -389,9 +383,8 @@ namespace GoddardRocketDefine {
     real_type t9   = DD(t8, t4);
     real_type t14  = gg(t8);
     result__[ 0   ] = t2 + t4 * L__[0] + (1.0 / X__[2] * (t7 - t9) - t14) * L__[1] - 1.0 / ModelPars[2] * t7 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -432,9 +425,8 @@ namespace GoddardRocketDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = ALIAS_TSPositive_DD(P__[0]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHpDp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,1, i_segment );
   }
 
   /*\
@@ -463,9 +455,8 @@ namespace GoddardRocketDefine {
     result__[ 0   ] = L__[0];
     result__[ 1   ] = L__[1];
     result__[ 2   ] = L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -557,9 +548,8 @@ namespace GoddardRocketDefine {
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

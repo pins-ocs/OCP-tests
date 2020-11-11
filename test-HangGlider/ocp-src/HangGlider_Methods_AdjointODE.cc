@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -129,9 +129,8 @@ namespace HangGliderDefine {
     real_type t92  = t91 * t14;
     real_type t94  = w_D_2(t7, t9);
     result__[ 3   ] = t2 * L__[1] - t85 * t27 * t6 + (-t94 * t23 - t24 * t92 - t8 * t89) * t32 * t3 + (-t85 * t49 * t45 + (-t94 * t20 - t24 * t89 + t8 * t92) * t31 * t45) * t44;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -276,9 +275,8 @@ namespace HangGliderDefine {
     real_type t298 = t297 * t15;
     real_type t302 = w_D_2_2(t7, t9);
     result__[ 8   ] = 2 * t284 * t28 * t6 - 2 * t150 * t164 * t6 - t291 * t48 * t6 + (-2 * t161 * t159 - t302 * t24 - t25 * t298 - t8 * t295) * t53 * t3 + (2 * t284 * t72 * t68 - 2 * t150 * t192 * t68 - t291 * t84 * t68 + (-2 * t161 * t156 - t302 * t21 - t25 * t295 + t8 * t298) * t52 * t68) * t67;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",9);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -362,9 +360,8 @@ namespace HangGliderDefine {
     real_type t85  = t84 * t12;
     real_type t87  = w_D_2(t5, t7);
     result__[ 2   ] = L__[1] - t78 * t25 * t4 + (-t87 * t21 - t22 * t85 - t6 * t82) * t29 * t4 + (-t78 * t45 * t42 + (-t87 * t18 - t22 * t82 + t6 * t85) * t48) * t41;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }
 
   /*\
@@ -404,9 +401,8 @@ namespace HangGliderDefine {
     real_type t23  = Lfun(t11, t12, t13);
     real_type t24  = w(t11, t13);
     result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[2] + (-2 * t12 * t19 * t18 - t24 * t23) * t16 * t7 * L__[2] + (-2 * t24 * t19 * t18 + t12 * t23) * t16 * t7 * L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -480,9 +476,8 @@ namespace HangGliderDefine {
     real_type t92  = Lfun_D_3(t7, t8, t9);
     real_type t94  = w_D_2(t7, t9);
     result__[ 2   ] = -t85 * t24 * t6 + (-2 * t8 * t88 * t15 - t94 * t20 - t21 * t92) * t29 * t3 - t85 * t49 * t43 + (-2 * t94 * t16 * t15 - 2 * t21 * t88 * t15 + t8 * t92) * t29 * t42;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDx_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -532,9 +527,8 @@ namespace HangGliderDefine {
     real_type t17  = Lfun(t5, t6, t7);
     real_type t18  = w(t5, t7);
     result__[ 0   ] = (-2 * t6 * t13 * t12 - t18 * t17) * t9 * t3 * L__[2] + (-2 * t18 * t13 * t12 + t6 * t17) * t9 * t3 * L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
 
   /*\
@@ -578,9 +572,8 @@ namespace HangGliderDefine {
     real_type t26  = t25 * t17;
     real_type t27  = w(t13, t7);
     result__[ 0   ] = t2 + t4 * L__[0] + t7 * L__[1] + (-t4 * t23 - t27 * t26) * t15 * t11 * L__[2] + ((-t27 * t23 + t4 * t26) * t15 * t11 - ModelPars[9]) * L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -621,9 +614,8 @@ namespace HangGliderDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = ALIAS_Tbound_DD(P__[0]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHpDp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,1, i_segment );
   }
 
   /*\
@@ -653,9 +645,8 @@ namespace HangGliderDefine {
     result__[ 1   ] = L__[1];
     result__[ 2   ] = L__[2];
     result__[ 3   ] = L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -748,9 +739,8 @@ namespace HangGliderDefine {
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];
     result__[ 3   ] = V__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

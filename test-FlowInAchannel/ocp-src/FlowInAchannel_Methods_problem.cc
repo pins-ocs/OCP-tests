@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods1.cc                                     |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -171,9 +171,7 @@ namespace FlowInAchannelDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\

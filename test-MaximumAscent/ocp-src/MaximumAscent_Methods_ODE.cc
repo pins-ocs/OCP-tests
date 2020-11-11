@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -83,9 +83,8 @@ namespace MaximumAscentDefine {
     real_type t28  = cos(t23);
     result__[ 2   ] = -t8 * t5 * result__[0] + t28 * t22;
     result__[ 3   ] = t8 * t5 * t3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,9 +147,8 @@ namespace MaximumAscentDefine {
     result__[ 5   ] = -t14 * t17;
     result__[ 6   ] = -t7 * t13;
     result__[ 7   ] = t14 * result__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -230,9 +228,8 @@ namespace MaximumAscentDefine {
     result__[ 0   ] = t13 * t11;
     real_type t14  = sin(t12);
     result__[ 1   ] = -t14 * t11;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -281,9 +278,8 @@ namespace MaximumAscentDefine {
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 4, i_segment );
   }
 
 }

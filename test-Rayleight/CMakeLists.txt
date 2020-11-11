@@ -9,37 +9,33 @@
 #                                                                          #
 ############################################################################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 SET( TARGET Rayleight )
 PROJECT( ${TARGET} CXX )
 
-SET( CMAKE_VERBOSE_MAKEFILE FALSE )
-SET( CMAKE_INSTALL_MESSAGE NEVER )
-SET( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON )
+SET( CMAKE_VERBOSE_MAKEFILE           TRUE  )
+SET( CMAKE_INSTALL_MESSAGE            NEVER )
+SET( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON    )
+SET( CMAKE_MACOSX_RPATH               ./lib )
 
-SET( CXX_WARN   "-Weverything -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-unreachable-code-break -Wno-format-nonliteral -Wno-cast-qual -Wno-unused-macros -Wno-switch-enum -Wno-conversion -Wno-cast-align -Wno-sign-conversion -Wno-documentation -Wno-c++2a-compat" )
+SET( CXX_WARN   "-Weverything -Wno-alloca -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-c++2a-compat -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-format-nonliteral -Wno-implicit-fallthrough -Wno-documentation -Wno-float-equal -Wno-padded -Wno-reserved-id-macro -Wno-unreachable-code-break -Wno-unused-macros -Wno-switch-enum -Wno-sign-conversion -Wno-signed-enum-bitfield -Wno-weak-vtables" )
 SET( CLANG_WARN "-Wall -Wno-float-equal -Wno-padded" )
 SET( VS_WARN    "" )
 
-EXEC_PROGRAM( pins ARGS --cflags     OUTPUT_VARIABLE CFLAGS )
+EXEC_PROGRAM( pins ARGS --cflags     OUTPUT_VARIABLE CFLAGS   )
 EXEC_PROGRAM( pins ARGS --cppflags   OUTPUT_VARIABLE CXXFLAGS )
-EXEC_PROGRAM( pins ARGS --lflags     OUTPUT_VARIABLE LFLAGS )
-EXEC_PROGRAM( pins ARGS --libs       OUTPUT_VARIABLE LIBS )
-EXEC_PROGRAM( pins ARGS --frameworks OUTPUT_VARIABLE LIBS2 )
-EXEC_PROGRAM( pins ARGS --includes   OUTPUT_VARIABLE INCLUDE )
+EXEC_PROGRAM( pins ARGS --lflags     OUTPUT_VARIABLE LFLAGS   )
+EXEC_PROGRAM( pins ARGS --libs       OUTPUT_VARIABLE LIBS     )
+EXEC_PROGRAM( pins ARGS --frameworks OUTPUT_VARIABLE LIBS2    )
+EXEC_PROGRAM( pins ARGS --includes   OUTPUT_VARIABLE INCLUDE  )
 
-SET( CMAKE_FLAGS  "${CXXFLAGS} ${INCLUDE}" )
-SET( CMAKE_LINKER "${LFLAGS} ${LIBS} ${LIBS2}" )
+SET( CMAKE_C_FLAGS_DEBUG    "${CFLAGS} ${INCLUDE}" )
+SET( CMAKE_C_FLAGS          "${CFLAGS} ${INCLUDE}" )
+SET( CMAKE_CXX_FLAGS_DEBUG  "${CXXFLAGS} ${INCLUDE}" )
+SET( CMAKE_CXX_FLAGS        "${CXXFLAGS} ${INCLUDE}" )
 
-SET( CMAKE_CXX_FLAGS_DEBUG     ${CMAKE_FLAGS}  )
-SET( CMAKE_CXX_FLAGS           ${CMAKE_FLAGS}  )
-SET( CMAKE_EXE_LINKER_FLAGS    ${CMAKE_LINKER} )
-SET( CMAKE_SHARED_LINKER_FLAGS ${CMAKE_LINKER} )
-
-#SET( CMAKE_C_FLAGS_RELEASE       ${CMAKE_CXX} )
-#SET( CMAKE_C_FLAGS_RELEASE       ${CMAKE_CXX} )
-#SET( CMAKE_C_FLAGS_DEBUG         ${CMAKE_CXX} )
-#SET( CMAKE_C_LINKER_WRAPPER_FLAG ${CMAKE_LINKER} )
+SET( CMAKE_SHARED_LINKER_FLAGS ${LFLAGS} )
+SET( CMAKE_EXE_LINKER_FLAGS    ${LFLAGS} )
 
 SET( CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR} )
 
@@ -72,10 +68,9 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/ocp-src )
 ADD_LIBRARY( ${TARGET}        SHARED ${SOURCES} ${HEADERS} )
 ADD_LIBRARY( ${TARGET}_static STATIC ${SOURCES} ${HEADERS} )
 
-ADD_EXECUTABLE( main            ocp-interfaces/cpp/${TARGET}_Main.cc )
-ADD_EXECUTABLE( main_standalone ocp-interfaces/cpp/${TARGET}_StandaloneMain.cc )
+ADD_EXECUTABLE( main ocp-interfaces/cpp/${TARGET}_Main.cc )
 
-INSTALL( TARGETS main main_standalone DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
+INSTALL( TARGETS main DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
 INSTALL(
   TARGETS ${TARGET} ${TARGET}_static
   RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
@@ -83,8 +78,8 @@ INSTALL(
   ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
 )
 
-TARGET_LINK_LIBRARIES( main            ${TARGET}_static )
-TARGET_LINK_LIBRARIES( main_standalone ${TARGET}_static )
+TARGET_LINK_LIBRARIES( ${TARGET} ${LIBS2} ${LIBS} )
+TARGET_LINK_LIBRARIES( main ${TARGET}_static ${LIBS2} ${LIBS}  )
 
 MESSAGE( STATUS "CMAKE_FLAGS  = ${CMAKE_FLAGS}" )
 MESSAGE( STATUS "CMAKE_LINKER = ${CMAKE_LINKER}" )

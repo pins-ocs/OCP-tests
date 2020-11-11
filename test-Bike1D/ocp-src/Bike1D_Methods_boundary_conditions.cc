@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -106,9 +106,8 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     result__[ 0   ] = XL__[0] - ModelPars[7];
     result__[ 1   ] = XR__[0] - ModelPars[6];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -151,9 +150,8 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -215,9 +213,8 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     result__[ 0   ] = XL__[0] * LL__[0] + OMEGA__[0];
     result__[ 1   ] = -XR__[0] * LR__[0] + OMEGA__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -263,9 +260,8 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     result__[ 0   ] = LL__[0];
     result__[ 1   ] = -LR__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DadjointBCDxp_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

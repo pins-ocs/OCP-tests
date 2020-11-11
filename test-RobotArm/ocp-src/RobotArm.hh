@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm.hh                                                    |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -102,9 +102,6 @@ namespace RobotArmDefine {
 
   class RobotArm : public Mechatronix::Discretized_Indirect_OCP {
 
-    // redirect output to a string in GenericContainer - - - - - - - - - - - - -
-    stringstream ss_redirected_stream;
-
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     real_type ModelPars[7];
 
@@ -166,9 +163,9 @@ namespace RobotArmDefine {
     ROBOTARM_API_DLL
     explicit
     RobotArm(
-      string const & name,
-      ThreadPool   * _TP,
-      Console      * _pConsole
+      string  const & name,
+      ThreadPool    * _TP,
+      Console const * _pConsole
     );
 
     ROBOTARM_API_DLL virtual

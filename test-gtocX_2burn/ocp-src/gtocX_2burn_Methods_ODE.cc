@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -92,9 +92,8 @@ namespace gtocX_2burnDefine {
     result__[ 4   ] = 0;
     real_type t26  = pow(t20 * t12 + t18 * t13 + 1, 2);
     result__[ 5   ] = t8 / t5 / t4 * t26 * t3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -185,9 +184,8 @@ namespace gtocX_2burnDefine {
     result__[ 9   ] = 2 * t41 * t73 * t70;
     result__[ 10  ] = 2 * t19 * t73 * t70;
     result__[ 11  ] = 2 * (-t19 * t13 + t41 * t14) * t73 * t70;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",12);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 12, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -306,9 +304,8 @@ namespace gtocX_2burnDefine {
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
     result__[ 5   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 6, i_segment );
   }
 
 }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_dll_pins.cc                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -334,7 +334,7 @@ namespace SingularConstrainedCalogeroDefine {
         MRB_TT_FALSE
       );
 
-    } catch ( exception const & err ) {
+    } catch ( std::exception const & err ) {
       mrb_raisef(
         mrb,
         E_SPLINE_ERROR,
@@ -402,7 +402,7 @@ namespace SingularConstrainedCalogeroDefine {
           ),
           mrb_float_value(mrb, values[i])
         );
-    } catch ( exception const & err ) {
+    } catch ( std::exception const & err ) {
       mrb_raisef(
         mrb,
         E_SPLINE_ERROR,

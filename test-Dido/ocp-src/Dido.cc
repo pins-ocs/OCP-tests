@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido.cc                                                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -120,9 +120,9 @@ namespace DidoDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   Dido::Dido(
-    string const & name,
-    ThreadPool   * _TP,
-    Console      * _pConsole
+    string  const & name,
+    ThreadPool    * _TP,
+    Console const * _pConsole
   )
   : Discretized_Indirect_OCP( name, _TP, _pConsole )
   // Controls
@@ -250,7 +250,7 @@ namespace DidoDefine {
   void
   Dido::setupPointers( GenericContainer const & gc_data ) {
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Pointers"),
       "Dido::setupPointers: Missing key `Pointers` in data\n"
     );
@@ -258,7 +258,7 @@ namespace DidoDefine {
 
     // Initialize user classes
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("pMesh"),
       "in Dido::setupPointers(gc) cant find key `pMesh' in gc\n"
     );
@@ -277,10 +277,11 @@ namespace DidoDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    pConsole->message("\nUser class (pointer)\n",msg_level);
-    pConsole->message("User function `pMesh`: ",msg_level);
-    mstr.str(""); pMesh->info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nUser class (pointer)\n",msg_level);
+    mstr.str("");
+    mstr << "User function `pMesh`: ";
+    pMesh->info(mstr);
+    m_console->message(mstr.str(),msg_level);
   }
 
   /* --------------------------------------------------------------------------
@@ -294,10 +295,8 @@ namespace DidoDefine {
   void
   Dido::setup( GenericContainer const & gc ) {
 
-    if ( gc.get_map_bool("RedirectStreamToString") ) {
-      ss_redirected_stream.str("");
-      pConsole->changeStream(&ss_redirected_stream);
-    }
+    if ( gc.exists("Debug") )
+      m_debug = gc("Debug").get_bool("Dido::setup, Debug");
 
     this->setupParameters( gc );
     this->setupClasses( gc );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,13 +52,13 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type mu = 1;
-   real_type m0 = 1;
-   real_type r0 = 1;
-   real_type T = .1405e-1*m0*mu/r0^2;
-   real_type v0 = (mu/r0)^(1/2);
-   real_type tf = 16.60*(r0^3/mu)^(1/2);
-   real_type mdot = .533*T*(mu/r0)^(1/2);
+    real_type mu = 1;
+    real_type r0 = 1;
+    real_type v0 = (mu/r0)^(1/2.0);
+    real_type tf = 16.60*(r0^3/mu)^(1/2.0);
+    real_type m0 = 1;
+    real_type T = 0.1405e-1*m0*mu/r0^2;
+    real_type mdot = 0.533*T*(mu/r0)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -80,9 +80,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "OrbitTransfer_dump";
@@ -125,7 +122,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_m"] = SET;
     data_BoundaryConditions["initial_alpha"] = SET;
     data_BoundaryConditions["initial_r"] = SET;
@@ -173,14 +170,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 OrbitTransfer_data.Mesh["s0"] = 0;
-OrbitTransfer_data.Mesh["segments"][0]["length"] = 1;
 OrbitTransfer_data.Mesh["segments"][0]["n"] = 1000;
+OrbitTransfer_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -201,7 +198,7 @@ OrbitTransfer_data.Mesh["segments"][0]["n"] = 1000;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/OrbitTransfer_OCP_result.txt" );
     } else {
@@ -223,12 +220,12 @@ OrbitTransfer_data.Mesh["segments"][0]["n"] = 1000;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

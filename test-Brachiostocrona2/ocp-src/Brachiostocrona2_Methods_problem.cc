@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods1.cc                                   |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -214,9 +214,7 @@ namespace Brachiostocrona2Define {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -243,9 +241,8 @@ namespace Brachiostocrona2Define {
       MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_theta ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   void

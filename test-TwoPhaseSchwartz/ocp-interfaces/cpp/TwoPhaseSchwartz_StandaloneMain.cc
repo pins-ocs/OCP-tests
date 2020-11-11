@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,12 +52,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type epsilon0 = 0.001;
-   real_type epsi0 = 0.1;
-   real_type epsi = epsi0;
-   real_type epsilon = epsilon0;
-   real_type tol0 = 0.1;
-   real_type tol = tol0;
+    real_type epsilon0 = 0.001;
+    real_type epsi0 = 0.1;
+    real_type epsi = epsi0;
+    real_type epsilon = epsilon0;
+    real_type tol0 = 0.1;
+    real_type tol = tol0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -79,9 +79,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "TwoPhaseSchwartz_dump";
@@ -124,7 +121,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_x1"] = SET;
     data_BoundaryConditions["initial_x2"] = SET;
     data_BoundaryConditions["x13"] = SET;
@@ -177,16 +174,17 @@ main() {
     // Constraint1D
     // Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
     // Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_bound1 = data_Constraints["bound1"];
-    data_bound1["subType"]   = 'PENALTY_REGULAR';
+    data_bound1["subType"]   = "PENALTY_REGULAR";
     data_bound1["epsilon"]   = epsi;
     data_bound1["tolerance"] = tol;
     data_bound1["active"]    = true;
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_bound2 = data_Constraints["bound2"];
-    data_bound2["subType"]   = 'PENALTY_REGULAR';
+    data_bound2["subType"]   = "PENALTY_REGULAR";
     data_bound2["epsilon"]   = epsi;
     data_bound2["tolerance"] = tol;
     data_bound2["active"]    = true;
@@ -202,7 +200,7 @@ TwoPhaseSchwartz_data.Mesh["segments"][0]["n"] = 100;
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -223,7 +221,7 @@ TwoPhaseSchwartz_data.Mesh["segments"][0]["n"] = 100;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/TwoPhaseSchwartz_OCP_result.txt" );
     } else {
@@ -245,12 +243,12 @@ TwoPhaseSchwartz_data.Mesh["segments"][0]["n"] = 100;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

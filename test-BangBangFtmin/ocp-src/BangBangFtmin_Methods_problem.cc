@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -77,8 +77,8 @@ namespace BangBangFtminDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[2];
-    return X__[1] * t2 * L__[0] + U__[0] * t2 * L__[1];
+    real_type t4   = X__[2];
+    return t4 * X__[1] * L__[0] + t4 * U__[0] * L__[1];
   }
 
   /*\
@@ -181,9 +181,7 @@ namespace BangBangFtminDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -210,9 +208,8 @@ namespace BangBangFtminDefine {
       MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_F ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   void

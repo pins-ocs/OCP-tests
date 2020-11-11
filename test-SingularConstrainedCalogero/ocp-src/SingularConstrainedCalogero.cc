@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero.cc                                 |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -126,9 +126,9 @@ namespace SingularConstrainedCalogeroDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   SingularConstrainedCalogero::SingularConstrainedCalogero(
-    string const & name,
-    ThreadPool   * _TP,
-    Console      * _pConsole
+    string  const & name,
+    ThreadPool    * _TP,
+    Console const * _pConsole
   )
   : Discretized_Indirect_OCP( name, _TP, _pConsole )
   // Controls
@@ -144,7 +144,7 @@ namespace SingularConstrainedCalogeroDefine {
     this->ns_continuation_begin = 0;
     this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, alglin::NaN<real_type>() );
+    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setupNames(
@@ -179,7 +179,7 @@ namespace SingularConstrainedCalogeroDefine {
   */
   void
   SingularConstrainedCalogero::updateContinuation( integer phase, real_type s ) {
-    LW_ASSERT(
+    UTILS_ASSERT(
       s >= 0 && s <= 1,
       "SingularConstrainedCalogero::updateContinuation( phase number = {}, s = {}) "
       "s must be in the interval [0,1]\n",
@@ -188,7 +188,7 @@ namespace SingularConstrainedCalogeroDefine {
     switch ( phase ) {
       case 0: continuationStep0( s ); break;
       default:
-        LW_ERROR(
+       UTILS_ERROR(
           "SingularConstrainedCalogero::updateContinuation( phase number = {}, s = {} )"
           " phase N.{} is not defined\n",
           phase, s, phase
@@ -207,7 +207,7 @@ namespace SingularConstrainedCalogeroDefine {
   */
   void
   SingularConstrainedCalogero::setupParameters( GenericContainer const & gc_data ) {
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Parameters"),
       "SingularConstrainedCalogero::setupParameters: Missing key `Parameters` in data\n"
     );
@@ -219,11 +219,11 @@ namespace SingularConstrainedCalogeroDefine {
       if ( gc.exists( namei ) ) {
         ModelPars[i] = gc(namei).get_number();
       } else {
-        pConsole->error( fmt::format( "Missing parameter: '{}'\n", namei ) );
+        m_console->error( fmt::format( "Missing parameter: '{}'\n", namei ) );
         allfound = false;
       }
     }
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       allfound, "in SingularConstrainedCalogero::setup not all parameters are set!\n"
     );
   }
@@ -243,13 +243,13 @@ namespace SingularConstrainedCalogeroDefine {
   */
   void
   SingularConstrainedCalogero::setupClasses( GenericContainer const & gc_data ) {
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Constraints"),
       "SingularConstrainedCalogero::setupClasses: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("uMaxBound"),
       "in SingularConstrainedCalogero::setupClasses(gc) missing key: ``uMaxBound''\n"
     );
@@ -295,7 +295,7 @@ namespace SingularConstrainedCalogeroDefine {
   void
   SingularConstrainedCalogero::setupControls( GenericContainer const & gc_data ) {
     // initialize Control penalties
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Controls"),
       "SingularConstrainedCalogero::setupClasses: Missing key `Controls` in data\n"
     );
@@ -316,7 +316,7 @@ namespace SingularConstrainedCalogeroDefine {
   void
   SingularConstrainedCalogero::setupPointers( GenericContainer const & gc_data ) {
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Pointers"),
       "SingularConstrainedCalogero::setupPointers: Missing key `Pointers` in data\n"
     );
@@ -324,7 +324,7 @@ namespace SingularConstrainedCalogeroDefine {
 
     // Initialize user classes
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("pMesh"),
       "in SingularConstrainedCalogero::setupPointers(gc) cant find key `pMesh' in gc\n"
     );
@@ -343,22 +343,25 @@ namespace SingularConstrainedCalogeroDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    pConsole->message("\nControls\n",msg_level);
-    mstr.str(""); uControl.info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nControls\n",msg_level);
+    mstr.str("");
+    uControl.info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nConstraints 1D\n",msg_level);
-    mstr.str(""); uMaxBound.info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nConstraints 1D\n",msg_level);
+    mstr.str("");
+    uMaxBound.info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nUser class (pointer)\n",msg_level);
-    pConsole->message("User function `pMesh`: ",msg_level);
-    mstr.str(""); pMesh->info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nUser class (pointer)\n",msg_level);
+    mstr.str("");
+    mstr << "User function `pMesh`: ";
+    pMesh->info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nModel Parameters\n",msg_level);
+    m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
-      pConsole->message(
+      m_console->message(
         fmt::format("{:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
         msg_level
       );
@@ -377,10 +380,8 @@ namespace SingularConstrainedCalogeroDefine {
   void
   SingularConstrainedCalogero::setup( GenericContainer const & gc ) {
 
-    if ( gc.get_map_bool("RedirectStreamToString") ) {
-      ss_redirected_stream.str("");
-      pConsole->changeStream(&ss_redirected_stream);
-    }
+    if ( gc.exists("Debug") )
+      m_debug = gc("Debug").get_bool("SingularConstrainedCalogero::setup, Debug");
 
     this->setupParameters( gc );
     this->setupClasses( gc );

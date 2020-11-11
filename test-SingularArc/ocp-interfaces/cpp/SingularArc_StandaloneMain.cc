@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,12 +52,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type epsi_ctrl0 = 0.01;
-   real_type tol_ctrl0 = 0.01;
-   real_type tol_ctrl = tol_ctrl0;
-   real_type epsi_ctrl = epsi_ctrl0;
-   real_type tol_T = 0.1;
-   real_type epsi_T = 0.01;
+    real_type tol_ctrl0 = 0.01;
+    real_type tol_ctrl = tol_ctrl0;
+    real_type epsi_T = 0.01;
+    real_type tol_T = 0.1;
+    real_type epsi_ctrl0 = 0.01;
+    real_type epsi_ctrl = epsi_ctrl0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -79,9 +79,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "SingularArc_dump";
@@ -124,7 +121,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_x1"] = SET;
     data_BoundaryConditions["initial_x2"] = SET;
     data_BoundaryConditions["initial_x3"] = SET;
@@ -142,10 +139,10 @@ main() {
     // Model Parameters
 
     // Guess Parameters
-    data_Parameters[T_init] = 100;
+    data_Parameters["T_init"] = 100;
 
     // Boundary Conditions
-    data_Parameters["x1_i"] = 1/2.0*Math::PI;
+    data_Parameters["x1_i"] = 1/2.00*Mechatronix::m_pi;
     data_Parameters["x2_i"] = 4;
     data_Parameters["x3_i"] = 0;
 
@@ -178,10 +175,11 @@ main() {
     // Constraint1D
     // Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
     // Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_tfbound = data_Constraints["tfbound"];
-    data_tfbound["subType"]   = 'BARRIER_LOG';
+    data_tfbound["subType"]   = "BARRIER_LOG";
     data_tfbound["epsilon"]   = epsi_T;
     data_tfbound["tolerance"] = tol_T;
     data_tfbound["active"]    = true;
@@ -197,7 +195,7 @@ SingularArc_data.Mesh["segments"][0]["length"] = 1;
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -218,7 +216,7 @@ SingularArc_data.Mesh["segments"][0]["length"] = 1;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/SingularArc_OCP_result.txt" );
     } else {
@@ -240,12 +238,12 @@ SingularArc_data.Mesh["segments"][0]["length"] = 1;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

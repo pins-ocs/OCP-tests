@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin.hh                                               |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -102,9 +102,6 @@ namespace BangBangFtminDefine {
 
   class BangBangFtmin : public Mechatronix::Discretized_Indirect_OCP {
 
-    // redirect output to a string in GenericContainer - - - - - - - - - - - - -
-    stringstream ss_redirected_stream;
-
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -162,9 +159,9 @@ namespace BangBangFtminDefine {
     BANGBANGFTMIN_API_DLL
     explicit
     BangBangFtmin(
-      string const & name,
-      ThreadPool   * _TP,
-      Console      * _pConsole
+      string  const & name,
+      ThreadPool    * _TP,
+      Console const * _pConsole
     );
 
     BANGBANGFTMIN_API_DLL virtual

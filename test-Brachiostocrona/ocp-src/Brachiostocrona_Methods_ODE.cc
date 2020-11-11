@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -87,9 +87,8 @@ namespace BrachiostocronaDefine {
     result__[ 1   ] = t6 * t3;
     result__[ 2   ] = -t6 * ModelPars[2] * t1;
     result__[ 3   ] = U__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -141,9 +140,8 @@ namespace BrachiostocronaDefine {
     result__[ 2   ] = t6 * t1;
     result__[ 3   ] = t5 * t3;
     result__[ 4   ] = -t3 * ModelPars[2] * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -190,9 +188,8 @@ namespace BrachiostocronaDefine {
     real_type t4   = sin(t2);
     result__[ 1   ] = t4 * t1;
     result__[ 2   ] = -t4 * ModelPars[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -231,9 +228,8 @@ namespace BrachiostocronaDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 1, i_segment );
   }
 
   /*\
@@ -282,9 +278,8 @@ namespace BrachiostocronaDefine {
     result__[ 1   ] = 1;
     result__[ 2   ] = ModelPars[3];
     result__[ 3   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 4, i_segment );
   }
 
 }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -130,9 +130,8 @@ namespace gtocX_2burnDefine {
     real_type t119 = L_guess(t10, t6);
     real_type t123 = ray_D_4(t3, t29, t30, t31);
     result__[ 5   ] = t117 * t72 + (2 * t31 - 2 * t119) * t2 + t34 * t123 * t42 * t40 + t52 * t21 * t20 - t50 * t123 * t42 * t55 + t36 * t21 * t48 + 2 * t117 * t88 * t85;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -296,9 +295,8 @@ namespace gtocX_2burnDefine {
     real_type t300 = t148 * t148;
     real_type t304 = ray_D_4_4(t18, t28, t29, t30);
     result__[ 17  ] = 2 * t24 * t21 * t296 * t79 + t33 * t300 * t50 * t48 - t62 * t300 * t50 * t71 + t33 * t304 * t42 * t48 - t62 * t304 * t42 * t71 + 2 * t298 * t224 * t115 - t35 * t19 * t17 + t64 * t19 * t60 + 2 * t150 * t71 + 2 * t166 * t48 + t296 * t185 + t298 * t230 - t188 + 2;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",18);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 18, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -361,9 +359,8 @@ namespace gtocX_2burnDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
 
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",0);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -459,9 +456,8 @@ namespace gtocX_2burnDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
 
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",0);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -527,9 +523,8 @@ namespace gtocX_2burnDefine {
     result__[ 3   ] = L__[3];
     result__[ 4   ] = L__[4];
     result__[ 5   ] = L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -624,9 +619,8 @@ namespace gtocX_2burnDefine {
     result__[ 3   ] = V__[3];
     result__[ 4   ] = V__[4];
     result__[ 5   ] = V__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

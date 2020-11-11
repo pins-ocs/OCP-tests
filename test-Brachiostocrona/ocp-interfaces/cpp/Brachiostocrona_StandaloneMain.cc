@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,11 +52,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type yf = -2;
-   real_type xf = 5;
-   real_type g = 9.81;
-   real_type Vf = (xf^2+yf^2)^(1/2)/(-2.*yf/g)^(1/2);
-   real_type Tf = (-2.*yf/g)^(1/2);
+    real_type yf = -2;
+    real_type xf = 5;
+    real_type g = 9.81;
+    real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
+    real_type Tf = (-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -78,9 +78,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "Brachiostocrona_dump";
@@ -123,7 +120,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_x"] = SET;
     data_BoundaryConditions["initial_y"] = SET;
     data_BoundaryConditions["initial_v"] = SET;
@@ -143,8 +140,8 @@ main() {
     data_Parameters["mass"] = 1;
 
     // Guess Parameters
-    data_Parameters[Tf] = Tf;
-    data_Parameters[Vf] = Vf;
+    data_Parameters["Tf"] = Tf;
+    data_Parameters["Vf"] = Vf;
 
     // Boundary Conditions
     data_Parameters["xf"] = xf;
@@ -185,7 +182,7 @@ Brachiostocrona_data.Mesh["segments"][0]["length"] = 1;
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -206,7 +203,7 @@ Brachiostocrona_data.Mesh["segments"][0]["length"] = 1;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/Brachiostocrona_OCP_result.txt" );
     } else {
@@ -228,12 +225,12 @@ Brachiostocrona_data.Mesh["segments"][0]["length"] = 1;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

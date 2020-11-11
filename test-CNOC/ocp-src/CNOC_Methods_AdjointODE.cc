@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods.cc                                                |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -251,9 +251,8 @@ namespace CNOCDefine {
     real_type t185 = ay_limit(t29);
     real_type t186 = t125 * t125;
     result__[ 6   ] = t179 + t180 + t181 + t182 + t183 + t184 + t185 + t129 * t186 + t54 * t39 + t52 * t152 - (-t137 * t53 - t2) * t51 - (t54 * t68 - t7) * t64 - (-t137 * t74 - U__[0]) * t73 - (t137 * t82 - U__[1]) * t81;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -552,9 +551,8 @@ namespace CNOCDefine {
     result__[ 42  ] = result__[31];
     result__[ 43  ] = result__[37];
     result__[ 44  ] = ALIAS_timePositive_DD(t1);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",45);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 45, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -619,9 +617,8 @@ namespace CNOCDefine {
     real_type t2   = X__[6];
     result__[ 0   ] = t2 * L__[4];
     result__[ 1   ] = t2 * L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -663,9 +660,8 @@ namespace CNOCDefine {
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
     result__[ 0   ] = L__[4];
     result__[ 1   ] = L__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDx_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -728,9 +724,8 @@ namespace CNOCDefine {
     real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
 
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",0);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -797,9 +792,8 @@ namespace CNOCDefine {
     result__[ 4   ] = L__[4];
     result__[ 5   ] = L__[5];
     result__[ 6   ] = L__[6];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -895,9 +889,8 @@ namespace CNOCDefine {
     result__[ 4   ] = V__[4];
     result__[ 5   ] = V__[5];
     result__[ 6   ] = V__[6];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

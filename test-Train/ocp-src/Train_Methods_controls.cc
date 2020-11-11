@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods.cc                                               |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -94,9 +94,8 @@ namespace TrainDefine {
     result__[ 0   ] = X__[1] + t2 + t5;
     real_type t8   = ALIAS_ubControl_D_1(U__[1], 0, ModelPars[6]);
     result__[ 1   ] = -t2 + t8;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -138,9 +137,8 @@ namespace TrainDefine {
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -180,9 +178,8 @@ namespace TrainDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = ALIAS_uaControl_D_1_1(U__[0], 0, ModelPars[5]);
     result__[ 1   ] = ALIAS_ubControl_D_1_1(U__[1], 0, ModelPars[6]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -341,7 +338,7 @@ namespace TrainDefine {
     DuDxlp( DgDxlp_I[ 0 ], DgDxlp_J[ 0] ) = -DgDxlp_V[0];
     DuDxlp( DgDxlp_I[ 1 ], DgDxlp_J[ 1] ) = -DgDxlp_V[1];
     DuDxlp( DgDxlp_I[ 2 ], DgDxlp_J[ 2] ) = -DgDxlp_V[2];
-    integer info = alglin::gesv( 2, 4, DgDu.get_data(), 2, ipiv, DuDxlp.get_data(), 2 );
+    integer info = alglin::gesv( 2, 4, DgDu.data(), 2, ipiv, DuDxlp.data(), 2 );
     return info == 0;
   }
 
@@ -392,7 +389,7 @@ namespace TrainDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -414,7 +411,7 @@ namespace TrainDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -424,7 +421,7 @@ namespace TrainDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -460,9 +457,8 @@ namespace TrainDefine {
     result__[ 1   ] = XR__[1] - XL__[1];
     result__[ 2   ] = LR__[0] - LL__[0];
     result__[ 3   ] = LR__[1] - LL__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -519,9 +515,8 @@ namespace TrainDefine {
     result__[ 5   ] = 1;
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
 }

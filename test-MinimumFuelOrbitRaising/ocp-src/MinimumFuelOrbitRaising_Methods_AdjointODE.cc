@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods.cc                             |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -83,9 +83,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type t21  = 1.0 / t5;
     result__[ 1   ] = -t21 * t2 * t14 + L__[0] - 1;
     result__[ 2   ] = 3 * t21 * t3 * t1 - t21 * t16;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -149,9 +148,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     result__[ 5   ] = result__[2];
     result__[ 6   ] = result__[4];
     result__[ 7   ] = 6 * t28 * t2 * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -219,9 +217,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type t10  = 1.0 / (-Q__[0] * ModelPars[1] + 1);
     real_type t15  = sin(t4);
     result__[ 0   ] = -t10 * t15 * t2 * L__[2] + t10 * t5 * t2 * L__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -317,9 +314,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
 
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",0);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -382,9 +378,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     result__[ 0   ] = L__[0];
     result__[ 1   ] = L__[1];
     result__[ 2   ] = L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -476,9 +471,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

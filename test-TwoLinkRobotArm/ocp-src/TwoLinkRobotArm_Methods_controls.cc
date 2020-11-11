@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -102,9 +102,8 @@ namespace TwoLinkRobotArmDefine {
     real_type t20  = 3.0 / 2.0 * t14;
     real_type t28  = ALIAS_u2Control_D_1(U__[1], -1, 1);
     result__[ 1   ] = t9 * (-4.0 / 3.0 - t20) * t3 - t9 * (-7.0 / 3.0 - t20) * t13 + t28;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -176,9 +175,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 5   ] = t18 * t39 * t2;
     result__[ 6   ] = -t18 * t43 * t2;
     result__[ 7   ] = t18 * t39 * t1 - t18 * t43 * t16;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -218,9 +216,8 @@ namespace TwoLinkRobotArmDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = ALIAS_u1Control_D_1_1(U__[0], -1, 1);
     result__[ 1   ] = ALIAS_u2Control_D_1_1(U__[1], -1, 1);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -409,7 +406,7 @@ namespace TwoLinkRobotArmDefine {
     DuDxlp( DgDxlp_I[ 5 ], DgDxlp_J[ 5] ) = -DgDxlp_V[5];
     DuDxlp( DgDxlp_I[ 6 ], DgDxlp_J[ 6] ) = -DgDxlp_V[6];
     DuDxlp( DgDxlp_I[ 7 ], DgDxlp_J[ 7] ) = -DgDxlp_V[7];
-    integer info = alglin::gesv( 2, 9, DgDu.get_data(), 2, ipiv, DuDxlp.get_data(), 2 );
+    integer info = alglin::gesv( 2, 9, DgDu.data(), 2, ipiv, DuDxlp.data(), 2 );
     return info == 0;
   }
 
@@ -464,7 +461,7 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -486,7 +483,7 @@ namespace TwoLinkRobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -496,7 +493,7 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -536,9 +533,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 5   ] = LR__[1] - LL__[1];
     result__[ 6   ] = LR__[2] - LL__[2];
     result__[ 7   ] = LR__[3] - LL__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -611,9 +607,8 @@ namespace TwoLinkRobotArmDefine {
     result__[ 13  ] = 1;
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",16);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
 }

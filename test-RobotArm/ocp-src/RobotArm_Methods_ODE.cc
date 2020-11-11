@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -103,9 +103,8 @@ namespace RobotArmDefine {
     result__[ 3   ] = X__[3] * t1;
     result__[ 4   ] = X__[4] * t1;
     result__[ 5   ] = X__[5] * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,9 +147,8 @@ namespace RobotArmDefine {
     result__[ 0   ] = P__[0];
     result__[ 1   ] = result__[0];
     result__[ 2   ] = result__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -199,9 +197,8 @@ namespace RobotArmDefine {
     result__[ 3   ] = X__[3];
     result__[ 4   ] = X__[4];
     result__[ 5   ] = X__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDp_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -244,9 +241,8 @@ namespace RobotArmDefine {
     result__[ 0   ] = P__[0];
     result__[ 1   ] = result__[0];
     result__[ 2   ] = result__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 3, i_segment );
   }
 
   /*\
@@ -300,9 +296,8 @@ namespace RobotArmDefine {
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
     result__[ 5   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 6, i_segment );
   }
 
 }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -98,9 +98,8 @@ namespace TwoStageCSTRDefine {
     real_type t12  = R2(t8, t11);
     result__[ 2   ] = t1 - t8 - result__[0] * t9 - t12 + 0.25e0;
     result__[ 3   ] = t2 - 2 * t11 - (t11 + 0.25e0) * U__[1] - result__[1] * t9 + t12 - 0.25e0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -170,9 +169,8 @@ namespace TwoStageCSTRDefine {
     result__[ 9   ] = -result__[3] * t6 + 1;
     result__[ 10  ] = t10;
     result__[ 11  ] = -2 - U__[1] + t11;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",12);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 12, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -248,9 +246,8 @@ namespace TwoStageCSTRDefine {
     result__[ 0   ] = -X__[1] - 0.25e0;
     result__[ 1   ] = -result__[0] * ModelPars[1];
     result__[ 2   ] = -X__[3] - 0.25e0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 3, i_segment );
   }
 
   /*\
@@ -299,9 +296,8 @@ namespace TwoStageCSTRDefine {
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 4, i_segment );
   }
 
 }

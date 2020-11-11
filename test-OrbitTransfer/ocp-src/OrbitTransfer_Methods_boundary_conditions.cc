@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -83,9 +83,8 @@ namespace OrbitTransferDefine {
     result__[ 5   ] = XR__[3];
     real_type t12  = sqrt(ModelPars[3] / XR__[2]);
     result__[ 6   ] = XR__[4] - t12;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 7, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -144,9 +143,8 @@ namespace OrbitTransferDefine {
     real_type t8   = t2 * t2;
     result__[ 6   ] = 1.0 / t8 * t1 / t5 / 2;
     result__[ 7   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -221,9 +219,8 @@ namespace OrbitTransferDefine {
     result__[ 7   ] = -1 + 1.0 / t21 * t14 / t18 * t13 / 2 - LR__[0];
     result__[ 8   ] = OMEGA__[5] - LR__[1];
     result__[ 9   ] = t13 - LR__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",10);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 10, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -275,9 +272,8 @@ namespace OrbitTransferDefine {
     real_type t11  = t3 * t3;
     real_type t12  = t11 * t11;
     result__[ 0   ] = 1.0 / t12 * t10 / t6 / t5 * t1 / 4 - 1.0 / t11 / t3 * t2 / t6 * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DadjointBCDxp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 1, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

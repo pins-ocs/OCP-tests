@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,14 +52,14 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
-   real_type jn_max = 65;
-   real_type js_max = 30;
-   real_type mesh_segments = 100;
-   real_type path_following_tolerance = 1.0e-05;
-   real_type v_nom = 0.173;
-   real_type deltaFeed = v_nom;
-   real_type pf_error = path_following_tolerance;
-   real_type js_min = -50;
+    real_type mesh_segments = 100;
+    real_type path_following_tolerance = 1.0e-05;
+    real_type pf_error = path_following_tolerance;
+    real_type js_min = -50;
+    real_type js_max = 30;
+    real_type v_nom = 0.173;
+    real_type deltaFeed = v_nom;
+    real_type jn_max = 65;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -81,9 +81,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "CNOC_dump";
@@ -126,7 +123,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_n"] = SET;
     data_BoundaryConditions["initial_vs"] = SET;
     data_BoundaryConditions["initial_vn"] = SET;
@@ -205,16 +202,17 @@ main() {
     // Constraint1D
     // Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
     // Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_timePositive = data_Constraints["timePositive"];
-    data_timePositive["subType"]   = 'BARRIER_LOG';
+    data_timePositive["subType"]   = "BARRIER_LOG";
     data_timePositive["epsilon"]   = 0.01;
     data_timePositive["tolerance"] = 0.01;
     data_timePositive["active"]    = true;
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_vLimit = data_Constraints["vLimit"];
-    data_vLimit["subType"]   = 'PENALTY_PIECEWISE';
+    data_vLimit["subType"]   = "PENALTY_PIECEWISE";
     data_vLimit["epsilon"]   = 0.01;
     data_vLimit["tolerance"] = 0.01;
     data_vLimit["active"]    = true;
@@ -453,7 +451,7 @@ CNOC_data.ToolPath2D["segments"][19]["n"] = mesh_segments;
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("ToolPath2D"),
       "missing key: ``ToolPath2D'' in gc_data\n"
     );
@@ -474,7 +472,7 @@ CNOC_data.ToolPath2D["segments"][19]["n"] = mesh_segments;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/CNOC_OCP_result.txt" );
     } else {
@@ -496,12 +494,12 @@ CNOC_data.ToolPath2D["segments"][19]["n"] = mesh_segments;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

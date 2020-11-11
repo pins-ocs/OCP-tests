@@ -21,16 +21,15 @@ ode[5];
 ode[6];
 # List of states and controls
 uvars := []:
-pvars := [p,h,k]:
+pvars := [p,h,k]: # parametri ottimizzazione
 xvars := map([f,g,L],(zeta)):
 odes  := Vector([ode[2],ode[3],ode[6]]):
 odes;
-# Optimal Contol Problem
+# Optimal Control Problem
 #Describe(loadDynamicSystem);
 loadDynamicSystem(
   equations  = odes,
   controls   = uvars,
-  parameters = pvars,
   states     = xvars
 );
 DELTAX0 := subs(zeta=zeta_i,XPOS-X0);
@@ -114,7 +113,7 @@ generateOCProblem(
   parameters        = PARS,
   post_processing   = POST,
   states_guess      = GUESS,
-  parameters_guess  = PGUESS,
+  optimization_parameters = PGUESS,
   continuation      = CONTINUATION,
   admissible_region = [ p > 0 ], 
   mesh              = [length=1, n=50],

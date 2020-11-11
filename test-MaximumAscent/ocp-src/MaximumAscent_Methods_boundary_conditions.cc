@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -82,9 +82,8 @@ namespace MaximumAscentDefine {
     result__[ 4   ] = XR__[1] - ModelPars[10];
     real_type t13  = sqrt(XR__[0]);
     result__[ 5   ] = t13 * XR__[2] - 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -138,9 +137,8 @@ namespace MaximumAscentDefine {
     real_type t3   = sqrt(XR__[0]);
     result__[ 5   ] = 1.0 / t3 * XR__[2] / 2;
     result__[ 6   ] = t3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 7, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -210,9 +208,8 @@ namespace MaximumAscentDefine {
     result__[ 5   ] = OMEGA__[4] - LR__[1];
     result__[ 6   ] = t13 * t9 - LR__[2];
     result__[ 7   ] = -LR__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -263,9 +260,8 @@ namespace MaximumAscentDefine {
     result__[ 0   ] = -1.0 / t5 / t4 * XR__[2] * t1 / 4;
     result__[ 1   ] = 1.0 / t5 * t1 / 2;
     result__[ 2   ] = result__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DadjointBCDxp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 3, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -98,9 +98,8 @@ namespace TwoStageCSTRDefine {
     real_type t14  = U__[1];
     real_type t20  = ALIAS_u2Control_D_1(t14, -0.5e0, 0.5e0);
     result__[ 1   ] = 2 * t14 * t1 + (-X__[3] - 0.25e0) * t9 + t20;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,9 +147,8 @@ namespace TwoStageCSTRDefine {
     result__[ 2   ] = -result__[1] * t2;
     result__[ 3   ] = -t1;
     result__[ 4   ] = -X__[3] - 0.25e0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -193,9 +191,8 @@ namespace TwoStageCSTRDefine {
     result__[ 0   ] = t2 + t4;
     real_type t6   = ALIAS_u2Control_D_1_1(U__[1], -0.5e0, 0.5e0);
     result__[ 1   ] = t2 + t6;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -371,7 +368,7 @@ namespace TwoStageCSTRDefine {
     DuDxlp( DgDxlp_I[ 2 ], DgDxlp_J[ 2] ) = -DgDxlp_V[2];
     DuDxlp( DgDxlp_I[ 3 ], DgDxlp_J[ 3] ) = -DgDxlp_V[3];
     DuDxlp( DgDxlp_I[ 4 ], DgDxlp_J[ 4] ) = -DgDxlp_V[4];
-    integer info = alglin::gesv( 2, 8, DgDu.get_data(), 2, ipiv, DuDxlp.get_data(), 2 );
+    integer info = alglin::gesv( 2, 8, DgDu.data(), 2, ipiv, DuDxlp.data(), 2 );
     return info == 0;
   }
 
@@ -426,7 +423,7 @@ namespace TwoStageCSTRDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -448,7 +445,7 @@ namespace TwoStageCSTRDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -458,7 +455,7 @@ namespace TwoStageCSTRDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -498,9 +495,8 @@ namespace TwoStageCSTRDefine {
     result__[ 5   ] = LR__[1] - LL__[1];
     result__[ 6   ] = LR__[2] - LL__[2];
     result__[ 7   ] = LR__[3] - LL__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -573,9 +569,8 @@ namespace TwoStageCSTRDefine {
     result__[ 13  ] = 1;
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",16);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
 }

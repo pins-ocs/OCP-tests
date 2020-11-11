@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona2_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 13/9/2020                                        #
+#  version: 1.0   date 12/11/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -20,17 +20,20 @@ include Mechatronix
 # Auxiliary values
 g  = 9.81
 yf = -2
+Tf = (-2.0*yf/g)**(1/2.0)
 xf = 5
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
-Tf = (-2.0*yf/g)**(1/2.0)
 
 mechatronix do |data|
 
   # Level of message
   data.InfoLevel = 4
 
+  # Activate dynamic debugging
+  data.Debug = false
+
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = 4
+  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
   data.U_threaded  = true
   data.F_threaded  = true
   data.JF_threaded = true
@@ -44,9 +47,6 @@ mechatronix do |data|
   data.JacobianCheckFull        = false
   data.JacobianCheck_epsilon    = 1e-4
   data.FiniteDifferenceJacobian = false
-
-  # Redirect output to GenericContainer["stream_output"]
-  data.RedirectStreamToString = false
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "Brachiostocrona2_dump"
@@ -162,8 +162,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 500,
         :length => 1,
+        :n      => 500,
       },
     ],
   };

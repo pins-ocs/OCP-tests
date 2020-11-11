@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Main.cc                                |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -52,10 +52,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-   real_type u_epsi = 0.01;
-   real_type u_tol = 0.01;
-   real_type theta0 = 1;
-   real_type theta = theta0;
+    real_type theta0 = 1;
+    real_type theta = theta0;
+    real_type u_tol = 0.01;
+    real_type u_epsi = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -77,9 +77,6 @@ main() {
     gc_data["JacobianCheckFull"]        = false;
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
-
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
 
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "SingularLuus04_FreeTime_dump";
@@ -122,7 +119,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_x"] = SET;
     data_BoundaryConditions["initial_y"] = SET;
     data_BoundaryConditions["initial_z"] = SET;
@@ -142,7 +139,7 @@ main() {
     data_Parameters["theta"] = theta;
 
     // Guess Parameters
-    data_Parameters[T_guess] = 50;
+    data_Parameters["T_guess"] = 50;
 
     // Boundary Conditions
     data_Parameters["x_f"] = 0;
@@ -184,14 +181,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularLuus04_FreeTime_data.Mesh["s0"] = 0;
-SingularLuus04_FreeTime_data.Mesh["segments"][0]["n"] = 5000;
 SingularLuus04_FreeTime_data.Mesh["segments"][0]["length"] = 1;
+SingularLuus04_FreeTime_data.Mesh["segments"][0]["n"] = 5000;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -212,7 +209,7 @@ SingularLuus04_FreeTime_data.Mesh["segments"][0]["length"] = 1;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/SingularLuus04_FreeTime_OCP_result.txt" );
     } else {
@@ -234,12 +231,12 @@ SingularLuus04_FreeTime_data.Mesh["segments"][0]["length"] = 1;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

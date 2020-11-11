@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -105,9 +105,8 @@ namespace RobotArmDefine {
     result__[ 1   ] = t10 * t2 + t2 * L__[1];
     real_type t15  = ALIAS_u_phiControl_D_1(U__[2], -1, 1);
     result__[ 2   ] = t15 * t2 + t2 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -158,9 +157,8 @@ namespace RobotArmDefine {
     result__[ 4   ] = result__[2];
     real_type t9   = ALIAS_u_phiControl_D_1(U__[2], -1, 1);
     result__[ 5   ] = L__[2] + t9;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -206,9 +204,8 @@ namespace RobotArmDefine {
     result__[ 1   ] = t5 * t1;
     real_type t7   = ALIAS_u_phiControl_D_1_1(U__[2], -1, 1);
     result__[ 2   ] = t7 * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 3, i_segment );
   }
 
   /*\
@@ -418,7 +415,7 @@ namespace RobotArmDefine {
     DuDxlp( DgDxlp_I[ 3 ], DgDxlp_J[ 3] ) = -DgDxlp_V[3];
     DuDxlp( DgDxlp_I[ 4 ], DgDxlp_J[ 4] ) = -DgDxlp_V[4];
     DuDxlp( DgDxlp_I[ 5 ], DgDxlp_J[ 5] ) = -DgDxlp_V[5];
-    integer info = alglin::gesv( 3, 13, DgDu.get_data(), 3, ipiv, DuDxlp.get_data(), 3 );
+    integer info = alglin::gesv( 3, 13, DgDu.data(), 3, ipiv, DuDxlp.data(), 3 );
     return info == 0;
   }
 
@@ -477,7 +474,7 @@ namespace RobotArmDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -499,7 +496,7 @@ namespace RobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -509,7 +506,7 @@ namespace RobotArmDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -562,9 +559,8 @@ namespace RobotArmDefine {
     real_type t30  = I_phi(t1);
     real_type t33  = I_phi(t2);
     result__[ 11  ] = LR__[2] * t30 - LL__[2] * t33;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",12);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 12, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -680,9 +676,8 @@ namespace RobotArmDefine {
     real_type t19  = I_phi_D(t10);
     result__[ 28  ] = LR__[2] * t19;
     result__[ 29  ] = I_phi(t10);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",30);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 30, i_segment_left, i_segment_right );
   }
 
 }

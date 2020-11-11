@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Main.cc                                                |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -74,9 +74,6 @@ main() {
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
 
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
-
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "Dadebo1_dump";
 
@@ -118,7 +115,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_x"] = SET;
     data_BoundaryConditions["initial_y"] = SET;
     data_BoundaryConditions["final_x"] = SET;
@@ -155,14 +152,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Dadebo1_data.Mesh["s0"] = 0;
-Dadebo1_data.Mesh["segments"][0]["length"] = 1;
 Dadebo1_data.Mesh["segments"][0]["n"] = 1000;
+Dadebo1_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -183,7 +180,7 @@ Dadebo1_data.Mesh["segments"][0]["n"] = 1000;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/Dadebo1_OCP_result.txt" );
     } else {
@@ -205,12 +202,12 @@ Dadebo1_data.Mesh["segments"][0]["n"] = 1000;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

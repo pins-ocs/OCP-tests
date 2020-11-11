@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -70,9 +70,8 @@ namespace HangingChainDefine {
     result__[ 0   ] = U__[0];
     real_type t1   = result__[0] * result__[0];
     result__[ 1   ] = sqrt(t1 + 1);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,9 +181,8 @@ namespace HangingChainDefine {
     real_type t2   = t1 * t1;
     real_type t4   = sqrt(t2 + 1);
     result__[ 1   ] = t1 / t4;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -229,9 +227,8 @@ namespace HangingChainDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 2, i_segment );
   }
 
 }

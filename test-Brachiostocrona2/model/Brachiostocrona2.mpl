@@ -19,10 +19,11 @@ EQNS_T := [ EQ||(1..3) ]: <%>;
 qvars := [x(zeta),y(zeta),v(zeta)] ;
 cvars := [theta(zeta)] ;
 # OCP
-loadDynamicSystem(  equations  = EQNS_T,
+loadDynamicSystem(
+  equations  = EQNS_T,
   controls   = cvars,
-  states     = qvars,
-  parameters = [T]);
+  states     = qvars
+);
 addBoundaryConditions(
   initial = [x=0,y=0,v=0],
   final   = [x=xf,y=yf]
@@ -46,11 +47,14 @@ PARS := [
   Vf    = VF,
   Tf    = TIME,
   g     = 9.81,
-  kappa = 1];
+  kappa = 1
+];
 GUESS := [
   x = zeta*xf,
   y = zeta*yf,
-  v = zeta*Vf,  lambda1__xo = 1e-6];
+  v = zeta*Vf,
+  lambda1__xo = 1e-6
+];
 addUserFunction( arctan2( y, x),derivatives=1 );
 addUserFunction( theta_sol( v, l1, l2, l3) = kappa*Pi+arctan2(v*l2-l3*g,v*l1),derivatives=1);
 USOL := [ theta = theta_sol( v(zeta),
@@ -59,11 +63,11 @@ USOL := [ theta = theta_sol( v(zeta),
                              lambda3__xo(zeta) )];
 generateOCProblem(
   "Brachiostocrona2",
-   admissible_region     = [T>0],
-   parameters            = PARS,
-   mesh                  = [length=1,n=500],
-   parameters_guess      = [T=Tf],
-   controls_user_defined = USOL, 
-   states_guess          = GUESS
+   admissible_region       = [T>0],
+   parameters              = PARS,
+   mesh                    = [length=1,n=500],
+   optimization_parameters = [T=Tf],
+   controls_user_defined   = USOL, 
+   states_guess            = GUESS
 ) ;
 

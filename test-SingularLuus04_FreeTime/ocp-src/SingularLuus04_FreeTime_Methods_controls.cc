@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods.cc                             |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -83,9 +83,8 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t2   = X__[3];
     real_type t5   = ALIAS_uControl_D_1(U__[0], -1, 1);
     result__[ 0   ] = t5 * t2 + t2 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -126,9 +125,8 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t3   = ALIAS_uControl_D_1(U__[0], -1, 1);
     result__[ 0   ] = L__[2] + t3;
     result__[ 1   ] = X__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -167,9 +165,8 @@ namespace SingularLuus04_FreeTimeDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = ALIAS_uControl_D_1_1(U__[0], -1, 1);
     result__[ 0   ] = t3 * X__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
 
   /*\
@@ -332,7 +329,7 @@ namespace SingularLuus04_FreeTimeDefine {
     // fill DgDxlp
     DuDxlp( DgDxlp_I[ 0 ], DgDxlp_J[ 0] ) = -DgDxlp_V[0];
     DuDxlp( DgDxlp_I[ 1 ], DgDxlp_J[ 1] ) = -DgDxlp_V[1];
-    integer info = alglin::gesv( 1, 8, DgDu.get_data(), 1, ipiv, DuDxlp.get_data(), 1 );
+    integer info = alglin::gesv( 1, 8, DgDu.data(), 1, ipiv, DuDxlp.data(), 1 );
     return info == 0;
   }
 
@@ -387,7 +384,7 @@ namespace SingularLuus04_FreeTimeDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -409,7 +406,7 @@ namespace SingularLuus04_FreeTimeDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -419,7 +416,7 @@ namespace SingularLuus04_FreeTimeDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -459,9 +456,8 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 5   ] = LR__[1] - LL__[1];
     result__[ 6   ] = LR__[2] - LL__[2];
     result__[ 7   ] = LR__[3] - LL__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -534,9 +530,8 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 13  ] = 1;
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",16);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
 }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -93,9 +93,8 @@ namespace GoddardRocketDefine {
     real_type t10  = gg(t4);
     result__[ 1   ] = (1.0 / X__[2] * (t3 - t5) - t10) * t1;
     result__[ 2   ] = -1.0 / ModelPars[2] * t3 * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -149,9 +148,8 @@ namespace GoddardRocketDefine {
     real_type t13  = DD(t1, t2);
     real_type t16  = t4 * t4;
     result__[ 3   ] = -1.0 / t16 * (U__[0] - t13) * result__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -198,9 +196,8 @@ namespace GoddardRocketDefine {
     real_type t8   = gg(t2);
     result__[ 1   ] = 1.0 / X__[2] * (t1 - t3) - t8;
     result__[ 2   ] = -1.0 / ModelPars[2] * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -242,9 +239,8 @@ namespace GoddardRocketDefine {
     real_type t1   = P__[0];
     result__[ 0   ] = 1.0 / X__[2] * t1;
     result__[ 1   ] = -1.0 / ModelPars[2] * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -291,9 +287,8 @@ namespace GoddardRocketDefine {
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 3, i_segment );
   }
 
 }

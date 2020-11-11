@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -114,9 +114,8 @@ namespace FarmerDefine {
     real_type t19  = X__[4];
     result__[ 3   ] = -1.0 / ModelPars[8] * (-t13 + t19);
     result__[ 4   ] = -1.0 / ModelPars[9] * (t19 - U__[3]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -165,9 +164,8 @@ namespace FarmerDefine {
     result__[ 3   ] = 1.0 / ModelPars[8];
     result__[ 4   ] = -result__[3];
     result__[ 5   ] = -1.0 / ModelPars[9];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -245,9 +243,8 @@ namespace FarmerDefine {
     result__[ 1   ] = 1.0 / ModelPars[6];
     result__[ 2   ] = 1.0 / ModelPars[7];
     result__[ 3   ] = 1.0 / ModelPars[9];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 4, i_segment );
   }
 
   /*\
@@ -298,9 +295,8 @@ namespace FarmerDefine {
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 5, i_segment );
   }
 
 }

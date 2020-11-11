@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods1.cc                                             |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -257,9 +257,7 @@ namespace FarmerDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -289,9 +287,8 @@ namespace FarmerDefine {
     UGUESS__[ iU_x2__o ] = 0;
     UGUESS__[ iU_x3__o ] = 0;
     UGUESS__[ iU_x4__o ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 4, i_segment );
   }
 
   void
@@ -381,9 +378,7 @@ namespace FarmerDefine {
     real_type t18  = ModelPars[4];
     real_type t19  = Q__[0];
     result__[ 1   ] = 1.0 / (-t18 + t17) * (ModelPars[0] * (t17 - t18 + t19 - 1) - (t19 - 1) * ModelPars[1]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",2);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods.cc                                |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -88,9 +88,8 @@ namespace EconomicGrowthModel2Define {
     result__[ 2   ] = t2 * X__[3];
     result__[ 3   ] = t2 * t6 * (1 - t3);
     result__[ 4   ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -154,9 +153,8 @@ namespace EconomicGrowthModel2Define {
     result__[ 7   ] = result__[5] * t4 * t9;
     result__[ 8   ] = result__[5] * t6 * t9;
     result__[ 9   ] = t8 * t9;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",10);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 10, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -229,11 +227,10 @@ namespace EconomicGrowthModel2Define {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = Q(X__[0], X__[1]);
-    result__[ 0   ] = X__[4] * t3;
+    result__[ 0   ] = t3 * X__[4];
     result__[ 1   ] = -result__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -284,9 +281,8 @@ namespace EconomicGrowthModel2Define {
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 5, i_segment );
   }
 
 }

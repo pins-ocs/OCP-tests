@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain.hh                                                |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -102,9 +102,6 @@ namespace HangingChainDefine {
 
   class HangingChain : public Mechatronix::Discretized_Indirect_OCP {
 
-    // redirect output to a string in GenericContainer - - - - - - - - - - - - -
-    stringstream ss_redirected_stream;
-
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     real_type ModelPars[6];
 
@@ -163,9 +160,9 @@ namespace HangingChainDefine {
     HANGINGCHAIN_API_DLL
     explicit
     HangingChain(
-      string const & name,
-      ThreadPool   * _TP,
-      Console      * _pConsole
+      string  const & name,
+      ThreadPool    * _TP,
+      Console const * _pConsole
     );
 
     HANGINGCHAIN_API_DLL virtual

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods1.cc                                              |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -74,7 +74,7 @@ namespace TrainDefine {
   void
   Train::continuationStep0( real_type s ) {
     int msg_level = 3;
-    pConsole->message(
+    m_console->message(
       fmt::format( "\nContinuation step N.0 s = {}\n", s ),
       msg_level
     );
@@ -254,9 +254,7 @@ namespace TrainDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -284,9 +282,8 @@ namespace TrainDefine {
     std::fill_n( UGUESS__.pointer(), 2, 0 );
     UGUESS__[ iU_ua ] = ModelPars[5] / 2;
     UGUESS__[ iU_ub ] = ModelPars[6] / 2;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
 
   void
@@ -366,9 +363,7 @@ namespace TrainDefine {
     result__[ 0   ] = uaControl(U__[0], 0, ModelPars[5]);
     result__[ 1   ] = ubControl(U__[1], 0, ModelPars[6]);
     result__[ 2   ] = h(X__[0]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",3);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

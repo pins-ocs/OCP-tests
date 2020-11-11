@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods.cc                                             |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -79,9 +79,8 @@ namespace ZermeloDefine {
     real_type t6   = sin(t5);
     real_type t11  = cos(t5);
     result__[ 0   ] = t11 * t4 * t2 * L__[3] - t6 * t4 * t2 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -128,9 +127,8 @@ namespace ZermeloDefine {
     real_type t12  = t2 * X__[4];
     result__[ 1   ] = -t5 * t12;
     result__[ 2   ] = t9 * t12;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -173,9 +171,8 @@ namespace ZermeloDefine {
     real_type t6   = cos(t5);
     real_type t11  = sin(t5);
     result__[ 0   ] = -t11 * t4 * t2 * L__[3] - t6 * t4 * t2 * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
 
   /*\
@@ -345,7 +342,7 @@ namespace ZermeloDefine {
     DuDxlp( DgDxlp_I[ 0 ], DgDxlp_J[ 0] ) = -DgDxlp_V[0];
     DuDxlp( DgDxlp_I[ 1 ], DgDxlp_J[ 1] ) = -DgDxlp_V[1];
     DuDxlp( DgDxlp_I[ 2 ], DgDxlp_J[ 2] ) = -DgDxlp_V[2];
-    integer info = alglin::gesv( 1, 10, DgDu.get_data(), 1, ipiv, DuDxlp.get_data(), 1 );
+    integer info = alglin::gesv( 1, 10, DgDu.data(), 1, ipiv, DuDxlp.data(), 1 );
     return info == 0;
   }
 
@@ -402,7 +399,7 @@ namespace ZermeloDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -424,7 +421,7 @@ namespace ZermeloDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -434,7 +431,7 @@ namespace ZermeloDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -476,9 +473,8 @@ namespace ZermeloDefine {
     result__[ 7   ] = LR__[2] - LL__[2];
     result__[ 8   ] = LR__[3] - LL__[3];
     result__[ 9   ] = LR__[4] - LL__[4];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",10);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 10, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -559,9 +555,8 @@ namespace ZermeloDefine {
     result__[ 17  ] = 1;
     result__[ 18  ] = -1;
     result__[ 19  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",20);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 20, i_segment_left, i_segment_right );
   }
 
 }

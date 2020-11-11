@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,23 +18,23 @@
 --]]
 
 -- Auxiliary values
-vc        = 620
-m_i       = 1
-g0        = 1
-Tmax      = 3.5*g0*m_i
-epsi_mass = 0.01
-mc        = 0.6
-m_f       = mc*m_i
-Dc        = .5*vc*m_i/g0
-epsi_TS   = 0.01
 epsi_v    = 0.01
-tol_mass  = 0.01
-tol_v     = 0.01
 epsi_T    = 0.01
-h_i       = 1
-c         = .5*(g0*h_i)^(1/2)
-tol_TS    = 0.01
+g0        = 1
+vc        = 620
 tol_T     = 0.01
+tol_v     = 0.01
+mc        = 0.6
+h_i       = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
+tol_TS    = 0.01
+epsi_TS   = 0.01
+tol_mass  = 0.01
+m_i       = 1
+m_f       = mc*m_i
+Tmax      = 3.5*g0*m_i
+Dc        = 0.5*vc*m_i/g0
+epsi_mass = 0.01
 
 content = {
 
@@ -42,7 +42,7 @@ content = {
   InfoLevel = 4,
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
+  N_threads   = [1,$MAX_THREAD_NUM-1].max,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -51,23 +51,20 @@ content = {
   -- Enable doctor
   Doctor = false,
 
+  -- Activate dynamic debugging
+  Debug = false,
+
   -- Enable check jacobian
   JacobianCheck            = false,
   JacobianCheckFull        = false,
   JacobianCheck_epsilon    = 1e-4,
   FiniteDifferenceJacobian = false,
 
-  -- Redirect output to GenericContainer["stream_output"]
-  RedirectStreamToString = false,
-
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "GoddardRocket_dump",
 
   -- spline output (all values as function of "s")
   -- OutputSplines = [0],
-
-  -- Redirect output to GenericContainer["stream_output"]
-  RedirectStreamToString = false,
 
   ControlSolver = {
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"
@@ -165,7 +162,7 @@ content = {
 
   -- Controls
   -- Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
-  -- Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', HYPERBOLIC'
+  -- Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
 
   Controls = {
     TControl = {
@@ -177,8 +174,9 @@ content = {
 
   Constraints = {
   -- Constraint1D
-  -- Penalty subtype: "PENALTY_REGULAR", "PENALTY_SMOOTH", "PENALTY_PIECEWISE"
-  -- Barrier subtype: "BARRIER_LOG", "BARRIER_LOG_EXP", "BARRIER_LOG0"
+  -- Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
+  -- Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
     -- PenaltyBarrier1DGreaterThan
     massPositivesubType   = "BARRIER_LOG",
     massPositiveepsilon   = epsi_mass,

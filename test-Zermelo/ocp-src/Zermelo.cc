@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo.cc                                                     |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -137,9 +137,9 @@ namespace ZermeloDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   Zermelo::Zermelo(
-    string const & name,
-    ThreadPool   * _TP,
-    Console      * _pConsole
+    string  const & name,
+    ThreadPool    * _TP,
+    Console const * _pConsole
   )
   : Discretized_Indirect_OCP( name, _TP, _pConsole )
   // Controls
@@ -151,7 +151,7 @@ namespace ZermeloDefine {
     this->U_solve_iterative = false;
 
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, alglin::NaN<real_type>() );
+    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setupNames(
@@ -199,7 +199,7 @@ namespace ZermeloDefine {
   */
   void
   Zermelo::setupParameters( GenericContainer const & gc_data ) {
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Parameters"),
       "Zermelo::setupParameters: Missing key `Parameters` in data\n"
     );
@@ -211,11 +211,11 @@ namespace ZermeloDefine {
       if ( gc.exists( namei ) ) {
         ModelPars[i] = gc(namei).get_number();
       } else {
-        pConsole->error( fmt::format( "Missing parameter: '{}'\n", namei ) );
+        m_console->error( fmt::format( "Missing parameter: '{}'\n", namei ) );
         allfound = false;
       }
     }
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       allfound, "in Zermelo::setup not all parameters are set!\n"
     );
   }
@@ -235,13 +235,13 @@ namespace ZermeloDefine {
   */
   void
   Zermelo::setupClasses( GenericContainer const & gc_data ) {
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Constraints"),
       "Zermelo::setupClasses: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("Tpositive"),
       "in Zermelo::setupClasses(gc) missing key: ``Tpositive''\n"
     );
@@ -301,7 +301,7 @@ namespace ZermeloDefine {
   void
   Zermelo::setupPointers( GenericContainer const & gc_data ) {
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Pointers"),
       "Zermelo::setupPointers: Missing key `Pointers` in data\n"
     );
@@ -309,7 +309,7 @@ namespace ZermeloDefine {
 
     // Initialize user classes
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("pMesh"),
       "in Zermelo::setupPointers(gc) cant find key `pMesh' in gc\n"
     );
@@ -328,18 +328,20 @@ namespace ZermeloDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    pConsole->message("\nConstraints 1D\n",msg_level);
-    mstr.str(""); Tpositive.info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nConstraints 1D\n",msg_level);
+    mstr.str("");
+    Tpositive.info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nUser class (pointer)\n",msg_level);
-    pConsole->message("User function `pMesh`: ",msg_level);
-    mstr.str(""); pMesh->info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nUser class (pointer)\n",msg_level);
+    mstr.str("");
+    mstr << "User function `pMesh`: ";
+    pMesh->info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nModel Parameters\n",msg_level);
+    m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
-      pConsole->message(
+      m_console->message(
         fmt::format("{:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
         msg_level
       );
@@ -358,10 +360,8 @@ namespace ZermeloDefine {
   void
   Zermelo::setup( GenericContainer const & gc ) {
 
-    if ( gc.get_map_bool("RedirectStreamToString") ) {
-      ss_redirected_stream.str("");
-      pConsole->changeStream(&ss_redirected_stream);
-    }
+    if ( gc.exists("Debug") )
+      m_debug = gc("Debug").get_bool("Zermelo::setup, Debug");
 
     this->setupParameters( gc );
     this->setupClasses( gc );

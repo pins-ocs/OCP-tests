@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -29,7 +29,7 @@ content = {
   InfoLevel = 4,
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
+  N_threads   = [1,$MAX_THREAD_NUM-1].max,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -38,23 +38,20 @@ content = {
   -- Enable doctor
   Doctor = false,
 
+  -- Activate dynamic debugging
+  Debug = false,
+
   -- Enable check jacobian
   JacobianCheck            = false,
   JacobianCheckFull        = false,
   JacobianCheck_epsilon    = 1e-4,
   FiniteDifferenceJacobian = false,
 
-  -- Redirect output to GenericContainer["stream_output"]
-  RedirectStreamToString = false,
-
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "AlpRider_dump",
 
   -- spline output (all values as function of "s")
   -- OutputSplines = [0],
-
-  -- Redirect output to GenericContainer["stream_output"]
-  RedirectStreamToString = false,
 
   ControlSolver = {
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"
@@ -155,8 +152,9 @@ content = {
 
   Constraints = {
   -- Constraint1D
-  -- Penalty subtype: "PENALTY_REGULAR", "PENALTY_SMOOTH", "PENALTY_PIECEWISE"
-  -- Barrier subtype: "BARRIER_LOG", "BARRIER_LOG_EXP", "BARRIER_LOG0"
+  -- Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
+  -- Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
     -- PenaltyBarrier1DGreaterThan
     YboundsubType   = "PENALTY_REGULAR",
     Yboundepsilon   = epsi,
@@ -174,18 +172,18 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
       
       {
+        n      = 400,
         length = 18,
-        n      = 400,
       },
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

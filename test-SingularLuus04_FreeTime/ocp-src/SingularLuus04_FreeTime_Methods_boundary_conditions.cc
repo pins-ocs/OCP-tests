@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods.cc                             |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -92,9 +92,8 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 3   ] = XR__[0] - ModelPars[5];
     result__[ 4   ] = XR__[1] - ModelPars[7];
     result__[ 5   ] = XR__[2] - ModelPars[9];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -145,9 +144,8 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
     result__[ 5   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -215,9 +213,8 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 5   ] = OMEGA__[4] - LR__[1];
     result__[ 6   ] = OMEGA__[5] - LR__[2];
     result__[ 7   ] = -LR__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -86,9 +86,8 @@ namespace EconomicGrowthModelDefine {
     real_type t6   = X__[2];
     real_type t12  = ALIAS_uControl_D_1(U__[0], 0, 1);
     result__[ 0   ] = t6 * t4 * L__[0] - t6 * t4 * L__[1] + t12 * t6;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -143,9 +142,8 @@ namespace EconomicGrowthModelDefine {
     result__[ 2   ] = t16 * t1 - t16 * t8 + t20;
     result__[ 3   ] = t6 * t16;
     result__[ 4   ] = -result__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -184,9 +182,8 @@ namespace EconomicGrowthModelDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = ALIAS_uControl_D_1_1(U__[0], 0, 1);
     result__[ 0   ] = t3 * X__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
 
   /*\
@@ -347,7 +344,7 @@ namespace EconomicGrowthModelDefine {
     DuDxlp( DgDxlp_I[ 2 ], DgDxlp_J[ 2] ) = -DgDxlp_V[2];
     DuDxlp( DgDxlp_I[ 3 ], DgDxlp_J[ 3] ) = -DgDxlp_V[3];
     DuDxlp( DgDxlp_I[ 4 ], DgDxlp_J[ 4] ) = -DgDxlp_V[4];
-    integer info = alglin::gesv( 1, 6, DgDu.get_data(), 1, ipiv, DuDxlp.get_data(), 1 );
+    integer info = alglin::gesv( 1, 6, DgDu.data(), 1, ipiv, DuDxlp.data(), 1 );
     return info == 0;
   }
 
@@ -400,7 +397,7 @@ namespace EconomicGrowthModelDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -422,7 +419,7 @@ namespace EconomicGrowthModelDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -432,7 +429,7 @@ namespace EconomicGrowthModelDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -470,9 +467,8 @@ namespace EconomicGrowthModelDefine {
     result__[ 3   ] = LR__[0] - LL__[0];
     result__[ 4   ] = LR__[1] - LL__[1];
     result__[ 5   ] = LR__[2] - LL__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -537,9 +533,8 @@ namespace EconomicGrowthModelDefine {
     result__[ 9   ] = 1;
     result__[ 10  ] = -1;
     result__[ 11  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",12);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
 }

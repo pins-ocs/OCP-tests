@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -74,9 +74,6 @@ main() {
     gc_data["JacobianCheck_epsilon"]    = 1e-4;
     gc_data["FiniteDifferenceJacobian"] = false;
 
-    // Redirect output to GenericContainer["stream_output"]
-    gc_data["RedirectStreamToString"] = false;
-
     // Dump Function and Jacobian if uncommented
     gc_data["DumpFile"] = "BangBangFtau_dump";
 
@@ -118,7 +115,7 @@ main() {
     data_Continuation["few_iterations"] = 8;
 
     // Boundary Conditions
-     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
+    GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
     data_BoundaryConditions["initial_x"] = SET;
     data_BoundaryConditions["initial_v"] = SET;
     data_BoundaryConditions["initial_sT"] = SET;
@@ -154,9 +151,10 @@ main() {
     // Constraints Parameters
 
     // functions mapped on objects
+    GenericContainer & gc_MappedObjects = gc_data["MappedObjects"];
 
     // ClipIntervalWithErf
-    GenericContainer & data_clip = dc_data("clip");
+    GenericContainer & data_clip = gc_MappedObjects["clip"];
     data_clip["h"] = 0.1;
     data_clip["delta"] = 0;
 
@@ -165,22 +163,23 @@ main() {
     // Constraint1D
     // Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
     // Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_vsTpositive = data_Constraints["vsTpositive"];
-    data_vsTpositive["subType"]   = 'PENALTY_REGULAR';
+    data_vsTpositive["subType"]   = "PENALTY_REGULAR";
     data_vsTpositive["epsilon"]   = 0.001;
     data_vsTpositive["tolerance"] = 0.001;
     data_vsTpositive["active"]    = true;
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_vsBpositive = data_Constraints["vsBpositive"];
-    data_vsBpositive["subType"]   = 'PENALTY_REGULAR';
+    data_vsBpositive["subType"]   = "PENALTY_REGULAR";
     data_vsBpositive["epsilon"]   = 0.001;
     data_vsBpositive["tolerance"] = 0.001;
     data_vsBpositive["active"]    = true;
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_vsTmax = data_Constraints["vsTmax"];
-    data_vsTmax["subType"]   = 'PENALTY_REGULAR';
+    data_vsTmax["subType"]   = "PENALTY_REGULAR";
     data_vsTmax["epsilon"]   = 0.001;
     data_vsTmax["tolerance"] = 0.001;
     data_vsTmax["active"]    = true;
@@ -210,7 +209,7 @@ BangBangFtau_data.Mesh["segments"][3]["n"] = 10;
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
     // setup user object classes
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
@@ -231,7 +230,7 @@ BangBangFtau_data.Mesh["segments"][3]["n"] = 10;
     model.get_solution( gc_solution );
     model.diagnostic( gc_data );
 
-    ofstream file;
+    std::ofstream file;
     if ( ok ) {
       file.open( "data/BangBangFtau_OCP_result.txt" );
     } else {
@@ -253,12 +252,12 @@ BangBangFtau_data.Mesh["segments"][3]["n"] = 10;
       target("penalties").get_number(), target("control_penalties").get_number()
     );
     if ( gc_solution.exists("parameters") ) {
-      cout << "Parameters:\n";
+      cout << "Optimization parameters:\n";
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
   }
-  catch ( exception const & exc ) {
+  catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);

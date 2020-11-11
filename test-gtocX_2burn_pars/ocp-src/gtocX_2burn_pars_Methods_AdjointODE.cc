@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -116,9 +116,8 @@ namespace gtocX_2burn_parsDefine {
     real_type t85  = t34 * t31;
     real_type t86  = acceleration_r(t35, t29);
     result__[ 2   ] = t74 * t9 + (2 * t2 - 2 * t76) * t12 + t6 * t80 * t37 * t33 + t3 * t86 * t85 * t28 * t26 - t3 * t80 * t37 * t44 + t6 * t86 * t85 * t28 * t43 + 2 * t74 * t53 * t50;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -231,9 +230,8 @@ namespace gtocX_2burn_parsDefine {
     real_type t178 = t26 * t23;
     real_type t179 = acceleration_r(t27, t21);
     result__[ 8   ] = -t6 * t179 * t178 * t20 * t18 + t3 * t179 * t178 * t20 * t42 + 2 * t22 * t53 * t161 * t51 + t6 * t165 * t29 * t25 - t3 * t165 * t29 * t43 + t6 * t169 * t36 * t25 - t3 * t169 * t36 * t43 + 2 * t3 * t87 * t36 * t25 + 2 * t6 * t87 * t36 * t43 + 2 * t163 * t76 * t111 + t161 * t9 + t163 * t85 - t13 + 2;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",9);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -319,9 +317,8 @@ namespace gtocX_2burn_parsDefine {
     real_type t108 = t14 * t11;
     real_type t109 = acceleration_r(t18, t9);
     result__[ 2   ] = t22 * t94 * t20 * t13 / 2 + t22 * t99 * t30 * t28 + t22 * t103 * t20 * t28 + t43 * t109 * t108 * t8 * t5 / 2 + t43 * t31 * t20 * t28 - t43 * t94 * t20 * t42 / 2 - t43 * t99 * t30 * t48 - t43 * t103 * t20 * t48 + t22 * t109 * t108 * t8 * t41 / 2 + t22 * t31 * t20 * t48 - 3 * (-t22 * t15 + t43 * t16) * t64 * t60;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }
 
   /*\
@@ -350,9 +347,8 @@ namespace gtocX_2burn_parsDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
 
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",0);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -479,9 +475,8 @@ namespace gtocX_2burn_parsDefine {
     result__[ 1   ] = (2 * P__[1] - 2 * t68) * t2;
     real_type t72  = k_guess(0);
     result__[ 2   ] = (2 * P__[2] - 2 * t72) * t2;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -560,9 +555,8 @@ namespace gtocX_2burn_parsDefine {
     result__[ 0   ] = 2 / t4 * t2 - t28 * t27 * t22 * t16 * t12 / 4 + t28 * t38 * t37 * t34 * t12 + t28 * t46 * t45 * t43 + t28 * t50 * t37 * t43 + t57 * t27 * t22 * t16 * t55 / 4 - t57 * t38 * t37 * t34 * t55 - t57 * t46 * t45 * t66 - t57 * t50 * t37 * t66 + 0.15e2 / 4.0 * t19 / t14 / t79 / t13 * t78 * t11 * L__[2];
     result__[ 1   ] = 2 * t2;
     result__[ 2   ] = result__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHpDp_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,3, i_segment );
   }
 
   /*\
@@ -591,9 +585,8 @@ namespace gtocX_2burn_parsDefine {
     result__[ 0   ] = L__[0];
     result__[ 1   ] = L__[1];
     result__[ 2   ] = L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -685,9 +678,8 @@ namespace gtocX_2burn_parsDefine {
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

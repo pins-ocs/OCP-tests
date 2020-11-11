@@ -15,15 +15,15 @@ EQ2    := diff(x2(t),t) = T*cos(x1(t)):
 EQ3    := diff(x3(t),t) = T*sin(x1(t)):
 EQNS_T := [ EQ||(1..3)]: <%> ;
 # State variables and controls
-qvars := [x1(t),x2(t),x3(t)] ;
-cvars := [u(t)] ;
-pars := [T] ;
+qvars := [x1(t),x2(t),x3(t)];
+cvars := [u(t)];
+pars := [T]; # optimization parameters
+;
 # Optimal Control: problem definition
 loadDynamicSystem(
-  equations  = EQNS_T,
-  controls   = cvars,
-  states     = qvars,
-  parameters = pars
+  equations = EQNS_T,
+  controls  = cvars,
+  states    = qvars
 );
 #Describe(addBoundaryConditions);
 addBoundaryConditions(
@@ -82,12 +82,12 @@ CONT := [
 #Describe(generateOCProblem);
 generateOCProblem(
   "SingularArc",
-  parameters        = pars,
-  mesh              = [length=1,n=400],
-  continuation      = CONT,
-  #controls_guess    = [u=1],
-  states_guess      = GUESS,
-  parameters_guess  = PGUESS
+  parameters              = pars,
+  mesh                    = [length=1,n=400],
+  continuation            = CONT,
+  #controls_guess         = [u=1],
+  states_guess            = GUESS,
+  optimization_parameters = PGUESS
 ) ;
 #ocp := getOCProblem();
 #eval(ocp);

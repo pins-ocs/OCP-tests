@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime.cc                                     |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -144,9 +144,9 @@ namespace SingularLuus04_FreeTimeDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   SingularLuus04_FreeTime::SingularLuus04_FreeTime(
-    string const & name,
-    ThreadPool   * _TP,
-    Console      * _pConsole
+    string  const & name,
+    ThreadPool    * _TP,
+    Console const * _pConsole
   )
   : Discretized_Indirect_OCP( name, _TP, _pConsole )
   // Controls
@@ -161,7 +161,7 @@ namespace SingularLuus04_FreeTimeDefine {
     this->ns_continuation_begin = 0;
     this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, alglin::NaN<real_type>() );
+    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setupNames(
@@ -196,7 +196,7 @@ namespace SingularLuus04_FreeTimeDefine {
   */
   void
   SingularLuus04_FreeTime::updateContinuation( integer phase, real_type s ) {
-    LW_ASSERT(
+    UTILS_ASSERT(
       s >= 0 && s <= 1,
       "SingularLuus04_FreeTime::updateContinuation( phase number = {}, s = {}) "
       "s must be in the interval [0,1]\n",
@@ -205,7 +205,7 @@ namespace SingularLuus04_FreeTimeDefine {
     switch ( phase ) {
       case 0: continuationStep0( s ); break;
       default:
-        LW_ERROR(
+       UTILS_ERROR(
           "SingularLuus04_FreeTime::updateContinuation( phase number = {}, s = {} )"
           " phase N.{} is not defined\n",
           phase, s, phase
@@ -224,7 +224,7 @@ namespace SingularLuus04_FreeTimeDefine {
   */
   void
   SingularLuus04_FreeTime::setupParameters( GenericContainer const & gc_data ) {
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Parameters"),
       "SingularLuus04_FreeTime::setupParameters: Missing key `Parameters` in data\n"
     );
@@ -236,11 +236,11 @@ namespace SingularLuus04_FreeTimeDefine {
       if ( gc.exists( namei ) ) {
         ModelPars[i] = gc(namei).get_number();
       } else {
-        pConsole->error( fmt::format( "Missing parameter: '{}'\n", namei ) );
+        m_console->error( fmt::format( "Missing parameter: '{}'\n", namei ) );
         allfound = false;
       }
     }
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       allfound, "in SingularLuus04_FreeTime::setup not all parameters are set!\n"
     );
   }
@@ -300,7 +300,7 @@ namespace SingularLuus04_FreeTimeDefine {
   void
   SingularLuus04_FreeTime::setupControls( GenericContainer const & gc_data ) {
     // initialize Control penalties
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Controls"),
       "SingularLuus04_FreeTime::setupClasses: Missing key `Controls` in data\n"
     );
@@ -321,7 +321,7 @@ namespace SingularLuus04_FreeTimeDefine {
   void
   SingularLuus04_FreeTime::setupPointers( GenericContainer const & gc_data ) {
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Pointers"),
       "SingularLuus04_FreeTime::setupPointers: Missing key `Pointers` in data\n"
     );
@@ -329,7 +329,7 @@ namespace SingularLuus04_FreeTimeDefine {
 
     // Initialize user classes
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("pMesh"),
       "in SingularLuus04_FreeTime::setupPointers(gc) cant find key `pMesh' in gc\n"
     );
@@ -348,18 +348,20 @@ namespace SingularLuus04_FreeTimeDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    pConsole->message("\nControls\n",msg_level);
-    mstr.str(""); uControl.info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nControls\n",msg_level);
+    mstr.str("");
+    uControl.info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nUser class (pointer)\n",msg_level);
-    pConsole->message("User function `pMesh`: ",msg_level);
-    mstr.str(""); pMesh->info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nUser class (pointer)\n",msg_level);
+    mstr.str("");
+    mstr << "User function `pMesh`: ";
+    pMesh->info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nModel Parameters\n",msg_level);
+    m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
-      pConsole->message(
+      m_console->message(
         fmt::format("{:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
         msg_level
       );
@@ -378,10 +380,8 @@ namespace SingularLuus04_FreeTimeDefine {
   void
   SingularLuus04_FreeTime::setup( GenericContainer const & gc ) {
 
-    if ( gc.get_map_bool("RedirectStreamToString") ) {
-      ss_redirected_stream.str("");
-      pConsole->changeStream(&ss_redirected_stream);
-    }
+    if ( gc.exists("Debug") )
+      m_debug = gc("Debug").get_bool("SingularLuus04_FreeTime::setup, Debug");
 
     this->setupParameters( gc );
     this->setupClasses( gc );

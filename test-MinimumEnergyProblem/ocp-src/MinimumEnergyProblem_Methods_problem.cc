@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods1.cc                               |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -58,7 +58,7 @@ namespace MinimumEnergyProblemDefine {
   void
   MinimumEnergyProblem::continuationStep0( real_type s ) {
     int msg_level = 3;
-    pConsole->message(
+    m_console->message(
       fmt::format( "\nContinuation step N.0 s = {}\n", s ),
       msg_level
     );
@@ -103,11 +103,11 @@ namespace MinimumEnergyProblemDefine {
 
   real_type
   MinimumEnergyProblem::interpLog_D_1_2( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t1   = pow(v0__XO, -s__XO);
+    real_type t1   = pow(v1__XO, s__XO);
     real_type t2   = -1 + s__XO;
     real_type t3   = log(v0__XO);
     real_type t6   = log(v1__XO);
-    real_type t10  = pow(v1__XO, s__XO);
+    real_type t10  = pow(v0__XO, -s__XO);
     return t10 * (t3 * t2 - t6 * t2 - 1) * t1;
   }
 
@@ -286,9 +286,7 @@ namespace MinimumEnergyProblemDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -315,9 +313,8 @@ namespace MinimumEnergyProblemDefine {
       MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_u ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   void

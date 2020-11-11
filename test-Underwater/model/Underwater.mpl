@@ -25,7 +25,7 @@ EQNS_T := [ EQ||(1..6) ]: <%> ;
 qvars := [x(zeta),z(zeta),theta(zeta),vx(zeta),vz(zeta),Omega(zeta)] ;
 cvars := [u1(zeta),u2(zeta),u3(zeta)] ;
 # Load Dynamical System
-loadDynamicSystem(equations=EQNS_T,controls=cvars,states=qvars,parameters=[T]) ;
+loadDynamicSystem(  equations = EQNS_T,  controls  = cvars,  states    = qvars);
 # Insert boundary conditions
 addBoundaryConditions(initial=[x,z,vx,vz,theta],final=[x,z,vx,vz,theta]);
 infoBoundaryConditions() ;
@@ -91,11 +91,11 @@ CONTINUATION := [
 ];
 generateOCProblem(
   "Underwater",
-  #post_processing = [[T(zeta),"minTime"]],
-  parameters       = pars,
-  mesh             = [length=1,n=1000],
-  continuation     = CONTINUATION,
-  parameters_guess = [ T = Tguess ],
-  states_guess     = GUESS
+  #post_processing        = [[T(zeta),"minTime"]],
+  parameters              = pars,
+  mesh                    = [length=1,n=1000],
+  continuation            = CONTINUATION,
+  optimization_parameters = [ T = Tguess ],
+  states_guess            = GUESS
 ) ;
 

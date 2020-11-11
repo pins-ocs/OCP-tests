@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -180,9 +180,7 @@ namespace OrbitTransferDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -209,9 +207,8 @@ namespace OrbitTransferDefine {
       MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_theta ] = atan2(-L__[1], -L__[2]);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   void
@@ -301,9 +298,7 @@ namespace OrbitTransferDefine {
     real_type t5   = ModelPars[4];
     result__[ 2   ] = t3 * t5;
     result__[ 3   ] = t4 * t5;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",4);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

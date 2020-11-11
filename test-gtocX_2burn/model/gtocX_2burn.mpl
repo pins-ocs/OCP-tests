@@ -28,10 +28,9 @@ odes;
 # Optimal Contol Problem
 #Describe(loadDynamicSystem);
 loadDynamicSystem(
-  equations  = odes,
-  controls   = uvars,
-  parameters = pvars,
-  states     = xvars
+  equations = odes,
+  controls  = uvars,
+  states    = xvars
 );
 DELTAX0 := subs(zeta=zeta_i,XPOS-X0);
 DELTAY0 := subs(zeta=zeta_i,YPOS-Y0);
@@ -111,15 +110,15 @@ PARS := [
 #Describe(generateOCProblem) ;
 generateOCProblem(
   "gtocX_2burn",
-  parameters          = PARS,
-  post_processing     = POST,
-  states_guess        = GUESS,
-  parameters_guess    = PGUESS,
-  continuation        = CONTINUATION,
-  admissible_region   = [ p(zeta) > 0 ], 
-  mesh                = [length=1, n=50],
-  external_frameworks = ["MechatronixAstro"],
-  clean               = false
+  parameters              = PARS,
+  post_processing         = POST,
+  states_guess            = GUESS,
+  optimization_parameters = PGUESS,
+  continuation            = CONTINUATION,
+  admissible_region       = [ p(zeta) > 0 ], 
+  mesh                    = [length=1, n=50],
+  external_frameworks     = ["MechatronixAstro"],
+  clean                   = false
 );
 NULL;
 

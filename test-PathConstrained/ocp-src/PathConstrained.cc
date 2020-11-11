@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained.cc                                             |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -124,9 +124,9 @@ namespace PathConstrainedDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   PathConstrained::PathConstrained(
-    string const & name,
-    ThreadPool   * _TP,
-    Console      * _pConsole
+    string  const & name,
+    ThreadPool    * _TP,
+    Console const * _pConsole
   )
   : Discretized_Indirect_OCP( name, _TP, _pConsole )
   // Controls
@@ -142,7 +142,7 @@ namespace PathConstrainedDefine {
     this->ns_continuation_begin = 0;
     this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, alglin::NaN<real_type>() );
+    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setupNames(
@@ -177,7 +177,7 @@ namespace PathConstrainedDefine {
   */
   void
   PathConstrained::updateContinuation( integer phase, real_type s ) {
-    LW_ASSERT(
+    UTILS_ASSERT(
       s >= 0 && s <= 1,
       "PathConstrained::updateContinuation( phase number = {}, s = {}) "
       "s must be in the interval [0,1]\n",
@@ -186,7 +186,7 @@ namespace PathConstrainedDefine {
     switch ( phase ) {
       case 0: continuationStep0( s ); break;
       default:
-        LW_ERROR(
+       UTILS_ERROR(
           "PathConstrained::updateContinuation( phase number = {}, s = {} )"
           " phase N.{} is not defined\n",
           phase, s, phase
@@ -205,7 +205,7 @@ namespace PathConstrainedDefine {
   */
   void
   PathConstrained::setupParameters( GenericContainer const & gc_data ) {
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Parameters"),
       "PathConstrained::setupParameters: Missing key `Parameters` in data\n"
     );
@@ -217,11 +217,11 @@ namespace PathConstrainedDefine {
       if ( gc.exists( namei ) ) {
         ModelPars[i] = gc(namei).get_number();
       } else {
-        pConsole->error( fmt::format( "Missing parameter: '{}'\n", namei ) );
+        m_console->error( fmt::format( "Missing parameter: '{}'\n", namei ) );
         allfound = false;
       }
     }
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       allfound, "in PathConstrained::setup not all parameters are set!\n"
     );
   }
@@ -241,13 +241,13 @@ namespace PathConstrainedDefine {
   */
   void
   PathConstrained::setupClasses( GenericContainer const & gc_data ) {
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Constraints"),
       "PathConstrained::setupClasses: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("x2bound"),
       "in PathConstrained::setupClasses(gc) missing key: ``x2bound''\n"
     );
@@ -293,7 +293,7 @@ namespace PathConstrainedDefine {
   void
   PathConstrained::setupControls( GenericContainer const & gc_data ) {
     // initialize Control penalties
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Controls"),
       "PathConstrained::setupClasses: Missing key `Controls` in data\n"
     );
@@ -314,7 +314,7 @@ namespace PathConstrainedDefine {
   void
   PathConstrained::setupPointers( GenericContainer const & gc_data ) {
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc_data.exists("Pointers"),
       "PathConstrained::setupPointers: Missing key `Pointers` in data\n"
     );
@@ -322,7 +322,7 @@ namespace PathConstrainedDefine {
 
     // Initialize user classes
 
-    LW_ASSERT0(
+    UTILS_ASSERT0(
       gc.exists("pMesh"),
       "in PathConstrained::setupPointers(gc) cant find key `pMesh' in gc\n"
     );
@@ -341,22 +341,25 @@ namespace PathConstrainedDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    pConsole->message("\nControls\n",msg_level);
-    mstr.str(""); uControl.info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nControls\n",msg_level);
+    mstr.str("");
+    uControl.info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nConstraints 1D\n",msg_level);
-    mstr.str(""); x2bound.info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nConstraints 1D\n",msg_level);
+    mstr.str("");
+    x2bound.info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nUser class (pointer)\n",msg_level);
-    pConsole->message("User function `pMesh`: ",msg_level);
-    mstr.str(""); pMesh->info(mstr);
-    pConsole->message(mstr.str(),msg_level);
+    m_console->message("\nUser class (pointer)\n",msg_level);
+    mstr.str("");
+    mstr << "User function `pMesh`: ";
+    pMesh->info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
-    pConsole->message("\nModel Parameters\n",msg_level);
+    m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
-      pConsole->message(
+      m_console->message(
         fmt::format("{:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
         msg_level
       );
@@ -375,10 +378,8 @@ namespace PathConstrainedDefine {
   void
   PathConstrained::setup( GenericContainer const & gc ) {
 
-    if ( gc.get_map_bool("RedirectStreamToString") ) {
-      ss_redirected_stream.str("");
-      pConsole->changeStream(&ss_redirected_stream);
-    }
+    if ( gc.exists("Debug") )
+      m_debug = gc("Debug").get_bool("PathConstrained::setup, Debug");
 
     this->setupParameters( gc );
     this->setupClasses( gc );

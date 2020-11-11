@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods.cc                                             |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -86,9 +86,8 @@ namespace ZermeloDefine {
     result__[ 4   ] = XR__[1] - 5;
     result__[ 5   ] = XR__[2] - 45;
     result__[ 6   ] = XR__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 7, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -141,9 +140,8 @@ namespace ZermeloDefine {
     result__[ 4   ] = 1;
     result__[ 5   ] = 1;
     result__[ 6   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",7);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 7, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -213,9 +211,8 @@ namespace ZermeloDefine {
     result__[ 7   ] = OMEGA__[5] - LR__[2];
     result__[ 8   ] = OMEGA__[6] - LR__[3];
     result__[ 9   ] = 1 - LR__[4];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",10);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 10, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

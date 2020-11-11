@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods1.cc                        |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -67,7 +67,7 @@ namespace SingularConstrainedCalogeroDefine {
   void
   SingularConstrainedCalogero::continuationStep0( real_type s ) {
     int msg_level = 3;
-    pConsole->message(
+    m_console->message(
       fmt::format( "\nContinuation step N.0 s = {}\n", s ),
       msg_level
     );
@@ -202,9 +202,7 @@ namespace SingularConstrainedCalogeroDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -232,9 +230,8 @@ namespace SingularConstrainedCalogeroDefine {
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     real_type t5   = fmax(0.1e0, X__[0] / 2 + 1.0 / 2.0 - Q__[0] / 2);
     UGUESS__[ iU_u ] = fmin(0.19e1, t5 + 1);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   void
@@ -309,9 +306,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = X__[0] + 1 - Q__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",1);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -333,9 +328,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = U__[0] * (Q__[0] - 4);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"integrated_post_eval",1);
-    #endif
+    Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 
 }

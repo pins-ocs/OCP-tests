@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -92,13 +92,10 @@ namespace gtocX_2burn_parsDefine {
   // Cell check strings
   #define __message_cell_check_0 "0 < 1+f(zeta)*cos(L(zeta))+g(zeta)*sin(L(zeta))"
 
-  // Pars check strings
-  #define __message_parameter_check_0 "0 < p"
-
   bool
   gtocX_2burn_pars::p_check( P_const_pointer_type P__ ) const {
     bool ok = true;
-    ok = ok && Xoptima__check__lt(0, P__[0]);
+
     return ok;
   }
 

@@ -20,7 +20,6 @@ EQ4 := diff(Ts(zeta),zeta) = 0:
 eqns := [EQ||(1..4)]:<%>;
 xvars := [s(zeta),v(zeta),a(zeta),Ts(zeta)] ;
 uvars := [jerk(zeta)] ;
-pars := [] ;
 # Optimal control
 # Optimal control problem definition
 # Load dynamic system
@@ -28,10 +27,9 @@ pars := [] ;
 # By default the command sets the independent variable to "zeta".
 #Describe(loadDynamicSystem);
 loadDynamicSystem(
-  controls   = uvars,
-  states     = xvars,
-  parameters = pars,
-  equations  = eqns
+  controls  = uvars,
+  states    = xvars,
+  equations = eqns
 );
 addBoundaryConditions(
   initial = [s,v,a],

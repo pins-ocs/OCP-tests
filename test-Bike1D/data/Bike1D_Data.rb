@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Bike1D_Data.rb                                                 #
 #                                                                       #
-#  version: 1.0   date 13/9/2020                                        #
+#  version: 1.0   date 12/11/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,17 +18,20 @@
 include Mechatronix
 
 # Auxiliary values
+mur_max = 1
 muf_min = -1
 mur_min = -1
-mur_max = 1
 
 mechatronix do |data|
 
   # Level of message
   data.InfoLevel = 4
 
+  # Activate dynamic debugging
+  data.Debug = false
+
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = 4
+  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
   data.U_threaded  = true
   data.F_threaded  = true
   data.JF_threaded = true
@@ -42,9 +45,6 @@ mechatronix do |data|
   data.JacobianCheckFull        = false
   data.JacobianCheck_epsilon    = 1e-4
   data.FiniteDifferenceJacobian = false
-
-  # Redirect output to GenericContainer["stream_output"]
-  data.RedirectStreamToString = false
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "Bike1D_dump"
@@ -149,8 +149,8 @@ mechatronix do |data|
   data.MappedObjects[:clip] = { :h => 0.01, :delta => 0 }
 
   # Controls
-  # Penalty type controls: "QUADRATIC", "QUADRATIC2", "PARABOLA", "CUBIC"
-  # Barrier type controls: "LOGARITHMIC", "COS_LOGARITHMIC", "TAN2", "HYPERBOLIC"
+  # Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
+  # Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
 
   data.Controls = {}
   data.Controls[:murControl] = {
@@ -177,8 +177,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 1000,
         :length => 1000,
+        :n      => 1000,
       },
     ],
   };

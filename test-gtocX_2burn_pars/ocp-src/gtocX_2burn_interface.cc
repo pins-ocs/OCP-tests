@@ -45,7 +45,7 @@ namespace gtocX_2burn_parsDefine {
       real_type t1  = ModelPars[iM_time_f];
       real_type muS = ModelPars[iM_muS];
       bool ok = gtocX::build_Lambert_guess( t0, *From, t1, *To, muS, Guess );
-      LW_ASSERT( ok, "guess_setup, Lambert failed" );
+      UTILS_ASSERT( ok, "guess_setup, Lambert failed" );
       do_setup = false;
       real_type ret = ModelPars[iM_retrograde];
       if ( ret < 0 ) Guess.make_retrograde();

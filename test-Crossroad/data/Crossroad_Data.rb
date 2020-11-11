@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Crossroad_Data.rb                                              #
 #                                                                       #
-#  version: 1.0   date 13/9/2020                                        #
+#  version: 1.0   date 12/11/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,20 +18,23 @@
 include Mechatronix
 
 # Auxiliary values
-L        = 100
 jerk_max = 10
+jerk_min = -10
+v_max    = 30
+L        = 100
 s_f      = L
 wJ       = 1/jerk_max**2
-v_max    = 30
-jerk_min = -10
 
 mechatronix do |data|
 
   # Level of message
   data.InfoLevel = 4
 
+  # Activate dynamic debugging
+  data.Debug = false
+
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = 4
+  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
   data.U_threaded  = true
   data.F_threaded  = true
   data.JF_threaded = true
@@ -45,9 +48,6 @@ mechatronix do |data|
   data.JacobianCheckFull        = false
   data.JacobianCheck_epsilon    = 1e-4
   data.FiniteDifferenceJacobian = false
-
-  # Redirect output to GenericContainer["stream_output"]
-  data.RedirectStreamToString = false
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "Crossroad_dump"
@@ -149,8 +149,8 @@ mechatronix do |data|
 
     # User Function Parameters
     :kappa0 => 0,
-    :kappa1 => 1/10.000,
-    :kappa2 => 1/10.000,
+    :kappa1 => 1/10.00,
+    :kappa2 => 1/10.00,
 
     # Continuation Parameters
 
@@ -161,8 +161,8 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # Controls
-  # Penalty type controls: "QUADRATIC", "QUADRATIC2", "PARABOLA", "CUBIC"
-  # Barrier type controls: "LOGARITHMIC", "COS_LOGARITHMIC", "TAN2", "HYPERBOLIC"
+  # Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
+  # Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
 
   data.Controls = {}
   data.Controls[:jerkControl] = {
@@ -176,6 +176,7 @@ mechatronix do |data|
   # Constraint1D
   # Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
   # Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
+
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:Tpositive] = {
     :subType   => 'PENALTY_REGULAR',
@@ -208,12 +209,12 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 0.5,
         :n      => 100,
+        :length => 0.5,
       },
       {
-        :length => 0.5,
         :n      => 100,
+        :length => 0.5,
       },
     ],
   };

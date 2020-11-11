@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -107,9 +107,8 @@ namespace Bike1DDefine {
     result__[ 0   ] = t11 * t5 + t3;
     real_type t15  = ALIAS_mufControl_D_1(U__[1], ModelPars[3], 0);
     result__[ 1   ] = t15 * t5 + t3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -166,9 +165,8 @@ namespace Bike1DDefine {
     real_type t20  = ALIAS_mufControl_D_1(U__[1], ModelPars[3], 0);
     result__[ 2   ] = -t20 * t3;
     result__[ 3   ] = result__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -214,9 +212,8 @@ namespace Bike1DDefine {
     result__[ 0   ] = t8 * t2;
     real_type t11  = ALIAS_mufControl_D_1_1(U__[1], ModelPars[3], 0);
     result__[ 1   ] = t11 * t2;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
 
   /*\
@@ -371,7 +368,7 @@ namespace Bike1DDefine {
     DuDxlp( DgDxlp_I[ 1 ], DgDxlp_J[ 1] ) = -DgDxlp_V[1];
     DuDxlp( DgDxlp_I[ 2 ], DgDxlp_J[ 2] ) = -DgDxlp_V[2];
     DuDxlp( DgDxlp_I[ 3 ], DgDxlp_J[ 3] ) = -DgDxlp_V[3];
-    integer info = alglin::gesv( 2, 2, DgDu.get_data(), 2, ipiv, DuDxlp.get_data(), 2 );
+    integer info = alglin::gesv( 2, 2, DgDu.data(), 2, ipiv, DuDxlp.data(), 2 );
     return info == 0;
   }
 
@@ -420,7 +417,7 @@ namespace Bike1DDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -442,7 +439,7 @@ namespace Bike1DDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -452,7 +449,7 @@ namespace Bike1DDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -488,9 +485,8 @@ namespace Bike1DDefine {
     real_type t2   = XL__[0];
     result__[ 0   ] = t1 - t2;
     result__[ 1   ] = LR__[0] * t1 - LL__[0] * t2;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -543,9 +539,8 @@ namespace Bike1DDefine {
     result__[ 3   ] = -XL__[0];
     result__[ 4   ] = LR__[0];
     result__[ 5   ] = XR__[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 6, i_segment_left, i_segment_right );
   }
 
 }

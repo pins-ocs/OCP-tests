@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -92,9 +92,8 @@ namespace EconomicGrowthModelDefine {
     result__[ 1   ] = XL__[1] - ModelPars[2];
     real_type t7   = Q(XR__[0], XR__[1]);
     result__[ 2   ] = t7 - ModelPars[0];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 3, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -143,9 +142,8 @@ namespace EconomicGrowthModelDefine {
     real_type t2   = XR__[1];
     result__[ 2   ] = Q_D_1(t1, t2);
     result__[ 3   ] = Q_D_2(t1, t2);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -216,9 +214,8 @@ namespace EconomicGrowthModelDefine {
     real_type t11  = Q_D_2(t6, t7);
     result__[ 4   ] = t11 * t5 - LR__[1];
     result__[ 5   ] = 1 - LR__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -274,9 +271,8 @@ namespace EconomicGrowthModelDefine {
     result__[ 2   ] = result__[1];
     real_type t6   = Q_D_2_2(t2, t3);
     result__[ 3   ] = t6 * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DadjointBCDxp_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

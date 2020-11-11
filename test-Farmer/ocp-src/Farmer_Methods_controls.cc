@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -121,9 +121,8 @@ namespace FarmerDefine {
     real_type t36  = U__[3];
     real_type t44  = ALIAS_x4__oControl_D_1(t36, -0.1e-2, 100);
     result__[ 3   ] = 2 * (-X__[4] + t36) * ModelPars[17] + L__[4] / ModelPars[9] + t44;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -175,9 +174,8 @@ namespace FarmerDefine {
     result__[ 5   ] = 1.0 / ModelPars[7];
     result__[ 6   ] = -2 * ModelPars[17];
     result__[ 7   ] = 1.0 / ModelPars[9];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -225,9 +223,8 @@ namespace FarmerDefine {
     result__[ 2   ] = 2 * ModelPars[16] + t12;
     real_type t16  = ALIAS_x4__oControl_D_1_1(U__[3], -0.1e-2, 100);
     result__[ 3   ] = 2 * ModelPars[17] + t16;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 4, i_segment );
   }
 
   /*\
@@ -438,7 +435,7 @@ namespace FarmerDefine {
     DuDxlp( DgDxlp_I[ 5 ], DgDxlp_J[ 5] ) = -DgDxlp_V[5];
     DuDxlp( DgDxlp_I[ 6 ], DgDxlp_J[ 6] ) = -DgDxlp_V[6];
     DuDxlp( DgDxlp_I[ 7 ], DgDxlp_J[ 7] ) = -DgDxlp_V[7];
-    integer info = alglin::gesv( 4, 10, DgDu.get_data(), 4, ipiv, DuDxlp.get_data(), 4 );
+    integer info = alglin::gesv( 4, 10, DgDu.data(), 4, ipiv, DuDxlp.data(), 4 );
     return info == 0;
   }
 
@@ -495,7 +492,7 @@ namespace FarmerDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -517,7 +514,7 @@ namespace FarmerDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -527,7 +524,7 @@ namespace FarmerDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -569,9 +566,8 @@ namespace FarmerDefine {
     result__[ 7   ] = LR__[2] - LL__[2];
     result__[ 8   ] = LR__[3] - LL__[3];
     result__[ 9   ] = LR__[4] - LL__[4];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",10);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 10, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -652,9 +648,8 @@ namespace FarmerDefine {
     result__[ 17  ] = 1;
     result__[ 18  ] = -1;
     result__[ 19  ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",20);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 20, i_segment_left, i_segment_right );
   }
 
 }

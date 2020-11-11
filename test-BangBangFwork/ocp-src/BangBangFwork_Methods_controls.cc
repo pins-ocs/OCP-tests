@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -83,9 +83,8 @@ namespace BangBangFworkDefine {
     real_type t4   = fMax(Q__[0]);
     real_type t5   = ALIAS_Fcontrol_D_1(U__[0], -t4, t4);
     result__[ 0   ] = L__[1] + t5;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"g_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -123,9 +122,8 @@ namespace BangBangFworkDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDxlp_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -164,9 +162,8 @@ namespace BangBangFworkDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = fMax(Q__[0]);
     result__[ 0   ] = ALIAS_Fcontrol_D_1_1(U__[0], -t3, t3);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DgDu_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
 
   /*\
@@ -317,7 +314,7 @@ namespace BangBangFworkDefine {
     DgDu( DgDu_I[ 0 ], DgDu_J[ 0 ] ) = DgDu_V[0];
     // fill DgDxlp
     DuDxlp( DgDxlp_I[ 0 ], DgDxlp_J[ 0] ) = -DgDxlp_V[0];
-    integer info = alglin::gesv( 1, 4, DgDu.get_data(), 1, ipiv, DuDxlp.get_data(), 1 );
+    integer info = alglin::gesv( 1, 4, DgDu.data(), 1, ipiv, DuDxlp.data(), 1 );
     return info == 0;
   }
 
@@ -368,7 +365,7 @@ namespace BangBangFworkDefine {
     P_const_pointer_type p,
     real_type            segmentLink[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -390,7 +387,7 @@ namespace BangBangFworkDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   void
@@ -400,7 +397,7 @@ namespace BangBangFworkDefine {
     P_const_pointer_type p,
     real_type            DsegmentLinkDxp[]
   ) const {
-    LW_ERROR0("NON IMPLEMENTATA\n");
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
@@ -436,9 +433,8 @@ namespace BangBangFworkDefine {
     result__[ 1   ] = XR__[1] - XL__[1];
     result__[ 2   ] = LR__[0] - LL__[0];
     result__[ 3   ] = LR__[1] - LL__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"jump_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -495,9 +491,8 @@ namespace BangBangFworkDefine {
     result__[ 5   ] = 1;
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DjumpDxlp_sparse",8);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
 }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -94,9 +94,8 @@ namespace OrbitTransferDefine {
     real_type t43  = t42 * t19;
     result__[ 3   ] = -t43 * t14 + t2 * L__[0];
     result__[ 4   ] = -t42 * t32 * t14 + 2 * t43 * t3 + t42 * t37;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -172,9 +171,8 @@ namespace OrbitTransferDefine {
     result__[ 6   ] = result__[3];
     result__[ 7   ] = result__[5];
     result__[ 8   ] = 2 * t53 * t3;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",9);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -243,9 +241,8 @@ namespace OrbitTransferDefine {
     real_type t9   = 1.0 / X__[0];
     real_type t14  = sin(t5);
     result__[ 0   ] = -t9 * t14 * t4 * t2 * L__[2] + t9 * t6 * t4 * t2 * L__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -292,9 +289,8 @@ namespace OrbitTransferDefine {
     real_type t10  = 1.0 / t9;
     real_type t15  = sin(t5);
     result__[ 0   ] = t10 * t15 * t4 * t2 * L__[2] - t10 * t6 * t4 * t2 * L__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHuDx_sparse",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -357,9 +353,8 @@ namespace OrbitTransferDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
 
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",0);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -424,9 +419,8 @@ namespace OrbitTransferDefine {
     result__[ 2   ] = L__[0];
     result__[ 3   ] = L__[1];
     result__[ 4   ] = L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -520,9 +514,8 @@ namespace OrbitTransferDefine {
     result__[ 2   ] = V__[4];
     result__[ 3   ] = V__[0];
     result__[ 4   ] = V__[1];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",5);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

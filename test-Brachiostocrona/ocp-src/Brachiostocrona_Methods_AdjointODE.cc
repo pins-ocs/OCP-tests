@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -93,9 +93,8 @@ namespace BrachiostocronaDefine {
     result__[ 2   ] = t5 * t3 + t9 * t8;
     real_type t11  = X__[2];
     result__[ 3   ] = -t5 * ModelPars[2] * t2 * L__[2] - t9 * t11 * t3 + t5 * t11 * t8;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hx_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -145,9 +144,8 @@ namespace BrachiostocronaDefine {
     result__[ 1   ] = result__[0];
     real_type t11  = X__[2];
     result__[ 2   ] = t5 * ModelPars[2] * t2 * L__[2] - t9 * t11 * t3 - t5 * t11 * t8;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDx_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -196,9 +194,8 @@ namespace BrachiostocronaDefine {
     result__[ 0   ] = t3 * t1 + t6 * t5;
     real_type t8   = X__[2];
     result__[ 1   ] = -t6 * t8 * t1 + t3 * t8 * t5 - t3 * ModelPars[2] * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DHxDp_sparse",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDp_sparse", 2, i_segment );
   }
 
   /*\
@@ -227,9 +224,8 @@ namespace BrachiostocronaDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hu_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -329,9 +325,8 @@ namespace BrachiostocronaDefine {
     real_type t5   = cos(t4);
     real_type t9   = sin(t4);
     result__[ 0   ] = t5 * t2 * L__[0] + t9 * t2 * L__[1] - t9 * ModelPars[2] * L__[2];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Hp_eval",1);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -395,9 +390,8 @@ namespace BrachiostocronaDefine {
     result__[ 1   ] = L__[1];
     result__[ 2   ] = ModelPars[3] * L__[2];
     result__[ 3   ] = L__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"eta_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -490,9 +484,8 @@ namespace BrachiostocronaDefine {
     result__[ 1   ] = V__[1];
     result__[ 2   ] = ModelPars[3] * V__[2];
     result__[ 3   ] = V__[3];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"nu_eval",4);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

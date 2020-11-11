@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -114,9 +114,8 @@ namespace UnderwaterDefine {
     result__[ 4   ] = (t24 * t15 * t13 * t2 + t24 * U__[1]) * t1;
     real_type t32  = 1.0 / ModelPars[1];
     result__[ 5   ] = (t32 * U__[2] + t32 * (t19 - t15) * t6 * t2) * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"rhs_ode",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "rhs_ode", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -193,9 +192,8 @@ namespace UnderwaterDefine {
     real_type t28  = 1.0 / ModelPars[1] * (t15 - t16);
     result__[ 11  ] = t28 * t20;
     result__[ 12  ] = t28 * t24;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDxp_sparse",13);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 13, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -254,9 +252,8 @@ namespace UnderwaterDefine {
     result__[ 4   ] = t19 * t11 * result__[2] * t1 + t19 * U__[1];
     real_type t26  = 1.0 / ModelPars[1];
     result__[ 5   ] = t26 * U__[2] + t26 * (t15 - t11) * t5 * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDp_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -300,9 +297,8 @@ namespace UnderwaterDefine {
     result__[ 0   ] = 1.0 / ModelPars[2] * t1;
     result__[ 1   ] = 1.0 / ModelPars[3] * t1;
     result__[ 2   ] = 1.0 / ModelPars[1] * t1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"Drhs_odeDu_sparse",3);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 3, i_segment );
   }
 
   /*\
@@ -355,9 +351,8 @@ namespace UnderwaterDefine {
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
     result__[ 5   ] = 1;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"A_sparse",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "A_sparse", 6, i_segment );
   }
 
 }

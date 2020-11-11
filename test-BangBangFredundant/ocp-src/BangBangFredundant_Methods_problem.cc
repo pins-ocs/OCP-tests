@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods1.cc                                 |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -198,9 +198,7 @@ namespace BangBangFredundantDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -228,9 +226,8 @@ namespace BangBangFredundantDefine {
     std::fill_n( UGUESS__.pointer(), 2, 0 );
     UGUESS__[ iU_aF1 ] = 0;
     UGUESS__[ iU_aF2 ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
 
   void
@@ -322,9 +319,7 @@ namespace BangBangFredundantDefine {
     real_type t6   = X__[2] + X__[3];
     result__[ 2   ] = Flim(t6);
     result__[ 3   ] = t6;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",4);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

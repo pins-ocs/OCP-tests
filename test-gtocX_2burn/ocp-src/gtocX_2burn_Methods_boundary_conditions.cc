@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -112,9 +112,8 @@ namespace gtocX_2burnDefine {
     real_type t26  = zPosition(t15, t16, t17, t18, t19, t20, t7);
     real_type t27  = Z_end(t22);
     result__[ 5   ] = t26 - t27;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"boundaryConditions_eval",6);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -238,9 +237,8 @@ namespace gtocX_2burnDefine {
     result__[ 33  ] = zPosition_D_4(t8, t9, t10, t11, t12, t13, t7);
     result__[ 34  ] = zPosition_D_5(t8, t9, t10, t11, t12, t13, t7);
     result__[ 35  ] = zPosition_D_6(t8, t9, t10, t11, t12, t13, t7);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DboundaryConditionsDxp_sparse",36);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 36, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -367,9 +365,8 @@ namespace gtocX_2burnDefine {
     real_type t99  = yPosition_D_6(t54, t55, t56, t57, t58, t59, t8);
     real_type t101 = zPosition_D_6(t54, t55, t56, t57, t58, t59, t8);
     result__[ 11  ] = t101 * t65 + t97 * t53 + t99 * t62 - LR__[5];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"adjointBC_eval",12);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 12, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -700,9 +697,8 @@ namespace gtocX_2burnDefine {
     real_type t268 = yPosition_D_6_6(t138, t139, t140, t141, t142, t143, t8);
     real_type t270 = zPosition_D_6_6(t138, t139, t140, t141, t142, t143, t8);
     result__[ 71  ] = t266 * t137 + t268 * t146 + t270 * t149;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"DadjointBCDxp_sparse",72);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 72, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

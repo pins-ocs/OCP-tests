@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods1.cc                                               |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -315,9 +315,7 @@ namespace CNOCDefine {
   ) const {
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__.pointer(),"q_eval",1);
-    #endif
+    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\
@@ -345,9 +343,8 @@ namespace CNOCDefine {
     std::fill_n( UGUESS__.pointer(), 2, 0 );
     UGUESS__[ iU_js ] = 0;
     UGUESS__[ iU_jn ] = 0;
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(UGUESS__.pointer(),"u_guess_eval",2);
-    #endif
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
 
   void
@@ -470,9 +467,7 @@ namespace CNOCDefine {
     result__[ 14  ] = ALIAS_yLimitLeft(t16, t33);
     result__[ 15  ] = ALIAS_xLimitRight(t16, t33);
     result__[ 16  ] = ALIAS_yLimitRight(t16, t33);
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"post_eval",17);
-    #endif
+    Mechatronix::check_in_segment( result__, "post_eval", 17, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -494,9 +489,7 @@ namespace CNOCDefine {
     real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
     result__[ 0   ] = X__[6];
-    #ifdef MECHATRONIX_DEBUG
-    CHECK_NAN(result__,"integrated_post_eval",1);
-    #endif
+    Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 
 }

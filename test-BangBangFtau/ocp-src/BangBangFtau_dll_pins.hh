@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_dll_pins.hh                                       |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -110,7 +110,7 @@ namespace BangBangFtauDefine {
   public:
 
     BANGBANGFTAU_API_DLL
-    BangBangFtau_Problem( ThreadPool * pTP, Console * pConsole )
+    BangBangFtau_Problem( ThreadPool * pTP, Console const * pConsole )
     : model("BangBangFtau",pTP,pConsole)
     , mesh( "mesh" )
     {
@@ -141,7 +141,7 @@ namespace BangBangFtauDefine {
         ok    = true;
         error = "no error";
       }
-      catch ( exception const & exc ) {
+      catch ( std::exception const & exc ) {
         error = exc.what();
       }
       catch ( char const exc[] ) {

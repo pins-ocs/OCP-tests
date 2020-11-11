@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Data.rb                                    |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -20,7 +20,6 @@
 
 #include "mex.h"
 #include <map>
-#include <cmath>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -49,12 +48,17 @@
 #define arg_out_8 plhs[8]
 #define arg_out_9 plhs[9]
 
-#define MEX_ASSERT(COND,MSG)              \
-  if ( !(COND) ) {                        \
-    ::std::basic_ostringstream<char> ost; \
-    ost << "Mex Error: " << MSG << '\n';  \
-    mexErrMsgTxt(ost.str().c_str());      \
+#define MEX_ASSERT(COND,MSG)             \
+  if ( !(COND) ) {                       \
+    std::ostringstream ost;              \
+    ost << "Mex Error: " << MSG << '\n'; \
+    mexErrMsgTxt(ost.str().c_str());     \
   }
+
+#define MEX_ERROR2(FMT,...) \
+  mexErrMsgTxt(fmt::format("Mex Error: " FMT,__VA_ARGS__).c_str())
+
+#define MEX_ASSERT2(COND,FMT,...) if ( !(COND) ) MEX_ERROR2(FMT,__VA_ARGS__)
 
 // -----------------------------------------------------------------------------
 
@@ -75,9 +79,10 @@ getScalarValue( mxArray const * arg, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
-  MEX_ASSERT(
+  MEX_ASSERT2(
     dims[0] == 1 && dims[1] == 1,
-    msg << ", found " << dims[0] << " x " << dims[1] << " matrix"
+    "{}, found {} x {} matrix\n",
+    msg, dims[0], dims[1]
   );
   return mxGetScalar(arg);
 }
@@ -97,9 +102,10 @@ getInt( mxArray const * arg, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
-  MEX_ASSERT(
+  MEX_ASSERT2(
     dims[0] == 1 && dims[1] == 1,
-    msg << ", found " << dims[0] << " x " << dims[1] << " matrix"
+    "{}, found {} x {} matrix\n",
+    msg, dims[0], dims[1]
   );
   mxClassID category = mxGetClassID(arg);
   int64_t res = 0;
@@ -115,13 +121,19 @@ getInt( mxArray const * arg, char const msg[] ) {
     case mxUINT64_CLASS: res = *static_cast<uint64_t*>(ptr); break;
     case mxDOUBLE_CLASS:
       { double tmp = *static_cast<double*>(ptr);
-        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp );
+        MEX_ASSERT2(
+          tmp == std::floor(tmp),
+          "{} expected int, found {}\n", msg, tmp
+        );
         res = static_cast<int64_t>(tmp);
       }
       break;
     case mxSINGLE_CLASS:
       { float tmp = *static_cast<float*>(ptr);
-        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp );
+        MEX_ASSERT2(
+          tmp == std::floor(tmp),
+          "{} expected int, found {}\n", msg, tmp
+        );
         res = static_cast<int64_t>(tmp);
       }
       break;
@@ -139,9 +151,10 @@ getVectorPointer( mxArray const * arg, mwSize & sz, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
-  MEX_ASSERT(
+  MEX_ASSERT2(
     dims[0] == 1 || dims[1] == 1,
-    msg << "\nExpect (1 x n or n x 1) matrix, found " << dims[0] << " x " << dims[1]
+    "{}\nExpect (1 x n or n x 1) matrix, found {} x {}\n",
+    msg, dims[0], dims[1]
   );
   sz = dims[0]*dims[1];
   return mxGetPr(arg);
@@ -181,7 +194,7 @@ static
 inline
 void
 setScalarBool( mxArray * & arg, bool value ) {
-  arg = mxCreateLogicalScalar(value);
+  arg = mxCreateLogicalScalar( value );
 }
 
 static
@@ -261,9 +274,7 @@ template <typename base>
 inline
 class_handle<base> *
 convertMat2HandlePtr(const mxArray *in) {
-  if ( mxGetNumberOfElements(in) != 1 ||
-       mxGetClassID(in) != mxUINT64_CLASS ||
-       mxIsComplex(in) )
+  if ( mxGetNumberOfElements(in) != 1 || mxGetClassID(in) != mxUINT64_CLASS || mxIsComplex(in))
     mexErrMsgTxt("Input must be an uint64 scalar.");
   class_handle<base> *ptr = reinterpret_cast<class_handle<base> *>(*((uint64_t *)mxGetData(in)));
   if (!ptr->isValid())
@@ -287,6 +298,6 @@ destroyObject(const mxArray *in) {
   mexUnlock();
 }
 
-#endif // MEX_UTILS_HH
+#endif // __CLASS_HANDLE_HPP__
 
 #endif

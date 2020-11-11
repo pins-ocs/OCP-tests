@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_dll_pins.hh                                      |
  |                                                                       |
- |  version: 1.0   date 13/9/2020                                        |
+ |  version: 1.0   date 12/11/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -110,7 +110,7 @@ namespace BangBangFworkDefine {
   public:
 
     BANGBANGFWORK_API_DLL
-    BangBangFwork_Problem( ThreadPool * pTP, Console * pConsole )
+    BangBangFwork_Problem( ThreadPool * pTP, Console const * pConsole )
     : model("BangBangFwork",pTP,pConsole)
     , mesh( "mesh" )
     {
@@ -141,7 +141,7 @@ namespace BangBangFworkDefine {
         ok    = true;
         error = "no error";
       }
-      catch ( exception const & exc ) {
+      catch ( std::exception const & exc ) {
         error = exc.what();
       }
       catch ( char const exc[] ) {
