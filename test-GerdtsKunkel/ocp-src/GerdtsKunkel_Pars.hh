@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Pars.hh                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef GERDTSKUNKELPARS_HH
-#define GERDTSKUNKELPARS_HH
+#ifndef GERDTSKUNKELPARS_DOT_HH
+#define GERDTSKUNKELPARS_DOT_HH
 
 #define numBc                    5
 #define numModelPars             5

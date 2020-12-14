@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "HangingChain_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -169,10 +167,10 @@ namespace HangingChainDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = U__[0];
-    real_type t7   = t4 * t4;
-    real_type t9   = sqrt(t7 + 1);
-    result__[ 0   ] = 1.0 / t9 * (t4 * (L__[1] + X__[0]) + t9 * L__[0]);
+    real_type t1   = U__[0];
+    real_type t2   = t1 * t1;
+    real_type t4   = sqrt(t2 + 1);
+    result__[ 0   ] = (t1 * (L__[1] + X__[0]) + t4 * L__[0]) / t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -196,7 +194,7 @@ namespace HangingChainDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

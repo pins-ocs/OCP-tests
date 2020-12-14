@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -50,7 +50,7 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     factorization = "LU",
     MaxIter       = 50,
     Tolerance     = 1e-9,
@@ -65,7 +65,7 @@ content = {
     factorization = "LU",
 
     -- Last Block selection:
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     last_factorization = "LU",
 
     -- choose solves: Hyness, NewtonDumped

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Guess.cc                                       |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -90,10 +90,13 @@ namespace BrachiostocronaDefine {
   #define Xoptima__check__lt(A,B) ( (A) <  (B) )
   #define Xoptima__check__le(A,B) ( (A) <= (B) )
 
+  // Pars check strings
+  #define __message_parameter_check_0 "0 < T"
+
   bool
   Brachiostocrona::p_check( P_const_pointer_type P__ ) const {
     bool ok = true;
-
+    ok = ok && Xoptima__check__lt(0, P__[0]);
     return ok;
   }
 

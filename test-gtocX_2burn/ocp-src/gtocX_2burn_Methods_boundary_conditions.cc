@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "gtocX_2burn_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -135,42 +133,42 @@ namespace gtocX_2burnDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 0   ; jIndex[ 3  ] = 3   ;
-    iIndex[ 4  ] = 0   ; jIndex[ 4  ] = 4   ;
-    iIndex[ 5  ] = 0   ; jIndex[ 5  ] = 5   ;
-    iIndex[ 6  ] = 1   ; jIndex[ 6  ] = 0   ;
-    iIndex[ 7  ] = 1   ; jIndex[ 7  ] = 1   ;
-    iIndex[ 8  ] = 1   ; jIndex[ 8  ] = 2   ;
-    iIndex[ 9  ] = 1   ; jIndex[ 9  ] = 3   ;
-    iIndex[ 10 ] = 1   ; jIndex[ 10 ] = 4   ;
-    iIndex[ 11 ] = 1   ; jIndex[ 11 ] = 5   ;
-    iIndex[ 12 ] = 2   ; jIndex[ 12 ] = 0   ;
-    iIndex[ 13 ] = 2   ; jIndex[ 13 ] = 1   ;
-    iIndex[ 14 ] = 2   ; jIndex[ 14 ] = 2   ;
-    iIndex[ 15 ] = 2   ; jIndex[ 15 ] = 3   ;
-    iIndex[ 16 ] = 2   ; jIndex[ 16 ] = 4   ;
-    iIndex[ 17 ] = 2   ; jIndex[ 17 ] = 5   ;
-    iIndex[ 18 ] = 3   ; jIndex[ 18 ] = 6   ;
-    iIndex[ 19 ] = 3   ; jIndex[ 19 ] = 7   ;
-    iIndex[ 20 ] = 3   ; jIndex[ 20 ] = 8   ;
-    iIndex[ 21 ] = 3   ; jIndex[ 21 ] = 9   ;
-    iIndex[ 22 ] = 3   ; jIndex[ 22 ] = 10  ;
-    iIndex[ 23 ] = 3   ; jIndex[ 23 ] = 11  ;
-    iIndex[ 24 ] = 4   ; jIndex[ 24 ] = 6   ;
-    iIndex[ 25 ] = 4   ; jIndex[ 25 ] = 7   ;
-    iIndex[ 26 ] = 4   ; jIndex[ 26 ] = 8   ;
-    iIndex[ 27 ] = 4   ; jIndex[ 27 ] = 9   ;
-    iIndex[ 28 ] = 4   ; jIndex[ 28 ] = 10  ;
-    iIndex[ 29 ] = 4   ; jIndex[ 29 ] = 11  ;
-    iIndex[ 30 ] = 5   ; jIndex[ 30 ] = 6   ;
-    iIndex[ 31 ] = 5   ; jIndex[ 31 ] = 7   ;
-    iIndex[ 32 ] = 5   ; jIndex[ 32 ] = 8   ;
-    iIndex[ 33 ] = 5   ; jIndex[ 33 ] = 9   ;
-    iIndex[ 34 ] = 5   ; jIndex[ 34 ] = 10  ;
-    iIndex[ 35 ] = 5   ; jIndex[ 35 ] = 11  ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 0   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 0   ; jIndex[5 ] = 5   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 0   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 1   ;
+    iIndex[8 ] = 1   ; jIndex[8 ] = 2   ;
+    iIndex[9 ] = 1   ; jIndex[9 ] = 3   ;
+    iIndex[10] = 1   ; jIndex[10] = 4   ;
+    iIndex[11] = 1   ; jIndex[11] = 5   ;
+    iIndex[12] = 2   ; jIndex[12] = 0   ;
+    iIndex[13] = 2   ; jIndex[13] = 1   ;
+    iIndex[14] = 2   ; jIndex[14] = 2   ;
+    iIndex[15] = 2   ; jIndex[15] = 3   ;
+    iIndex[16] = 2   ; jIndex[16] = 4   ;
+    iIndex[17] = 2   ; jIndex[17] = 5   ;
+    iIndex[18] = 3   ; jIndex[18] = 6   ;
+    iIndex[19] = 3   ; jIndex[19] = 7   ;
+    iIndex[20] = 3   ; jIndex[20] = 8   ;
+    iIndex[21] = 3   ; jIndex[21] = 9   ;
+    iIndex[22] = 3   ; jIndex[22] = 10  ;
+    iIndex[23] = 3   ; jIndex[23] = 11  ;
+    iIndex[24] = 4   ; jIndex[24] = 6   ;
+    iIndex[25] = 4   ; jIndex[25] = 7   ;
+    iIndex[26] = 4   ; jIndex[26] = 8   ;
+    iIndex[27] = 4   ; jIndex[27] = 9   ;
+    iIndex[28] = 4   ; jIndex[28] = 10  ;
+    iIndex[29] = 4   ; jIndex[29] = 11  ;
+    iIndex[30] = 5   ; jIndex[30] = 6   ;
+    iIndex[31] = 5   ; jIndex[31] = 7   ;
+    iIndex[32] = 5   ; jIndex[32] = 8   ;
+    iIndex[33] = 5   ; jIndex[33] = 9   ;
+    iIndex[34] = 5   ; jIndex[34] = 10  ;
+    iIndex[35] = 5   ; jIndex[35] = 11  ;
   }
 
   void
@@ -388,78 +386,78 @@ namespace gtocX_2burnDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 0   ; jIndex[ 3  ] = 3   ;
-    iIndex[ 4  ] = 0   ; jIndex[ 4  ] = 4   ;
-    iIndex[ 5  ] = 0   ; jIndex[ 5  ] = 5   ;
-    iIndex[ 6  ] = 1   ; jIndex[ 6  ] = 0   ;
-    iIndex[ 7  ] = 1   ; jIndex[ 7  ] = 1   ;
-    iIndex[ 8  ] = 1   ; jIndex[ 8  ] = 2   ;
-    iIndex[ 9  ] = 1   ; jIndex[ 9  ] = 3   ;
-    iIndex[ 10 ] = 1   ; jIndex[ 10 ] = 4   ;
-    iIndex[ 11 ] = 1   ; jIndex[ 11 ] = 5   ;
-    iIndex[ 12 ] = 2   ; jIndex[ 12 ] = 0   ;
-    iIndex[ 13 ] = 2   ; jIndex[ 13 ] = 1   ;
-    iIndex[ 14 ] = 2   ; jIndex[ 14 ] = 2   ;
-    iIndex[ 15 ] = 2   ; jIndex[ 15 ] = 3   ;
-    iIndex[ 16 ] = 2   ; jIndex[ 16 ] = 4   ;
-    iIndex[ 17 ] = 2   ; jIndex[ 17 ] = 5   ;
-    iIndex[ 18 ] = 3   ; jIndex[ 18 ] = 0   ;
-    iIndex[ 19 ] = 3   ; jIndex[ 19 ] = 1   ;
-    iIndex[ 20 ] = 3   ; jIndex[ 20 ] = 2   ;
-    iIndex[ 21 ] = 3   ; jIndex[ 21 ] = 3   ;
-    iIndex[ 22 ] = 3   ; jIndex[ 22 ] = 4   ;
-    iIndex[ 23 ] = 3   ; jIndex[ 23 ] = 5   ;
-    iIndex[ 24 ] = 4   ; jIndex[ 24 ] = 0   ;
-    iIndex[ 25 ] = 4   ; jIndex[ 25 ] = 1   ;
-    iIndex[ 26 ] = 4   ; jIndex[ 26 ] = 2   ;
-    iIndex[ 27 ] = 4   ; jIndex[ 27 ] = 3   ;
-    iIndex[ 28 ] = 4   ; jIndex[ 28 ] = 4   ;
-    iIndex[ 29 ] = 4   ; jIndex[ 29 ] = 5   ;
-    iIndex[ 30 ] = 5   ; jIndex[ 30 ] = 0   ;
-    iIndex[ 31 ] = 5   ; jIndex[ 31 ] = 1   ;
-    iIndex[ 32 ] = 5   ; jIndex[ 32 ] = 2   ;
-    iIndex[ 33 ] = 5   ; jIndex[ 33 ] = 3   ;
-    iIndex[ 34 ] = 5   ; jIndex[ 34 ] = 4   ;
-    iIndex[ 35 ] = 5   ; jIndex[ 35 ] = 5   ;
-    iIndex[ 36 ] = 6   ; jIndex[ 36 ] = 6   ;
-    iIndex[ 37 ] = 6   ; jIndex[ 37 ] = 7   ;
-    iIndex[ 38 ] = 6   ; jIndex[ 38 ] = 8   ;
-    iIndex[ 39 ] = 6   ; jIndex[ 39 ] = 9   ;
-    iIndex[ 40 ] = 6   ; jIndex[ 40 ] = 10  ;
-    iIndex[ 41 ] = 6   ; jIndex[ 41 ] = 11  ;
-    iIndex[ 42 ] = 7   ; jIndex[ 42 ] = 6   ;
-    iIndex[ 43 ] = 7   ; jIndex[ 43 ] = 7   ;
-    iIndex[ 44 ] = 7   ; jIndex[ 44 ] = 8   ;
-    iIndex[ 45 ] = 7   ; jIndex[ 45 ] = 9   ;
-    iIndex[ 46 ] = 7   ; jIndex[ 46 ] = 10  ;
-    iIndex[ 47 ] = 7   ; jIndex[ 47 ] = 11  ;
-    iIndex[ 48 ] = 8   ; jIndex[ 48 ] = 6   ;
-    iIndex[ 49 ] = 8   ; jIndex[ 49 ] = 7   ;
-    iIndex[ 50 ] = 8   ; jIndex[ 50 ] = 8   ;
-    iIndex[ 51 ] = 8   ; jIndex[ 51 ] = 9   ;
-    iIndex[ 52 ] = 8   ; jIndex[ 52 ] = 10  ;
-    iIndex[ 53 ] = 8   ; jIndex[ 53 ] = 11  ;
-    iIndex[ 54 ] = 9   ; jIndex[ 54 ] = 6   ;
-    iIndex[ 55 ] = 9   ; jIndex[ 55 ] = 7   ;
-    iIndex[ 56 ] = 9   ; jIndex[ 56 ] = 8   ;
-    iIndex[ 57 ] = 9   ; jIndex[ 57 ] = 9   ;
-    iIndex[ 58 ] = 9   ; jIndex[ 58 ] = 10  ;
-    iIndex[ 59 ] = 9   ; jIndex[ 59 ] = 11  ;
-    iIndex[ 60 ] = 10  ; jIndex[ 60 ] = 6   ;
-    iIndex[ 61 ] = 10  ; jIndex[ 61 ] = 7   ;
-    iIndex[ 62 ] = 10  ; jIndex[ 62 ] = 8   ;
-    iIndex[ 63 ] = 10  ; jIndex[ 63 ] = 9   ;
-    iIndex[ 64 ] = 10  ; jIndex[ 64 ] = 10  ;
-    iIndex[ 65 ] = 10  ; jIndex[ 65 ] = 11  ;
-    iIndex[ 66 ] = 11  ; jIndex[ 66 ] = 6   ;
-    iIndex[ 67 ] = 11  ; jIndex[ 67 ] = 7   ;
-    iIndex[ 68 ] = 11  ; jIndex[ 68 ] = 8   ;
-    iIndex[ 69 ] = 11  ; jIndex[ 69 ] = 9   ;
-    iIndex[ 70 ] = 11  ; jIndex[ 70 ] = 10  ;
-    iIndex[ 71 ] = 11  ; jIndex[ 71 ] = 11  ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 0   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 0   ; jIndex[5 ] = 5   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 0   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 1   ;
+    iIndex[8 ] = 1   ; jIndex[8 ] = 2   ;
+    iIndex[9 ] = 1   ; jIndex[9 ] = 3   ;
+    iIndex[10] = 1   ; jIndex[10] = 4   ;
+    iIndex[11] = 1   ; jIndex[11] = 5   ;
+    iIndex[12] = 2   ; jIndex[12] = 0   ;
+    iIndex[13] = 2   ; jIndex[13] = 1   ;
+    iIndex[14] = 2   ; jIndex[14] = 2   ;
+    iIndex[15] = 2   ; jIndex[15] = 3   ;
+    iIndex[16] = 2   ; jIndex[16] = 4   ;
+    iIndex[17] = 2   ; jIndex[17] = 5   ;
+    iIndex[18] = 3   ; jIndex[18] = 0   ;
+    iIndex[19] = 3   ; jIndex[19] = 1   ;
+    iIndex[20] = 3   ; jIndex[20] = 2   ;
+    iIndex[21] = 3   ; jIndex[21] = 3   ;
+    iIndex[22] = 3   ; jIndex[22] = 4   ;
+    iIndex[23] = 3   ; jIndex[23] = 5   ;
+    iIndex[24] = 4   ; jIndex[24] = 0   ;
+    iIndex[25] = 4   ; jIndex[25] = 1   ;
+    iIndex[26] = 4   ; jIndex[26] = 2   ;
+    iIndex[27] = 4   ; jIndex[27] = 3   ;
+    iIndex[28] = 4   ; jIndex[28] = 4   ;
+    iIndex[29] = 4   ; jIndex[29] = 5   ;
+    iIndex[30] = 5   ; jIndex[30] = 0   ;
+    iIndex[31] = 5   ; jIndex[31] = 1   ;
+    iIndex[32] = 5   ; jIndex[32] = 2   ;
+    iIndex[33] = 5   ; jIndex[33] = 3   ;
+    iIndex[34] = 5   ; jIndex[34] = 4   ;
+    iIndex[35] = 5   ; jIndex[35] = 5   ;
+    iIndex[36] = 6   ; jIndex[36] = 6   ;
+    iIndex[37] = 6   ; jIndex[37] = 7   ;
+    iIndex[38] = 6   ; jIndex[38] = 8   ;
+    iIndex[39] = 6   ; jIndex[39] = 9   ;
+    iIndex[40] = 6   ; jIndex[40] = 10  ;
+    iIndex[41] = 6   ; jIndex[41] = 11  ;
+    iIndex[42] = 7   ; jIndex[42] = 6   ;
+    iIndex[43] = 7   ; jIndex[43] = 7   ;
+    iIndex[44] = 7   ; jIndex[44] = 8   ;
+    iIndex[45] = 7   ; jIndex[45] = 9   ;
+    iIndex[46] = 7   ; jIndex[46] = 10  ;
+    iIndex[47] = 7   ; jIndex[47] = 11  ;
+    iIndex[48] = 8   ; jIndex[48] = 6   ;
+    iIndex[49] = 8   ; jIndex[49] = 7   ;
+    iIndex[50] = 8   ; jIndex[50] = 8   ;
+    iIndex[51] = 8   ; jIndex[51] = 9   ;
+    iIndex[52] = 8   ; jIndex[52] = 10  ;
+    iIndex[53] = 8   ; jIndex[53] = 11  ;
+    iIndex[54] = 9   ; jIndex[54] = 6   ;
+    iIndex[55] = 9   ; jIndex[55] = 7   ;
+    iIndex[56] = 9   ; jIndex[56] = 8   ;
+    iIndex[57] = 9   ; jIndex[57] = 9   ;
+    iIndex[58] = 9   ; jIndex[58] = 10  ;
+    iIndex[59] = 9   ; jIndex[59] = 11  ;
+    iIndex[60] = 10  ; jIndex[60] = 6   ;
+    iIndex[61] = 10  ; jIndex[61] = 7   ;
+    iIndex[62] = 10  ; jIndex[62] = 8   ;
+    iIndex[63] = 10  ; jIndex[63] = 9   ;
+    iIndex[64] = 10  ; jIndex[64] = 10  ;
+    iIndex[65] = 10  ; jIndex[65] = 11  ;
+    iIndex[66] = 11  ; jIndex[66] = 6   ;
+    iIndex[67] = 11  ; jIndex[67] = 7   ;
+    iIndex[68] = 11  ; jIndex[68] = 8   ;
+    iIndex[69] = 11  ; jIndex[69] = 9   ;
+    iIndex[70] = 11  ; jIndex[70] = 10  ;
+    iIndex[71] = 11  ; jIndex[71] = 11  ;
   }
 
   void

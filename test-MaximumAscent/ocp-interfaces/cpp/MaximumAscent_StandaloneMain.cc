@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "MaximumAscent_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -52,23 +50,23 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type days1 = 30;
-    real_type mu = 398600441800000;
-    real_type u0 = 0;
-    real_type Isp = 1500;
-    real_type T = 0.68;
     real_type r0 = 6678140;
-    real_type v0 = (mu/r0)^(1/2.0);
-    real_type u0_bar = u0/v0;
+    real_type days1 = 30;
+    real_type T = 0.68;
+    real_type Isp = 1500;
+    real_type u0 = 0;
     real_type g0 = 9.80665;
     real_type mdot = T/g0/Isp;
     real_type days = 1;
+    real_type mu = 398600441800000;
+    real_type v0 = (mu/r0)^(1/2.0);
+    real_type u0_bar = u0/v0;
     real_type tf = 86400*days;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
     // ==============================================================
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // :factorization => 'LU',
     // ==============================================================
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -101,9 +99,9 @@ main() {
     // =================
 
     // Last Block selection:
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // ==============================================
-    data_Solver["last_factorization"] = "LU";
+    data_Solver["last_factorization"] = "PINV";
     // ==============================================
 
     // choose solver: Hyness, NewtonDumped
@@ -201,7 +199,7 @@ MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
-    // pModel->set_timeout_ms( 100 );
+    // model->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

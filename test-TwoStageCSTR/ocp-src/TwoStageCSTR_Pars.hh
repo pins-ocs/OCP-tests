@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Pars.hh                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef TWOSTAGECSTRPARS_HH
-#define TWOSTAGECSTRPARS_HH
+#ifndef TWOSTAGECSTRPARS_DOT_HH
+#define TWOSTAGECSTRPARS_DOT_HH
 
 #define numBc                    4
 #define numModelPars             6

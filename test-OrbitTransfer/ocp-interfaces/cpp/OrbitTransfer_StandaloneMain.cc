@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "OrbitTransfer_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -53,17 +51,17 @@ main() {
 
     // Auxiliary values
     real_type mu = 1;
+    real_type m0 = 1;
     real_type r0 = 1;
     real_type v0 = (mu/r0)^(1/2.0);
     real_type tf = 16.60*(r0^3/mu)^(1/2.0);
-    real_type m0 = 1;
     real_type T = 0.1405e-1*m0*mu/r0^2;
     real_type mdot = 0.533*T*(mu/r0)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
     // ==============================================================
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // :factorization => 'LU',
     // ==============================================================
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -96,9 +94,9 @@ main() {
     // =================
 
     // Last Block selection:
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // ==============================================
-    data_Solver["last_factorization"] = "LU";
+    data_Solver["last_factorization"] = "PINV";
     // ==============================================
 
     // choose solver: Hyness, NewtonDumped
@@ -170,8 +168,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 OrbitTransfer_data.Mesh["s0"] = 0;
-OrbitTransfer_data.Mesh["segments"][0]["n"] = 1000;
 OrbitTransfer_data.Mesh["segments"][0]["length"] = 1;
+OrbitTransfer_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers
@@ -191,7 +189,7 @@ OrbitTransfer_data.Mesh["segments"][0]["length"] = 1;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
-    // pModel->set_timeout_ms( 100 );
+    // model->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

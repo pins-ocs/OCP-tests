@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona2_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 12/11/2020                                       #
+#  version: 1.0   date 14/12/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,11 +18,11 @@
 include Mechatronix
 
 # Auxiliary values
+xf = 5
 g  = 9.81
 yf = -2
-Tf = (-2.0*yf/g)**(1/2.0)
-xf = 5
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+Tf = (-2.0*yf/g)**(1/2.0)
 
 mechatronix do |data|
 
@@ -57,7 +57,7 @@ mechatronix do |data|
   # setup solver for controls
   data.ControlSolver = {
     # ==============================================================
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     :factorization => 'LU',
     # ==============================================================
     :Rcond     => 1e-14,  # reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -76,9 +76,10 @@ mechatronix do |data|
     # =================
 
     # Last Block selection:
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
     :last_factorization => 'LU',
+    ###:last_factorization => 'PINV',
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped
@@ -162,8 +163,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 500,
+        :length => 1,
       },
     ],
   };

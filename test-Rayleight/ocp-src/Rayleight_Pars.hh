@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Pars.hh                                              |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef RAYLEIGHTPARS_HH
-#define RAYLEIGHTPARS_HH
+#ifndef RAYLEIGHTPARS_DOT_HH
+#define RAYLEIGHTPARS_DOT_HH
 
 #define numBc                    2
 #define numModelPars             0

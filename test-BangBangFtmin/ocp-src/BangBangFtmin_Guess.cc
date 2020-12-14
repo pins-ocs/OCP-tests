@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Guess.cc                                         |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -87,6 +87,9 @@ namespace BangBangFtminDefine {
   #define Xoptima__check__lt(A,B) ( (A) <  (B) )
   #define Xoptima__check__le(A,B) ( (A) <= (B) )
 
+  // Node check strings
+  #define __message_node_check_0 "0 < T(zeta)"
+
   bool
   BangBangFtmin::p_check( P_const_pointer_type P__ ) const {
     bool ok = true;
@@ -106,7 +109,7 @@ namespace BangBangFtminDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
+    ok = ok && Xoptima__check__lt(0, X__[2]);
     return ok;
   }
 

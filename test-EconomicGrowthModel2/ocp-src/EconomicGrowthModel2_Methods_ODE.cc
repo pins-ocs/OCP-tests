@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods.cc                                |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "EconomicGrowthModel2_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -111,16 +109,16 @@ namespace EconomicGrowthModel2Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 2   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 4   ;
-    iIndex[ 2  ] = 1   ; jIndex[ 2  ] = 0   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 1   ;
-    iIndex[ 4  ] = 1   ; jIndex[ 4  ] = 4   ;
-    iIndex[ 5  ] = 2   ; jIndex[ 5  ] = 3   ;
-    iIndex[ 6  ] = 2   ; jIndex[ 6  ] = 4   ;
-    iIndex[ 7  ] = 3   ; jIndex[ 7  ] = 0   ;
-    iIndex[ 8  ] = 3   ; jIndex[ 8  ] = 1   ;
-    iIndex[ 9  ] = 3   ; jIndex[ 9  ] = 4   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 3   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 4   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 0   ;
+    iIndex[8 ] = 3   ; jIndex[8 ] = 1   ;
+    iIndex[9 ] = 3   ; jIndex[9 ] = 4   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -209,8 +207,8 @@ namespace EconomicGrowthModel2Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 1   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 3   ; jIndex[ 1  ] = 0   ;
+    iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 3   ; jIndex[1 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -227,7 +225,7 @@ namespace EconomicGrowthModel2Define {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = Q(X__[0], X__[1]);
-    result__[ 0   ] = t3 * X__[4];
+    result__[ 0   ] = X__[4] * t3;
     result__[ 1   ] = -result__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
@@ -257,11 +255,11 @@ namespace EconomicGrowthModel2Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 2   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 1   ;
-    iIndex[ 3  ] = 3   ; jIndex[ 3  ] = 3   ;
-    iIndex[ 4  ] = 4   ; jIndex[ 4  ] = 4   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 1   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 4   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -24,7 +24,7 @@ s0 = 0.1 length = 0.4 npts = 41 no data set
 Segment N.2
 s0 = 0.5 length = 0.4 npts = 41 no data set
 Segment N.3
-s0 = 0.9 length = 0.1 npts = 11 no data set
+s0 = 0.9 length = 0.09999999999999998 npts = 11 no data set
 INFO CLASS = BangBangFtminP
   dim_u        = 1
   dim_q        = 1
@@ -43,22 +43,23 @@ INFO CLASS = BangBangFtminP
   nQ_total     = 104
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  1,  7] (  0.00763,  0.00932) [     8.84,     8.60]      0.01 ( 0: 0): 0: 0: 0 G
-[  2,  1] (  0.00932,  0.00907) [    0.438,    0.342]       0.2 ( 1: 0): 2: 0: 2 G
+[  1,  7] (  0.00763,  0.00932) [     8.84,     8.60]    0.0100 ( 0: 0): 0: 0: 0 G
+[  2,  1] (  0.00932,  0.00907) [    0.438,    0.342]     0.200 ( 1: 0): 2: 0: 2 G
 [  3,  1] (  0.00907,  0.00434) [    0.392,    0.107]     0.894 ( 2: 0): 1: 0: 1 G
 [  4,  1] (  0.00434, 0.000446) [    0.132,   0.0137]      1.00 ( 3: 0): 1: 0: 1 G
 [  5,  1] ( 0.000446, 7.39e-06) [  0.00915, 0.000247]      1.00 ( 4: 0): 0: 0: 0 G
-[  6,  1] ( 7.39e-06, 5.34e-09) [  0.00026, 1.73e-07]      1.00 ( 5: 0): 0: 0: 0 G
-[  7,  1] ( 5.34e-09, 1.24e-15) [ 1.73e-07, 3.84e-14]      1.00 ( 6: 0): 0: 0: 0 G
+[  6,  1] ( 7.39e-06, 5.34e-09) [ 0.000260, 1.73e-07]      1.00 ( 5: 0): 0: 0: 0 G
+[  7,  1] ( 5.34e-09, 1.24e-15) [ 1.73e-07, 3.85e-14]      1.00 ( 6: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 4.04    ms    iteration           = 7         
-Total Equations        = 524           tolerance           = 1e-09     
-max iterations         = 300           max accumul. iter.  = 800       
+Elapsed Time           = 4.98 [ms]     timeout             = 0 [ms]
+iteration              = 7             tolerance           = 1.000e-09 
+max iterations         = 300           Total Equations     = 524
+max accumul. iter.     = 800           Memory Used         = 69Kb (+32bytes)
 ---------------------------- Continuation ----------------------------
 Initial Step           = 0.2           Minimum Step        = 0.001     
 Reduce Factor          = 0.5           Augment Factor      = 1.5       
@@ -71,11 +72,11 @@ Jacobian Factorization = 7             Jacobian Inversion  = 18
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 1.7228e-13      last `new' ||d||_inf  =  6.978e-07
+last ||d||_inf = 1.7242e-13      last `new' ||d||_inf  = 6.9780e-07
 last ||f||_inf = 3.8207e-07      last ||f||_1          = 5.3448e-09
 
-target [Lagrange,Mayer]        = [      0.00000,      2.82984]
-[Penalties/Barriers, Controls] = [      0.00000,   0.00283008]
-Parameters:
+target [Lagrange,Mayer]        = [       0.00000,      2.82984]
+[Penalties/Barriers, Controls] = [       0.00000,   0.00283008]
+Optimization parameters:
 T: 2.82984192826104763
 All Done Folks!

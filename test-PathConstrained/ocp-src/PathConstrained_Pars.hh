@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Pars.hh                                        |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef PATHCONSTRAINEDPARS_HH
-#define PATHCONSTRAINEDPARS_HH
+#ifndef PATHCONSTRAINEDPARS_DOT_HH
+#define PATHCONSTRAINEDPARS_DOT_HH
 
 #define numBc                    2
 #define numModelPars             4

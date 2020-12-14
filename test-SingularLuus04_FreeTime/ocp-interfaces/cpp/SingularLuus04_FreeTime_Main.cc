@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Main.cc                                |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -22,9 +22,7 @@
 #include "SingularLuus04_FreeTime_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -41,7 +39,7 @@ main() {
   Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
 
   try {
-    SingularLuus04_FreeTime * pModel = new SingularLuus04_FreeTime("SingularLuus04_FreeTime",&TP,&console);
+    SingularLuus04_FreeTime * m_model = new SingularLuus04_FreeTime("SingularLuus04_FreeTime",&TP,&console);
 
     // user defined Object instances (external)
     MeshStd          mesh( "mesh" );
@@ -71,18 +69,18 @@ main() {
     ptrs[ "pMesh" ] = &mesh;
 
     // setup model
-    pModel->setup( gc_data );
+    m_model->setup( gc_data );
 
     // initialize nonlinear system initial point
-    pModel->guess( gc_data("Guess","Missing `Guess` field") );
+    m_model->guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
-    // pModel->set_timeout_ms( 100 );
-    bool ok = pModel->solve(); // no spline
+    // m_model->set_timeout_ms( 100 );
+    bool ok = m_model->solve(); // no spline
 
     // get solution (even if not converged)
-    pModel->get_solution( gc_solution );
-    pModel->diagnostic( gc_data );
+    m_model->get_solution( gc_solution );
+    m_model->diagnostic( gc_data );
 
     std::ofstream file;
     if ( ok ) {

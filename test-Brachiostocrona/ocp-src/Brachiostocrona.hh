@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona.hh                                             |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,15 +15,15 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef BRACHIOSTOCRONA_HH
-#define BRACHIOSTOCRONA_HH
+#ifndef BRACHIOSTOCRONA_DOT_HH
+#define BRACHIOSTOCRONA_DOT_HH
 
-// Mechatronix Headers
 #include <MechatronixCore/MechatronixCore.hh>
 #include <MechatronixSolver/MechatronixSolver.hh>
+#include <MechatronixRoad/MechatronixRoad.hh>
+#include <MechatronixManufacturing/MechatronixManufacturing.hh>
 #include <MechatronixInterfaceMruby/MechatronixInterfaceMruby.hh>
-
-// user headers
+// User Headers
 #include <MechatronixCore/MechatronixCore.hh>
 
 
@@ -52,9 +52,7 @@ namespace BrachiostocronaDefine {
   using namespace MechatronixLoad;
 
   using namespace std;
-  using Mechatronix::real_type;
-  using Mechatronix::integer;
-  using Mechatronix::ostream_type;
+  using namespace MechatronixLoad;
 
   // user class in namespaces
   using Mechatronix::MeshStd;

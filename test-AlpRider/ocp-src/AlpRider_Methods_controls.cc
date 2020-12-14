@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "AlpRider_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -102,14 +100,14 @@ namespace AlpRiderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 4   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 5   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 6   ;
-    iIndex[ 3  ] = 0   ; jIndex[ 3  ] = 7   ;
-    iIndex[ 4  ] = 1   ; jIndex[ 4  ] = 4   ;
-    iIndex[ 5  ] = 1   ; jIndex[ 5  ] = 5   ;
-    iIndex[ 6  ] = 1   ; jIndex[ 6  ] = 6   ;
-    iIndex[ 7  ] = 1   ; jIndex[ 7  ] = 7   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 7   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 5   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 6   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 7   ;
   }
 
   void
@@ -155,8 +153,8 @@ namespace AlpRiderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 1   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
   void
@@ -507,22 +505,22 @@ namespace AlpRiderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 8   ;
-    iIndex[ 2  ] = 1   ; jIndex[ 2  ] = 1   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 9   ;
-    iIndex[ 4  ] = 2   ; jIndex[ 4  ] = 2   ;
-    iIndex[ 5  ] = 2   ; jIndex[ 5  ] = 10  ;
-    iIndex[ 6  ] = 3   ; jIndex[ 6  ] = 3   ;
-    iIndex[ 7  ] = 3   ; jIndex[ 7  ] = 11  ;
-    iIndex[ 8  ] = 4   ; jIndex[ 8  ] = 4   ;
-    iIndex[ 9  ] = 4   ; jIndex[ 9  ] = 12  ;
-    iIndex[ 10 ] = 5   ; jIndex[ 10 ] = 5   ;
-    iIndex[ 11 ] = 5   ; jIndex[ 11 ] = 13  ;
-    iIndex[ 12 ] = 6   ; jIndex[ 12 ] = 6   ;
-    iIndex[ 13 ] = 6   ; jIndex[ 13 ] = 14  ;
-    iIndex[ 14 ] = 7   ; jIndex[ 14 ] = 7   ;
-    iIndex[ 15 ] = 7   ; jIndex[ 15 ] = 15  ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 8   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 9   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 10  ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 11  ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 4   ; jIndex[9 ] = 12  ;
+    iIndex[10] = 5   ; jIndex[10] = 5   ;
+    iIndex[11] = 5   ; jIndex[11] = 13  ;
+    iIndex[12] = 6   ; jIndex[12] = 6   ;
+    iIndex[13] = 6   ; jIndex[13] = 14  ;
+    iIndex[14] = 7   ; jIndex[14] = 7   ;
+    iIndex[15] = 7   ; jIndex[15] = 15  ;
   }
 
   void

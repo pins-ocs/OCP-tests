@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: OrbitTransfer_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 12/11/2020                                       #
+#  version: 1.0   date 14/12/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -19,10 +19,10 @@ include Mechatronix
 
 # Auxiliary values
 mu   = 1
+m0   = 1
 r0   = 1
 v0   = (mu/r0)**(1/2.0)
 tf   = 16.60*(r0**3/mu)**(1/2.0)
-m0   = 1
 T    = 0.1405e-1*m0*mu/r0**2
 mdot = 0.533*T*(mu/r0)**(1/2.0)
 
@@ -59,7 +59,7 @@ mechatronix do |data|
   # setup solver for controls
   data.ControlSolver = {
     # ==============================================================
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     :factorization => 'LU',
     # ==============================================================
     :Rcond     => 1e-14,  # reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -78,9 +78,10 @@ mechatronix do |data|
     # =================
 
     # Last Block selection:
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
     :last_factorization => 'LU',
+    ###:last_factorization => 'PINV',
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped
@@ -166,8 +167,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 1000,
         :length => 1,
+        :n      => 1000,
       },
     ],
   };

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Pars.hh                                      |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef WORSTCASESCENARIOPARS_HH
-#define WORSTCASESCENARIOPARS_HH
+#ifndef WORSTCASESCENARIOPARS_DOT_HH
+#define WORSTCASESCENARIOPARS_DOT_HH
 
 #define numBc                    1
 #define numModelPars             1

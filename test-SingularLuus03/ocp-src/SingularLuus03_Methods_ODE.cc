@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus03_Methods.cc                                      |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "SingularLuus03_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -106,9 +104,9 @@ namespace SingularLuus03Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 1   ;
-    iIndex[ 1  ] = 2   ; jIndex[ 1  ] = 0   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 1   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 0   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 1   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -183,7 +181,7 @@ namespace SingularLuus03Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 1   ; jIndex[ 0  ] = 0   ;
+    iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -228,9 +226,9 @@ namespace SingularLuus03Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 2   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

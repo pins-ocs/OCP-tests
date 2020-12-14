@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: Catalyst_ffi_structs.rb                                           #
 #                                                                          #
-#  version: 1.0   date 12/11/2020                                          #
+#  version: 1.0   date 14/12/2020                                          #
 #                                                                          #
 #  Copyright (C) 2020                                                      #
 #                                                                          #
@@ -99,48 +99,48 @@ module Catalyst
     end
   end
 
-  attach_function :setup_model,                          # ruby name
-                  :Catalyst_setup_model,        # C name
+  attach_function :setup_model, # ruby name
+                  :Catalyst_setup_model, # C name
                   [:pointer ,:pointer ,:pointer ],
                   :void
 
-  attach_function :setup_solver,                         # ruby name
-                  :Catalyst_setup_solver,       # C name
+  attach_function :setup_solver, # ruby name
+                  :Catalyst_setup_solver, # C name
                   [:pointer ],
                   :void
 
-  attach_function :write_solution_to_file,                   # ruby name
+  attach_function :write_solution_to_file, # ruby name
                   :Catalyst_write_solution_to_file, # C name
                   [:string],
                   :void
 
-  attach_function :printout_enabled?,                       # ruby name
-                  :Catalyst_printout_is_enabled,   # C name
+  attach_function :printout_enabled?, # ruby name
+                  :Catalyst_printout_is_enabled, # C name
                   [],
                   :int
 
-  attach_function :enable_printout,                      # ruby name
-                  :Catalyst_enable_printout,    # C name
+  attach_function :enable_printout, # ruby name
+                  :Catalyst_enable_printout, # C name
                   [],
                   :void
 
-  attach_function :disable_printout,                     # ruby name
-                  :Catalyst_disable_printout,   # C name
+  attach_function :disable_printout, # ruby name
+                  :Catalyst_disable_printout, # C name
                   [],
                   :void
 
-  attach_function :reset_multiplier,                     # ruby name
-                  :Catalyst_reset_multiplier,   # C name
+  attach_function :reset_multiplier, # ruby name
+                  :Catalyst_reset_multiplier, # C name
                   [],
                   :void
 
-  attach_function :reset_BC_multiplier,                     # ruby name
-                  :Catalyst_reset_BC_multiplier,   # C name
+  attach_function :reset_BC_multiplier, # ruby name
+                  :Catalyst_reset_BC_multiplier, # C name
                   [],
                   :void
 
-  attach_function :set_internal_guess,                     # ruby name
-                  :Catalyst_set_internal_guess,   # C name
+  attach_function :set_internal_guess, # ruby name
+                  :Catalyst_set_internal_guess, # C name
                   [],
                   :void
 

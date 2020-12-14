@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Guess.cc                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -88,6 +88,7 @@ namespace gtocX_2burnDefine {
 
   // Node check strings
   #define __message_node_check_0 "0 < 1+f(zeta)*cos(L(zeta))+g(zeta)*sin(L(zeta))"
+  #define __message_node_check_1 "0 < p(zeta)"
 
   // Cell check strings
   #define __message_cell_check_0 "0 < 1+f(zeta)*cos(L(zeta))+g(zeta)*sin(L(zeta))"
@@ -115,6 +116,7 @@ namespace gtocX_2burnDefine {
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
     ok = ok && Xoptima__check__lt(0, t3 * X__[1] + t6 * X__[2] + 1);
+    ok = ok && Xoptima__check__lt(0, X__[0]);
     return ok;
   }
 

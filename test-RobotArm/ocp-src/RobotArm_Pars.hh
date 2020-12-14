@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Pars.hh                                               |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef ROBOTARMPARS_HH
-#define ROBOTARMPARS_HH
+#ifndef ROBOTARMPARS_DOT_HH
+#define ROBOTARMPARS_DOT_HH
 
 #define numBc                    12
 #define numModelPars             7

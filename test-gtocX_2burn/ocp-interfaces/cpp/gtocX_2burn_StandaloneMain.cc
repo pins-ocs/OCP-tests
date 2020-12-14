@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "gtocX_2burn_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -52,13 +50,13 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type ray_epsi = 0.001;
     real_type ray_tol = 0.001;
+    real_type ray_epsi = 0.001;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
     // ==============================================================
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // :factorization => 'LU',
     // ==============================================================
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -91,9 +89,9 @@ main() {
     // =================
 
     // Last Block selection:
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // ==============================================
-    data_Solver["last_factorization"] = "LU";
+    data_Solver["last_factorization"] = "PINV";
     // ==============================================
 
     // choose solver: Hyness, NewtonDumped
@@ -159,9 +157,8 @@ main() {
     // Controls: No penalties or barriers constraint defined
 
     // Constraint1D
-    // Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
-    // Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
-
+    // Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_ray_positive = data_Constraints["ray_positive"];
@@ -174,8 +171,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 gtocX_2burn_data.Mesh["s0"] = 0;
-gtocX_2burn_data.Mesh["segments"][0]["length"] = 1;
 gtocX_2burn_data.Mesh["segments"][0]["n"] = 50;
+gtocX_2burn_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -195,7 +192,7 @@ gtocX_2burn_data.Mesh["segments"][0]["n"] = 50;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
-    // pModel->set_timeout_ms( 100 );
+    // model->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

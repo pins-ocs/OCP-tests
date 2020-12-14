@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Speyer_Pars.hh                                                 |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef SPEYERPARS_HH
-#define SPEYERPARS_HH
+#ifndef SPEYERPARS_DOT_HH
+#define SPEYERPARS_DOT_HH
 
 #define numBc                    2
 #define numModelPars             3

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Methods.cc                                      |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "MultipleDubins_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -375,42 +373,42 @@ namespace MultipleDubinsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 18  ;
-    iIndex[ 2  ] = 1   ; jIndex[ 2  ] = 1   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 19  ;
-    iIndex[ 4  ] = 2   ; jIndex[ 4  ] = 2   ;
-    iIndex[ 5  ] = 2   ; jIndex[ 5  ] = 20  ;
-    iIndex[ 6  ] = 3   ; jIndex[ 6  ] = 3   ;
-    iIndex[ 7  ] = 3   ; jIndex[ 7  ] = 21  ;
-    iIndex[ 8  ] = 4   ; jIndex[ 8  ] = 4   ;
-    iIndex[ 9  ] = 4   ; jIndex[ 9  ] = 22  ;
-    iIndex[ 10 ] = 5   ; jIndex[ 10 ] = 5   ;
-    iIndex[ 11 ] = 5   ; jIndex[ 11 ] = 23  ;
-    iIndex[ 12 ] = 6   ; jIndex[ 12 ] = 6   ;
-    iIndex[ 13 ] = 6   ; jIndex[ 13 ] = 24  ;
-    iIndex[ 14 ] = 7   ; jIndex[ 14 ] = 7   ;
-    iIndex[ 15 ] = 7   ; jIndex[ 15 ] = 25  ;
-    iIndex[ 16 ] = 8   ; jIndex[ 16 ] = 8   ;
-    iIndex[ 17 ] = 8   ; jIndex[ 17 ] = 26  ;
-    iIndex[ 18 ] = 9   ; jIndex[ 18 ] = 9   ;
-    iIndex[ 19 ] = 9   ; jIndex[ 19 ] = 27  ;
-    iIndex[ 20 ] = 10  ; jIndex[ 20 ] = 10  ;
-    iIndex[ 21 ] = 10  ; jIndex[ 21 ] = 28  ;
-    iIndex[ 22 ] = 11  ; jIndex[ 22 ] = 11  ;
-    iIndex[ 23 ] = 11  ; jIndex[ 23 ] = 29  ;
-    iIndex[ 24 ] = 12  ; jIndex[ 24 ] = 12  ;
-    iIndex[ 25 ] = 12  ; jIndex[ 25 ] = 30  ;
-    iIndex[ 26 ] = 13  ; jIndex[ 26 ] = 13  ;
-    iIndex[ 27 ] = 13  ; jIndex[ 27 ] = 31  ;
-    iIndex[ 28 ] = 14  ; jIndex[ 28 ] = 14  ;
-    iIndex[ 29 ] = 14  ; jIndex[ 29 ] = 32  ;
-    iIndex[ 30 ] = 15  ; jIndex[ 30 ] = 15  ;
-    iIndex[ 31 ] = 15  ; jIndex[ 31 ] = 33  ;
-    iIndex[ 32 ] = 16  ; jIndex[ 32 ] = 16  ;
-    iIndex[ 33 ] = 16  ; jIndex[ 33 ] = 34  ;
-    iIndex[ 34 ] = 17  ; jIndex[ 34 ] = 17  ;
-    iIndex[ 35 ] = 17  ; jIndex[ 35 ] = 35  ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 18  ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 19  ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 20  ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 21  ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 4   ; jIndex[9 ] = 22  ;
+    iIndex[10] = 5   ; jIndex[10] = 5   ;
+    iIndex[11] = 5   ; jIndex[11] = 23  ;
+    iIndex[12] = 6   ; jIndex[12] = 6   ;
+    iIndex[13] = 6   ; jIndex[13] = 24  ;
+    iIndex[14] = 7   ; jIndex[14] = 7   ;
+    iIndex[15] = 7   ; jIndex[15] = 25  ;
+    iIndex[16] = 8   ; jIndex[16] = 8   ;
+    iIndex[17] = 8   ; jIndex[17] = 26  ;
+    iIndex[18] = 9   ; jIndex[18] = 9   ;
+    iIndex[19] = 9   ; jIndex[19] = 27  ;
+    iIndex[20] = 10  ; jIndex[20] = 10  ;
+    iIndex[21] = 10  ; jIndex[21] = 28  ;
+    iIndex[22] = 11  ; jIndex[22] = 11  ;
+    iIndex[23] = 11  ; jIndex[23] = 29  ;
+    iIndex[24] = 12  ; jIndex[24] = 12  ;
+    iIndex[25] = 12  ; jIndex[25] = 30  ;
+    iIndex[26] = 13  ; jIndex[26] = 13  ;
+    iIndex[27] = 13  ; jIndex[27] = 31  ;
+    iIndex[28] = 14  ; jIndex[28] = 14  ;
+    iIndex[29] = 14  ; jIndex[29] = 32  ;
+    iIndex[30] = 15  ; jIndex[30] = 15  ;
+    iIndex[31] = 15  ; jIndex[31] = 33  ;
+    iIndex[32] = 16  ; jIndex[32] = 16  ;
+    iIndex[33] = 16  ; jIndex[33] = 34  ;
+    iIndex[34] = 17  ; jIndex[34] = 17  ;
+    iIndex[35] = 17  ; jIndex[35] = 35  ;
   }
 
   void

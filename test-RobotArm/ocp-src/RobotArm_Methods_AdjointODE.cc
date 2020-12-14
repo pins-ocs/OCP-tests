@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "RobotArm_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -137,10 +135,10 @@ namespace RobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 2   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 0   ;
-    iIndex[ 3  ] = 2   ; jIndex[ 3  ] = 2   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
   }
 
   void
@@ -191,9 +189,9 @@ namespace RobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 3   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 4   ; jIndex[ 1  ] = 0   ;
-    iIndex[ 2  ] = 5   ; jIndex[ 2  ] = 0   ;
+    iIndex[0 ] = 3   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 4   ; jIndex[1 ] = 0   ;
+    iIndex[2 ] = 5   ; jIndex[2 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -303,9 +301,9 @@ namespace RobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 0   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 0   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -449,9 +447,9 @@ namespace RobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 4   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 4   ; jIndex[ 1  ] = 2   ;
-    iIndex[ 2  ] = 5   ; jIndex[ 2  ] = 0   ;
+    iIndex[0 ] = 4   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 4   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 5   ; jIndex[2 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -566,9 +564,9 @@ namespace RobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 1   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 2   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 0   ;
+    iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 12/11/2020                                       #
+#  version: 1.0   date 14/12/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,14 +18,14 @@
 include Mechatronix
 
 # Auxiliary values
-mesh_segments            = 100
-path_following_tolerance = 1.0e-05
-pf_error                 = path_following_tolerance
+v_nom                    = 0.173
 js_min                   = -50
 js_max                   = 30
-v_nom                    = 0.173
-deltaFeed                = v_nom
+path_following_tolerance = 1.0e-05
+pf_error                 = path_following_tolerance
 jn_max                   = 65
+mesh_segments            = 100
+deltaFeed                = v_nom
 
 mechatronix do |data|
 
@@ -60,7 +60,7 @@ mechatronix do |data|
   # setup solver for controls
   data.ControlSolver = {
     # ==============================================================
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     :factorization => 'LU',
     # ==============================================================
     :Rcond     => 1e-14,  # reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -79,9 +79,10 @@ mechatronix do |data|
     # =================
 
     # Last Block selection:
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
     :last_factorization => 'LU',
+    ###:last_factorization => 'PINV',
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped
@@ -172,9 +173,8 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # Controls
-  # Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
-  # Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
-
+  # Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   data.Controls = {}
   data.Controls[:jsControl] = {
     :type      => 'LOGARITHMIC',
@@ -191,9 +191,8 @@ mechatronix do |data|
 
   data.Constraints = {}
   # Constraint1D
-  # Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
-  # Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
-
+  # Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:timePositive] = {
     :subType   => 'BARRIER_LOG',

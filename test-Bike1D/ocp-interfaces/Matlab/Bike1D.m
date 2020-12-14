@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Bike1D.m                                                       %
 %                                                                       %
-%  version: 1.0   date 12/11/2020                                       %
+%  version: 1.0   date 14/12/2020                                       %
 %                                                                       %
 %  Copyright (C) 2020                                                   %
 %                                                                       %
@@ -21,17 +21,17 @@ classdef Bike1D < handle
   end
 
   methods
-
+    % -------------------------------------------------------------------------
     function self = Bike1D( name )
       %% Allocate the C++ class instance
       self.objectHandle = Bike1D_Mex( 'new', name );
     end
-
+    % -------------------------------------------------------------------------
     function delete( self )
       %% Destroy the C++ class instance
       Bike1D_Mex( 'delete', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function help( self )
       %% print help for the class usage
       Bike1D_Mex('help');
@@ -45,12 +45,12 @@ classdef Bike1D < handle
       % and return a MATLAB structure with the readed data
       data = Bike1D_Mex( 'read', self.objectHandle, fname );
     end
-
+    % -------------------------------------------------------------------------
     function setup( self, fname_or_struct )
       % Initialize an OCP problem reading data from a file or a MATLAT stucture
       Bike1D_Mex( 'setup', self.objectHandle, fname_or_struct );
     end
-
+    % -------------------------------------------------------------------------
     function n = names( self )
       % return a MATLAB structures collecting the names of the variable, states etc
       % of the OCP problem:
@@ -65,7 +65,7 @@ classdef Bike1D < handle
       % n.model_names                  = cell array of strings, names of model parameters
       n = Bike1D_Mex( 'names', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function res = dims( self )
       % return a MATLAB structures collecting the dimension of the OCP problem:
       % res.dim_q     = number of mesh variables (variables computed ad mesh nodes)
@@ -78,7 +78,7 @@ classdef Bike1D < handle
       % res.neq       = number of equations
       res = Bike1D_Mex( 'dims', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function res = get_ocp_data( self )
       % return a structure with data and solution (if computed) of the OCP problem
       % information level possible values: -1,0,1,2,3,4
@@ -136,7 +136,9 @@ classdef Bike1D < handle
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % INFO LEVEL
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function infoLevel( self, infoLvl )
       % set information level
@@ -144,7 +146,9 @@ classdef Bike1D < handle
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % NUM THREAD
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function N_thread( self, nt )
       % set information level
@@ -152,7 +156,9 @@ classdef Bike1D < handle
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % GUESS
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function set_guess( self, varargin )
       % with no argument use predefined guess, otherwise
@@ -169,7 +175,9 @@ classdef Bike1D < handle
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % SOLVE
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function ok = solve( self, varargin )
       % ok = false if computation failed
@@ -177,109 +185,435 @@ classdef Bike1D < handle
       % varargin{1} = timeout
       ok = Bike1D_Mex( 'solve', self.objectHandle, varargin{:} );
     end
-
+    % -------------------------------------------------------------------------
     function updateContinuation( self, n, s )
       % set parameter of the problem for continuation step `n` at fraction `s`
-      %
       Bike1D_Mex( 'updateContinuation', self.objectHandle, n, s );
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % GET SOLUTION
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     function sol = solution( self, varargin )
+      % return the whole solution or the column of name varargin{1}
       sol = Bike1D_Mex( 'get_solution', self.objectHandle, varargin{:} );
     end
-
+    % -------------------------------------------------------------------------
+    function sol = solution2( self )
+      % return the whole solution
+      sol = Bike1D_Mex( 'get_solution2', self.objectHandle );
+    end
+    % -------------------------------------------------------------------------
+    function sol = solution3( self )
+      % return the whole solution
+      sol = Bike1D_Mex( 'get_solution3', self.objectHandle );
+    end
+    % -------------------------------------------------------------------------
     function sol = pack( self, X, Lambda, Pars, Omega )
+      % combine the solution in the matrices `X`, `Lambda`, `Pars` and `Omega`
+      % in a single vector as stored in the solver PINS
       sol = Bike1D_Mex( 'pack', self.objectHandle, X, Lambda, Pars, Omega );
     end
-
+    % -------------------------------------------------------------------------
     function [X, Lambda, Pars, Omega] = unpack( self, sol )
+      % unpack a vector to the matrices `X`, `Lambda`, `Pars` and `Omega`
+      % the vector must contains the data as stored in the solver PINS
       [X, Lambda, Pars, Omega] = Bike1D_Mex( 'unpack', self.objectHandle, sol );
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % ZETA
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function res = zeta( self )
       res = Bike1D_Mex( 'get_solution', self.objectHandle, 'zeta' );
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % STATES
     % -------------------------------------------------------------------------
-    function res = v( self, varargin  )
-      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'v', varargin{:} );
+    % -------------------------------------------------------------------------
+    function res = v( self )
+      % return the solution for the state: v
+      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'v' );
     end
 
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     % MULTIPLIER
     % -------------------------------------------------------------------------
-    function res = lambda1( self, varargin )
-      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'lambda1__xo', varargin{:} );
+    % -------------------------------------------------------------------------
+    function res = lambda1( self )
+      % return the solution for the multiplier: lambda1
+      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'lambda1__xo' );
     end
 
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     % CONTROLS
     % -------------------------------------------------------------------------
-    function res = mur( self, varargin )
-      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'mur', varargin{:} );
+    % -------------------------------------------------------------------------
+    function res = mur( self )
+      % return the solution for the control: mur
+      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'mur' );
     end
-    function res = muf( self, varargin )
-      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'muf', varargin{:} );
+    function res = muf( self )
+      % return the solution for the control: muf
+      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'muf' );
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % POSTPROCESSING
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     function res = Tmax_norma( self )
+      % return the solution for the post processing variable: Tmax_norma
       res = Bike1D_Mex( 'get_solution', self.objectHandle, 'Tmax_norma' );
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % NONLINEAR SYSTEM
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     function F = eval_F( self, x )
+      % return the nonlinear system of the indirect methods
       F = Bike1D_Mex( 'eval_F', self.objectHandle, x );
     end
-
+    % -------------------------------------------------------------------------
     function JF = eval_JF( self, x )
+      % return the jacobian of the nonlinear system of the indirect methods
       JF = Bike1D_Mex( 'eval_JF', self.objectHandle, x );
     end
-
+    % -------------------------------------------------------------------------
     function JF = eval_JF_pattern( self )
+      % return the pattern of the jacobian of the nonlinear system of the indirect methods
       JF = Bike1D_Mex( 'eval_JF_pattern', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function x = get_raw_solution( self )
+      % return the solution in a vector as stored in PINS
       x = Bike1D_Mex( 'get_raw_solution', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function set_raw_solution( self, x )
+      % return set the solution in a vector as stored in PINS
       Bike1D_Mex( 'set_raw_solution', self.objectHandle, x );
     end
-
+    % -------------------------------------------------------------------------
     function ok = check_raw_solution( self, x )
+      % check the solution in a vector as stored in PINS
       ok = Bike1D_Mex( 'check_raw_solution', self.objectHandle, x );
     end
-
+    % -------------------------------------------------------------------------
     function check_jacobian( self, x, epsi )
+      % check the analytic jacobian comparing with finite difference one.
+      % `epsi` is the admitted tolerance
       Bike1D_Mex( 'check_jacobian', self.objectHandle, x, epsi );
     end
-
-    function [a,c] = get_ac( self, iseg_L, q_L, x_L, lambda_L, ...
-                                   iseg_R, q_R, x_R, lambda_R, pars, U )
-      [a,c] = Bike1D_Mex( 'a', self.objectHandle, ...
+    % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
+    % DISCRETIZED PROBLEM ACCESS
+    % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
+    function [a,c] = eval_ac( self, iseg_L, q_L, x_L, lambda_L, ...
+                                    iseg_R, q_R, x_R, lambda_R, pars, U )
+      % compute the block of the nonlinear system given left and right stated
+      [a,c] = Bike1D_Mex( 'ac', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
-
-    function [h,c] = get_hc( self, iseg_L, q_L, x_L, lambda_L, ...
-                                   iseg_R, q_R, x_R, lambda_R, pars )
+    % -------------------------------------------------------------------------
+    function [Ja,Jc] = eval_DacDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                           iseg_R, q_R, x_R, lambda_R, pars, U )
+      % compute the block of the nonlinear system given left and right stated
+      [Ja,Jc] = Bike1D_Mex( 'DacDxlp', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function [h,c] = eval_hc( self, iseg_L, q_L, x_L, lambda_L, ...
+                                    iseg_R, q_R, x_R, lambda_R, pars )
+      % compute the block of the BC of the nonlinear system given left and right stated
       [h,c] = Bike1D_Mex( 'hc', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
+    end
+    % -------------------------------------------------------------------------
+    function [Jh,Jc] = eval_DhcDxlop( self, iseg_L, q_L, x_L, lambda_L, ...
+                                            iseg_R, q_R, x_R, lambda_R, pars )
+      % compute the block of the BC of the nonlinear system given left and right stated
+      [Jh,Jc] = Bike1D_Mex( 'DhcDxlop', self.objectHandle, ...
+        iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
+    % CONTINUOUS PROBLEM ACCESS
+    % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
+    function u = eval_u( self, varargin )
+      % compute the control give states and multiplyer
+      % res = self.eval_u( iseg, q, x, lambda, pars )
+      % the call
+      % res = self.eval_u( iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars )
+      % is the same as
+      % res = self.eval_u( iseg_L, (q_L+q_R)./2, (x_L+x_R)./2, (lambda_L+lambda_R)./2, pars )
+      u = Bike1D_Mex( 'u', self.objectHandle, varargin{:} );
+    end
+    % -------------------------------------------------------------------------
+    function u = eval_DuDxlp( self, varargin )
+      % compute the control give states and multiplyer
+      % res = self.eval_DuDxlp( iseg, q, x, lambda, pars )
+      % the call
+      % res = self.eval_DuDxlp( iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars )
+      % is the same as
+      % res = self.eval_DuDxlp( iseg_L, (q_L+q_R)./2, (x_L+x_R)./2, (lambda_L+lambda_R)./2, pars )
+      %
+      u = Bike1D_Mex( 'DuDxlp', self.objectHandle, varargin{:} );
+    end
+    % -------------------------------------------------------------------------
+    function rhs = eval_rhs_ode( self, iseg, q, x, u, pars )
+      % compute rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      rhs = Bike1D_Mex(...
+        'rhs_ode', self.objectHandle, iseg, q, x, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_Drhs_odeDx( self, iseg, q, x, u, pars )
+      % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `x`
+      J = Bike1D_Mex(...
+        'Drhs_odeDx', self.objectHandle, iseg, q, x, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_Drhs_odeDu( self, iseg, q, x, u, pars )
+      % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `u`
+      J = Bike1D_Mex(...
+        'Drhs_odeDu', self.objectHandle, iseg, q, x, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_Drhs_odeDp( self, iseg, q, x, u, pars )
+      % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `pars`
+      J = Bike1D_Mex(...
+        'Drhs_odeDp', self.objectHandle, iseg, q, x, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function A = eval_A( self, iseg, q, x, pars )
+      % compute `A(q,x)` of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `pars`
+      A = Bike1D_Mex( 'A', self.objectHandle, iseg, q, x, pars );
+    end
+    % -------------------------------------------------------------------------
+    function eta = eval_eta( self, iseg, q, x, lambda, pars )
+      % compute `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
+      eta = Bike1D_Mex(...
+        'eta', self.objectHandle, iseg, q, x, lambda, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DetaDx( self, iseg, q, x, lambda, pars )
+      % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
+      % respect to `x`
+      J = Bike1D_Mex(...
+        'DetaDx', self.objectHandle, iseg, q, x, lambda, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DetaDp( self, iseg, q, x, lambda, pars )
+      % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
+      % respect to `x`
+      J = Bike1D_Mex(...
+        'DetaDp', self.objectHandle, iseg, q, x, lambda, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function nu = eval_nu( self, iseg, q, x, V, pars )
+      % compute `nu(q,x,V,pars) = A(q,x,pars) V`
+      nu = Bike1D_Mex( 'nu', self.objectHandle, iseg, q, x, V, pars );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DnuDx( self, iseg, q, x, V, pars )
+      % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
+      % respect to `x`
+      J = Bike1D_Mex( 'DnuDx', self.objectHandle, iseg, q, x, V, pars );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DnuDp( self, iseg, q, x, V, pars )
+      % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
+      % respect to `x`
+      J = Bike1D_Mex( 'DnuDp', self.objectHandle, iseg, q, x, V, pars );
+    end
+    % -------------------------------------------------------------------------
+    function Hx = eval_Hx( self, iseg, q, x, lambda, V, u, pars )
+      Hx = Bike1D_Mex(...
+        'Hx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHxDx( self, iseg, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hx(q,x,lambda,V,pars)`
+      % respect to `x`
+      J = Bike1D_Mex(...
+        'DHxDx', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHxDp( self, iseg, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hx(q,x,lambda,V,u,pars)`
+      % respect to `x`
+      J = Bike1D_Mex(...
+        'DHxDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function Hx = eval_Hu( self, iseg, q, x, lambda, V, u, pars )
+      Hx = Bike1D_Mex(...
+        'Hu', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHuDx( self, iseg, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
+      % respect to `x`
+      J = Bike1D_Mex(...
+        'DHuDx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHuDp( self, iseg, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
+      % respect to `x`
+      J = Bike1D_Mex(...
+        'DHuDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function Hp = eval_Hp( self, iseg, q, x, lambda, V, u, pars )
+      Hp = Bike1D_Mex(...
+        'Hp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHpDp( self, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hp(q,x,lambda,V,u,pars)`
+      % respect to `x`
+      J = Bike1D_Mex(...
+        'DHpDp', self.objectHandle, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function bc = eval_bc( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+      bc = Bike1D_Mex( ...
+        'boundaryConditions', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DbcDx( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+      J = Bike1D_Mex( ...
+        'DboundaryConditionsDx', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DbcDp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+      J = Bike1D_Mex( ...
+        'DboundaryConditionsDp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function bc = eval_adjoiontBC( self, iseg_L, q_L, x_L, lambda_L, ...
+                                         iseg_R, q_R, x_R, lambda_R, ...
+                                         pars, Omega )
+      bc = Bike1D_Mex( ...
+        'adjoiontBC', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DadjoiontBCDx( self, iseg_L, q_L, x_L, lambda_L, ...
+                                           iseg_R, q_R, x_R, lambda_R, ...
+                                           pars, Omega )
+      J = Bike1D_Mex( ...
+        'DadjoiontBCDx', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DadjoiontBCDp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                           iseg_R, q_R, x_R, lambda_R, ...
+                                           pars, Omega )
+      J = Bike1D_Mex( ...
+        'DadjoiontBCDp', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function bc = eval_jump( self, iseg_L, q_L, x_L, lambda_L, ...
+                                   iseg_R, q_R, x_R, lambda_R, pars )
+      bc = Bike1D_Mex( ...
+        'jump', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DjumpDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                       iseg_R, q_R, x_R, lambda_R, pars )
+      J = Bike1D_Mex( ...
+        'DjumpDxlp', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_penalties( self, iseg, q, x, lambda, u, pars )
+      J = Bike1D_Mex( ...
+        'penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_control_penalties( self, iseg, q, x, lambda, u, pars )
+      J = Bike1D_Mex( ...
+        'control_penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function target = eval_lagrange_target( self, iseg, q, x, u, pars )
+      target = Bike1D_Mex( ...
+        'lagrange_target', self.objectHandle, iseg, q, x, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function target = eval_mayer_target( self, iseg_L, q_L, x_L, ...
+                                               iseg_R, q_R, x_R, ...
+                                               u, pars )
+      target = Bike1D_Mex( ...
+        'mayer_target', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function target = eval_q( self, i_segment, s )
+      target = Bike1D_Mex( 'q', self.objectHandle, i_segment, s );
+    end
+    % -------------------------------------------------------------------------
+    function nodes = get_nodes( self )
+      nodes = Bike1D_Mex( 'nodes', self.objectHandle );
+    end
+    % -------------------------------------------------------------------------
+    function node_to_segment = get_node_to_segment( self )
+      node_to_segment = Bike1D_Mex( 'node_to_segment', self.objectHandle );
     end
 
     % -------------------------------------------------------------------------
@@ -293,7 +627,7 @@ classdef Bike1D < handle
       title('states');
       legend( 'v' );
     end
-
+    % -------------------------------------------------------------------------
     function plot_multipliers( self )
       plot(...
         self.zeta(), self.lambda1(), ...
@@ -302,7 +636,7 @@ classdef Bike1D < handle
       title('multipliers');
       legend( '\lambda1' );
     end
-
+    % -------------------------------------------------------------------------
     function plot_controls( self )
       plot(...
         self.zeta(), self.mur(), ...
@@ -312,9 +646,7 @@ classdef Bike1D < handle
       title('controls');
       legend( '\mur', '\muf' );
     end
-
   end
-
 end
 
 % EOF: Bike1D.m

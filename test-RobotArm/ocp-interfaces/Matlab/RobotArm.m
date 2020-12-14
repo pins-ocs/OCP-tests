@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: RobotArm.m                                                     %
 %                                                                       %
-%  version: 1.0   date 12/11/2020                                       %
+%  version: 1.0   date 14/12/2020                                       %
 %                                                                       %
 %  Copyright (C) 2020                                                   %
 %                                                                       %
@@ -21,17 +21,17 @@ classdef RobotArm < handle
   end
 
   methods
-
+    % -------------------------------------------------------------------------
     function self = RobotArm( name )
       %% Allocate the C++ class instance
       self.objectHandle = RobotArm_Mex( 'new', name );
     end
-
+    % -------------------------------------------------------------------------
     function delete( self )
       %% Destroy the C++ class instance
       RobotArm_Mex( 'delete', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function help( self )
       %% print help for the class usage
       RobotArm_Mex('help');
@@ -45,12 +45,12 @@ classdef RobotArm < handle
       % and return a MATLAB structure with the readed data
       data = RobotArm_Mex( 'read', self.objectHandle, fname );
     end
-
+    % -------------------------------------------------------------------------
     function setup( self, fname_or_struct )
       % Initialize an OCP problem reading data from a file or a MATLAT stucture
       RobotArm_Mex( 'setup', self.objectHandle, fname_or_struct );
     end
-
+    % -------------------------------------------------------------------------
     function n = names( self )
       % return a MATLAB structures collecting the names of the variable, states etc
       % of the OCP problem:
@@ -65,7 +65,7 @@ classdef RobotArm < handle
       % n.model_names                  = cell array of strings, names of model parameters
       n = RobotArm_Mex( 'names', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function res = dims( self )
       % return a MATLAB structures collecting the dimension of the OCP problem:
       % res.dim_q     = number of mesh variables (variables computed ad mesh nodes)
@@ -78,7 +78,7 @@ classdef RobotArm < handle
       % res.neq       = number of equations
       res = RobotArm_Mex( 'dims', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function res = get_ocp_data( self )
       % return a structure with data and solution (if computed) of the OCP problem
       % information level possible values: -1,0,1,2,3,4
@@ -136,7 +136,9 @@ classdef RobotArm < handle
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % INFO LEVEL
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function infoLevel( self, infoLvl )
       % set information level
@@ -144,7 +146,9 @@ classdef RobotArm < handle
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % NUM THREAD
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function N_thread( self, nt )
       % set information level
@@ -152,7 +156,9 @@ classdef RobotArm < handle
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % GUESS
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function set_guess( self, varargin )
       % with no argument use predefined guess, otherwise
@@ -169,7 +175,9 @@ classdef RobotArm < handle
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % SOLVE
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function ok = solve( self, varargin )
       % ok = false if computation failed
@@ -177,139 +185,475 @@ classdef RobotArm < handle
       % varargin{1} = timeout
       ok = RobotArm_Mex( 'solve', self.objectHandle, varargin{:} );
     end
-
+    % -------------------------------------------------------------------------
     function updateContinuation( self, n, s )
       % set parameter of the problem for continuation step `n` at fraction `s`
-      %
       RobotArm_Mex( 'updateContinuation', self.objectHandle, n, s );
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % GET SOLUTION
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     function sol = solution( self, varargin )
+      % return the whole solution or the column of name varargin{1}
       sol = RobotArm_Mex( 'get_solution', self.objectHandle, varargin{:} );
     end
-
+    % -------------------------------------------------------------------------
+    function sol = solution2( self )
+      % return the whole solution
+      sol = RobotArm_Mex( 'get_solution2', self.objectHandle );
+    end
+    % -------------------------------------------------------------------------
+    function sol = solution3( self )
+      % return the whole solution
+      sol = RobotArm_Mex( 'get_solution3', self.objectHandle );
+    end
+    % -------------------------------------------------------------------------
     function sol = pack( self, X, Lambda, Pars, Omega )
+      % combine the solution in the matrices `X`, `Lambda`, `Pars` and `Omega`
+      % in a single vector as stored in the solver PINS
       sol = RobotArm_Mex( 'pack', self.objectHandle, X, Lambda, Pars, Omega );
     end
-
+    % -------------------------------------------------------------------------
     function [X, Lambda, Pars, Omega] = unpack( self, sol )
+      % unpack a vector to the matrices `X`, `Lambda`, `Pars` and `Omega`
+      % the vector must contains the data as stored in the solver PINS
       [X, Lambda, Pars, Omega] = RobotArm_Mex( 'unpack', self.objectHandle, sol );
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % ZETA
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     function res = zeta( self )
       res = RobotArm_Mex( 'get_solution', self.objectHandle, 'zeta' );
     end
 
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     % STATES
     % -------------------------------------------------------------------------
-    function res = rho( self, varargin  )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'rho', varargin{:} );
+    % -------------------------------------------------------------------------
+    function res = rho( self )
+      % return the solution for the state: rho
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'rho' );
     end
-    function res = theta( self, varargin  )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'theta', varargin{:} );
+    function res = theta( self )
+      % return the solution for the state: theta
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'theta' );
     end
-    function res = phi( self, varargin  )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'phi', varargin{:} );
+    function res = phi( self )
+      % return the solution for the state: phi
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'phi' );
     end
-    function res = rho1( self, varargin  )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'rho1', varargin{:} );
+    function res = rho1( self )
+      % return the solution for the state: rho1
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'rho1' );
     end
-    function res = theta1( self, varargin  )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'theta1', varargin{:} );
+    function res = theta1( self )
+      % return the solution for the state: theta1
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'theta1' );
     end
-    function res = phi1( self, varargin  )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'phi1', varargin{:} );
+    function res = phi1( self )
+      % return the solution for the state: phi1
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'phi1' );
     end
 
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     % MULTIPLIER
     % -------------------------------------------------------------------------
-    function res = lambda1( self, varargin )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda1__xo', varargin{:} );
+    % -------------------------------------------------------------------------
+    function res = lambda1( self )
+      % return the solution for the multiplier: lambda1
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda1__xo' );
     end
-    function res = lambda2( self, varargin )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda2__xo', varargin{:} );
+    function res = lambda2( self )
+      % return the solution for the multiplier: lambda2
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda2__xo' );
     end
-    function res = lambda3( self, varargin )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda3__xo', varargin{:} );
+    function res = lambda3( self )
+      % return the solution for the multiplier: lambda3
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda3__xo' );
     end
-    function res = lambda4( self, varargin )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda4__xo', varargin{:} );
+    function res = lambda4( self )
+      % return the solution for the multiplier: lambda4
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda4__xo' );
     end
-    function res = lambda5( self, varargin )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda5__xo', varargin{:} );
+    function res = lambda5( self )
+      % return the solution for the multiplier: lambda5
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda5__xo' );
     end
-    function res = lambda6( self, varargin )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda6__xo', varargin{:} );
+    function res = lambda6( self )
+      % return the solution for the multiplier: lambda6
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'lambda6__xo' );
     end
 
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     % CONTROLS
     % -------------------------------------------------------------------------
-    function res = u_rho( self, varargin )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'u_rho', varargin{:} );
+    % -------------------------------------------------------------------------
+    function res = u_rho( self )
+      % return the solution for the control: u_rho
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'u_rho' );
     end
-    function res = u_theta( self, varargin )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'u_theta', varargin{:} );
+    function res = u_theta( self )
+      % return the solution for the control: u_theta
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'u_theta' );
     end
-    function res = u_phi( self, varargin )
-      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'u_phi', varargin{:} );
+    function res = u_phi( self )
+      % return the solution for the control: u_phi
+      res = RobotArm_Mex( 'get_solution', self.objectHandle, 'u_phi' );
     end
 
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     % POSTPROCESSING
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
 
+    % -------------------------------------------------------------------------
     % -------------------------------------------------------------------------
     % NONLINEAR SYSTEM
     % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
     function F = eval_F( self, x )
+      % return the nonlinear system of the indirect methods
       F = RobotArm_Mex( 'eval_F', self.objectHandle, x );
     end
-
+    % -------------------------------------------------------------------------
     function JF = eval_JF( self, x )
+      % return the jacobian of the nonlinear system of the indirect methods
       JF = RobotArm_Mex( 'eval_JF', self.objectHandle, x );
     end
-
+    % -------------------------------------------------------------------------
     function JF = eval_JF_pattern( self )
+      % return the pattern of the jacobian of the nonlinear system of the indirect methods
       JF = RobotArm_Mex( 'eval_JF_pattern', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function x = get_raw_solution( self )
+      % return the solution in a vector as stored in PINS
       x = RobotArm_Mex( 'get_raw_solution', self.objectHandle );
     end
-
+    % -------------------------------------------------------------------------
     function set_raw_solution( self, x )
+      % return set the solution in a vector as stored in PINS
       RobotArm_Mex( 'set_raw_solution', self.objectHandle, x );
     end
-
+    % -------------------------------------------------------------------------
     function ok = check_raw_solution( self, x )
+      % check the solution in a vector as stored in PINS
       ok = RobotArm_Mex( 'check_raw_solution', self.objectHandle, x );
     end
-
+    % -------------------------------------------------------------------------
     function check_jacobian( self, x, epsi )
+      % check the analytic jacobian comparing with finite difference one.
+      % `epsi` is the admitted tolerance
       RobotArm_Mex( 'check_jacobian', self.objectHandle, x, epsi );
     end
-
-    function [a,c] = get_ac( self, iseg_L, q_L, x_L, lambda_L, ...
-                                   iseg_R, q_R, x_R, lambda_R, pars, U )
-      [a,c] = RobotArm_Mex( 'a', self.objectHandle, ...
+    % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
+    % DISCRETIZED PROBLEM ACCESS
+    % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
+    function [a,c] = eval_ac( self, iseg_L, q_L, x_L, lambda_L, ...
+                                    iseg_R, q_R, x_R, lambda_R, pars, U )
+      % compute the block of the nonlinear system given left and right stated
+      [a,c] = RobotArm_Mex( 'ac', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
-
-    function [h,c] = get_hc( self, iseg_L, q_L, x_L, lambda_L, ...
-                                   iseg_R, q_R, x_R, lambda_R, pars )
+    % -------------------------------------------------------------------------
+    function [Ja,Jc] = eval_DacDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                           iseg_R, q_R, x_R, lambda_R, pars, U )
+      % compute the block of the nonlinear system given left and right stated
+      [Ja,Jc] = RobotArm_Mex( 'DacDxlp', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function [h,c] = eval_hc( self, iseg_L, q_L, x_L, lambda_L, ...
+                                    iseg_R, q_R, x_R, lambda_R, pars )
+      % compute the block of the BC of the nonlinear system given left and right stated
       [h,c] = RobotArm_Mex( 'hc', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
+    end
+    % -------------------------------------------------------------------------
+    function [Jh,Jc] = eval_DhcDxlop( self, iseg_L, q_L, x_L, lambda_L, ...
+                                            iseg_R, q_R, x_R, lambda_R, pars )
+      % compute the block of the BC of the nonlinear system given left and right stated
+      [Jh,Jc] = RobotArm_Mex( 'DhcDxlop', self.objectHandle, ...
+        iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
+    % CONTINUOUS PROBLEM ACCESS
+    % -------------------------------------------------------------------------
+    % -------------------------------------------------------------------------
+    function u = eval_u( self, varargin )
+      % compute the control give states and multiplyer
+      % res = self.eval_u( iseg, q, x, lambda, pars )
+      % the call
+      % res = self.eval_u( iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars )
+      % is the same as
+      % res = self.eval_u( iseg_L, (q_L+q_R)./2, (x_L+x_R)./2, (lambda_L+lambda_R)./2, pars )
+      u = RobotArm_Mex( 'u', self.objectHandle, varargin{:} );
+    end
+    % -------------------------------------------------------------------------
+    function u = eval_DuDxlp( self, varargin )
+      % compute the control give states and multiplyer
+      % res = self.eval_DuDxlp( iseg, q, x, lambda, pars )
+      % the call
+      % res = self.eval_DuDxlp( iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars )
+      % is the same as
+      % res = self.eval_DuDxlp( iseg_L, (q_L+q_R)./2, (x_L+x_R)./2, (lambda_L+lambda_R)./2, pars )
+      %
+      u = RobotArm_Mex( 'DuDxlp', self.objectHandle, varargin{:} );
+    end
+    % -------------------------------------------------------------------------
+    function rhs = eval_rhs_ode( self, iseg, q, x, u, pars )
+      % compute rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      rhs = RobotArm_Mex(...
+        'rhs_ode', self.objectHandle, iseg, q, x, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_Drhs_odeDx( self, iseg, q, x, u, pars )
+      % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `x`
+      J = RobotArm_Mex(...
+        'Drhs_odeDx', self.objectHandle, iseg, q, x, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_Drhs_odeDu( self, iseg, q, x, u, pars )
+      % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `u`
+      J = RobotArm_Mex(...
+        'Drhs_odeDu', self.objectHandle, iseg, q, x, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_Drhs_odeDp( self, iseg, q, x, u, pars )
+      % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `pars`
+      J = RobotArm_Mex(...
+        'Drhs_odeDp', self.objectHandle, iseg, q, x, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function A = eval_A( self, iseg, q, x, pars )
+      % compute `A(q,x)` of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `pars`
+      A = RobotArm_Mex( 'A', self.objectHandle, iseg, q, x, pars );
+    end
+    % -------------------------------------------------------------------------
+    function eta = eval_eta( self, iseg, q, x, lambda, pars )
+      % compute `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
+      eta = RobotArm_Mex(...
+        'eta', self.objectHandle, iseg, q, x, lambda, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DetaDx( self, iseg, q, x, lambda, pars )
+      % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
+      % respect to `x`
+      J = RobotArm_Mex(...
+        'DetaDx', self.objectHandle, iseg, q, x, lambda, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DetaDp( self, iseg, q, x, lambda, pars )
+      % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
+      % respect to `x`
+      J = RobotArm_Mex(...
+        'DetaDp', self.objectHandle, iseg, q, x, lambda, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function nu = eval_nu( self, iseg, q, x, V, pars )
+      % compute `nu(q,x,V,pars) = A(q,x,pars) V`
+      nu = RobotArm_Mex( 'nu', self.objectHandle, iseg, q, x, V, pars );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DnuDx( self, iseg, q, x, V, pars )
+      % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
+      % respect to `x`
+      J = RobotArm_Mex( 'DnuDx', self.objectHandle, iseg, q, x, V, pars );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DnuDp( self, iseg, q, x, V, pars )
+      % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
+      % respect to `x`
+      J = RobotArm_Mex( 'DnuDp', self.objectHandle, iseg, q, x, V, pars );
+    end
+    % -------------------------------------------------------------------------
+    function Hx = eval_Hx( self, iseg, q, x, lambda, V, u, pars )
+      Hx = RobotArm_Mex(...
+        'Hx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHxDx( self, iseg, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hx(q,x,lambda,V,pars)`
+      % respect to `x`
+      J = RobotArm_Mex(...
+        'DHxDx', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHxDp( self, iseg, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hx(q,x,lambda,V,u,pars)`
+      % respect to `x`
+      J = RobotArm_Mex(...
+        'DHxDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function Hx = eval_Hu( self, iseg, q, x, lambda, V, u, pars )
+      Hx = RobotArm_Mex(...
+        'Hu', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHuDx( self, iseg, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
+      % respect to `x`
+      J = RobotArm_Mex(...
+        'DHuDx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHuDp( self, iseg, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
+      % respect to `x`
+      J = RobotArm_Mex(...
+        'DHuDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function Hp = eval_Hp( self, iseg, q, x, lambda, V, u, pars )
+      Hp = RobotArm_Mex(...
+        'Hp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DHpDp( self, q, x, lambda, V, u, pars )
+      % compute the jacobian of `Hp(q,x,lambda,V,u,pars)`
+      % respect to `x`
+      J = RobotArm_Mex(...
+        'DHpDp', self.objectHandle, q, x, lambda, V, u, pars...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function bc = eval_bc( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+      bc = RobotArm_Mex( ...
+        'boundaryConditions', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DbcDx( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+      J = RobotArm_Mex( ...
+        'DboundaryConditionsDx', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DbcDp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+      J = RobotArm_Mex( ...
+        'DboundaryConditionsDp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function bc = eval_adjoiontBC( self, iseg_L, q_L, x_L, lambda_L, ...
+                                         iseg_R, q_R, x_R, lambda_R, ...
+                                         pars, Omega )
+      bc = RobotArm_Mex( ...
+        'adjoiontBC', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DadjoiontBCDx( self, iseg_L, q_L, x_L, lambda_L, ...
+                                           iseg_R, q_R, x_R, lambda_R, ...
+                                           pars, Omega )
+      J = RobotArm_Mex( ...
+        'DadjoiontBCDx', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DadjoiontBCDp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                           iseg_R, q_R, x_R, lambda_R, ...
+                                           pars, Omega )
+      J = RobotArm_Mex( ...
+        'DadjoiontBCDp', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function bc = eval_jump( self, iseg_L, q_L, x_L, lambda_L, ...
+                                   iseg_R, q_R, x_R, lambda_R, pars )
+      bc = RobotArm_Mex( ...
+        'jump', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_DjumpDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                       iseg_R, q_R, x_R, lambda_R, pars )
+      J = RobotArm_Mex( ...
+        'DjumpDxlp', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_penalties( self, iseg, q, x, lambda, u, pars )
+      J = RobotArm_Mex( ...
+        'penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function J = eval_control_penalties( self, iseg, q, x, lambda, u, pars )
+      J = RobotArm_Mex( ...
+        'control_penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function target = eval_lagrange_target( self, iseg, q, x, u, pars )
+      target = RobotArm_Mex( ...
+        'lagrange_target', self.objectHandle, iseg, q, x, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function target = eval_mayer_target( self, iseg_L, q_L, x_L, ...
+                                               iseg_R, q_R, x_R, ...
+                                               u, pars )
+      target = RobotArm_Mex( ...
+        'mayer_target', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, u, pars ...
+      );
+    end
+    % -------------------------------------------------------------------------
+    function target = eval_q( self, i_segment, s )
+      target = RobotArm_Mex( 'q', self.objectHandle, i_segment, s );
+    end
+    % -------------------------------------------------------------------------
+    function nodes = get_nodes( self )
+      nodes = RobotArm_Mex( 'nodes', self.objectHandle );
+    end
+    % -------------------------------------------------------------------------
+    function node_to_segment = get_node_to_segment( self )
+      node_to_segment = RobotArm_Mex( 'node_to_segment', self.objectHandle );
     end
 
     % -------------------------------------------------------------------------
@@ -328,7 +672,7 @@ classdef RobotArm < handle
       title('states');
       legend( '\rho', 'th\eta', '\phi', '\rho1', 'th\eta1', '\phi1' );
     end
-
+    % -------------------------------------------------------------------------
     function plot_multipliers( self )
       plot(...
         self.zeta(), self.lambda1(), ...
@@ -342,7 +686,7 @@ classdef RobotArm < handle
       title('multipliers');
       legend( '\lambda1', '\lambda2', '\lambda3', '\lambda4', '\lambda5', '\lambda6' );
     end
-
+    % -------------------------------------------------------------------------
     function plot_controls( self )
       plot(...
         self.zeta(), self.u_rho(), ...
@@ -353,9 +697,7 @@ classdef RobotArm < handle
       title('controls');
       legend( 'u\_\rho', 'u\_th\eta', 'u\_\phi' );
     end
-
   end
-
 end
 
 % EOF: RobotArm.m

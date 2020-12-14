@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "MaximumAscent_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -105,13 +103,13 @@ namespace MaximumAscentDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 3   ; jIndex[ 3  ] = 3   ;
-    iIndex[ 4  ] = 4   ; jIndex[ 4  ] = 5   ;
-    iIndex[ 5  ] = 5   ; jIndex[ 5  ] = 4   ;
-    iIndex[ 6  ] = 5   ; jIndex[ 6  ] = 6   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 5   ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 4   ;
+    iIndex[6 ] = 5   ; jIndex[6 ] = 6   ;
   }
 
   void
@@ -231,9 +229,9 @@ namespace MaximumAscentDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 4   ; jIndex[ 0  ] = 4   ;
-    iIndex[ 1  ] = 4   ; jIndex[ 1  ] = 6   ;
-    iIndex[ 2  ] = 6   ; jIndex[ 2  ] = 4   ;
+    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
+    iIndex[1 ] = 4   ; jIndex[1 ] = 6   ;
+    iIndex[2 ] = 6   ; jIndex[2 ] = 4   ;
   }
 
   void

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods1.cc                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "RobotArm_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -282,9 +280,9 @@ namespace RobotArmDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    real_type t1   = P__[0];
-    real_type t2   = ModelPars[2];
-    return -(t1 * (t2 - 1) - t2) * t1;
+    real_type t1   = ModelPars[2];
+    real_type t3   = P__[0];
+    return -t3 * (t3 * (t1 - 1) - t1);
   }
 
   /*\
@@ -300,14 +298,12 @@ namespace RobotArmDefine {
 
   void
   RobotArm::q_eval(
-    integer        i_node,
     integer        i_segment,
     real_type      s,
     Q_pointer_type result__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SecondOrderSingularRegulator_Pars.hh                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef SECONDORDERSINGULARREGULATORPARS_HH
-#define SECONDORDERSINGULARREGULATORPARS_HH
+#ifndef SECONDORDERSINGULARREGULATORPARS_DOT_HH
+#define SECONDORDERSINGULARREGULATORPARS_DOT_HH
 
 #define numBc                    2
 #define numModelPars             0

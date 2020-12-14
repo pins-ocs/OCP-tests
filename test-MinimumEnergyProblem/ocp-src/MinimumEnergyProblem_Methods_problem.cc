@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods1.cc                               |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "MinimumEnergyProblem_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -104,11 +102,11 @@ namespace MinimumEnergyProblemDefine {
   real_type
   MinimumEnergyProblem::interpLog_D_1_2( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
     real_type t1   = pow(v1__XO, s__XO);
-    real_type t2   = -1 + s__XO;
-    real_type t3   = log(v0__XO);
-    real_type t6   = log(v1__XO);
-    real_type t10  = pow(v0__XO, -s__XO);
-    return t10 * (t3 * t2 - t6 * t2 - 1) * t1;
+    real_type t2   = pow(v0__XO, -s__XO);
+    real_type t4   = -1 + s__XO;
+    real_type t5   = log(v0__XO);
+    real_type t8   = log(v1__XO);
+    return (t5 * t4 - t8 * t4 - 1) * t2 * t1;
   }
 
   real_type
@@ -279,14 +277,12 @@ namespace MinimumEnergyProblemDefine {
 
   void
   MinimumEnergyProblem::q_eval(
-    integer        i_node,
     integer        i_segment,
     real_type      s,
     Q_pointer_type result__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\

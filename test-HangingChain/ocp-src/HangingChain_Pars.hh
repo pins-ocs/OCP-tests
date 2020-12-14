@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Pars.hh                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef HANGINGCHAINPARS_HH
-#define HANGINGCHAINPARS_HH
+#ifndef HANGINGCHAINPARS_DOT_HH
+#define HANGINGCHAINPARS_DOT_HH
 
 #define numBc                    3
 #define numModelPars             6

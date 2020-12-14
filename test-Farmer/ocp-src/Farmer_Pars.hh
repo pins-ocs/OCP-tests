@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Pars.hh                                                 |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef FARMERPARS_HH
-#define FARMERPARS_HH
+#ifndef FARMERPARS_DOT_HH
+#define FARMERPARS_DOT_HH
 
 #define numBc                    5
 #define numModelPars             23

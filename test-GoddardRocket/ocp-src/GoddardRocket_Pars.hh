@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Pars.hh                                          |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef GODDARDROCKETPARS_HH
-#define GODDARDROCKETPARS_HH
+#ifndef GODDARDROCKETPARS_DOT_HH
+#define GODDARDROCKETPARS_DOT_HH
 
 #define numBc                    4
 #define numModelPars             17

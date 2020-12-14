@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,11 +18,11 @@
 --]]
 
 -- Auxiliary values
+xf = 5
 g  = 9.81
 yf = -2
-Tf = (-2.0*yf/g)**(1/2.0)
-xf = 5
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+Tf = (-2.0*yf/g)**(1/2.0)
 
 content = {
 
@@ -55,7 +55,7 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     factorization = "LU",
     MaxIter       = 50,
     Tolerance     = 1e-9,
@@ -70,7 +70,7 @@ content = {
     factorization = "LU",
 
     -- Last Block selection:
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     last_factorization = "LU",
 
     -- choose solves: Hyness, NewtonDumped
@@ -154,8 +154,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 500,
+        length = 1,
       },
     },
   },

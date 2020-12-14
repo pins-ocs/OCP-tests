@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFclip_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 12/11/2020                                       #
+#  version: 1.0   date 14/12/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -53,7 +53,7 @@ mechatronix do |data|
   # setup solver for controls
   data.ControlSolver = {
     # ==============================================================
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     :factorization => 'LU',
     # ==============================================================
     :Rcond     => 1e-14,  # reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -72,9 +72,10 @@ mechatronix do |data|
     # =================
 
     # Last Block selection:
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
     :last_factorization => 'LU',
+    ###:last_factorization => 'PINV',
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped
@@ -144,9 +145,8 @@ mechatronix do |data|
   data.MappedObjects[:clip] = { :h => 0.1, :delta => 0.1 }
 
   # Controls
-  # Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
-  # Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
-
+  # Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   data.Controls = {}
   data.Controls[:controlForce] = {
     :type      => 'QUADRATIC',
@@ -166,20 +166,20 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 0.1,
         :n      => 10,
-      },
-      {
-        :length => 0.4,
-        :n      => 40,
-      },
-      {
-        :length => 0.4,
-        :n      => 40,
-      },
-      {
         :length => 0.1,
+      },
+      {
+        :n      => 40,
+        :length => 0.4,
+      },
+      {
+        :n      => 40,
+        :length => 0.4,
+      },
+      {
         :n      => 10,
+        :length => 0.1,
       },
     ],
   };

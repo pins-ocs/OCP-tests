@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods1.cc                                          |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "vanDerPol_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -197,14 +195,12 @@ namespace vanDerPolDefine {
 
   void
   vanDerPol::q_eval(
-    integer        i_node,
     integer        i_segment,
     real_type      s,
     Q_pointer_type result__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\

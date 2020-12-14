@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "gtocX_2burn_pars_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -139,15 +137,15 @@ namespace gtocX_2burn_parsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 0   ;
-    iIndex[ 4  ] = 1   ; jIndex[ 4  ] = 1   ;
-    iIndex[ 5  ] = 1   ; jIndex[ 5  ] = 2   ;
-    iIndex[ 6  ] = 2   ; jIndex[ 6  ] = 0   ;
-    iIndex[ 7  ] = 2   ; jIndex[ 7  ] = 1   ;
-    iIndex[ 8  ] = 2   ; jIndex[ 8  ] = 2   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 0   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 2   ;
   }
 
   void
@@ -196,14 +194,14 @@ namespace gtocX_2burn_parsDefine {
     real_type t43  = t24 * t42;
     real_type t51  = t17 * L__[2];
     real_type t53  = 1.0 / t20 / t19;
-    result__[ 0   ] = 2 * t22 * t53 * t10 * t51 + t6 * t31 * t29 * t25 + t6 * t37 * t36 * t25 - t3 * t31 * t29 * t43 - t3 * t37 * t36 * t43 + t10 * t9 - t13 + 2;
+    result__[ 0   ] = 2 * t10 * t22 * t51 * t53 + t25 * t29 * t31 * t6 + t25 * t36 * t37 * t6 - t29 * t3 * t31 * t43 - t3 * t36 * t37 * t43 + t10 * t9 - t13 + 2;
     real_type t60  = ray_D_3(t19, t1, t5, t2);
     real_type t61  = t30 * t60;
     real_type t65  = ray_D_2_3(t19, t1, t5, t2);
     real_type t76  = t22 * t53;
     real_type t77  = t3 * t76;
-    result__[ 1   ] = t6 * t61 * t29 * t25 + t6 * t65 * t36 * t25 - t3 * t61 * t29 * t43 - t3 * t65 * t36 * t43 + t3 * t6 * t9 + 2 * t77 * t6 * t51;
-    real_type t82  = -t6 * t1 + t3 * t5;
+    result__[ 1   ] = t25 * t29 * t6 * t61 + t25 * t36 * t6 * t65 - t29 * t3 * t43 * t61 - t3 * t36 * t43 * t65 + t3 * t6 * t9 + 2 * t51 * t6 * t77;
+    real_type t82  = -t1 * t6 + t3 * t5;
     real_type t83  = t82 * t9;
     real_type t85  = ALIAS_ray_positive_D(t8);
     real_type t87  = ray_D_4(t19, t1, t5, t2);
@@ -212,15 +210,15 @@ namespace gtocX_2burn_parsDefine {
     real_type t108 = t82 * t51;
     real_type t111 = t8 * t51;
     real_type t112 = t6 * t76;
-    result__[ 2   ] = t6 * t88 * t29 * t25 + t3 * t30 * t36 * t25 + t6 * t92 * t36 * t25 - t3 * t88 * t29 * t43 - t3 * t92 * t36 * t43 + t6 * t30 * t36 * t43 + 2 * t77 * t108 - 2 * t112 * t111 + t3 * t83 - t6 * t85;
+    result__[ 2   ] = t25 * t29 * t6 * t88 + t25 * t3 * t30 * t36 + t25 * t36 * t6 * t92 - t29 * t3 * t43 * t88 - t3 * t36 * t43 * t92 + t30 * t36 * t43 * t6 + 2 * t108 * t77 - 2 * t111 * t112 + t3 * t83 - t6 * t85;
     result__[ 3   ] = result__[1];
     real_type t115 = t6 * t6;
     real_type t117 = t60 * t60;
     real_type t121 = ray_D_3_3(t19, t1, t5, t2);
-    result__[ 4   ] = 2 * t22 * t53 * t115 * t51 + t6 * t117 * t29 * t25 - t3 * t117 * t29 * t43 + t6 * t121 * t36 * t25 - t3 * t121 * t36 * t43 + t115 * t9 - t13 + 2;
+    result__[ 4   ] = 2 * t115 * t22 * t51 * t53 + t117 * t25 * t29 * t6 - t117 * t29 * t3 * t43 + t121 * t25 * t36 * t6 - t121 * t3 * t36 * t43 + t115 * t9 - t13 + 2;
     real_type t137 = t60 * t87;
     real_type t141 = ray_D_3_4(t19, t1, t5, t2);
-    result__[ 5   ] = t6 * t137 * t29 * t25 - t3 * t137 * t29 * t43 + t6 * t141 * t36 * t25 - t3 * t141 * t36 * t43 + t3 * t60 * t36 * t25 + t6 * t60 * t36 * t43 + 2 * t112 * t108 + 2 * t77 * t111 + t3 * t85 + t6 * t83;
+    result__[ 5   ] = t137 * t25 * t29 * t6 - t137 * t29 * t3 * t43 + t141 * t25 * t36 * t6 - t141 * t3 * t36 * t43 + t25 * t3 * t36 * t60 + t36 * t43 * t6 * t60 + 2 * t108 * t112 + 2 * t111 * t77 + t3 * t85 + t6 * t83;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
     real_type t161 = t82 * t82;
@@ -229,7 +227,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t169 = ray_D_4_4(t19, t1, t5, t2);
     real_type t178 = t26 * t23;
     real_type t179 = acceleration_r(t27, t21);
-    result__[ 8   ] = -t6 * t179 * t178 * t20 * t18 + t3 * t179 * t178 * t20 * t42 + 2 * t22 * t53 * t161 * t51 + t6 * t165 * t29 * t25 - t3 * t165 * t29 * t43 + t6 * t169 * t36 * t25 - t3 * t169 * t36 * t43 + 2 * t3 * t87 * t36 * t25 + 2 * t6 * t87 * t36 * t43 + 2 * t163 * t76 * t111 + t161 * t9 + t163 * t85 - t13 + 2;
+    result__[ 8   ] = -t178 * t179 * t18 * t20 * t6 + t178 * t179 * t20 * t3 * t42 + 2 * t161 * t22 * t51 * t53 + t165 * t25 * t29 * t6 - t165 * t29 * t3 * t43 + t169 * t25 * t36 * t6 - t169 * t3 * t36 * t43 + 2 * t25 * t3 * t36 * t87 + 2 * t36 * t43 * t6 * t87 + 2 * t111 * t163 * t76 + t161 * t9 + t163 * t85 - t13 + 2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
   }
@@ -253,9 +251,9 @@ namespace gtocX_2burn_parsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 0   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 0   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -498,9 +496,9 @@ namespace gtocX_2burn_parsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 2   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

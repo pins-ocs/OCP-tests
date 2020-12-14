@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "Crossroad_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -136,20 +134,20 @@ namespace CrossroadDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 0   ;
-    iIndex[ 4  ] = 1   ; jIndex[ 4  ] = 1   ;
-    iIndex[ 5  ] = 1   ; jIndex[ 5  ] = 2   ;
-    iIndex[ 6  ] = 1   ; jIndex[ 6  ] = 3   ;
-    iIndex[ 7  ] = 2   ; jIndex[ 7  ] = 0   ;
-    iIndex[ 8  ] = 2   ; jIndex[ 8  ] = 1   ;
-    iIndex[ 9  ] = 2   ; jIndex[ 9  ] = 2   ;
-    iIndex[ 10 ] = 2   ; jIndex[ 10 ] = 3   ;
-    iIndex[ 11 ] = 3   ; jIndex[ 11 ] = 1   ;
-    iIndex[ 12 ] = 3   ; jIndex[ 12 ] = 2   ;
-    iIndex[ 13 ] = 3   ; jIndex[ 13 ] = 3   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 0   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 1   ;
+    iIndex[9 ] = 2   ; jIndex[9 ] = 2   ;
+    iIndex[10] = 2   ; jIndex[10] = 3   ;
+    iIndex[11] = 3   ; jIndex[11] = 1   ;
+    iIndex[12] = 3   ; jIndex[12] = 2   ;
+    iIndex[13] = 3   ; jIndex[13] = 3   ;
   }
 
   void
@@ -295,7 +293,7 @@ namespace CrossroadDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 3   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

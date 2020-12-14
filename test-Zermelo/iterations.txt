@@ -26,7 +26,7 @@ Segment N.0
 s0 = 0 length = 1 npts = 1001 no data set
 
 Model Parameters
-.......................................S = 50.0
+.......................................S = 50
 INFO CLASS = Zermelo
   dim_u        = 1
   dim_q        = 1
@@ -45,26 +45,27 @@ INFO CLASS = Zermelo
   nQ_total     = 1001
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
 [  1,  1] (   0.0234,  0.00695) [     5.24,     1.36]      1.00 ( 0: 0): 0: 0: 0 G
 [  2,  5] (  0.00695,  0.00689) [     1.90,     1.65]    0.0396 ( 1: 0): 0: 0: 0 G
 [  3,  5] (  0.00689,  0.00696) [     1.23,     1.25]    0.0324 ( 2: 0): 2: 0: 2 G
-[  4,  1] (  0.00696,  0.00504) [     1.11,     1.61]      0.36 ( 3: 0): 2: 0: 2 G
+[  4,  1] (  0.00696,  0.00504) [     1.11,     1.61]     0.360 ( 3: 0): 2: 0: 2 G
 [  5,  1] (  0.00504,  0.00247) [     1.11,    0.986]      1.00 ( 4: 0): 1: 0: 1 G
 [  6,  2] (  0.00247,  0.00157) [    0.633,    0.467]     0.286 ( 5: 0): 0: 0: 0 G
 [  7,  2] (  0.00157, 0.000805) [    0.481,    0.275]     0.437 ( 6: 0): 1: 0: 1 G
 [  8,  1] ( 0.000805, 0.000124) [    0.279,   0.0143]      1.00 ( 7: 0): 1: 0: 1 G
 [  9,  1] ( 0.000124, 2.98e-06) [   0.0111,  0.00107]      1.00 ( 8: 0): 0: 0: 0 G
-[ 10,  1] ( 2.98e-06,  2.6e-09) [  0.00113,  8.4e-07]      1.00 ( 9: 0): 0: 0: 0 G
-[ 11,  1] (  2.6e-09, 9.01e-16) [ 8.41e-07, 3.88e-13]      1.00 (10: 0): 0: 0: 0 G
+[ 10,  1] ( 2.98e-06, 2.60e-09) [  0.00113, 8.40e-07]      1.00 ( 9: 0): 0: 0: 0 G
+[ 11,  1] ( 2.60e-09, 9.01e-16) [ 8.41e-07, 3.88e-13]      1.00 (10: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 58.2    ms    iteration           = 11        
-Total Equations        = 11017         tolerance           = 1e-09     
-max iterations         = 300           max accumul. iter.  = 800       
+Elapsed Time           = 30.5 [ms]     timeout             = 0 [ms]
+iteration              = 11            tolerance           = 1.000e-09 
+max iterations         = 300           Total Equations     = 11017
+max accumul. iter.     = 800           Memory Used         = 1Mb (+7Kb)
 ---------------------------- Continuation ----------------------------
 Initial Step           = 0.2           Minimum Step        = 0.001     
 Reduce Factor          = 0.5           Augment Factor      = 1.5       
@@ -77,9 +78,9 @@ Jacobian Factorization = 11            Jacobian Inversion  = 32
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 3.3503e-12      last `new' ||d||_inf  =  8.264e-06
+last ||d||_inf = 3.3509e-12      last `new' ||d||_inf  = 8.2640e-06
 last ||f||_inf = 4.0117e-08      last ||f||_1          = 2.6006e-09
 
-target [Lagrange,Mayer]        = [      0.00000,     0.903177]
-[Penalties/Barriers, Controls] = [      0.00000,      0.00000]
+target [Lagrange,Mayer]        = [       0.00000,     0.903177]
+[Penalties/Barriers, Controls] = [       0.00000,       0.00000]
 All Done Folks!

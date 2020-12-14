@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Main.cc                                |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "MinimumFuelOrbitRaising_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -57,7 +55,7 @@ main() {
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
     // ==============================================================
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // :factorization => 'LU',
     // ==============================================================
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -90,9 +88,9 @@ main() {
     // =================
 
     // Last Block selection:
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // ==============================================
-    data_Solver["last_factorization"] = "LU";
+    data_Solver["last_factorization"] = "PINV";
     // ==============================================
 
     // choose solver: Hyness, NewtonDumped
@@ -178,7 +176,7 @@ MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
-    // pModel->set_timeout_ms( 100 );
+    // model->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

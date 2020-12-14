@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods.cc                                                |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "CNOC_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::ToolPath2D;
@@ -204,18 +202,18 @@ namespace CNOCDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 1   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 2   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 3   ;
-    iIndex[ 3  ] = 3   ; jIndex[ 3  ] = 4   ;
-    iIndex[ 4  ] = 4   ; jIndex[ 4  ] = 5   ;
-    iIndex[ 5  ] = 5   ; jIndex[ 5  ] = 8   ;
-    iIndex[ 6  ] = 6   ; jIndex[ 6  ] = 9   ;
-    iIndex[ 7  ] = 7   ; jIndex[ 7  ] = 10  ;
-    iIndex[ 8  ] = 8   ; jIndex[ 8  ] = 11  ;
-    iIndex[ 9  ] = 9   ; jIndex[ 9  ] = 12  ;
-    iIndex[ 10 ] = 10  ; jIndex[ 10 ] = 0   ;
-    iIndex[ 11 ] = 11  ; jIndex[ 11 ] = 7   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 4   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 5   ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 8   ;
+    iIndex[6 ] = 6   ; jIndex[6 ] = 9   ;
+    iIndex[7 ] = 7   ; jIndex[7 ] = 10  ;
+    iIndex[8 ] = 8   ; jIndex[8 ] = 11  ;
+    iIndex[9 ] = 9   ; jIndex[9 ] = 12  ;
+    iIndex[10] = 10  ; jIndex[10] = 0   ;
+    iIndex[11] = 11  ; jIndex[11] = 7   ;
   }
 
   void

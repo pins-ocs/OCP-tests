@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "TwoLinkRobotArm_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -126,14 +124,14 @@ namespace TwoLinkRobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 3   ; jIndex[ 3  ] = 3   ;
-    iIndex[ 4  ] = 4   ; jIndex[ 4  ] = 4   ;
-    iIndex[ 5  ] = 5   ; jIndex[ 5  ] = 5   ;
-    iIndex[ 6  ] = 6   ; jIndex[ 6  ] = 6   ;
-    iIndex[ 7  ] = 7   ; jIndex[ 7  ] = 7   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 5   ;
+    iIndex[6 ] = 6   ; jIndex[6 ] = 6   ;
+    iIndex[7 ] = 7   ; jIndex[7 ] = 7   ;
   }
 
   void
@@ -287,7 +285,7 @@ namespace TwoLinkRobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 8   ; jIndex[ 0  ] = 0   ;
+    iIndex[0 ] = 8   ; jIndex[0 ] = 0   ;
   }
 
   void

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Pars.hh                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef BANGBANGFTAUPARS_HH
-#define BANGBANGFTAUPARS_HH
+#ifndef BANGBANGFTAUPARS_DOT_HH
+#define BANGBANGFTAUPARS_DOT_HH
 
 #define numBc                    5
 #define numModelPars             6

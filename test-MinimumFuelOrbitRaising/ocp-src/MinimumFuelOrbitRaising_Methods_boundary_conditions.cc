@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods.cc                             |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "MinimumFuelOrbitRaising_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -104,12 +102,12 @@ namespace MinimumFuelOrbitRaisingDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 3   ; jIndex[ 3  ] = 4   ;
-    iIndex[ 4  ] = 4   ; jIndex[ 4  ] = 3   ;
-    iIndex[ 5  ] = 4   ; jIndex[ 5  ] = 5   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 4   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 3   ;
+    iIndex[5 ] = 4   ; jIndex[5 ] = 5   ;
   }
 
   void
@@ -227,9 +225,9 @@ namespace MinimumFuelOrbitRaisingDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 3   ; jIndex[ 0  ] = 5   ;
-    iIndex[ 1  ] = 5   ; jIndex[ 1  ] = 3   ;
-    iIndex[ 2  ] = 5   ; jIndex[ 2  ] = 5   ;
+    iIndex[0 ] = 3   ; jIndex[0 ] = 5   ;
+    iIndex[1 ] = 5   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 5   ; jIndex[2 ] = 5   ;
   }
 
   void

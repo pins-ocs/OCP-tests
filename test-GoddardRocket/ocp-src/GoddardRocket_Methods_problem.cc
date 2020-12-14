@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "GoddardRocket_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -193,12 +191,12 @@ namespace GoddardRocketDefine {
 
   real_type
   GoddardRocket::explog_D_1_2( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t1   = pow(a__XO, -s__XO);
-    real_type t2   = -1 + s__XO;
-    real_type t3   = log(a__XO);
-    real_type t6   = log(b__XO);
-    real_type t10  = pow(b__XO, s__XO);
-    return t10 * (t3 * t2 - t6 * t2 - 1) * t1;
+    real_type t1   = pow(b__XO, s__XO);
+    real_type t2   = pow(a__XO, -s__XO);
+    real_type t4   = -1 + s__XO;
+    real_type t5   = log(a__XO);
+    real_type t8   = log(b__XO);
+    return (t5 * t4 - t8 * t4 - 1) * t2 * t1;
   }
 
   real_type
@@ -378,14 +376,12 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::q_eval(
-    integer        i_node,
     integer        i_segment,
     real_type      s,
     Q_pointer_type result__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = s;
-    Mechatronix::check_in_node( result__.pointer(),"q_eval",1, i_node );
   }
 
   /*\

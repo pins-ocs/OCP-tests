@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Pars.hh                                               |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef ALPRIDERPARS_HH
-#define ALPRIDERPARS_HH
+#ifndef ALPRIDERPARS_DOT_HH
+#define ALPRIDERPARS_DOT_HH
 
 #define numBc                    8
 #define numModelPars             14

@@ -35,25 +35,26 @@ INFO CLASS = MinimumFuelOrbitRaising
   nQ_total     = 401
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
 [  1, 34] (  0.00137,  0.00137) [    0.568,     1.25]  0.000129 ( 0: 0): 0: 0: 0 G
-[  2,  1] (  0.00137,  0.00135) [    0.569,     0.56]    0.0228 ( 0: 0): 0: 0: 4 G
+[  2,  1] (  0.00137,  0.00135) [    0.569,    0.560]    0.0228 ( 0: 0): 0: 0: 4 G
 [  3,  1] (  0.00135,  0.00131) [    0.584,    0.452]     0.302 ( 0: 0): 0: 0: 6 G
-[  4,  4] (  0.00131,  0.00123) [     1.33,     1.21]     0.044 ( 0: 0): 0: 1: 7 G
-[  5,  4] (  0.00123, 0.000878) [    0.385,     0.21]     0.263 ( 4: 0): 2: 0: 2 G
+[  4,  4] (  0.00131,  0.00123) [     1.33,     1.21]    0.0440 ( 0: 0): 0: 1: 7 G
+[  5,  4] (  0.00123, 0.000878) [    0.385,    0.210]     0.263 ( 4: 0): 2: 0: 2 G
 [  6,  1] ( 0.000878, 0.000225) [    0.141,   0.0387]      1.00 ( 5: 0): 1: 0: 1 G
 [  7,  1] ( 0.000225, 4.29e-05) [   0.0518,  0.00511]      1.00 ( 6: 0): 0: 0: 0 G
 [  8,  1] ( 4.29e-05, 3.67e-07) [  0.00421, 4.16e-05]      1.00 ( 7: 0): 0: 0: 0 G
-[  9,  1] ( 3.67e-07,  8.8e-11) [    4e-05, 2.29e-08]      1.00 ( 8: 0): 0: 0: 0 G
-[ 10,  1] (  8.8e-11, 6.65e-17) [ 2.29e-08, 9.95e-15]      1.00 ( 9: 0): 0: 0: 0 G
+[  9,  1] ( 3.67e-07, 8.80e-11) [ 4.00e-05, 2.29e-08]      1.00 ( 8: 0): 0: 0: 0 G
+[ 10,  1] ( 8.80e-11, 6.72e-17) [ 2.29e-08, 9.95e-15]      1.00 ( 9: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 18.0    ms    iteration           = 10        
-Total Equations        = 2811          tolerance           = 1e-09     
-max iterations         = 300           max accumul. iter.  = 800       
+Elapsed Time           = 18.6 [ms]     timeout             = 0 [ms]
+iteration              = 10            tolerance           = 1.000e-09 
+max iterations         = 300           Total Equations     = 2811
+max accumul. iter.     = 800           Memory Used         = 287Kb (+92bytes)
 ---------------------------- Continuation ----------------------------
 Initial Step           = 0.2           Minimum Step        = 0.001     
 Reduce Factor          = 0.5           Augment Factor      = 1.5       
@@ -66,9 +67,9 @@ Jacobian Factorization = 10            Jacobian Inversion  = 59
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 5.4402e-14      last `new' ||d||_inf  = 1.1936e-07
+last ||d||_inf = 5.4436e-14      last `new' ||d||_inf  = 1.1936e-07
 last ||f||_inf = 8.4234e-09      last ||f||_1          = 8.8024e-11
 
-target [Lagrange,Mayer]        = [    -0.659769,      0.00000]
-[Penalties/Barriers, Controls] = [      0.00000,      0.00000]
+target [Lagrange,Mayer]        = [    -0.659769,       0.00000]
+[Penalties/Barriers, Controls] = [       0.00000,       0.00000]
 All Done Folks!

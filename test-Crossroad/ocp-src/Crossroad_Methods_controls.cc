@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "Crossroad_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -113,8 +111,8 @@ namespace CrossroadDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 3   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 6   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
   }
 
   void
@@ -154,7 +152,7 @@ namespace CrossroadDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
   void
@@ -486,18 +484,18 @@ namespace CrossroadDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 1   ; jIndex[ 2  ] = 9   ;
-    iIndex[ 3  ] = 2   ; jIndex[ 3  ] = 2   ;
-    iIndex[ 4  ] = 2   ; jIndex[ 4  ] = 10  ;
-    iIndex[ 5  ] = 3   ; jIndex[ 5  ] = 7   ;
-    iIndex[ 6  ] = 4   ; jIndex[ 6  ] = 8   ;
-    iIndex[ 7  ] = 5   ; jIndex[ 7  ] = 5   ;
-    iIndex[ 8  ] = 5   ; jIndex[ 8  ] = 13  ;
-    iIndex[ 9  ] = 6   ; jIndex[ 9  ] = 6   ;
-    iIndex[ 10 ] = 6   ; jIndex[ 10 ] = 14  ;
-    iIndex[ 11 ] = 7   ; jIndex[ 11 ] = 15  ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 9   ;
+    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 10  ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 7   ;
+    iIndex[6 ] = 4   ; jIndex[6 ] = 8   ;
+    iIndex[7 ] = 5   ; jIndex[7 ] = 5   ;
+    iIndex[8 ] = 5   ; jIndex[8 ] = 13  ;
+    iIndex[9 ] = 6   ; jIndex[9 ] = 6   ;
+    iIndex[10] = 6   ; jIndex[10] = 14  ;
+    iIndex[11] = 7   ; jIndex[11] = 15  ;
   }
 
   void

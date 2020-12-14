@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Pars.hh                                |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef SINGULARLUUS04_FREETIMEPARS_HH
-#define SINGULARLUUS04_FREETIMEPARS_HH
+#ifndef SINGULARLUUS04_FREETIMEPARS_DOT_HH
+#define SINGULARLUUS04_FREETIMEPARS_DOT_HH
 
 #define numBc                    6
 #define numModelPars             12

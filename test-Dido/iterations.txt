@@ -29,20 +29,21 @@ INFO CLASS = Dido
   nQ_total     = 101
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
 [  1,  2] (   0.0237,   0.0408) [     1.98,     1.14]     0.825 ( 0: 0): 0: 0: 0 G
 [  2,  1] (   0.0408,  0.00946) [     1.33,    0.249]      1.00 ( 1: 0): 1: 0: 1 G
 [  3,  1] (  0.00946, 0.000228) [    0.223,  0.00301]      1.00 ( 2: 0): 0: 0: 0 G
-[  4,  1] ( 0.000228,  5.3e-08) [  0.00299, 1.21e-06]      1.00 ( 3: 0): 0: 0: 0 G
-[  5,  1] (  5.3e-08, 1.11e-14) [ 1.21e-06, 1.58e-13]      1.00 ( 4: 0): 0: 0: 0 G
+[  4,  1] ( 0.000228, 5.30e-08) [  0.00299, 1.21e-06]      1.00 ( 3: 0): 0: 0: 0 G
+[  5,  1] ( 5.30e-08, 1.11e-14) [ 1.21e-06, 1.58e-13]      1.00 ( 4: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 2.21    ms    iteration           = 5         
-Total Equations        = 507           tolerance           = 1e-09     
-max iterations         = 300           max accumul. iter.  = 800       
+Elapsed Time           = 2.36 [ms]     timeout             = 0 [ms]
+iteration              = 5             tolerance           = 1.000e-09 
+max iterations         = 300           Total Equations     = 507
+max accumul. iter.     = 800           Memory Used         = 56Kb (+41bytes)
 ---------------------------- Continuation ----------------------------
 Initial Step           = 0.2           Minimum Step        = 0.001     
 Reduce Factor          = 0.5           Augment Factor      = 1.5       
@@ -55,9 +56,9 @@ Jacobian Factorization = 5             Jacobian Inversion  = 11
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf =  7.733e-13      last `new' ||d||_inf  = 5.6177e-06
+last ||d||_inf = 7.7330e-13      last `new' ||d||_inf  = 5.6177e-06
 last ||f||_inf = 3.0046e-07      last ||f||_1          = 5.2981e-08
 
-target [Lagrange,Mayer]        = [     -15.9142,      0.00000]
-[Penalties/Barriers, Controls] = [      0.00000,      0.00000]
+target [Lagrange,Mayer]        = [     -15.9142,       0.00000]
+[Penalties/Barriers, Controls] = [       0.00000,       0.00000]
 All Done Folks!

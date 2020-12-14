@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "TwoStageCSTR_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -58,7 +56,7 @@ main() {
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
     // ==============================================================
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // :factorization => 'LU',
     // ==============================================================
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -91,9 +89,9 @@ main() {
     // =================
 
     // Last Block selection:
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // ==============================================
-    data_Solver["last_factorization"] = "LU";
+    data_Solver["last_factorization"] = "PINV";
     // ==============================================
 
     // choose solver: Hyness, NewtonDumped
@@ -154,9 +152,8 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
-    // Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
-
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
+    // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u1Control = data_Controls["u1Control"];
     data_u1Control["type"]      = "COS_LOGARITHMIC";
@@ -177,8 +174,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 TwoStageCSTR_data.Mesh["s0"] = 0;
-TwoStageCSTR_data.Mesh["segments"][0]["n"] = 400;
 TwoStageCSTR_data.Mesh["segments"][0]["length"] = 2;
+TwoStageCSTR_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers
@@ -198,7 +195,7 @@ TwoStageCSTR_data.Mesh["segments"][0]["length"] = 2;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
-    // pModel->set_timeout_ms( 100 );
+    // model->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

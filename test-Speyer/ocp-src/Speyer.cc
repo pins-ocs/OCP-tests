@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Speyer.cc                                                      |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -131,7 +131,7 @@ namespace SpeyerDefine {
   // Constraints 2D
   // User classes
   {
-    this->U_solve_iterative = false;
+    m_U_solve_iterative = false;
 
     // continuation
     this->ns_continuation_begin = 0;
@@ -150,8 +150,8 @@ namespace SpeyerDefine {
       numIntegratedPostProcess, namesIntegratedPostProcess,
       numBc,                    namesBc
     );
-    //pSolver = &this->solverNewtonDumped;
-    pSolver = &this->solverHyness;
+    //m_solver = &m_solver_NewtonDumped;
+    m_solver = &m_solver_Hyness;
 
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
@@ -415,19 +415,19 @@ namespace SpeyerDefine {
 
     // If required save function and jacobian
     //if ( gc.exists("DumpFile") )
-    //  this->dumpFunctionAndJacobian( pSolver->solution(),
+    //  this->dumpFunctionAndJacobian( m_solver->solution(),
     //                                 gc("DumpFile").get_string() );
 
     //bool do_diagnosis = gc.get_map_bool("Doctor");
     //if ( do_diagnosis )
-    //  this->diagnosis( pSolver->solution(), gc["diagnosis"] );
+    //  this->diagnosis( m_solver->solution(), gc["diagnosis"] );
 
     real_type epsi = 1e-5;
     gc.get_if_exists("JacobianCheck_epsilon",epsi);
     if ( gc.get_map_bool("JacobianCheck") )
-      this->checkJacobian( pSolver->solution(), epsi );
+      this->checkJacobian( m_solver->solution(), epsi );
     if ( gc.get_map_bool("JacobianCheckFull") )
-      this->checkJacobianFull( pSolver->solution(), epsi );
+      this->checkJacobianFull( m_solver->solution(), epsi );
   }
 
   // save model parameters

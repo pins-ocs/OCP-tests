@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,23 +18,23 @@
 --]]
 
 -- Auxiliary values
-epsi_v    = 0.01
-epsi_T    = 0.01
+epsi_TS   = 0.01
 g0        = 1
-vc        = 620
-tol_T     = 0.01
-tol_v     = 0.01
-mc        = 0.6
+tol_TS    = 0.01
 h_i       = 1
 c         = 0.5*(g0*h_i)**(1/2.0)
-tol_TS    = 0.01
-epsi_TS   = 0.01
+vc        = 620
 tol_mass  = 0.01
+epsi_v    = 0.01
+mc        = 0.6
+epsi_mass = 0.01
+tol_T     = 0.01
 m_i       = 1
+Dc        = 0.5*vc*m_i/g0
 m_f       = mc*m_i
 Tmax      = 3.5*g0*m_i
-Dc        = 0.5*vc*m_i/g0
-epsi_mass = 0.01
+tol_v     = 0.01
+epsi_T    = 0.01
 
 content = {
 
@@ -67,7 +67,7 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     factorization = "LU",
     MaxIter       = 50,
     Tolerance     = 1e-9,
@@ -82,7 +82,7 @@ content = {
     factorization = "LU",
 
     -- Last Block selection:
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     last_factorization = "LU",
 
     -- choose solves: Hyness, NewtonDumped
@@ -161,9 +161,8 @@ content = {
   },
 
   -- Controls
-  -- Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
-  -- Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
-
+  -- Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   Controls = {
     TControl = {
       type      = 'QUADRATIC',
@@ -174,9 +173,8 @@ content = {
 
   Constraints = {
   -- Constraint1D
-  -- Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
-  -- Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
-
+  -- Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DGreaterThan
     massPositivesubType   = "BARRIER_LOG",
     massPositiveepsilon   = epsi_mass,
@@ -206,8 +204,8 @@ content = {
     segments = {
       
       {
-        n      = 1000,
         length = 1,
+        n      = 1000,
       },
     },
   },

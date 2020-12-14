@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Pars.hh                                            |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef GTOCX_2BURNPARS_HH
-#define GTOCX_2BURNPARS_HH
+#ifndef GTOCX_2BURNPARS_DOT_HH
+#define GTOCX_2BURNPARS_DOT_HH
 
 #define numBc                    6
 #define numModelPars             7

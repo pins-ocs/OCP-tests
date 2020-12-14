@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "Underwater_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -147,17 +145,17 @@ namespace UnderwaterDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 2   ; jIndex[ 0  ] = 2   ;
-    iIndex[ 1  ] = 2   ; jIndex[ 1  ] = 3   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 4   ;
-    iIndex[ 3  ] = 3   ; jIndex[ 3  ] = 2   ;
-    iIndex[ 4  ] = 3   ; jIndex[ 4  ] = 4   ;
-    iIndex[ 5  ] = 3   ; jIndex[ 5  ] = 5   ;
-    iIndex[ 6  ] = 4   ; jIndex[ 6  ] = 2   ;
-    iIndex[ 7  ] = 4   ; jIndex[ 7  ] = 3   ;
-    iIndex[ 8  ] = 4   ; jIndex[ 8  ] = 5   ;
-    iIndex[ 9  ] = 5   ; jIndex[ 9  ] = 3   ;
-    iIndex[ 10 ] = 5   ; jIndex[ 10 ] = 4   ;
+    iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 4   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 2   ;
+    iIndex[4 ] = 3   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 5   ;
+    iIndex[6 ] = 4   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 4   ; jIndex[7 ] = 3   ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 5   ;
+    iIndex[9 ] = 5   ; jIndex[9 ] = 3   ;
+    iIndex[10] = 5   ; jIndex[10] = 4   ;
   }
 
   void
@@ -217,10 +215,10 @@ namespace UnderwaterDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 2   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 3   ; jIndex[ 1  ] = 0   ;
-    iIndex[ 2  ] = 4   ; jIndex[ 2  ] = 0   ;
-    iIndex[ 3  ] = 5   ; jIndex[ 3  ] = 0   ;
+    iIndex[0 ] = 2   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 3   ; jIndex[1 ] = 0   ;
+    iIndex[2 ] = 4   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 5   ; jIndex[3 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -347,9 +345,9 @@ namespace UnderwaterDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 0   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 0   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

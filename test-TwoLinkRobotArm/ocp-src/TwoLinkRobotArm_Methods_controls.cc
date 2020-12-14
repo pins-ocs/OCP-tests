@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "TwoLinkRobotArm_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -125,14 +123,14 @@ namespace TwoLinkRobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 2   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 4   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 5   ;
-    iIndex[ 3  ] = 0   ; jIndex[ 3  ] = 8   ;
-    iIndex[ 4  ] = 1   ; jIndex[ 4  ] = 2   ;
-    iIndex[ 5  ] = 1   ; jIndex[ 5  ] = 4   ;
-    iIndex[ 6  ] = 1   ; jIndex[ 6  ] = 5   ;
-    iIndex[ 7  ] = 1   ; jIndex[ 7  ] = 8   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 8   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 4   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 5   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 8   ;
   }
 
   void
@@ -198,8 +196,8 @@ namespace TwoLinkRobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 1   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
   void
@@ -259,7 +257,7 @@ namespace TwoLinkRobotArmDefine {
     real_type t12  = t11 * t11;
     real_type t15  = 1.0 / (81 * t12 + 31);
     U__[ iU_u1 ] = u1Control.solve(-6 * t15 * (-9 * t4 * t2 + 8 * t7) * t1, -1, 1);
-    U__[ iU_u2 ] = u2Control.solve(54 * t15 * t1 * (t4 * (t7 - t2) + 8.0 / 9.0 * t7 - 0.14e2 / 9.0 * t2), -1, 1);
+    U__[ iU_u2 ] = u2Control.solve(54 * t15 * (t4 * (t7 - t2) + 8.0 / 9.0 * t7 - 0.14e2 / 9.0 * t2) * t1, -1, 1);
   }
 
   void
@@ -315,19 +313,19 @@ namespace TwoLinkRobotArmDefine {
     DuDxlp(0, 1) = 0;
     DuDxlp(1, 1) = 0;
     DuDxlp(0, 2) = u1Control.solve_rhs(-6 * P__[0] * (-9 * L__[1] * cos(X__[2]) + 8 * L__[0]) / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * (-54 * P__[0] * L__[1] * sin(X__[2]) / (81 * pow(sin(X__[2]), 2) + 31) + 972 * P__[0] * (-9 * L__[1] * cos(X__[2]) + 8 * L__[0]) * pow(81 * pow(sin(X__[2]), 2) + 31, -2) * sin(X__[2]) * cos(X__[2]));
-    DuDxlp(1, 2) = u2Control.solve_rhs(54 * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) * P__[0] / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * (-54 * (L__[0] - L__[1]) * sin(X__[2]) * P__[0] / (81 * pow(sin(X__[2]), 2) + 31) - 8748 * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) * P__[0] * pow(81 * pow(sin(X__[2]), 2) + 31, -2) * sin(X__[2]) * cos(X__[2]));
+    DuDxlp(1, 2) = u2Control.solve_rhs(54 * P__[0] * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * (-54 * P__[0] * (L__[0] - L__[1]) * sin(X__[2]) / (81 * pow(sin(X__[2]), 2) + 31) - 8748 * P__[0] * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) * pow(81 * pow(sin(X__[2]), 2) + 31, -2) * sin(X__[2]) * cos(X__[2]));
     DuDxlp(0, 3) = 0;
     DuDxlp(1, 3) = 0;
     DuDxlp(0, 4) = -48 * u1Control.solve_rhs(-6 * P__[0] * (-9 * L__[1] * cos(X__[2]) + 8 * L__[0]) / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * P__[0] / (81 * pow(sin(X__[2]), 2) + 31);
-    DuDxlp(1, 4) = 54 * u2Control.solve_rhs(54 * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) * P__[0] / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * (cos(X__[2]) + 8.0 / 9.0) * P__[0] / (81 * pow(sin(X__[2]), 2) + 31);
+    DuDxlp(1, 4) = 54 * u2Control.solve_rhs(54 * P__[0] * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * P__[0] * (cos(X__[2]) + 8.0 / 9.0) / (81 * pow(sin(X__[2]), 2) + 31);
     DuDxlp(0, 5) = 54 * u1Control.solve_rhs(-6 * P__[0] * (-9 * L__[1] * cos(X__[2]) + 8 * L__[0]) / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * P__[0] * cos(X__[2]) / (81 * pow(sin(X__[2]), 2) + 31);
-    DuDxlp(1, 5) = 54 * u2Control.solve_rhs(54 * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) * P__[0] / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * (-cos(X__[2]) - 0.14e2 / 9.0) * P__[0] / (81 * pow(sin(X__[2]), 2) + 31);
+    DuDxlp(1, 5) = 54 * u2Control.solve_rhs(54 * P__[0] * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * P__[0] * (-cos(X__[2]) - 0.14e2 / 9.0) / (81 * pow(sin(X__[2]), 2) + 31);
     DuDxlp(0, 6) = 0;
     DuDxlp(1, 6) = 0;
     DuDxlp(0, 7) = 0;
     DuDxlp(1, 7) = 0;
     DuDxlp(0, 8) = -6 * u1Control.solve_rhs(-6 * P__[0] * (-9 * L__[1] * cos(X__[2]) + 8 * L__[0]) / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * (-9 * L__[1] * cos(X__[2]) + 8 * L__[0]) / (81 * pow(sin(X__[2]), 2) + 31);
-    DuDxlp(1, 8) = 54 * u2Control.solve_rhs(54 * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) * P__[0] / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) / (81 * pow(sin(X__[2]), 2) + 31);
+    DuDxlp(1, 8) = 54 * u2Control.solve_rhs(54 * P__[0] * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) / (81 * pow(sin(X__[2]), 2) + 31), -1, 1) * ((L__[0] - L__[1]) * cos(X__[2]) + 8.0 / 9.0 * L__[0] - 0.14e2 / 9.0 * L__[1]) / (81 * pow(sin(X__[2]), 2) + 31);
   }
 
   void
@@ -556,22 +554,22 @@ namespace TwoLinkRobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 8   ;
-    iIndex[ 2  ] = 1   ; jIndex[ 2  ] = 1   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 9   ;
-    iIndex[ 4  ] = 2   ; jIndex[ 4  ] = 2   ;
-    iIndex[ 5  ] = 2   ; jIndex[ 5  ] = 10  ;
-    iIndex[ 6  ] = 3   ; jIndex[ 6  ] = 3   ;
-    iIndex[ 7  ] = 3   ; jIndex[ 7  ] = 11  ;
-    iIndex[ 8  ] = 4   ; jIndex[ 8  ] = 4   ;
-    iIndex[ 9  ] = 4   ; jIndex[ 9  ] = 12  ;
-    iIndex[ 10 ] = 5   ; jIndex[ 10 ] = 5   ;
-    iIndex[ 11 ] = 5   ; jIndex[ 11 ] = 13  ;
-    iIndex[ 12 ] = 6   ; jIndex[ 12 ] = 6   ;
-    iIndex[ 13 ] = 6   ; jIndex[ 13 ] = 14  ;
-    iIndex[ 14 ] = 7   ; jIndex[ 14 ] = 7   ;
-    iIndex[ 15 ] = 7   ; jIndex[ 15 ] = 15  ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 8   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 9   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 10  ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 11  ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 4   ; jIndex[9 ] = 12  ;
+    iIndex[10] = 5   ; jIndex[10] = 5   ;
+    iIndex[11] = 5   ; jIndex[11] = 13  ;
+    iIndex[12] = 6   ; jIndex[12] = 6   ;
+    iIndex[13] = 6   ; jIndex[13] = 14  ;
+    iIndex[14] = 7   ; jIndex[14] = 7   ;
+    iIndex[15] = 7   ; jIndex[15] = 15  ;
   }
 
   void

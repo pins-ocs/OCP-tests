@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Pars.hh                                        |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef TWOLINKROBOTARMPARS_HH
-#define TWOLINKROBOTARMPARS_HH
+#ifndef TWOLINKROBOTARMPARS_DOT_HH
+#define TWOLINKROBOTARMPARS_DOT_HH
 
 #define numBc                    8
 #define numModelPars             6

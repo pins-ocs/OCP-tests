@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "OrbitTransfer_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -117,15 +115,15 @@ namespace OrbitTransferDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 2   ; jIndex[ 1  ] = 2   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 3   ;
-    iIndex[ 3  ] = 2   ; jIndex[ 3  ] = 4   ;
-    iIndex[ 4  ] = 3   ; jIndex[ 4  ] = 2   ;
-    iIndex[ 5  ] = 3   ; jIndex[ 5  ] = 4   ;
-    iIndex[ 6  ] = 4   ; jIndex[ 6  ] = 2   ;
-    iIndex[ 7  ] = 4   ; jIndex[ 7  ] = 3   ;
-    iIndex[ 8  ] = 4   ; jIndex[ 8  ] = 4   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
+    iIndex[3 ] = 2   ; jIndex[3 ] = 4   ;
+    iIndex[4 ] = 3   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 4   ;
+    iIndex[6 ] = 4   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 4   ; jIndex[7 ] = 3   ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
   }
 
   void
@@ -264,7 +262,7 @@ namespace OrbitTransferDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

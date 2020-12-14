@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "HangGlider_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -55,14 +53,14 @@ main() {
     real_type W0 = 1000;
     real_type cL_max = 1.4;
     real_type tol_max = 0.01;
-    real_type epsi_max = 0.01;
-    real_type W = W0;
     real_type cL_min = 0;
+    real_type W = W0;
+    real_type epsi_max = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
     // ==============================================================
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // :factorization => 'LU',
     // ==============================================================
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -95,9 +93,9 @@ main() {
     // =================
 
     // Last Block selection:
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // ==============================================
-    data_Solver["last_factorization"] = "LU";
+    data_Solver["last_factorization"] = "PINV";
     // ==============================================
 
     // choose solver: Hyness, NewtonDumped
@@ -180,9 +178,8 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Penalty type controls: 'QUADRATIC', 'QUADRATIC2', 'PARABOLA', 'CUBIC'
-    // Barrier type controls: 'LOGARITHMIC', 'COS_LOGARITHMIC', 'TAN2', 'HYPERBOLIC'
-
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
+    // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_cLControl = data_Controls["cLControl"];
     data_cLControl["type"]      = "QUADRATIC2";
@@ -192,9 +189,8 @@ main() {
 
 
     // Constraint1D
-    // Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
-    // Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
-
+    // Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_Tbound = data_Constraints["Tbound"];
@@ -207,8 +203,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HangGlider_data.Mesh["s0"] = 0;
-HangGlider_data.Mesh["segments"][0]["n"] = 400;
 HangGlider_data.Mesh["segments"][0]["length"] = 1;
+HangGlider_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers
@@ -228,7 +224,7 @@ HangGlider_data.Mesh["segments"][0]["length"] = 1;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
-    // pModel->set_timeout_ms( 100 );
+    // model->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -111,10 +111,17 @@ namespace MultipleDubinsDefine {
   #define Xoptima__check__lt(A,B) ( (A) <  (B) )
   #define Xoptima__check__le(A,B) ( (A) <= (B) )
 
+  // Pars check strings
+  #define __message_cell_check_0 "0 < L1"
+  #define __message_cell_check_1 "0 < L2"
+  #define __message_cell_check_2 "0 < L3"
+
   bool
   MultipleDubins::p_check( P_const_pointer_type P__ ) const {
     bool ok = true;
-
+    ok = ok && Xoptima__check__lt(0, P__[0]);
+    ok = ok && Xoptima__check__lt(0, P__[1]);
+    ok = ok && Xoptima__check__lt(0, P__[2]);
     return ok;
   }
 

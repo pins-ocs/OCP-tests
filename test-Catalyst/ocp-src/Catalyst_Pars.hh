@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Pars.hh                                               |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef CATALYSTPARS_HH
-#define CATALYSTPARS_HH
+#ifndef CATALYSTPARS_DOT_HH
+#define CATALYSTPARS_DOT_HH
 
 #define numBc                    2
 #define numModelPars             2

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,10 +19,10 @@
 
 -- Auxiliary values
 mu   = 1
+m0   = 1
 r0   = 1
 v0   = (mu/r0)**(1/2.0)
 tf   = 16.60*(r0**3/mu)**(1/2.0)
-m0   = 1
 T    = 0.1405e-1*m0*mu/r0**2
 mdot = 0.533*T*(mu/r0)**(1/2.0)
 
@@ -57,7 +57,7 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     factorization = "LU",
     MaxIter       = 50,
     Tolerance     = 1e-9,
@@ -72,7 +72,7 @@ content = {
     factorization = "LU",
 
     -- Last Block selection:
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     last_factorization = "LU",
 
     -- choose solves: Hyness, NewtonDumped
@@ -158,8 +158,8 @@ content = {
     segments = {
       
       {
-        n      = 1000,
         length = 1,
+        n      = 1000,
       },
     },
   },

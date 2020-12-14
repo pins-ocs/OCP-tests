@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Guess.cc                                                |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -118,6 +118,13 @@ namespace FarmerDefine {
   #define Xoptima__check__lt(A,B) ( (A) <  (B) )
   #define Xoptima__check__le(A,B) ( (A) <= (B) )
 
+  // Node check strings
+  #define __message_node_check_3 "0 <= res(zeta)"
+  #define __message_node_check_0 "0 <= x1(zeta)"
+  #define __message_node_check_1 "0 <= x2(zeta)"
+  #define __message_node_check_2 "0 <= x3(zeta)"
+  #define __message_node_check_4 "0 <= x4(zeta)"
+
   bool
   Farmer::p_check( P_const_pointer_type P__ ) const {
     bool ok = true;
@@ -137,7 +144,11 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
+    ok = ok && Xoptima__check__le(0, X__[3]);
+    ok = ok && Xoptima__check__le(0, X__[0]);
+    ok = ok && Xoptima__check__le(0, X__[1]);
+    ok = ok && Xoptima__check__le(0, X__[2]);
+    ok = ok && Xoptima__check__le(0, X__[4]);
     return ok;
   }
 

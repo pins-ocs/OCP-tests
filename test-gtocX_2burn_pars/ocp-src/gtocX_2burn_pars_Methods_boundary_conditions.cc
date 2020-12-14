@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "gtocX_2burn_pars_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -132,24 +130,24 @@ namespace gtocX_2burn_parsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 0   ;
-    iIndex[ 4  ] = 1   ; jIndex[ 4  ] = 1   ;
-    iIndex[ 5  ] = 1   ; jIndex[ 5  ] = 2   ;
-    iIndex[ 6  ] = 2   ; jIndex[ 6  ] = 0   ;
-    iIndex[ 7  ] = 2   ; jIndex[ 7  ] = 1   ;
-    iIndex[ 8  ] = 2   ; jIndex[ 8  ] = 2   ;
-    iIndex[ 9  ] = 3   ; jIndex[ 9  ] = 3   ;
-    iIndex[ 10 ] = 3   ; jIndex[ 10 ] = 4   ;
-    iIndex[ 11 ] = 3   ; jIndex[ 11 ] = 5   ;
-    iIndex[ 12 ] = 4   ; jIndex[ 12 ] = 3   ;
-    iIndex[ 13 ] = 4   ; jIndex[ 13 ] = 4   ;
-    iIndex[ 14 ] = 4   ; jIndex[ 14 ] = 5   ;
-    iIndex[ 15 ] = 5   ; jIndex[ 15 ] = 3   ;
-    iIndex[ 16 ] = 5   ; jIndex[ 16 ] = 4   ;
-    iIndex[ 17 ] = 5   ; jIndex[ 17 ] = 5   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 0   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 2   ;
+    iIndex[9 ] = 3   ; jIndex[9 ] = 3   ;
+    iIndex[10] = 3   ; jIndex[10] = 4   ;
+    iIndex[11] = 3   ; jIndex[11] = 5   ;
+    iIndex[12] = 4   ; jIndex[12] = 3   ;
+    iIndex[13] = 4   ; jIndex[13] = 4   ;
+    iIndex[14] = 4   ; jIndex[14] = 5   ;
+    iIndex[15] = 5   ; jIndex[15] = 3   ;
+    iIndex[16] = 5   ; jIndex[16] = 4   ;
+    iIndex[17] = 5   ; jIndex[17] = 5   ;
   }
 
   void
@@ -218,24 +216,24 @@ namespace gtocX_2burn_parsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 0   ;
-    iIndex[ 4  ] = 1   ; jIndex[ 4  ] = 1   ;
-    iIndex[ 5  ] = 1   ; jIndex[ 5  ] = 2   ;
-    iIndex[ 6  ] = 2   ; jIndex[ 6  ] = 0   ;
-    iIndex[ 7  ] = 2   ; jIndex[ 7  ] = 1   ;
-    iIndex[ 8  ] = 2   ; jIndex[ 8  ] = 2   ;
-    iIndex[ 9  ] = 3   ; jIndex[ 9  ] = 0   ;
-    iIndex[ 10 ] = 3   ; jIndex[ 10 ] = 1   ;
-    iIndex[ 11 ] = 3   ; jIndex[ 11 ] = 2   ;
-    iIndex[ 12 ] = 4   ; jIndex[ 12 ] = 0   ;
-    iIndex[ 13 ] = 4   ; jIndex[ 13 ] = 1   ;
-    iIndex[ 14 ] = 4   ; jIndex[ 14 ] = 2   ;
-    iIndex[ 15 ] = 5   ; jIndex[ 15 ] = 0   ;
-    iIndex[ 16 ] = 5   ; jIndex[ 16 ] = 1   ;
-    iIndex[ 17 ] = 5   ; jIndex[ 17 ] = 2   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 0   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 2   ;
+    iIndex[9 ] = 3   ; jIndex[9 ] = 0   ;
+    iIndex[10] = 3   ; jIndex[10] = 1   ;
+    iIndex[11] = 3   ; jIndex[11] = 2   ;
+    iIndex[12] = 4   ; jIndex[12] = 0   ;
+    iIndex[13] = 4   ; jIndex[13] = 1   ;
+    iIndex[14] = 4   ; jIndex[14] = 2   ;
+    iIndex[15] = 5   ; jIndex[15] = 0   ;
+    iIndex[16] = 5   ; jIndex[16] = 1   ;
+    iIndex[17] = 5   ; jIndex[17] = 2   ;
   }
 
   void
@@ -394,42 +392,42 @@ namespace gtocX_2burn_parsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 0   ;
-    iIndex[ 4  ] = 1   ; jIndex[ 4  ] = 1   ;
-    iIndex[ 5  ] = 1   ; jIndex[ 5  ] = 2   ;
-    iIndex[ 6  ] = 2   ; jIndex[ 6  ] = 0   ;
-    iIndex[ 7  ] = 2   ; jIndex[ 7  ] = 1   ;
-    iIndex[ 8  ] = 2   ; jIndex[ 8  ] = 2   ;
-    iIndex[ 9  ] = 3   ; jIndex[ 9  ] = 3   ;
-    iIndex[ 10 ] = 3   ; jIndex[ 10 ] = 4   ;
-    iIndex[ 11 ] = 3   ; jIndex[ 11 ] = 5   ;
-    iIndex[ 12 ] = 4   ; jIndex[ 12 ] = 3   ;
-    iIndex[ 13 ] = 4   ; jIndex[ 13 ] = 4   ;
-    iIndex[ 14 ] = 4   ; jIndex[ 14 ] = 5   ;
-    iIndex[ 15 ] = 5   ; jIndex[ 15 ] = 3   ;
-    iIndex[ 16 ] = 5   ; jIndex[ 16 ] = 4   ;
-    iIndex[ 17 ] = 5   ; jIndex[ 17 ] = 5   ;
-    iIndex[ 18 ] = 6   ; jIndex[ 18 ] = 0   ;
-    iIndex[ 19 ] = 6   ; jIndex[ 19 ] = 1   ;
-    iIndex[ 20 ] = 6   ; jIndex[ 20 ] = 2   ;
-    iIndex[ 21 ] = 6   ; jIndex[ 21 ] = 3   ;
-    iIndex[ 22 ] = 6   ; jIndex[ 22 ] = 4   ;
-    iIndex[ 23 ] = 6   ; jIndex[ 23 ] = 5   ;
-    iIndex[ 24 ] = 7   ; jIndex[ 24 ] = 0   ;
-    iIndex[ 25 ] = 7   ; jIndex[ 25 ] = 1   ;
-    iIndex[ 26 ] = 7   ; jIndex[ 26 ] = 2   ;
-    iIndex[ 27 ] = 7   ; jIndex[ 27 ] = 3   ;
-    iIndex[ 28 ] = 7   ; jIndex[ 28 ] = 4   ;
-    iIndex[ 29 ] = 7   ; jIndex[ 29 ] = 5   ;
-    iIndex[ 30 ] = 8   ; jIndex[ 30 ] = 0   ;
-    iIndex[ 31 ] = 8   ; jIndex[ 31 ] = 1   ;
-    iIndex[ 32 ] = 8   ; jIndex[ 32 ] = 2   ;
-    iIndex[ 33 ] = 8   ; jIndex[ 33 ] = 3   ;
-    iIndex[ 34 ] = 8   ; jIndex[ 34 ] = 4   ;
-    iIndex[ 35 ] = 8   ; jIndex[ 35 ] = 5   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 0   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 2   ;
+    iIndex[9 ] = 3   ; jIndex[9 ] = 3   ;
+    iIndex[10] = 3   ; jIndex[10] = 4   ;
+    iIndex[11] = 3   ; jIndex[11] = 5   ;
+    iIndex[12] = 4   ; jIndex[12] = 3   ;
+    iIndex[13] = 4   ; jIndex[13] = 4   ;
+    iIndex[14] = 4   ; jIndex[14] = 5   ;
+    iIndex[15] = 5   ; jIndex[15] = 3   ;
+    iIndex[16] = 5   ; jIndex[16] = 4   ;
+    iIndex[17] = 5   ; jIndex[17] = 5   ;
+    iIndex[18] = 6   ; jIndex[18] = 0   ;
+    iIndex[19] = 6   ; jIndex[19] = 1   ;
+    iIndex[20] = 6   ; jIndex[20] = 2   ;
+    iIndex[21] = 6   ; jIndex[21] = 3   ;
+    iIndex[22] = 6   ; jIndex[22] = 4   ;
+    iIndex[23] = 6   ; jIndex[23] = 5   ;
+    iIndex[24] = 7   ; jIndex[24] = 0   ;
+    iIndex[25] = 7   ; jIndex[25] = 1   ;
+    iIndex[26] = 7   ; jIndex[26] = 2   ;
+    iIndex[27] = 7   ; jIndex[27] = 3   ;
+    iIndex[28] = 7   ; jIndex[28] = 4   ;
+    iIndex[29] = 7   ; jIndex[29] = 5   ;
+    iIndex[30] = 8   ; jIndex[30] = 0   ;
+    iIndex[31] = 8   ; jIndex[31] = 1   ;
+    iIndex[32] = 8   ; jIndex[32] = 2   ;
+    iIndex[33] = 8   ; jIndex[33] = 3   ;
+    iIndex[34] = 8   ; jIndex[34] = 4   ;
+    iIndex[35] = 8   ; jIndex[35] = 5   ;
   }
 
   void
@@ -615,33 +613,33 @@ namespace gtocX_2burn_parsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 1   ; jIndex[ 3  ] = 0   ;
-    iIndex[ 4  ] = 1   ; jIndex[ 4  ] = 1   ;
-    iIndex[ 5  ] = 1   ; jIndex[ 5  ] = 2   ;
-    iIndex[ 6  ] = 2   ; jIndex[ 6  ] = 0   ;
-    iIndex[ 7  ] = 2   ; jIndex[ 7  ] = 1   ;
-    iIndex[ 8  ] = 2   ; jIndex[ 8  ] = 2   ;
-    iIndex[ 9  ] = 3   ; jIndex[ 9  ] = 0   ;
-    iIndex[ 10 ] = 3   ; jIndex[ 10 ] = 1   ;
-    iIndex[ 11 ] = 3   ; jIndex[ 11 ] = 2   ;
-    iIndex[ 12 ] = 4   ; jIndex[ 12 ] = 0   ;
-    iIndex[ 13 ] = 4   ; jIndex[ 13 ] = 1   ;
-    iIndex[ 14 ] = 4   ; jIndex[ 14 ] = 2   ;
-    iIndex[ 15 ] = 5   ; jIndex[ 15 ] = 0   ;
-    iIndex[ 16 ] = 5   ; jIndex[ 16 ] = 1   ;
-    iIndex[ 17 ] = 5   ; jIndex[ 17 ] = 2   ;
-    iIndex[ 18 ] = 6   ; jIndex[ 18 ] = 0   ;
-    iIndex[ 19 ] = 6   ; jIndex[ 19 ] = 1   ;
-    iIndex[ 20 ] = 6   ; jIndex[ 20 ] = 2   ;
-    iIndex[ 21 ] = 7   ; jIndex[ 21 ] = 0   ;
-    iIndex[ 22 ] = 7   ; jIndex[ 22 ] = 1   ;
-    iIndex[ 23 ] = 7   ; jIndex[ 23 ] = 2   ;
-    iIndex[ 24 ] = 8   ; jIndex[ 24 ] = 0   ;
-    iIndex[ 25 ] = 8   ; jIndex[ 25 ] = 1   ;
-    iIndex[ 26 ] = 8   ; jIndex[ 26 ] = 2   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 0   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 2   ;
+    iIndex[9 ] = 3   ; jIndex[9 ] = 0   ;
+    iIndex[10] = 3   ; jIndex[10] = 1   ;
+    iIndex[11] = 3   ; jIndex[11] = 2   ;
+    iIndex[12] = 4   ; jIndex[12] = 0   ;
+    iIndex[13] = 4   ; jIndex[13] = 1   ;
+    iIndex[14] = 4   ; jIndex[14] = 2   ;
+    iIndex[15] = 5   ; jIndex[15] = 0   ;
+    iIndex[16] = 5   ; jIndex[16] = 1   ;
+    iIndex[17] = 5   ; jIndex[17] = 2   ;
+    iIndex[18] = 6   ; jIndex[18] = 0   ;
+    iIndex[19] = 6   ; jIndex[19] = 1   ;
+    iIndex[20] = 6   ; jIndex[20] = 2   ;
+    iIndex[21] = 7   ; jIndex[21] = 0   ;
+    iIndex[22] = 7   ; jIndex[22] = 1   ;
+    iIndex[23] = 7   ; jIndex[23] = 2   ;
+    iIndex[24] = 8   ; jIndex[24] = 0   ;
+    iIndex[25] = 8   ; jIndex[25] = 1   ;
+    iIndex[26] = 8   ; jIndex[26] = 2   ;
   }
 
   void

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Methods.cc                                      |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "MultipleDubins_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -123,24 +121,24 @@ namespace MultipleDubinsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 2   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 3   ; jIndex[ 3  ] = 15  ;
-    iIndex[ 4  ] = 4   ; jIndex[ 4  ] = 16  ;
-    iIndex[ 5  ] = 5   ; jIndex[ 5  ] = 17  ;
-    iIndex[ 6  ] = 6   ; jIndex[ 6  ] = 3   ;
-    iIndex[ 7  ] = 6   ; jIndex[ 7  ] = 9   ;
-    iIndex[ 8  ] = 7   ; jIndex[ 8  ] = 4   ;
-    iIndex[ 9  ] = 7   ; jIndex[ 9  ] = 10  ;
-    iIndex[ 10 ] = 8   ; jIndex[ 10 ] = 5   ;
-    iIndex[ 11 ] = 8   ; jIndex[ 11 ] = 11  ;
-    iIndex[ 12 ] = 9   ; jIndex[ 12 ] = 6   ;
-    iIndex[ 13 ] = 9   ; jIndex[ 13 ] = 12  ;
-    iIndex[ 14 ] = 10  ; jIndex[ 14 ] = 7   ;
-    iIndex[ 15 ] = 10  ; jIndex[ 15 ] = 13  ;
-    iIndex[ 16 ] = 11  ; jIndex[ 16 ] = 8   ;
-    iIndex[ 17 ] = 11  ; jIndex[ 17 ] = 14  ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 15  ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 16  ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 17  ;
+    iIndex[6 ] = 6   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 6   ; jIndex[7 ] = 9   ;
+    iIndex[8 ] = 7   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 7   ; jIndex[9 ] = 10  ;
+    iIndex[10] = 8   ; jIndex[10] = 5   ;
+    iIndex[11] = 8   ; jIndex[11] = 11  ;
+    iIndex[12] = 9   ; jIndex[12] = 6   ;
+    iIndex[13] = 9   ; jIndex[13] = 12  ;
+    iIndex[14] = 10  ; jIndex[14] = 7   ;
+    iIndex[15] = 10  ; jIndex[15] = 13  ;
+    iIndex[16] = 11  ; jIndex[16] = 8   ;
+    iIndex[17] = 11  ; jIndex[17] = 14  ;
   }
 
   void
@@ -291,7 +289,7 @@ namespace MultipleDubinsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 17  ; jIndex[ 0  ] = 17  ;
+    iIndex[0 ] = 17  ; jIndex[0 ] = 17  ;
   }
 
   void

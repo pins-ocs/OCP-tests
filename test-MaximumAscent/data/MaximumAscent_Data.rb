@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 12/11/2020                                       #
+#  version: 1.0   date 14/12/2020                                       #
 #                                                                       #
 #  Copyright (C) 2020                                                   #
 #                                                                       #
@@ -18,17 +18,17 @@
 include Mechatronix
 
 # Auxiliary values
-days1  = 30
-mu     = 398600441800000
-u0     = 0
-Isp    = 1500
-T      = 0.68
 r0     = 6678140
-v0     = (mu/r0)**(1/2.0)
-u0_bar = u0/v0
+days1  = 30
+T      = 0.68
+Isp    = 1500
+u0     = 0
 g0     = 9.80665
 mdot   = T/g0/Isp
 days   = 1
+mu     = 398600441800000
+v0     = (mu/r0)**(1/2.0)
+u0_bar = u0/v0
 tf     = 86400*days
 
 mechatronix do |data|
@@ -64,7 +64,7 @@ mechatronix do |data|
   # setup solver for controls
   data.ControlSolver = {
     # ==============================================================
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     :factorization => 'LU',
     # ==============================================================
     :Rcond     => 1e-14,  # reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -83,9 +83,10 @@ mechatronix do |data|
     # =================
 
     # Last Block selection:
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
     :last_factorization => 'LU',
+    ###:last_factorization => 'PINV',
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped

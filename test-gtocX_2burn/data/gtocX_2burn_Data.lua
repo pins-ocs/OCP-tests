@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Data.lua                                           |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,8 +18,8 @@
 --]]
 
 -- Auxiliary values
-ray_epsi = 0.001
 ray_tol  = 0.001
+ray_epsi = 0.001
 
 content = {
 
@@ -52,7 +52,7 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     factorization = "LU",
     MaxIter       = 50,
     Tolerance     = 1e-9,
@@ -67,7 +67,7 @@ content = {
     factorization = "LU",
 
     -- Last Block selection:
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     last_factorization = "LU",
 
     -- choose solves: Hyness, NewtonDumped
@@ -141,9 +141,8 @@ content = {
 
   Constraints = {
   -- Constraint1D
-  -- Penalty subtype: 'PENALTY_REGULAR', 'PENALTY_SMOOTH', 'PENALTY_PIECEWISE'
-  -- Barrier subtype: 'BARRIER_LOG', 'BARRIER_LOG_EXP', 'BARRIER_LOG0'
-
+  -- Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DGreaterThan
     ray_positivesubType   = "BARRIER_LOG",
     ray_positiveepsilon   = ray_epsi,
@@ -161,8 +160,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 50,
+        length = 1,
       },
     },
   },

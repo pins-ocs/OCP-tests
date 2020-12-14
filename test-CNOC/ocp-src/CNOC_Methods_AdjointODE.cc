@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods.cc                                                |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "CNOC_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::ToolPath2D;
@@ -274,51 +272,51 @@ namespace CNOCDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 0   ;
-    iIndex[ 1  ] = 0   ; jIndex[ 1  ] = 1   ;
-    iIndex[ 2  ] = 0   ; jIndex[ 2  ] = 2   ;
-    iIndex[ 3  ] = 0   ; jIndex[ 3  ] = 3   ;
-    iIndex[ 4  ] = 0   ; jIndex[ 4  ] = 4   ;
-    iIndex[ 5  ] = 0   ; jIndex[ 5  ] = 5   ;
-    iIndex[ 6  ] = 0   ; jIndex[ 6  ] = 6   ;
-    iIndex[ 7  ] = 1   ; jIndex[ 7  ] = 0   ;
-    iIndex[ 8  ] = 1   ; jIndex[ 8  ] = 1   ;
-    iIndex[ 9  ] = 1   ; jIndex[ 9  ] = 2   ;
-    iIndex[ 10 ] = 1   ; jIndex[ 10 ] = 3   ;
-    iIndex[ 11 ] = 1   ; jIndex[ 11 ] = 4   ;
-    iIndex[ 12 ] = 1   ; jIndex[ 12 ] = 5   ;
-    iIndex[ 13 ] = 1   ; jIndex[ 13 ] = 6   ;
-    iIndex[ 14 ] = 2   ; jIndex[ 14 ] = 0   ;
-    iIndex[ 15 ] = 2   ; jIndex[ 15 ] = 1   ;
-    iIndex[ 16 ] = 2   ; jIndex[ 16 ] = 2   ;
-    iIndex[ 17 ] = 2   ; jIndex[ 17 ] = 3   ;
-    iIndex[ 18 ] = 2   ; jIndex[ 18 ] = 4   ;
-    iIndex[ 19 ] = 2   ; jIndex[ 19 ] = 5   ;
-    iIndex[ 20 ] = 2   ; jIndex[ 20 ] = 6   ;
-    iIndex[ 21 ] = 3   ; jIndex[ 21 ] = 0   ;
-    iIndex[ 22 ] = 3   ; jIndex[ 22 ] = 1   ;
-    iIndex[ 23 ] = 3   ; jIndex[ 23 ] = 2   ;
-    iIndex[ 24 ] = 3   ; jIndex[ 24 ] = 3   ;
-    iIndex[ 25 ] = 3   ; jIndex[ 25 ] = 6   ;
-    iIndex[ 26 ] = 4   ; jIndex[ 26 ] = 0   ;
-    iIndex[ 27 ] = 4   ; jIndex[ 27 ] = 1   ;
-    iIndex[ 28 ] = 4   ; jIndex[ 28 ] = 2   ;
-    iIndex[ 29 ] = 4   ; jIndex[ 29 ] = 4   ;
-    iIndex[ 30 ] = 4   ; jIndex[ 30 ] = 5   ;
-    iIndex[ 31 ] = 4   ; jIndex[ 31 ] = 6   ;
-    iIndex[ 32 ] = 5   ; jIndex[ 32 ] = 0   ;
-    iIndex[ 33 ] = 5   ; jIndex[ 33 ] = 1   ;
-    iIndex[ 34 ] = 5   ; jIndex[ 34 ] = 2   ;
-    iIndex[ 35 ] = 5   ; jIndex[ 35 ] = 4   ;
-    iIndex[ 36 ] = 5   ; jIndex[ 36 ] = 5   ;
-    iIndex[ 37 ] = 5   ; jIndex[ 37 ] = 6   ;
-    iIndex[ 38 ] = 6   ; jIndex[ 38 ] = 0   ;
-    iIndex[ 39 ] = 6   ; jIndex[ 39 ] = 1   ;
-    iIndex[ 40 ] = 6   ; jIndex[ 40 ] = 2   ;
-    iIndex[ 41 ] = 6   ; jIndex[ 41 ] = 3   ;
-    iIndex[ 42 ] = 6   ; jIndex[ 42 ] = 4   ;
-    iIndex[ 43 ] = 6   ; jIndex[ 43 ] = 5   ;
-    iIndex[ 44 ] = 6   ; jIndex[ 44 ] = 6   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 0   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 0   ; jIndex[5 ] = 5   ;
+    iIndex[6 ] = 0   ; jIndex[6 ] = 6   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 0   ;
+    iIndex[8 ] = 1   ; jIndex[8 ] = 1   ;
+    iIndex[9 ] = 1   ; jIndex[9 ] = 2   ;
+    iIndex[10] = 1   ; jIndex[10] = 3   ;
+    iIndex[11] = 1   ; jIndex[11] = 4   ;
+    iIndex[12] = 1   ; jIndex[12] = 5   ;
+    iIndex[13] = 1   ; jIndex[13] = 6   ;
+    iIndex[14] = 2   ; jIndex[14] = 0   ;
+    iIndex[15] = 2   ; jIndex[15] = 1   ;
+    iIndex[16] = 2   ; jIndex[16] = 2   ;
+    iIndex[17] = 2   ; jIndex[17] = 3   ;
+    iIndex[18] = 2   ; jIndex[18] = 4   ;
+    iIndex[19] = 2   ; jIndex[19] = 5   ;
+    iIndex[20] = 2   ; jIndex[20] = 6   ;
+    iIndex[21] = 3   ; jIndex[21] = 0   ;
+    iIndex[22] = 3   ; jIndex[22] = 1   ;
+    iIndex[23] = 3   ; jIndex[23] = 2   ;
+    iIndex[24] = 3   ; jIndex[24] = 3   ;
+    iIndex[25] = 3   ; jIndex[25] = 6   ;
+    iIndex[26] = 4   ; jIndex[26] = 0   ;
+    iIndex[27] = 4   ; jIndex[27] = 1   ;
+    iIndex[28] = 4   ; jIndex[28] = 2   ;
+    iIndex[29] = 4   ; jIndex[29] = 4   ;
+    iIndex[30] = 4   ; jIndex[30] = 5   ;
+    iIndex[31] = 4   ; jIndex[31] = 6   ;
+    iIndex[32] = 5   ; jIndex[32] = 0   ;
+    iIndex[33] = 5   ; jIndex[33] = 1   ;
+    iIndex[34] = 5   ; jIndex[34] = 2   ;
+    iIndex[35] = 5   ; jIndex[35] = 4   ;
+    iIndex[36] = 5   ; jIndex[36] = 5   ;
+    iIndex[37] = 5   ; jIndex[37] = 6   ;
+    iIndex[38] = 6   ; jIndex[38] = 0   ;
+    iIndex[39] = 6   ; jIndex[39] = 1   ;
+    iIndex[40] = 6   ; jIndex[40] = 2   ;
+    iIndex[41] = 6   ; jIndex[41] = 3   ;
+    iIndex[42] = 6   ; jIndex[42] = 4   ;
+    iIndex[43] = 6   ; jIndex[43] = 5   ;
+    iIndex[44] = 6   ; jIndex[44] = 6   ;
   }
 
   void
@@ -640,8 +638,8 @@ namespace CNOCDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-    iIndex[ 0  ] = 0   ; jIndex[ 0  ] = 6   ;
-    iIndex[ 1  ] = 1   ; jIndex[ 1  ] = 6   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 6   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 6   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

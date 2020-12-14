@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Pars.hh                                     |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef BANGBANGFREDUNDANTPARS_HH
-#define BANGBANGFREDUNDANTPARS_HH
+#ifndef BANGBANGFREDUNDANTPARS_DOT_HH
+#define BANGBANGFREDUNDANTPARS_DOT_HH
 
 #define numBc                    3
 #define numModelPars             2

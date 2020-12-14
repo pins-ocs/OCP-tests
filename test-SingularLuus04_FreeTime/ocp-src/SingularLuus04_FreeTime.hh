@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime.hh                                     |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,15 +15,15 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef SINGULARLUUS04_FREETIME_HH
-#define SINGULARLUUS04_FREETIME_HH
+#ifndef SINGULARLUUS04_FREETIME_DOT_HH
+#define SINGULARLUUS04_FREETIME_DOT_HH
 
-// Mechatronix Headers
 #include <MechatronixCore/MechatronixCore.hh>
 #include <MechatronixSolver/MechatronixSolver.hh>
+#include <MechatronixRoad/MechatronixRoad.hh>
+#include <MechatronixManufacturing/MechatronixManufacturing.hh>
 #include <MechatronixInterfaceMruby/MechatronixInterfaceMruby.hh>
-
-// user headers
+// User Headers
 #include <MechatronixCore/MechatronixCore.hh>
 
 
@@ -52,9 +52,7 @@ namespace SingularLuus04_FreeTimeDefine {
   using namespace MechatronixLoad;
 
   using namespace std;
-  using Mechatronix::real_type;
-  using Mechatronix::integer;
-  using Mechatronix::ostream_type;
+  using namespace MechatronixLoad;
 
   // user class in namespaces
   using Mechatronix::MeshStd;

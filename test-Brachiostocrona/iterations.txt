@@ -25,9 +25,9 @@ Model Parameters
 ......................................Tf = 0.638550856814101
 ......................................Vf = 8.433415678122358
 .......................................g = 9.81
-....................................mass = 1.0
-......................................xf = 5.0
-......................................yf = -2.0
+....................................mass = 1
+......................................xf = 5
+......................................yf = -2
 INFO CLASS = Brachiostocrona
   dim_u        = 1
   dim_q        = 1
@@ -46,23 +46,24 @@ INFO CLASS = Brachiostocrona
   nQ_total     = 501
   FD jacobian  = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 4
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
 
 
 [it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
 [  1, 15] (  0.00213,  0.00208) [    0.476,    0.589]    0.0211 ( 0: 0): 0: 0: 0 G
-[  2,  3] (  0.00208,   0.0017) [    0.495,    0.364]     0.228 ( 0: 0): 0: 0: 2 G
-[  3,  2] (   0.0017,  0.00173) [    0.358,     0.19]     0.598 ( 2: 0): 1: 0: 1 G
-[  4,  2] (  0.00173, 0.000765) [     0.26,   0.0872]     0.675 ( 3: 0): 1: 0: 1 G
+[  2,  3] (  0.00208,  0.00170) [    0.495,    0.364]     0.228 ( 0: 0): 0: 0: 2 G
+[  3,  2] (  0.00170,  0.00173) [    0.358,    0.190]     0.598 ( 2: 0): 1: 0: 1 G
+[  4,  2] (  0.00173, 0.000765) [    0.260,   0.0872]     0.675 ( 3: 0): 1: 0: 1 G
 [  5,  1] ( 0.000765, 0.000138) [   0.0732,   0.0342]      1.00 ( 4: 0): 1: 0: 1 G
 [  6,  1] ( 0.000138, 1.28e-05) [   0.0251,  0.00226]      1.00 ( 5: 0): 0: 0: 0 G
 [  7,  1] ( 1.28e-05, 4.15e-08) [  0.00227, 7.33e-06]      1.00 ( 6: 0): 0: 0: 0 G
-[  8,  1] ( 4.15e-08, 4.37e-13) [ 7.31e-06,  6.1e-11]      1.00 ( 7: 0): 0: 0: 0 G
+[  8,  1] ( 4.15e-08, 4.37e-13) [ 7.31e-06, 6.10e-11]      1.00 ( 7: 0): 0: 0: 0 G
 
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time           = 22.5    ms    iteration           = 8         
-Total Equations        = 4514          tolerance           = 1e-09     
-max iterations         = 300           max accumul. iter.  = 800       
+Elapsed Time           = 15.0 [ms]     timeout             = 0 [ms]
+iteration              = 8             tolerance           = 1.000e-09 
+max iterations         = 300           Total Equations     = 4514
+max accumul. iter.     = 800           Memory Used         = 543Kb (+69bytes)
 ---------------------------- Continuation ----------------------------
 Initial Step           = 0.2           Minimum Step        = 0.001     
 Reduce Factor          = 0.5           Augment Factor      = 1.5       
@@ -78,8 +79,8 @@ Jacobian Factorization = 8             Jacobian Inversion  = 34
 last ||d||_inf = 5.5455e-10      last `new' ||d||_inf  = 5.9476e-05
 last ||f||_inf = 2.3545e-06      last ||f||_1          = 4.1511e-08
 
-target [Lagrange,Mayer]        = [      0.00000,      1.29314]
-[Penalties/Barriers, Controls] = [      0.00000,  4.66306e-05]
-Parameters:
+target [Lagrange,Mayer]        = [       0.00000,      1.29314]
+[Penalties/Barriers, Controls] = [       0.00000,  4.66306e-05]
+Optimization parameters:
 T: 1.29313718268642708
 All Done Folks!

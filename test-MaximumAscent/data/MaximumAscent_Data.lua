@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -18,17 +18,17 @@
 --]]
 
 -- Auxiliary values
-days1  = 30
-mu     = 398600441800000
-u0     = 0
-Isp    = 1500
-T      = 0.68
 r0     = 6678140
-v0     = (mu/r0)**(1/2.0)
-u0_bar = u0/v0
+days1  = 30
+T      = 0.68
+Isp    = 1500
+u0     = 0
 g0     = 9.80665
 mdot   = T/g0/Isp
 days   = 1
+mu     = 398600441800000
+v0     = (mu/r0)**(1/2.0)
+u0_bar = u0/v0
 tf     = 86400*days
 
 content = {
@@ -62,7 +62,7 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "MINIMIZATION"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     factorization = "LU",
     MaxIter       = 50,
     Tolerance     = 1e-9,
@@ -77,7 +77,7 @@ content = {
     factorization = "LU",
 
     -- Last Block selection:
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY"
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
     last_factorization = "LU",
 
     -- choose solves: Hyness, NewtonDumped

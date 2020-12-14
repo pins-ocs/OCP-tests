@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -19,9 +19,7 @@
 #include "Brachiostocrona2_Pars.hh"
 
 using namespace std;
-using Mechatronix::real_type;
-using Mechatronix::integer;
-using Mechatronix::ostream_type;
+using namespace MechatronixLoad;
 
 // user class in namespaces
 using Mechatronix::MeshStd;
@@ -52,16 +50,16 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type xf = 5;
     real_type g = 9.81;
     real_type yf = -2;
-    real_type Tf = (-2.0*yf/g)^(1/2.0);
-    real_type xf = 5;
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
+    real_type Tf = (-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
     // ==============================================================
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'MINIMIZATION'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // :factorization => 'LU',
     // ==============================================================
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
@@ -94,9 +92,9 @@ main() {
     // =================
 
     // Last Block selection:
-    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY'
+    // 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     // ==============================================
-    data_Solver["last_factorization"] = "LU";
+    data_Solver["last_factorization"] = "PINV";
     // ==============================================
 
     // choose solver: Hyness, NewtonDumped
@@ -166,8 +164,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Brachiostocrona2_data.Mesh["s0"] = 0;
-Brachiostocrona2_data.Mesh["segments"][0]["length"] = 1;
 Brachiostocrona2_data.Mesh["segments"][0]["n"] = 500;
+Brachiostocrona2_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -187,7 +185,7 @@ Brachiostocrona2_data.Mesh["segments"][0]["n"] = 500;
     model.guess( gc_data("Guess","Missing `Guess` field") );
 
     // solve nonlinear system
-    // pModel->set_timeout_ms( 100 );
+    // model->set_timeout_ms( 100 );
     bool ok = model.solve(); // no spline
 
     // get solution (even if not converged)

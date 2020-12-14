@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Data.rb                                              |
  |                                                                       |
- |  version: 1.0   date 12/11/2020                                       |
+ |  version: 1.0   date 14/12/2020                                       |
  |                                                                       |
  |  Copyright (C) 2020                                                   |
  |                                                                       |
@@ -15,8 +15,8 @@
 \*-----------------------------------------------------------------------*/
 
 
-#ifndef MEX_UTILS_HH
-#define MEX_UTILS_HH
+#ifndef MEX_UTILS_DOT_HH
+#define MEX_UTILS_DOT_HH
 
 #include "mex.h"
 #include <map>
@@ -24,18 +24,25 @@
 #include <sstream>
 #include <iostream>
 
-#define arg_in_0 prhs[0]
-#define arg_in_1 prhs[1]
-#define arg_in_2 prhs[2]
-#define arg_in_3 prhs[3]
-#define arg_in_4 prhs[4]
-#define arg_in_5 prhs[5]
-#define arg_in_6 prhs[6]
-#define arg_in_7 prhs[7]
-#define arg_in_8 prhs[8]
-#define arg_in_9 prhs[9]
+#include <stdint.h>
+#include <cstring>
+#include <typeinfo>
+
+#define arg_in_0  prhs[0]
+#define arg_in_1  prhs[1]
+#define arg_in_2  prhs[2]
+#define arg_in_3  prhs[3]
+#define arg_in_4  prhs[4]
+#define arg_in_5  prhs[5]
+#define arg_in_6  prhs[6]
+#define arg_in_7  prhs[7]
+#define arg_in_8  prhs[8]
+#define arg_in_9  prhs[9]
 #define arg_in_10 prhs[10]
 #define arg_in_11 prhs[11]
+#define arg_in_12 prhs[12]
+#define arg_in_13 prhs[13]
+#define arg_in_14 prhs[14]
 
 #define arg_out_0 plhs[0]
 #define arg_out_1 plhs[1]
@@ -65,17 +72,19 @@
 static
 inline
 bool
-isScalar( mxArray const * arg, char const msg[] ) {
+isScalar( mxArray const * arg, std::string const & msg ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
   return dims[0] == 1 && dims[1] == 1;
 }
 
+// -----------------------------------------------------------------------------
+
 static
 inline
 double
-getScalarValue( mxArray const * arg, char const msg[] ) {
+getScalarValue( mxArray const * arg, std::string const & msg ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
@@ -87,18 +96,22 @@ getScalarValue( mxArray const * arg, char const msg[] ) {
   return mxGetScalar(arg);
 }
 
+// -----------------------------------------------------------------------------
+
 static
 inline
 bool
-getBool( mxArray const * arg, char const msg[] ) {
+getBool( mxArray const * arg, std::string const & msg ) {
   MEX_ASSERT( mxIsLogicalScalar(arg), msg );
   return mxIsLogicalScalarTrue(arg);
 }
 
+// -----------------------------------------------------------------------------
+
 static
 inline
 int64_t
-getInt( mxArray const * arg, char const msg[] ) {
+getInt( mxArray const * arg, std::string const & msg ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
@@ -144,15 +157,17 @@ getInt( mxArray const * arg, char const msg[] ) {
   return res;
 }
 
+// -----------------------------------------------------------------------------
+
 static
 inline
 double const *
-getVectorPointer( mxArray const * arg, mwSize & sz, char const msg[] ) {
+getVectorPointer( mxArray const * arg, mwSize & sz, std::string const & msg ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
   MEX_ASSERT2(
-    dims[0] == 1 || dims[1] == 1,
+    dims[0] == 1 || dims[1] == 1 || dims[0]*dims[1] == 0,
     "{}\nExpect (1 x n or n x 1) matrix, found {} x {}\n",
     msg, dims[0], dims[1]
   );
@@ -160,10 +175,17 @@ getVectorPointer( mxArray const * arg, mwSize & sz, char const msg[] ) {
   return mxGetPr(arg);
 }
 
+// -----------------------------------------------------------------------------
+
 static
 inline
 double const *
-getMatrixPointer( mxArray const * arg, mwSize & nr, mwSize & nc,  char const msg[] ) {
+getMatrixPointer(
+  mxArray      const * arg,
+  mwSize             & nr,
+  mwSize             & nc,
+  std::string const  & msg
+) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
@@ -182,6 +204,8 @@ setScalarValue( mxArray * & arg, double value ) {
   *mxGetPr(arg) = value;
 }
 
+// -----------------------------------------------------------------------------
+
 static
 inline
 void
@@ -190,12 +214,16 @@ setScalarInt( mxArray * & arg, int64_t value ) {
   *static_cast<int64_t*>(mxGetData(arg)) = value;
 }
 
+// -----------------------------------------------------------------------------
+
 static
 inline
 void
 setScalarBool( mxArray * & arg, bool value ) {
   arg = mxCreateLogicalScalar( value );
 }
+
+// -----------------------------------------------------------------------------
 
 static
 inline
@@ -205,6 +233,8 @@ createMatrixInt32( mxArray * & arg, mwSize nrow, mwSize ncol ) {
   return static_cast<int32_t*>(mxGetData(arg));
 }
 
+// -----------------------------------------------------------------------------
+
 static
 inline
 int64_t *
@@ -212,6 +242,8 @@ createMatrixInt64( mxArray * & arg, mwSize nrow, mwSize ncol ) {
   arg = mxCreateNumericMatrix( nrow, ncol, mxINT64_CLASS, mxREAL );
   return static_cast<int64_t*>(mxGetData(arg));
 }
+
+// -----------------------------------------------------------------------------
 
 static
 inline
@@ -228,14 +260,6 @@ createMatrixValue( mxArray * & arg, mwSize nrow, mwSize ncol ) {
 
   https://it.mathworks.com/matlabcentral/fileexchange/38964-example-matlab-class-wrapper-for-a-c++-class
 */
-
-#ifndef __MEX_CLASS_HANDLE_HH__
-#define __MEX_CLASS_HANDLE_HH__
-#include "mex.h"
-#include <stdint.h>
-#include <string>
-#include <cstring>
-#include <typeinfo>
 
 #define CLASS_HANDLE_SIGNATURE 0xFF00F0A5
 
@@ -260,6 +284,8 @@ public:
   base *ptr() { return ptr_m; }
 };
 
+// -----------------------------------------------------------------------------
+
 template <typename base>
 inline
 mxArray *
@@ -270,11 +296,13 @@ convertPtr2Mat( base *ptr ) {
   return out;
 }
 
+// -----------------------------------------------------------------------------
+
 template <typename base>
 inline
 class_handle<base> *
 convertMat2HandlePtr(const mxArray *in) {
-  if ( mxGetNumberOfElements(in) != 1 || mxGetClassID(in) != mxUINT64_CLASS || mxIsComplex(in))
+  if ( mxGetNumberOfElements(in) != 1 || mxGetClassID(in) != mxUINT64_CLASS || mxIsComplex(in) )
     mexErrMsgTxt("Input must be an uint64 scalar.");
   class_handle<base> *ptr = reinterpret_cast<class_handle<base> *>(*((uint64_t *)mxGetData(in)));
   if (!ptr->isValid())
@@ -282,12 +310,16 @@ convertMat2HandlePtr(const mxArray *in) {
   return ptr;
 }
 
+// -----------------------------------------------------------------------------
+
 template <typename base>
 inline
 base *
 convertMat2Ptr(const mxArray *in) {
   return convertMat2HandlePtr<base>(in)->ptr();
 }
+
+// -----------------------------------------------------------------------------
 
 template <typename base>
 inline
@@ -298,6 +330,6 @@ destroyObject(const mxArray *in) {
   mexUnlock();
 }
 
-#endif // __CLASS_HANDLE_HPP__
+// -----------------------------------------------------------------------------
 
 #endif
