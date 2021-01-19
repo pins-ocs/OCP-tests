@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Main.cc                            |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_max = 0.01;
     real_type epsi_max = 0.01;
+    real_type tol_max = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -175,8 +175,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularConstrainedCalogero_data.Mesh["s0"] = 0;
-SingularConstrainedCalogero_data.Mesh["segments"][0]["n"] = 600;
 SingularConstrainedCalogero_data.Mesh["segments"][0]["length"] = 3;
+SingularConstrainedCalogero_data.Mesh["segments"][0]["n"] = 600;
 
 
     // alias for user object classes passed as pointers

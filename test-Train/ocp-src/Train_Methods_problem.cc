@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods1.cc                                              |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -71,11 +71,6 @@ namespace TrainDefine {
 
   void
   Train::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     real_type t2   = 1 - s;
     real_type t6   = ModelPars[12] * s + t2 * ModelPars[11];
     uaControl.update_epsilon(t6);
@@ -148,7 +143,10 @@ namespace TrainDefine {
     real_type t1   = U__[0];
     real_type t2   = X__[1];
     real_type t8   = acc(X__[0], t2);
-    return t2 * t1 + t2 * L__[0] + (t8 + t1 - U__[1]) * L__[1];
+    real_type t9   = U__[1];
+    real_type t13  = uaControl(t1, 0, ModelPars[5]);
+    real_type t15  = ubControl(t9, 0, ModelPars[6]);
+    return t2 * t1 + t2 * L__[0] + (t8 + t1 - t9) * L__[1] + t13 + t15;
   }
 
   /*\

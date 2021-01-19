@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1.cc                                                     |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -121,10 +121,10 @@ namespace Dadebo1Define {
   */
   Dadebo1::Dadebo1(
     string  const & name,
-    ThreadPool    * _TP,
-    Console const * _pConsole
+    ThreadPool    * TP,
+    Console const * console
   )
-  : Discretized_Indirect_OCP( name, _TP, _pConsole )
+  : Discretized_Indirect_OCP( name, TP, console )
   // Controls
   // Constraints 1D
   // Constraints 2D
@@ -166,7 +166,19 @@ namespace Dadebo1Define {
   //       |_|
   */
   void
-  Dadebo1::updateContinuation( integer phase, real_type s ) {
+  Dadebo1::updateContinuation(
+    integer   phase,
+    real_type old_s,
+    real_type s
+  ) {
+    int msg_level = 3;
+    m_console->message(
+      fmt::format(
+        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        phase+1, s, s-old_s
+      ),
+      msg_level
+    );
   }
 
   /* --------------------------------------------------------------------------
@@ -295,6 +307,7 @@ namespace Dadebo1Define {
   void
   Dadebo1::setup( GenericContainer const & gc ) {
 
+    m_debug = false;
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("Dadebo1::setup, Debug");
 

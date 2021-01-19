@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus02_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -163,8 +163,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularLuus02_data.Mesh["s0"] = 0;
-SingularLuus02_data.Mesh["segments"][0]["n"] = 400;
 SingularLuus02_data.Mesh["segments"][0]["length"] = Tf;
+SingularLuus02_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

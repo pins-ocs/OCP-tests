@@ -29,51 +29,45 @@ Model Parameters
 ....................................amp1 = 0.1
 ....................................amp2 = 0.01
 INFO CLASS = BangBangFwork
-  dim_u        = 1
-  dim_q        = 1
-  dim_x        = 2
-  dim_p        = 0
-  dim_omega    = 3
-  dim_big_bc   = 7
-  numNodes     = 104
-  InitialBC    = 4
-  FinalBC      = 3
-  CyclicBC     = 0
-  InitialOMEGA = 2
-  FinalOMEGA   = 1
-  CyclicOMEGA  = 0
-  nZ_total     = 522
-  nQ_total     = 104
-  FD jacobian  = NO
+  numNodes    = 104
+  dim         = u = 1, q = 1, x = 2, p = 0, omega = 3, big_bc = 7
+  BC          = Inital = 4, Final = 3, Cyclic = 0
+  OMEGA       = Inital = 2, Final = 1, Cyclic = 0
+  total       = nZ = 419, UC = 103, Q = 104
+  index start = omega = 416, p = 419
+  FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
 
 
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  1,  3] (  0.00192,    0.125) [     13.7,    0.792]     0.478 ( 0: 0): 0: 0: 0 G
-[  2,  1] (    0.125, 5.61e-16) [     6.51, 9.97e-16]      1.00 ( 1: 0): 1: 0: 1 G
-[  3,  1] ( 5.61e-16, 4.61e-18) [ 9.97e-16, 5.01e-18]      1.00 ( 2: 0): 0: 0: 0 G
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  1,  3] (0.00239  ,0.155    ) [17.1     ,0.986    ] 0.478      0: 0
+[  2,  1] (0.155    ,7.15e-16 ) [8.10     ,1.81e-15 ] 1.00       0: 1
+[  3,  1] (7.15e-16 ,5.74e-18 ) [1.81e-15 ,6.22e-18 ] 1.00       0: 0
 
------------------------------ STATISTIC ------------------------------
-Elapsed Time           = 1.91 [ms]     timeout             = 0 [ms]
-iteration              = 3             tolerance           = 1.000e-09 
-max iterations         = 300           Total Equations     = 522
-max accumul. iter.     = 800           Memory Used         = 57Kb (+67bytes)
----------------------------- Continuation ----------------------------
-Initial Step           = 0.2           Minimum Step        = 0.001     
-Reduce Factor          = 0.5           Augment Factor      = 1.5       
----------------------------- valutations -----------------------------
-Merit Function         = 0             Function Evaluation = 6         
-Jacobian Factorization = 3             Jacobian Inversion  = 8         
-----------------------------------------------------------------------
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 1.99[ms]      timeout        = 0 [ms]
+iteration      = 3             tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 419
+max acc. iter. = 800           N. System pars = 103
+Converged      = YES           Memory Used    = 49Kb (+65bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 6             Jacobian       = 3         
+Factorization  = 3             Inversion      = 8         
+------------------------ USER INFO -------------------------
+last ||d||_inf = 4.5202e-17    last||d1||_inf = 1.4870e-14
+last ||f||_inf = 8.8593e-15    last||f1||_1   = 7.1519e-16
+------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 4.4997e-17      last `new' ||d||_inf  = 7.7642e-15
-last ||f||_inf = 8.8593e-15      last ||f||_1          = 5.6059e-16
-
-target [Lagrange,Mayer]        = [       0.00000,    -0.261922]
-[Penalties/Barriers, Controls] = [       0.00000,  0.000997996]
+target [Lagrange,Mayer]       = [ 0.000, -0.2619 ]
+[Penalties/Barriers,Controls] = [ 0.000, 0.0009980 ]
 All Done Folks!

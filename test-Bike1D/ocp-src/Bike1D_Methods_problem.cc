@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods1.cc                                             |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -115,7 +115,15 @@ namespace Bike1DDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 1.0 / X__[0] + L__[0] * ModelPars[1] * (U__[0] + U__[1]);
+    real_type t1   = X__[0];
+    real_type t2   = 1.0 / t1;
+    real_type t6   = U__[0];
+    real_type t7   = U__[1];
+    real_type t11  = Tmax_normalized(t1);
+    real_type t13  = clip(t11, 0, ModelPars[4]);
+    real_type t14  = murControl(t6, ModelPars[5], t13);
+    real_type t17  = mufControl(t7, ModelPars[3], 0);
+    return t2 + (t6 + t7) * ModelPars[1] * L__[0] + t14 * t2 + t17 * t2;
   }
 
   /*\

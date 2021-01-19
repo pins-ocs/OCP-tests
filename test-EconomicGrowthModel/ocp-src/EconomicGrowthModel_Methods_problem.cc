@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods1.cc                                |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -119,7 +119,8 @@ namespace EconomicGrowthModelDefine {
     real_type t4   = U__[0];
     real_type t8   = Q(X__[0], X__[1]);
     real_type t9   = t1 * t8;
-    return t2 + t9 * t4 * L__[0] + t9 * (1 - t4) * L__[1];
+    real_type t15  = uControl(t4, 0, 1);
+    return t2 + t9 * t4 * L__[0] + t9 * (1 - t4) * L__[1] + t15 * t1;
   }
 
   /*\

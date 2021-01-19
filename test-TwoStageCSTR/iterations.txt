@@ -33,52 +33,46 @@ Model Parameters
 ....................................x3_i = 0.1
 ....................................x4_i = 0
 INFO CLASS = TwoStageCSTR
-  dim_u        = 2
-  dim_q        = 1
-  dim_x        = 4
-  dim_p        = 0
-  dim_omega    = 4
-  dim_big_bc   = 12
-  numNodes     = 401
-  InitialBC    = 8
-  FinalBC      = 4
-  CyclicBC     = 0
-  InitialOMEGA = 4
-  FinalOMEGA   = 0
-  CyclicOMEGA  = 0
-  nZ_total     = 4012
-  nQ_total     = 401
-  FD jacobian  = NO
+  numNodes    = 401
+  dim         = u = 2, q = 1, x = 4, p = 0, omega = 4, big_bc = 12
+  BC          = Inital = 8, Final = 4, Cyclic = 0
+  OMEGA       = Inital = 4, Final = 0, Cyclic = 0
+  total       = nZ = 3212, UC = 800, Q = 401
+  index start = omega = 3208, p = 3212
+  FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
 
 
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  1,  1] ( 0.000348, 8.92e-05) [   0.0450,  0.00805]      1.00 ( 0: 0): 0: 0: 0 G
-[  2,  1] ( 8.92e-05, 3.76e-06) [  0.00527, 0.000351]      1.00 ( 1: 0): 0: 0: 0 G
-[  3,  1] ( 3.76e-06, 8.12e-09) [ 0.000367, 1.14e-06]      1.00 ( 2: 0): 0: 0: 0 G
-[  4,  1] ( 8.12e-09, 2.38e-13) [ 1.14e-06, 4.63e-11]      1.00 ( 3: 0): 0: 0: 0 G
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  1,  1] (0.000435 ,0.000111 ) [0.0562   ,0.0101   ] 1.00       0: 0
+[  2,  1] (0.000111 ,4.70e-06 ) [0.00659  ,0.000439 ] 1.00       0: 0
+[  3,  1] (4.70e-06 ,1.01e-08 ) [0.000458 ,1.42e-06 ] 1.00       0: 0
+[  4,  1] (1.01e-08 ,2.97e-13 ) [1.42e-06 ,5.79e-11 ] 1.00       0: 0
 
------------------------------ STATISTIC ------------------------------
-Elapsed Time           = 5.60 [ms]     timeout             = 0 [ms]
-iteration              = 4             tolerance           = 1.000e-09 
-max iterations         = 300           Total Equations     = 4012
-max accumul. iter.     = 800           Memory Used         = 439Kb (+54bytes)
----------------------------- Continuation ----------------------------
-Initial Step           = 0.2           Minimum Step        = 0.001     
-Reduce Factor          = 0.5           Augment Factor      = 1.5       
----------------------------- valutations -----------------------------
-Merit Function         = 0             Function Evaluation = 5         
-Jacobian Factorization = 4             Jacobian Inversion  = 8         
-----------------------------------------------------------------------
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 12.5[ms]      timeout        = 0 [ms]
+iteration      = 4             tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 3212
+max acc. iter. = 800           N. System pars = 800
+Converged      = YES           Memory Used    = 366Kb (+90bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 5             Jacobian       = 4         
+Factorization  = 4             Inversion      = 8         
+------------------------ USER INFO -------------------------
+last ||d||_inf = 3.0924e-10    last||d1||_inf = 1.1164e-05
+last ||f||_inf = 1.4912e-07    last||f1||_1   = 1.0140e-08
+------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 3.0924e-10      last `new' ||d||_inf  = 1.1164e-05
-last ||f||_inf = 1.4912e-07      last ||f||_1          = 8.1181e-09
-
-target [Lagrange,Mayer]        = [    0.0232380,       0.00000]
-[Penalties/Barriers, Controls] = [       0.00000,  4.53567e-06]
+target [Lagrange,Mayer]       = [ 0.02324, 0.000 ]
+[Penalties/Barriers,Controls] = [ 0.000, 4.536e-06 ]
 All Done Folks!

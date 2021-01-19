@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods1.cc                                          |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -62,11 +62,6 @@ namespace vanDerPolDefine {
 
   void
   vanDerPol::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     ModelPars[0] = 1 - s;
   }
 
@@ -95,7 +90,9 @@ namespace vanDerPolDefine {
     real_type t2   = t1 * t1;
     real_type t3   = X__[1];
     real_type t4   = t3 * t3;
-    return t2 + t4 + t3 * L__[0] + (t3 * (-t2 + 1) - t1 + U__[0]) * L__[1];
+    real_type t10  = U__[0];
+    real_type t15  = uControl(t10, -1, 1);
+    return t2 + t4 + t3 * L__[0] + (t3 * (-t2 + 1) - t1 + t10) * L__[1] + t15 * (t2 + t4 + ModelPars[0]);
   }
 
   /*\

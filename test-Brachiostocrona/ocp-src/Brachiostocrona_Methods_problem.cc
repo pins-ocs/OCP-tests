@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods1.cc                                    |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -80,7 +80,9 @@ namespace BrachiostocronaDefine {
     real_type t5   = X__[3];
     real_type t6   = cos(t5);
     real_type t11  = sin(t5);
-    return t11 * t4 * t2 * L__[1] - t11 * ModelPars[2] * t2 * L__[2] + t6 * t4 * t2 * L__[0] + L__[3] * U__[0];
+    real_type t20  = U__[0];
+    real_type t22  = vthetaControl(t20, -10, 10);
+    return t11 * t4 * t2 * L__[1] - t11 * ModelPars[2] * t2 * L__[2] + t6 * t4 * t2 * L__[0] + t22 * t2 + t20 * L__[3];
   }
 
   /*\

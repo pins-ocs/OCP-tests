@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_dll_pins.hh                                   |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -108,8 +108,8 @@ namespace TwoPhaseSchwartzDefine {
   public:
 
     TWOPHASESCHWARTZ_API_DLL
-    TwoPhaseSchwartz_Problem( ThreadPool * pTP, Console const * pConsole )
-    : model("TwoPhaseSchwartz",pTP,pConsole)
+    TwoPhaseSchwartz_Problem( ThreadPool * TP, Console const * console )
+    : model("TwoPhaseSchwartz",TP,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,11 +17,16 @@
 
 --]]
 
+-- User Header
+
 -- Auxiliary values
 epsi_ctrl = 1e-05
 tol_ctrl  = 1e-05
 
 content = {
+
+  -- activate run time debug
+  data.Debug = false,
 
   -- Level of message
   InfoLevel = 4,
@@ -52,12 +57,21 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
+    -- ==============================================================
+    -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
+    -- "LM" = Levenberg–Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
+    solver = "QN",
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",
-    MaxIter       = 50,
-    Tolerance     = 1e-9,
-    Iterative     = false,
-    InfoLevel     = -1 -- suppress all messages
+    -- "BFGS", "DFP", "SR1" for Quasi Newton
+    update = "BFGS",
+    -- 'EXACT', 'ARMIJO'
+    linesearch = "EXACT",
+    -- ==============================================================
+    MaxIter   = 50,
+    Tolerance = 1e-9,
+    Iterative = false,
+    InfoLevel = -1 -- suppress all messages
   },
 
   -- setup solver
@@ -129,8 +143,8 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
+  -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
       type      = 'COS_LOGARITHMIC',
@@ -152,8 +166,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

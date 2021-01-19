@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SlidingMode_Methods1.cc                                        |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -75,8 +75,10 @@ namespace SlidingModeDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = X__[0] * X__[0];
-    return t3 * L__[1] + L__[0] * U__[0];
+    real_type t2   = U__[0];
+    real_type t6   = X__[0] * X__[0];
+    real_type t8   = uControl(t2, -1, 1);
+    return t2 * L__[0] + t6 * L__[1] + t8;
   }
 
   /*\

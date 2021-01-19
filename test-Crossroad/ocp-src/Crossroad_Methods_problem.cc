@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods1.cc                                          |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -118,7 +118,8 @@ namespace CrossroadDefine {
     real_type t22  = VelBound(t9);
     real_type t24  = U__[0];
     real_type t25  = t24 * t24;
-    return t2 + t21 + t22 + t1 * (t25 * ModelPars[11] + ModelPars[12]) + t9 * t1 * L__[0] + t3 * t1 * L__[1] + t24 * t1 * L__[2];
+    real_type t41  = jerkControl(t24, ModelPars[16], ModelPars[15]);
+    return t2 + t21 + t22 + t1 * (t25 * ModelPars[11] + ModelPars[12]) + t9 * t1 * L__[0] + t3 * t1 * L__[1] + t24 * t1 * L__[2] + t41;
   }
 
   /*\

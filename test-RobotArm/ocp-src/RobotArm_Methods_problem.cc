@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods1.cc                                           |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -80,11 +80,6 @@ namespace RobotArmDefine {
 
   void
   RobotArm::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     ModelPars[2] = s;
     real_type t2   = 1 - s;
     real_type t3   = pow(ModelPars[3], t2);
@@ -197,7 +192,13 @@ namespace RobotArmDefine {
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = P__[0];
-    return U__[0] * t2 * L__[0] + U__[1] * t2 * L__[1] + U__[2] * t2 * L__[2] + X__[3] * t2 * L__[3] + X__[4] * t2 * L__[4] + X__[5] * t2 * L__[5];
+    real_type t4   = U__[0];
+    real_type t8   = U__[1];
+    real_type t12  = U__[2];
+    real_type t26  = u_rhoControl(t4, -1, 1);
+    real_type t28  = u_thetaControl(t8, -1, 1);
+    real_type t30  = u_phiControl(t12, -1, 1);
+    return t12 * t2 * L__[2] + t4 * t2 * L__[0] + t8 * t2 * L__[1] + X__[3] * t2 * L__[3] + X__[4] * t2 * L__[4] + X__[5] * t2 * L__[5] + t26 * t2 + t28 * t2 + t30 * t2;
   }
 
   /*\

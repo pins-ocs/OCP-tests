@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -468,12 +468,12 @@ namespace HangGliderDefine {
     real_type t62  = v_D_2(t7, t8, t9);
     real_type t65  = Dfun_D_2(t7, t8, t9);
     real_type t71  = Lfun_D_2(t7, t8, t9);
-    result__[ 1   ] = -t62 * t24 * t6 + (-2 * t8 * t65 * t15 - 2 * t16 * t15 - t21 * t71) * t29 * t3 - t62 * t49 * t43 + (-2 * t21 * t65 * t15 + t8 * t71 + t20) * t29 * t42;
+    result__[ 1   ] = -t62 * t24 * t6 + (-2 * t15 * t65 * t8 - 2 * t15 * t16 - t21 * t71) * t29 * t3 - t62 * t49 * t43 + (-2 * t15 * t21 * t65 + t71 * t8 + t20) * t29 * t42;
     real_type t85  = v_D_3(t7, t8, t9);
     real_type t88  = Dfun_D_3(t7, t8, t9);
     real_type t92  = Lfun_D_3(t7, t8, t9);
     real_type t94  = w_D_2(t7, t9);
-    result__[ 2   ] = -t85 * t24 * t6 + (-2 * t8 * t88 * t15 - t94 * t20 - t21 * t92) * t29 * t3 - t85 * t49 * t43 + (-2 * t94 * t16 * t15 - 2 * t21 * t88 * t15 + t8 * t92) * t29 * t42;
+    result__[ 2   ] = -t85 * t24 * t6 + (-2 * t15 * t8 * t88 - t20 * t94 - t21 * t92) * t29 * t3 - t85 * t49 * t43 + (-2 * t15 * t16 * t94 - 2 * t15 * t21 * t88 + t8 * t92) * t29 * t42;
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 3, i_segment );
   }

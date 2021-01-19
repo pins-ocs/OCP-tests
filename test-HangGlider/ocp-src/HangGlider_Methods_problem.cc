@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods1.cc                                         |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -64,11 +64,6 @@ namespace HangGliderDefine {
 
   void
   HangGlider::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     ModelPars[2] = (1 - s) * ModelPars[3] + s * ModelPars[4];
   }
   /*\
@@ -80,11 +75,6 @@ namespace HangGliderDefine {
 
   void
   HangGlider::continuationStep1( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.1 s = {}\n", s ),
-      msg_level
-    );
     real_type t2   = 1 - s;
     real_type t3   = pow(ModelPars[23], t2);
     real_type t5   = pow(ModelPars[24], s);
@@ -493,7 +483,8 @@ namespace HangGliderDefine {
     real_type t32  = Lfun(t20, t10, t14);
     real_type t33  = t32 * t4;
     real_type t34  = w(t20, t14);
-    return t2 + t6 * ModelPars[2] + t10 * t1 * L__[0] + t14 * t1 * L__[1] + (-t10 * t30 - t34 * t33) * t22 * t19 * t1 * L__[2] + ((t10 * t33 - t34 * t30) * t22 * t19 * t1 - ModelPars[9] * t1) * L__[3];
+    real_type t52  = cLControl(t4, ModelPars[8], ModelPars[7]);
+    return t2 + t6 * ModelPars[2] + t10 * t1 * L__[0] + t14 * t1 * L__[1] + (-t10 * t30 - t34 * t33) * t22 * t19 * t1 * L__[2] + ((t10 * t33 - t34 * t30) * t22 * t19 * t1 - ModelPars[9] * t1) * L__[3] + t52;
   }
 
   /*\

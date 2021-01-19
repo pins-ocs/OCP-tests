@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods1.cc                                    |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -71,11 +71,6 @@ namespace TwoLinkRobotArmDefine {
 
   void
   TwoLinkRobotArm::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     ModelPars[1] = s;
   }
   /*\
@@ -87,11 +82,6 @@ namespace TwoLinkRobotArmDefine {
 
   void
   TwoLinkRobotArm::continuationStep1( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.1 s = {}\n", s ),
-      msg_level
-    );
     real_type t2   = 1 - s;
     real_type t3   = pow(ModelPars[2], t2);
     real_type t5   = pow(ModelPars[3], s);
@@ -138,7 +128,9 @@ namespace TwoLinkRobotArmDefine {
     real_type t18  = U__[1];
     real_type t23  = t5 * t5;
     real_type t26  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t23);
-    return t26 * ((9.0 / 4.0 * t8 * t6 + 2 * t12) * t5 + 4.0 / 3.0 * t16 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t6) * t2 * L__[0] - t26 * ((7.0 / 2.0 * t8 + 9.0 / 4.0 * t12 * t6) * t5 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t16 - t18) * t6) * t2 * L__[1] + (t11 - t7) * t2 * L__[2] + t7 * t2 * L__[3];
+    real_type t50  = u1Control(t16, -1, 1);
+    real_type t51  = u2Control(t18, -1, 1);
+    return t26 * ((9.0 / 4.0 * t8 * t6 + 2 * t12) * t5 + 4.0 / 3.0 * t16 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t6) * t2 * L__[0] - t26 * ((7.0 / 2.0 * t8 + 9.0 / 4.0 * t12 * t6) * t5 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t16 - t18) * t6) * t2 * L__[1] + (t11 - t7) * t2 * L__[2] + t7 * t2 * L__[3] + t50 + t51;
   }
 
   /*\

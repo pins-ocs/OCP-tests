@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater.hh                                                  |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -163,8 +163,8 @@ namespace UnderwaterDefine {
     explicit
     Underwater(
       string  const & name,
-      ThreadPool    * _TP,
-      Console const * _pConsole
+      ThreadPool    * TP,
+      Console const * console
     );
 
     UNDERWATER_API_DLL virtual
@@ -248,7 +248,11 @@ namespace UnderwaterDefine {
     // Continuation phase update
     UNDERWATER_API_DLL
     void
-    updateContinuation( integer phase, real_type s ) MECHATRONIX_OVERRIDE;
+    updateContinuation(
+      integer   phase,
+      real_type old_s,
+      real_type s
+    ) MECHATRONIX_OVERRIDE;
 
     // save model parameters
     UNDERWATER_API_DLL virtual

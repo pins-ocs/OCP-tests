@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -193,14 +193,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFtau_data.Mesh["s0"] = 0;
-BangBangFtau_data.Mesh["segments"][0]["n"] = 10;
 BangBangFtau_data.Mesh["segments"][0]["length"] = 0.1;
-BangBangFtau_data.Mesh["segments"][1]["n"] = 40;
+BangBangFtau_data.Mesh["segments"][0]["n"] = 10;
 BangBangFtau_data.Mesh["segments"][1]["length"] = 0.4;
-BangBangFtau_data.Mesh["segments"][2]["n"] = 40;
+BangBangFtau_data.Mesh["segments"][1]["n"] = 40;
 BangBangFtau_data.Mesh["segments"][2]["length"] = 0.4;
-BangBangFtau_data.Mesh["segments"][3]["n"] = 10;
+BangBangFtau_data.Mesh["segments"][2]["n"] = 40;
 BangBangFtau_data.Mesh["segments"][3]["length"] = 0.1;
+BangBangFtau_data.Mesh["segments"][3]["n"] = 10;
 
 
     // alias for user object classes passed as pointers

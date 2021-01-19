@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -402,42 +402,42 @@ namespace PointMassCarModel_2Define {
     result__[ 9   ] = 2 * t117 * t208 * t207 + t265 * t212;
     result__[ 10  ] = result__[2];
     result__[ 11  ] = result__[7];
-    real_type t296 = t151 * t72;
-    real_type t299 = ALIAS_AdherenceEllipse_DD(t28);
-    real_type t300 = t299 * t51;
-    real_type t301 = t20 * t20;
-    real_type t303 = t24 * t24;
+    real_type t296 = ALIAS_AdherenceEllipse_DD(t28);
+    real_type t297 = t296 * t51;
+    real_type t298 = t20 * t20;
+    real_type t300 = t24 * t24;
+    real_type t301 = 1.0 / t300;
+    real_type t303 = t16 * t16;
     real_type t304 = 1.0 / t303;
-    real_type t306 = t16 * t16;
-    real_type t307 = 1.0 / t306;
+    real_type t308 = t151 * t72;
     real_type t311 = t151 * t17;
     real_type t315 = t151 * t151;
     real_type t328 = zeta__dot_D_1_1(t1, t2, t3, t4);
-    real_type t333 = 4 * t307 * t304 * t21 * t301 * t300 + 4 * t311 * t158 * t157 + 2 * t296 * t177 + 2 * t315 * t30 + 2 * t315 * t42 + 2 * t315 * t57 + 2 * t315 * t76 + 2 * t315 * t83 + 2 * t315 * t89 - t328 * t49 - t328 * t64 - t328 * t86 - t328 * t92;
-    real_type t352 = ALIAS_LimitMinSpeed_DD(t1);
-    real_type t354 = ALIAS_PowerLimit_DD(t74);
-    real_type t355 = t354 * t51;
-    real_type t356 = t69 * t69;
-    real_type t358 = t70 * t70;
-    real_type t359 = 1.0 / t358;
-    real_type t362 = t155 * t51;
-    real_type t367 = t359 * t356 * t10 * t355 - 2 * t17 * t25 * t20 * t362 - t102 * t328 * t94 - t106 * t328 * t104 - t110 * t328 * t108 - t114 * t328 * t112 - t99 * t328 * t97 - 2 * ModelPars[3] * t104 - 2 * t151 * t185 - t328 * t36 - t328 * t80 - t328 * t95 + t352 * t51;
+    real_type t333 = 4 * t304 * t301 * t21 * t298 * t297 + 4 * t311 * t158 * t157 + 2 * t308 * t177 + 2 * t315 * t30 + 2 * t315 * t42 + 2 * t315 * t57 + 2 * t315 * t76 + 2 * t315 * t83 + 2 * t315 * t89 - t328 * t49 - t328 * t64 - t328 * t86 - t328 * t92;
+    real_type t349 = t155 * t51;
+    real_type t357 = ALIAS_LimitMinSpeed_DD(t1);
+    real_type t359 = ALIAS_PowerLimit_DD(t74);
+    real_type t360 = t359 * t51;
+    real_type t361 = t69 * t69;
+    real_type t363 = t70 * t70;
+    real_type t364 = 1.0 / t363;
+    real_type t367 = t364 * t361 * t10 * t360 - 2 * t17 * t25 * t20 * t349 - t102 * t328 * t94 - t106 * t328 * t104 - t110 * t328 * t108 - t114 * t328 * t112 - t99 * t328 * t97 - 2 * ModelPars[3] * t104 - 2 * t151 * t185 - t328 * t36 - t328 * t80 - t328 * t95 + t357 * t51;
     result__[ 12  ] = t333 + t367;
-    result__[ 13  ] = 4 * t307 * t304 * t21 * t1 * t20 * t19 * t300 - 4 * t17 * t158 * t19 * t362 + 2 * t311 * t204 * t203;
-    real_type t386 = t13 * t9 * t300;
-    result__[ 14  ] = t9 * t359 * t356 * t1 * t355 + 4 * t158 * t20 * t307 * t386 + 2 * t151 * t208 * t207 - t72 * t175 * t51 + t296 * t212;
+    result__[ 13  ] = 4 * t304 * t301 * t21 * t1 * t20 * t19 * t297 - 4 * t17 * t158 * t19 * t349 + 2 * t311 * t204 * t203;
+    real_type t386 = t13 * t9 * t297;
+    result__[ 14  ] = t9 * t364 * t361 * t1 * t360 + 4 * t158 * t20 * t304 * t386 + 2 * t151 * t208 * t207 - t72 * t175 * t51 + t308 * t212;
     result__[ 15  ] = result__[3];
     result__[ 16  ] = result__[8];
     result__[ 17  ] = result__[13];
     real_type t399 = t21 * t21;
-    result__[ 18  ] = 4 * t307 * t304 * t399 * t20 * t300 - 2 * t17 * t204 * t362;
-    result__[ 19  ] = 4 * t204 * t19 * t307 * t386;
+    result__[ 18  ] = 4 * t304 * t301 * t399 * t20 * t297 - 2 * t17 * t204 * t349;
+    result__[ 19  ] = 4 * t204 * t19 * t304 * t386;
     result__[ 20  ] = result__[4];
     result__[ 21  ] = result__[9];
     result__[ 22  ] = result__[14];
     result__[ 23  ] = result__[19];
     real_type t410 = t12 * t12;
-    result__[ 24  ] = 4 * t307 / t410 * t10 * t300 - 2 * t208 * t362 + t359 * t356 * t21 * t355;
+    result__[ 24  ] = 4 * t304 / t410 * t10 * t297 - 2 * t208 * t349 + t364 * t361 * t21 * t360;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 25, i_segment );
   }

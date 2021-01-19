@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type b = 3;
     real_type a = 1;
+    real_type b = 3;
     real_type u0 = b-a;
     real_type L0 = (u0^2+1)^(1/2.0);
     real_type L = L0;

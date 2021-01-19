@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -302,82 +302,6 @@ namespace OrbitTransferDefine {
     L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
     L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
-  }
-
-  /*\
-   |   ___       ___      _                               _
-   |  |   \ _  _|   \__ _| |_ __   _ _ _  _ _ __  ___ _ _(_)__
-   |  | |) | || | |) \ \ / | '_ \ | ' \ || | '  \/ -_) '_| / _|
-   |  |___/ \_,_|___//_\_\_| .__/ |_||_\_,_|_|_|_\___|_| |_\__|
-   |                       |_|
-  \*/
-
-  bool
-  OrbitTransfer::DuDxlp_full_numeric(
-    NodeType2 const          & NODE__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
-  ) const {
-    static integer DgDu_I[ 1 ], DgDu_J[ 1 ];
-    static integer DgDxlp_I[ 3 ], DgDxlp_J[ 3 ];
-    static bool    computed_pattern = false;
-    if ( !computed_pattern ) {
-      this->DgDu_pattern( DgDu_I, DgDu_J );
-      this->DgDxlp_pattern( DgDxlp_I, DgDxlp_J );
-      computed_pattern = true;
-    }
-    real_type DgDu_V[ 1 ], DgDxlp_V[ 3 ];
-    this->DgDu_sparse( NODE__, U__, P__, DgDu_V );
-    this->DgDxlp_sparse( NODE__, U__, P__, DgDxlp_V );
-
-    integer   ipiv[ 1 ];
-    real_type DgDu_storage[ 1 ];
-    MatrixWrapper<real_type> DgDu( DgDu_storage, 1, 1, 1 );
-    DgDu.zero_fill();
-    DuDxlp.zero_fill();
-
-    // fill DgDu
-    DgDu( DgDu_I[ 0 ], DgDu_J[ 0 ] ) = DgDu_V[0];
-    // fill DgDxlp
-    DuDxlp( DgDxlp_I[ 0 ], DgDxlp_J[ 0] ) = -DgDxlp_V[0];
-    DuDxlp( DgDxlp_I[ 1 ], DgDxlp_J[ 1] ) = -DgDxlp_V[1];
-    DuDxlp( DgDxlp_I[ 2 ], DgDxlp_J[ 2] ) = -DgDxlp_V[2];
-    integer info = alglin::gesv( 1, 10, DgDu.data(), 1, ipiv, DuDxlp.data(), 1 );
-    return info == 0;
-  }
-
-  bool
-  OrbitTransfer::DuDxlp_full_numeric(
-    NodeType2 const          & LEFT__,
-    NodeType2 const          & RIGHT__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
-  ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[5];
-    real_type L__[5];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    return this->DuDxlp_full_numeric( NODE__, P__, U__, DuDxlp );
   }
 
   /*\

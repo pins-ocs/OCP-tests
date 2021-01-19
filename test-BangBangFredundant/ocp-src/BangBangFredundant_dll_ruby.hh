@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_dll_ruby.hh                                 |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -105,8 +105,8 @@ namespace BangBangFredundantDefine {
   public:
 
     BANGBANGFREDUNDANT_API_DLL
-    BangBangFredundant_Problem( ThreadPool * pTP, Console * pConsole )
-    : model("BangBangFredundant",pTP,pConsole)
+    BangBangFredundant_Problem( ThreadPool * TP, Console const * console )
+    : model("BangBangFredundant",TP,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

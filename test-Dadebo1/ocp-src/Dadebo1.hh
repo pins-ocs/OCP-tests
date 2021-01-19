@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1.hh                                                     |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -157,8 +157,8 @@ namespace Dadebo1Define {
     explicit
     Dadebo1(
       string  const & name,
-      ThreadPool    * _TP,
-      Console const * _pConsole
+      ThreadPool    * TP,
+      Console const * console
     );
 
     DADEBO1_API_DLL virtual
@@ -242,7 +242,11 @@ namespace Dadebo1Define {
     // Continuation phase update
     DADEBO1_API_DLL
     void
-    updateContinuation( integer phase, real_type s ) MECHATRONIX_OVERRIDE;
+    updateContinuation(
+      integer   phase,
+      real_type old_s,
+      real_type s
+    ) MECHATRONIX_OVERRIDE;
 
     // save model parameters
     DADEBO1_API_DLL virtual

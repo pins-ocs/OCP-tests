@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -155,10 +155,10 @@ namespace CrossroadDefine {
   */
   Crossroad::Crossroad(
     string  const & name,
-    ThreadPool    * _TP,
-    Console const * _pConsole
+    ThreadPool    * TP,
+    Console const * console
   )
-  : Discretized_Indirect_OCP( name, _TP, _pConsole )
+  : Discretized_Indirect_OCP( name, TP, console )
   // Controls
   , jerkControl("jerkControl")
   // Constraints 1D
@@ -205,7 +205,19 @@ namespace CrossroadDefine {
   //       |_|
   */
   void
-  Crossroad::updateContinuation( integer phase, real_type s ) {
+  Crossroad::updateContinuation(
+    integer   phase,
+    real_type old_s,
+    real_type s
+  ) {
+    int msg_level = 3;
+    m_console->message(
+      fmt::format(
+        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        phase+1, s, s-old_s
+      ),
+      msg_level
+    );
   }
 
   /* --------------------------------------------------------------------------
@@ -406,6 +418,7 @@ namespace CrossroadDefine {
   void
   Crossroad::setup( GenericContainer const & gc ) {
 
+    m_debug = false;
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("Crossroad::setup, Debug");
 

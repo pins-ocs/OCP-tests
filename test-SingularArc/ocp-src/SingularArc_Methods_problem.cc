@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Methods1.cc                                        |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -64,11 +64,6 @@ namespace SingularArcDefine {
 
   void
   SingularArc::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     real_type t2   = 1 - s;
     real_type t3   = pow(ModelPars[4], t2);
     real_type t5   = pow(ModelPars[5], s);
@@ -101,10 +96,12 @@ namespace SingularArcDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = P__[0];
     real_type t2   = tfbound(t1);
+    real_type t5   = U__[0];
     real_type t9   = X__[0];
     real_type t10  = cos(t9);
     real_type t14  = sin(t9);
-    return t10 * t1 * L__[1] + t14 * t1 * L__[2] + U__[0] * t1 * L__[0] + t2;
+    real_type t16  = uControl(t5, -2, 2);
+    return t10 * t1 * L__[1] + t14 * t1 * L__[2] + t5 * t1 * L__[0] + t16 + t2;
   }
 
   /*\

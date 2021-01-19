@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods1.cc                                             |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -121,15 +121,23 @@ namespace FarmerDefine {
     real_type t38  = t1 * t1;
     real_type t40  = t15 * t15;
     real_type t42  = t2 * t2;
-    real_type t46  = -t8 + U__[0];
+    real_type t45  = U__[0];
+    real_type t46  = -t8 + t45;
     real_type t47  = t46 * t46;
-    real_type t51  = -t1 + U__[1];
+    real_type t50  = U__[1];
+    real_type t51  = -t1 + t50;
     real_type t52  = t51 * t51;
-    real_type t56  = -t15 + U__[2];
+    real_type t55  = U__[2];
+    real_type t56  = -t15 + t55;
     real_type t57  = t56 * t56;
-    real_type t61  = -t2 + U__[3];
+    real_type t60  = U__[3];
+    real_type t61  = -t2 + t60;
     real_type t62  = t61 * t61;
-    return t4 + t34 * ModelPars[18] + t36 * t6 + t38 * t10 + t40 * t13 + t42 * t17 + t47 * ModelPars[14] + t52 * ModelPars[15] + t57 * ModelPars[16] + t62 * ModelPars[17] + 1.0 / ModelPars[5] * t46 * L__[0] + 1.0 / ModelPars[6] * t51 * L__[1] + 1.0 / ModelPars[7] * t56 * L__[2] - 1.0 / ModelPars[8] * (-t15 + t2) * L__[3] + 1.0 / ModelPars[9] * t61 * L__[4];
+    real_type t94  = x1__oControl(t45, -0.1e-2, 100);
+    real_type t95  = x2__oControl(t50, -0.1e-2, 100);
+    real_type t96  = x3__oControl(t55, -0.1e-2, 100);
+    real_type t97  = x4__oControl(t60, -0.1e-2, 100);
+    return t4 + t34 * ModelPars[18] + t36 * t6 + t38 * t10 + t40 * t13 + t42 * t17 + t47 * ModelPars[14] + t52 * ModelPars[15] + t57 * ModelPars[16] + t62 * ModelPars[17] + 1.0 / ModelPars[5] * t46 * L__[0] + 1.0 / ModelPars[6] * t51 * L__[1] + 1.0 / ModelPars[7] * t56 * L__[2] - 1.0 / ModelPars[8] * (-t15 + t2) * L__[3] + 1.0 / ModelPars[9] * t61 * L__[4] + t94 + t95 + t96 + t97;
   }
 
   /*\

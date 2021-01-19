@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Data.lua                                             |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,15 +17,20 @@
 
 --]]
 
+-- User Header
+
 -- Auxiliary values
 jerk_min = -10
 jerk_max = 10
+wJ       = 1/jerk_max**2
 v_max    = 30
 L        = 100
 s_f      = L
-wJ       = 1/jerk_max**2
 
 content = {
+
+  -- activate run time debug
+  data.Debug = false,
 
   -- Level of message
   InfoLevel = 4,
@@ -56,12 +61,21 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
+    -- ==============================================================
+    -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
+    -- "LM" = Levenberg–Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
+    solver = "QN",
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",
-    MaxIter       = 50,
-    Tolerance     = 1e-9,
-    Iterative     = true,
-    InfoLevel     = -1 -- suppress all messages
+    -- "BFGS", "DFP", "SR1" for Quasi Newton
+    update = "BFGS",
+    -- 'EXACT', 'ARMIJO'
+    linesearch = "EXACT",
+    -- ==============================================================
+    MaxIter   = 50,
+    Tolerance = 1e-9,
+    Iterative = true,
+    InfoLevel = -1 -- suppress all messages
   },
 
   -- setup solver
@@ -152,8 +166,8 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
+  -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     jerkControl = {
       type      = 'LOGARITHMIC',
@@ -197,13 +211,13 @@ content = {
     segments = {
       
       {
-        length = 0.5,
         n      = 100,
+        length = 0.5,
       },
       
       {
-        length = 0.5,
         n      = 100,
+        length = 0.5,
       },
     },
   },

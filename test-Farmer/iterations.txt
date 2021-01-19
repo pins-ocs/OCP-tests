@@ -70,51 +70,45 @@ Model Parameters
 .....................................x30 = 0.001
 .....................................x40 = 0.001
 INFO CLASS = Farmer
-  dim_u        = 4
-  dim_q        = 1
-  dim_x        = 5
-  dim_p        = 0
-  dim_omega    = 5
-  dim_big_bc   = 15
-  numNodes     = 401
-  InitialBC    = 10
-  FinalBC      = 5
-  CyclicBC     = 0
-  InitialOMEGA = 5
-  FinalOMEGA   = 0
-  CyclicOMEGA  = 0
-  nZ_total     = 5615
-  nQ_total     = 401
-  FD jacobian  = NO
+  numNodes    = 401
+  dim         = u = 4, q = 1, x = 5, p = 0, omega = 5, big_bc = 15
+  BC          = Inital = 10, Final = 5, Cyclic = 0
+  OMEGA       = Inital = 5, Final = 0, Cyclic = 0
+  total       = nZ = 4015, UC = 1600, Q = 401
+  index start = omega = 4010, p = 4015
+  FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
 
 
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  1,  1] ( 0.000266, 3.00e-06) [    0.118,  0.00265]      1.00 ( 0: 0): 0: 0: 0 G
-[  2,  1] ( 3.00e-06, 5.31e-10) [  0.00255, 3.85e-07]      1.00 ( 1: 0): 0: 0: 0 G
-[  3,  1] ( 5.31e-10, 1.07e-15) [ 3.85e-07, 5.28e-13]      1.00 ( 2: 0): 0: 0: 0 G
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  1,  1] (0.000372 ,4.19e-06 ) [0.165    ,0.00370  ] 1.00       0: 0
+[  2,  1] (4.19e-06 ,7.42e-10 ) [0.00357  ,5.38e-07 ] 1.00       0: 0
+[  3,  1] (7.42e-10 ,1.50e-15 ) [5.39e-07 ,7.39e-13 ] 1.00       0: 0
 
------------------------------ STATISTIC ------------------------------
-Elapsed Time           = 6.64 [ms]     timeout             = 0 [ms]
-iteration              = 3             tolerance           = 1.000e-09 
-max iterations         = 120           Total Equations     = 5615
-max accumul. iter.     = 800           Memory Used         = 683Kb (+67bytes)
----------------------------- Continuation ----------------------------
-Initial Step           = 0.2           Minimum Step        = 0.001     
-Reduce Factor          = 0.5           Augment Factor      = 1.5       
----------------------------- valutations -----------------------------
-Merit Function         = 0             Function Evaluation = 4         
-Jacobian Factorization = 3             Jacobian Inversion  = 6         
-----------------------------------------------------------------------
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 18.1[ms]      timeout        = 0 [ms]
+iteration      = 3             tolerance      = 1.000e-09 
+max iterations = 120           N. Equations   = 4015
+max acc. iter. = 800           N. System pars = 1600
+Converged      = YES           Memory Used    = 560Kb (+26bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 4             Jacobian       = 3         
+Factorization  = 3             Inversion      = 6         
+------------------------ USER INFO -------------------------
+last ||d||_inf = 7.0846e-12    last||d1||_inf = 6.0664e-06
+last ||f||_inf = 8.3930e-09    last||f1||_1   = 7.4243e-10
+------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 7.0846e-12      last `new' ||d||_inf  = 6.0664e-06
-last ||f||_inf = 8.3930e-09      last ||f||_1          = 5.3087e-10
-
-target [Lagrange,Mayer]        = [    0.0122020,       0.00000]
-[Penalties/Barriers, Controls] = [  1.71678e-05,   0.00928353]
+target [Lagrange,Mayer]       = [ 0.01220, 0.000 ]
+[Penalties/Barriers,Controls] = [ 1.717e-05, 0.009284 ]
 All Done Folks!

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods1.cc                                       |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -51,11 +51,6 @@ namespace HangingChainDefine {
 
   void
   HangingChain::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     ModelPars[0] = ModelPars[1] * (1 - s) + ModelPars[2] * s;
   }
 

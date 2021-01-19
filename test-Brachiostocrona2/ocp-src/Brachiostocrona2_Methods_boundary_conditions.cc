@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -191,11 +191,11 @@ namespace Brachiostocrona2Define {
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[0];
     result__[ 1   ] = OMEGA__[1] + LL__[1];
-    real_type t6   = ModelPars[4];
-    result__[ 2   ] = t6 * LL__[2] + OMEGA__[2];
+    real_type t5   = ModelPars[4];
+    result__[ 2   ] = LL__[2] * t5 + OMEGA__[2];
     result__[ 3   ] = OMEGA__[3] - LR__[0];
     result__[ 4   ] = OMEGA__[4] - LR__[1];
-    result__[ 5   ] = -LR__[2] * t6;
+    result__[ 5   ] = -LR__[2] * t5;
     result__[ 6   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 7, i_segment_left, i_segment_right );

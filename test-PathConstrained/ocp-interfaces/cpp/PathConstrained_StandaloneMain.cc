@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type tol_ctrl0 = 0.01;
     real_type epsi_ctrl0 = 0.01;
     real_type epsi_ctrl = epsi_ctrl0;
-    real_type tol_ctrl0 = 0.01;
     real_type tol_ctrl = tol_ctrl0;
     integer InfoLevel = 4;
 

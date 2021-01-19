@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -68,11 +68,6 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     real_type t3   = explog(s, ModelPars[3], ModelPars[14]);
     TControl.update_epsilon(t3);
     real_type t6   = explog(s, ModelPars[10], ModelPars[16]);
@@ -192,11 +187,11 @@ namespace GoddardRocketDefine {
   real_type
   GoddardRocket::explog_D_1_2( real_type s__XO, real_type a__XO, real_type b__XO ) const {
     real_type t1   = pow(b__XO, s__XO);
-    real_type t2   = pow(a__XO, -s__XO);
-    real_type t4   = -1 + s__XO;
-    real_type t5   = log(a__XO);
-    real_type t8   = log(b__XO);
-    return (t5 * t4 - t8 * t4 - 1) * t2 * t1;
+    real_type t2   = -1 + s__XO;
+    real_type t3   = log(a__XO);
+    real_type t6   = log(b__XO);
+    real_type t10  = pow(a__XO, -s__XO);
+    return t10 * (t3 * t2 - t6 * t2 - 1) * t1;
   }
 
   real_type
@@ -278,7 +273,8 @@ namespace GoddardRocketDefine {
     real_type t13  = X__[0];
     real_type t14  = DD(t13, t5);
     real_type t18  = gg(t13);
-    return t2 + t4 + t6 + t5 * t3 * L__[0] + (1.0 / t1 * (t12 - t14) - t18) * t3 * L__[1] - 1.0 / ModelPars[2] * t12 * t3 * L__[2];
+    real_type t28  = TControl(t12, 0, ModelPars[1]);
+    return t2 + t4 + t6 + t5 * t3 * L__[0] + (1.0 / t1 * (t12 - t14) - t18) * t3 * L__[1] - 1.0 / ModelPars[2] * t12 * t3 * L__[2] + t28;
   }
 
   /*\

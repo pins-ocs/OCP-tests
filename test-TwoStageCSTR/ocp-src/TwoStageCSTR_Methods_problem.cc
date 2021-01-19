@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods1.cc                                       |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -190,7 +190,9 @@ namespace TwoStageCSTRDefine {
     real_type t24  = t17 - (2 + t10) * (t3 + 0.25e0);
     real_type t27  = ModelPars[1];
     real_type t29  = R2(t5, t7);
-    return t2 + t4 + t6 + t8 + (t11 + t13) * ModelPars[0] + t18 * L__[0] + t24 * L__[1] + (t1 - t5 - t18 * t27 - t29 + 0.25e0) * L__[2] + (t3 - 2 * t7 - (t7 + 0.25e0) * t12 - t24 * t27 + t29 - 0.25e0) * L__[3];
+    real_type t39  = u1Control(t10, -0.5e0, 0.5e0);
+    real_type t40  = u2Control(t12, -0.5e0, 0.5e0);
+    return t2 + t4 + t6 + t8 + (t11 + t13) * ModelPars[0] + t18 * L__[0] + t24 * L__[1] + (t1 - t5 - t18 * t27 - t29 + 0.25e0) * L__[2] + (t3 - 2 * t7 - (t7 + 0.25e0) * t12 - t24 * t27 + t29 - 0.25e0) * L__[3] + t39 + t40;
   }
 
   /*\

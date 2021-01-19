@@ -12,51 +12,45 @@ User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 1001
 Segment N.0
 s0 = 0 length = 1 npts = 1001 no data set
 INFO CLASS = Dadebo1
-  dim_u        = 1
-  dim_q        = 1
-  dim_x        = 2
-  dim_p        = 0
-  dim_omega    = 3
-  dim_big_bc   = 7
-  numNodes     = 1001
-  InitialBC    = 4
-  FinalBC      = 3
-  CyclicBC     = 0
-  InitialOMEGA = 2
-  FinalOMEGA   = 1
-  CyclicOMEGA  = 0
-  nZ_total     = 5007
-  nQ_total     = 1001
-  FD jacobian  = NO
+  numNodes    = 1001
+  dim         = u = 1, q = 1, x = 2, p = 0, omega = 3, big_bc = 7
+  BC          = Inital = 4, Final = 3, Cyclic = 0
+  OMEGA       = Inital = 2, Final = 1, Cyclic = 0
+  total       = nZ = 4007, UC = 1000, Q = 1001
+  index start = omega = 4004, p = 4007
+  FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
 
 
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  1,  1] ( 0.000799, 1.51e-05) [    0.191,  0.00757]      1.00 ( 0: 0): 0: 0: 0 G
-[  2,  1] ( 1.51e-05, 1.67e-17) [  0.00757, 1.28e-17]      1.00 ( 1: 0): 0: 0: 0 G
-[  3,  1] ( 1.67e-17, 1.66e-17) [ 1.28e-17, 1.25e-17]      1.00 ( 2: 0): 0: 0: 0 G
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  1,  1] (0.000998 ,1.89e-05 ) [0.239    ,0.00946  ] 1.00       0: 0
+[  2,  1] (1.89e-05 ,2.08e-17 ) [0.00946  ,1.60e-17 ] 1.00       0: 0
+[  3,  1] (2.08e-17 ,2.07e-17 ) [1.60e-17 ,1.56e-17 ] 1.00       0: 0
 
------------------------------ STATISTIC ------------------------------
-Elapsed Time           = 4.56 [ms]     timeout             = 0 [ms]
-iteration              = 3             tolerance           = 1.000e-09 
-max iterations         = 300           Total Equations     = 5007
-max accumul. iter.     = 800           Memory Used         = 499Kb (+38bytes)
----------------------------- Continuation ----------------------------
-Initial Step           = 0.2           Minimum Step        = 0.001     
-Reduce Factor          = 0.5           Augment Factor      = 1.5       
----------------------------- valutations -----------------------------
-Merit Function         = 0             Function Evaluation = 4         
-Jacobian Factorization = 3             Jacobian Inversion  = 6         
-----------------------------------------------------------------------
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 4.80[ms]      timeout        = 0 [ms]
+iteration      = 3             tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 4007
+max acc. iter. = 800           N. System pars = 1000
+Converged      = YES           Memory Used    = 404Kb (+64bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 4             Jacobian       = 3         
+Factorization  = 3             Inversion      = 6         
+------------------------ USER INFO -------------------------
+last ||d||_inf = 5.7289e-17    last||d1||_inf = 8.2450e-17
+last ||f||_inf = 1.1184e-16    last||f1||_1   = 2.0821e-17
+------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 5.7289e-17      last `new' ||d||_inf  = 8.2450e-17
-last ||f||_inf = 1.1184e-16      last ||f||_1          = 1.6663e-17
-
-target [Lagrange,Mayer]        = [       0.00000,     0.924234]
-[Penalties/Barriers, Controls] = [       0.00000,       0.00000]
+target [Lagrange,Mayer]       = [ 0.000, 0.9242 ]
+[Penalties/Barriers,Controls] = [ 0.000, 0.000 ]
 All Done Folks!

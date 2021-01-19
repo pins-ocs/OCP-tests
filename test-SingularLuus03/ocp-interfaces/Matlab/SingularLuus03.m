@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: SingularLuus03.m                                               %
 %                                                                       %
-%  version: 1.0   date 14/12/2020                                       %
+%  version: 1.0   date 19/1/2021                                        %
 %                                                                       %
-%  Copyright (C) 2020                                                   %
+%  Copyright (C) 2021                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -186,9 +186,11 @@ classdef SingularLuus03 < handle
       ok = SingularLuus03_Mex( 'solve', self.objectHandle, varargin{:} );
     end
     % -------------------------------------------------------------------------
-    function updateContinuation( self, n, s )
+    function updateContinuation( self, n, old_s, s )
       % set parameter of the problem for continuation step `n` at fraction `s`
-      SingularLuus03_Mex( 'updateContinuation', self.objectHandle, n, s );
+      SingularLuus03_Mex( ...
+        'updateContinuation', self.objectHandle, n, old_s, s ...
+      );
     end
 
     % -------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods1.cc                        |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -64,11 +64,6 @@ namespace SingularConstrainedCalogeroDefine {
 
   void
   SingularConstrainedCalogero::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     real_type t2   = 1 - s;
     uMaxBound.update_epsilon(s * ModelPars[5] + t2 * ModelPars[4]);
     uMaxBound.update_tolerance(s * ModelPars[1] + t2 * ModelPars[0]);
@@ -98,7 +93,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type t1   = U__[0];
     real_type t3   = Q__[0];
     real_type t5   = uMaxBound(t1 - 1 - X__[0] + t3);
-    return t5 + (t3 - 4) * t1 + t1 * L__[0];
+    real_type t10  = uControl(t1, 0, 2);
+    return t5 + (t3 - 4) * t1 + t1 * L__[0] + t10;
   }
 
   /*\

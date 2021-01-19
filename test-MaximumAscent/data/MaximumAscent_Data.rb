@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 14/12/2020                                       #
+#  version: 1.0   date 19/1/2021                                        #
 #                                                                       #
-#  Copyright (C) 2020                                                   #
+#  Copyright (C) 2021                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -17,21 +17,26 @@
 
 include Mechatronix
 
+# User Header
+
 # Auxiliary values
-r0     = 6678140
-days1  = 30
-T      = 0.68
-Isp    = 1500
-u0     = 0
 g0     = 9.80665
-mdot   = T/g0/Isp
 days   = 1
+tf     = 86400*days
+days1  = 30
 mu     = 398600441800000
+u0     = 0
+Isp    = 1500
+T      = 0.68
+mdot   = T/g0/Isp
+r0     = 6678140
 v0     = (mu/r0)**(1/2.0)
 u0_bar = u0/v0
-tf     = 86400*days
 
 mechatronix do |data|
+
+  # activate run time debug
+  data.Debug = false
 
   # Level of message
   data.InfoLevel = 4
@@ -64,10 +69,16 @@ mechatronix do |data|
   # setup solver for controls
   data.ControlSolver = {
     # ==============================================================
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
+    # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
+    # 'LM' = Levenberg–Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
+    :solver => 'NewtonDumped',
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
+    # 'BFGS', 'DFP', 'SR1' for Quasi Newton
+    :update => 'BFGS',
+    # 'EXACT', 'ARMIJO'
+    :linesearch => 'EXACT',
     # ==============================================================
-    :Rcond     => 1e-14,  # reciprocal condition number threshold for QR, SVD, LSS, LSY
     :MaxIter   => 50,
     :Tolerance => 1e-9,
     :Iterative => false,
@@ -86,7 +97,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
     :last_factorization => 'LU',
-    ###:last_factorization => 'PINV',
+    #:last_factorization => 'PINV',
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped
@@ -177,8 +188,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 1000*days1,
         :length => 1,
+        :n      => 1000*days1,
       },
     ],
   };

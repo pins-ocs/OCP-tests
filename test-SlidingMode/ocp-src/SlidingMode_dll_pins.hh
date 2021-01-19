@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SlidingMode_dll_pins.hh                                        |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -108,8 +108,8 @@ namespace SlidingModeDefine {
   public:
 
     SLIDINGMODE_API_DLL
-    SlidingMode_Problem( ThreadPool * pTP, Console const * pConsole )
-    : model("SlidingMode",pTP,pConsole)
+    SlidingMode_Problem( ThreadPool * TP, Console const * console )
+    : model("SlidingMode",TP,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

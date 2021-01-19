@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods1.cc                                       |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -80,7 +80,10 @@ namespace BikeSteeringDefine {
     real_type t1   = X__[2];
     real_type t2   = minimumTimeSize(t1);
     real_type t11  = ModelPars[3];
-    return t2 + X__[0] * t1 * L__[0] + (X__[1] * t11 * ModelPars[2] * ModelPars[4] * t1 - U__[0] * t11 * t1) * L__[1];
+    real_type t17  = U__[0];
+    real_type t21  = ModelPars[0];
+    real_type t22  = FyControl(t17, -t21, t21);
+    return t2 + X__[0] * t1 * L__[0] + (X__[1] * t11 * ModelPars[2] * ModelPars[4] * t1 - t17 * t11 * t1) * L__[1] + t22 * t1;
   }
 
   /*\

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods1.cc                                              |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -79,7 +79,9 @@ namespace BrakeDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = P__[0];
     real_type t2   = Tpositive(t1);
-    return X__[1] * t1 * L__[0] + U__[0] * t1 * L__[1] + t2;
+    real_type t9   = U__[0];
+    real_type t11  = aControl(t9, -1, 1);
+    return t9 * t1 * L__[1] + X__[1] * t1 * L__[0] + t11 + t2;
   }
 
   /*\

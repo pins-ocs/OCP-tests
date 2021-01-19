@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -156,8 +156,8 @@ main() {
 
     // ClipIntervalWithSinAtan
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["h"] = 0.01;
     data_clip["delta"] = 0;
+    data_clip["h"] = 0.01;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
@@ -182,8 +182,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Bike1D_data.Mesh["s0"] = 0;
-Bike1D_data.Mesh["segments"][0]["length"] = 1000;
 Bike1D_data.Mesh["segments"][0]["n"] = 1000;
+Bike1D_data.Mesh["segments"][0]["length"] = 1000;
 
 
     // alias for user object classes passed as pointers

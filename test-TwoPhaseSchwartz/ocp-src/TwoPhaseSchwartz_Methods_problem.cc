@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods1.cc                                   |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -66,11 +66,6 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     real_type t2   = 1 - s;
     real_type t3   = pow(ModelPars[6], t2);
     real_type t5   = pow(ModelPars[7], s);
@@ -114,11 +109,13 @@ namespace TwoPhaseSchwartzDefine {
     real_type t12  = bound2(0.8e0 + t5);
     real_type t14  = U__[1];
     real_type t15  = t14 * t14;
+    real_type t20  = U__[0];
     real_type t21  = t1 * t1;
     real_type t29  = ModelPars[0];
     real_type t31  = X__[3];
     real_type t36  = X__[2] * X__[2];
-    return t10 + t12 + t15 * ModelPars[3] + t5 * L__[0] + (U__[0] - 0.1e0 * t5 * (2 * t21 + 1)) * L__[1] + t31 * t29 * L__[2] + (t14 - 0.1e0 * t31 * (2 * t36 + 1)) * t29 * L__[3];
+    real_type t43  = u1Control(t20, -1, 1);
+    return t10 + t12 + t15 * ModelPars[3] + t5 * L__[0] + (t20 - 0.1e0 * t5 * (2 * t21 + 1)) * L__[1] + t31 * t29 * L__[2] + (t14 - 0.1e0 * t31 * (2 * t36 + 1)) * t29 * L__[3] + t43;
   }
 
   /*\

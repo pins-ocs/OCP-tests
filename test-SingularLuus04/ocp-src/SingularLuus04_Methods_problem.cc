@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Methods1.cc                                     |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -62,11 +62,6 @@ namespace SingularLuus04Define {
 
   void
   SingularLuus04::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     uControl.update_epsilon(ModelPars[0] * (1 - s) + s * ModelPars[5]);
   }
 
@@ -91,8 +86,10 @@ namespace SingularLuus04Define {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t11  = X__[0] * X__[0];
-    return L__[0] * X__[1] + L__[1] * X__[2] + L__[2] * U__[0] + t11;
+    real_type t2   = X__[0] * X__[0];
+    real_type t10  = U__[0];
+    real_type t14  = uControl(t10, -1, 1);
+    return t2 + L__[0] * X__[1] + L__[1] * X__[2] + t10 * L__[2] + t14 * (t2 + ModelPars[4]);
   }
 
   /*\

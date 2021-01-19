@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Methods1.cc                                    |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -64,11 +64,6 @@ namespace PathConstrainedDefine {
 
   void
   PathConstrained::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     real_type t2   = 1 - s;
     real_type t3   = pow(ModelPars[0], t2);
     real_type t5   = pow(ModelPars[1], s);
@@ -110,7 +105,8 @@ namespace PathConstrainedDefine {
     real_type t9   = t8 * t8;
     real_type t12  = X__[0] * X__[0];
     real_type t13  = t5 * t5;
-    return t7 + 0.5e-2 * t9 + t12 + t13 + t5 * L__[0] + (-t5 + t8) * L__[1];
+    real_type t19  = uControl(t8, -20, 20);
+    return t7 + 0.5e-2 * t9 + t12 + t13 + t5 * L__[0] + (-t5 + t8) * L__[1] + t19;
   }
 
   /*\

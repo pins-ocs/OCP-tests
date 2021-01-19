@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,14 +50,14 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
-    real_type v_nom = 0.173;
-    real_type js_min = -50;
     real_type js_max = 30;
+    real_type v_nom = 0.173;
+    real_type mesh_segments = 100;
+    real_type js_min = -50;
+    real_type deltaFeed = v_nom;
     real_type path_following_tolerance = 1.0e-05;
     real_type pf_error = path_following_tolerance;
     real_type jn_max = 65;
-    real_type mesh_segments = 100;
-    real_type deltaFeed = v_nom;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

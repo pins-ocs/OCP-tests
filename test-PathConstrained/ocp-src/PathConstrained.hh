@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained.hh                                             |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -161,8 +161,8 @@ namespace PathConstrainedDefine {
     explicit
     PathConstrained(
       string  const & name,
-      ThreadPool    * _TP,
-      Console const * _pConsole
+      ThreadPool    * TP,
+      Console const * console
     );
 
     PATHCONSTRAINED_API_DLL virtual
@@ -246,7 +246,11 @@ namespace PathConstrainedDefine {
     // Continuation phase update
     PATHCONSTRAINED_API_DLL
     void
-    updateContinuation( integer phase, real_type s ) MECHATRONIX_OVERRIDE;
+    updateContinuation(
+      integer   phase,
+      real_type old_s,
+      real_type s
+    ) MECHATRONIX_OVERRIDE;
 
     // save model parameters
     PATHCONSTRAINED_API_DLL virtual

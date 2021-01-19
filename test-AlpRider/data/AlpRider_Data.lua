@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,13 +17,18 @@
 
 --]]
 
+-- User Header
+
 -- Auxiliary values
 tol0  = 0.1
-tol   = tol0
 epsi0 = 0.1
 epsi  = epsi0
+tol   = tol0
 
 content = {
+
+  -- activate run time debug
+  data.Debug = false,
 
   -- Level of message
   InfoLevel = 4,
@@ -54,12 +59,21 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
+    -- ==============================================================
+    -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
+    -- "LM" = Levenberg–Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
+    solver = "QN",
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",
-    MaxIter       = 50,
-    Tolerance     = 1e-9,
-    Iterative     = false,
-    InfoLevel     = -1 -- suppress all messages
+    -- "BFGS", "DFP", "SR1" for Quasi Newton
+    update = "BFGS",
+    -- 'EXACT', 'ARMIJO'
+    linesearch = "EXACT",
+    -- ==============================================================
+    MaxIter   = 50,
+    Tolerance = 1e-9,
+    Iterative = false,
+    InfoLevel = -1 -- suppress all messages
   },
 
   -- setup solver
@@ -171,18 +185,18 @@ content = {
     segments = {
       
       {
-        n      = 400,
         length = 1,
+        n      = 400,
       },
       
       {
-        n      = 400,
         length = 18,
+        n      = 400,
       },
       
       {
-        n      = 400,
         length = 1,
+        n      = 400,
       },
     },
   },

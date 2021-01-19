@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_dll_pins.hh                                             |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -108,8 +108,8 @@ namespace Bike1DDefine {
   public:
 
     BIKE1D_API_DLL
-    Bike1D_Problem( ThreadPool * pTP, Console const * pConsole )
-    : model("Bike1D",pTP,pConsole)
+    Bike1D_Problem( ThreadPool * TP, Console const * console )
+    : model("Bike1D",TP,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

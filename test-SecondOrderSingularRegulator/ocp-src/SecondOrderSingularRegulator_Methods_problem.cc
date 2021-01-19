@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SecondOrderSingularRegulator_Methods1.cc                       |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -75,10 +75,12 @@ namespace SecondOrderSingularRegulatorDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[1];
-    real_type t8   = X__[0] * X__[0];
-    real_type t9   = t2 * t2;
-    return t2 * L__[0] + L__[1] * U__[0] + t8 + t9;
+    real_type t1   = X__[1];
+    real_type t2   = t1 * t1;
+    real_type t4   = X__[0] * X__[0];
+    real_type t8   = U__[0];
+    real_type t10  = uControl(t8, -1, 1);
+    return t1 * L__[0] + t8 * L__[1] + t10 + t2 + t4;
   }
 
   /*\

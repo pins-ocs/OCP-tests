@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: SingularLuus02_fsolve_main.m                                   %
 %                                                                       %
-%  version: 1.0   date 14/12/2020                                       %
+%  version: 1.0   date 19/1/2021                                        %
 %                                                                       %
-%  Copyright (C) 2020                                                   %
+%  Copyright (C) 2021                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -36,7 +36,7 @@ ocp = SingularLuus02( 'SingularLuus02', infolevel );
 % -----------------------------------------------------------------------------
 ocp.setup('../../data/SingularLuus02_Data.rb');
 ocp.set_guess(); % use default guess
-%ocp.updateContinuation(0,1);
+%ocp.updateContinuation(0,0,1);
 
 solver = nlsys_solver_ipopt(ocp);
 x = solver.solve();

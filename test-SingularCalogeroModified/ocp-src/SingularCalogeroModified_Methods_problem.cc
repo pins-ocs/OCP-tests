@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods1.cc                           |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -62,11 +62,6 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     real_type t1   = ModelPars[1];
     real_type t5   = log(1.0 / t1 * ModelPars[4]);
     real_type t7   = exp(t5 * s);
@@ -96,7 +91,9 @@ namespace SingularCalogeroModifiedDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = Q__[0] * Q__[0];
     real_type t7   = pow(ModelPars[0] * t2 + X__[0] - 1, 2);
-    return L__[0] * X__[1] + L__[1] * U__[0] + t7;
+    real_type t12  = U__[0];
+    real_type t16  = uControl(t12, -1, 1);
+    return t7 + L__[0] * X__[1] + t12 * L__[1] + t16 * (ModelPars[1] + t7);
   }
 
   /*\

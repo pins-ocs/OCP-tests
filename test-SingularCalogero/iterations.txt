@@ -16,58 +16,52 @@ User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 101
 Segment N.0
 s0 = -1 length = 2 npts = 101 no data set
 INFO CLASS = SingularCalogero
-  dim_u        = 1
-  dim_q        = 1
-  dim_x        = 1
-  dim_p        = 0
-  dim_omega    = 0
-  dim_big_bc   = 2
-  numNodes     = 101
-  InitialBC    = 1
-  FinalBC      = 1
-  CyclicBC     = 0
-  InitialOMEGA = 0
-  FinalOMEGA   = 0
-  CyclicOMEGA  = 0
-  nZ_total     = 302
-  nQ_total     = 101
-  FD jacobian  = NO
+  numNodes    = 101
+  dim         = u = 1, q = 1, x = 1, p = 0, omega = 0, big_bc = 2
+  BC          = Inital = 1, Final = 1, Cyclic = 0
+  OMEGA       = Inital = 0, Final = 0, Cyclic = 0
+  total       = nZ = 202, UC = 100, Q = 101
+  index start = omega = 202, p = 202
+  FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
 
 
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  1,  1] (  0.00883,  0.00275) [    0.221, 0.000202]      1.00 ( 0: 0): 0: 0: 0 G
-[  2,  1] (  0.00275,  0.00170) [  0.00137, 0.000925]      1.00 ( 1: 0): 0: 0: 0 G
-[  3,  1] (  0.00170, 0.000892) [  0.00708,  0.00300]      1.00 ( 2: 0): 0: 0: 0 G
-[  4,  1] ( 0.000892, 0.000348) [  0.00980,  0.00164]      1.00 ( 3: 0): 0: 0: 0 G
-[  5,  1] ( 0.000348, 0.000154) [  0.00373, 0.000517]      1.00 ( 4: 0): 0: 0: 0 G
-[  6,  1] ( 0.000154, 5.47e-05) [  0.00109, 0.000147]      1.00 ( 5: 0): 0: 0: 0 G
-[  7,  1] ( 5.47e-05, 9.89e-06) [ 0.000259, 2.32e-05]      1.00 ( 6: 0): 0: 0: 0 G
-[  8,  1] ( 9.89e-06, 3.75e-07) [ 3.10e-05, 7.52e-07]      1.00 ( 7: 0): 0: 0: 0 G
-[  9,  1] ( 3.75e-07, 5.14e-10) [ 8.00e-07, 8.46e-10]      1.00 ( 8: 0): 0: 0: 0 G
-[ 10,  1] ( 5.14e-10, 8.98e-16) [ 8.48e-10, 1.26e-15]      1.00 ( 9: 0): 0: 0: 0 G
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  1,  1] (0.0132   ,0.00411  ) [0.330    ,0.000302 ] 1.00       0: 0
+[  2,  1] (0.00411  ,0.00254  ) [0.00205  ,0.00138  ] 1.00       0: 0
+[  3,  1] (0.00254  ,0.00133  ) [0.0106   ,0.00449  ] 1.00       0: 0
+[  4,  1] (0.00133  ,0.000520 ) [0.0146   ,0.00245  ] 1.00       0: 0
+[  5,  1] (0.000520 ,0.000230 ) [0.00557  ,0.000772 ] 1.00       0: 0
+[  6,  1] (0.000230 ,8.18e-05 ) [0.00162  ,0.000221 ] 1.00       0: 0
+[  7,  1] (8.18e-05 ,1.48e-05 ) [0.000387 ,3.48e-05 ] 1.00       0: 0
+[  8,  1] (1.48e-05 ,5.61e-07 ) [4.64e-05 ,1.12e-06 ] 1.00       0: 0
+[  9,  1] (5.61e-07 ,7.69e-10 ) [1.20e-06 ,1.26e-09 ] 1.00       0: 0
+[ 10,  1] (7.69e-10 ,1.34e-15 ) [1.27e-09 ,1.88e-15 ] 1.00       0: 0
 
------------------------------ STATISTIC ------------------------------
-Elapsed Time           = 3.98 [ms]     timeout             = 0 [ms]
-iteration              = 10            tolerance           = 1.000e-09 
-max iterations         = 300           Total Equations     = 302
-max accumul. iter.     = 800           Memory Used         = 32Kb (+70bytes)
----------------------------- Continuation ----------------------------
-Initial Step           = 0.2           Minimum Step        = 0.001     
-Reduce Factor          = 0.5           Augment Factor      = 1.5       
----------------------------- valutations -----------------------------
-Merit Function         = 0             Function Evaluation = 11        
-Jacobian Factorization = 10            Jacobian Inversion  = 20        
-----------------------------------------------------------------------
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 3.53[ms]      timeout        = 0 [ms]
+iteration      = 10            tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 202
+max acc. iter. = 800           N. System pars = 100
+Converged      = YES           Memory Used    = 26Kb (+71bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 11            Jacobian       = 10        
+Factorization  = 10            Inversion      = 20        
+------------------------ USER INFO -------------------------
+last ||d||_inf = 2.5413e-14    last||d1||_inf = 1.8662e-08
+last ||f||_inf = 3.3162e-08    last||f1||_1   = 7.6892e-10
+------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 2.5413e-14      last `new' ||d||_inf  = 1.8662e-08
-last ||f||_inf = 3.3162e-08      last ||f||_1          = 5.1431e-10
-
-target [Lagrange,Mayer]        = [   0.00723321,       0.00000]
-[Penalties/Barriers, Controls] = [       0.00000,   0.00100947]
+target [Lagrange,Mayer]       = [ 0.007233, 0.000 ]
+[Penalties/Barriers,Controls] = [ 0.000, 0.001009 ]
 All Done Folks!

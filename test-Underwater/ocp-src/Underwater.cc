@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -165,10 +165,10 @@ namespace UnderwaterDefine {
   */
   Underwater::Underwater(
     string  const & name,
-    ThreadPool    * _TP,
-    Console const * _pConsole
+    ThreadPool    * TP,
+    Console const * console
   )
-  : Discretized_Indirect_OCP( name, _TP, _pConsole )
+  : Discretized_Indirect_OCP( name, TP, console )
   // Controls
   , u1Control("u1Control")
   , u2Control("u2Control")
@@ -217,21 +217,33 @@ namespace UnderwaterDefine {
   //       |_|
   */
   void
-  Underwater::updateContinuation( integer phase, real_type s ) {
+  Underwater::updateContinuation(
+    integer   phase,
+    real_type old_s,
+    real_type s
+  ) {
+    int msg_level = 3;
+    m_console->message(
+      fmt::format(
+        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        phase+1, s, s-old_s
+      ),
+      msg_level
+    );
     UTILS_ASSERT(
-      s >= 0 && s <= 1,
-      "Underwater::updateContinuation( phase number = {}, s = {}) "
-      "s must be in the interval [0,1]\n",
-      phase, s
+      0 <= old_s && old_s < s && s <= 1,
+      "Underwater::updateContinuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
     );
     switch ( phase ) {
       case 0: continuationStep0( s ); break;
       case 1: continuationStep1( s ); break;
       default:
-       UTILS_ERROR(
-          "Underwater::updateContinuation( phase number = {}, s = {} )"
+        UTILS_ERROR(
+          "Underwater::updateContinuation( phase number={}, old_s={}, s={} )"
           " phase N.{} is not defined\n",
-          phase, s, phase
+          phase, old_s, s, phase
         );
     }
   }
@@ -407,6 +419,7 @@ namespace UnderwaterDefine {
   void
   Underwater::setup( GenericContainer const & gc ) {
 
+    m_debug = false;
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("Underwater::setup, Debug");
 

@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFredundant_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 14/12/2020                                       #
+#  version: 1.0   date 19/1/2021                                        #
 #                                                                       #
-#  Copyright (C) 2020                                                   #
+#  Copyright (C) 2021                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -17,10 +17,15 @@
 
 include Mechatronix
 
+# User Header
+
 # Auxiliary values
 maxAF = 10
 
 mechatronix do |data|
+
+  # activate run time debug
+  data.Debug = false
 
   # Level of message
   data.InfoLevel = 4
@@ -53,10 +58,16 @@ mechatronix do |data|
   # setup solver for controls
   data.ControlSolver = {
     # ==============================================================
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
+    # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
+    # 'LM' = Levenberg–Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
+    :solver => 'NewtonDumped',
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
+    # 'BFGS', 'DFP', 'SR1' for Quasi Newton
+    :update => 'BFGS',
+    # 'EXACT', 'ARMIJO'
+    :linesearch => 'EXACT',
     # ==============================================================
-    :Rcond     => 1e-14,  # reciprocal condition number threshold for QR, SVD, LSS, LSY
     :MaxIter   => 50,
     :Tolerance => 1e-9,
     :Iterative => false,
@@ -75,7 +86,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
     :last_factorization => 'LU',
-    ###:last_factorization => 'PINV',
+    #:last_factorization => 'PINV',
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped
@@ -139,8 +150,8 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # Controls
-  # Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
+  # Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:aF1Control] = {
     :type      => 'COS_LOGARITHMIC',
@@ -177,8 +188,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 100,
+        :length => 1,
       },
     ],
   };

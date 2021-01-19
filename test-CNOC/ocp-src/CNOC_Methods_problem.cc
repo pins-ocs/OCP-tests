@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods1.cc                                               |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -184,7 +184,12 @@ namespace CNOCDefine {
     real_type t62  = ALIAS_kappa(t33);
     real_type t65  = 1.0 / (-t62 * t15 + 1);
     real_type t73  = t65 * t62;
-    return t2 + t13 * t1 + t19 * t1 + t25 * t1 + t31 * t1 + t43 * t1 + t51 * t1 + 1.0 / t57 * t54 * t1 + t1 * t65 * t3 * L__[0] + t1 * t5 * L__[1] - t1 * (-t73 * t5 * t3 - t21) * L__[2] - t1 * (t65 * t62 * t4 - t27) * L__[3] - t1 * (-t73 * t27 * t3 - U__[0]) * L__[4] - t1 * (t73 * t21 * t3 - U__[1]) * L__[5];
+    real_type t85  = U__[0];
+    real_type t92  = U__[1];
+    real_type t100 = jsControl(t85, ModelPars[10], ModelPars[9]);
+    real_type t102 = ModelPars[8];
+    real_type t103 = jnControl(t92, -t102, t102);
+    return t2 + t13 * t1 + t19 * t1 + t25 * t1 + t31 * t1 + t43 * t1 + t51 * t1 + 1.0 / t57 * t54 * t1 + t1 * t65 * t3 * L__[0] + t1 * t5 * L__[1] - t1 * (-t73 * t5 * t3 - t21) * L__[2] - t1 * (t65 * t62 * t4 - t27) * L__[3] - t1 * (-t73 * t27 * t3 - t85) * L__[4] - t1 * (t73 * t21 * t3 - t92) * L__[5] + t100 * t1 + t103 * t1;
   }
 
   /*\

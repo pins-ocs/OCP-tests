@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: PointMassCarModel_2_ffi_structs.rb                                #
 #                                                                          #
-#  version: 1.0   date 19/1/2021                                           #
+#  version: 1.0   date 20/1/2021                                           #
 #                                                                          #
 #  Copyright (C) 2021                                                      #
 #                                                                          #

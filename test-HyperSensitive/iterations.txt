@@ -15,54 +15,47 @@ Model Parameters
 .....................................y_f = 1
 .....................................y_i = 1.5
 INFO CLASS = HyperSensitive
-  dim_u        = 1
-  dim_q        = 1
-  dim_x        = 1
-  dim_p        = 0
-  dim_omega    = 2
-  dim_big_bc   = 4
-  numNodes     = 51
-  InitialBC    = 2
-  FinalBC      = 2
-  CyclicBC     = 0
-  InitialOMEGA = 1
-  FinalOMEGA   = 1
-  CyclicOMEGA  = 0
-  nZ_total     = 154
-  nQ_total     = 51
-  FD jacobian  = NO
+  numNodes    = 51
+  dim         = u = 1, q = 1, x = 1, p = 0, omega = 2, big_bc = 4
+  BC          = Inital = 2, Final = 2, Cyclic = 0
+  OMEGA       = Inital = 1, Final = 1, Cyclic = 0
+  total       = nZ = 104, UC = 50, Q = 51
+  index start = omega = 102, p = 104
+  FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
 
 
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  1,  2] (   0.0162,   0.0335) [    0.306,    0.104]     0.625 ( 0: 0): 0: 0: 0 G
-[  2,  1] (   0.0335,   0.0147) [    0.167,   0.0583]      1.00 ( 1: 0): 1: 0: 1 G
-[  3,  1] (   0.0147, 0.000821) [   0.0462,  0.00142]      1.00 ( 2: 0): 0: 0: 0 G
-[  4,  1] ( 0.000821, 7.35e-06) [  0.00156, 1.55e-05]      1.00 ( 3: 0): 0: 0: 0 G
-[  5,  1] ( 7.35e-06, 8.58e-11) [ 1.57e-05, 2.42e-10]      1.00 ( 4: 0): 0: 0: 0 G
-[  6,  1] ( 8.58e-11, 1.42e-17) [ 2.42e-10, 1.24e-17]      1.00 ( 5: 0): 0: 0: 0 G
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  1,  2] (0.0240   ,0.0328   ) [0.453    ,0.148    ] 0.625      0: 0
+[  2,  1] (0.0328   ,0.0202   ) [0.234    ,0.0753   ] 1.00       0: 1
+[  3,  1] (0.0202   ,0.000728 ) [0.0646   ,0.00124  ] 1.00       0: 0
+[  4,  1] (0.000728 ,2.73e-06 ) [0.00131  ,6.31e-06 ] 1.00       0: 0
+[  5,  1] (2.73e-06 ,2.17e-11 ) [6.34e-06 ,6.18e-11 ] 1.00       0: 0
 
------------------------------ STATISTIC ------------------------------
-Elapsed Time           = 2.00 [ms]     timeout             = 0 [ms]
-iteration              = 6             tolerance           = 1.000e-09 
-max iterations         = 300           Total Equations     = 154
-max accumul. iter.     = 800           Memory Used         = 18Kb (+36bytes)
----------------------------- Continuation ----------------------------
-Initial Step           = 0.2           Minimum Step        = 0.001     
-Reduce Factor          = 0.5           Augment Factor      = 1.5       
----------------------------- valutations -----------------------------
-Merit Function         = 0             Function Evaluation = 8         
-Jacobian Factorization = 6             Jacobian Inversion  = 13        
-----------------------------------------------------------------------
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 1.96[ms]      timeout        = 0 [ms]
+iteration      = 5             tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 104
+max acc. iter. = 800           N. System pars = 50
+Converged      = YES           Memory Used    = 16Kb (+31bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 7             Jacobian       = 5         
+Factorization  = 5             Inversion      = 11        
+------------------------ USER INFO -------------------------
+last ||d||_inf = 1.1459e-09    last||d1||_inf = 0.00013507
+last ||f||_inf = 8.3697e-05    last||f1||_1   = 2.7327e-06
+------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 3.3507e-16      last `new' ||d||_inf  = 7.0040e-09
-last ||f||_inf = 5.0000e-09      last ||f||_1          = 8.5843e-11
-
-target [Lagrange,Mayer]        = [      2.65982,       0.00000]
-[Penalties/Barriers, Controls] = [       0.00000,       0.00000]
+target [Lagrange,Mayer]       = [ 2.660, 0.000 ]
+[Penalties/Barriers,Controls] = [ 0.000, 0.000 ]
 All Done Folks!

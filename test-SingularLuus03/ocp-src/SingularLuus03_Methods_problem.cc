@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus03_Methods1.cc                                     |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,9 +76,11 @@ namespace SingularLuus03Define {
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = X__[1];
+    real_type t5   = U__[0];
     real_type t9   = X__[0] * X__[0];
     real_type t10  = t2 * t2;
-    return t2 * L__[0] + L__[1] * U__[0] + (t9 + t10) * L__[2];
+    real_type t13  = uControl(t5, -1, 1);
+    return t2 * L__[0] + t5 * L__[1] + (t9 + t10) * L__[2] + t13;
   }
 
   /*\

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -85,7 +85,10 @@ namespace BangBangFclipDefine {
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t8   = clip(X__[2], ModelPars[1], ModelPars[0]);
-    return t8 * L__[1] + L__[0] * X__[1] + L__[2] * U__[0];
+    real_type t11  = U__[0];
+    real_type t13  = ModelPars[2];
+    real_type t14  = controlForce(t11, -t13, t13);
+    return t11 * L__[2] + t8 * L__[1] + L__[0] * X__[1] + t14;
   }
 
   /*\

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods1.cc                                         |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -80,11 +80,6 @@ namespace UnderwaterDefine {
 
   void
   Underwater::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     ModelPars[1] = 0.15e1 - 0.138e1 * s;
   }
   /*\
@@ -96,11 +91,6 @@ namespace UnderwaterDefine {
 
   void
   Underwater::continuationStep1( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.1 s = {}\n", s ),
-      msg_level
-    );
     real_type epsi = (1 - s) * ModelPars[14] + s * ModelPars[15];
     u1Control.update_epsilon(epsi);
     u2Control.update_epsilon(epsi);
@@ -135,12 +125,18 @@ namespace UnderwaterDefine {
     real_type t8   = X__[4];
     real_type t9   = sin(t5);
     real_type t21  = X__[5];
+    real_type t25  = U__[0];
     real_type t26  = ModelPars[2];
     real_type t27  = 1.0 / t26;
     real_type t30  = ModelPars[3];
+    real_type t37  = U__[1];
     real_type t38  = 1.0 / t30;
+    real_type t47  = U__[2];
     real_type t49  = 1.0 / ModelPars[1];
-    return (t6 * t4 + t9 * t8) * t2 * L__[0] + (-t9 * t4 + t6 * t8) * t2 * L__[1] + t21 * t2 * L__[2] + (-t27 * t30 * t21 * t8 + t27 * U__[0]) * t2 * L__[3] + (t38 * t26 * t21 * t4 + t38 * U__[1]) * t2 * L__[4] + (t49 * U__[2] + t49 * (t30 - t26) * t8 * t4) * t2 * L__[5];
+    real_type t57  = u1Control(t25, -1, 1);
+    real_type t59  = u2Control(t37, -1, 1);
+    real_type t61  = u3Control(t47, -1, 1);
+    return (t6 * t4 + t9 * t8) * t2 * L__[0] + (-t9 * t4 + t6 * t8) * t2 * L__[1] + t21 * t2 * L__[2] + (-t27 * t30 * t21 * t8 + t27 * t25) * t2 * L__[3] + (t38 * t26 * t21 * t4 + t38 * t37) * t2 * L__[4] + (t49 * t47 + t49 * (t30 - t26) * t8 * t4) * t2 * L__[5] + t57 * t2 + t59 * t2 + t61 * t2;
   }
 
   /*\

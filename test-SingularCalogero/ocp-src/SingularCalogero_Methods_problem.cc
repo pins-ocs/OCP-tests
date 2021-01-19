@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Methods1.cc                                   |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -77,7 +77,9 @@ namespace SingularCalogeroDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = Q__[0] * Q__[0];
     real_type t5   = pow(t2 + X__[0] - 1, 2);
-    return L__[0] * U__[0] + t5;
+    real_type t7   = U__[0];
+    real_type t9   = uControl(t7, -1, 1);
+    return t7 * L__[0] + t5 + t9;
   }
 
   /*\

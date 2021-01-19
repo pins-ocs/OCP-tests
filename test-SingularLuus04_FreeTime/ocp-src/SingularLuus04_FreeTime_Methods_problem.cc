@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods1.cc                            |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -62,11 +62,6 @@ namespace SingularLuus04_FreeTimeDefine {
 
   void
   SingularLuus04_FreeTime::continuationStep0( real_type s ) {
-    int msg_level = 3;
-    m_console->message(
-      fmt::format( "\nContinuation step N.0 s = {}\n", s ),
-      msg_level
-    );
     real_type t2   = 1 - s;
     ModelPars[1] = s * ModelPars[3] + t2 * ModelPars[2];
     uControl.update_epsilon(s * ModelPars[11] + t2 * ModelPars[4]);
@@ -95,7 +90,9 @@ namespace SingularLuus04_FreeTimeDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = X__[3];
     real_type t3   = X__[0] * X__[0];
-    return (ModelPars[1] * t1 + t3) * t1 + X__[1] * t1 * L__[0] + X__[2] * t1 * L__[1] + U__[0] * t1 * L__[2];
+    real_type t18  = U__[0];
+    real_type t20  = uControl(t18, -1, 1);
+    return (ModelPars[1] * t1 + t3) * t1 + X__[1] * t1 * L__[0] + X__[2] * t1 * L__[1] + t18 * t1 * L__[2] + t20 * t1;
   }
 
   /*\

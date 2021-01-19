@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -78,7 +78,8 @@ namespace GunnAndThomasDefine {
     real_type t2   = U__[0];
     real_type t4   = X__[1];
     real_type t7   = 10 * t4 - X__[0];
-    return t7 * t2 * L__[0] + (-t7 * t2 - t4 * (1 - t2)) * L__[1];
+    real_type t16  = uControl(t2, 0, 1);
+    return t7 * t2 * L__[0] + (-t7 * t2 - t4 * (1 - t2)) * L__[1] + t16;
   }
 
   /*\

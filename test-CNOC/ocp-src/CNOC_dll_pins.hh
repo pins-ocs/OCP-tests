@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_dll_pins.hh                                               |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -108,8 +108,8 @@ namespace CNOCDefine {
   public:
 
     CNOC_API_DLL
-    CNOC_Problem( ThreadPool * pTP, Console const * pConsole )
-    : model("CNOC",pTP,pConsole)
+    CNOC_Problem( ThreadPool * TP, Console const * console )
+    : model("CNOC",TP,console)
     , toolPath2D( "toolPath2D" )
     {
       Mechatronix::activate_ctrlC();

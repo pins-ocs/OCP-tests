@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods1.cc                                  |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -75,7 +75,9 @@ namespace WorstCaseScenarioDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return L__[0] * (1 - 2 * Q__[0]) * U__[0];
+    real_type t6   = U__[0];
+    real_type t8   = uControl(t6, 0, 1);
+    return t6 * (1 - 2 * Q__[0]) * L__[0] + t8;
   }
 
   /*\

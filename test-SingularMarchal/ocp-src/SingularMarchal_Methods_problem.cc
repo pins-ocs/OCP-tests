@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Methods1.cc                                    |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,7 +76,10 @@ namespace SingularMarchalDefine {
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = X__[0] * X__[0];
-    return t2 / 2 + L__[0] * X__[1] + L__[1] * U__[0];
+    real_type t3   = t2 / 2;
+    real_type t8   = U__[0];
+    real_type t12  = uControl(t8, -1, 1);
+    return t3 + L__[0] * X__[1] + t8 * L__[1] + t12 * (t3 + ModelPars[0]);
   }
 
   /*\

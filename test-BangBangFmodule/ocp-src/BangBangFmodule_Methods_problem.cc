@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods1.cc                                    |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -86,7 +86,9 @@ namespace BangBangFmoduleDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = U__[0];
     real_type t2   = U__[1];
-    return t1 + t2 + L__[0] * X__[1] + (t1 - t2) * L__[1];
+    real_type t10  = controlP(t1, 0, ModelPars[1]);
+    real_type t12  = controlM(t2, 0, ModelPars[0]);
+    return t1 + t2 + L__[0] * X__[1] + (t1 - t2) * L__[1] + t10 + t12;
   }
 
   /*\

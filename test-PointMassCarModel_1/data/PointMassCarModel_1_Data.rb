@@ -20,14 +20,14 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-up_tol0   = 0.01
 m         = 700
-road_tol0 = 0.01
-p_epsi0   = 0.1
 wT0       = 0.01
-kD        = 0.2500000000/m
 up_epsi0  = 0.1
+road_tol0 = 0.01
+up_tol0   = 0.01
+p_epsi0   = 0.1
 wT        = wT0
+kD        = 0.2500000000/m
 p_tol0    = 0.1
 
 mechatronix do |data|
@@ -243,74 +243,74 @@ mechatronix do |data|
     :is_SAE   => false,
     :segments => [
       {
-        :leftWidth  => 15/2.0,
+        :gridSize   => 1,
         :length     => 190,
-        :gridSize   => 1,
+        :curvature  => 0,
+        :leftWidth  => 15/2.0,
         :rightWidth => 60,
-        :curvature  => 0,
       },
       {
-        :leftWidth  => 60,
+        :gridSize   => 1,
         :length     => 973.8937227,
-        :gridSize   => 1,
-        :rightWidth => 30,
         :curvature  => 0.003225806452,
+        :leftWidth  => 60,
+        :rightWidth => 30,
       },
       {
-        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 180,
-        :gridSize   => 1,
-        :rightWidth => 30,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :rightWidth => 30,
       },
       {
-        :leftWidth  => 20,
-        :length     => 235.619449,
         :gridSize   => 1,
-        :rightWidth => 15,
+        :length     => 235.619449,
         :curvature  => 0.006666666667,
+        :leftWidth  => 20,
+        :rightWidth => 15,
       },
       {
-        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 240,
-        :gridSize   => 1,
-        :rightWidth => 30,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :rightWidth => 30,
       },
       {
-        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 235.619449,
-        :gridSize   => 1,
-        :rightWidth => 30,
         :curvature  => -1/150.0,
+        :leftWidth  => 30,
+        :rightWidth => 30,
       },
       {
-        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 200,
-        :gridSize   => 1,
-        :rightWidth => 30,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :rightWidth => 30,
       },
       {
-        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 125.6637062,
-        :gridSize   => 1,
-        :rightWidth => 30,
         :curvature  => 0.025,
+        :leftWidth  => 30,
+        :rightWidth => 30,
       },
       {
-        :leftWidth  => 30,
-        :length     => 480,
         :gridSize   => 1,
-        :rightWidth => 30,
+        :length     => 480,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :rightWidth => 30,
       },
       {
-        :leftWidth  => 30,
-        :length     => 10,
         :gridSize   => 0.1,
-        :rightWidth => 30,
+        :length     => 10,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :rightWidth => 30,
       },
     ],
   };

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Speyer_Mex.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -71,33 +71,8 @@ static scoped_redirect_cout mycout_redirect;
 
 static char const help_msg[] =
 "%===========================================================================%\n"
-"\n"
 "Mex command has the following possible calls:\n"
-"\n"
-"  - Speyer_Mex('setup', mstruct):\n"
-"    initialise the problem with a matlab structure 'mstruct'\n"
-"\n"
-"  - Speyer_Mex('solve'):\n"
-"    solve the optimal control problem and store internally\n"
-"    the solution found.\n"
-"\n"
-"  To get the solution there are various calling sequence:\n"
-"  - sol = Speyer_Mex('get_solution'):\n"
-"    return the full solution as a matlab structure also with solver\n"
-"    information (e.g. iteration taken, convergence, etc).\n"
-"\n"
-"  - sol1, sol2, ..., solN = Speyer_Mex('get_solution',{var_nm}):\n"
-"    return the full solution as a vector only for the desired variable\n"
-"    'var_nm' or listed in the cell array {var_num}.\n"
-"\n"
-"  - sol = Speyer_Mex('get_solution',t):\n"
-"    return the solution as a vector for all output variables at desired\n"
-"    instant 't'. 't' can be a vector or a scalar.\n"
-"\n"
-"  - sol1, sol2, ..., solN = Speyer_Mex('get_solution',t,{var_nm}):\n"
-"    return the solution as a matlab matrix for all output variables\n"
-"    listed in the cell array {var_num} at instant 't'.%\n"
-"    't' can be a vector or a scalar.\n"
+"Speyer_Mex('command', arguments ):\n"
 "%===========================================================================%\n"
 ;
 
@@ -211,8 +186,8 @@ public:
 
   using MODEL_CLASS::guess;
 
-  ProblemStorage( std::string const & cname, ThreadPool * pTP, Console * pConsole )
-  : MODEL_CLASS(cname,pTP,pConsole)
+  ProblemStorage( std::string const & cname, ThreadPool * TP, Console const * console )
+  : MODEL_CLASS(cname,TP,console)
   , setup_ok(false)
   , guess_ok(false)
   , solve_ok(false)
@@ -497,12 +472,13 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('updateContinuation',obj,nphase,s): "
+    #define CMD MODEL_NAME "_Mex('updateContinuation',obj,nphase,old_s,s): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'updateContinuation'" );
-    CHECK_IN( 4 ); CHECK_OUT( 0 );
-    int64_t nphase = getInt( arg_in_2, CMD " nphase number" );
-    real_type s    = getScalarValue( arg_in_3, CMD " s" );
-    this->updateContinuation( nphase, s );
+    CHECK_IN( 5 ); CHECK_OUT( 0 );
+    int64_t nphase  = getInt( arg_in_2, CMD " nphase number" );
+    real_type old_s = getScalarValue( arg_in_3, CMD " old_s" );
+    real_type s     = getScalarValue( arg_in_4, CMD " s" );
+    this->updateContinuation( nphase, old_s, s );
     #undef CMD
   }
 
@@ -521,7 +497,9 @@ public:
     #define CMD MODEL_NAME "_Mex('get_raw_solution',obj): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_raw_solution'" );
     CHECK_IN( 2 ); CHECK_OUT( 1 );
-    real_type * x = createMatrixValue( arg_out_0, this->numEquations(), 1 );
+    real_type * x = createMatrixValue(
+      arg_out_0, this->numEquations()+this->numParameters(), 1
+    );
     this->get_raw_solution( x );
     #undef CMD
   }
@@ -543,10 +521,11 @@ public:
     CHECK_IN( 3 ); CHECK_OUT( 0 );
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x");
+    mwSize nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(this->numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, this->numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
     this->set_raw_solution( x );
     this->doneGuess(); // is equivalent to set guess
@@ -570,10 +549,11 @@ public:
     CHECK_IN( 3 ); CHECK_OUT( 1 );
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
+    mwSize nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(this->numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, this->numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
     setScalarBool( arg_out_0, this->check_raw_solution(x) );
     #undef CMD
@@ -597,10 +577,11 @@ public:
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
     real_type epsi = getScalarValue( arg_in_3, CMD "argument epsi" );
+    mwSize     nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(this->numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, this->numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
     this->checkJacobian(x,epsi);
     #undef CMD
@@ -715,12 +696,13 @@ public:
     CHECK_IN( 3 ); CHECK_OUT( 1 );
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
+    mwSize nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
-    real_type * f = createMatrixValue( arg_out_0, dimx, 1 );
+    real_type * f = createMatrixValue( arg_out_0, this->numEquations(), 1 );
     MODEL_CLASS::eval_F( x, f );
     #undef CMD
   }
@@ -743,10 +725,11 @@ public:
 
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
+    mwSize nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
 
     mxArray *args[5];
@@ -756,14 +739,20 @@ public:
     setScalarValue( args[3], numEquations() );
     setScalarValue( args[4], numEquations() );
 
-    size_t nnz = size_t(MODEL_CLASS::eval_JF_nnz());
     Mechatronix::Malloc<integer> mem("mex_eval_JF");
-    mem.allocate( 2*nnz );
-    integer * i_row = mem( nnz );
-    integer * j_col = mem( nnz );
+    mem.allocate( 2*nnz() );
+    integer * i_row = mem( nnz() );
+    integer * j_col = mem( nnz() );
     MODEL_CLASS::eval_JF_pattern( i_row, j_col, 1 );
-    for ( size_t i = 0; i < nnz; ++i ) {
-      I[i] = i_row[i]; J[i] = j_col[i];
+    for ( size_t i = 0; i < nnz(); ++i ) {
+      I[i] = static_cast<real_type>(i_row[i]);
+      J[i] = static_cast<real_type>(j_col[i]);
+      MEX_ASSERT2(
+        I[i] > 0 && I[i] <= numEquations() &&
+        J[i] > 0 && J[i] <= numEquations(),
+        CMD " index I = {} J = {} must be in the range = [1,{}]\n",
+        I[i], J[i], numEquations()
+      );
     }
 
     MODEL_CLASS::eval_JF_values( x, V );
@@ -791,18 +780,24 @@ public:
     mxArray *args[5];
     real_type * I = createMatrixValue( args[0], 1, nnz() );
     real_type * J = createMatrixValue( args[1], 1, nnz() );
-    real_type * V = createMatrixValue( args[2], 1, nnz() );
+    setScalarValue( args[2], 1 );
     setScalarValue( args[3], numEquations() );
     setScalarValue( args[4], numEquations() );
 
-    size_t nnz = size_t(MODEL_CLASS::eval_JF_nnz());
     Mechatronix::Malloc<integer> mem("mex_eval_JF");
-    mem.allocate( 2*nnz );
-    integer * i_row = mem( nnz );
-    integer * j_col = mem( nnz );
+    mem.allocate( 2*nnz() );
+    integer * i_row = mem( nnz() );
+    integer * j_col = mem( nnz() );
     MODEL_CLASS::eval_JF_pattern( i_row, j_col, 1 );
-    for ( size_t i = 0; i < nnz; ++i ) {
-      I[i] = i_row[i]; J[i] = j_col[i]; V[i] = 1;
+    for ( size_t i = 0; i < nnz(); ++i ) {
+      I[i] = static_cast<real_type>(i_row[i]);
+      J[i] = static_cast<real_type>(j_col[i]);
+      MEX_ASSERT2(
+        I[i] > 0 && I[i] <= numEquations() &&
+        J[i] > 0 && J[i] <= numEquations(),
+        CMD " index I = {} J = {} must be in the range = [1,{}]\n",
+        I[i], J[i], numEquations()
+      );
     }
 
     int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
@@ -1175,6 +1170,7 @@ public:
     CHECK_OUT( 1 );
 
     mwSize nP, nU, nCOL;
+    Mechatronix::U_solver & US = this->m_U_control_solver[0];
 
     if ( nrhs == 11 ) {
       NodeType2 L, R;
@@ -1184,7 +1180,7 @@ public:
       U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
       if ( m_U_solve_iterative ) {
         this->u_guess_eval( L, R, P, U );
-        this->m_U_controlSystem[0].eval( L, R, P, U, U );
+        US.eval( L, R, P, U, U );
       } else {
         this->u_eval_analytic( L, R, P, U );
       }
@@ -1197,7 +1193,7 @@ public:
       U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
       if ( m_U_solve_iterative ) {
         this->u_guess_eval( N, P, U );
-        m_U_controlSystem[0].eval( N, P, U, U );
+        m_U_control_solver[0].eval( N, P, U, U );
       } else {
         this->u_eval_analytic( N, P, U );
       }
@@ -1226,6 +1222,7 @@ public:
     CHECK_OUT( 1 );
 
     mwSize nP, nU, nCOL;
+    Mechatronix::U_solver & US = this->m_U_control_solver[0];
 
     if ( nrhs == 12 ) {
       NodeType2 L, R;
@@ -1237,7 +1234,13 @@ public:
       real_type * DuDxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
 
       MatrixWrapper<real_type> DuDxlp( DuDxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
-      this->DuDxlp_full_analytic( L, R, P, U, DuDxlp );
+
+      if ( m_U_solve_iterative ) {
+        US.u_eval_DuDxlp( L, R, P, U, DuDxlp );
+      } else {
+        this->DuDxlp_full_analytic( L, R, P, U, DuDxlp );
+      }
+
     } else if ( nrhs == 8 ) {
       NodeType2 N;
       get_N( CMD, nrhs, prhs, N );
@@ -1248,7 +1251,13 @@ public:
       real_type * DuDxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
 
       MatrixWrapper<real_type> DuDxlp( DuDxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
-      this->DuDxlp_full_analytic( N, P, U, DuDxlp );
+
+      if ( m_U_solve_iterative ) {
+        US.u_eval_DuDxlp( N, P, U, DuDxlp );
+      } else {
+        this->DuDxlp_full_analytic( N, P, U, DuDxlp );
+      }
+
     } else {
       MEX_ASSERT( false, CMD "argument must be 12 or 8" );
     }

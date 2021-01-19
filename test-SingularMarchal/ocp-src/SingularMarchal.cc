@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal.cc                                             |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -129,10 +129,10 @@ namespace SingularMarchalDefine {
   */
   SingularMarchal::SingularMarchal(
     string  const & name,
-    ThreadPool    * _TP,
-    Console const * _pConsole
+    ThreadPool    * TP,
+    Console const * console
   )
-  : Discretized_Indirect_OCP( name, _TP, _pConsole )
+  : Discretized_Indirect_OCP( name, TP, console )
   // Controls
   , uControl("uControl")
   // Constraints 1D
@@ -176,7 +176,19 @@ namespace SingularMarchalDefine {
   //       |_|
   */
   void
-  SingularMarchal::updateContinuation( integer phase, real_type s ) {
+  SingularMarchal::updateContinuation(
+    integer   phase,
+    real_type old_s,
+    real_type s
+  ) {
+    int msg_level = 3;
+    m_console->message(
+      fmt::format(
+        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        phase+1, s, s-old_s
+      ),
+      msg_level
+    );
   }
 
   /* --------------------------------------------------------------------------
@@ -346,6 +358,7 @@ namespace SingularMarchalDefine {
   void
   SingularMarchal::setup( GenericContainer const & gc ) {
 
+    m_debug = false;
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("SingularMarchal::setup, Debug");
 

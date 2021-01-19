@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_tolerance0 = 0.01;
     real_type u_epsilon0 = 0.01;
-    real_type u_tolerance = u_tolerance0;
     real_type u_epsilon = u_epsilon0;
+    real_type u_tolerance0 = 0.01;
+    real_type u_tolerance = u_tolerance0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_dll_pins.hh                               |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -108,8 +108,8 @@ namespace MinimumEnergyProblemDefine {
   public:
 
     MINIMUMENERGYPROBLEM_API_DLL
-    MinimumEnergyProblem_Problem( ThreadPool * pTP, Console const * pConsole )
-    : model("MinimumEnergyProblem",pTP,pConsole)
+    MinimumEnergyProblem_Problem( ThreadPool * TP, Console const * console )
+    : model("MinimumEnergyProblem",TP,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

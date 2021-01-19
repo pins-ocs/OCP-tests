@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods1.cc                                 |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 19/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -88,7 +88,12 @@ namespace BangBangFredundantDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t4   = X__[2] + X__[3];
     real_type t5   = Flim(t4);
-    return t4 * L__[1] + t5 * ModelPars[1] + L__[0] * X__[1] + L__[2] * X__[4] + L__[3] * X__[5] + L__[4] * U__[0] + L__[5] * U__[1];
+    real_type t19  = U__[0];
+    real_type t22  = U__[1];
+    real_type t24  = ModelPars[0];
+    real_type t25  = aF1Control(t19, -t24, t24);
+    real_type t26  = aF2Control(t22, -t24, t24);
+    return t19 * L__[4] + t22 * L__[5] + t4 * L__[1] + t5 * ModelPars[1] + L__[0] * X__[1] + L__[2] * X__[4] + L__[3] * X__[5] + t25 + t26;
   }
 
   /*\
