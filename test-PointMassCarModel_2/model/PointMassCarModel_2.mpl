@@ -17,20 +17,21 @@ zvars  := subs(t=zeta, tvars):
 zuvars := subs(t=zeta, uvars):
 <zuvars>, <zvars>;
 tToZeta := seq(
-  diff(tvars[i],t) = subs(t=zeta, diff(tvars[i],t))/inv_zeta__dot(zeta),
+  diff(tvars[i],t) = subs(t=zeta, diff(tvars[i],t))*zeta__dot(zeta),
   i=1..nops(tvars)
 ), s(t) = zeta, s(zeta) = zeta, t=zeta;
 zeqns    := subs(tToZeta, eqns_t):
-eqn_zeta := simplify(op(solve( zeqns[1], {inv_zeta__dot(zeta)} )));
+eqn_zeta := simplify(op(solve( zeqns[1], {zeta__dot(zeta)} )));
 zeqns    := simplify(simplify(zeqns,trig),size):
-zeqns    := simplify(op(solve( zeqns[2..-1], diff(zvars[2..-1],zeta) ))):
+zeqns    := simplify(zeqns[2..-1]):
+#zeqns    := simplify(op(solve( zeqns[2..-1], diff(zvars[2..-1],zeta) ))):
 <zeqns>;
 # Definition of zeta__dot algebraic variable REGULARIZED
-eqn_zeta_def  := subs(Kappa(zeta)=Kappa,subs( map(x->x=op(0,x),zvars), rhs(eqn_zeta)));
+eqn_zeta_def := simplify(subs(Kappa(zeta)=Kappa,subs( map(x->x=op(0,x),zvars), rhs(eqn_zeta))));
 #eqn_zeta_def := subs(V=sqrt(V_epsilon^2+V^2),eqn_zeta_def);
-addUserFunction(inv_zeta__dot(V,alpha,n,Kappa)=eqn_zeta_def);
-INVZDOT := inv_zeta__dot(V(zeta),alpha(zeta),n(zeta),Kappa(zeta));ZDOT    := 1/INVZDOT;
-zeqns := subs( inv_zeta__dot(zeta)=INVZDOT, zeqns ): <%>;
+addUserFunction(zeta__dot(V,alpha,n,Kappa)=eqn_zeta_def);
+ZDOT    := zeta__dot(V(zeta),alpha(zeta),n(zeta),Kappa(zeta));INVZDOT := 1/ZDOT;
+zeqns := subs( zeta__dot(zeta)=ZDOT, zeqns ): <%>;
 # 
 # 
 # Formulate the problem with XOptima
@@ -162,8 +163,8 @@ out_vars := [
   [subs(t=zeta,fy),  "fy"],
   [MU_X,             "mu_x"],
   [MU_Y,             "mu_y"],
-  [INVZDOT,          "inv_zeta_dot"],
-  [1/INVZDOT,        "zeta_dot_eq"]
+  [1/ZDOT,           "inv_zeta_dot"],
+  [ZDOT,             "zeta_dot_eq"]
 ]:
 <%>;
 # Ocp data
@@ -180,8 +181,7 @@ wMC       = 1,
   p_epsi1   = 1e-3, 
   up_epsi1  = 1e-2,
   up_tol0   = 1e-2,
-  road_tol0 = 0.01,
-  V_epsilon = 0.01
+  road_tol0 = 0.01
 ]: <%>;
 # Define the states check and guess
 admissible_region_expr := [ V(zeta) > 0 ]:
@@ -199,10 +199,10 @@ continuation_param := [
   ]
 ];
 
-project_name := "PointMassCarModel_1";
+project_name := "PointMassCarModel_2";
 project_dir  := "../";
 
-int_out_vars := [[INVZDOT, "t"]];
+int_out_vars := [[1/ZDOT, "t"]];
 # Generate the project
 generateOCProblem(
   project_name, 
@@ -219,5 +219,6 @@ generateOCProblem(
   #excluded = [ "Main.cc", "Data.lua", "run_ffi.rb"]#, "run.rb"]#, "Data.rb" ]
 );
 ocp := getOCProblem();
-ocp["bvp"]["interface_equations"];
+ocp["bvp"]["interface_equations"][6];
+indices(ocp);
 
