@@ -2,7 +2,7 @@
 # XOPTIMA Automatic Code Generation for Optimal Control Problems 
 # 
 # Point mass car optimal control
-# Free time by segment
+# Free time by segment, use 1/sqrt(Vsegment) for scaling
 # 
 # 
 # Discontinuous: zeta_dot as algebric variable defined in UserFunction no Jump conditions
@@ -16,20 +16,20 @@ zvars  := subs(t=zeta, tvars):
 zuvars := subs(t=zeta, uvars):
 <zuvars>, <zvars>;
 tToT := seq(
-  diff(tvars[i],t) = subs(t=zeta, L()*diff(tvars[i],t))/T(zeta),
+  diff(tvars[i],t) = subs(t=zeta, diff(tvars[i],t))/sqrt_inv_Vseg(zeta)^2,
   i=1..nops(tvars)
 ), t=zeta;
 addUserFunction(zeta__dot(V,alpha,n,Kappa)=V*cos(alpha)/(1-Kappa*n));
-ZDOT    := zeta__dot(V(zeta),alpha(zeta),n(zeta),Kappa(s(zeta)));
-INVZDOT := 1/ZDOT;
+ZDOT := zeta__dot(V(zeta),alpha(zeta),n(zeta),Kappa(s(zeta)));
 eqns_t;
 eqns_t[1] := diff(s(t),t) = zeta__dot(V(t),alpha(t),n(t),Kappa(s(t)));
-zeqns    := subs(tToT, eqns_t):
-zeqns    := simplify(simplify(zeqns,trig),size):
-zeqns    := simplify(zeqns);
-zeqns    := [op(simplify(op(solve( zeqns, diff(zvars,zeta) )))), diff(T(zeta),zeta)=0]:
+zeqns := subs(tToT, eqns_t):
+zeqns := simplify(simplify(zeqns,trig),size):
+zeqns := simplify(zeqns);
+zeqns := [op(simplify(op(solve( zeqns, diff(zvars,zeta) )))),
+         diff(sqrt_inv_Vseg(zeta),zeta)=0]:
 <zeqns>;
-zvars := [op(subs(t=zeta, tvars)),T(zeta)];
+zvars := [op(subs(t=zeta, tvars)),sqrt_inv_Vseg(zeta)];
 # Formulate the problem with XOptima
 # Road definition
 read("roads.mpl"):
@@ -43,9 +43,7 @@ qextra := [
   xV(zeta,n)         = isoX(zeta,n),
   yV(zeta,n)         = isoY(zeta,n),
   leftWidth(zeta)    = leftWidth(zeta),
-  leftWidth_D(zeta)  = leftWidth_D(zeta),
   rightWidth(zeta)   = rightWidth(zeta),
-  rightWidth_D(zeta) = rightWidth_D(zeta),
   xLane(zeta)        = isoX(zeta), 
   yLane(zeta)        = isoY(zeta),
   theta(zeta)        = isoAngle(zeta),
@@ -61,7 +59,7 @@ mapUserFunctionToObject(
   "Mechatronix#Road2D", # classe (deve essere registrata)
   road_data_init
 );
-ALIASES := [ D(leftWidth)=leftWidth_D, D(rightWidth)=rightWidth_D];
+ALIASES := [];#  [ D(leftWidth)=leftWidth_D, D(rightWidth)=rightWidth_D];
 # Dynamic system load
 loadDynamicSystem(
   states        = zvars,
@@ -103,17 +101,22 @@ else           # MAYER CYCLIC ----
                 + ( (Omega(zeta_i) - Omega(zeta_f))/0.1 )^2;
 end:
 
-setInterfaceConditionFixed(  s,  s(zeta_L)-zeta_L, #ssSegmentMax_L(),  s(zeta_R)-zeta_R  #ssSegmentMin_R());
-setInterfaceConditionFree( T );
+setInterfaceConditionFixed(
+  s,
+  s(zeta_L)-zeta_L, #ssSegmentMax_L(),
+  s(zeta_R)-zeta_R  #ssSegmentMin_R()
+);
+setInterfaceConditionFree( sqrt_inv_Vseg );
+SCALE := sqrt_inv_Vseg(zeta)^2;
 # Define the target
 setTarget(
-  lagrange = wT * T(zeta)/L(),
+  lagrange = wT * SCALE,
   mayer    = wMC*Mayer_cyclic
 );
 # Define penalties options
-penalties_opts      := scale = T(zeta)/L(), epsilon = p_epsi0,  tolerance = p_tol0;
-road_penalties_opts := scale = T(zeta)/L(), epsilon = p_epsi0,  tolerance = road_tol0;
-u_penalties_opts    := scale = T(zeta)/L(), epsilon = up_epsi0, tolerance = up_tol0;
+penalties_opts      := scale = SCALE, epsilon = p_epsi0,  tolerance = p_tol0;
+road_penalties_opts := scale = SCALE, epsilon = p_epsi0,  tolerance = road_tol0;
+u_penalties_opts    := scale = SCALE, epsilon = up_epsi0, tolerance = up_tol0;
 # Add penalties
 # Adherence limit: rotate the ellipse by an angle beta
 MU_X :=  subs(t=zeta, fx(t)/(mu__x__max*g) );
@@ -142,16 +145,11 @@ addUnilateralConstraint(
   PowerLimit,
   penalties_opts
 );
-addUnilateralConstraint(
-  zeta__dot(V(zeta),alpha(zeta),n(zeta),Kappa(s(zeta)))>0,
-  Spos,
-  penalties_opts
-);
-addUnilateralConstraint(
-  T(zeta) > 0,
-  Tmin,
-  penalties_opts
-);
+#addUnilateralConstraint(
+#  zeta__dot(V(zeta),alpha(zeta),n(zeta),Kappa(s(zeta)))>0,
+#  Spos,
+#  penalties_opts
+#);
 # Add control bounds
 addControlBound(
   v__fx(zeta),
@@ -184,8 +182,9 @@ out_vars := [
   [subs(t=zeta,fy),     "fy"],
   [MU_X,                "mu_x"],
   [MU_Y,                "mu_y"],
-  [1/ZDOT,              "inv_zeta_dot"],
-  [ZDOT,                "zeta_dot_eq"]
+  [1/sqrt_inv_Vseg(zeta)^2,   "Vseg"],
+  [L()/sqrt_inv_Vseg(zeta)^2, "Tseg"],
+  [ZDOT,                      "zeta_dot_eq"]
 ]:
 <%>;
 # Ocp data
@@ -193,9 +192,10 @@ other_params := [
   wT0       = 0.01,
   wT1       = 1.0,
   wT        = wT0, # Lagrange target weight
-#      
+#     
 wMC       = 1,
-  V0        = 5,#10 ,
+  V0        = 0,
+  Vguess    = 10,
   p_epsi0   = 0.1, 
   p_tol0    = 0.1,
   up_epsi0  = 0.1,
@@ -205,8 +205,13 @@ wMC       = 1,
   road_tol0 = 0.01
 ]: <%>;
 # Define the states check and guess
-admissible_region_expr := [  T(zeta) > 0]:
-states_guess_expr := [  V     = V0,  Omega = V0/R0,  T     = L()/V0,  s     = zeta]:
+admissible_region_expr := []:
+states_guess_expr := [
+  V             = Vguess,
+  Omega         = Vguess/R0,
+  sqrt_inv_Vseg = sqrt(1/Vguess),
+  s             = zeta
+]:
 # Define the continuation in the penalties
 continuation_param := [ 
   [ wT = wT0 + s*(wT1-wT0)],
@@ -223,7 +228,7 @@ continuation_param := [
 project_name := "PointMassCarModel_3";
 project_dir  := "../";
 
-int_out_vars := [[T(zeta)/L(), "t"]];
+int_out_vars := [[sqrt_inv_Vseg(zeta)^2, "t"]];
 # Generate the project
 generateOCProblem( clean=false,
   project_name, 
@@ -235,7 +240,8 @@ generateOCProblem( clean=false,
   continuation             = continuation_param,
   states_guess             = states_guess_expr,
   admissible_region        = admissible_region_expr,
-  aliases                  = ALIASES  #controls_guess         = controls_guess_expression,
+  aliases                  = ALIASES
+  #controls_guess         = controls_guess_expression,
   #mesh = [[length = 1, n = Num_mesh_points]],
   #excluded = [ "Main.cc", "Data.lua", "run_ffi.rb"]#, "run.rb"]#, "Data.rb" ]
 );

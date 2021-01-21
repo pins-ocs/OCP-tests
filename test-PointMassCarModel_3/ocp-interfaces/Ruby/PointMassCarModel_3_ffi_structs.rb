@@ -44,6 +44,8 @@ module PointMassCarModel_3
 
       :V0,            :data_t,
 
+      :Vguess,        :data_t,
+
       :g,             :data_t,
 
       :kD,            :data_t,
@@ -124,12 +126,6 @@ module PointMassCarModel_3
       :PowerLimitSubType,         :index_t,
       :PowerLimitEpsilon,         :data_t,
       :PowerLimitTolerance,       :data_t,
-      :SposSubType,               :index_t,
-      :SposEpsilon,               :data_t,
-      :SposTolerance,             :data_t,
-      :TminSubType,               :index_t,
-      :TminEpsilon,               :data_t,
-      :TminTolerance,             :data_t,
 
       # 2D constraints
 

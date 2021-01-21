@@ -56,7 +56,7 @@ namespace PointMassCarModel_3Define {
     "V",
     "Omega",
     "fx",
-    "T",
+    "sqrt_inv_Vseg",
     nullptr
   };
 
@@ -108,8 +108,6 @@ namespace PointMassCarModel_3Define {
     "RoadLeftBorder",
     "RoadRightBorder",
     "PowerLimit",
-    "Spos",
-    "Tmin",
     "Kappa",
     "leftWidth",
     "rightWidth",
@@ -125,7 +123,8 @@ namespace PointMassCarModel_3Define {
     "fy",
     "mu_x",
     "mu_y",
-    "inv_zeta_dot",
+    "Vseg",
+    "Tseg",
     "zeta_dot_eq",
     nullptr
   };
@@ -138,6 +137,7 @@ namespace PointMassCarModel_3Define {
   char const *namesModelPars[numModelPars+1] = {
     "Pmax",
     "V0",
+    "Vguess",
     "g",
     "kD",
     "m",
@@ -160,8 +160,6 @@ namespace PointMassCarModel_3Define {
     "RoadLeftBorder",
     "RoadRightBorder",
     "PowerLimit",
-    "Spos",
-    "Tmin",
     nullptr
   };
 
@@ -207,8 +205,6 @@ namespace PointMassCarModel_3Define {
   , RoadLeftBorder("RoadLeftBorder")
   , RoadRightBorder("RoadRightBorder")
   , PowerLimit("PowerLimit")
-  , Spos("Spos")
-  , Tmin("Tmin")
   // Constraints 2D
   // User classes
   {
@@ -360,18 +356,6 @@ namespace PointMassCarModel_3Define {
     );
     PowerLimit.setup( gc("PowerLimit") );
 
-    UTILS_ASSERT0(
-      gc.exists("Spos"),
-      "in PointMassCarModel_3::setupClasses(gc) missing key: ``Spos''\n"
-    );
-    Spos.setup( gc("Spos") );
-
-    UTILS_ASSERT0(
-      gc.exists("Tmin"),
-      "in PointMassCarModel_3::setupClasses(gc) missing key: ``Tmin''\n"
-    );
-    Tmin.setup( gc("Tmin") );
-
   }
 
   /* --------------------------------------------------------------------------
@@ -473,8 +457,6 @@ namespace PointMassCarModel_3Define {
     RoadLeftBorder  .info(mstr);
     RoadRightBorder .info(mstr);
     PowerLimit      .info(mstr);
-    Spos            .info(mstr);
-    Tmin            .info(mstr);
     m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);

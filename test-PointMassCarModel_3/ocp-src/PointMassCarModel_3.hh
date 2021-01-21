@@ -101,7 +101,7 @@ namespace PointMassCarModel_3Define {
   class PointMassCarModel_3 : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[16];
+    real_type ModelPars[17];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU v__fxControl;
@@ -112,8 +112,6 @@ namespace PointMassCarModel_3Define {
     Mechatronix::PenaltyBarrier1DGreaterThan RoadLeftBorder;
     Mechatronix::PenaltyBarrier1DGreaterThan RoadRightBorder;
     Mechatronix::PenaltyBarrier1DGreaterThan PowerLimit;
-    Mechatronix::PenaltyBarrier1DGreaterThan Spos;
-    Mechatronix::PenaltyBarrier1DGreaterThan Tmin;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

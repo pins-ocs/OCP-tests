@@ -19,8 +19,8 @@
 #define POINTMASSCARMODEL_3PARS_DOT_HH
 
 #define numBc                    8
-#define numModelPars             16
-#define numConstraint1D          6
+#define numModelPars             17
+#define numConstraint1D          4
 #define numConstraint2D          0
 #define numConstraintU           2
 #define numXvars                 7
@@ -29,7 +29,7 @@
 #define numOMEGAvars             8
 #define numQvars                 4
 #define numPvars                 0
-#define numPostProcess           25
+#define numPostProcess           24
 #define numIntegratedPostProcess 1
 #define numContinuationSteps     2
 
@@ -40,7 +40,7 @@
 #define iX_V             3
 #define iX_Omega         4
 #define iX_fx            5
-#define iX_T             6
+#define iX_sqrt_inv_Vseg 6
 
 // Lvars
 #define iL_lambda1__xo   0
@@ -66,20 +66,21 @@
 // ModelPars Maps
 #define iM_Pmax          0
 #define iM_V0            1
-#define iM_g             2
-#define iM_kD            3
-#define iM_m             4
-#define iM_p_epsi0       5
-#define iM_p_epsi1       6
-#define iM_wT            7
-#define iM_wT0           8
-#define iM_wT1           9
-#define iM_mu__x__max    10
-#define iM_mu__y__max    11
-#define iM_up_epsi0      12
-#define iM_up_epsi1      13
-#define iM_v__Omega__max 14
-#define iM_v__fx__max    15
+#define iM_Vguess        2
+#define iM_g             3
+#define iM_kD            4
+#define iM_m             5
+#define iM_p_epsi0       6
+#define iM_p_epsi1       7
+#define iM_wT            8
+#define iM_wT0           9
+#define iM_wT1           10
+#define iM_mu__x__max    11
+#define iM_mu__y__max    12
+#define iM_up_epsi0      13
+#define iM_up_epsi1      14
+#define iM_v__Omega__max 15
+#define iM_v__fx__max    16
 
 #endif
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 21/1/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -86,13 +86,22 @@ using Mechatronix::Road2D;
 #define ALIAS_xLane_DD(__t1) segment.isoX_DD( __t1)
 #define ALIAS_xLane_D(__t1) segment.isoX_D( __t1)
 #define ALIAS_xLane(__t1) segment.isoX( __t1)
+#define ALIAS_rightWidth_R_DD(__t1) segmentRight.rightWidth_DD( __t1)
+#define ALIAS_rightWidth_R_D(__t1) segmentRight.rightWidth_D( __t1)
 #define ALIAS_rightWidth_R(__t1) segmentRight.rightWidth( __t1)
+#define ALIAS_rightWidth_L_DD(__t1) segmentLeft.rightWidth_DD( __t1)
+#define ALIAS_rightWidth_L_D(__t1) segmentLeft.rightWidth_D( __t1)
 #define ALIAS_rightWidth_L(__t1) segmentLeft.rightWidth( __t1)
+#define ALIAS_rightWidth_DD(__t1) segment.rightWidth_DD( __t1)
+#define ALIAS_rightWidth_D(__t1) segment.rightWidth_D( __t1)
 #define ALIAS_rightWidth(__t1) segment.rightWidth( __t1)
+#define ALIAS_leftWidth_R_DD(__t1) segmentRight.leftWidth_DD( __t1)
 #define ALIAS_leftWidth_R_D(__t1) segmentRight.leftWidth_D( __t1)
 #define ALIAS_leftWidth_R(__t1) segmentRight.leftWidth( __t1)
+#define ALIAS_leftWidth_L_DD(__t1) segmentLeft.leftWidth_DD( __t1)
 #define ALIAS_leftWidth_L_D(__t1) segmentLeft.leftWidth_D( __t1)
 #define ALIAS_leftWidth_L(__t1) segmentLeft.leftWidth( __t1)
+#define ALIAS_leftWidth_DD(__t1) segment.leftWidth_DD( __t1)
 #define ALIAS_leftWidth_D(__t1) segment.leftWidth_D( __t1)
 #define ALIAS_leftWidth(__t1) segment.leftWidth( __t1)
 #define ALIAS_Kappa_R_DD(__t1) segmentRight.isoCurvature_DD( __t1)
@@ -165,8 +174,8 @@ namespace PointMassCarModel_1Define {
     real_type t7   = inv_zeta__dot(t1, t2, X__[0], t6);
     result__[ 0   ] = t7 * t3 * t1;
     result__[ 1   ] = t7 * X__[3] - t6;
-    real_type t11  = t1 * t1;
-    result__[ 2   ] = (-t11 * ModelPars[3] + X__[4]) * t7;
+    real_type t10  = t1 * t1;
+    result__[ 2   ] = (-ModelPars[3] * t10 + X__[4]) * t7;
     result__[ 3   ] = t7 * ModelPars[14] * U__[1];
     result__[ 4   ] = t7 * ModelPars[15] * U__[0];
     if ( m_debug )

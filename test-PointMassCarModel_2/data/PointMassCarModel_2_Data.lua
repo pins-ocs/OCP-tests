@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-road_tol0 = 0.01
 up_epsi0  = 0.1
 wT0       = 0.01
-m         = 700
-up_tol0   = 0.01
 wT        = wT0
-p_tol0    = 0.1
+m         = 700
 kD        = 0.2500000000/m
+up_tol0   = 0.01
 p_epsi0   = 0.1
+road_tol0 = 0.01
+p_tol0    = 0.1
 
 content = {
 
@@ -232,83 +232,83 @@ content = {
     segments = {
       
       {
-        length     = 190,
         curvature  = 0,
+        gridSize   = 1,
+        length     = 190,
         rightWidth = 60,
         leftWidth  = 15/2.0,
-        gridSize   = 1,
       },
       
       {
-        length     = 973.8937227,
         curvature  = 0.003225806452,
+        gridSize   = 1,
+        length     = 973.8937227,
         rightWidth = 30,
         leftWidth  = 60,
-        gridSize   = 1,
       },
       
       {
-        length     = 180,
         curvature  = 0,
+        gridSize   = 1,
+        length     = 180,
         rightWidth = 30,
         leftWidth  = 30,
-        gridSize   = 1,
       },
       
       {
-        length     = 235.619449,
         curvature  = 0.006666666667,
+        gridSize   = 1,
+        length     = 235.619449,
         rightWidth = 15,
         leftWidth  = 20,
-        gridSize   = 1,
       },
       
       {
+        curvature  = 0,
+        gridSize   = 1,
         length     = 240,
-        curvature  = 0,
         rightWidth = 30,
         leftWidth  = 30,
-        gridSize   = 1,
       },
       
       {
-        length     = 235.619449,
         curvature  = -1/150.0,
+        gridSize   = 1,
+        length     = 235.619449,
         rightWidth = 30,
         leftWidth  = 30,
-        gridSize   = 1,
       },
       
       {
+        curvature  = 0,
+        gridSize   = 1,
         length     = 200,
-        curvature  = 0,
         rightWidth = 30,
         leftWidth  = 30,
-        gridSize   = 1,
       },
       
       {
-        length     = 125.6637062,
         curvature  = 0.025,
+        gridSize   = 1,
+        length     = 125.6637062,
         rightWidth = 30,
         leftWidth  = 30,
-        gridSize   = 1,
       },
       
       {
+        curvature  = 0,
+        gridSize   = 1,
         length     = 480,
-        curvature  = 0,
         rightWidth = 30,
         leftWidth  = 30,
-        gridSize   = 1,
       },
       
       {
-        length     = 10,
         curvature  = 0,
+        gridSize   = 0.1,
+        length     = 10,
         rightWidth = 30,
         leftWidth  = 30,
-        gridSize   = 0.1,
       },
     },
   },

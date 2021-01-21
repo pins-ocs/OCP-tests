@@ -263,9 +263,9 @@ classdef PointMassCarModel_3 < handle
       % return the solution for the state: fx
       res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'fx' );
     end
-    function res = T( self )
-      % return the solution for the state: T
-      res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'T' );
+    function res = sqrt_inv_Vseg( self )
+      % return the solution for the state: sqrt_inv_Vseg
+      res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'sqrt_inv_Vseg' );
     end
 
     % -------------------------------------------------------------------------
@@ -345,14 +345,6 @@ classdef PointMassCarModel_3 < handle
       % return the solution for the post processing variable: PowerLimit
       res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'PowerLimit' );
     end
-    function res = Spos( self )
-      % return the solution for the post processing variable: Spos
-      res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'Spos' );
-    end
-    function res = Tmin( self )
-      % return the solution for the post processing variable: Tmin
-      res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'Tmin' );
-    end
     function res = Kappa( self )
       % return the solution for the post processing variable: Kappa
       res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'Kappa' );
@@ -413,9 +405,13 @@ classdef PointMassCarModel_3 < handle
       % return the solution for the post processing variable: mu_y
       res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'mu_y' );
     end
-    function res = inv_zeta_dot( self )
-      % return the solution for the post processing variable: inv_zeta_dot
-      res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'inv_zeta_dot' );
+    function res = Vseg( self )
+      % return the solution for the post processing variable: Vseg
+      res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'Vseg' );
+    end
+    function res = Tseg( self )
+      % return the solution for the post processing variable: Tseg
+      res = PointMassCarModel_3_Mex( 'get_solution', self.objectHandle, 'Tseg' );
     end
     function res = zeta_dot_eq( self )
       % return the solution for the post processing variable: zeta_dot_eq
@@ -773,11 +769,11 @@ classdef PointMassCarModel_3 < handle
         self.zeta(), self.V(), ...
         self.zeta(), self.Omega(), ...
         self.zeta(), self.fx(), ...
-        self.zeta(), self.T(), ...
+        self.zeta(), self.sqrt_inv_Vseg(), ...
         'Linewidth', 2 ...
       );
       title('states');
-      legend( 's', 'n', '\alpha', 'V', '\Omega', 'fx', 'T' );
+      legend( 's', 'n', '\alpha', 'V', '\Omega', 'fx', 'sqrt\_inv\_Vseg' );
     end
     % -------------------------------------------------------------------------
     function plot_multipliers( self )

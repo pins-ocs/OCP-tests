@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_1_pins_run.rb                                #
 #                                                                       #
-#  version: 1.0   date 19/1/2021                                        #
+#  version: 1.0   date 21/1/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #

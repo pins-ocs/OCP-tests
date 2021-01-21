@@ -73,12 +73,6 @@
 #define ALIAS_xLane_DD(__t1) segment.isoX_DD( __t1)
 #define ALIAS_xLane_D(__t1) segment.isoX_D( __t1)
 #define ALIAS_xLane(__t1) segment.isoX( __t1)
-#define ALIAS_rightWidth_D_R_D(__t1) segmentRight.rightWidth_D_D( __t1)
-#define ALIAS_rightWidth_D_R(__t1) segmentRight.rightWidth_D( __t1)
-#define ALIAS_rightWidth_D_L_D(__t1) segmentLeft.rightWidth_D_D( __t1)
-#define ALIAS_rightWidth_D_L(__t1) segmentLeft.rightWidth_D( __t1)
-#define ALIAS_rightWidth_D_D(__t1) segment.rightWidth_D_D( __t1)
-#define ALIAS_rightWidth_D(__t1) segment.rightWidth_D( __t1)
 #define ALIAS_rightWidth_R_DD(__t1) segmentRight.rightWidth_DD( __t1)
 #define ALIAS_rightWidth_R_D(__t1) segmentRight.rightWidth_D( __t1)
 #define ALIAS_rightWidth_R(__t1) segmentRight.rightWidth( __t1)
@@ -88,12 +82,6 @@
 #define ALIAS_rightWidth_DD(__t1) segment.rightWidth_DD( __t1)
 #define ALIAS_rightWidth_D(__t1) segment.rightWidth_D( __t1)
 #define ALIAS_rightWidth(__t1) segment.rightWidth( __t1)
-#define ALIAS_leftWidth_D_R_D(__t1) segmentRight.leftWidth_D_D( __t1)
-#define ALIAS_leftWidth_D_R(__t1) segmentRight.leftWidth_D( __t1)
-#define ALIAS_leftWidth_D_L_D(__t1) segmentLeft.leftWidth_D_D( __t1)
-#define ALIAS_leftWidth_D_L(__t1) segmentLeft.leftWidth_D( __t1)
-#define ALIAS_leftWidth_D_D(__t1) segment.leftWidth_D_D( __t1)
-#define ALIAS_leftWidth_D(__t1) segment.leftWidth_D( __t1)
 #define ALIAS_leftWidth_R_DD(__t1) segmentRight.leftWidth_DD( __t1)
 #define ALIAS_leftWidth_R_D(__t1) segmentRight.leftWidth_D( __t1)
 #define ALIAS_leftWidth_R(__t1) segmentRight.leftWidth( __t1)
@@ -127,10 +115,6 @@
 #define ALIAS_L_R(___dummy___) segmentRight.length()
 #define ALIAS_L_L(___dummy___) segmentLeft.length()
 #define ALIAS_L(___dummy___) segment.length()
-#define ALIAS_Tmin_DD(__t1) Tmin.DD( __t1)
-#define ALIAS_Tmin_D(__t1) Tmin.D( __t1)
-#define ALIAS_Spos_DD(__t1) Spos.DD( __t1)
-#define ALIAS_Spos_D(__t1) Spos.D( __t1)
 #define ALIAS_PowerLimit_DD(__t1) PowerLimit.DD( __t1)
 #define ALIAS_PowerLimit_D(__t1) PowerLimit.D( __t1)
 #define ALIAS_RoadRightBorder_DD(__t1) RoadRightBorder.DD( __t1)
@@ -184,10 +168,10 @@ namespace PointMassCarModel_3Define {
     L_pointer_type       L__
   ) const {
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    X__[ iX_s     ] = Q__[0];
-    X__[ iX_V     ] = ModelPars[1];
-    X__[ iX_Omega ] = 0.1000000000e-1 * X__[3];
-    X__[ iX_T     ] = 1.0 / X__[3] * Q__[1];
+    X__[ iX_s             ] = Q__[0];
+    X__[ iX_V             ] = ModelPars[2];
+    X__[ iX_Omega         ] = 0.1000000000e-1 * X__[3];
+    X__[ iX_sqrt_inv_Vseg ] = sqrt(1.0 / X__[3]);
 
   }
 
@@ -201,9 +185,6 @@ namespace PointMassCarModel_3Define {
 
   #define Xoptima__check__lt(A,B) ( (A) <  (B) )
   #define Xoptima__check__le(A,B) ( (A) <= (B) )
-
-  // Node check strings
-  #define __message_node_check_0 "0 < T(zeta)"
 
   bool
   PointMassCarModel_3::p_check( P_const_pointer_type P__ ) const {
@@ -224,7 +205,7 @@ namespace PointMassCarModel_3Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    ok = ok && Xoptima__check__lt(0, X__[6]);
+
     return ok;
   }
 
