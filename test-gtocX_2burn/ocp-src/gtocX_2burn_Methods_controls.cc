@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -206,37 +206,6 @@ namespace gtocX_2burnDefine {
     MatrixWrapper<real_type> & DuDxlp
   ) const {
     // no controls to compute
-  }
-
-  /*\
-   |   ___       ___      _                               _
-   |  |   \ _  _|   \__ _| |_ __   _ _ _  _ _ __  ___ _ _(_)__
-   |  | |) | || | |) \ \ / | '_ \ | ' \ || | '  \/ -_) '_| / _|
-   |  |___/ \_,_|___//_\_\_| .__/ |_||_\_,_|_|_|_\___|_| |_\__|
-   |                       |_|
-  \*/
-
-  bool
-  gtocX_2burn::DuDxlp_full_numeric(
-    NodeType2 const          & NODE__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
-  ) const {
-    // no controls, no jacobian to compute
-    return true;
-  }
-
-  bool
-  gtocX_2burn::DuDxlp_full_numeric(
-    NodeType2 const          & LEFT__,
-    NodeType2 const          & RIGHT__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
-  ) const {
-    // no controls to compute
-    return true;
   }
 
   /*\

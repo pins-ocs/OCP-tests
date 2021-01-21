@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -162,10 +162,10 @@ namespace gtocX_2burnDefine {
   */
   gtocX_2burn::gtocX_2burn(
     string  const & name,
-    ThreadPool    * _TP,
-    Console const * _pConsole
+    ThreadPool    * TP,
+    Console const * console
   )
-  : Discretized_Indirect_OCP( name, _TP, _pConsole )
+  : Discretized_Indirect_OCP( name, TP, console )
   // Controls
   // Constraints 1D
   , ray_positive("ray_positive")
@@ -212,21 +212,33 @@ namespace gtocX_2burnDefine {
   //       |_|
   */
   void
-  gtocX_2burn::updateContinuation( integer phase, real_type s ) {
+  gtocX_2burn::updateContinuation(
+    integer   phase,
+    real_type old_s,
+    real_type s
+  ) {
+    int msg_level = 3;
+    m_console->message(
+      fmt::format(
+        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        phase+1, s, s-old_s
+      ),
+      msg_level
+    );
     UTILS_ASSERT(
-      s >= 0 && s <= 1,
-      "gtocX_2burn::updateContinuation( phase number = {}, s = {}) "
-      "s must be in the interval [0,1]\n",
-      phase, s
+      0 <= old_s && old_s < s && s <= 1,
+      "gtocX_2burn::updateContinuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
     );
     switch ( phase ) {
       case 0: continuationStep0( s ); break;
       case 1: continuationStep1( s ); break;
       default:
-       UTILS_ERROR(
-          "gtocX_2burn::updateContinuation( phase number = {}, s = {} )"
+        UTILS_ERROR(
+          "gtocX_2burn::updateContinuation( phase number={}, old_s={}, s={} )"
           " phase N.{} is not defined\n",
-          phase, s, phase
+          phase, old_s, s, phase
         );
     }
   }
@@ -403,6 +415,7 @@ namespace gtocX_2burnDefine {
   void
   gtocX_2burn::setup( GenericContainer const & gc ) {
 
+    m_debug = false;
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("gtocX_2burn::setup, Debug");
 

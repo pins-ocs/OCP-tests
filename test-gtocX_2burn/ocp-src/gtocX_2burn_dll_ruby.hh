@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_dll_ruby.hh                                        |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 20/1/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -105,8 +105,8 @@ namespace gtocX_2burnDefine {
   public:
 
     GTOCX_2BURN_API_DLL
-    gtocX_2burn_Problem( ThreadPool * pTP, Console * pConsole )
-    : model("gtocX_2burn",pTP,pConsole)
+    gtocX_2burn_Problem( ThreadPool * TP, Console const * console )
+    : model("gtocX_2burn",TP,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

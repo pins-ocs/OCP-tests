@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_dll_ruby.hh                                |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 21/1/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
