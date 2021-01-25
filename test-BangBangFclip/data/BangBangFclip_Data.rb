@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFclip_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 19/1/2021                                        #
+#  version: 1.0   date 25/1/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,7 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-vFmax = 10
+vFmax    = 10
+h0       = 0.1
+epsilon0 = 0.1
 
 mechatronix do |data|
 
@@ -102,7 +104,7 @@ mechatronix do |data|
 
     # continuation parameters
     :ns_continuation_begin => 0,
-    :ns_continuation_end   => 0,
+    :ns_continuation_end   => 1,
     :continuation => {
       :initial_step   => 0.2,   # initial step for continuation
       :min_step       => 0.001, # minimum accepted step for continuation
@@ -145,6 +147,10 @@ mechatronix do |data|
     # User Function Parameters
 
     # Continuation Parameters
+    :h0       => h0,
+    :h1       => 1e-10,
+    :epsilon0 => epsilon0,
+    :epsilon1 => 0.0001,
 
     # Constraints Parameters
   }
@@ -153,7 +159,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :h => 0.1, :delta => 0.1 }
+  data.MappedObjects[:clip] = { :delta => 0, :h => h0 }
 
   # Controls
   # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
@@ -161,7 +167,7 @@ mechatronix do |data|
   data.Controls = {}
   data.Controls[:controlForce] = {
     :type      => 'QUADRATIC',
-    :epsilon   => 0.001,
+    :epsilon   => epsilon0,
     :tolerance => 0.001
   }
 
@@ -177,20 +183,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 0.1,
-        :n      => 10,
-      },
-      {
-        :length => 0.4,
-        :n      => 40,
-      },
-      {
-        :length => 0.4,
-        :n      => 40,
-      },
-      {
-        :length => 0.1,
-        :n      => 10,
+        :n      => 400,
+        :length => 1,
       },
     ],
   };

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip.cc                                               |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 25/1/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -96,9 +96,13 @@ namespace BangBangFclipDefine {
   };
 
   char const *namesModelPars[numModelPars+1] = {
+    "h0",
+    "h1",
     "maxClip",
     "minClip",
     "vFmax",
+    "epsilon0",
+    "epsilon1",
     nullptr
   };
 
@@ -144,6 +148,9 @@ namespace BangBangFclipDefine {
   {
     m_U_solve_iterative = false;
 
+    // continuation
+    this->ns_continuation_begin = 0;
+    this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
@@ -192,6 +199,21 @@ namespace BangBangFclipDefine {
       ),
       msg_level
     );
+    UTILS_ASSERT(
+      0 <= old_s && old_s < s && s <= 1,
+      "BangBangFclip::updateContinuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
+    );
+    switch ( phase ) {
+      case 0: continuationStep0( s ); break;
+      default:
+        UTILS_ERROR(
+          "BangBangFclip::updateContinuation( phase number={}, old_s={}, s={} )"
+          " phase N.{} is not defined\n",
+          phase, old_s, s, phase
+        );
+    }
   }
 
   /* --------------------------------------------------------------------------

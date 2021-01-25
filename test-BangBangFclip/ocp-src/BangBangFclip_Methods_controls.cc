@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 25/1/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,7 +87,7 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ModelPars[2];
+    real_type t3   = ModelPars[4];
     real_type t4   = ALIAS_controlForce_D_1(U__[0], -t3, t3);
     result__[ 0   ] = L__[2] + t4;
     if ( m_debug )
@@ -167,7 +167,7 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[2];
+    real_type t2   = ModelPars[4];
     result__[ 0   ] = ALIAS_controlForce_D_1_1(U__[0], -t2, t2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
@@ -203,7 +203,7 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[2];
+    real_type t2   = ModelPars[4];
     U__[ iU_vF ] = controlForce.solve(-L__[2], -t2, t2);
   }
 
@@ -258,7 +258,7 @@ namespace BangBangFclipDefine {
     DuDxlp(0, 2) = 0;
     DuDxlp(0, 3) = 0;
     DuDxlp(0, 4) = 0;
-    DuDxlp(0, 5) = -controlForce.solve_rhs(-L__[2], -ModelPars[2], ModelPars[2]);
+    DuDxlp(0, 5) = -controlForce.solve_rhs(-L__[2], -ModelPars[4], ModelPars[4]);
   }
 
   void

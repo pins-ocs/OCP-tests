@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 25/1/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -91,7 +91,7 @@ namespace BangBangFclipDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = L__[0];
-    real_type t5   = ALIAS_clip_D_1(X__[2], ModelPars[1], ModelPars[0]);
+    real_type t5   = ALIAS_clip_D_1(X__[2], ModelPars[3], ModelPars[2]);
     result__[ 2   ] = t5 * L__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
@@ -132,7 +132,7 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t5   = ALIAS_clip_D_1_1(X__[2], ModelPars[1], ModelPars[0]);
+    real_type t5   = ALIAS_clip_D_1_1(X__[2], ModelPars[3], ModelPars[2]);
     result__[ 0   ] = t5 * L__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );

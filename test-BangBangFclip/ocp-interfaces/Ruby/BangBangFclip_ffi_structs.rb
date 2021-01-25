@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: BangBangFclip_ffi_structs.rb                                      #
 #                                                                          #
-#  version: 1.0   date 19/1/2021                                           #
+#  version: 1.0   date 25/1/2021                                           #
 #                                                                          #
 #  Copyright (C) 2021                                                      #
 #                                                                          #
@@ -40,11 +40,19 @@ module BangBangFclip
   class BangBangFclip_model_params < FFI::Struct
     layout(
 
-      :maxClip, :data_t,
+      :h0,       :data_t,
 
-      :minClip, :data_t,
+      :h1,       :data_t,
 
-      :vFmax,   :data_t,
+      :maxClip,  :data_t,
+
+      :minClip,  :data_t,
+
+      :vFmax,    :data_t,
+
+      :epsilon0, :data_t,
+
+      :epsilon1, :data_t,
 
     )
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip.hh                                               |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 25/1/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -101,7 +101,7 @@ namespace BangBangFclipDefine {
   class BangBangFclip : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[3];
+    real_type ModelPars[7];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU controlForce;
@@ -123,6 +123,7 @@ namespace BangBangFclipDefine {
     BangBangFclip const & operator = ( BangBangFclip const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
+    void continuationStep0( real_type s );
 
   public:
 
@@ -221,6 +222,9 @@ namespace BangBangFclipDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    BANGBANGFCLIP_API_DLL real_type fun      ( real_type x__XO ) const;
+    BANGBANGFCLIP_API_DLL real_type fun_D    ( real_type x__XO ) const;
+    BANGBANGFCLIP_API_DLL real_type fun_DD   ( real_type x__XO ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

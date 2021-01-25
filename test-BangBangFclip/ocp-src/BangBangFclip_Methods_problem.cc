@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 25/1/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -62,6 +62,41 @@ using Mechatronix::MeshStd;
 
 
 namespace BangBangFclipDefine {
+  /*\
+   |   ___         _   _               _   _
+   |  / __|___ _ _| |_(_)_ _ _  _ __ _| |_(_)___ _ _
+   | | (__/ _ \ ' \  _| | ' \ || / _` |  _| / _ \ ' \
+   |  \___\___/_||_\__|_|_||_\_,_\__,_|\__|_\___/_||_|
+  \*/
+
+  void
+  BangBangFclip::continuationStep0( real_type s ) {
+    real_type t2   = 1 - s;
+    clip.update_h(s * ModelPars[1] + t2 * ModelPars[0]);
+    controlForce.update_epsilon(s * ModelPars[6] + ModelPars[5] * t2);
+  }
+
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  real_type
+  BangBangFclip::fun( real_type x__XO ) const {
+    return x__XO * x__XO;
+  }
+
+  real_type
+  BangBangFclip::fun_D( real_type x__XO ) const {
+    return 2 * x__XO;
+  }
+
+  real_type
+  BangBangFclip::fun_DD( real_type x__XO ) const {
+    return 2;
+  }
 
 
   /*\
@@ -84,9 +119,9 @@ namespace BangBangFclipDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t8   = clip(X__[2], ModelPars[1], ModelPars[0]);
+    real_type t8   = clip(X__[2], ModelPars[3], ModelPars[2]);
     real_type t11  = U__[0];
-    real_type t13  = ModelPars[2];
+    real_type t13  = ModelPars[4];
     real_type t14  = controlForce(t11, -t13, t13);
     return t11 * L__[2] + t8 * L__[1] + L__[0] * X__[1] + t14;
   }
@@ -121,7 +156,7 @@ namespace BangBangFclipDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[2];
+    real_type t2   = ModelPars[4];
     return controlForce(U__[0], -t2, t2);
   }
 
@@ -267,7 +302,7 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[2];
+    real_type t2   = ModelPars[4];
     ok = ok && controlForce.check_range(U__[0], -t2, t2);
     return ok;
   }
@@ -296,7 +331,7 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = clip(X__[2], ModelPars[1], ModelPars[0]);
+    result__[ 0   ] = clip(X__[2], ModelPars[3], ModelPars[2]);
     Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
