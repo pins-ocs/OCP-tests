@@ -23,28 +23,52 @@ cvars := [u(zeta)] ;
 #infoRegisteredObjects();
 loadDynamicSystem(equations=EQNS_T,controls=cvars,states=qvars) ;
 addUserFunction( Q(x,y)=x*y ) ;
-addBoundaryConditions(  initial=[x1,x2,y1,y2],  generic=[ [x1(zeta_f)=x2(zeta_f),"FinalX"],
+addBoundaryConditions(
+  initial=[x1,x2,y1,y2],
+  generic=[ [x1(zeta_f)=x2(zeta_f),"FinalX"],
             [y1(zeta_f)=Yc,"FinalY1"],
-            [y2(zeta_f)=Yc,"FinalY2"] ]);
-setStatusBoundaryConditions(  generic=["FinalX","FinalY1","FinalY2"]);
+            [y2(zeta_f)=Yc,"FinalY2"] ]
+);
+setStatusBoundaryConditions(
+  generic=["FinalX","FinalY1","FinalY2"]
+);
 infoBoundaryConditions() ;
 # Penalty
-addControlBound(  u,
+addControlBound(
+  u,
   controlType = "U_COS_LOGARITHMIC",
-  min         = 0,  max         = 1,
+  min         = 0,
+  max         = 1,
   epsilon     = 1e-2,
   tolerance   = 0.01,
-  scale       = T(zeta));
+  scale       = T(zeta)
+);
 addUnilateralConstraint( T(zeta)>=0, Tpositive ) ;
 setTarget( mayer = T(zeta_f) ) ;
-POST := [  [lambda4__xo(zeta)-lambda2__xo(zeta),"switching"]];
-PARS := [  epsi_max = 0.01,  epsi_min = 1e-9,  x1_i     = 1,  x2_i     = 2,  y1_i     = 1,  y2_i     = 2,  Yc       = 10,  T_guess  = 1];
-CONT := [  [ [u,"epsilon"] = explog(epsi_max,epsi_min,s) ]];
+POST := [
+  [lambda4__xo(zeta)-lambda2__xo(zeta),"switching"]
+];
+PARS := [
+  epsi_max = 0.01,
+  epsi_min = 1e-9,
+  x1_i     = 1,
+  x2_i     = 2,
+  y1_i     = 1,
+  y2_i     = 2,
+  Yc       = 10,
+  T_guess  = 1
+];
+CONT := [
+  [ [u,"epsilon"] = explog(epsi_max,epsi_min,s) ]
+];
 addUserFunction( explog(a,b,s)=exp(log(a)*(1-s)+log(b)*s) );
-generateOCProblem(  "EconomicGrowthModel2",
-  post_processing = POST,
-  parameters      = PARS,
-  continuation    = CONT,
-  mesh            = [length=1, n=5000],
-  states_guess    = [ T=T_guess, x1=x1_i, x2=x2_i, y1=y1_i, y2=y2_i ]);
+generateOCProblem(
+  "EconomicGrowthModel2",
+  post_processing     = POST,
+  parameters          = PARS,
+  continuation        = CONT,
+  mesh                = [length=1, n=5000],
+  controls_guess      = [u = 0.5],  controls_iterative  = false,  states_guess        = [ T=T_guess, x1=x1_i, x2=x2_i, y1=y1_i, y2=y2_i ]
+);
+#Describe(generateOCProblem);
 
