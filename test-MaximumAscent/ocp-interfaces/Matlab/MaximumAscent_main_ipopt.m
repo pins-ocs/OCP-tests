@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: MaximumAscent_fsolve_main.m                                    %
 %                                                                       %
-%  version: 1.0   date 19/1/2021                                        %
+%  version: 1.0   date 26/2/2021                                        %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus04_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 19/1/2021                                        #
+#  version: 1.0   date 26/2/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,21 +20,21 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-u_epsi    = 0.01
 epsilon_X = 1e-07
-Tf        = 6
 u_tol     = 0.01
+Tf        = 6
+u_epsi    = 0.01
 
 mechatronix do |data|
 
   # activate run time debug
   data.Debug = false
 
+  # Enable doctor
+  data.Doctor = false
+
   # Level of message
   data.InfoLevel = 4
-
-  # Activate dynamic debugging
-  data.Debug = false
 
   # maximum number of threads used for linear algebra and various solvers
   data.N_threads   = [1,$MAX_THREAD_NUM-1].max
@@ -42,9 +42,6 @@ mechatronix do |data|
   data.F_threaded  = true
   data.JF_threaded = true
   data.LU_threaded = true
-
-  # Enable doctor
-  data.Doctor = false
 
   # Enable check jacobian
   data.JacobianCheck            = false
@@ -62,7 +59,7 @@ mechatronix do |data|
   data.ControlSolver = {
     # ==============================================================
     # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
-    # 'LM' = Levenberg–Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
+    # 'LM' = Levenberg-Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
@@ -178,8 +175,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => Tf,
         :n      => 2000,
+        :length => Tf,
       },
     ],
   };

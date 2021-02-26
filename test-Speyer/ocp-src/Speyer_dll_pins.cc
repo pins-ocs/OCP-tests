@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Speyer_dll_pins.cc                                             |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -237,7 +237,7 @@ namespace SpeyerDefine {
       bool ok = it->second->solve();
       if ( !ok )
         pConsole->error( "Speyer_ocp_solve, solution failed!\n" );
-      it->second->diagnostic( gc_data );
+      it->second->diagnostic( gc_data, gc_data );
     }
 
     // return values

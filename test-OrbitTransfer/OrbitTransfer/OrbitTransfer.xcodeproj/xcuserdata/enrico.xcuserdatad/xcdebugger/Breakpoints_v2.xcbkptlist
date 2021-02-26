@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "128156A7-3766-43D0-87AE-E03C067668A8"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
+            landmarkName = "Discretized_Indirect_OCP::guess(gc_guess, Z_node)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "631">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "3226">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "3800">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "4390">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "5473">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "6626">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "7856">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "8979">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "9069">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "9099">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "9607">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "9637">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "10150">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "10180">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "11429">
+               </Location>
+               <Location
+                  uuid = "08E6B5C4-C3FB-49EE-AFDC-9CFDE1FE889D - e896b2a98f004785"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mechatronix::Discretized_Indirect_OCP::guess(GenericContainerNamespace::GenericContainer const&amp;, double*)"
+                  moduleName = "MechatronixSolver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/src/MechatronixSolver/Discretized_Indirect_OCP_Guess.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "12333">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

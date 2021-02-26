@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2.hh                                         |
  |                                                                       |
- |  version: 1.0   date 21/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -256,12 +256,6 @@ namespace PointMassCarModel_2Define {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     void
     get_names( GenericContainer & out ) const;
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // do some check on the computed solution
-    POINTMASSCARMODEL_2_API_DLL
-    void
-    diagnostic( GenericContainer const & gc_solution );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Continuation phase update

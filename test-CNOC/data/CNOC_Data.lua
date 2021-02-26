@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Data.lua                                                  |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,19 +20,22 @@
 -- User Header
 
 -- Auxiliary values
-js_max                   = 30
+jn_max                   = 65
 v_nom                    = 0.173
-mesh_segments            = 100
-js_min                   = -50
 deltaFeed                = v_nom
+js_min                   = -50
+js_max                   = 30
+mesh_segments            = 100
 path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
-jn_max                   = 65
 
 content = {
 
   -- activate run time debug
   data.Debug = false,
+
+  -- Enable doctor
+  Doctor = false,
 
   -- Level of message
   InfoLevel = 4,
@@ -43,12 +46,6 @@ content = {
   F_threaded  = true,
   JF_threaded = true,
   LU_threaded = true,
-
-  -- Enable doctor
-  Doctor = false,
-
-  -- Activate dynamic debugging
-  Debug = false,
 
   -- Enable check jacobian
   JacobianCheck            = false,
@@ -65,7 +62,7 @@ content = {
   ControlSolver = {
     -- ==============================================================
     -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
-    -- "LM" = Levenberg–Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
+    -- "LM" = Levenberg-Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
     solver = "QN",
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",

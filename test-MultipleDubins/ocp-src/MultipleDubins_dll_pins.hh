@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_dll_pins.hh                                     |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -108,8 +108,8 @@ namespace MultipleDubinsDefine {
   public:
 
     MULTIPLEDUBINS_API_DLL
-    MultipleDubins_Problem( ThreadPool * pTP, Console const * pConsole )
-    : model("MultipleDubins",pTP,pConsole)
+    MultipleDubins_Problem( ThreadPool * TP, Console const * console )
+    : model("MultipleDubins",TP,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();
@@ -173,8 +173,8 @@ namespace MultipleDubinsDefine {
 
     MULTIPLEDUBINS_API_DLL
     void
-    diagnostic( GenericContainer & gc_data )
-    { return model.diagnostic( gc_data ); }
+    diagnostic( GenericContainer const & gc_data, GenericContainer & gc_solution )
+    { return model.diagnostic( gc_data, gc_solution ); }
 
     MULTIPLEDUBINS_API_DLL
     integer

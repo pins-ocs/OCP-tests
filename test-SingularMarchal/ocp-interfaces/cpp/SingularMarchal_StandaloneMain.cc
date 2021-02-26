@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -192,7 +192,7 @@ SingularMarchal_data.Mesh["segments"][0]["length"] = 8;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

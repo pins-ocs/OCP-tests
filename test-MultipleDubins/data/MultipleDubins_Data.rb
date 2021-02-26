@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: MultipleDubins_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 14/12/2020                                       #
+#  version: 1.0   date 26/2/2021                                        #
 #                                                                       #
-#  Copyright (C) 2020                                                   #
+#  Copyright (C) 2021                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -17,15 +17,20 @@
 
 include Mechatronix
 
+# User Header
+
 # Auxiliary values
 
 mechatronix do |data|
 
+  # activate run time debug
+  data.Debug = false
+
+  # Enable doctor
+  data.Doctor = false
+
   # Level of message
   data.InfoLevel = 4
-
-  # Activate dynamic debugging
-  data.Debug = false
 
   # maximum number of threads used for linear algebra and various solvers
   data.N_threads   = [1,$MAX_THREAD_NUM-1].max
@@ -33,9 +38,6 @@ mechatronix do |data|
   data.F_threaded  = true
   data.JF_threaded = true
   data.LU_threaded = true
-
-  # Enable doctor
-  data.Doctor = false
 
   # Enable check jacobian
   data.JacobianCheck            = false
@@ -52,10 +54,16 @@ mechatronix do |data|
   # setup solver for controls
   data.ControlSolver = {
     # ==============================================================
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
+    # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
+    # 'LM' = Levenberg-Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
+    :solver => 'NewtonDumped',
+    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
+    # 'BFGS', 'DFP', 'SR1' for Quasi Newton
+    :update => 'BFGS',
+    # 'EXACT', 'ARMIJO'
+    :linesearch => 'EXACT',
     # ==============================================================
-    :Rcond     => 1e-14,  # reciprocal condition number threshold for QR, SVD, LSS, LSY
     :MaxIter   => 50,
     :Tolerance => 1e-9,
     :Iterative => false,
@@ -74,7 +82,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
     :last_factorization => 'LU',
-    ###:last_factorization => 'PINV',
+    #:last_factorization => 'PINV',
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped
@@ -156,7 +164,7 @@ mechatronix do |data|
   data.MappedObjects[:diff2pi] = { :N => 2*Math::PI }
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :h => 0.001, :delta => 0 }
+  data.MappedObjects[:clip] = { :delta => 0, :h => 0.001 }
 
   # Controls: No penalties or barriers constraint defined
   data.Controls = {}
@@ -172,8 +180,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 40,
+        :length => 1,
       },
     ],
   };

@@ -43,11 +43,16 @@ VelBound = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 2 num. nodes = 202
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 2
+num. nodes = 202
 Segment N.0
 s0 = 0 length = 0.5 npts = 101 no data set
 Segment N.1
 s0 = 0.5 length = 0.5 npts = 101 no data set
+END Mesh[mesh]
 
 Model Parameters
 .......................................L = 100
@@ -122,11 +127,11 @@ Hyness --- start iterations ---
 [ 38,  1] (7.14e-10 ,9.20e-15 ) [1.27e-09 ,8.92e-15 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 72.5[ms]      timeout        = 0 [ms]
+Elapsed Time   = 73.2[ms]      timeout        = 0 [ms]
 iteration      = 38            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 1622
 max acc. iter. = 800           N. System pars = 201
-Converged      = YES           Memory Used    = 172Kb (+26bytes)
+Converged      = YES           Memory Used    = 171Kb (+15bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

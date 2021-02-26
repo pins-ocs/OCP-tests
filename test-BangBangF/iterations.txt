@@ -15,9 +15,14 @@ FControl = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 101
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 101
 Segment N.0
 s0 = 0 length = 1 npts = 101 no data set
+END Mesh[mesh]
 INFO CLASS = BangBangF
   numNodes    = 101
   dim         = u = 1, q = 1, x = 2, p = 0, omega = 3, big_bc = 7
@@ -38,11 +43,11 @@ Hyness --- start iterations ---
 [  4,  1] (4.73e-18 ,4.77e-18 ) [4.12e-18 ,4.11e-18 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 2.35[ms]      timeout        = 0 [ms]
+Elapsed Time   = 2.27[ms]      timeout        = 0 [ms]
 iteration      = 4             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 407
 max acc. iter. = 800           N. System pars = 100
-Converged      = YES           Memory Used    = 48Kb (+47bytes)
+Converged      = YES           Memory Used    = 47Kb (+76bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars.hh                                            |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -161,8 +161,8 @@ namespace gtocX_2burn_parsDefine {
     explicit
     gtocX_2burn_pars(
       string  const & name,
-      ThreadPool    * _TP,
-      Console const * _pConsole
+      ThreadPool    * TP,
+      Console const * console
     );
 
     GTOCX_2BURN_PARS_API_DLL virtual
@@ -552,16 +552,14 @@ namespace gtocX_2burn_parsDefine {
     get_names( GenericContainer & out ) const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // do some check on the computed solution
-    GTOCX_2BURN_PARS_API_DLL
-    void
-    diagnostic( GenericContainer const & gc_solution );
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Continuation phase update
     GTOCX_2BURN_PARS_API_DLL
     void
-    updateContinuation( integer phase, real_type s ) MECHATRONIX_OVERRIDE;
+    updateContinuation(
+      integer   phase,
+      real_type old_s,
+      real_type s
+    ) MECHATRONIX_OVERRIDE;
 
     // save model parameters
     GTOCX_2BURN_PARS_API_DLL virtual

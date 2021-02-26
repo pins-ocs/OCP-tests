@@ -18,9 +18,14 @@ x1Limitation = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 20001
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 20001
 Segment N.0
 s0 = 0 length = 1 npts = 20001 no data set
+END Mesh[mesh]
 
 Model Parameters
 .................................maxEpsi = 0.1
@@ -118,7 +123,7 @@ Hyness --- start iterations ---
 [ 55,  1] (2.56e-11 ,1.29e-11 ) [6.18e-11 ,1.04e-11 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 2.70[sec]     timeout        = 0 [ms]
+Elapsed Time   = 2.38[sec]     timeout        = 0 [ms]
 iteration      = 55            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 80008
 max acc. iter. = 800           N. System pars = 20000

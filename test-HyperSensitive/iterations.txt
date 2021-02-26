@@ -7,9 +7,14 @@ Boundary Conditions activation status
 
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 51
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 51
 Segment N.0
 s0 = 0 length = 10000 npts = 51 no data set
+END Mesh[mesh]
 
 Model Parameters
 .....................................y_f = 1
@@ -35,11 +40,11 @@ Hyness --- start iterations ---
 [  5,  1] (2.73e-06 ,2.17e-11 ) [6.34e-06 ,6.18e-11 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 1.96[ms]      timeout        = 0 [ms]
+Elapsed Time   = 1.99[ms]      timeout        = 0 [ms]
 iteration      = 5             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 104
 max acc. iter. = 800           N. System pars = 50
-Converged      = YES           Memory Used    = 16Kb (+31bytes)
+Converged      = YES           Memory Used    = 15Kb (+92bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

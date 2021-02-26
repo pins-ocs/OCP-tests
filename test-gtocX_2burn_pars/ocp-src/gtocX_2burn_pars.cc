@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars.cc                                            |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -159,10 +159,10 @@ namespace gtocX_2burn_parsDefine {
   */
   gtocX_2burn_pars::gtocX_2burn_pars(
     string  const & name,
-    ThreadPool    * _TP,
-    Console const * _pConsole
+    ThreadPool    * TP,
+    Console const * console
   )
-  : Discretized_Indirect_OCP( name, _TP, _pConsole )
+  : Discretized_Indirect_OCP( name, TP, console )
   // Controls
   // Constraints 1D
   , ray_positive("ray_positive")
@@ -209,21 +209,33 @@ namespace gtocX_2burn_parsDefine {
   //       |_|
   */
   void
-  gtocX_2burn_pars::updateContinuation( integer phase, real_type s ) {
+  gtocX_2burn_pars::updateContinuation(
+    integer   phase,
+    real_type old_s,
+    real_type s
+  ) {
+    int msg_level = 3;
+    m_console->message(
+      fmt::format(
+        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        phase+1, s, s-old_s
+      ),
+      msg_level
+    );
     UTILS_ASSERT(
-      s >= 0 && s <= 1,
-      "gtocX_2burn_pars::updateContinuation( phase number = {}, s = {}) "
-      "s must be in the interval [0,1]\n",
-      phase, s
+      0 <= old_s && old_s < s && s <= 1,
+      "gtocX_2burn_pars::updateContinuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
     );
     switch ( phase ) {
       case 0: continuationStep0( s ); break;
       case 1: continuationStep1( s ); break;
       default:
-       UTILS_ERROR(
-          "gtocX_2burn_pars::updateContinuation( phase number = {}, s = {} )"
+        UTILS_ERROR(
+          "gtocX_2burn_pars::updateContinuation( phase number={}, old_s={}, s={} )"
           " phase N.{} is not defined\n",
-          phase, s, phase
+          phase, old_s, s, phase
         );
     }
   }
@@ -375,7 +387,7 @@ namespace gtocX_2burn_parsDefine {
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     mstr.str("");
-    mstr << "User function `pMesh`: ";
+    mstr << "\nUser function `pMesh`\n";
     pMesh->info(mstr);
     m_console->message(mstr.str(),msg_level);
 
@@ -400,6 +412,7 @@ namespace gtocX_2burn_parsDefine {
   void
   gtocX_2burn_pars::setup( GenericContainer const & gc ) {
 
+    m_debug = false;
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("gtocX_2burn_pars::setup, Debug");
 
@@ -455,35 +468,6 @@ namespace gtocX_2burn_parsDefine {
     vec_string_type & model_names = out["model_names"].set_vec_string();
     for ( integer i = 0; i < numModelPars; ++i )
       model_names.push_back(namesModelPars[i]);
-  }
-
-  /* --------------------------------------------------------------------------
-  //      _ _                       _   _
-  //   __| (_)__ _ __ _ _ _  ___ __| |_(_)__
-  //  / _` | / _` / _` | ' \/ _ (_-<  _| / _|
-  //  \__,_|_\__,_\__, |_||_\___/__/\__|_\__|
-  //              |___/
-  */
-  void
-  gtocX_2burn_pars::diagnostic( GenericContainer const & gc ) {
-
-    // DA RIFARE--------------
-
-    // If required save function and jacobian
-    //if ( gc.exists("DumpFile") )
-    //  this->dumpFunctionAndJacobian( m_solver->solution(),
-    //                                 gc("DumpFile").get_string() );
-
-    //bool do_diagnosis = gc.get_map_bool("Doctor");
-    //if ( do_diagnosis )
-    //  this->diagnosis( m_solver->solution(), gc["diagnosis"] );
-
-    real_type epsi = 1e-5;
-    gc.get_if_exists("JacobianCheck_epsilon",epsi);
-    if ( gc.get_map_bool("JacobianCheck") )
-      this->checkJacobian( m_solver->solution(), epsi );
-    if ( gc.get_map_bool("JacobianCheckFull") )
-      this->checkJacobianFull( m_solver->solution(), epsi );
   }
 
   // save model parameters

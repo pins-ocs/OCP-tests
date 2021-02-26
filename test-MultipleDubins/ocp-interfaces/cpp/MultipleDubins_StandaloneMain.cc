@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -166,8 +166,8 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["h"] = 0.001;
     data_clip["delta"] = 0;
+    data_clip["h"] = 0.001;
 
     // Controls: No penalties or barriers constraint defined
 
@@ -177,8 +177,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 MultipleDubins_data.Mesh["s0"] = 0;
-MultipleDubins_data.Mesh["segments"][0]["length"] = 1;
 MultipleDubins_data.Mesh["segments"][0]["n"] = 40;
+MultipleDubins_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -203,7 +203,7 @@ MultipleDubins_data.Mesh["segments"][0]["n"] = 40;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

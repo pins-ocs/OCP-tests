@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_epsilon0 = 0.01;
-    real_type u_epsilon = u_epsilon0;
     real_type u_tolerance0 = 0.01;
     real_type u_tolerance = u_tolerance0;
+    real_type u_epsilon0 = 0.01;
+    real_type u_epsilon = u_epsilon0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -217,7 +217,7 @@ RobotArm_data.Mesh["segments"][0]["n"] = 400;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

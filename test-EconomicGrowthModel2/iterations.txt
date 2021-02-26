@@ -28,9 +28,14 @@ Tpositive = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 5001
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 5001
 Segment N.0
 s0 = 0 length = 1 npts = 5001 no data set
+END Mesh[mesh]
 
 Model Parameters
 .................................T_guess = 1
@@ -119,7 +124,7 @@ Hyness --- start iterations ---
 [ 46,  1] (1.04e-10 ,2.72e-12 ) [2.06e-10 ,4.17e-12 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 1.30[sec]     timeout        = 0 [ms]
+Elapsed Time   = 1.11[sec]     timeout        = 0 [ms]
 iteration      = 46            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 50017
 max acc. iter. = 800           N. System pars = 5000

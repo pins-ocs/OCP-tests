@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods1.cc                                             |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,29 +71,6 @@ using Mechatronix::MeshStd;
 
 
 namespace Bike1DDefine {
-
-  /*\
-   |  _   _               ___             _   _
-   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-  \*/
-  // user defined functions which has a body defined in MAPLE
-  real_type
-  Bike1D::Tmax_normalized( real_type v__XO ) const {
-    return ModelPars[0] / ModelPars[2] / ModelPars[1] * (1 - v__XO / ModelPars[8]);
-  }
-
-  real_type
-  Bike1D::Tmax_normalized_D( real_type v__XO ) const {
-    return -ModelPars[0] / ModelPars[2] / ModelPars[1] / ModelPars[8];
-  }
-
-  real_type
-  Bike1D::Tmax_normalized_DD( real_type v__XO ) const {
-    return 0;
-  }
-
 
   /*\
    |  _  _            _ _ _            _
@@ -233,82 +210,153 @@ namespace Bike1DDefine {
   }
 
   /*\
-   |    ___
-   |   / __|_  _ ___ ______
-   |  | (_ | || / -_|_-<_-<
-   |   \___|\_,_\___/__/__/
+   |   ____                                  _   _     _       _
+   |  / ___|  ___  __ _ _ __ ___   ___ _ __ | |_| |   (_)_ __ | | __
+   |  \___ \ / _ \/ _` | '_ ` _ \ / _ \ '_ \| __| |   | | '_ \| |/ /
+   |   ___) |  __/ (_| | | | | | |  __/ | | | |_| |___| | | | |   <
+   |  |____/ \___|\__, |_| |_| |_|\___|_| |_|\__|_____|_|_| |_|_|\_\
+   |              |___/
   \*/
 
   integer
-  Bike1D::u_guess_numEqns() const
-  { return 2; }
+  Bike1D::segmentLink_numEqns() const
+  { return 0; }
 
   void
-  Bike1D::u_guess_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  Bike1D::segmentLink_eval(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            segmentLink[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-      MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_mur ] = 0;
-    UGUESS__[ iU_muf ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Bike1D::DsegmentLinkDxp_numRows() const
+  { return 0; }
+
+  integer
+  Bike1D::DsegmentLinkDxp_numCols() const
+  { return 0; }
+
+  integer
+  Bike1D::DsegmentLinkDxp_nnz() const
+  { return 0; }
+
   void
-  Bike1D::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  Bike1D::DsegmentLinkDxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[1];
-    real_type L__[1];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q      = Q__;
-    NODE__.x      = X__;
-    NODE__.lambda = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    this->u_guess_eval( NODE__, P__, UGUESS__ );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Bike1D::DsegmentLinkDxp_sparse(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            DsegmentLinkDxp[]
+  ) const {
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
-   |    ___ _           _
-   |   / __| |_  ___ __| |__
-   |  | (__| ' \/ -_) _| / /
-   |   \___|_||_\___\__|_\_\
+   |     _
+   |  _ | |_  _ _ __  _ __
+   | | || | || | '  \| '_ \
+   |  \__/ \_,_|_|_|_| .__/
+   |                 |_|
   \*/
 
-  bool
-  Bike1D::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+  integer
+  Bike1D::jump_numEqns() const
+  { return 2; }
+
+  void
+  Bike1D::jump_eval(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && mufControl.check_range(U__[1], ModelPars[3], 0);
-    real_type t6   = Tmax_normalized(X__[0]);
-    real_type t8   = clip(t6, 0, ModelPars[4]);
-    ok = ok && murControl.check_range(U__[0], ModelPars[5], t8);
-    return ok;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    real_type t1   = XR__[0];
+    real_type t2   = XL__[0];
+    result__[ 0   ] = t1 - t2;
+    result__[ 1   ] = LR__[0] * t1 - LL__[0] * t2;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 2, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Bike1D::DjumpDxlp_numRows() const
+  { return 2; }
+
+  integer
+  Bike1D::DjumpDxlp_numCols() const
+  { return 4; }
+
+  integer
+  Bike1D::DjumpDxlp_nnz() const
+  { return 6; }
+
+  void
+  Bike1D::DjumpDxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 3   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Bike1D::DjumpDxlp_sparse(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = -1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = -LL__[0];
+    result__[ 3   ] = -XL__[0];
+    result__[ 4   ] = LR__[0];
+    result__[ 5   ] = XR__[0];
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 6, i_segment_left, i_segment_right );
   }
 
   /*\

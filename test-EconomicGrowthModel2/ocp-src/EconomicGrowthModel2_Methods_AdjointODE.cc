@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -160,18 +160,18 @@ namespace EconomicGrowthModel2Define {
     real_type t7   = X__[4];
     real_type t8   = t7 * t6;
     real_type t12  = (1 - t2) * L__[3];
-    result__[ 0   ] = t12 * t8 + t3 * t8;
+    result__[ 0   ] = t8 * t12 + t8 * t3;
     real_type t14  = Q_D_1_2(t4, t5);
     real_type t15  = t7 * t14;
-    result__[ 1   ] = t12 * t15 + t15 * t3;
+    result__[ 1   ] = t15 * t12 + t15 * t3;
     real_type t18  = Q_D_1(t4, t5);
-    result__[ 2   ] = t12 * t18 + t18 * t3;
+    result__[ 2   ] = t18 * t12 + t18 * t3;
     result__[ 3   ] = result__[1];
     real_type t21  = Q_D_2_2(t4, t5);
     real_type t22  = t7 * t21;
-    result__[ 4   ] = t12 * t22 + t22 * t3;
+    result__[ 4   ] = t22 * t12 + t22 * t3;
     real_type t25  = Q_D_2(t4, t5);
-    result__[ 5   ] = t12 * t25 + t25 * t3;
+    result__[ 5   ] = t25 * t12 + t25 * t3;
     result__[ 6   ] = L__[0];
     result__[ 7   ] = L__[2];
     result__[ 8   ] = result__[2];

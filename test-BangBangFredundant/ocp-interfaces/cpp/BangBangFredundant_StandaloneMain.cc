@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -179,8 +179,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFredundant_data.Mesh["s0"] = 0;
-BangBangFredundant_data.Mesh["segments"][0]["n"] = 100;
 BangBangFredundant_data.Mesh["segments"][0]["length"] = 1;
+BangBangFredundant_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers
@@ -205,7 +205,7 @@ BangBangFredundant_data.Mesh["segments"][0]["length"] = 1;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

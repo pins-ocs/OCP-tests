@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 21/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -208,6 +208,8 @@ namespace PointMassCarModel_2Define {
     iIndex[7 ] = 1   ; jIndex[7 ] = 9   ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   PointMassCarModel_2::DgDxlp_sparse(
     NodeType2 const    & NODE__,
@@ -269,6 +271,8 @@ namespace PointMassCarModel_2Define {
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   PointMassCarModel_2::DgDu_sparse(
     NodeType2 const    & NODE__,
@@ -325,6 +329,8 @@ namespace PointMassCarModel_2Define {
     U__[ iU_v__fx    ] = v__fxControl.solve(-t8 * ModelPars[15] * L__[3], -1, 1);
     U__[ iU_v__Omega ] = v__OmegaControl.solve(-t8 * ModelPars[14] * L__[4], -1, 1);
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   PointMassCarModel_2::u_eval_analytic(
@@ -408,6 +414,8 @@ namespace PointMassCarModel_2Define {
     DuDxlp(1, 9) = -v__OmegaControl.solve_rhs(-L__[4] * ModelPars[14] * zeta__dot(X__[2], X__[1], X__[0], Q__[1]), -1, 1) * ModelPars[14] * zeta__dot(X__[2], X__[1], X__[0], Q__[1]);
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   PointMassCarModel_2::DuDxlp_full_analytic(
     NodeType2 const          & LEFT__,
@@ -449,281 +457,6 @@ namespace PointMassCarModel_2Define {
     L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
     L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
-  }
-
-  /*\
-   |   ____                                  _   _     _       _
-   |  / ___|  ___  __ _ _ __ ___   ___ _ __ | |_| |   (_)_ __ | | __
-   |  \___ \ / _ \/ _` | '_ ` _ \ / _ \ '_ \| __| |   | | '_ \| |/ /
-   |   ___) |  __/ (_| | | | | | |  __/ | | | |_| |___| | | | |   <
-   |  |____/ \___|\__, |_| |_| |_|\___|_| |_|\__|_____|_|_| |_|_|\_\
-   |              |___/
-  \*/
-
-  integer
-  PointMassCarModel_2::segmentLink_numEqns() const
-  { return 0; }
-
-  void
-  PointMassCarModel_2::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
-  ) const {
-   UTILS_ERROR0("NON IMPLEMENTATA\n");
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_2::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  PointMassCarModel_2::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  PointMassCarModel_2::DsegmentLinkDxp_nnz() const
-  { return 0; }
-
-  void
-  PointMassCarModel_2::DsegmentLinkDxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-   UTILS_ERROR0("NON IMPLEMENTATA\n");
-  }
-
-  void
-  PointMassCarModel_2::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
-  ) const {
-   UTILS_ERROR0("NON IMPLEMENTATA\n");
-  }
-
-  /*\
-   |     _
-   |  _ | |_  _ _ __  _ __
-   | | || | || | '  \| '_ \
-   |  \__/ \_,_|_|_|_| .__/
-   |                 |_|
-  \*/
-
-  integer
-  PointMassCarModel_2::jump_numEqns() const
-  { return 10; }
-
-  void
-  PointMassCarModel_2::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
-    real_type t1   = XR__[0];
-    real_type t2   = XL__[0];
-    result__[ 0   ] = t1 - t2;
-    real_type t3   = XR__[1];
-    real_type t4   = XL__[1];
-    result__[ 1   ] = t3 - t4;
-    real_type t5   = XR__[2];
-    real_type t6   = XL__[2];
-    result__[ 2   ] = t5 - t6;
-    result__[ 3   ] = XR__[3] - XL__[3];
-    result__[ 4   ] = XR__[4] - XL__[4];
-    real_type t12  = ALIAS_Kappa_R(QR__[0]);
-    real_type t13  = zeta__dot(t5, t3, t1, t12);
-    real_type t17  = ALIAS_Kappa_L(QL__[0]);
-    real_type t18  = zeta__dot(t6, t4, t2, t17);
-    result__[ 5   ] = LR__[0] * t13 - LL__[0] * t18;
-    result__[ 6   ] = LR__[1] * t13 - LL__[1] * t18;
-    result__[ 7   ] = LR__[2] * t13 - LL__[2] * t18;
-    result__[ 8   ] = LR__[4] * t13 - LL__[4] * t18;
-    result__[ 9   ] = LR__[3] * t13 - LL__[3] * t18;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "jump_eval", 10, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_2::DjumpDxlp_numRows() const
-  { return 10; }
-
-  integer
-  PointMassCarModel_2::DjumpDxlp_numCols() const
-  { return 20; }
-
-  integer
-  PointMassCarModel_2::DjumpDxlp_nnz() const
-  { return 50; }
-
-  void
-  PointMassCarModel_2::DjumpDxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 10  ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 11  ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 12  ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 13  ;
-    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
-    iIndex[9 ] = 4   ; jIndex[9 ] = 14  ;
-    iIndex[10] = 5   ; jIndex[10] = 0   ;
-    iIndex[11] = 5   ; jIndex[11] = 1   ;
-    iIndex[12] = 5   ; jIndex[12] = 2   ;
-    iIndex[13] = 5   ; jIndex[13] = 5   ;
-    iIndex[14] = 5   ; jIndex[14] = 10  ;
-    iIndex[15] = 5   ; jIndex[15] = 11  ;
-    iIndex[16] = 5   ; jIndex[16] = 12  ;
-    iIndex[17] = 5   ; jIndex[17] = 15  ;
-    iIndex[18] = 6   ; jIndex[18] = 0   ;
-    iIndex[19] = 6   ; jIndex[19] = 1   ;
-    iIndex[20] = 6   ; jIndex[20] = 2   ;
-    iIndex[21] = 6   ; jIndex[21] = 6   ;
-    iIndex[22] = 6   ; jIndex[22] = 10  ;
-    iIndex[23] = 6   ; jIndex[23] = 11  ;
-    iIndex[24] = 6   ; jIndex[24] = 12  ;
-    iIndex[25] = 6   ; jIndex[25] = 16  ;
-    iIndex[26] = 7   ; jIndex[26] = 0   ;
-    iIndex[27] = 7   ; jIndex[27] = 1   ;
-    iIndex[28] = 7   ; jIndex[28] = 2   ;
-    iIndex[29] = 7   ; jIndex[29] = 7   ;
-    iIndex[30] = 7   ; jIndex[30] = 10  ;
-    iIndex[31] = 7   ; jIndex[31] = 11  ;
-    iIndex[32] = 7   ; jIndex[32] = 12  ;
-    iIndex[33] = 7   ; jIndex[33] = 17  ;
-    iIndex[34] = 8   ; jIndex[34] = 0   ;
-    iIndex[35] = 8   ; jIndex[35] = 1   ;
-    iIndex[36] = 8   ; jIndex[36] = 2   ;
-    iIndex[37] = 8   ; jIndex[37] = 9   ;
-    iIndex[38] = 8   ; jIndex[38] = 10  ;
-    iIndex[39] = 8   ; jIndex[39] = 11  ;
-    iIndex[40] = 8   ; jIndex[40] = 12  ;
-    iIndex[41] = 8   ; jIndex[41] = 19  ;
-    iIndex[42] = 9   ; jIndex[42] = 0   ;
-    iIndex[43] = 9   ; jIndex[43] = 1   ;
-    iIndex[44] = 9   ; jIndex[44] = 2   ;
-    iIndex[45] = 9   ; jIndex[45] = 8   ;
-    iIndex[46] = 9   ; jIndex[46] = 10  ;
-    iIndex[47] = 9   ; jIndex[47] = 11  ;
-    iIndex[48] = 9   ; jIndex[48] = 12  ;
-    iIndex[49] = 9   ; jIndex[49] = 18  ;
-  }
-
-  void
-  PointMassCarModel_2::DjumpDxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = -1;
-    result__[ 1   ] = 1;
-    result__[ 2   ] = -1;
-    result__[ 3   ] = 1;
-    result__[ 4   ] = -1;
-    result__[ 5   ] = 1;
-    result__[ 6   ] = -1;
-    result__[ 7   ] = 1;
-    result__[ 8   ] = -1;
-    result__[ 9   ] = 1;
-    real_type t1   = XL__[2];
-    real_type t2   = XL__[1];
-    real_type t3   = XL__[0];
-    real_type t5   = ALIAS_Kappa_L(QL__[0]);
-    real_type t6   = zeta__dot_D_3(t1, t2, t3, t5);
-    real_type t7   = LL__[0];
-    result__[ 10  ] = -t7 * t6;
-    real_type t9   = zeta__dot_D_2(t1, t2, t3, t5);
-    result__[ 11  ] = -t9 * t7;
-    real_type t11  = zeta__dot_D_1(t1, t2, t3, t5);
-    result__[ 12  ] = -t7 * t11;
-    real_type t13  = zeta__dot(t1, t2, t3, t5);
-    result__[ 13  ] = -t13;
-    real_type t14  = XR__[2];
-    real_type t15  = XR__[1];
-    real_type t16  = XR__[0];
-    real_type t18  = ALIAS_Kappa_R(QR__[0]);
-    real_type t19  = zeta__dot_D_3(t14, t15, t16, t18);
-    real_type t20  = LR__[0];
-    result__[ 14  ] = t20 * t19;
-    real_type t21  = zeta__dot_D_2(t14, t15, t16, t18);
-    result__[ 15  ] = t20 * t21;
-    real_type t22  = zeta__dot_D_1(t14, t15, t16, t18);
-    result__[ 16  ] = t20 * t22;
-    result__[ 17  ] = zeta__dot(t14, t15, t16, t18);
-    real_type t23  = LL__[1];
-    result__[ 18  ] = -t23 * t6;
-    result__[ 19  ] = -t23 * t9;
-    result__[ 20  ] = -t23 * t11;
-    result__[ 21  ] = result__[13];
-    real_type t27  = LR__[1];
-    result__[ 22  ] = t27 * t19;
-    result__[ 23  ] = t27 * t21;
-    result__[ 24  ] = t27 * t22;
-    result__[ 25  ] = result__[17];
-    real_type t28  = LL__[2];
-    result__[ 26  ] = -t28 * t6;
-    result__[ 27  ] = -t28 * t9;
-    result__[ 28  ] = -t28 * t11;
-    result__[ 29  ] = result__[21];
-    real_type t32  = LR__[2];
-    result__[ 30  ] = t32 * t19;
-    result__[ 31  ] = t32 * t21;
-    result__[ 32  ] = t32 * t22;
-    result__[ 33  ] = result__[25];
-    real_type t33  = LL__[4];
-    result__[ 34  ] = -t33 * t6;
-    result__[ 35  ] = -t33 * t9;
-    result__[ 36  ] = -t33 * t11;
-    result__[ 37  ] = result__[29];
-    real_type t37  = LR__[4];
-    result__[ 38  ] = t37 * t19;
-    result__[ 39  ] = t37 * t21;
-    result__[ 40  ] = t37 * t22;
-    result__[ 41  ] = result__[33];
-    real_type t38  = LL__[3];
-    result__[ 42  ] = -t38 * t6;
-    result__[ 43  ] = -t38 * t9;
-    result__[ 44  ] = -t38 * t11;
-    result__[ 45  ] = result__[37];
-    real_type t42  = LR__[3];
-    result__[ 46  ] = t42 * t19;
-    result__[ 47  ] = t42 * t21;
-    result__[ 48  ] = t42 * t22;
-    result__[ 49  ] = result__[41];
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 50, i_segment_left, i_segment_right );
   }
 
 }

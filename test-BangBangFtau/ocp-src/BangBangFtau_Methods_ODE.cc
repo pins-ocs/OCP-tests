@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFtau_Methods_ODE.cc                                    |
+ |  file: BangBangFtau_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 23/2/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,12 +84,12 @@ namespace BangBangFtauDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[iX_v];
-    real_type t1   = X__[iX_sT];
-    real_type t2   = X__[iX_sB];
-    result__[ 1   ] = clip(t1 - t2, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    result__[ 2   ] = -1.0 / ModelPars[iM_tauT] * (t1 - U__[iU_vsT]);
-    result__[ 3   ] = -1.0 / ModelPars[iM_tauB] * (t2 - U__[iU_vsB]);
+    result__[ 0   ] = X__[1];
+    real_type t1   = X__[2];
+    real_type t2   = X__[3];
+    result__[ 1   ] = clip(t1 - t2, ModelPars[3], ModelPars[1]);
+    result__[ 2   ] = -1.0 / ModelPars[5] * (t1 - U__[0]);
+    result__[ 3   ] = -1.0 / ModelPars[4] * (t2 - U__[1]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
@@ -134,10 +134,10 @@ namespace BangBangFtauDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    result__[ 1   ] = ALIAS_clip_D_1(X__[iX_sT] - X__[iX_sB], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    result__[ 1   ] = ALIAS_clip_D_1(X__[2] - X__[3], ModelPars[3], ModelPars[1]);
     result__[ 2   ] = -result__[1];
-    result__[ 3   ] = -1.0 / ModelPars[iM_tauT];
-    result__[ 4   ] = -1.0 / ModelPars[iM_tauB];
+    result__[ 3   ] = -1.0 / ModelPars[5];
+    result__[ 4   ] = -1.0 / ModelPars[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 5, i_segment );
   }
@@ -211,8 +211,8 @@ namespace BangBangFtauDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 1.0 / ModelPars[iM_tauT];
-    result__[ 1   ] = 1.0 / ModelPars[iM_tauB];
+    result__[ 0   ] = 1.0 / ModelPars[5];
+    result__[ 1   ] = 1.0 / ModelPars[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
@@ -269,4 +269,4 @@ namespace BangBangFtauDefine {
 
 }
 
-// EOF: BangBangFtau_Methods_ODE.cc
+// EOF: BangBangFtau_Methods.cc

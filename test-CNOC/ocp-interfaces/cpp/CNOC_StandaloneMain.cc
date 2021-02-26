@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,14 +50,14 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
-    real_type js_max = 30;
+    real_type jn_max = 65;
     real_type v_nom = 0.173;
-    real_type mesh_segments = 100;
-    real_type js_min = -50;
     real_type deltaFeed = v_nom;
+    real_type js_min = -50;
+    real_type js_max = 30;
+    real_type mesh_segments = 100;
     real_type path_following_tolerance = 1.0e-05;
     real_type pf_error = path_following_tolerance;
-    real_type jn_max = 65;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -466,7 +466,7 @@ CNOC_data.ToolPath2D["segments"][19]["n"] = mesh_segments;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

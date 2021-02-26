@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -243,8 +243,8 @@ namespace RobotArmDefine {
     result__[ 0   ] = OMEGA__[0] + LL__[3];
     result__[ 1   ] = OMEGA__[1] + LL__[4];
     result__[ 2   ] = OMEGA__[2] + LL__[5];
-    real_type t7   = ModelPars[0];
-    result__[ 3   ] = LL__[0] * t7 + OMEGA__[3];
+    real_type t8   = ModelPars[0];
+    result__[ 3   ] = t8 * LL__[0] + OMEGA__[3];
     real_type t12  = XL__[0];
     real_type t14  = I_theta(t12, XL__[2]);
     result__[ 4   ] = LL__[1] * t14 + OMEGA__[4];
@@ -253,7 +253,7 @@ namespace RobotArmDefine {
     result__[ 6   ] = OMEGA__[6] - LR__[3];
     result__[ 7   ] = OMEGA__[7] - LR__[4];
     result__[ 8   ] = OMEGA__[8] - LR__[5];
-    result__[ 9   ] = -LR__[0] * t7 + OMEGA__[9];
+    result__[ 9   ] = -t8 * LR__[0] + OMEGA__[9];
     real_type t31  = XR__[0];
     real_type t33  = I_theta(t31, XR__[2]);
     result__[ 10  ] = -LR__[1] * t33 + OMEGA__[10];

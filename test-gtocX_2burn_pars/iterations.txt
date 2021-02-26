@@ -20,9 +20,14 @@ ray_positive = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 51
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 51
 Segment N.0
 s0 = 0 length = 1 npts = 51 no data set
+END Mesh[mesh]
 
 Model Parameters
 .....................................muS = 0.575874
@@ -33,97 +38,99 @@ Model Parameters
 ..............................retrograde = -1
 ................................w_nonlin = 0
 INFO CLASS = gtocX_2burn_pars
-  dim_u        = 0
-  dim_q        = 1
-  dim_x        = 3
-  dim_p        = 3
-  dim_omega    = 6
-  dim_big_bc   = 12
-  numNodes     = 51
-  InitialBC    = 6
-  FinalBC      = 0
-  CyclicBC     = 6
-  InitialOMEGA = 3
-  FinalOMEGA   = 0
-  CyclicOMEGA  = 3
-  nZ_total     = 315
-  nQ_total     = 51
-  FD jacobian  = NO
+  numNodes    = 51
+  dim         = u = 0, q = 1, x = 3, p = 3, omega = 6, big_bc = 12
+  BC          = Inital = 6, Final = 0, Cyclic = 6
+  OMEGA       = Inital = 3, Final = 0, Cyclic = 3
+  total       = nZ = 315, UC = 0, Q = 51
+  index start = omega = 306, p = 312
+  FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: LU, N.threads: 7
+Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
 
 
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  1,  1] ( 4.73e-06, 7.71e-09) [ 0.000368, 9.70e-08]      1.00 ( 0: 0): 0: 0: 0 G
-[  2,  1] ( 7.71e-09, 2.59e-16) [ 9.70e-08, 4.13e-15]      1.00 ( 1: 0): 0: 0: 0 G
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  1,  1] (4.73e-06 ,7.71e-09 ) [0.000368 ,9.70e-08 ] 1.00       0: 0
+[  2,  1] (7.71e-09 ,2.59e-16 ) [9.70e-08 ,4.05e-15 ] 1.00       0: 0
 
-Continuation step N.0 s = 0.2
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  3,  1] ( 6.98e-07, 6.42e-17) [ 5.99e-05, 1.46e-16]      1.00 ( 0: 0): 0: 0: 0 G
-[  4,  1] ( 6.42e-17, 6.52e-17) [ 1.46e-16, 6.73e-17]      1.00 ( 1: 0): 0: 0: 0 G
+Continuation step N.1 s=0.20, ds=0.2000
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  3,  1] (6.98e-07 ,6.66e-17 ) [5.99e-05 ,2.07e-16 ] 1.00       0: 0
+[  4,  1] (6.66e-17 ,6.81e-17 ) [2.07e-16 ,2.68e-16 ] 1.00       0: 0
 
-Continuation step N.0 s = 0.5
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  5,  1] ( 1.05e-06, 6.72e-17) [ 8.98e-05, 1.07e-16]      1.00 ( 2: 2): 0: 0: 0 G
-[  6,  1] ( 6.72e-17, 6.65e-17) [ 1.07e-16, 1.31e-16]      1.00 ( 1: 2): 0: 0: 0 G
+Continuation step N.1 s=0.50, ds=0.3000
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  5,  1] (1.05e-06 ,6.46e-17 ) [8.98e-05 ,1.73e-16 ] 1.00       0: 0
+[  6,  2] (6.46e-17 ,6.02e-17 ) [1.73e-16 ,2.97e-16 ] 0.487      0: 0
 
-Continuation step N.0 s = 0.9500000000000001
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  7,  1] ( 1.57e-06, 5.64e-17) [ 0.000135, 1.05e-16]      1.00 ( 2: 2): 0: 0: 0 G
-[  8,  1] ( 5.64e-17, 6.83e-17) [ 1.05e-16, 5.08e-17]      1.00 ( 1: 2): 0: 0: 0 G
+Continuation step N.1 s=0.95, ds=0.4500
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  7,  1] (1.57e-06 ,6.43e-17 ) [0.000135 ,6.85e-17 ] 1.00       0: 0
+[  8,  2] (6.43e-17 ,6.42e-17 ) [6.84e-17 ,4.79e-17 ] 0.421      0: 0
 
-Continuation step N.0 s = 1
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[  9,  1] ( 1.75e-07, 5.94e-17) [ 1.50e-05, 4.56e-17]      1.00 ( 2: 2): 0: 0: 0 G
+Continuation step N.1 s=1.0, ds=0.05000
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[  9,  1] (1.75e-07 ,5.75e-17 ) [1.50e-05 ,9.58e-17 ] 1.00       0: 0
 
-Continuation step N.1 s = 0.2
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[ 10,  1] ( 0.000702, 7.36e-06) [  0.00925, 0.000173]      1.00 ( 1: 1): 0: 0: 0 G
-[ 11,  1] ( 7.36e-06, 2.17e-09) [ 0.000167, 9.46e-08]      1.00 ( 1: 1): 0: 0: 0 G
-[ 12,  1] ( 2.17e-09, 4.15e-16) [ 9.47e-08, 1.01e-14]      1.00 ( 2: 1): 0: 0: 0 G
+Continuation step N.2 s=0.20, ds=0.2000
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[ 10,  1] (0.000702 ,7.36e-06 ) [0.00925  ,0.000173 ] 1.00       0: 0
+[ 11,  1] (7.36e-06 ,2.17e-09 ) [0.000167 ,9.46e-08 ] 1.00       0: 0
+[ 12,  1] (2.17e-09 ,4.20e-16 ) [9.47e-08 ,1.00e-14 ] 1.00       0: 0
 
-Continuation step N.1 s = 0.5
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[ 13,  1] (  0.00108, 3.20e-05) [   0.0155, 0.000587]      1.00 ( 3: 3): 0: 0: 0 G
-[ 14,  1] ( 3.20e-05, 2.80e-08) [ 0.000555, 9.22e-07]      1.00 ( 1: 3): 0: 0: 0 G
-[ 15,  1] ( 2.80e-08, 4.82e-14) [ 9.23e-07, 8.06e-13]      1.00 ( 2: 3): 0: 0: 0 G
+Continuation step N.2 s=0.50, ds=0.3000
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[ 13,  1] (0.00108  ,3.20e-05 ) [0.0155   ,0.000587 ] 1.00       0: 0
+[ 14,  1] (3.20e-05 ,2.80e-08 ) [0.000555 ,9.22e-07 ] 1.00       0: 0
+[ 15,  1] (2.80e-08 ,4.82e-14 ) [9.23e-07 ,8.06e-13 ] 1.00       0: 0
 
-Continuation step N.1 s = 0.9500000000000001
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[ 16,  1] (  0.00169, 0.000207) [   0.0283,  0.00302]      1.00 ( 3: 3): 0: 0: 0 G
-[ 17,  1] ( 0.000207, 8.03e-07) [  0.00281, 2.00e-05]      1.00 ( 1: 3): 0: 0: 0 G
-[ 18,  1] ( 8.03e-07, 4.41e-11) [ 2.02e-05, 5.40e-10]      1.00 ( 2: 3): 0: 0: 0 G
+Continuation step N.2 s=0.95, ds=0.4500
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[ 16,  1] (0.00169  ,0.000207 ) [0.0283   ,0.00302  ] 1.00       0: 0
+[ 17,  1] (0.000207 ,8.03e-07 ) [0.00281  ,2.00e-05 ] 1.00       0: 0
+[ 18,  1] (8.03e-07 ,4.41e-11 ) [2.02e-05 ,5.40e-10 ] 1.00       0: 0
 
-Continuation step N.1 s = 1
-[it./dmp] ( |f0|_1  , |f1|_1  ) [ |d0|_1  , |d1|_1  ] lambda
-[ 19,  1] ( 0.000204, 5.99e-06) [  0.00430, 8.01e-05]      1.00 ( 3: 3): 0: 0: 0 G
-[ 20,  1] ( 5.99e-06, 6.96e-10) [ 7.96e-05, 1.66e-08]      1.00 ( 1: 3): 0: 0: 0 G
-[ 21,  1] ( 6.96e-10, 8.91e-17) [ 1.66e-08, 4.28e-16]      1.00 ( 2: 3): 0: 0: 0 G
+Continuation step N.2 s=1.0, ds=0.05000
+Hyness --- start iterations ---
+[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
+[ 19,  1] (0.000204 ,5.99e-06 ) [0.00430  ,8.01e-05 ] 1.00       0: 0
+[ 20,  1] (5.99e-06 ,6.96e-10 ) [7.96e-05 ,1.66e-08 ] 1.00       0: 0
+[ 21,  1] (6.96e-10 ,9.36e-17 ) [1.66e-08 ,4.76e-16 ] 1.00       0: 0
 
------------------------------ STATISTIC ------------------------------
-Elapsed Time           = 15.0 [ms]     timeout             = 0 [ms]
-iteration              = 21            tolerance           = 1.000e-09 
-max iterations         = 300           Total Equations     = 315
-max accumul. iter.     = 800           Memory Used         = 71Kb (+58bytes)
----------------------------- Continuation ----------------------------
-Initial Step           = 0.2           Minimum Step        = 0.001     
-Reduce Factor          = 0.5           Augment Factor      = 1.5       
----------------------------- valutations -----------------------------
-Merit Function         = 0             Function Evaluation = 30        
-Jacobian Factorization = 21            Jacobian Inversion  = 42        
-----------------------------------------------------------------------
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 7.88[ms]      timeout        = 0 [ms]
+iteration      = 21            tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 315
+max acc. iter. = 800           N. System pars = 0
+Converged      = YES           Memory Used    = 62Kb (+57bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 32            Jacobian       = 21        
+Factorization  = 21            Inversion      = 44        
+------------------------ USER INFO -------------------------
+last ||d||_inf = 2.9788e-15    last||d1||_inf = 1.7728e-07
+last ||f||_inf = 8.0102e-09    last||f1||_1   = 6.9614e-10
+------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-last ||d||_inf = 2.7296e-15      last `new' ||d||_inf  = 1.7728e-07
-last ||f||_inf = 8.0102e-09      last ||f||_1          = 6.9614e-10
-
-target [Lagrange,Mayer]        = [       0.00000,       0.00000]
-[Penalties/Barriers, Controls] = [ 3.03004e-102,       0.00000]
+target [Lagrange,Mayer]       = [ 0.000, 0.000 ]
+[Penalties/Barriers,Controls] = [ 3.030e-102, 0.000 ]
 Optimization parameters:
-h: -0.0655370757577170421
-k: 3.23748474378138165e-32
-p: 1.85767113762416125
+h: -0.0655370757577170282
+k: 3.74941544370279723e-32
+p: 1.85767113762416147
 All Done Folks!

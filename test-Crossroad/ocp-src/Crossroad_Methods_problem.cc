@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods1.cc                                          |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -59,29 +59,6 @@ using Mechatronix::MeshStd;
 
 
 namespace CrossroadDefine {
-
-  /*\
-   |  _   _               ___             _   _
-   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-  \*/
-  // user defined functions which has a body defined in MAPLE
-  real_type
-  Crossroad::kappa( real_type s__XO ) const {
-    return (s__XO < ModelPars[0] / 2 ? 2 * ((ModelPars[0] / 2 - s__XO) * ModelPars[4] + s__XO * ModelPars[5]) / ModelPars[0] : 2 * ((ModelPars[0] - s__XO) * ModelPars[5] + (s__XO - ModelPars[0] / 2) * ModelPars[6]) / ModelPars[0]);
-  }
-
-  real_type
-  Crossroad::kappa_D( real_type s__XO ) const {
-    return (s__XO < ModelPars[0] / 2 ? 2 * (ModelPars[5] - ModelPars[4]) / ModelPars[0] : 2 * (ModelPars[6] - ModelPars[5]) / ModelPars[0]);
-  }
-
-  real_type
-  Crossroad::kappa_DD( real_type s__XO ) const {
-    return 0;
-  }
-
 
   /*\
    |  _  _            _ _ _            _
@@ -235,84 +212,170 @@ namespace CrossroadDefine {
   }
 
   /*\
-   |    ___
-   |   / __|_  _ ___ ______
-   |  | (_ | || / -_|_-<_-<
-   |   \___|\_,_\___/__/__/
+   |   ____                                  _   _     _       _
+   |  / ___|  ___  __ _ _ __ ___   ___ _ __ | |_| |   (_)_ __ | | __
+   |  \___ \ / _ \/ _` | '_ ` _ \ / _ \ '_ \| __| |   | | '_ \| |/ /
+   |   ___) |  __/ (_| | | | | | |  __/ | | | |_| |___| | | | |   <
+   |  |____/ \___|\__, |_| |_| |_|\___|_| |_|\__|_____|_|_| |_|_|\_\
+   |              |___/
   \*/
 
   integer
-  Crossroad::u_guess_numEqns() const
-  { return 1; }
+  Crossroad::segmentLink_numEqns() const
+  { return 0; }
 
   void
-  Crossroad::u_guess_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  Crossroad::segmentLink_eval(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            segmentLink[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-      MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_jerk ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Crossroad::DsegmentLinkDxp_numRows() const
+  { return 0; }
+
+  integer
+  Crossroad::DsegmentLinkDxp_numCols() const
+  { return 0; }
+
+  integer
+  Crossroad::DsegmentLinkDxp_nnz() const
+  { return 0; }
+
   void
-  Crossroad::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  Crossroad::DsegmentLinkDxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[4];
-    real_type L__[4];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q      = Q__;
-    NODE__.x      = X__;
-    NODE__.lambda = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    this->u_guess_eval( NODE__, P__, UGUESS__ );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Crossroad::DsegmentLinkDxp_sparse(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            DsegmentLinkDxp[]
+  ) const {
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
-   |    ___ _           _
-   |   / __| |_  ___ __| |__
-   |  | (__| ' \/ -_) _| / /
-   |   \___|_||_\___\__|_\_\
+   |     _
+   |  _ | |_  _ _ __  _ __
+   | | || | || | '  \| '_ \
+   |  \__/ \_,_|_|_|_| .__/
+   |                 |_|
   \*/
 
-  bool
-  Crossroad::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+  integer
+  Crossroad::jump_numEqns() const
+  { return 8; }
+
+  void
+  Crossroad::jump_eval(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && jerkControl.check_range(U__[0], ModelPars[16], ModelPars[15]);
-    return ok;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    real_type t3   = ModelPars[0] / 2;
+    result__[ 0   ] = XL__[0] - t3;
+    result__[ 1   ] = XR__[1] - XL__[1];
+    result__[ 2   ] = XR__[2] - XL__[2];
+    result__[ 3   ] = LL__[3];
+    result__[ 4   ] = XR__[0] - t3;
+    result__[ 5   ] = LR__[1] - LL__[1];
+    result__[ 6   ] = LR__[2] - LL__[2];
+    result__[ 7   ] = LR__[3];
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Crossroad::DjumpDxlp_numRows() const
+  { return 8; }
+
+  integer
+  Crossroad::DjumpDxlp_numCols() const
+  { return 16; }
+
+  integer
+  Crossroad::DjumpDxlp_nnz() const
+  { return 12; }
+
+  void
+  Crossroad::DjumpDxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 9   ;
+    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 10  ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 7   ;
+    iIndex[6 ] = 4   ; jIndex[6 ] = 8   ;
+    iIndex[7 ] = 5   ; jIndex[7 ] = 5   ;
+    iIndex[8 ] = 5   ; jIndex[8 ] = 13  ;
+    iIndex[9 ] = 6   ; jIndex[9 ] = 6   ;
+    iIndex[10] = 6   ; jIndex[10] = 14  ;
+    iIndex[11] = 7   ; jIndex[11] = 15  ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Crossroad::DjumpDxlp_sparse(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 1;
+    result__[ 1   ] = -1;
+    result__[ 2   ] = 1;
+    result__[ 3   ] = -1;
+    result__[ 4   ] = 1;
+    result__[ 5   ] = 1;
+    result__[ 6   ] = 1;
+    result__[ 7   ] = -1;
+    result__[ 8   ] = 1;
+    result__[ 9   ] = -1;
+    result__[ 10  ] = 1;
+    result__[ 11  ] = 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

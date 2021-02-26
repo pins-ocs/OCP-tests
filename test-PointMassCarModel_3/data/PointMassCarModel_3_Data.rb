@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_3_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 21/1/2021                                        #
+#  version: 1.0   date 26/2/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,26 +20,26 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-wT0       = 0.01
 road_tol0 = 0.01
-m         = 700
-wT        = wT0
-kD        = 0.2500000000/m
-p_epsi0   = 0.1
-p_tol0    = 0.1
 up_epsi0  = 0.1
+m         = 700
+kD        = 0.2500000000/m
+p_tol0    = 0.1
+wT0       = 0.01
+wT        = wT0
 up_tol0   = 0.01
+p_epsi0   = 0.1
 
 mechatronix do |data|
 
   # activate run time debug
   data.Debug = false
 
+  # Enable doctor
+  data.Doctor = false
+
   # Level of message
   data.InfoLevel = 4
-
-  # Activate dynamic debugging
-  data.Debug = false
 
   # maximum number of threads used for linear algebra and various solvers
   data.N_threads   = [1,$MAX_THREAD_NUM-1].max
@@ -47,9 +47,6 @@ mechatronix do |data|
   data.F_threaded  = true
   data.JF_threaded = true
   data.LU_threaded = true
-
-  # Enable doctor
-  data.Doctor = false
 
   # Enable check jacobian
   data.JacobianCheck            = false
@@ -67,7 +64,7 @@ mechatronix do |data|
   data.ControlSolver = {
     # ==============================================================
     # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
-    # 'LM' = Levenberg–Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
+    # 'LM' = Levenberg-Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
@@ -239,74 +236,74 @@ mechatronix do |data|
     :is_SAE   => false,
     :segments => [
       {
-        :rightWidth => 60,
         :leftWidth  => 15/2.0,
+        :length     => 190,
+        :rightWidth => 60,
         :curvature  => 0,
         :gridSize   => 1,
-        :length     => 190,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 60,
+        :length     => 973.8937227,
+        :rightWidth => 30,
         :curvature  => 0.003225806452,
         :gridSize   => 1,
-        :length     => 973.8937227,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
+        :length     => 180,
+        :rightWidth => 30,
         :curvature  => 0,
         :gridSize   => 1,
-        :length     => 180,
       },
       {
-        :rightWidth => 15,
         :leftWidth  => 20,
+        :length     => 235.619449,
+        :rightWidth => 15,
         :curvature  => 0.006666666667,
         :gridSize   => 1,
-        :length     => 235.619449,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
+        :length     => 240,
+        :rightWidth => 30,
         :curvature  => 0,
         :gridSize   => 1,
-        :length     => 240,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
+        :length     => 235.619449,
+        :rightWidth => 30,
         :curvature  => -1/150.0,
         :gridSize   => 1,
-        :length     => 235.619449,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
+        :length     => 200,
+        :rightWidth => 30,
         :curvature  => 0,
         :gridSize   => 1,
-        :length     => 200,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
+        :length     => 125.6637062,
+        :rightWidth => 30,
         :curvature  => 0.025,
         :gridSize   => 1,
-        :length     => 125.6637062,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
+        :length     => 480,
+        :rightWidth => 30,
         :curvature  => 0,
         :gridSize   => 1,
-        :length     => 480,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
+        :length     => 10,
+        :rightWidth => 30,
         :curvature  => 0,
         :gridSize   => 0.1,
-        :length     => 10,
       },
     ],
   };

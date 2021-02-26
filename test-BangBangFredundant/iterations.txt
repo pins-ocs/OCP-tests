@@ -31,9 +31,14 @@ Flim = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 101
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 101
 Segment N.0
 s0 = 0 length = 1 npts = 101 no data set
+END Mesh[mesh]
 
 Model Parameters
 ...................................maxAF = 10
@@ -74,11 +79,11 @@ Hyness --- start iterations ---
 [ 20,  2] (2.85e-12 ,5.73e-14 ) [0.000612 ,0.000508 ] 0.980      0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 28.7[ms]      timeout        = 0 [ms]
+Elapsed Time   = 14.0[ms]      timeout        = 0 [ms]
 iteration      = 20            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 1215
 max acc. iter. = 800           N. System pars = 200
-Converged      = YES           Memory Used    = 164Kb (+94bytes)
+Converged      = YES           Memory Used    = 162Kb (+79bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

@@ -21,13 +21,18 @@ ubControl = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 3 num. nodes = 3128
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 3
+num. nodes = 3128
 Segment N.0
 s0 = 0 length = 0.25 npts = 26 no data set
 Segment N.1
 s0 = 0.25 length = 0.75 npts = 3001 no data set
 Segment N.2
 s0 = 1 length = 3.8 npts = 101 no data set
+END Mesh[mesh]
 
 Model Parameters
 ...................................alpha = 0.3
@@ -128,7 +133,7 @@ Hyness --- start iterations ---
 [ 52,  1] (6.19e-12 ,1.21e-14 ) [2.46e-11 ,9.71e-15 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 392.0[ms]     timeout        = 0 [ms]
+Elapsed Time   = 251.0[ms]     timeout        = 0 [ms]
 iteration      = 52            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 12516
 max acc. iter. = 800           N. System pars = 6254

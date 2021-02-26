@@ -25,7 +25,11 @@ minimumTimeSize = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 4 num. nodes = 104
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 4
+num. nodes = 104
 Segment N.0
 s0 = 0 length = 0.1 npts = 11 no data set
 Segment N.1
@@ -34,6 +38,7 @@ Segment N.2
 s0 = 0.5 length = 0.4 npts = 41 no data set
 Segment N.3
 s0 = 0.9 length = 0.09999999999999998 npts = 11 no data set
+END Mesh[mesh]
 
 Model Parameters
 ....................................Fmax = 2452.5
@@ -78,11 +83,11 @@ Hyness --- start iterations ---
 [ 17,  1] (2.19e-11 ,4.86e-16 ) [1.01e-09 ,1.61e-17 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 11.8[ms]      timeout        = 0 [ms]
+Elapsed Time   = 12.2[ms]      timeout        = 0 [ms]
 iteration      = 17            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 628
 max acc. iter. = 800           N. System pars = 103
-Converged      = YES           Memory Used    = 73Kb (+58bytes)
+Converged      = YES           Memory Used    = 72Kb (+56bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

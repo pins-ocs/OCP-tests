@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: CNOC.m                                                         %
 %                                                                       %
-%  version: 1.0   date 19/1/2021                                        %
+%  version: 1.0   date 26/2/2021                                        %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -21,36 +21,36 @@ classdef CNOC < handle
   end
 
   methods
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function self = CNOC( name )
       %% Allocate the C++ class instance
       self.objectHandle = CNOC_Mex( 'new', name );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function delete( self )
       %% Destroy the C++ class instance
       CNOC_Mex( 'delete', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function help( self )
       %% print help for the class usage
       CNOC_Mex('help');
     end
 
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % INITIALIZATION
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function data = read( self, fname )
       % read a file with problem description in Ruby o LUA
       % and return a MATLAB structure with the readed data
       data = CNOC_Mex( 'read', self.objectHandle, fname );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function setup( self, fname_or_struct )
       % Initialize an OCP problem reading data from a file or a MATLAT stucture
       CNOC_Mex( 'setup', self.objectHandle, fname_or_struct );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function n = names( self )
       % return a MATLAB structures collecting the names of the variable, states etc
       % of the OCP problem:
@@ -65,7 +65,7 @@ classdef CNOC < handle
       % n.model_names                  = cell array of strings, names of model parameters
       n = CNOC_Mex( 'names', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = dims( self )
       % return a MATLAB structures collecting the dimension of the OCP problem:
       % res.dim_q     = number of mesh variables (variables computed ad mesh nodes)
@@ -78,7 +78,7 @@ classdef CNOC < handle
       % res.neq       = number of equations
       res = CNOC_Mex( 'dims', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = get_ocp_data( self )
       % return a structure with data and solution (if computed) of the OCP problem
       % information level possible values: -1,0,1,2,3,4
@@ -135,31 +135,31 @@ classdef CNOC < handle
       res = CNOC_Mex( 'get_ocp_data', self.objectHandle );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % INFO LEVEL
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function infoLevel( self, infoLvl )
       % set information level
       CNOC_Mex( 'infoLevel', self.objectHandle, infoLvl );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % NUM THREAD
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function N_thread( self, nt )
       % set information level
       CNOC_Mex( 'N_thread', self.objectHandle, nt );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % GUESS
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function set_guess( self, varargin )
       % with no argument use predefined guess, otherwise
       % use structure to initialize guess
@@ -174,18 +174,18 @@ classdef CNOC < handle
       guess = CNOC_Mex( 'get_solution_as_guess', self.objectHandle );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % SOLVE
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function ok = solve( self, varargin )
       % ok = false if computation failed
       % ok = true if computation is succesfull
       % varargin{1} = timeout
       ok = CNOC_Mex( 'solve', self.objectHandle, varargin{:} );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function updateContinuation( self, n, old_s, s )
       % set parameter of the problem for continuation step `n` at fraction `s`
       CNOC_Mex( ...
@@ -193,52 +193,52 @@ classdef CNOC < handle
       );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % GET SOLUTION
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function sol = solution( self, varargin )
       % return the whole solution or the column of name varargin{1}
       sol = CNOC_Mex( 'get_solution', self.objectHandle, varargin{:} );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function sol = solution2( self )
       % return the whole solution
       sol = CNOC_Mex( 'get_solution2', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function sol = solution3( self )
       % return the whole solution
       sol = CNOC_Mex( 'get_solution3', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function sol = pack( self, X, Lambda, Pars, Omega )
       % combine the solution in the matrices `X`, `Lambda`, `Pars` and `Omega`
       % in a single vector as stored in the solver PINS
       sol = CNOC_Mex( 'pack', self.objectHandle, X, Lambda, Pars, Omega );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [X, Lambda, Pars, Omega] = unpack( self, sol )
       % unpack a vector to the matrices `X`, `Lambda`, `Pars` and `Omega`
       % the vector must contains the data as stored in the solver PINS
       [X, Lambda, Pars, Omega] = CNOC_Mex( 'unpack', self.objectHandle, sol );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % ZETA
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = zeta( self )
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'zeta' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % STATES
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = s( self )
       % return the solution for the state: s
       res = CNOC_Mex( 'get_solution', self.objectHandle, 's' );
@@ -268,11 +268,11 @@ classdef CNOC < handle
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'coV' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % MULTIPLIER
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = lambda1( self )
       % return the solution for the multiplier: lambda1
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'lambda1__xo' );
@@ -302,11 +302,11 @@ classdef CNOC < handle
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'lambda7__xo' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % CONTROLS
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = js( self )
       % return the solution for the control: js
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'js' );
@@ -316,125 +316,125 @@ classdef CNOC < handle
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'jn' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % POSTPROCESSING
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
-    function res = feed( self )
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    function res = post_processing_feed( self )
       % return the solution for the post processing variable: feed
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'feed' );
     end
-    function res = acc( self )
+    function res = post_processing_acc( self )
       % return the solution for the post processing variable: acc
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'acc' );
     end
-    function res = jerk( self )
+    function res = post_processing_jerk( self )
       % return the solution for the post processing variable: jerk
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'jerk' );
     end
-    function res = vx( self )
+    function res = post_processing_vx( self )
       % return the solution for the post processing variable: vx
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'vx' );
     end
-    function res = vy( self )
+    function res = post_processing_vy( self )
       % return the solution for the post processing variable: vy
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'vy' );
     end
-    function res = ax( self )
+    function res = post_processing_ax( self )
       % return the solution for the post processing variable: ax
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'ax' );
     end
-    function res = ay( self )
+    function res = post_processing_ay( self )
       % return the solution for the post processing variable: ay
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'ay' );
     end
-    function res = jx( self )
+    function res = post_processing_jx( self )
       % return the solution for the post processing variable: jx
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'jx' );
     end
-    function res = jy( self )
+    function res = post_processing_jy( self )
       % return the solution for the post processing variable: jy
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'jy' );
     end
-    function res = X_minus_path( self )
+    function res = post_processing_X_minus_path( self )
       % return the solution for the post processing variable: X_minus_path
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'X-path' );
     end
-    function res = Y_minus_path( self )
+    function res = post_processing_Y_minus_path( self )
       % return the solution for the post processing variable: Y_minus_path
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'Y-path' );
     end
-    function res = X_minus_traj( self )
+    function res = post_processing_X_minus_traj( self )
       % return the solution for the post processing variable: X_minus_traj
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'X-traj' );
     end
-    function res = Y_minus_traj( self )
+    function res = post_processing_Y_minus_traj( self )
       % return the solution for the post processing variable: Y_minus_traj
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'Y-traj' );
     end
-    function res = X_minus_left( self )
+    function res = post_processing_X_minus_left( self )
       % return the solution for the post processing variable: X_minus_left
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'X-left' );
     end
-    function res = Y_minus_left( self )
+    function res = post_processing_Y_minus_left( self )
       % return the solution for the post processing variable: Y_minus_left
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'Y-left' );
     end
-    function res = X_minus_right( self )
+    function res = post_processing_X_minus_right( self )
       % return the solution for the post processing variable: X_minus_right
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'X-right' );
     end
-    function res = Y_minus_right( self )
+    function res = post_processing_Y_minus_right( self )
       % return the solution for the post processing variable: Y_minus_right
       res = CNOC_Mex( 'get_solution', self.objectHandle, 'Y-right' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % NONLINEAR SYSTEM
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function F = eval_F( self, x )
       % return the nonlinear system of the indirect methods
       F = CNOC_Mex( 'eval_F', self.objectHandle, x );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function JF = eval_JF( self, x )
       % return the jacobian of the nonlinear system of the indirect methods
       JF = CNOC_Mex( 'eval_JF', self.objectHandle, x );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function JF = eval_JF_pattern( self )
       % return the pattern of the jacobian of the nonlinear system of the indirect methods
       JF = CNOC_Mex( 'eval_JF_pattern', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function x = get_raw_solution( self )
       % return the solution in a vector as stored in PINS
       x = CNOC_Mex( 'get_raw_solution', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function set_raw_solution( self, x )
       % return set the solution in a vector as stored in PINS
       CNOC_Mex( 'set_raw_solution', self.objectHandle, x );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function ok = check_raw_solution( self, x )
       % check the solution in a vector as stored in PINS
       ok = CNOC_Mex( 'check_raw_solution', self.objectHandle, x );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function check_jacobian( self, x, epsi )
       % check the analytic jacobian comparing with finite difference one.
       % `epsi` is the admitted tolerance
       CNOC_Mex( 'check_jacobian', self.objectHandle, x, epsi );
     end
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % DISCRETIZED PROBLEM ACCESS
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [a,c] = eval_ac( self, iseg_L, q_L, x_L, lambda_L, ...
                                     iseg_R, q_R, x_R, lambda_R, pars, U )
       % compute the block of the nonlinear system given left and right stated
@@ -442,7 +442,7 @@ classdef CNOC < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [Ja,Jc] = eval_DacDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
                                            iseg_R, q_R, x_R, lambda_R, pars, U )
       % compute the block of the nonlinear system given left and right stated
@@ -450,7 +450,7 @@ classdef CNOC < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [h,c] = eval_hc( self, iseg_L, q_L, x_L, lambda_L, ...
                                     iseg_R, q_R, x_R, lambda_R, pars )
       % compute the block of the BC of the nonlinear system given left and right stated
@@ -458,7 +458,7 @@ classdef CNOC < handle
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [Jh,Jc] = eval_DhcDxlop( self, iseg_L, q_L, x_L, lambda_L, ...
                                             iseg_R, q_R, x_R, lambda_R, pars )
       % compute the block of the BC of the nonlinear system given left and right stated
@@ -466,11 +466,11 @@ classdef CNOC < handle
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % CONTINUOUS PROBLEM ACCESS
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function u = eval_u( self, varargin )
       % compute the control give states and multiplyer
       % res = self.eval_u( iseg, q, x, lambda, pars )
@@ -480,7 +480,7 @@ classdef CNOC < handle
       % res = self.eval_u( iseg_L, (q_L+q_R)./2, (x_L+x_R)./2, (lambda_L+lambda_R)./2, pars )
       u = CNOC_Mex( 'u', self.objectHandle, varargin{:} );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function u = eval_DuDxlp( self, varargin )
       % compute the control give states and multiplyer
       % res = self.eval_DuDxlp( iseg, q, x, lambda, pars )
@@ -491,14 +491,14 @@ classdef CNOC < handle
       %
       u = CNOC_Mex( 'DuDxlp', self.objectHandle, varargin{:} );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function rhs = eval_rhs_ode( self, iseg, q, x, u, pars )
       % compute rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       rhs = CNOC_Mex(...
         'rhs_ode', self.objectHandle, iseg, q, x, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_Drhs_odeDx( self, iseg, q, x, u, pars )
       % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       % respect to `x`
@@ -506,7 +506,7 @@ classdef CNOC < handle
         'Drhs_odeDx', self.objectHandle, iseg, q, x, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_Drhs_odeDu( self, iseg, q, x, u, pars )
       % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       % respect to `u`
@@ -514,7 +514,7 @@ classdef CNOC < handle
         'Drhs_odeDu', self.objectHandle, iseg, q, x, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_Drhs_odeDp( self, iseg, q, x, u, pars )
       % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       % respect to `pars`
@@ -522,20 +522,20 @@ classdef CNOC < handle
         'Drhs_odeDp', self.objectHandle, iseg, q, x, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function A = eval_A( self, iseg, q, x, pars )
       % compute `A(q,x)` of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       % respect to `pars`
       A = CNOC_Mex( 'A', self.objectHandle, iseg, q, x, pars );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function eta = eval_eta( self, iseg, q, x, lambda, pars )
       % compute `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
       eta = CNOC_Mex(...
         'eta', self.objectHandle, iseg, q, x, lambda, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DetaDx( self, iseg, q, x, lambda, pars )
       % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
       % respect to `x`
@@ -543,7 +543,7 @@ classdef CNOC < handle
         'DetaDx', self.objectHandle, iseg, q, x, lambda, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DetaDp( self, iseg, q, x, lambda, pars )
       % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
       % respect to `x`
@@ -551,30 +551,30 @@ classdef CNOC < handle
         'DetaDp', self.objectHandle, iseg, q, x, lambda, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function nu = eval_nu( self, iseg, q, x, V, pars )
       % compute `nu(q,x,V,pars) = A(q,x,pars) V`
       nu = CNOC_Mex( 'nu', self.objectHandle, iseg, q, x, V, pars );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DnuDx( self, iseg, q, x, V, pars )
       % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
       % respect to `x`
       J = CNOC_Mex( 'DnuDx', self.objectHandle, iseg, q, x, V, pars );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DnuDp( self, iseg, q, x, V, pars )
       % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
       % respect to `x`
       J = CNOC_Mex( 'DnuDp', self.objectHandle, iseg, q, x, V, pars );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function Hx = eval_Hx( self, iseg, q, x, lambda, V, u, pars )
       Hx = CNOC_Mex(...
         'Hx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHxDx( self, iseg, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hx(q,x,lambda,V,pars)`
       % respect to `x`
@@ -582,7 +582,7 @@ classdef CNOC < handle
         'DHxDx', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHxDp( self, iseg, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hx(q,x,lambda,V,u,pars)`
       % respect to `x`
@@ -590,13 +590,13 @@ classdef CNOC < handle
         'DHxDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function Hx = eval_Hu( self, iseg, q, x, lambda, V, u, pars )
       Hx = CNOC_Mex(...
         'Hu', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHuDx( self, iseg, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
       % respect to `x`
@@ -604,7 +604,7 @@ classdef CNOC < handle
         'DHuDx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHuDp( self, iseg, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
       % respect to `x`
@@ -612,13 +612,13 @@ classdef CNOC < handle
         'DHuDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function Hp = eval_Hp( self, iseg, q, x, lambda, V, u, pars )
       Hp = CNOC_Mex(...
         'Hp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHpDp( self, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hp(q,x,lambda,V,u,pars)`
       % respect to `x`
@@ -626,28 +626,28 @@ classdef CNOC < handle
         'DHpDp', self.objectHandle, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function bc = eval_bc( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       bc = CNOC_Mex( ...
         'boundaryConditions', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DbcDx( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       J = CNOC_Mex( ...
         'DboundaryConditionsDx', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DbcDp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       J = CNOC_Mex( ...
         'DboundaryConditionsDp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function bc = eval_adjoiontBC( self, iseg_L, q_L, x_L, lambda_L, ...
                                          iseg_R, q_R, x_R, lambda_R, ...
                                          pars, Omega )
@@ -656,7 +656,7 @@ classdef CNOC < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DadjoiontBCDx( self, iseg_L, q_L, x_L, lambda_L, ...
                                            iseg_R, q_R, x_R, lambda_R, ...
                                            pars, Omega )
@@ -665,7 +665,7 @@ classdef CNOC < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DadjoiontBCDp( self, iseg_L, q_L, x_L, lambda_L, ...
                                            iseg_R, q_R, x_R, lambda_R, ...
                                            pars, Omega )
@@ -674,7 +674,7 @@ classdef CNOC < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function bc = eval_jump( self, iseg_L, q_L, x_L, lambda_L, ...
                                    iseg_R, q_R, x_R, lambda_R, pars )
       bc = CNOC_Mex( ...
@@ -682,7 +682,7 @@ classdef CNOC < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DjumpDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
                                        iseg_R, q_R, x_R, lambda_R, pars )
       J = CNOC_Mex( ...
@@ -690,25 +690,25 @@ classdef CNOC < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_penalties( self, iseg, q, x, lambda, u, pars )
       J = CNOC_Mex( ...
         'penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_control_penalties( self, iseg, q, x, lambda, u, pars )
       J = CNOC_Mex( ...
         'control_penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function target = eval_lagrange_target( self, iseg, q, x, u, pars )
       target = CNOC_Mex( ...
         'lagrange_target', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function target = eval_mayer_target( self, iseg_L, q_L, x_L, ...
                                                iseg_R, q_R, x_R, ...
                                                u, pars )
@@ -717,22 +717,21 @@ classdef CNOC < handle
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function target = eval_q( self, i_segment, s )
       target = CNOC_Mex( 'q', self.objectHandle, i_segment, s );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function nodes = get_nodes( self )
       nodes = CNOC_Mex( 'nodes', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function node_to_segment = get_node_to_segment( self )
       node_to_segment = CNOC_Mex( 'node_to_segment', self.objectHandle );
     end
-
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % PLOT SOLUTION
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function plot_states( self )
       plot(...
         self.zeta(), self.s(), ...
@@ -747,7 +746,7 @@ classdef CNOC < handle
       title('states');
       legend( 's', 'n', 'vs', 'vn', 'as', 'an', 'coV' );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function plot_multipliers( self )
       plot(...
         self.zeta(), self.lambda1(), ...
@@ -762,7 +761,7 @@ classdef CNOC < handle
       title('multipliers');
       legend( '\lambda1', '\lambda2', '\lambda3', '\lambda4', '\lambda5', '\lambda6', '\lambda7' );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function plot_controls( self )
       plot(...
         self.zeta(), self.js(), ...

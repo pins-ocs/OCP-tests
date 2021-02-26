@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type mu = 1;
-    real_type g = 9.81;
     real_type m = 250;
+    real_type g = 9.81;
+    real_type mu = 1;
     real_type Fmax = m*g*mu;
     integer InfoLevel = 4;
 
@@ -182,14 +182,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BikeSteering_data.Mesh["s0"] = 0;
-BikeSteering_data.Mesh["segments"][0]["length"] = 0.1;
 BikeSteering_data.Mesh["segments"][0]["n"] = 10;
-BikeSteering_data.Mesh["segments"][1]["length"] = 0.4;
+BikeSteering_data.Mesh["segments"][0]["length"] = 0.1;
 BikeSteering_data.Mesh["segments"][1]["n"] = 40;
-BikeSteering_data.Mesh["segments"][2]["length"] = 0.4;
+BikeSteering_data.Mesh["segments"][1]["length"] = 0.4;
 BikeSteering_data.Mesh["segments"][2]["n"] = 40;
-BikeSteering_data.Mesh["segments"][3]["length"] = 0.1;
+BikeSteering_data.Mesh["segments"][2]["length"] = 0.4;
 BikeSteering_data.Mesh["segments"][3]["n"] = 10;
+BikeSteering_data.Mesh["segments"][3]["length"] = 0.1;
 
 
     // alias for user object classes passed as pointers
@@ -214,7 +214,7 @@ BikeSteering_data.Mesh["segments"][3]["n"] = 10;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

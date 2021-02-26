@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Mex.cc                                          |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -71,33 +71,8 @@ static scoped_redirect_cout mycout_redirect;
 
 static char const help_msg[] =
 "%===========================================================================%\n"
-"\n"
 "Mex command has the following possible calls:\n"
-"\n"
-"  - MultipleDubins_Mex('setup', mstruct):\n"
-"    initialise the problem with a matlab structure 'mstruct'\n"
-"\n"
-"  - MultipleDubins_Mex('solve'):\n"
-"    solve the optimal control problem and store internally\n"
-"    the solution found.\n"
-"\n"
-"  To get the solution there are various calling sequence:\n"
-"  - sol = MultipleDubins_Mex('get_solution'):\n"
-"    return the full solution as a matlab structure also with solver\n"
-"    information (e.g. iteration taken, convergence, etc).\n"
-"\n"
-"  - sol1, sol2, ..., solN = MultipleDubins_Mex('get_solution',{var_nm}):\n"
-"    return the full solution as a vector only for the desired variable\n"
-"    'var_nm' or listed in the cell array {var_num}.\n"
-"\n"
-"  - sol = MultipleDubins_Mex('get_solution',t):\n"
-"    return the solution as a vector for all output variables at desired\n"
-"    instant 't'. 't' can be a vector or a scalar.\n"
-"\n"
-"  - sol1, sol2, ..., solN = MultipleDubins_Mex('get_solution',t,{var_nm}):\n"
-"    return the solution as a matlab matrix for all output variables\n"
-"    listed in the cell array {var_num} at instant 't'.%\n"
-"    't' can be a vector or a scalar.\n"
+"MultipleDubins_Mex('command', arguments ):\n"
 "%===========================================================================%\n"
 ;
 
@@ -211,8 +186,8 @@ public:
 
   using MODEL_CLASS::guess;
 
-  ProblemStorage( std::string const & cname, ThreadPool * pTP, Console * pConsole )
-  : MODEL_CLASS(cname,pTP,pConsole)
+  ProblemStorage( std::string const & cname, ThreadPool * TP, Console const * console )
+  : MODEL_CLASS(cname,TP,console)
   , setup_ok(false)
   , guess_ok(false)
   , solve_ok(false)
@@ -256,10 +231,6 @@ public:
     solution3_ok = false;
   }
 
-  void
-  diagnostic()
-  { MODEL_CLASS::diagnostic( gc_data ); }
-
   integer nnz() const { return MODEL_CLASS::eval_JF_nnz(); }
 
   void
@@ -285,7 +256,7 @@ public:
    |              |___|               |_|
   \*/
   void
-  mex_read(
+  do_read(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -311,7 +282,7 @@ public:
    |              |___|               |_|
   \*/
   void
-  mex_setup(
+  do_setup(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -355,7 +326,7 @@ public:
    |              |___|___/
   \*/
   void
-  mex_set_guess(
+  do_set_guess(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -382,7 +353,7 @@ public:
   }
 
   void
-  mex_get_guess(
+  do_get_guess(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -394,7 +365,7 @@ public:
   }
 
   void
-  mex_get_solution_as_guess(
+  do_get_solution_as_guess(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -415,7 +386,7 @@ public:
    |               |___|
   \*/
   void
-  mex_solve(
+  do_solve(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -444,7 +415,7 @@ public:
    |              |___|
   \*/
   void
-  mex_dims(
+  do_dims(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -472,7 +443,7 @@ public:
    |              |___|
   \*/
   void
-  mex_names(
+  do_names(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -493,16 +464,17 @@ public:
    |              |___|  |_|
   \*/
   void
-  mex_updateContinuation(
+  do_updateContinuation(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('updateContinuation',obj,nphase,s): "
+    #define CMD MODEL_NAME "_Mex('updateContinuation',obj,nphase,old_s,s): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'updateContinuation'" );
-    CHECK_IN( 4 ); CHECK_OUT( 0 );
-    int64_t nphase = getInt( arg_in_2, CMD " nphase number" );
-    real_type s    = getScalarValue( arg_in_3, CMD " s" );
-    this->updateContinuation( nphase, s );
+    CHECK_IN( 5 ); CHECK_OUT( 0 );
+    int64_t nphase  = getInt( arg_in_2, CMD " nphase number" );
+    real_type old_s = getScalarValue( arg_in_3, CMD " old_s" );
+    real_type s     = getScalarValue( arg_in_4, CMD " s" );
+    this->updateContinuation( nphase, old_s, s );
     #undef CMD
   }
 
@@ -514,14 +486,16 @@ public:
    |              |___|___/       |___|            |___|
   \*/
   void
-  mex_get_raw_solution(
+  do_get_raw_solution(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_raw_solution',obj): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_raw_solution'" );
     CHECK_IN( 2 ); CHECK_OUT( 1 );
-    real_type * x = createMatrixValue( arg_out_0, this->numEquations(), 1 );
+    real_type * x = createMatrixValue(
+      arg_out_0, this->numEquations()+this->numParameters(), 1
+    );
     this->get_raw_solution( x );
     #undef CMD
   }
@@ -534,7 +508,7 @@ public:
    |              |___|         |___|            |___|
   \*/
   void
-  mex_set_raw_solution(
+  do_set_raw_solution(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -543,10 +517,11 @@ public:
     CHECK_IN( 3 ); CHECK_OUT( 0 );
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x");
+    mwSize nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(this->numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, this->numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
     this->set_raw_solution( x );
     this->doneGuess(); // is equivalent to set guess
@@ -561,7 +536,7 @@ public:
    |              |___|                |___|            |___|
   \*/
   void
-  mex_check_raw_solution(
+  do_check_raw_solution(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -570,10 +545,11 @@ public:
     CHECK_IN( 3 ); CHECK_OUT( 1 );
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
+    mwSize nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(this->numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, this->numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
     setScalarBool( arg_out_0, this->check_raw_solution(x) );
     #undef CMD
@@ -587,7 +563,7 @@ public:
    |              |___|                |___|__/
   \*/
   void
-  mex_check_jacobian(
+  do_check_jacobian(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -597,10 +573,11 @@ public:
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
     real_type epsi = getScalarValue( arg_in_3, CMD "argument epsi" );
+    mwSize     nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(this->numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, this->numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
     this->checkJacobian(x,epsi);
     #undef CMD
@@ -614,7 +591,7 @@ public:
    |              |___|___/       |___|
   \*/
   void
-  mex_get_solution(
+  do_get_solution(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -623,6 +600,7 @@ public:
     CHECK_OUT( 1 );
     if ( !solution1_ok ) {
       MODEL_CLASS::get_solution( gc_solution1 );
+      MODEL_CLASS::diagnostic( gc_data, gc_solution1 );
       solution1_ok = true;
     }
     if ( nrhs == 2 ) {
@@ -646,7 +624,7 @@ public:
   }
 
   void
-  mex_get_solution2(
+  do_get_solution2(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -656,6 +634,7 @@ public:
     CHECK_OUT( 1 );
     if ( !solution2_ok ) {
       MODEL_CLASS::get_solution2( gc_solution2 );
+      MODEL_CLASS::diagnostic( gc_data, gc_solution2 );
       solution2_ok = true;
     }
     GenericContainer_to_mxArray( gc_solution2, arg_out_0 );
@@ -663,7 +642,7 @@ public:
   }
 
   void
-  mex_get_solution3(
+  do_get_solution3(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -673,6 +652,7 @@ public:
     CHECK_OUT( 1 );
     if ( !solution3_ok ) {
       MODEL_CLASS::get_solution3( gc_solution3 );
+      MODEL_CLASS::diagnostic( gc_data, gc_solution3 );
       solution3_ok = true;
     }
     GenericContainer_to_mxArray( gc_solution3, arg_out_0 );
@@ -687,7 +667,7 @@ public:
    |              |___|___/       |___|      |_| |___|
   \*/
   void
-  mex_get_ocp_data(
+  do_get_ocp_data(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -706,7 +686,7 @@ public:
    |              |___|            |___|
   \*/
   void
-  mex_eval_F(
+  do_eval_F(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -715,12 +695,13 @@ public:
     CHECK_IN( 3 ); CHECK_OUT( 1 );
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
+    mwSize nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
-    real_type * f = createMatrixValue( arg_out_0, dimx, 1 );
+    real_type * f = createMatrixValue( arg_out_0, this->numEquations(), 1 );
     MODEL_CLASS::eval_F( x, f );
     #undef CMD
   }
@@ -733,7 +714,7 @@ public:
    |              |___|            |___|
   \*/
   void
-  mex_eval_JF(
+  do_eval_JF(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -743,10 +724,11 @@ public:
 
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
+    mwSize nep = this->numEquations()+this->numParameters();
     MEX_ASSERT2(
-      dimx == mwSize(numEquations()),
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, numEquations()
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
 
     mxArray *args[5];
@@ -756,14 +738,20 @@ public:
     setScalarValue( args[3], numEquations() );
     setScalarValue( args[4], numEquations() );
 
-    size_t nnz = size_t(MODEL_CLASS::eval_JF_nnz());
     Mechatronix::Malloc<integer> mem("mex_eval_JF");
-    mem.allocate( 2*nnz );
-    integer * i_row = mem( nnz );
-    integer * j_col = mem( nnz );
+    mem.allocate( 2*nnz() );
+    integer * i_row = mem( nnz() );
+    integer * j_col = mem( nnz() );
     MODEL_CLASS::eval_JF_pattern( i_row, j_col, 1 );
-    for ( size_t i = 0; i < nnz; ++i ) {
-      I[i] = i_row[i]; J[i] = j_col[i];
+    for ( size_t i = 0; i < nnz(); ++i ) {
+      I[i] = static_cast<real_type>(i_row[i]);
+      J[i] = static_cast<real_type>(j_col[i]);
+      MEX_ASSERT2(
+        I[i] > 0 && I[i] <= numEquations() &&
+        J[i] > 0 && J[i] <= numEquations(),
+        CMD " index I = {} J = {} must be in the range = [1,{}]\n",
+        I[i], J[i], numEquations()
+      );
     }
 
     MODEL_CLASS::eval_JF_values( x, V );
@@ -780,7 +768,7 @@ public:
    |              |___|            |___|   |___|_|
   \*/
   void
-  mex_eval_JF_pattern(
+  do_eval_JF_pattern(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -791,18 +779,24 @@ public:
     mxArray *args[5];
     real_type * I = createMatrixValue( args[0], 1, nnz() );
     real_type * J = createMatrixValue( args[1], 1, nnz() );
-    real_type * V = createMatrixValue( args[2], 1, nnz() );
+    setScalarValue( args[2], 1 );
     setScalarValue( args[3], numEquations() );
     setScalarValue( args[4], numEquations() );
 
-    size_t nnz = size_t(MODEL_CLASS::eval_JF_nnz());
     Mechatronix::Malloc<integer> mem("mex_eval_JF");
-    mem.allocate( 2*nnz );
-    integer * i_row = mem( nnz );
-    integer * j_col = mem( nnz );
+    mem.allocate( 2*nnz() );
+    integer * i_row = mem( nnz() );
+    integer * j_col = mem( nnz() );
     MODEL_CLASS::eval_JF_pattern( i_row, j_col, 1 );
-    for ( size_t i = 0; i < nnz; ++i ) {
-      I[i] = i_row[i]; J[i] = j_col[i]; V[i] = 1;
+    for ( size_t i = 0; i < nnz(); ++i ) {
+      I[i] = static_cast<real_type>(i_row[i]);
+      J[i] = static_cast<real_type>(j_col[i]);
+      MEX_ASSERT2(
+        I[i] > 0 && I[i] <= numEquations() &&
+        J[i] > 0 && J[i] <= numEquations(),
+        CMD " index I = {} J = {} must be in the range = [1,{}]\n",
+        I[i], J[i], numEquations()
+      );
     }
 
     int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
@@ -818,7 +812,7 @@ public:
    |              |___|_|
   \*/
   void
-  mex_pack(
+  do_pack(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -871,7 +865,7 @@ public:
    |              |___|       |_|
   \*/
   void
-  mex_unpack(
+  do_unpack(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1016,7 +1010,7 @@ public:
    |               |___|
   \*/
   void
-  mex_ac(
+  do_ac(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1049,7 +1043,7 @@ public:
    |               |___|__/                            |___|
   \*/
   void
-  mex_DacDxlp(
+  do_DacDxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1098,7 +1092,7 @@ public:
    |               |___|
   \*/
   void
-  mex_hc(
+  do_hc(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1129,7 +1123,7 @@ public:
    |               |___|__/                            |___|
   \*/
   void
-  mex_DhcDxlop(
+  do_DhcDxlop(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1164,7 +1158,7 @@ public:
    |   \___/
   \*/
   void
-  mex_u(
+  do_u(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1175,6 +1169,7 @@ public:
     CHECK_OUT( 1 );
 
     mwSize nP, nU, nCOL;
+    Mechatronix::U_solver & US = this->m_U_control_solver[0];
 
     if ( nrhs == 11 ) {
       NodeType2 L, R;
@@ -1184,7 +1179,7 @@ public:
       U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
       if ( m_U_solve_iterative ) {
         this->u_guess_eval( L, R, P, U );
-        this->m_U_controlSystem[0].eval( L, R, P, U, U );
+        US.eval( L, R, P, U, U );
       } else {
         this->u_eval_analytic( L, R, P, U );
       }
@@ -1197,7 +1192,7 @@ public:
       U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
       if ( m_U_solve_iterative ) {
         this->u_guess_eval( N, P, U );
-        m_U_controlSystem[0].eval( N, P, U, U );
+        m_U_control_solver[0].eval( N, P, U, U );
       } else {
         this->u_eval_analytic( N, P, U );
       }
@@ -1215,7 +1210,7 @@ public:
    |                       |_|
   \*/
   void
-  mex_DuDxlp(
+  do_DuDxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1226,6 +1221,7 @@ public:
     CHECK_OUT( 1 );
 
     mwSize nP, nU, nCOL;
+    Mechatronix::U_solver & US = this->m_U_control_solver[0];
 
     if ( nrhs == 12 ) {
       NodeType2 L, R;
@@ -1237,7 +1233,13 @@ public:
       real_type * DuDxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
 
       MatrixWrapper<real_type> DuDxlp( DuDxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
-      this->DuDxlp_full_analytic( L, R, P, U, DuDxlp );
+
+      if ( m_U_solve_iterative ) {
+        US.u_eval_DuDxlp( L, R, P, U, DuDxlp );
+      } else {
+        this->DuDxlp_full_analytic( L, R, P, U, DuDxlp );
+      }
+
     } else if ( nrhs == 8 ) {
       NodeType2 N;
       get_N( CMD, nrhs, prhs, N );
@@ -1248,7 +1250,13 @@ public:
       real_type * DuDxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
 
       MatrixWrapper<real_type> DuDxlp( DuDxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
-      this->DuDxlp_full_analytic( N, P, U, DuDxlp );
+
+      if ( m_U_solve_iterative ) {
+        US.u_eval_DuDxlp( N, P, U, DuDxlp );
+      } else {
+        this->DuDxlp_full_analytic( N, P, U, DuDxlp );
+      }
+
     } else {
       MEX_ASSERT( false, CMD "argument must be 12 or 8" );
     }
@@ -1296,7 +1304,7 @@ public:
    |   \___/|___/|___|
   \*/
   void
-  mex_rhs_ode(
+  do_rhs_ode(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1320,7 +1328,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_Drhs_odeDx(
+  do_Drhs_odeDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1342,7 +1350,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_Drhs_odeDu(
+  do_Drhs_odeDu(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1365,7 +1373,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_Drhs_odeDp(
+  do_Drhs_odeDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1393,7 +1401,7 @@ public:
   \*/
 
   void
-  mex_A(
+  do_A(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1420,7 +1428,7 @@ public:
   \*/
 
   void
-  mex_eta(
+  do_eta(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1443,7 +1451,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DetaDx(
+  do_DetaDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1465,7 +1473,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DetaDp(
+  do_DetaDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1491,7 +1499,7 @@ public:
   \*/
 
   void
-  mex_nu(
+  do_nu(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1515,7 +1523,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DnuDx(
+  do_DnuDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1538,7 +1546,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DnuDp(
+  do_DnuDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1572,7 +1580,7 @@ public:
    |  |_||_/_\_\
   \*/
   void
-  mex_Hx(
+  do_Hx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1597,7 +1605,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHxDx(
+  do_DHxDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1621,7 +1629,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHxDp(
+  do_DHxDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1649,7 +1657,7 @@ public:
    |  |_||_|\_,_|
   \*/
   void
-  mex_Hu(
+  do_Hu(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1673,7 +1681,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHuDx(
+  do_DHuDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1696,7 +1704,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHuDp(
+  do_DHuDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1724,7 +1732,7 @@ public:
    |       |_|
   \*/
   void
-  mex_Hp(
+  do_Hp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1749,7 +1757,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHpDp(
+  do_DHpDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1837,7 +1845,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_boundaryConditions(
+  do_boundaryConditions(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1861,7 +1869,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DboundaryConditionsDx(
+  do_DboundaryConditionsDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1882,7 +1890,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DboundaryConditionsDp(
+  do_DboundaryConditionsDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1908,7 +1916,7 @@ public:
    |           |__/
   \*/
   void
-  mex_adjointBC(
+  do_adjointBC(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1937,7 +1945,7 @@ public:
    |                |__/
   \*/
   void
-  mex_DadjointBCDx(
+  do_DadjointBCDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1965,7 +1973,7 @@ public:
    |                |__/                            |_|
   \*/
   void
-  mex_DadjointBCDp(
+  do_DadjointBCDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1993,7 +2001,7 @@ public:
    |  |__/           |_|
   \*/
   void
-  mex_jump(
+  do_jump(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2021,7 +2029,7 @@ public:
    |     |__/           |_|             |_|
   \*/
   void
-  mex_DjumpDxlp(
+  do_DjumpDxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2048,7 +2056,7 @@ public:
    |  |_|
   \*/
   void
-  mex_penalties(
+  do_penalties(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2071,7 +2079,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_control_penalties(
+  do_control_penalties(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2100,7 +2108,7 @@ public:
   \*/
 
   void
-  mex_lagrange_target(
+  do_lagrange_target(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2123,7 +2131,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_mayer_target(
+  do_mayer_target(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2144,7 +2152,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_q(
+  do_q(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2171,7 +2179,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_nodes(
+  do_nodes(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2191,7 +2199,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_node_to_segment(
+  do_node_to_segment(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2208,6 +2216,7 @@ public:
 
     #undef CMD
   }
+
 
 };
 
@@ -2350,7 +2359,7 @@ do_read(
     nrhs >= 2,
     MODEL_NAME "_Mex('read',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_read( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_read( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2364,7 +2373,7 @@ do_setup(
     nrhs >= 2,
     MODEL_NAME "_Mex('setup',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_setup( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_setup( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2378,7 +2387,7 @@ do_set_guess(
     nrhs >= 2,
     MODEL_NAME "_Mex('set_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_set_guess( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_set_guess( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2392,7 +2401,7 @@ do_get_guess(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_guess( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_guess( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2406,7 +2415,7 @@ do_get_solution_as_guess(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_solution_as_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_solution_as_guess( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_solution_as_guess( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2420,7 +2429,7 @@ do_solve(
     nrhs >= 2,
     MODEL_NAME "_Mex('solve',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_solve( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_solve( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2434,7 +2443,7 @@ do_dims(
     nrhs >= 2,
     MODEL_NAME "_Mex('dims',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_dims( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_dims( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2448,7 +2457,7 @@ do_names(
     nrhs >= 2,
     MODEL_NAME "_Mex('names',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_names( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_names( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2462,7 +2471,7 @@ do_updateContinuation(
     nrhs >= 2,
     MODEL_NAME "_Mex('updateContinuation',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_updateContinuation( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_updateContinuation( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2476,7 +2485,7 @@ do_get_raw_solution(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_raw_solution',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_raw_solution( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_raw_solution( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2490,7 +2499,7 @@ do_set_raw_solution(
     nrhs >= 2,
     MODEL_NAME "_Mex('set_raw_solution',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_set_raw_solution( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_set_raw_solution( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2504,7 +2513,7 @@ do_check_raw_solution(
     nrhs >= 2,
     MODEL_NAME "_Mex('check_raw_solution',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_check_raw_solution( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_check_raw_solution( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2518,7 +2527,7 @@ do_check_jacobian(
     nrhs >= 2,
     MODEL_NAME "_Mex('check_jacobian',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_check_jacobian( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_check_jacobian( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2532,7 +2541,7 @@ do_get_solution(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_solution',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_solution( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_solution( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2546,7 +2555,7 @@ do_get_solution2(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_solution2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_solution2( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_solution2( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2560,7 +2569,7 @@ do_get_solution3(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_solution3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_solution3( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_solution3( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2574,7 +2583,7 @@ do_get_ocp_data(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_ocp_data',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_ocp_data( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_ocp_data( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2588,7 +2597,7 @@ do_eval_F(
     nrhs >= 2,
     MODEL_NAME "_Mex('eval_F',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_eval_F( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_eval_F( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2602,7 +2611,7 @@ do_eval_JF(
     nrhs >= 2,
     MODEL_NAME "_Mex('eval_JF',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_eval_JF( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_eval_JF( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2616,7 +2625,7 @@ do_eval_JF_pattern(
     nrhs >= 2,
     MODEL_NAME "_Mex('eval_JF_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_eval_JF_pattern( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_eval_JF_pattern( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2630,7 +2639,7 @@ do_pack(
     nrhs >= 2,
     MODEL_NAME "_Mex('pack',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_pack( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_pack( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2644,7 +2653,7 @@ do_unpack(
     nrhs >= 2,
     MODEL_NAME "_Mex('unpack',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_unpack( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_unpack( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2658,7 +2667,7 @@ do_ac(
     nrhs >= 2,
     MODEL_NAME "_Mex('ac',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_ac( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ac( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2672,7 +2681,7 @@ do_DacDxlp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DacDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DacDxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DacDxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2686,7 +2695,7 @@ do_hc(
     nrhs >= 2,
     MODEL_NAME "_Mex('hc',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_hc( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_hc( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2700,7 +2709,7 @@ do_DhcDxlop(
     nrhs >= 2,
     MODEL_NAME "_Mex('DhcDxlop',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DhcDxlop( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DhcDxlop( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2714,7 +2723,7 @@ do_u(
     nrhs >= 2,
     MODEL_NAME "_Mex('u',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_u( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_u( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2728,7 +2737,7 @@ do_DuDxlp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DuDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DuDxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DuDxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2742,7 +2751,7 @@ do_rhs_ode(
     nrhs >= 2,
     MODEL_NAME "_Mex('rhs_ode',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_rhs_ode( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_rhs_ode( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2756,7 +2765,7 @@ do_Drhs_odeDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('Drhs_odeDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Drhs_odeDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Drhs_odeDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2770,7 +2779,7 @@ do_Drhs_odeDu(
     nrhs >= 2,
     MODEL_NAME "_Mex('Drhs_odeDu',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Drhs_odeDu( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Drhs_odeDu( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2784,7 +2793,7 @@ do_Drhs_odeDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('Drhs_odeDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Drhs_odeDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Drhs_odeDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2798,7 +2807,7 @@ do_A(
     nrhs >= 2,
     MODEL_NAME "_Mex('A',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_A( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_A( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2812,7 +2821,7 @@ do_eta(
     nrhs >= 2,
     MODEL_NAME "_Mex('eta',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_eta( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_eta( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2826,7 +2835,7 @@ do_DetaDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DetaDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DetaDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DetaDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2840,7 +2849,7 @@ do_DetaDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DetaDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DetaDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DetaDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2854,7 +2863,7 @@ do_nu(
     nrhs >= 2,
     MODEL_NAME "_Mex('nu',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_nu( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_nu( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2868,7 +2877,7 @@ do_DnuDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DnuDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DnuDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DnuDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2882,7 +2891,7 @@ do_DnuDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DnuDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DnuDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DnuDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2896,7 +2905,7 @@ do_Hx(
     nrhs >= 2,
     MODEL_NAME "_Mex('Hx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Hx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Hx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2910,7 +2919,7 @@ do_DHxDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHxDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHxDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHxDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2924,7 +2933,7 @@ do_DHxDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHxDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHxDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHxDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2938,7 +2947,7 @@ do_Hu(
     nrhs >= 2,
     MODEL_NAME "_Mex('Hu',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Hu( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Hu( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2952,7 +2961,7 @@ do_DHuDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHuDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHuDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHuDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2966,7 +2975,7 @@ do_DHuDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHuDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHuDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHuDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2980,7 +2989,7 @@ do_Hp(
     nrhs >= 2,
     MODEL_NAME "_Mex('Hp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Hp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Hp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2994,7 +3003,7 @@ do_DHpDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHpDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHpDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHpDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3008,7 +3017,7 @@ do_boundaryConditions(
     nrhs >= 2,
     MODEL_NAME "_Mex('boundaryConditions',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_boundaryConditions( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_boundaryConditions( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3022,7 +3031,7 @@ do_DboundaryConditionsDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DboundaryConditionsDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DboundaryConditionsDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3036,7 +3045,7 @@ do_DboundaryConditionsDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DboundaryConditionsDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DboundaryConditionsDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3050,7 +3059,7 @@ do_adjointBC(
     nrhs >= 2,
     MODEL_NAME "_Mex('adjointBC',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_adjointBC( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_adjointBC( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3064,7 +3073,7 @@ do_DadjointBCDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DadjointBCDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DadjointBCDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3078,7 +3087,7 @@ do_DadjointBCDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DadjointBCDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DadjointBCDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3092,7 +3101,7 @@ do_jump(
     nrhs >= 2,
     MODEL_NAME "_Mex('jump',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_jump( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_jump( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3106,7 +3115,7 @@ do_DjumpDxlp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DjumpDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DjumpDxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DjumpDxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3120,7 +3129,7 @@ do_penalties(
     nrhs >= 2,
     MODEL_NAME "_Mex('penalties',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_penalties( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_penalties( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3134,7 +3143,7 @@ do_control_penalties(
     nrhs >= 2,
     MODEL_NAME "_Mex('control_penalties',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_control_penalties( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_control_penalties( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3148,7 +3157,7 @@ do_lagrange_target(
     nrhs >= 2,
     MODEL_NAME "_Mex('lagrange_target',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_lagrange_target( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_lagrange_target( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3162,7 +3171,7 @@ do_mayer_target(
     nrhs >= 2,
     MODEL_NAME "_Mex('mayer_target',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_mayer_target( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_mayer_target( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3176,7 +3185,7 @@ do_q(
     nrhs >= 2,
     MODEL_NAME "_Mex('q',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_q( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_q( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3190,7 +3199,7 @@ do_nodes(
     nrhs >= 2,
     MODEL_NAME "_Mex('nodes',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_nodes( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_nodes( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3204,7 +3213,7 @@ do_node_to_segment(
     nrhs >= 2,
     MODEL_NAME "_Mex('node_to_segment',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_node_to_segment( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_node_to_segment( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

@@ -14,9 +14,14 @@ uControl = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 501
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 501
 Segment N.0
 s0 = 0 length = 5 npts = 501 no data set
+END Mesh[mesh]
 INFO CLASS = SecondOrderSingularRegulator
   numNodes    = 501
   dim         = u = 1, q = 1, x = 2, p = 0, omega = 2, big_bc = 6
@@ -347,11 +352,11 @@ Hyness --- start iterations ---
 [300,  5] (0.00176  ,0.00182  ) [0.204    ,0.115    ] 0.000243   0:846
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 0.985[sec]    timeout        = 0 [ms]
+Elapsed Time   = 0.593[sec]    timeout        = 0 [ms]
 iteration      = 301           tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 2006
 max acc. iter. = 800           N. System pars = 500
-Converged      = NO            Memory Used    = 206Kb (+47bytes)
+Converged      = NO            Memory Used    = 205Kb (+82bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

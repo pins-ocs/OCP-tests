@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Mex.cc                                             |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -231,10 +231,6 @@ public:
     solution3_ok = false;
   }
 
-  void
-  diagnostic()
-  { MODEL_CLASS::diagnostic( gc_data ); }
-
   integer nnz() const { return MODEL_CLASS::eval_JF_nnz(); }
 
   void
@@ -260,7 +256,7 @@ public:
    |              |___|               |_|
   \*/
   void
-  mex_read(
+  do_read(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -286,7 +282,7 @@ public:
    |              |___|               |_|
   \*/
   void
-  mex_setup(
+  do_setup(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -330,7 +326,7 @@ public:
    |              |___|___/
   \*/
   void
-  mex_set_guess(
+  do_set_guess(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -357,7 +353,7 @@ public:
   }
 
   void
-  mex_get_guess(
+  do_get_guess(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -369,7 +365,7 @@ public:
   }
 
   void
-  mex_get_solution_as_guess(
+  do_get_solution_as_guess(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -390,7 +386,7 @@ public:
    |               |___|
   \*/
   void
-  mex_solve(
+  do_solve(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -419,7 +415,7 @@ public:
    |              |___|
   \*/
   void
-  mex_dims(
+  do_dims(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -447,7 +443,7 @@ public:
    |              |___|
   \*/
   void
-  mex_names(
+  do_names(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -468,7 +464,7 @@ public:
    |              |___|  |_|
   \*/
   void
-  mex_updateContinuation(
+  do_updateContinuation(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -490,7 +486,7 @@ public:
    |              |___|___/       |___|            |___|
   \*/
   void
-  mex_get_raw_solution(
+  do_get_raw_solution(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -512,7 +508,7 @@ public:
    |              |___|         |___|            |___|
   \*/
   void
-  mex_set_raw_solution(
+  do_set_raw_solution(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -540,7 +536,7 @@ public:
    |              |___|                |___|            |___|
   \*/
   void
-  mex_check_raw_solution(
+  do_check_raw_solution(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -567,7 +563,7 @@ public:
    |              |___|                |___|__/
   \*/
   void
-  mex_check_jacobian(
+  do_check_jacobian(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -595,7 +591,7 @@ public:
    |              |___|___/       |___|
   \*/
   void
-  mex_get_solution(
+  do_get_solution(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -604,6 +600,7 @@ public:
     CHECK_OUT( 1 );
     if ( !solution1_ok ) {
       MODEL_CLASS::get_solution( gc_solution1 );
+      MODEL_CLASS::diagnostic( gc_data, gc_solution1 );
       solution1_ok = true;
     }
     if ( nrhs == 2 ) {
@@ -627,7 +624,7 @@ public:
   }
 
   void
-  mex_get_solution2(
+  do_get_solution2(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -637,6 +634,7 @@ public:
     CHECK_OUT( 1 );
     if ( !solution2_ok ) {
       MODEL_CLASS::get_solution2( gc_solution2 );
+      MODEL_CLASS::diagnostic( gc_data, gc_solution2 );
       solution2_ok = true;
     }
     GenericContainer_to_mxArray( gc_solution2, arg_out_0 );
@@ -644,7 +642,7 @@ public:
   }
 
   void
-  mex_get_solution3(
+  do_get_solution3(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -654,6 +652,7 @@ public:
     CHECK_OUT( 1 );
     if ( !solution3_ok ) {
       MODEL_CLASS::get_solution3( gc_solution3 );
+      MODEL_CLASS::diagnostic( gc_data, gc_solution3 );
       solution3_ok = true;
     }
     GenericContainer_to_mxArray( gc_solution3, arg_out_0 );
@@ -668,7 +667,7 @@ public:
    |              |___|___/       |___|      |_| |___|
   \*/
   void
-  mex_get_ocp_data(
+  do_get_ocp_data(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -687,7 +686,7 @@ public:
    |              |___|            |___|
   \*/
   void
-  mex_eval_F(
+  do_eval_F(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -715,7 +714,7 @@ public:
    |              |___|            |___|
   \*/
   void
-  mex_eval_JF(
+  do_eval_JF(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -769,7 +768,7 @@ public:
    |              |___|            |___|   |___|_|
   \*/
   void
-  mex_eval_JF_pattern(
+  do_eval_JF_pattern(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -813,7 +812,7 @@ public:
    |              |___|_|
   \*/
   void
-  mex_pack(
+  do_pack(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -866,7 +865,7 @@ public:
    |              |___|       |_|
   \*/
   void
-  mex_unpack(
+  do_unpack(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1011,7 +1010,7 @@ public:
    |               |___|
   \*/
   void
-  mex_ac(
+  do_ac(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1044,7 +1043,7 @@ public:
    |               |___|__/                            |___|
   \*/
   void
-  mex_DacDxlp(
+  do_DacDxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1093,7 +1092,7 @@ public:
    |               |___|
   \*/
   void
-  mex_hc(
+  do_hc(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1124,7 +1123,7 @@ public:
    |               |___|__/                            |___|
   \*/
   void
-  mex_DhcDxlop(
+  do_DhcDxlop(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1159,7 +1158,7 @@ public:
    |   \___/
   \*/
   void
-  mex_u(
+  do_u(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1211,7 +1210,7 @@ public:
    |                       |_|
   \*/
   void
-  mex_DuDxlp(
+  do_DuDxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1305,7 +1304,7 @@ public:
    |   \___/|___/|___|
   \*/
   void
-  mex_rhs_ode(
+  do_rhs_ode(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1329,7 +1328,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_Drhs_odeDx(
+  do_Drhs_odeDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1351,7 +1350,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_Drhs_odeDu(
+  do_Drhs_odeDu(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1374,7 +1373,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_Drhs_odeDp(
+  do_Drhs_odeDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1402,7 +1401,7 @@ public:
   \*/
 
   void
-  mex_A(
+  do_A(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1429,7 +1428,7 @@ public:
   \*/
 
   void
-  mex_eta(
+  do_eta(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1452,7 +1451,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DetaDx(
+  do_DetaDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1474,7 +1473,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DetaDp(
+  do_DetaDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1500,7 +1499,7 @@ public:
   \*/
 
   void
-  mex_nu(
+  do_nu(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1524,7 +1523,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DnuDx(
+  do_DnuDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1547,7 +1546,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DnuDp(
+  do_DnuDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1581,7 +1580,7 @@ public:
    |  |_||_/_\_\
   \*/
   void
-  mex_Hx(
+  do_Hx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1606,7 +1605,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHxDx(
+  do_DHxDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1630,7 +1629,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHxDp(
+  do_DHxDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1658,7 +1657,7 @@ public:
    |  |_||_|\_,_|
   \*/
   void
-  mex_Hu(
+  do_Hu(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1682,7 +1681,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHuDx(
+  do_DHuDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1705,7 +1704,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHuDp(
+  do_DHuDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1733,7 +1732,7 @@ public:
    |       |_|
   \*/
   void
-  mex_Hp(
+  do_Hp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1758,7 +1757,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DHpDp(
+  do_DHpDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1846,7 +1845,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_boundaryConditions(
+  do_boundaryConditions(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1870,7 +1869,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DboundaryConditionsDx(
+  do_DboundaryConditionsDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1891,7 +1890,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_DboundaryConditionsDp(
+  do_DboundaryConditionsDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1917,7 +1916,7 @@ public:
    |           |__/
   \*/
   void
-  mex_adjointBC(
+  do_adjointBC(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1946,7 +1945,7 @@ public:
    |                |__/
   \*/
   void
-  mex_DadjointBCDx(
+  do_DadjointBCDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -1974,7 +1973,7 @@ public:
    |                |__/                            |_|
   \*/
   void
-  mex_DadjointBCDp(
+  do_DadjointBCDp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2002,7 +2001,7 @@ public:
    |  |__/           |_|
   \*/
   void
-  mex_jump(
+  do_jump(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2030,7 +2029,7 @@ public:
    |     |__/           |_|             |_|
   \*/
   void
-  mex_DjumpDxlp(
+  do_DjumpDxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2057,7 +2056,7 @@ public:
    |  |_|
   \*/
   void
-  mex_penalties(
+  do_penalties(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2080,7 +2079,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_control_penalties(
+  do_control_penalties(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2109,7 +2108,7 @@ public:
   \*/
 
   void
-  mex_lagrange_target(
+  do_lagrange_target(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2132,7 +2131,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_mayer_target(
+  do_mayer_target(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2153,7 +2152,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_q(
+  do_q(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2180,7 +2179,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_nodes(
+  do_nodes(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2200,7 +2199,7 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  mex_node_to_segment(
+  do_node_to_segment(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
@@ -2217,6 +2216,5864 @@ public:
 
     #undef CMD
   }
+
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  void
+  do_cont(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('cont', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->cont(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_1_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_1_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_1_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_1_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_1_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_1_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_1_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_1_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_1_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_1_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_1_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_1_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_1_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_1_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_1_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_1_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_1_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_2_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_2_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_2_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_2_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_2_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_2_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_2_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_2_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_2_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_2_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_2_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_2_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_2_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_2_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_2_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_2_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_3_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_3_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_3_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_3_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_3_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_3_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_3_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_3_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_3_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_3_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_3_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_3_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_3_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_3_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_3_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_4_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_4_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_4_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_4_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_4_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_4_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_4_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_4_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_4_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_4_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_4_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_4_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_5_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_5_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_5_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_5_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_5_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_5_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_5_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_5_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_5_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_6_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_6_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_6_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_6_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_6_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_6_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xPosition_D_7_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xPosition_D_7_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xPosition_D_7_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_1_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_1_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_1_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_1_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_1_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_1_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_1_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_1_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_1_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_1_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_1_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_1_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_1_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_1_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_1_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_1_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_1_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_2_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_2_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_2_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_2_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_2_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_2_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_2_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_2_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_2_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_2_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_2_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_2_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_2_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_2_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_2_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_2_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_3_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_3_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_3_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_3_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_3_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_3_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_3_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_3_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_3_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_3_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_3_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_3_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_3_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_3_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_3_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_4_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_4_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_4_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_4_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_4_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_4_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_4_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_4_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_4_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_4_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_4_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_4_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_5_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_5_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_5_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_5_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_5_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_5_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_5_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_5_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_5_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_6_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_6_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_6_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_6_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_6_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_6_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yPosition_D_7_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yPosition_D_7_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yPosition_D_7_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_1_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_1_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_1_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_1_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_1_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_1_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_1_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_1_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_1_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_1_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_1_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_1_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_1_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_1_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_1_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_1_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_1_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_2_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_2_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_2_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_2_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_2_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_2_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_2_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_2_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_2_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_2_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_2_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_2_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_2_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_2_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_2_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_2_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_3_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_3_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_3_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_3_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_3_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_3_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_3_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_3_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_3_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_3_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_3_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_3_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_3_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_3_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_3_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_4_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_4_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_4_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_4_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_4_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_4_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_4_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_4_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_4_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_4_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_4_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_4_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_5_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_5_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_5_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_5_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_5_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_5_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_5_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_5_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_5_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_6_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_6_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_6_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_6_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_6_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_6_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zPosition_D_7_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zPosition_D_7_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zPosition_D_7_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_1_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_1_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_1_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_1_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_1_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_1_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_1_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_1_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_1_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_1_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_1_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_1_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_1_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_1_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_1_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_1_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_1_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_2_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_2_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_2_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_2_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_2_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_2_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_2_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_2_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_2_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_2_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_2_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_2_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_2_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_2_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_2_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_2_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_3_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_3_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_3_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_3_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_3_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_3_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_3_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_3_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_3_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_3_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_3_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_3_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_3_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_3_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_3_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_4_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_4_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_4_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_4_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_4_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_4_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_4_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_4_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_4_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_4_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_4_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_4_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_5_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_5_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_5_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_5_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_5_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_5_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_5_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_5_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_5_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_6_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_6_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_6_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_6_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_6_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_6_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_xVelocity_D_7_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('xVelocity_D_7_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->xVelocity_D_7_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_1_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_1_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_1_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_1_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_1_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_1_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_1_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_1_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_1_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_1_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_1_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_1_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_1_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_1_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_1_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_1_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_1_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_2_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_2_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_2_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_2_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_2_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_2_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_2_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_2_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_2_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_2_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_2_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_2_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_2_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_2_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_2_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_2_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_3_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_3_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_3_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_3_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_3_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_3_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_3_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_3_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_3_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_3_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_3_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_3_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_3_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_3_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_3_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_4_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_4_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_4_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_4_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_4_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_4_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_4_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_4_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_4_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_4_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_4_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_4_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_5_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_5_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_5_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_5_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_5_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_5_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_5_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_5_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_5_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_6_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_6_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_6_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_6_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_6_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_6_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_yVelocity_D_7_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('yVelocity_D_7_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->yVelocity_D_7_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_1_1(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_1_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_1_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_1_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_1_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_1_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_1_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_1_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_1_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_1_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_1_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_1_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_1_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_1_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_1_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_1_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_1_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_2_2(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_2_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_2_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_2_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_2_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_2_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_2_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_2_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_2_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_2_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_2_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_2_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_2_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_2_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_2_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_2_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_3_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_3_3', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_3_3(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_3_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_3_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_3_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_3_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_3_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_3_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_3_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_3_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_3_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_3_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_3_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_3_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_4_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_4_4', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_4_4(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_4_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_4_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_4_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_4_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_4_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_4_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_4_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_4_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_4_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_5_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_5_5', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_5_5(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_5_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_5_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_5_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_5_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_5_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_5_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_6_6(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_6_6', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_6_6(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_6_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_6_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_6_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_zVelocity_D_7_7(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('zVelocity_D_7_7', obj, ... args ... ): "
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+    real_type arg5 = getScalarValue( arg_in_5, CMD " arg5" );
+    real_type arg6 = getScalarValue( arg_in_6, CMD " arg6" );
+
+    setScalarValue( arg_out_0, this->zVelocity_D_7_7(arg0,arg1,arg2,arg3,arg4,arg5,arg6) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg_D_1', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg_D_1(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg_D_2', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg_D_2(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg_D_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg_D_3', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg_D_3(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg_D_1_1(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg_D_1_2(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg_D_1_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg_D_1_3', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg_D_1_3(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg_D_2_2(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg_D_2_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg_D_2_3', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg_D_2_3(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_norm_reg_D_3_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('norm_reg_D_3_3', obj, ... args ... ): "
+    CHECK_IN( 5 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+
+    setScalarValue( arg_out_0, this->norm_reg_D_3_3(arg0,arg1,arg2) );
+    #undef CMD
+  }
+
+  void
+  do_ray(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_1', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_1(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_2', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_2(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_3', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_3(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_4', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_4(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_1_1(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_1_2(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_1_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_1_3', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_1_3(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_1_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_1_4', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_1_4(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_2_2(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_2_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_2_3', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_2_3(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_2_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_2_4', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_2_4(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_3_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_3_3', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_3_3(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_3_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_3_4', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_3_4(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_ray_D_4_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('ray_D_4_4', obj, ... args ... ): "
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+
+    setScalarValue( arg_out_0, this->ray_D_4_4(arg0,arg1,arg2,arg3) );
+    #undef CMD
+  }
+
+  void
+  do_vel(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_1', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_1(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_2', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_2(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_3', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_3(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_4', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_4(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_5', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_5(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_1_1(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_1_2(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_1_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_1_3', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_1_3(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_1_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_1_4', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_1_4(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_1_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_1_5', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_1_5(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_2_2(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_2_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_2_3', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_2_3(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_2_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_2_4', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_2_4(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_2_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_2_5', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_2_5(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_3_3(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_3_3', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_3_3(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_3_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_3_4', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_3_4(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_3_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_3_5', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_3_5(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_4_4(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_4_4', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_4_4(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_4_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_4_5', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_4_5(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vel_D_5_5(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vel_D_5_5', obj, ... args ... ): "
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
+    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    real_type arg4 = getScalarValue( arg_in_4, CMD " arg4" );
+
+    setScalarValue( arg_out_0, this->vel_D_5_5(arg0,arg1,arg2,arg3,arg4) );
+    #undef CMD
+  }
+
+  void
+  do_vc(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vc', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->vc(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_vc_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vc_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->vc_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_vc_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('vc_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->vc_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_acceleration_r(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('acceleration_r', obj, ... args ... ): "
+    CHECK_IN( 4 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+
+    setScalarValue( arg_out_0, this->acceleration_r(arg0,arg1) );
+    #undef CMD
+  }
+
+  void
+  do_acceleration_r_D_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('acceleration_r_D_1', obj, ... args ... ): "
+    CHECK_IN( 4 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+
+    setScalarValue( arg_out_0, this->acceleration_r_D_1(arg0,arg1) );
+    #undef CMD
+  }
+
+  void
+  do_acceleration_r_D_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('acceleration_r_D_2', obj, ... args ... ): "
+    CHECK_IN( 4 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+
+    setScalarValue( arg_out_0, this->acceleration_r_D_2(arg0,arg1) );
+    #undef CMD
+  }
+
+  void
+  do_acceleration_r_D_1_1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('acceleration_r_D_1_1', obj, ... args ... ): "
+    CHECK_IN( 4 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+
+    setScalarValue( arg_out_0, this->acceleration_r_D_1_1(arg0,arg1) );
+    #undef CMD
+  }
+
+  void
+  do_acceleration_r_D_1_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('acceleration_r_D_1_2', obj, ... args ... ): "
+    CHECK_IN( 4 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+
+    setScalarValue( arg_out_0, this->acceleration_r_D_1_2(arg0,arg1) );
+    #undef CMD
+  }
+
+  void
+  do_acceleration_r_D_2_2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('acceleration_r_D_2_2', obj, ... args ... ): "
+    CHECK_IN( 4 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+
+    setScalarValue( arg_out_0, this->acceleration_r_D_2_2(arg0,arg1) );
+    #undef CMD
+  }
+
+  void
+  do_X_begin(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('X_begin', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->X_begin(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_X_begin_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('X_begin_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->X_begin_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_X_begin_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('X_begin_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->X_begin_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_Y_begin(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Y_begin', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Y_begin(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_Y_begin_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Y_begin_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Y_begin_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_Y_begin_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Y_begin_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Y_begin_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_Z_begin(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Z_begin', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Z_begin(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_Z_begin_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Z_begin_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Z_begin_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_Z_begin_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Z_begin_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Z_begin_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VX_begin(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VX_begin', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VX_begin(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VX_begin_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VX_begin_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VX_begin_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_VX_begin_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VX_begin_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VX_begin_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VY_begin(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VY_begin', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VY_begin(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VY_begin_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VY_begin_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VY_begin_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_VY_begin_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VY_begin_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VY_begin_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VZ_begin(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VZ_begin', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VZ_begin(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VZ_begin_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VZ_begin_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VZ_begin_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_VZ_begin_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VZ_begin_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VZ_begin_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_X_end(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('X_end', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->X_end(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_X_end_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('X_end_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->X_end_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_X_end_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('X_end_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->X_end_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_Y_end(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Y_end', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Y_end(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_Y_end_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Y_end_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Y_end_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_Y_end_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Y_end_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Y_end_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_Z_end(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Z_end', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Z_end(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_Z_end_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Z_end_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Z_end_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_Z_end_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('Z_end_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->Z_end_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VX_end(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VX_end', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VX_end(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VX_end_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VX_end_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VX_end_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_VX_end_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VX_end_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VX_end_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VY_end(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VY_end', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VY_end(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VY_end_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VY_end_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VY_end_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_VY_end_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VY_end_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VY_end_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VZ_end(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VZ_end', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VZ_end(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_VZ_end_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VZ_end_D', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VZ_end_D(arg0) );
+    #undef CMD
+  }
+  void
+  do_VZ_end_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('VZ_end_DD', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->VZ_end_DD(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_p_guess(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('p_guess', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->p_guess(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_f_guess(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('f_guess', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->f_guess(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_g_guess(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('g_guess', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->g_guess(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_h_guess(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('h_guess', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->h_guess(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_k_guess(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('k_guess', obj, ... args ... ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+
+    setScalarValue( arg_out_0, this->k_guess(arg0) );
+    #undef CMD
+  }
+
+  void
+  do_L_guess(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('L_guess', obj, ... args ... ): "
+    CHECK_IN( 4 );
+    CHECK_OUT( 1 );
+    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
+    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
+
+    setScalarValue( arg_out_0, this->L_guess(arg0,arg1) );
+    #undef CMD
+  }
+
+  void
+  do_guess_setup(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('guess_setup', obj, ... args ... ): "
+    CHECK_IN( 2 );
+    CHECK_OUT( 1 );
+
+    setScalarValue( arg_out_0, this->guess_setup() );
+    #undef CMD
+  }
+
 
 };
 
@@ -2359,7 +8216,7 @@ do_read(
     nrhs >= 2,
     MODEL_NAME "_Mex('read',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_read( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_read( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2373,7 +8230,7 @@ do_setup(
     nrhs >= 2,
     MODEL_NAME "_Mex('setup',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_setup( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_setup( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2387,7 +8244,7 @@ do_set_guess(
     nrhs >= 2,
     MODEL_NAME "_Mex('set_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_set_guess( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_set_guess( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2401,7 +8258,7 @@ do_get_guess(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_guess( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_guess( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2415,7 +8272,7 @@ do_get_solution_as_guess(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_solution_as_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_solution_as_guess( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_solution_as_guess( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2429,7 +8286,7 @@ do_solve(
     nrhs >= 2,
     MODEL_NAME "_Mex('solve',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_solve( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_solve( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2443,7 +8300,7 @@ do_dims(
     nrhs >= 2,
     MODEL_NAME "_Mex('dims',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_dims( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_dims( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2457,7 +8314,7 @@ do_names(
     nrhs >= 2,
     MODEL_NAME "_Mex('names',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_names( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_names( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2471,7 +8328,7 @@ do_updateContinuation(
     nrhs >= 2,
     MODEL_NAME "_Mex('updateContinuation',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_updateContinuation( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_updateContinuation( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2485,7 +8342,7 @@ do_get_raw_solution(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_raw_solution',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_raw_solution( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_raw_solution( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2499,7 +8356,7 @@ do_set_raw_solution(
     nrhs >= 2,
     MODEL_NAME "_Mex('set_raw_solution',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_set_raw_solution( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_set_raw_solution( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2513,7 +8370,7 @@ do_check_raw_solution(
     nrhs >= 2,
     MODEL_NAME "_Mex('check_raw_solution',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_check_raw_solution( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_check_raw_solution( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2527,7 +8384,7 @@ do_check_jacobian(
     nrhs >= 2,
     MODEL_NAME "_Mex('check_jacobian',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_check_jacobian( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_check_jacobian( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2541,7 +8398,7 @@ do_get_solution(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_solution',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_solution( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_solution( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2555,7 +8412,7 @@ do_get_solution2(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_solution2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_solution2( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_solution2( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2569,7 +8426,7 @@ do_get_solution3(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_solution3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_solution3( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_solution3( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2583,7 +8440,7 @@ do_get_ocp_data(
     nrhs >= 2,
     MODEL_NAME "_Mex('get_ocp_data',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_get_ocp_data( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_get_ocp_data( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2597,7 +8454,7 @@ do_eval_F(
     nrhs >= 2,
     MODEL_NAME "_Mex('eval_F',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_eval_F( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_eval_F( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2611,7 +8468,7 @@ do_eval_JF(
     nrhs >= 2,
     MODEL_NAME "_Mex('eval_JF',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_eval_JF( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_eval_JF( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2625,7 +8482,7 @@ do_eval_JF_pattern(
     nrhs >= 2,
     MODEL_NAME "_Mex('eval_JF_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_eval_JF_pattern( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_eval_JF_pattern( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2639,7 +8496,7 @@ do_pack(
     nrhs >= 2,
     MODEL_NAME "_Mex('pack',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_pack( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_pack( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2653,7 +8510,7 @@ do_unpack(
     nrhs >= 2,
     MODEL_NAME "_Mex('unpack',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_unpack( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_unpack( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2667,7 +8524,7 @@ do_ac(
     nrhs >= 2,
     MODEL_NAME "_Mex('ac',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_ac( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ac( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2681,7 +8538,7 @@ do_DacDxlp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DacDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DacDxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DacDxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2695,7 +8552,7 @@ do_hc(
     nrhs >= 2,
     MODEL_NAME "_Mex('hc',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_hc( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_hc( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2709,7 +8566,7 @@ do_DhcDxlop(
     nrhs >= 2,
     MODEL_NAME "_Mex('DhcDxlop',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DhcDxlop( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DhcDxlop( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2723,7 +8580,7 @@ do_u(
     nrhs >= 2,
     MODEL_NAME "_Mex('u',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_u( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_u( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2737,7 +8594,7 @@ do_DuDxlp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DuDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DuDxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DuDxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2751,7 +8608,7 @@ do_rhs_ode(
     nrhs >= 2,
     MODEL_NAME "_Mex('rhs_ode',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_rhs_ode( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_rhs_ode( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2765,7 +8622,7 @@ do_Drhs_odeDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('Drhs_odeDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Drhs_odeDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Drhs_odeDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2779,7 +8636,7 @@ do_Drhs_odeDu(
     nrhs >= 2,
     MODEL_NAME "_Mex('Drhs_odeDu',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Drhs_odeDu( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Drhs_odeDu( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2793,7 +8650,7 @@ do_Drhs_odeDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('Drhs_odeDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Drhs_odeDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Drhs_odeDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2807,7 +8664,7 @@ do_A(
     nrhs >= 2,
     MODEL_NAME "_Mex('A',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_A( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_A( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2821,7 +8678,7 @@ do_eta(
     nrhs >= 2,
     MODEL_NAME "_Mex('eta',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_eta( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_eta( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2835,7 +8692,7 @@ do_DetaDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DetaDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DetaDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DetaDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2849,7 +8706,7 @@ do_DetaDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DetaDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DetaDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DetaDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2863,7 +8720,7 @@ do_nu(
     nrhs >= 2,
     MODEL_NAME "_Mex('nu',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_nu( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_nu( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2877,7 +8734,7 @@ do_DnuDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DnuDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DnuDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DnuDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2891,7 +8748,7 @@ do_DnuDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DnuDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DnuDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DnuDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2905,7 +8762,7 @@ do_Hx(
     nrhs >= 2,
     MODEL_NAME "_Mex('Hx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Hx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Hx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2919,7 +8776,7 @@ do_DHxDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHxDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHxDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHxDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2933,7 +8790,7 @@ do_DHxDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHxDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHxDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHxDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2947,7 +8804,7 @@ do_Hu(
     nrhs >= 2,
     MODEL_NAME "_Mex('Hu',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Hu( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Hu( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2961,7 +8818,7 @@ do_DHuDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHuDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHuDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHuDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2975,7 +8832,7 @@ do_DHuDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHuDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHuDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHuDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2989,7 +8846,7 @@ do_Hp(
     nrhs >= 2,
     MODEL_NAME "_Mex('Hp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_Hp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Hp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3003,7 +8860,7 @@ do_DHpDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DHpDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DHpDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DHpDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3017,7 +8874,7 @@ do_boundaryConditions(
     nrhs >= 2,
     MODEL_NAME "_Mex('boundaryConditions',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_boundaryConditions( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_boundaryConditions( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3031,7 +8888,7 @@ do_DboundaryConditionsDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DboundaryConditionsDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DboundaryConditionsDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3045,7 +8902,7 @@ do_DboundaryConditionsDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DboundaryConditionsDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DboundaryConditionsDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3059,7 +8916,7 @@ do_adjointBC(
     nrhs >= 2,
     MODEL_NAME "_Mex('adjointBC',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_adjointBC( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_adjointBC( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3073,7 +8930,7 @@ do_DadjointBCDx(
     nrhs >= 2,
     MODEL_NAME "_Mex('DadjointBCDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DadjointBCDx( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDx( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3087,7 +8944,7 @@ do_DadjointBCDp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DadjointBCDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DadjointBCDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3101,7 +8958,7 @@ do_jump(
     nrhs >= 2,
     MODEL_NAME "_Mex('jump',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_jump( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_jump( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3115,7 +8972,7 @@ do_DjumpDxlp(
     nrhs >= 2,
     MODEL_NAME "_Mex('DjumpDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_DjumpDxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DjumpDxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3129,7 +8986,7 @@ do_penalties(
     nrhs >= 2,
     MODEL_NAME "_Mex('penalties',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_penalties( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_penalties( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3143,7 +9000,7 @@ do_control_penalties(
     nrhs >= 2,
     MODEL_NAME "_Mex('control_penalties',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_control_penalties( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_control_penalties( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3157,7 +9014,7 @@ do_lagrange_target(
     nrhs >= 2,
     MODEL_NAME "_Mex('lagrange_target',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_lagrange_target( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_lagrange_target( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3171,7 +9028,7 @@ do_mayer_target(
     nrhs >= 2,
     MODEL_NAME "_Mex('mayer_target',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_mayer_target( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_mayer_target( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3185,7 +9042,7 @@ do_q(
     nrhs >= 2,
     MODEL_NAME "_Mex('q',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_q( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_q( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3199,7 +9056,7 @@ do_nodes(
     nrhs >= 2,
     MODEL_NAME "_Mex('nodes',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_nodes( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_nodes( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3213,7 +9070,4417 @@ do_node_to_segment(
     nrhs >= 2,
     MODEL_NAME "_Mex('node_to_segment',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->mex_node_to_segment( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_node_to_segment( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_cont(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('cont',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_cont( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_1_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_1_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_1_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_1_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_1_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_1_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_1_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_1_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_1_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_1_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_1_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_1_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_1_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_1_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_1_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_2_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_2_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_2_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_2_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_2_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_2_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_2_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_2_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_2_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_2_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_2_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_2_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_2_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_2_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_2_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_3_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_3_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_3_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_3_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_3_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_3_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_3_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_3_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_3_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_3_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_3_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_3_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_3_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_3_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_3_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_4_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_4_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_4_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_4_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_4_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_4_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_4_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_4_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_4_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_4_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_4_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_4_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_5_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_5_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_5_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_5_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_5_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_5_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_5_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_5_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_5_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_6_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_6_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_6_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_6_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_6_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_6_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xPosition_D_7_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xPosition_D_7_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xPosition_D_7_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_1_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_1_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_1_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_1_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_1_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_1_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_1_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_1_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_1_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_1_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_1_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_1_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_1_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_1_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_1_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_2_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_2_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_2_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_2_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_2_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_2_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_2_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_2_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_2_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_2_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_2_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_2_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_2_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_2_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_2_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_3_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_3_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_3_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_3_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_3_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_3_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_3_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_3_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_3_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_3_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_3_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_3_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_3_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_3_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_3_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_4_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_4_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_4_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_4_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_4_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_4_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_4_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_4_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_4_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_4_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_4_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_4_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_5_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_5_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_5_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_5_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_5_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_5_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_5_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_5_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_5_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_6_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_6_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_6_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_6_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_6_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_6_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yPosition_D_7_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yPosition_D_7_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yPosition_D_7_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_1_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_1_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_1_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_1_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_1_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_1_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_1_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_1_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_1_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_1_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_1_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_1_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_1_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_1_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_1_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_2_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_2_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_2_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_2_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_2_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_2_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_2_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_2_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_2_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_2_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_2_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_2_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_2_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_2_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_2_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_3_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_3_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_3_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_3_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_3_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_3_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_3_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_3_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_3_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_3_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_3_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_3_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_3_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_3_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_3_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_4_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_4_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_4_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_4_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_4_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_4_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_4_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_4_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_4_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_4_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_4_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_4_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_5_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_5_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_5_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_5_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_5_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_5_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_5_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_5_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_5_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_6_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_6_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_6_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_6_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_6_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_6_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zPosition_D_7_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zPosition_D_7_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zPosition_D_7_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_1_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_1_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_1_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_1_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_1_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_1_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_1_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_1_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_1_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_1_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_1_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_1_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_1_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_1_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_1_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_2_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_2_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_2_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_2_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_2_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_2_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_2_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_2_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_2_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_2_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_2_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_2_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_2_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_2_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_2_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_3_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_3_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_3_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_3_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_3_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_3_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_3_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_3_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_3_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_3_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_3_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_3_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_3_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_3_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_3_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_4_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_4_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_4_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_4_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_4_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_4_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_4_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_4_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_4_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_4_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_4_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_4_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_5_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_5_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_5_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_5_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_5_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_5_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_5_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_5_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_5_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_6_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_6_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_6_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_6_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_6_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_6_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_xVelocity_D_7_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('xVelocity_D_7_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_xVelocity_D_7_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_1_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_1_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_1_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_1_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_1_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_1_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_1_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_1_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_1_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_1_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_1_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_1_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_1_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_1_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_1_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_2_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_2_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_2_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_2_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_2_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_2_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_2_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_2_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_2_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_2_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_2_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_2_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_2_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_2_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_2_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_3_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_3_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_3_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_3_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_3_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_3_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_3_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_3_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_3_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_3_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_3_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_3_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_3_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_3_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_3_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_4_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_4_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_4_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_4_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_4_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_4_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_4_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_4_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_4_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_4_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_4_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_4_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_5_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_5_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_5_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_5_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_5_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_5_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_5_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_5_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_5_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_6_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_6_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_6_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_6_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_6_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_6_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_yVelocity_D_7_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('yVelocity_D_7_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_yVelocity_D_7_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_1_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_1_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_1_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_1_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_1_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_1_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_1_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_1_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_1_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_1_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_1_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_1_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_1_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_1_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_1_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_2_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_2_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_2_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_2_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_2_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_2_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_2_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_2_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_2_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_2_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_2_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_2_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_2_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_2_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_2_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_3_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_3_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_3_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_3_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_3_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_3_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_3_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_3_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_3_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_3_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_3_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_3_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_3_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_3_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_3_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_4_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_4_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_4_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_4_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_4_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_4_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_4_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_4_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_4_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_4_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_4_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_4_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_5_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_5_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_5_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_5_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_5_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_5_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_5_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_5_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_5_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_6_6(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_6_6',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_6_6( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_6_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_6_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_6_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_zVelocity_D_7_7(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('zVelocity_D_7_7',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_zVelocity_D_7_7( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg_D_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg_D_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg_D_1_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg_D_1_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg_D_1_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg_D_2_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg_D_2_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg_D_2_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_norm_reg_D_3_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('norm_reg_D_3_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_norm_reg_D_3_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_1_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_1_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_1_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_1_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_1_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_1_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_2_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_2_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_2_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_2_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_2_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_2_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_3_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_3_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_3_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_3_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_3_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_3_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_ray_D_4_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('ray_D_4_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_ray_D_4_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_1_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_1_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_1_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_1_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_1_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_1_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_1_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_1_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_1_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_2_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_2_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_2_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_2_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_2_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_2_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_2_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_2_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_2_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_3_3(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_3_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_3_3( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_3_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_3_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_3_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_3_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_3_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_3_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_4_4(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_4_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_4_4( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_4_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_4_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_4_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vel_D_5_5(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vel_D_5_5',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vel_D_5_5( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vc(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vc',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vc( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vc_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vc_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vc_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_vc_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('vc_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_vc_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_acceleration_r(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('acceleration_r',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_acceleration_r( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_acceleration_r_D_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('acceleration_r_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_acceleration_r_D_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_acceleration_r_D_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('acceleration_r_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_acceleration_r_D_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_acceleration_r_D_1_1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('acceleration_r_D_1_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_acceleration_r_D_1_1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_acceleration_r_D_1_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('acceleration_r_D_1_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_acceleration_r_D_1_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_acceleration_r_D_2_2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('acceleration_r_D_2_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_acceleration_r_D_2_2( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_X_begin(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('X_begin',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_X_begin( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_X_begin_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('X_begin_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_X_begin_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_X_begin_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('X_begin_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_X_begin_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Y_begin(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Y_begin',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Y_begin( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Y_begin_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Y_begin_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Y_begin_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Y_begin_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Y_begin_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Y_begin_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Z_begin(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Z_begin',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Z_begin( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Z_begin_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Z_begin_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Z_begin_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Z_begin_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Z_begin_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Z_begin_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VX_begin(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VX_begin',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VX_begin( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VX_begin_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VX_begin_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VX_begin_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VX_begin_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VX_begin_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VX_begin_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VY_begin(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VY_begin',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VY_begin( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VY_begin_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VY_begin_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VY_begin_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VY_begin_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VY_begin_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VY_begin_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VZ_begin(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VZ_begin',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VZ_begin( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VZ_begin_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VZ_begin_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VZ_begin_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VZ_begin_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VZ_begin_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VZ_begin_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_X_end(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('X_end',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_X_end( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_X_end_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('X_end_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_X_end_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_X_end_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('X_end_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_X_end_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Y_end(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Y_end',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Y_end( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Y_end_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Y_end_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Y_end_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Y_end_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Y_end_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Y_end_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Z_end(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Z_end',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Z_end( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Z_end_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Z_end_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Z_end_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Z_end_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Z_end_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_Z_end_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VX_end(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VX_end',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VX_end( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VX_end_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VX_end_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VX_end_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VX_end_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VX_end_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VX_end_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VY_end(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VY_end',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VY_end( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VY_end_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VY_end_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VY_end_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VY_end_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VY_end_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VY_end_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VZ_end(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VZ_end',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VZ_end( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VZ_end_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VZ_end_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VZ_end_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_VZ_end_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('VZ_end_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_VZ_end_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_p_guess(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('p_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_p_guess( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_f_guess(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('f_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_f_guess( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_g_guess(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('g_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_g_guess( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_h_guess(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('h_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_h_guess( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_k_guess(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('k_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_k_guess( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_L_guess(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('L_guess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_L_guess( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_guess_setup(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('guess_setup',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_guess_setup( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3280,6 +13547,321 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"q",do_q},
   {"nodes",do_nodes},
   {"node_to_segment",do_node_to_segment},
+  {"cont",do_cont},
+  {"xPosition",do_xPosition},
+  {"xPosition_D_1",do_xPosition_D_1},
+  {"xPosition_D_2",do_xPosition_D_2},
+  {"xPosition_D_3",do_xPosition_D_3},
+  {"xPosition_D_4",do_xPosition_D_4},
+  {"xPosition_D_5",do_xPosition_D_5},
+  {"xPosition_D_6",do_xPosition_D_6},
+  {"xPosition_D_7",do_xPosition_D_7},
+  {"xPosition_D_1_1",do_xPosition_D_1_1},
+  {"xPosition_D_1_2",do_xPosition_D_1_2},
+  {"xPosition_D_1_3",do_xPosition_D_1_3},
+  {"xPosition_D_1_4",do_xPosition_D_1_4},
+  {"xPosition_D_1_5",do_xPosition_D_1_5},
+  {"xPosition_D_1_6",do_xPosition_D_1_6},
+  {"xPosition_D_1_7",do_xPosition_D_1_7},
+  {"xPosition_D_2_2",do_xPosition_D_2_2},
+  {"xPosition_D_2_3",do_xPosition_D_2_3},
+  {"xPosition_D_2_4",do_xPosition_D_2_4},
+  {"xPosition_D_2_5",do_xPosition_D_2_5},
+  {"xPosition_D_2_6",do_xPosition_D_2_6},
+  {"xPosition_D_2_7",do_xPosition_D_2_7},
+  {"xPosition_D_3_3",do_xPosition_D_3_3},
+  {"xPosition_D_3_4",do_xPosition_D_3_4},
+  {"xPosition_D_3_5",do_xPosition_D_3_5},
+  {"xPosition_D_3_6",do_xPosition_D_3_6},
+  {"xPosition_D_3_7",do_xPosition_D_3_7},
+  {"xPosition_D_4_4",do_xPosition_D_4_4},
+  {"xPosition_D_4_5",do_xPosition_D_4_5},
+  {"xPosition_D_4_6",do_xPosition_D_4_6},
+  {"xPosition_D_4_7",do_xPosition_D_4_7},
+  {"xPosition_D_5_5",do_xPosition_D_5_5},
+  {"xPosition_D_5_6",do_xPosition_D_5_6},
+  {"xPosition_D_5_7",do_xPosition_D_5_7},
+  {"xPosition_D_6_6",do_xPosition_D_6_6},
+  {"xPosition_D_6_7",do_xPosition_D_6_7},
+  {"xPosition_D_7_7",do_xPosition_D_7_7},
+  {"yPosition",do_yPosition},
+  {"yPosition_D_1",do_yPosition_D_1},
+  {"yPosition_D_2",do_yPosition_D_2},
+  {"yPosition_D_3",do_yPosition_D_3},
+  {"yPosition_D_4",do_yPosition_D_4},
+  {"yPosition_D_5",do_yPosition_D_5},
+  {"yPosition_D_6",do_yPosition_D_6},
+  {"yPosition_D_7",do_yPosition_D_7},
+  {"yPosition_D_1_1",do_yPosition_D_1_1},
+  {"yPosition_D_1_2",do_yPosition_D_1_2},
+  {"yPosition_D_1_3",do_yPosition_D_1_3},
+  {"yPosition_D_1_4",do_yPosition_D_1_4},
+  {"yPosition_D_1_5",do_yPosition_D_1_5},
+  {"yPosition_D_1_6",do_yPosition_D_1_6},
+  {"yPosition_D_1_7",do_yPosition_D_1_7},
+  {"yPosition_D_2_2",do_yPosition_D_2_2},
+  {"yPosition_D_2_3",do_yPosition_D_2_3},
+  {"yPosition_D_2_4",do_yPosition_D_2_4},
+  {"yPosition_D_2_5",do_yPosition_D_2_5},
+  {"yPosition_D_2_6",do_yPosition_D_2_6},
+  {"yPosition_D_2_7",do_yPosition_D_2_7},
+  {"yPosition_D_3_3",do_yPosition_D_3_3},
+  {"yPosition_D_3_4",do_yPosition_D_3_4},
+  {"yPosition_D_3_5",do_yPosition_D_3_5},
+  {"yPosition_D_3_6",do_yPosition_D_3_6},
+  {"yPosition_D_3_7",do_yPosition_D_3_7},
+  {"yPosition_D_4_4",do_yPosition_D_4_4},
+  {"yPosition_D_4_5",do_yPosition_D_4_5},
+  {"yPosition_D_4_6",do_yPosition_D_4_6},
+  {"yPosition_D_4_7",do_yPosition_D_4_7},
+  {"yPosition_D_5_5",do_yPosition_D_5_5},
+  {"yPosition_D_5_6",do_yPosition_D_5_6},
+  {"yPosition_D_5_7",do_yPosition_D_5_7},
+  {"yPosition_D_6_6",do_yPosition_D_6_6},
+  {"yPosition_D_6_7",do_yPosition_D_6_7},
+  {"yPosition_D_7_7",do_yPosition_D_7_7},
+  {"zPosition",do_zPosition},
+  {"zPosition_D_1",do_zPosition_D_1},
+  {"zPosition_D_2",do_zPosition_D_2},
+  {"zPosition_D_3",do_zPosition_D_3},
+  {"zPosition_D_4",do_zPosition_D_4},
+  {"zPosition_D_5",do_zPosition_D_5},
+  {"zPosition_D_6",do_zPosition_D_6},
+  {"zPosition_D_7",do_zPosition_D_7},
+  {"zPosition_D_1_1",do_zPosition_D_1_1},
+  {"zPosition_D_1_2",do_zPosition_D_1_2},
+  {"zPosition_D_1_3",do_zPosition_D_1_3},
+  {"zPosition_D_1_4",do_zPosition_D_1_4},
+  {"zPosition_D_1_5",do_zPosition_D_1_5},
+  {"zPosition_D_1_6",do_zPosition_D_1_6},
+  {"zPosition_D_1_7",do_zPosition_D_1_7},
+  {"zPosition_D_2_2",do_zPosition_D_2_2},
+  {"zPosition_D_2_3",do_zPosition_D_2_3},
+  {"zPosition_D_2_4",do_zPosition_D_2_4},
+  {"zPosition_D_2_5",do_zPosition_D_2_5},
+  {"zPosition_D_2_6",do_zPosition_D_2_6},
+  {"zPosition_D_2_7",do_zPosition_D_2_7},
+  {"zPosition_D_3_3",do_zPosition_D_3_3},
+  {"zPosition_D_3_4",do_zPosition_D_3_4},
+  {"zPosition_D_3_5",do_zPosition_D_3_5},
+  {"zPosition_D_3_6",do_zPosition_D_3_6},
+  {"zPosition_D_3_7",do_zPosition_D_3_7},
+  {"zPosition_D_4_4",do_zPosition_D_4_4},
+  {"zPosition_D_4_5",do_zPosition_D_4_5},
+  {"zPosition_D_4_6",do_zPosition_D_4_6},
+  {"zPosition_D_4_7",do_zPosition_D_4_7},
+  {"zPosition_D_5_5",do_zPosition_D_5_5},
+  {"zPosition_D_5_6",do_zPosition_D_5_6},
+  {"zPosition_D_5_7",do_zPosition_D_5_7},
+  {"zPosition_D_6_6",do_zPosition_D_6_6},
+  {"zPosition_D_6_7",do_zPosition_D_6_7},
+  {"zPosition_D_7_7",do_zPosition_D_7_7},
+  {"xVelocity",do_xVelocity},
+  {"xVelocity_D_1",do_xVelocity_D_1},
+  {"xVelocity_D_2",do_xVelocity_D_2},
+  {"xVelocity_D_3",do_xVelocity_D_3},
+  {"xVelocity_D_4",do_xVelocity_D_4},
+  {"xVelocity_D_5",do_xVelocity_D_5},
+  {"xVelocity_D_6",do_xVelocity_D_6},
+  {"xVelocity_D_7",do_xVelocity_D_7},
+  {"xVelocity_D_1_1",do_xVelocity_D_1_1},
+  {"xVelocity_D_1_2",do_xVelocity_D_1_2},
+  {"xVelocity_D_1_3",do_xVelocity_D_1_3},
+  {"xVelocity_D_1_4",do_xVelocity_D_1_4},
+  {"xVelocity_D_1_5",do_xVelocity_D_1_5},
+  {"xVelocity_D_1_6",do_xVelocity_D_1_6},
+  {"xVelocity_D_1_7",do_xVelocity_D_1_7},
+  {"xVelocity_D_2_2",do_xVelocity_D_2_2},
+  {"xVelocity_D_2_3",do_xVelocity_D_2_3},
+  {"xVelocity_D_2_4",do_xVelocity_D_2_4},
+  {"xVelocity_D_2_5",do_xVelocity_D_2_5},
+  {"xVelocity_D_2_6",do_xVelocity_D_2_6},
+  {"xVelocity_D_2_7",do_xVelocity_D_2_7},
+  {"xVelocity_D_3_3",do_xVelocity_D_3_3},
+  {"xVelocity_D_3_4",do_xVelocity_D_3_4},
+  {"xVelocity_D_3_5",do_xVelocity_D_3_5},
+  {"xVelocity_D_3_6",do_xVelocity_D_3_6},
+  {"xVelocity_D_3_7",do_xVelocity_D_3_7},
+  {"xVelocity_D_4_4",do_xVelocity_D_4_4},
+  {"xVelocity_D_4_5",do_xVelocity_D_4_5},
+  {"xVelocity_D_4_6",do_xVelocity_D_4_6},
+  {"xVelocity_D_4_7",do_xVelocity_D_4_7},
+  {"xVelocity_D_5_5",do_xVelocity_D_5_5},
+  {"xVelocity_D_5_6",do_xVelocity_D_5_6},
+  {"xVelocity_D_5_7",do_xVelocity_D_5_7},
+  {"xVelocity_D_6_6",do_xVelocity_D_6_6},
+  {"xVelocity_D_6_7",do_xVelocity_D_6_7},
+  {"xVelocity_D_7_7",do_xVelocity_D_7_7},
+  {"yVelocity",do_yVelocity},
+  {"yVelocity_D_1",do_yVelocity_D_1},
+  {"yVelocity_D_2",do_yVelocity_D_2},
+  {"yVelocity_D_3",do_yVelocity_D_3},
+  {"yVelocity_D_4",do_yVelocity_D_4},
+  {"yVelocity_D_5",do_yVelocity_D_5},
+  {"yVelocity_D_6",do_yVelocity_D_6},
+  {"yVelocity_D_7",do_yVelocity_D_7},
+  {"yVelocity_D_1_1",do_yVelocity_D_1_1},
+  {"yVelocity_D_1_2",do_yVelocity_D_1_2},
+  {"yVelocity_D_1_3",do_yVelocity_D_1_3},
+  {"yVelocity_D_1_4",do_yVelocity_D_1_4},
+  {"yVelocity_D_1_5",do_yVelocity_D_1_5},
+  {"yVelocity_D_1_6",do_yVelocity_D_1_6},
+  {"yVelocity_D_1_7",do_yVelocity_D_1_7},
+  {"yVelocity_D_2_2",do_yVelocity_D_2_2},
+  {"yVelocity_D_2_3",do_yVelocity_D_2_3},
+  {"yVelocity_D_2_4",do_yVelocity_D_2_4},
+  {"yVelocity_D_2_5",do_yVelocity_D_2_5},
+  {"yVelocity_D_2_6",do_yVelocity_D_2_6},
+  {"yVelocity_D_2_7",do_yVelocity_D_2_7},
+  {"yVelocity_D_3_3",do_yVelocity_D_3_3},
+  {"yVelocity_D_3_4",do_yVelocity_D_3_4},
+  {"yVelocity_D_3_5",do_yVelocity_D_3_5},
+  {"yVelocity_D_3_6",do_yVelocity_D_3_6},
+  {"yVelocity_D_3_7",do_yVelocity_D_3_7},
+  {"yVelocity_D_4_4",do_yVelocity_D_4_4},
+  {"yVelocity_D_4_5",do_yVelocity_D_4_5},
+  {"yVelocity_D_4_6",do_yVelocity_D_4_6},
+  {"yVelocity_D_4_7",do_yVelocity_D_4_7},
+  {"yVelocity_D_5_5",do_yVelocity_D_5_5},
+  {"yVelocity_D_5_6",do_yVelocity_D_5_6},
+  {"yVelocity_D_5_7",do_yVelocity_D_5_7},
+  {"yVelocity_D_6_6",do_yVelocity_D_6_6},
+  {"yVelocity_D_6_7",do_yVelocity_D_6_7},
+  {"yVelocity_D_7_7",do_yVelocity_D_7_7},
+  {"zVelocity",do_zVelocity},
+  {"zVelocity_D_1",do_zVelocity_D_1},
+  {"zVelocity_D_2",do_zVelocity_D_2},
+  {"zVelocity_D_3",do_zVelocity_D_3},
+  {"zVelocity_D_4",do_zVelocity_D_4},
+  {"zVelocity_D_5",do_zVelocity_D_5},
+  {"zVelocity_D_6",do_zVelocity_D_6},
+  {"zVelocity_D_7",do_zVelocity_D_7},
+  {"zVelocity_D_1_1",do_zVelocity_D_1_1},
+  {"zVelocity_D_1_2",do_zVelocity_D_1_2},
+  {"zVelocity_D_1_3",do_zVelocity_D_1_3},
+  {"zVelocity_D_1_4",do_zVelocity_D_1_4},
+  {"zVelocity_D_1_5",do_zVelocity_D_1_5},
+  {"zVelocity_D_1_6",do_zVelocity_D_1_6},
+  {"zVelocity_D_1_7",do_zVelocity_D_1_7},
+  {"zVelocity_D_2_2",do_zVelocity_D_2_2},
+  {"zVelocity_D_2_3",do_zVelocity_D_2_3},
+  {"zVelocity_D_2_4",do_zVelocity_D_2_4},
+  {"zVelocity_D_2_5",do_zVelocity_D_2_5},
+  {"zVelocity_D_2_6",do_zVelocity_D_2_6},
+  {"zVelocity_D_2_7",do_zVelocity_D_2_7},
+  {"zVelocity_D_3_3",do_zVelocity_D_3_3},
+  {"zVelocity_D_3_4",do_zVelocity_D_3_4},
+  {"zVelocity_D_3_5",do_zVelocity_D_3_5},
+  {"zVelocity_D_3_6",do_zVelocity_D_3_6},
+  {"zVelocity_D_3_7",do_zVelocity_D_3_7},
+  {"zVelocity_D_4_4",do_zVelocity_D_4_4},
+  {"zVelocity_D_4_5",do_zVelocity_D_4_5},
+  {"zVelocity_D_4_6",do_zVelocity_D_4_6},
+  {"zVelocity_D_4_7",do_zVelocity_D_4_7},
+  {"zVelocity_D_5_5",do_zVelocity_D_5_5},
+  {"zVelocity_D_5_6",do_zVelocity_D_5_6},
+  {"zVelocity_D_5_7",do_zVelocity_D_5_7},
+  {"zVelocity_D_6_6",do_zVelocity_D_6_6},
+  {"zVelocity_D_6_7",do_zVelocity_D_6_7},
+  {"zVelocity_D_7_7",do_zVelocity_D_7_7},
+  {"norm_reg",do_norm_reg},
+  {"norm_reg_D_1",do_norm_reg_D_1},
+  {"norm_reg_D_2",do_norm_reg_D_2},
+  {"norm_reg_D_3",do_norm_reg_D_3},
+  {"norm_reg_D_1_1",do_norm_reg_D_1_1},
+  {"norm_reg_D_1_2",do_norm_reg_D_1_2},
+  {"norm_reg_D_1_3",do_norm_reg_D_1_3},
+  {"norm_reg_D_2_2",do_norm_reg_D_2_2},
+  {"norm_reg_D_2_3",do_norm_reg_D_2_3},
+  {"norm_reg_D_3_3",do_norm_reg_D_3_3},
+  {"ray",do_ray},
+  {"ray_D_1",do_ray_D_1},
+  {"ray_D_2",do_ray_D_2},
+  {"ray_D_3",do_ray_D_3},
+  {"ray_D_4",do_ray_D_4},
+  {"ray_D_1_1",do_ray_D_1_1},
+  {"ray_D_1_2",do_ray_D_1_2},
+  {"ray_D_1_3",do_ray_D_1_3},
+  {"ray_D_1_4",do_ray_D_1_4},
+  {"ray_D_2_2",do_ray_D_2_2},
+  {"ray_D_2_3",do_ray_D_2_3},
+  {"ray_D_2_4",do_ray_D_2_4},
+  {"ray_D_3_3",do_ray_D_3_3},
+  {"ray_D_3_4",do_ray_D_3_4},
+  {"ray_D_4_4",do_ray_D_4_4},
+  {"vel",do_vel},
+  {"vel_D_1",do_vel_D_1},
+  {"vel_D_2",do_vel_D_2},
+  {"vel_D_3",do_vel_D_3},
+  {"vel_D_4",do_vel_D_4},
+  {"vel_D_5",do_vel_D_5},
+  {"vel_D_1_1",do_vel_D_1_1},
+  {"vel_D_1_2",do_vel_D_1_2},
+  {"vel_D_1_3",do_vel_D_1_3},
+  {"vel_D_1_4",do_vel_D_1_4},
+  {"vel_D_1_5",do_vel_D_1_5},
+  {"vel_D_2_2",do_vel_D_2_2},
+  {"vel_D_2_3",do_vel_D_2_3},
+  {"vel_D_2_4",do_vel_D_2_4},
+  {"vel_D_2_5",do_vel_D_2_5},
+  {"vel_D_3_3",do_vel_D_3_3},
+  {"vel_D_3_4",do_vel_D_3_4},
+  {"vel_D_3_5",do_vel_D_3_5},
+  {"vel_D_4_4",do_vel_D_4_4},
+  {"vel_D_4_5",do_vel_D_4_5},
+  {"vel_D_5_5",do_vel_D_5_5},
+  {"vc",do_vc},
+  {"vc_D",do_vc_D},
+  {"vc_DD",do_vc_DD},
+  {"acceleration_r",do_acceleration_r},
+  {"acceleration_r_D_1",do_acceleration_r_D_1},
+  {"acceleration_r_D_2",do_acceleration_r_D_2},
+  {"acceleration_r_D_1_1",do_acceleration_r_D_1_1},
+  {"acceleration_r_D_1_2",do_acceleration_r_D_1_2},
+  {"acceleration_r_D_2_2",do_acceleration_r_D_2_2},
+  {"X_begin",do_X_begin},
+  {"X_begin_D",do_X_begin_D},
+  {"X_begin_DD",do_X_begin_DD},
+  {"Y_begin",do_Y_begin},
+  {"Y_begin_D",do_Y_begin_D},
+  {"Y_begin_DD",do_Y_begin_DD},
+  {"Z_begin",do_Z_begin},
+  {"Z_begin_D",do_Z_begin_D},
+  {"Z_begin_DD",do_Z_begin_DD},
+  {"VX_begin",do_VX_begin},
+  {"VX_begin_D",do_VX_begin_D},
+  {"VX_begin_DD",do_VX_begin_DD},
+  {"VY_begin",do_VY_begin},
+  {"VY_begin_D",do_VY_begin_D},
+  {"VY_begin_DD",do_VY_begin_DD},
+  {"VZ_begin",do_VZ_begin},
+  {"VZ_begin_D",do_VZ_begin_D},
+  {"VZ_begin_DD",do_VZ_begin_DD},
+  {"X_end",do_X_end},
+  {"X_end_D",do_X_end_D},
+  {"X_end_DD",do_X_end_DD},
+  {"Y_end",do_Y_end},
+  {"Y_end_D",do_Y_end_D},
+  {"Y_end_DD",do_Y_end_DD},
+  {"Z_end",do_Z_end},
+  {"Z_end_D",do_Z_end_D},
+  {"Z_end_DD",do_Z_end_DD},
+  {"VX_end",do_VX_end},
+  {"VX_end_D",do_VX_end_D},
+  {"VX_end_DD",do_VX_end_DD},
+  {"VY_end",do_VY_end},
+  {"VY_end_D",do_VY_end_D},
+  {"VY_end_DD",do_VY_end_DD},
+  {"VZ_end",do_VZ_end},
+  {"VZ_end_D",do_VZ_end_D},
+  {"VZ_end_DD",do_VZ_end_DD},
+  {"p_guess",do_p_guess},
+  {"f_guess",do_f_guess},
+  {"g_guess",do_g_guess},
+  {"h_guess",do_h_guess},
+  {"k_guess",do_k_guess},
+  {"L_guess",do_L_guess},
+  {"guess_setup",do_guess_setup},
   {"new",do_new},
   {"infoLevel",do_infoLevel},
   {"N_threads",do_N_threads},

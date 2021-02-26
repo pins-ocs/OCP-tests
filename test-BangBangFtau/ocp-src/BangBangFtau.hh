@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau.hh                                                |
  |                                                                       |
- |  version: 1.0   date 23/2/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define BANGBANGFTAU_API_DLL
 #endif
 
-#define OCP_VIRTUAL          override
-#define INDIRECT_OCP_VIRTUAL override
+#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
+#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
 
 namespace BangBangFtauDefine {
 
@@ -168,11 +168,11 @@ namespace BangBangFtauDefine {
     );
 
     BANGBANGFTAU_API_DLL virtual
-    ~BangBangFtau() override;
+    ~BangBangFtau() MECHATRONIX_OVERRIDE;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     BANGBANGFTAU_API_DLL virtual
-    char const * model_name() const override
+    char const * model_name() const MECHATRONIX_OVERRIDE
     { return "BangBangFtau"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -246,12 +246,12 @@ namespace BangBangFtauDefine {
       integer   phase,
       real_type old_s,
       real_type s
-    ) override;
+    ) MECHATRONIX_OVERRIDE;
 
     // save model parameters
     BANGBANGFTAU_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const override;
+    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
 
   };
 }

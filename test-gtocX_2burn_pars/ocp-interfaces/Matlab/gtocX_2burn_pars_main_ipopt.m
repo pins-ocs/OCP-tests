@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: gtocX_2burn_pars_fsolve_main.m                                 %
 %                                                                       %
-%  version: 1.0   date 14/12/2020                                       %
+%  version: 1.0   date 26/2/2021                                        %
 %                                                                       %
-%  Copyright (C) 2020                                                   %
+%  Copyright (C) 2021                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -36,7 +36,7 @@ ocp = gtocX_2burn_pars( 'gtocX_2burn_pars', infolevel );
 % -----------------------------------------------------------------------------
 ocp.setup('../../data/gtocX_2burn_pars_Data.rb');
 ocp.set_guess(); % use default guess
-%ocp.updateContinuation(0,1);
+%ocp.updateContinuation(0,0,1);
 
 solver = nlsys_solver_ipopt(ocp);
 x = solver.solve();

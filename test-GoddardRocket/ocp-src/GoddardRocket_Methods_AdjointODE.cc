@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -156,7 +156,7 @@ namespace GoddardRocketDefine {
     real_type t7   = X__[2];
     real_type t8   = 1.0 / t7;
     real_type t10  = gg_DD(t4);
-    result__[ 0   ] = (-t8 * t6 - t10) * t3;
+    result__[ 0   ] = (-t6 * t8 - t10) * t3;
     real_type t12  = DD_D_1_2(t4, t5);
     result__[ 1   ] = -t8 * t12 * t3;
     real_type t15  = DD_D_1(t4, t5);
@@ -166,7 +166,7 @@ namespace GoddardRocketDefine {
     result__[ 3   ] = result__[1];
     real_type t19  = ALIAS_vPositive_DD(t5);
     real_type t20  = DD_D_2_2(t4, t5);
-    result__[ 4   ] = -t8 * t20 * t3 + t19;
+    result__[ 4   ] = -t20 * t3 * t8 + t19;
     real_type t23  = DD_D_2(t4, t5);
     result__[ 5   ] = t17 * t23 * t3;
     result__[ 6   ] = result__[2];

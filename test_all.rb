@@ -29,6 +29,8 @@ Dir.entries(ocps_path).select {|f|
   end
 }
 
+tests_dirs.sort!
+
 #files = Dir.entries(ocps_path)
 
 tests_dirs.each_with_index { |f,i|

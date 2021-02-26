@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,28 +20,31 @@
 -- User Header
 
 -- Auxiliary values
+tol_v     = 0.01
+epsi_T    = 0.01
 tol_TS    = 0.01
-epsi_TS   = 0.01
-epsi_mass = 0.01
 m_i       = 1
-tol_mass  = 0.01
+epsi_TS   = 0.01
 h_i       = 1
+epsi_mass = 0.01
+mc        = 0.6
 tol_T     = 0.01
 epsi_v    = 0.01
-mc        = 0.6
-m_f       = mc*m_i
 vc        = 620
-epsi_T    = 0.01
-tol_v     = 0.01
+m_f       = mc*m_i
 g0        = 1
 Dc        = 0.5*vc*m_i/g0
-Tmax      = 3.5*g0*m_i
 c         = 0.5*(g0*h_i)**(1/2.0)
+Tmax      = 3.5*g0*m_i
+tol_mass  = 0.01
 
 content = {
 
   -- activate run time debug
   data.Debug = false,
+
+  -- Enable doctor
+  Doctor = false,
 
   -- Level of message
   InfoLevel = 4,
@@ -52,12 +55,6 @@ content = {
   F_threaded  = true,
   JF_threaded = true,
   LU_threaded = true,
-
-  -- Enable doctor
-  Doctor = false,
-
-  -- Activate dynamic debugging
-  Debug = false,
 
   -- Enable check jacobian
   JacobianCheck            = false,
@@ -74,7 +71,7 @@ content = {
   ControlSolver = {
     -- ==============================================================
     -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
-    -- "LM" = Levenberg–Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
+    -- "LM" = Levenberg-Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
     solver = "QN",
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",
@@ -218,8 +215,8 @@ content = {
     segments = {
       
       {
-        n      = 1000,
         length = 1,
+        n      = 1000,
       },
     },
   },

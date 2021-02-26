@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau.cc                                                |
  |                                                                       |
- |  version: 1.0   date 23/2/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -394,7 +394,6 @@ namespace BangBangFtauDefine {
 
     m_console->message("\nUser mapped functions\n",msg_level);
     mstr.str("");
-    mstr << "User function ``clip'' mapped with: ";
     clip.info(mstr);
     m_console->message(mstr.str(),msg_level);
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods1.cc                                |
  |                                                                       |
- |  version: 1.0   date 21/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -185,118 +185,6 @@ namespace PointMassCarModel_3Define {
   }
 
   /*\
-   |  _   _               ___             _   _
-   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-  \*/
-  // user defined functions which has a body defined in MAPLE
-  real_type
-  PointMassCarModel_3::zeta__dot( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    return 1.0 / (-n__XO * Kappa__XO + 1) * t1 * V__XO;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_1( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    return 1.0 / (-n__XO * Kappa__XO + 1) * t1;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_1_1( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    return 0;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_1_2( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = sin(alpha__XO);
-    return 1.0 / (n__XO * Kappa__XO - 1) * t1;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_1_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    real_type t5   = pow(n__XO * Kappa__XO - 1, 2);
-    return 1.0 / t5 * Kappa__XO * t1;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_1_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    real_type t5   = pow(n__XO * Kappa__XO - 1, 2);
-    return 1.0 / t5 * n__XO * t1;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_2( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = sin(alpha__XO);
-    return 1.0 / (n__XO * Kappa__XO - 1) * t1 * V__XO;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_2_2( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    return 1.0 / (n__XO * Kappa__XO - 1) * t1 * V__XO;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_2_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = sin(alpha__XO);
-    real_type t5   = pow(n__XO * Kappa__XO - 1, 2);
-    return -Kappa__XO / t5 * t1 * V__XO;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_2_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = sin(alpha__XO);
-    real_type t5   = pow(n__XO * Kappa__XO - 1, 2);
-    return -n__XO / t5 * t1 * V__XO;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    real_type t5   = pow(n__XO * Kappa__XO - 1, 2);
-    return Kappa__XO / t5 * t1 * V__XO;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_3_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    real_type t3   = Kappa__XO * Kappa__XO;
-    real_type t5   = n__XO * Kappa__XO - 1;
-    real_type t6   = t5 * t5;
-    return -2 / t6 / t5 * t3 * t1 * V__XO;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_3_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    real_type t3   = n__XO * Kappa__XO;
-    real_type t5   = t3 - 1;
-    real_type t6   = t5 * t5;
-    return -1.0 / t6 / t5 * (t3 + 1) * t1 * V__XO;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    real_type t5   = pow(n__XO * Kappa__XO - 1, 2);
-    return 1.0 / t5 * n__XO * t1 * V__XO;
-  }
-
-  real_type
-  PointMassCarModel_3::zeta__dot_D_4_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
-    real_type t3   = n__XO * n__XO;
-    real_type t5   = n__XO * Kappa__XO - 1;
-    real_type t6   = t5 * t5;
-    return -2 / t6 / t5 * t3 * t1 * V__XO;
-  }
-
-
-  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -472,95 +360,199 @@ namespace PointMassCarModel_3Define {
   }
 
   /*\
-   |    ___
-   |   / __|_  _ ___ ______
-   |  | (_ | || / -_|_-<_-<
-   |   \___|\_,_\___/__/__/
+   |   ____                                  _   _     _       _
+   |  / ___|  ___  __ _ _ __ ___   ___ _ __ | |_| |   (_)_ __ | | __
+   |  \___ \ / _ \/ _` | '_ ` _ \ / _ \ '_ \| __| |   | | '_ \| |/ /
+   |   ___) |  __/ (_| | | | | | |  __/ | | | |_| |___| | | | |   <
+   |  |____/ \___|\__, |_| |_| |_|\___|_| |_|\__|_____|_|_| |_|_|\_\
+   |              |___/
   \*/
 
   integer
-  PointMassCarModel_3::u_guess_numEqns() const
-  { return 2; }
+  PointMassCarModel_3::segmentLink_numEqns() const
+  { return 0; }
 
   void
-  PointMassCarModel_3::u_guess_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  PointMassCarModel_3::segmentLink_eval(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            segmentLink[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-      Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_v__fx    ] = 0;
-    UGUESS__[ iU_v__Omega ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  PointMassCarModel_3::DsegmentLinkDxp_numRows() const
+  { return 0; }
+
+  integer
+  PointMassCarModel_3::DsegmentLinkDxp_numCols() const
+  { return 0; }
+
+  integer
+  PointMassCarModel_3::DsegmentLinkDxp_nnz() const
+  { return 0; }
+
   void
-  PointMassCarModel_3::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  PointMassCarModel_3::DsegmentLinkDxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[4];
-    real_type X__[7];
-    real_type L__[7];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q      = Q__;
-    NODE__.x      = X__;
-    NODE__.lambda = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    Q__[1] = (LEFT__.q[1]+RIGHT__.q[1])/2;
-    Q__[2] = (LEFT__.q[2]+RIGHT__.q[2])/2;
-    Q__[3] = (LEFT__.q[3]+RIGHT__.q[3])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
-    X__[5] = (LEFT__.x[5]+RIGHT__.x[5])/2;
-    X__[6] = (LEFT__.x[6]+RIGHT__.x[6])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    L__[5] = (LEFT__.lambda[5]+RIGHT__.lambda[5])/2;
-    L__[6] = (LEFT__.lambda[6]+RIGHT__.lambda[6])/2;
-    this->u_guess_eval( NODE__, P__, UGUESS__ );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  PointMassCarModel_3::DsegmentLinkDxp_sparse(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            DsegmentLinkDxp[]
+  ) const {
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
-   |    ___ _           _
-   |   / __| |_  ___ __| |__
-   |  | (__| ' \/ -_) _| / /
-   |   \___|_||_\___\__|_\_\
+   |     _
+   |  _ | |_  _ _ __  _ __
+   | | || | || | '  \| '_ \
+   |  \__/ \_,_|_|_|_| .__/
+   |                 |_|
   \*/
 
-  bool
-  PointMassCarModel_3::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+  integer
+  PointMassCarModel_3::jump_numEqns() const
+  { return 14; }
+
+  void
+  PointMassCarModel_3::jump_eval(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    ok = ok && v__OmegaControl.check_range(U__[1], -1, 1);
-    ok = ok && v__fxControl.check_range(U__[0], -1, 1);
-    return ok;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = XL__[0] - QL__[0];
+    result__[ 1   ] = XR__[1] - XL__[1];
+    result__[ 2   ] = XR__[2] - XL__[2];
+    result__[ 3   ] = XR__[3] - XL__[3];
+    result__[ 4   ] = XR__[4] - XL__[4];
+    result__[ 5   ] = XR__[5] - XL__[5];
+    result__[ 6   ] = LL__[6];
+    result__[ 7   ] = XR__[0] - QR__[0];
+    result__[ 8   ] = LR__[1] - LL__[1];
+    result__[ 9   ] = LR__[2] - LL__[2];
+    result__[ 10  ] = LR__[3] - LL__[3];
+    result__[ 11  ] = LR__[4] - LL__[4];
+    result__[ 12  ] = LR__[5] - LL__[5];
+    result__[ 13  ] = LR__[6];
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 14, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  PointMassCarModel_3::DjumpDxlp_numRows() const
+  { return 14; }
+
+  integer
+  PointMassCarModel_3::DjumpDxlp_numCols() const
+  { return 28; }
+
+  integer
+  PointMassCarModel_3::DjumpDxlp_nnz() const
+  { return 24; }
+
+  void
+  PointMassCarModel_3::DjumpDxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 15  ;
+    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 16  ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 3   ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 17  ;
+    iIndex[7 ] = 4   ; jIndex[7 ] = 4   ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 18  ;
+    iIndex[9 ] = 5   ; jIndex[9 ] = 5   ;
+    iIndex[10] = 5   ; jIndex[10] = 19  ;
+    iIndex[11] = 6   ; jIndex[11] = 13  ;
+    iIndex[12] = 7   ; jIndex[12] = 14  ;
+    iIndex[13] = 8   ; jIndex[13] = 8   ;
+    iIndex[14] = 8   ; jIndex[14] = 22  ;
+    iIndex[15] = 9   ; jIndex[15] = 9   ;
+    iIndex[16] = 9   ; jIndex[16] = 23  ;
+    iIndex[17] = 10  ; jIndex[17] = 10  ;
+    iIndex[18] = 10  ; jIndex[18] = 24  ;
+    iIndex[19] = 11  ; jIndex[19] = 11  ;
+    iIndex[20] = 11  ; jIndex[20] = 25  ;
+    iIndex[21] = 12  ; jIndex[21] = 12  ;
+    iIndex[22] = 12  ; jIndex[22] = 26  ;
+    iIndex[23] = 13  ; jIndex[23] = 27  ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  PointMassCarModel_3::DjumpDxlp_sparse(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 1;
+    result__[ 1   ] = -1;
+    result__[ 2   ] = 1;
+    result__[ 3   ] = -1;
+    result__[ 4   ] = 1;
+    result__[ 5   ] = -1;
+    result__[ 6   ] = 1;
+    result__[ 7   ] = -1;
+    result__[ 8   ] = 1;
+    result__[ 9   ] = -1;
+    result__[ 10  ] = 1;
+    result__[ 11  ] = 1;
+    result__[ 12  ] = 1;
+    result__[ 13  ] = -1;
+    result__[ 14  ] = 1;
+    result__[ 15  ] = -1;
+    result__[ 16  ] = 1;
+    result__[ 17  ] = -1;
+    result__[ 18  ] = 1;
+    result__[ 19  ] = -1;
+    result__[ 20  ] = 1;
+    result__[ 21  ] = -1;
+    result__[ 22  ] = 1;
+    result__[ 23  ] = 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 24, i_segment_left, i_segment_right );
   }
 
   /*\

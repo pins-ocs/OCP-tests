@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -115,6 +115,8 @@ namespace CrossroadDefine {
     iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   Crossroad::DgDxlp_sparse(
     NodeType2 const    & NODE__,
@@ -154,6 +156,8 @@ namespace CrossroadDefine {
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Crossroad::DgDu_sparse(
@@ -205,6 +209,8 @@ namespace CrossroadDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_jerk ] = 0;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Crossroad::u_eval_analytic(
@@ -264,6 +270,8 @@ namespace CrossroadDefine {
     DuDxlp(0, 7) = 0;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   Crossroad::DuDxlp_full_analytic(
     NodeType2 const          & LEFT__,
@@ -293,169 +301,6 @@ namespace CrossroadDefine {
     L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
     L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
-  }
-
-  /*\
-   |   ____                                  _   _     _       _
-   |  / ___|  ___  __ _ _ __ ___   ___ _ __ | |_| |   (_)_ __ | | __
-   |  \___ \ / _ \/ _` | '_ ` _ \ / _ \ '_ \| __| |   | | '_ \| |/ /
-   |   ___) |  __/ (_| | | | | | |  __/ | | | |_| |___| | | | |   <
-   |  |____/ \___|\__, |_| |_| |_|\___|_| |_|\__|_____|_|_| |_|_|\_\
-   |              |___/
-  \*/
-
-  integer
-  Crossroad::segmentLink_numEqns() const
-  { return 0; }
-
-  void
-  Crossroad::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
-  ) const {
-   UTILS_ERROR0("NON IMPLEMENTATA\n");
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Crossroad::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  Crossroad::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  Crossroad::DsegmentLinkDxp_nnz() const
-  { return 0; }
-
-  void
-  Crossroad::DsegmentLinkDxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-   UTILS_ERROR0("NON IMPLEMENTATA\n");
-  }
-
-  void
-  Crossroad::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
-  ) const {
-   UTILS_ERROR0("NON IMPLEMENTATA\n");
-  }
-
-  /*\
-   |     _
-   |  _ | |_  _ _ __  _ __
-   | | || | || | '  \| '_ \
-   |  \__/ \_,_|_|_|_| .__/
-   |                 |_|
-  \*/
-
-  integer
-  Crossroad::jump_numEqns() const
-  { return 8; }
-
-  void
-  Crossroad::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    real_type t3   = ModelPars[0] / 2;
-    result__[ 0   ] = XL__[0] - t3;
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = LL__[3];
-    result__[ 4   ] = XR__[0] - t3;
-    result__[ 5   ] = LR__[1] - LL__[1];
-    result__[ 6   ] = LR__[2] - LL__[2];
-    result__[ 7   ] = LR__[3];
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Crossroad::DjumpDxlp_numRows() const
-  { return 8; }
-
-  integer
-  Crossroad::DjumpDxlp_numCols() const
-  { return 16; }
-
-  integer
-  Crossroad::DjumpDxlp_nnz() const
-  { return 12; }
-
-  void
-  Crossroad::DjumpDxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 9   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 10  ;
-    iIndex[5 ] = 3   ; jIndex[5 ] = 7   ;
-    iIndex[6 ] = 4   ; jIndex[6 ] = 8   ;
-    iIndex[7 ] = 5   ; jIndex[7 ] = 5   ;
-    iIndex[8 ] = 5   ; jIndex[8 ] = 13  ;
-    iIndex[9 ] = 6   ; jIndex[9 ] = 6   ;
-    iIndex[10] = 6   ; jIndex[10] = 14  ;
-    iIndex[11] = 7   ; jIndex[11] = 15  ;
-  }
-
-  void
-  Crossroad::DjumpDxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = 1;
-    result__[ 1   ] = -1;
-    result__[ 2   ] = 1;
-    result__[ 3   ] = -1;
-    result__[ 4   ] = 1;
-    result__[ 5   ] = 1;
-    result__[ 6   ] = 1;
-    result__[ 7   ] = -1;
-    result__[ 8   ] = 1;
-    result__[ 9   ] = -1;
-    result__[ 10  ] = 1;
-    result__[ 11  ] = 1;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
 }

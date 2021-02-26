@@ -22,13 +22,18 @@ Ybound = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 3 num. nodes = 1203
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 3
+num. nodes = 1203
 Segment N.0
 s0 = 0 length = 1 npts = 401 no data set
 Segment N.1
 s0 = 1 length = 18 npts = 401 no data set
 Segment N.2
 s0 = 19 length = 1 npts = 401 no data set
+END Mesh[mesh]
 
 Model Parameters
 .......................................W = 0
@@ -4411,7 +4416,7 @@ Hyness --- start iterations ---
 [3579,  1] (1.35e-08 ,3.95e-12 ) [6.60e-10 ,1.34e-11 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 14.3[sec]     timeout        = 0 [ms]
+Elapsed Time   = 13.0[sec]     timeout        = 0 [ms]
 iteration      = 3579          tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 9632
 max acc. iter. = 4000          N. System pars = 2404

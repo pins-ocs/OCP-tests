@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods1.cc                                         |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -83,369 +83,6 @@ namespace HangGliderDefine {
     real_type t10  = pow(ModelPars[14], s);
     cLControl.update_tolerance(t10 * t8);
   }
-
-  /*\
-   |  _   _               ___             _   _
-   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-  \*/
-  // user defined functions which has a body defined in MAPLE
-  real_type
-  HangGlider::r( real_type x__XO ) const {
-    return pow(x__XO / ModelPars[11] - 0.25e1, 2);
-  }
-
-  real_type
-  HangGlider::r_D( real_type x__XO ) const {
-    real_type t2   = ModelPars[11];
-    real_type t5   = t2 * t2;
-    return 1.0 / t5 * (2.0 * x__XO - 5.0 * t2);
-  }
-
-  real_type
-  HangGlider::r_DD( real_type x__XO ) const {
-    real_type t2   = ModelPars[11] * ModelPars[11];
-    return 2.0 / t2;
-  }
-
-  real_type
-  HangGlider::u( real_type x__XO ) const {
-    real_type t2   = r(x__XO);
-    real_type t5   = exp(-t2);
-    return t5 * (1 - t2) * ModelPars[15];
-  }
-
-  real_type
-  HangGlider::u_D( real_type x__XO ) const {
-    real_type t2   = r_D(x__XO);
-    real_type t4   = r(x__XO);
-    real_type t5   = exp(-t4);
-    return (t4 - 2) * t5 * t2 * ModelPars[15];
-  }
-
-  real_type
-  HangGlider::u_DD( real_type x__XO ) const {
-    real_type t1   = r(x__XO);
-    real_type t3   = r_DD(x__XO);
-    real_type t5   = r_D(x__XO);
-    real_type t6   = t5 * t5;
-    real_type t12  = exp(-t1);
-    return -t12 * ModelPars[15] * (t3 * (-t1 + 2) + (t1 - 3) * t6);
-  }
-
-  real_type
-  HangGlider::w( real_type x__XO, real_type y1__XO ) const {
-    real_type t1   = u(x__XO);
-    return y1__XO - t1;
-  }
-
-  real_type
-  HangGlider::w_D_1( real_type x__XO, real_type y1__XO ) const {
-    real_type t1   = u_D(x__XO);
-    return -t1;
-  }
-
-  real_type
-  HangGlider::w_D_1_1( real_type x__XO, real_type y1__XO ) const {
-    real_type t1   = u_DD(x__XO);
-    return -t1;
-  }
-
-  real_type
-  HangGlider::w_D_1_2( real_type x__XO, real_type y1__XO ) const {
-    return 0;
-  }
-
-  real_type
-  HangGlider::w_D_2( real_type x__XO, real_type y1__XO ) const {
-    return 1;
-  }
-
-  real_type
-  HangGlider::w_D_2_2( real_type x__XO, real_type y1__XO ) const {
-    return 0;
-  }
-
-  real_type
-  HangGlider::v2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = x1__XO * x1__XO;
-    real_type t2   = w(x__XO, y1__XO);
-    real_type t3   = t2 * t2;
-    return t1 + t3;
-  }
-
-  real_type
-  HangGlider::v2_D_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w(x__XO, y1__XO);
-    real_type t2   = w_D_1(x__XO, y1__XO);
-    return 2 * t2 * t1;
-  }
-
-  real_type
-  HangGlider::v2_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w_D_1(x__XO, y1__XO);
-    real_type t2   = t1 * t1;
-    real_type t3   = w(x__XO, y1__XO);
-    real_type t4   = w_D_1_1(x__XO, y1__XO);
-    return 2 * t4 * t3 + 2 * t2;
-  }
-
-  real_type
-  HangGlider::v2_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    return 0;
-  }
-
-  real_type
-  HangGlider::v2_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w_D_2(x__XO, y1__XO);
-    real_type t2   = w_D_1(x__XO, y1__XO);
-    real_type t4   = w(x__XO, y1__XO);
-    real_type t5   = w_D_1_2(x__XO, y1__XO);
-    return 2 * t2 * t1 + 2 * t5 * t4;
-  }
-
-  real_type
-  HangGlider::v2_D_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    return 2 * x1__XO;
-  }
-
-  real_type
-  HangGlider::v2_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    return 2;
-  }
-
-  real_type
-  HangGlider::v2_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    return 0;
-  }
-
-  real_type
-  HangGlider::v2_D_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w(x__XO, y1__XO);
-    real_type t2   = w_D_2(x__XO, y1__XO);
-    return 2 * t2 * t1;
-  }
-
-  real_type
-  HangGlider::v2_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w_D_2(x__XO, y1__XO);
-    real_type t2   = t1 * t1;
-    real_type t3   = w(x__XO, y1__XO);
-    real_type t4   = w_D_2_2(x__XO, y1__XO);
-    return 2 * t4 * t3 + 2 * t2;
-  }
-
-  real_type
-  HangGlider::v( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2(x__XO, x1__XO, y1__XO);
-    return sqrt(t1);
-  }
-
-  real_type
-  HangGlider::v_D_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2(x__XO, x1__XO, y1__XO);
-    real_type t2   = sqrt(t1);
-    real_type t4   = v2_D_1(x__XO, x1__XO, y1__XO);
-    return t4 / t2 / 2;
-  }
-
-  real_type
-  HangGlider::v_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_1_1(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_1(x__XO, x1__XO, y1__XO);
-    real_type t6   = t5 * t5;
-    real_type t8   = sqrt(t2);
-    return 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
-  }
-
-  real_type
-  HangGlider::v_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_1_2(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_1(x__XO, x1__XO, y1__XO);
-    real_type t6   = v2_D_2(x__XO, x1__XO, y1__XO);
-    real_type t9   = sqrt(t2);
-    return 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
-  }
-
-  real_type
-  HangGlider::v_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_1_3(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_1(x__XO, x1__XO, y1__XO);
-    real_type t6   = v2_D_3(x__XO, x1__XO, y1__XO);
-    real_type t9   = sqrt(t2);
-    return 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
-  }
-
-  real_type
-  HangGlider::v_D_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2(x__XO, x1__XO, y1__XO);
-    real_type t2   = sqrt(t1);
-    real_type t4   = v2_D_2(x__XO, x1__XO, y1__XO);
-    return t4 / t2 / 2;
-  }
-
-  real_type
-  HangGlider::v_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_2_2(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_2(x__XO, x1__XO, y1__XO);
-    real_type t6   = t5 * t5;
-    real_type t8   = sqrt(t2);
-    return 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
-  }
-
-  real_type
-  HangGlider::v_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_2_3(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_2(x__XO, x1__XO, y1__XO);
-    real_type t6   = v2_D_3(x__XO, x1__XO, y1__XO);
-    real_type t9   = sqrt(t2);
-    return 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
-  }
-
-  real_type
-  HangGlider::v_D_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2(x__XO, x1__XO, y1__XO);
-    real_type t2   = sqrt(t1);
-    real_type t4   = v2_D_3(x__XO, x1__XO, y1__XO);
-    return t4 / t2 / 2;
-  }
-
-  real_type
-  HangGlider::v_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_3_3(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_3(x__XO, x1__XO, y1__XO);
-    real_type t6   = t5 * t5;
-    real_type t8   = sqrt(t2);
-    return 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
-  }
-
-  real_type
-  HangGlider::Dfun( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Dfun_D_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Dfun_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_1(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Dfun_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Dfun_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Dfun_D_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Dfun_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Dfun_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Dfun_D_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Dfun_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_3_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun_D_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_1(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun_D_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun_D_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
-  real_type
-  HangGlider::Lfun_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_3_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
-  }
-
 
   /*\
    |  _  _            _ _ _            _
@@ -589,84 +226,177 @@ namespace HangGliderDefine {
   }
 
   /*\
-   |    ___
-   |   / __|_  _ ___ ______
-   |  | (_ | || / -_|_-<_-<
-   |   \___|\_,_\___/__/__/
+   |   ____                                  _   _     _       _
+   |  / ___|  ___  __ _ _ __ ___   ___ _ __ | |_| |   (_)_ __ | | __
+   |  \___ \ / _ \/ _` | '_ ` _ \ / _ \ '_ \| __| |   | | '_ \| |/ /
+   |   ___) |  __/ (_| | | | | | |  __/ | | | |_| |___| | | | |   <
+   |  |____/ \___|\__, |_| |_| |_|\___|_| |_|\__|_____|_|_| |_|_|\_\
+   |              |___/
   \*/
 
   integer
-  HangGlider::u_guess_numEqns() const
-  { return 1; }
+  HangGlider::segmentLink_numEqns() const
+  { return 0; }
 
   void
-  HangGlider::u_guess_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  HangGlider::segmentLink_eval(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            segmentLink[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-      MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_cL ] = 0.7e0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  HangGlider::DsegmentLinkDxp_numRows() const
+  { return 0; }
+
+  integer
+  HangGlider::DsegmentLinkDxp_numCols() const
+  { return 0; }
+
+  integer
+  HangGlider::DsegmentLinkDxp_nnz() const
+  { return 0; }
+
   void
-  HangGlider::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  HangGlider::DsegmentLinkDxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[4];
-    real_type L__[4];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q      = Q__;
-    NODE__.x      = X__;
-    NODE__.lambda = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    this->u_guess_eval( NODE__, P__, UGUESS__ );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  HangGlider::DsegmentLinkDxp_sparse(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            DsegmentLinkDxp[]
+  ) const {
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
-   |    ___ _           _
-   |   / __| |_  ___ __| |__
-   |  | (__| ' \/ -_) _| / /
-   |   \___|_||_\___\__|_\_\
+   |     _
+   |  _ | |_  _ _ __  _ __
+   | | || | || | '  \| '_ \
+   |  \__/ \_,_|_|_|_| .__/
+   |                 |_|
   \*/
 
-  bool
-  HangGlider::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+  integer
+  HangGlider::jump_numEqns() const
+  { return 8; }
+
+  void
+  HangGlider::jump_eval(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && cLControl.check_range(U__[0], ModelPars[8], ModelPars[7]);
-    return ok;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = XR__[0] - XL__[0];
+    result__[ 1   ] = XR__[1] - XL__[1];
+    result__[ 2   ] = XR__[2] - XL__[2];
+    result__[ 3   ] = XR__[3] - XL__[3];
+    result__[ 4   ] = LR__[0] - LL__[0];
+    result__[ 5   ] = LR__[1] - LL__[1];
+    result__[ 6   ] = LR__[2] - LL__[2];
+    result__[ 7   ] = LR__[3] - LL__[3];
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  HangGlider::DjumpDxlp_numRows() const
+  { return 8; }
+
+  integer
+  HangGlider::DjumpDxlp_numCols() const
+  { return 17; }
+
+  integer
+  HangGlider::DjumpDxlp_nnz() const
+  { return 16; }
+
+  void
+  HangGlider::DjumpDxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 8   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 9   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 10  ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 11  ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 4   ; jIndex[9 ] = 12  ;
+    iIndex[10] = 5   ; jIndex[10] = 5   ;
+    iIndex[11] = 5   ; jIndex[11] = 13  ;
+    iIndex[12] = 6   ; jIndex[12] = 6   ;
+    iIndex[13] = 6   ; jIndex[13] = 14  ;
+    iIndex[14] = 7   ; jIndex[14] = 7   ;
+    iIndex[15] = 7   ; jIndex[15] = 15  ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  HangGlider::DjumpDxlp_sparse(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = -1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = -1;
+    result__[ 3   ] = 1;
+    result__[ 4   ] = -1;
+    result__[ 5   ] = 1;
+    result__[ 6   ] = -1;
+    result__[ 7   ] = 1;
+    result__[ 8   ] = -1;
+    result__[ 9   ] = 1;
+    result__[ 10  ] = -1;
+    result__[ 11  ] = 1;
+    result__[ 12  ] = -1;
+    result__[ 13  ] = 1;
+    result__[ 14  ] = -1;
+    result__[ 15  ] = 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
   /*\

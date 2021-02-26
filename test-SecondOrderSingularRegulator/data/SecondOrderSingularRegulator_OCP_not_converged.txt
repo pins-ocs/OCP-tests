@@ -1,5 +1,5 @@
-# Date:             00:15:42 2021-01-20
-# MX Version:       1.4.8-d000dirty-osx_10.15.7
+# Date:             16:21:46 2021-02-26
+# MX Version:       1.4.8-d015dirty-osx_10.15.7 hash: g8e9870e1
 # Computation type: Optimal control solution
 # Model name:       SecondOrderSingularRegulator
 #
@@ -14,7 +14,7 @@
 # max_accumulated_iter = 800
 # tolerance            = 9.999999999999999e-10
 # iterations           = 301
-# cpu_time             = 984.564 ms
+# cpu_time             = 593.391 ms
 # solver_type          = CyclicReduction+LU and LastBlock LU
 # lapack version       = Accelerate
 #

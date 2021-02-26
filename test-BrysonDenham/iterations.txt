@@ -18,9 +18,14 @@ X1bound = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 401
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
 Segment N.0
 s0 = 0 length = 1 npts = 401 no data set
+END Mesh[mesh]
 INFO CLASS = BrysonDenham
   numNodes    = 401
   dim         = u = 1, q = 1, x = 2, p = 0, omega = 4, big_bc = 8
@@ -66,11 +71,11 @@ Hyness --- start iterations ---
 [ 28,  1] (6.37e-08 ,6.71e-13 ) [2.69e-07 ,2.67e-12 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 38.2[ms]      timeout        = 0 [ms]
+Elapsed Time   = 24.7[ms]      timeout        = 0 [ms]
 iteration      = 28            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 1608
 max acc. iter. = 800           N. System pars = 400
-Converged      = YES           Memory Used    = 167Kb (+55bytes)
+Converged      = YES           Memory Used    = 166Kb (+78bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

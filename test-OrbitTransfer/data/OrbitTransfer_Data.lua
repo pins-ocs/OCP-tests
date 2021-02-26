@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -24,14 +24,17 @@ r0   = 1
 m0   = 1
 mu   = 1
 tf   = 16.60*(r0**3/mu)**(1/2.0)
+v0   = (mu/r0)**(1/2.0)
 T    = 0.1405e-1*m0*mu/r0**2
 mdot = 0.533*T*(mu/r0)**(1/2.0)
-v0   = (mu/r0)**(1/2.0)
 
 content = {
 
   -- activate run time debug
   data.Debug = false,
+
+  -- Enable doctor
+  Doctor = false,
 
   -- Level of message
   InfoLevel = 4,
@@ -42,12 +45,6 @@ content = {
   F_threaded  = true,
   JF_threaded = true,
   LU_threaded = true,
-
-  -- Enable doctor
-  Doctor = false,
-
-  -- Activate dynamic debugging
-  Debug = false,
 
   -- Enable check jacobian
   JacobianCheck            = false,
@@ -64,7 +61,7 @@ content = {
   ControlSolver = {
     -- ==============================================================
     -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
-    -- "LM" = Levenberg–Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
+    -- "LM" = Levenberg-Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
     solver = "QN",
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",

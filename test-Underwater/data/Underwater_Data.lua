@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Data.lua                                            |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -29,6 +29,9 @@ content = {
   -- activate run time debug
   data.Debug = false,
 
+  -- Enable doctor
+  Doctor = false,
+
   -- Level of message
   InfoLevel = 4,
 
@@ -38,12 +41,6 @@ content = {
   F_threaded  = true,
   JF_threaded = true,
   LU_threaded = true,
-
-  -- Enable doctor
-  Doctor = false,
-
-  -- Activate dynamic debugging
-  Debug = false,
 
   -- Enable check jacobian
   JacobianCheck            = false,
@@ -60,7 +57,7 @@ content = {
   ControlSolver = {
     -- ==============================================================
     -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
-    -- "LM" = Levenberg–Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
+    -- "LM" = Levenberg-Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
     solver = "QN",
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",
@@ -199,8 +196,8 @@ content = {
     segments = {
       
       {
-        n      = 1000,
         length = 1,
+        n      = 1000,
       },
     },
   },

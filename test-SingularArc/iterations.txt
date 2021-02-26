@@ -26,9 +26,14 @@ tfbound = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 401
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
 Segment N.0
 s0 = 0 length = 1 npts = 401 no data set
+END Mesh[mesh]
 
 Model Parameters
 ..................................T_init = 100
@@ -123,11 +128,11 @@ Hyness --- start iterations ---
 [ 51,  1] (1.17e-12 ,3.21e-17 ) [6.63e-13 ,3.62e-16 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 65.3[ms]      timeout        = 0 [ms]
+Elapsed Time   = 63.5[ms]      timeout        = 0 [ms]
 iteration      = 51            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 2412
 max acc. iter. = 800           N. System pars = 400
-Converged      = YES           Memory Used    = 297Kb (+67bytes)
+Converged      = YES           Memory Used    = 296Kb (+59bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

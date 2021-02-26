@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: TwoPhaseSchwartz_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 19/1/2021                                        #
+#  version: 1.0   date 26/2/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,23 +20,23 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsilon0 = 0.001
 epsi0    = 0.1
-tol0     = 0.1
-tol      = tol0
 epsi     = epsi0
+tol0     = 0.1
+epsilon0 = 0.001
 epsilon  = epsilon0
+tol      = tol0
 
 mechatronix do |data|
 
   # activate run time debug
   data.Debug = false
 
+  # Enable doctor
+  data.Doctor = false
+
   # Level of message
   data.InfoLevel = 4
-
-  # Activate dynamic debugging
-  data.Debug = false
 
   # maximum number of threads used for linear algebra and various solvers
   data.N_threads   = [1,$MAX_THREAD_NUM-1].max
@@ -44,9 +44,6 @@ mechatronix do |data|
   data.F_threaded  = true
   data.JF_threaded = true
   data.LU_threaded = true
-
-  # Enable doctor
-  data.Doctor = false
 
   # Enable check jacobian
   data.JacobianCheck            = false
@@ -64,7 +61,7 @@ mechatronix do |data|
   data.ControlSolver = {
     # ==============================================================
     # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
-    # 'LM' = Levenberg–Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
+    # 'LM' = Levenberg-Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
@@ -199,8 +196,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 100,
+        :length => 1,
       },
     ],
   };

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -199,11 +199,11 @@ namespace BikeSteeringDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    real_type t1   = ModelPars[1];
-    result__[ 0   ] = LL__[1] * t1 + OMEGA__[0];
+    real_type t2   = ModelPars[1];
+    result__[ 0   ] = t2 * LL__[1] + OMEGA__[0];
     result__[ 1   ] = OMEGA__[1] + LL__[0];
     result__[ 2   ] = LL__[2];
-    result__[ 3   ] = -LR__[1] * t1 + OMEGA__[2];
+    result__[ 3   ] = -t2 * LR__[1] + OMEGA__[2];
     result__[ 4   ] = OMEGA__[3] - LR__[0];
     result__[ 5   ] = 1 - LR__[2];
     if ( m_debug )

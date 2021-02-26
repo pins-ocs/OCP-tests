@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC.cc                                                        |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -470,7 +470,7 @@ namespace CNOCDefine {
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     mstr.str("");
-    mstr << "User function `pToolPath2D`: ";
+    mstr << "\nUser function `pToolPath2D`\n";
     pToolPath2D->info(mstr);
     m_console->message(mstr.str(),msg_level);
 
@@ -551,35 +551,6 @@ namespace CNOCDefine {
     vec_string_type & model_names = out["model_names"].set_vec_string();
     for ( integer i = 0; i < numModelPars; ++i )
       model_names.push_back(namesModelPars[i]);
-  }
-
-  /* --------------------------------------------------------------------------
-  //      _ _                       _   _
-  //   __| (_)__ _ __ _ _ _  ___ __| |_(_)__
-  //  / _` | / _` / _` | ' \/ _ (_-<  _| / _|
-  //  \__,_|_\__,_\__, |_||_\___/__/\__|_\__|
-  //              |___/
-  */
-  void
-  CNOC::diagnostic( GenericContainer const & gc ) {
-
-    // DA RIFARE--------------
-
-    // If required save function and jacobian
-    //if ( gc.exists("DumpFile") )
-    //  this->dumpFunctionAndJacobian( m_solver->solution(),
-    //                                 gc("DumpFile").get_string() );
-
-    //bool do_diagnosis = gc.get_map_bool("Doctor");
-    //if ( do_diagnosis )
-    //  this->diagnosis( m_solver->solution(), gc["diagnosis"] );
-
-    real_type epsi = 1e-5;
-    gc.get_if_exists("JacobianCheck_epsilon",epsi);
-    if ( gc.get_map_bool("JacobianCheck") )
-      this->checkJacobian( m_solver->solution(), epsi );
-    if ( gc.get_map_bool("JacobianCheckFull") )
-      this->checkJacobianFull( m_solver->solution(), epsi );
   }
 
   // save model parameters

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 19/1/2021                                        #
+#  version: 1.0   date 26/2/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,16 +20,16 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-g0     = 9.80665
-days   = 1
-tf     = 86400*days
-days1  = 30
-mu     = 398600441800000
 u0     = 0
 Isp    = 1500
 T      = 0.68
+g0     = 9.80665
 mdot   = T/g0/Isp
+days   = 1
+tf     = 86400*days
 r0     = 6678140
+mu     = 398600441800000
+days1  = 30
 v0     = (mu/r0)**(1/2.0)
 u0_bar = u0/v0
 
@@ -38,11 +38,11 @@ mechatronix do |data|
   # activate run time debug
   data.Debug = false
 
+  # Enable doctor
+  data.Doctor = false
+
   # Level of message
   data.InfoLevel = 4
-
-  # Activate dynamic debugging
-  data.Debug = false
 
   # maximum number of threads used for linear algebra and various solvers
   data.N_threads   = [1,$MAX_THREAD_NUM-1].max
@@ -50,9 +50,6 @@ mechatronix do |data|
   data.F_threaded  = true
   data.JF_threaded = true
   data.LU_threaded = true
-
-  # Enable doctor
-  data.Doctor = false
 
   # Enable check jacobian
   data.JacobianCheck            = false
@@ -70,7 +67,7 @@ mechatronix do |data|
   data.ControlSolver = {
     # ==============================================================
     # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
-    # 'LM' = Levenberg–Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
+    # 'LM' = Levenberg-Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
@@ -188,8 +185,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 1000*days1,
+        :length => 1,
       },
     ],
   };

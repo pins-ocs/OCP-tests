@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -80,7 +80,7 @@ main() {
 
     // get solution (even if not converged)
     m_model->get_solution( gc_solution );
-    m_model->diagnostic( gc_data );
+    m_model->diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {
@@ -96,10 +96,12 @@ main() {
     cout.precision(18);
     GenericContainer const & target = gc_solution("target");
     fmt::print(
-      "target [Lagrange,Mayer]        = [ {:12.6}, {:12.6}]\n"
-      "[Penalties/Barriers, Controls] = [ {:12.6}, {:12.6}]\n",
-      target("lagrange").get_number(),  target("mayer").get_number(),
-      target("penalties").get_number(), target("control_penalties").get_number()
+      "target [Lagrange,Mayer]       = [ {}, {} ]\n"
+      "[Penalties/Barriers,Controls] = [ {}, {} ]\n",
+      fmt::format("{:.4}",target("lagrange").get_number()),
+      fmt::format("{:.4}",target("mayer").get_number()),
+      fmt::format("{:.4}",target("penalties").get_number()),
+      fmt::format("{:.4}",target("control_penalties").get_number())
     );
     if ( gc_solution.exists("parameters") ) {
       cout << "Optimization parameters:\n";

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Train.m                                                        %
 %                                                                       %
-%  version: 1.0   date 20/1/2021                                        %
+%  version: 1.0   date 26/2/2021                                        %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -21,36 +21,36 @@ classdef Train < handle
   end
 
   methods
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function self = Train( name )
       %% Allocate the C++ class instance
       self.objectHandle = Train_Mex( 'new', name );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function delete( self )
       %% Destroy the C++ class instance
       Train_Mex( 'delete', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function help( self )
       %% print help for the class usage
       Train_Mex('help');
     end
 
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % INITIALIZATION
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function data = read( self, fname )
       % read a file with problem description in Ruby o LUA
       % and return a MATLAB structure with the readed data
       data = Train_Mex( 'read', self.objectHandle, fname );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function setup( self, fname_or_struct )
       % Initialize an OCP problem reading data from a file or a MATLAT stucture
       Train_Mex( 'setup', self.objectHandle, fname_or_struct );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function n = names( self )
       % return a MATLAB structures collecting the names of the variable, states etc
       % of the OCP problem:
@@ -65,7 +65,7 @@ classdef Train < handle
       % n.model_names                  = cell array of strings, names of model parameters
       n = Train_Mex( 'names', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = dims( self )
       % return a MATLAB structures collecting the dimension of the OCP problem:
       % res.dim_q     = number of mesh variables (variables computed ad mesh nodes)
@@ -78,7 +78,7 @@ classdef Train < handle
       % res.neq       = number of equations
       res = Train_Mex( 'dims', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = get_ocp_data( self )
       % return a structure with data and solution (if computed) of the OCP problem
       % information level possible values: -1,0,1,2,3,4
@@ -135,31 +135,31 @@ classdef Train < handle
       res = Train_Mex( 'get_ocp_data', self.objectHandle );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % INFO LEVEL
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function infoLevel( self, infoLvl )
       % set information level
       Train_Mex( 'infoLevel', self.objectHandle, infoLvl );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % NUM THREAD
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function N_thread( self, nt )
       % set information level
       Train_Mex( 'N_thread', self.objectHandle, nt );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % GUESS
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function set_guess( self, varargin )
       % with no argument use predefined guess, otherwise
       % use structure to initialize guess
@@ -174,18 +174,18 @@ classdef Train < handle
       guess = Train_Mex( 'get_solution_as_guess', self.objectHandle );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % SOLVE
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function ok = solve( self, varargin )
       % ok = false if computation failed
       % ok = true if computation is succesfull
       % varargin{1} = timeout
       ok = Train_Mex( 'solve', self.objectHandle, varargin{:} );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function updateContinuation( self, n, old_s, s )
       % set parameter of the problem for continuation step `n` at fraction `s`
       Train_Mex( ...
@@ -193,52 +193,52 @@ classdef Train < handle
       );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % GET SOLUTION
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function sol = solution( self, varargin )
       % return the whole solution or the column of name varargin{1}
       sol = Train_Mex( 'get_solution', self.objectHandle, varargin{:} );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function sol = solution2( self )
       % return the whole solution
       sol = Train_Mex( 'get_solution2', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function sol = solution3( self )
       % return the whole solution
       sol = Train_Mex( 'get_solution3', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function sol = pack( self, X, Lambda, Pars, Omega )
       % combine the solution in the matrices `X`, `Lambda`, `Pars` and `Omega`
       % in a single vector as stored in the solver PINS
       sol = Train_Mex( 'pack', self.objectHandle, X, Lambda, Pars, Omega );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [X, Lambda, Pars, Omega] = unpack( self, sol )
       % unpack a vector to the matrices `X`, `Lambda`, `Pars` and `Omega`
       % the vector must contains the data as stored in the solver PINS
       [X, Lambda, Pars, Omega] = Train_Mex( 'unpack', self.objectHandle, sol );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % ZETA
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = zeta( self )
       res = Train_Mex( 'get_solution', self.objectHandle, 'zeta' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % STATES
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = x( self )
       % return the solution for the state: x
       res = Train_Mex( 'get_solution', self.objectHandle, 'x' );
@@ -248,11 +248,11 @@ classdef Train < handle
       res = Train_Mex( 'get_solution', self.objectHandle, 'v' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % MULTIPLIER
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = lambda1( self )
       % return the solution for the multiplier: lambda1
       res = Train_Mex( 'get_solution', self.objectHandle, 'lambda1__xo' );
@@ -262,11 +262,11 @@ classdef Train < handle
       res = Train_Mex( 'get_solution', self.objectHandle, 'lambda2__xo' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % CONTROLS
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function res = ua( self )
       % return the solution for the control: ua
       res = Train_Mex( 'get_solution', self.objectHandle, 'ua' );
@@ -276,69 +276,69 @@ classdef Train < handle
       res = Train_Mex( 'get_solution', self.objectHandle, 'ub' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % POSTPROCESSING
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
-    function res = uaControl( self )
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    function res = post_processing_uaControl( self )
       % return the solution for the post processing variable: uaControl
       res = Train_Mex( 'get_solution', self.objectHandle, 'uaControl' );
     end
-    function res = ubControl( self )
+    function res = post_processing_ubControl( self )
       % return the solution for the post processing variable: ubControl
       res = Train_Mex( 'get_solution', self.objectHandle, 'ubControl' );
     end
-    function res = Profile( self )
+    function res = post_processing_Profile( self )
       % return the solution for the post processing variable: Profile
       res = Train_Mex( 'get_solution', self.objectHandle, 'Profile' );
     end
 
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % NONLINEAR SYSTEM
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function F = eval_F( self, x )
       % return the nonlinear system of the indirect methods
       F = Train_Mex( 'eval_F', self.objectHandle, x );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function JF = eval_JF( self, x )
       % return the jacobian of the nonlinear system of the indirect methods
       JF = Train_Mex( 'eval_JF', self.objectHandle, x );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function JF = eval_JF_pattern( self )
       % return the pattern of the jacobian of the nonlinear system of the indirect methods
       JF = Train_Mex( 'eval_JF_pattern', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function x = get_raw_solution( self )
       % return the solution in a vector as stored in PINS
       x = Train_Mex( 'get_raw_solution', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function set_raw_solution( self, x )
       % return set the solution in a vector as stored in PINS
       Train_Mex( 'set_raw_solution', self.objectHandle, x );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function ok = check_raw_solution( self, x )
       % check the solution in a vector as stored in PINS
       ok = Train_Mex( 'check_raw_solution', self.objectHandle, x );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function check_jacobian( self, x, epsi )
       % check the analytic jacobian comparing with finite difference one.
       % `epsi` is the admitted tolerance
       Train_Mex( 'check_jacobian', self.objectHandle, x, epsi );
     end
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % DISCRETIZED PROBLEM ACCESS
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [a,c] = eval_ac( self, iseg_L, q_L, x_L, lambda_L, ...
                                     iseg_R, q_R, x_R, lambda_R, pars, U )
       % compute the block of the nonlinear system given left and right stated
@@ -346,7 +346,7 @@ classdef Train < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [Ja,Jc] = eval_DacDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
                                            iseg_R, q_R, x_R, lambda_R, pars, U )
       % compute the block of the nonlinear system given left and right stated
@@ -354,7 +354,7 @@ classdef Train < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [h,c] = eval_hc( self, iseg_L, q_L, x_L, lambda_L, ...
                                     iseg_R, q_R, x_R, lambda_R, pars )
       % compute the block of the BC of the nonlinear system given left and right stated
@@ -362,7 +362,7 @@ classdef Train < handle
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function [Jh,Jc] = eval_DhcDxlop( self, iseg_L, q_L, x_L, lambda_L, ...
                                             iseg_R, q_R, x_R, lambda_R, pars )
       % compute the block of the BC of the nonlinear system given left and right stated
@@ -370,11 +370,11 @@ classdef Train < handle
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % CONTINUOUS PROBLEM ACCESS
-    % -------------------------------------------------------------------------
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function u = eval_u( self, varargin )
       % compute the control give states and multiplyer
       % res = self.eval_u( iseg, q, x, lambda, pars )
@@ -384,7 +384,7 @@ classdef Train < handle
       % res = self.eval_u( iseg_L, (q_L+q_R)./2, (x_L+x_R)./2, (lambda_L+lambda_R)./2, pars )
       u = Train_Mex( 'u', self.objectHandle, varargin{:} );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function u = eval_DuDxlp( self, varargin )
       % compute the control give states and multiplyer
       % res = self.eval_DuDxlp( iseg, q, x, lambda, pars )
@@ -395,14 +395,14 @@ classdef Train < handle
       %
       u = Train_Mex( 'DuDxlp', self.objectHandle, varargin{:} );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function rhs = eval_rhs_ode( self, iseg, q, x, u, pars )
       % compute rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       rhs = Train_Mex(...
         'rhs_ode', self.objectHandle, iseg, q, x, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_Drhs_odeDx( self, iseg, q, x, u, pars )
       % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       % respect to `x`
@@ -410,7 +410,7 @@ classdef Train < handle
         'Drhs_odeDx', self.objectHandle, iseg, q, x, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_Drhs_odeDu( self, iseg, q, x, u, pars )
       % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       % respect to `u`
@@ -418,7 +418,7 @@ classdef Train < handle
         'Drhs_odeDu', self.objectHandle, iseg, q, x, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_Drhs_odeDp( self, iseg, q, x, u, pars )
       % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       % respect to `pars`
@@ -426,20 +426,20 @@ classdef Train < handle
         'Drhs_odeDp', self.objectHandle, iseg, q, x, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function A = eval_A( self, iseg, q, x, pars )
       % compute `A(q,x)` of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       % respect to `pars`
       A = Train_Mex( 'A', self.objectHandle, iseg, q, x, pars );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function eta = eval_eta( self, iseg, q, x, lambda, pars )
       % compute `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
       eta = Train_Mex(...
         'eta', self.objectHandle, iseg, q, x, lambda, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DetaDx( self, iseg, q, x, lambda, pars )
       % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
       % respect to `x`
@@ -447,7 +447,7 @@ classdef Train < handle
         'DetaDx', self.objectHandle, iseg, q, x, lambda, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DetaDp( self, iseg, q, x, lambda, pars )
       % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
       % respect to `x`
@@ -455,30 +455,30 @@ classdef Train < handle
         'DetaDp', self.objectHandle, iseg, q, x, lambda, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function nu = eval_nu( self, iseg, q, x, V, pars )
       % compute `nu(q,x,V,pars) = A(q,x,pars) V`
       nu = Train_Mex( 'nu', self.objectHandle, iseg, q, x, V, pars );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DnuDx( self, iseg, q, x, V, pars )
       % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
       % respect to `x`
       J = Train_Mex( 'DnuDx', self.objectHandle, iseg, q, x, V, pars );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DnuDp( self, iseg, q, x, V, pars )
       % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
       % respect to `x`
       J = Train_Mex( 'DnuDp', self.objectHandle, iseg, q, x, V, pars );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function Hx = eval_Hx( self, iseg, q, x, lambda, V, u, pars )
       Hx = Train_Mex(...
         'Hx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHxDx( self, iseg, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hx(q,x,lambda,V,pars)`
       % respect to `x`
@@ -486,7 +486,7 @@ classdef Train < handle
         'DHxDx', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHxDp( self, iseg, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hx(q,x,lambda,V,u,pars)`
       % respect to `x`
@@ -494,13 +494,13 @@ classdef Train < handle
         'DHxDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function Hx = eval_Hu( self, iseg, q, x, lambda, V, u, pars )
       Hx = Train_Mex(...
         'Hu', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHuDx( self, iseg, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
       % respect to `x`
@@ -508,7 +508,7 @@ classdef Train < handle
         'DHuDx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHuDp( self, iseg, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
       % respect to `x`
@@ -516,13 +516,13 @@ classdef Train < handle
         'DHuDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function Hp = eval_Hp( self, iseg, q, x, lambda, V, u, pars )
       Hp = Train_Mex(...
         'Hp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DHpDp( self, q, x, lambda, V, u, pars )
       % compute the jacobian of `Hp(q,x,lambda,V,u,pars)`
       % respect to `x`
@@ -530,28 +530,28 @@ classdef Train < handle
         'DHpDp', self.objectHandle, q, x, lambda, V, u, pars...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function bc = eval_bc( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       bc = Train_Mex( ...
         'boundaryConditions', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DbcDx( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       J = Train_Mex( ...
         'DboundaryConditionsDx', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DbcDp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       J = Train_Mex( ...
         'DboundaryConditionsDp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function bc = eval_adjoiontBC( self, iseg_L, q_L, x_L, lambda_L, ...
                                          iseg_R, q_R, x_R, lambda_R, ...
                                          pars, Omega )
@@ -560,7 +560,7 @@ classdef Train < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DadjoiontBCDx( self, iseg_L, q_L, x_L, lambda_L, ...
                                            iseg_R, q_R, x_R, lambda_R, ...
                                            pars, Omega )
@@ -569,7 +569,7 @@ classdef Train < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DadjoiontBCDp( self, iseg_L, q_L, x_L, lambda_L, ...
                                            iseg_R, q_R, x_R, lambda_R, ...
                                            pars, Omega )
@@ -578,7 +578,7 @@ classdef Train < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function bc = eval_jump( self, iseg_L, q_L, x_L, lambda_L, ...
                                    iseg_R, q_R, x_R, lambda_R, pars )
       bc = Train_Mex( ...
@@ -586,7 +586,7 @@ classdef Train < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_DjumpDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
                                        iseg_R, q_R, x_R, lambda_R, pars )
       J = Train_Mex( ...
@@ -594,25 +594,25 @@ classdef Train < handle
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_penalties( self, iseg, q, x, lambda, u, pars )
       J = Train_Mex( ...
         'penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function J = eval_control_penalties( self, iseg, q, x, lambda, u, pars )
       J = Train_Mex( ...
         'control_penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function target = eval_lagrange_target( self, iseg, q, x, u, pars )
       target = Train_Mex( ...
         'lagrange_target', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function target = eval_mayer_target( self, iseg_L, q_L, x_L, ...
                                                iseg_R, q_R, x_R, ...
                                                u, pars )
@@ -621,22 +621,62 @@ classdef Train < handle
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, u, pars ...
       );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function target = eval_q( self, i_segment, s )
       target = Train_Mex( 'q', self.objectHandle, i_segment, s );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function nodes = get_nodes( self )
       nodes = Train_Mex( 'nodes', self.objectHandle );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function node_to_segment = get_node_to_segment( self )
       node_to_segment = Train_Mex( 'node_to_segment', self.objectHandle );
     end
-
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    %  _   _               ___             _   _
+    % | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+    % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+    %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+    % ---------------------------------------------------------------------
+    function res = acc( self, x__XO, v__XO )
+      res = Train_Mex('acc', self.objectHandle, x__XO, v__XO );
+    end
+    % ---------------------------------------------------------------------
+    function res = acc_D_1( self, x__XO, v__XO )
+      res = Train_Mex('acc_D_1', self.objectHandle, x__XO, v__XO );
+    end
+    % ---------------------------------------------------------------------
+    function res = acc_D_2( self, x__XO, v__XO )
+      res = Train_Mex('acc_D_2', self.objectHandle, x__XO, v__XO );
+    end
+    % ---------------------------------------------------------------------
+    function res = acc_D_1_1( self, x__XO, v__XO )
+      res = Train_Mex('acc_D_1_1', self.objectHandle, x__XO, v__XO );
+    end
+    % ---------------------------------------------------------------------
+    function res = acc_D_1_2( self, x__XO, v__XO )
+      res = Train_Mex('acc_D_1_2', self.objectHandle, x__XO, v__XO );
+    end
+    % ---------------------------------------------------------------------
+    function res = acc_D_2_2( self, x__XO, v__XO )
+      res = Train_Mex('acc_D_2_2', self.objectHandle, x__XO, v__XO );
+    end
+    % ---------------------------------------------------------------------
+    function res = h( self, x__XO )
+      res = Train_Mex('h', self.objectHandle, x__XO );
+    end
+    % ---------------------------------------------------------------------
+    function res = h_D( self, x__XO )
+      res = Train_Mex('h_D', self.objectHandle, x__XO );
+    end
+    % ---------------------------------------------------------------------
+    function res = h_DD( self, x__XO )
+      res = Train_Mex('h_DD', self.objectHandle, x__XO );
+    end
+    % ---------------------------------------------------------------------
     % PLOT SOLUTION
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function plot_states( self )
       plot(...
         self.zeta(), self.x(), ...
@@ -646,7 +686,7 @@ classdef Train < handle
       title('states');
       legend( 'x', 'v' );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function plot_multipliers( self )
       plot(...
         self.zeta(), self.lambda1(), ...
@@ -656,7 +696,7 @@ classdef Train < handle
       title('multipliers');
       legend( '\lambda1', '\lambda2' );
     end
-    % -------------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     function plot_controls( self )
       plot(...
         self.zeta(), self.ua(), ...

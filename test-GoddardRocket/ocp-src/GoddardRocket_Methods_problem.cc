@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,171 +77,6 @@ namespace GoddardRocketDefine {
     real_type t12  = explog(s, ModelPars[11], ModelPars[15]);
     TSPositive.update_tolerance(t12);
   }
-
-  /*\
-   |  _   _               ___             _   _
-   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-  \*/
-  // user defined functions which has a body defined in MAPLE
-  real_type
-  GoddardRocket::DD( real_type h__XO, real_type v__XO ) const {
-    real_type t2   = v__XO * v__XO;
-    real_type t10  = exp(ModelPars[7] * (1 - h__XO / ModelPars[6]));
-    return t10 * t2 * ModelPars[0];
-  }
-
-  real_type
-  GoddardRocket::DD_D_1( real_type h__XO, real_type v__XO ) const {
-    real_type t2   = v__XO * v__XO;
-    real_type t4   = ModelPars[7];
-    real_type t5   = ModelPars[6];
-    real_type t8   = 1.0 / t5;
-    real_type t10  = exp(t8 * (t5 - h__XO) * t4);
-    return -t8 * t10 * t4 * t2 * ModelPars[0];
-  }
-
-  real_type
-  GoddardRocket::DD_D_1_1( real_type h__XO, real_type v__XO ) const {
-    real_type t2   = v__XO * v__XO;
-    real_type t4   = ModelPars[7];
-    real_type t5   = t4 * t4;
-    real_type t6   = ModelPars[6];
-    real_type t7   = t6 * t6;
-    real_type t14  = exp(1.0 / t6 * (t6 - h__XO) * t4);
-    return t14 / t7 * t5 * t2 * ModelPars[0];
-  }
-
-  real_type
-  GoddardRocket::DD_D_1_2( real_type h__XO, real_type v__XO ) const {
-    real_type t3   = ModelPars[7];
-    real_type t4   = ModelPars[6];
-    real_type t7   = 1.0 / t4;
-    real_type t9   = exp(t7 * (t4 - h__XO) * t3);
-    return -2 * t7 * t9 * t3 * ModelPars[0] * v__XO;
-  }
-
-  real_type
-  GoddardRocket::DD_D_2( real_type h__XO, real_type v__XO ) const {
-    real_type t4   = ModelPars[6];
-    real_type t9   = exp(1.0 / t4 * (t4 - h__XO) * ModelPars[7]);
-    return 2 * t9 * v__XO * ModelPars[0];
-  }
-
-  real_type
-  GoddardRocket::DD_D_2_2( real_type h__XO, real_type v__XO ) const {
-    real_type t3   = ModelPars[6];
-    real_type t8   = exp(1.0 / t3 * (t3 - h__XO) * ModelPars[7]);
-    return 2 * t8 * ModelPars[0];
-  }
-
-  real_type
-  GoddardRocket::gg( real_type h__XO ) const {
-    real_type t3   = ModelPars[6] * ModelPars[6];
-    real_type t5   = h__XO * h__XO;
-    return 1.0 / t5 * t3 * ModelPars[5];
-  }
-
-  real_type
-  GoddardRocket::gg_D( real_type h__XO ) const {
-    real_type t3   = ModelPars[6] * ModelPars[6];
-    real_type t5   = h__XO * h__XO;
-    return -2 / t5 / h__XO * t3 * ModelPars[5];
-  }
-
-  real_type
-  GoddardRocket::gg_DD( real_type h__XO ) const {
-    real_type t3   = ModelPars[6] * ModelPars[6];
-    real_type t5   = h__XO * h__XO;
-    real_type t6   = t5 * t5;
-    return 6 / t6 * t3 * ModelPars[5];
-  }
-
-  real_type
-  GoddardRocket::explog( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t2   = log(a__XO);
-    real_type t4   = log(b__XO);
-    return exp(t2 * (1 - s__XO) + t4 * s__XO);
-  }
-
-  real_type
-  GoddardRocket::explog_D_1( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t1   = log(a__XO);
-    real_type t2   = log(b__XO);
-    real_type t5   = pow(a__XO, 1 - s__XO);
-    real_type t7   = pow(b__XO, s__XO);
-    return -t7 * t5 * (t1 - t2);
-  }
-
-  real_type
-  GoddardRocket::explog_D_1_1( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t1   = log(a__XO);
-    real_type t2   = log(b__XO);
-    real_type t4   = pow(t1 - t2, 2);
-    real_type t6   = pow(a__XO, 1 - s__XO);
-    real_type t8   = pow(b__XO, s__XO);
-    return t8 * t6 * t4;
-  }
-
-  real_type
-  GoddardRocket::explog_D_1_2( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t1   = pow(b__XO, s__XO);
-    real_type t2   = -1 + s__XO;
-    real_type t3   = log(a__XO);
-    real_type t6   = log(b__XO);
-    real_type t10  = pow(a__XO, -s__XO);
-    return t10 * (t3 * t2 - t6 * t2 - 1) * t1;
-  }
-
-  real_type
-  GoddardRocket::explog_D_1_3( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t1   = -1 + s__XO;
-    real_type t2   = pow(b__XO, t1);
-    real_type t4   = pow(a__XO, -t1);
-    real_type t6   = log(a__XO);
-    real_type t8   = log(b__XO);
-    return -(s__XO * t6 - t8 * s__XO - 1) * t4 * t2;
-  }
-
-  real_type
-  GoddardRocket::explog_D_2( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t2   = pow(a__XO, -s__XO);
-    real_type t4   = pow(b__XO, s__XO);
-    return -t4 * t2 * (-1 + s__XO);
-  }
-
-  real_type
-  GoddardRocket::explog_D_2_2( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t3   = pow(a__XO, -s__XO - 1);
-    real_type t5   = pow(b__XO, s__XO);
-    return t5 * s__XO * t3 * (-1 + s__XO);
-  }
-
-  real_type
-  GoddardRocket::explog_D_2_3( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t1   = -1 + s__XO;
-    real_type t2   = pow(a__XO, -s__XO);
-    real_type t4   = pow(b__XO, t1);
-    return -s__XO * t4 * t2 * t1;
-  }
-
-  real_type
-  GoddardRocket::explog_D_3( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t1   = -1 + s__XO;
-    real_type t2   = pow(b__XO, t1);
-    real_type t5   = pow(a__XO, -t1);
-    return t5 * t2 * s__XO;
-  }
-
-  real_type
-  GoddardRocket::explog_D_3_3( real_type s__XO, real_type a__XO, real_type b__XO ) const {
-    real_type t2   = pow(b__XO, -2 + s__XO);
-    real_type t4   = -1 + s__XO;
-    real_type t6   = pow(a__XO, -t4);
-    return t6 * t4 * t2 * s__XO;
-  }
-
 
   /*\
    |  _  _            _ _ _            _
@@ -381,82 +216,167 @@ namespace GoddardRocketDefine {
   }
 
   /*\
-   |    ___
-   |   / __|_  _ ___ ______
-   |  | (_ | || / -_|_-<_-<
-   |   \___|\_,_\___/__/__/
+   |   ____                                  _   _     _       _
+   |  / ___|  ___  __ _ _ __ ___   ___ _ __ | |_| |   (_)_ __ | | __
+   |  \___ \ / _ \/ _` | '_ ` _ \ / _ \ '_ \| __| |   | | '_ \| |/ /
+   |   ___) |  __/ (_| | | | | | |  __/ | | | |_| |___| | | | |   <
+   |  |____/ \___|\__, |_| |_| |_|\___|_| |_|\__|_____|_|_| |_|_|\_\
+   |              |___/
   \*/
 
   integer
-  GoddardRocket::u_guess_numEqns() const
-  { return 1; }
+  GoddardRocket::segmentLink_numEqns() const
+  { return 0; }
 
   void
-  GoddardRocket::u_guess_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  GoddardRocket::segmentLink_eval(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            segmentLink[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-      MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_T ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GoddardRocket::DsegmentLinkDxp_numRows() const
+  { return 0; }
+
+  integer
+  GoddardRocket::DsegmentLinkDxp_numCols() const
+  { return 0; }
+
+  integer
+  GoddardRocket::DsegmentLinkDxp_nnz() const
+  { return 0; }
+
   void
-  GoddardRocket::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+  GoddardRocket::DsegmentLinkDxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[3];
-    real_type L__[3];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q      = Q__;
-    NODE__.x      = X__;
-    NODE__.lambda = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    this->u_guess_eval( NODE__, P__, UGUESS__ );
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  GoddardRocket::DsegmentLinkDxp_sparse(
+    NodeType const     & L,
+    NodeType const     & R,
+    P_const_pointer_type p,
+    real_type            DsegmentLinkDxp[]
+  ) const {
+   UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   /*\
-   |    ___ _           _
-   |   / __| |_  ___ __| |__
-   |  | (__| ' \/ -_) _| / /
-   |   \___|_||_\___\__|_\_\
+   |     _
+   |  _ | |_  _ _ __  _ __
+   | | || | || | '  \| '_ \
+   |  \__/ \_,_|_|_|_| .__/
+   |                 |_|
   \*/
 
-  bool
-  GoddardRocket::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+  integer
+  GoddardRocket::jump_numEqns() const
+  { return 6; }
+
+  void
+  GoddardRocket::jump_eval(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && TControl.check_range(U__[0], 0, ModelPars[1]);
-    return ok;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = XR__[0] - XL__[0];
+    result__[ 1   ] = XR__[1] - XL__[1];
+    result__[ 2   ] = XR__[2] - XL__[2];
+    result__[ 3   ] = LR__[0] - LL__[0];
+    result__[ 4   ] = LR__[1] - LL__[1];
+    result__[ 5   ] = LR__[2] - LL__[2];
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "jump_eval", 6, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GoddardRocket::DjumpDxlp_numRows() const
+  { return 6; }
+
+  integer
+  GoddardRocket::DjumpDxlp_numCols() const
+  { return 13; }
+
+  integer
+  GoddardRocket::DjumpDxlp_nnz() const
+  { return 12; }
+
+  void
+  GoddardRocket::DjumpDxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 7   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 8   ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 9   ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 4   ; jIndex[9 ] = 10  ;
+    iIndex[10] = 5   ; jIndex[10] = 5   ;
+    iIndex[11] = 5   ; jIndex[11] = 11  ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  GoddardRocket::DjumpDxlp_sparse(
+    NodeType2 const    & LEFT__,
+    NodeType2 const    & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = -1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = -1;
+    result__[ 3   ] = 1;
+    result__[ 4   ] = -1;
+    result__[ 5   ] = 1;
+    result__[ 6   ] = -1;
+    result__[ 7   ] = 1;
+    result__[ 8   ] = -1;
+    result__[ 9   ] = 1;
+    result__[ 10  ] = -1;
+    result__[ 11  ] = 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

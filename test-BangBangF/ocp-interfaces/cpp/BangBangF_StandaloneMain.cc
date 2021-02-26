@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -159,8 +159,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangF_data.Mesh["s0"] = 0;
-BangBangF_data.Mesh["segments"][0]["length"] = 1;
 BangBangF_data.Mesh["segments"][0]["n"] = 100;
+BangBangF_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -185,7 +185,7 @@ BangBangF_data.Mesh["segments"][0]["n"] = 100;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

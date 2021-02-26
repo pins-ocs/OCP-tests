@@ -21,9 +21,14 @@ u2Control = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 401
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
 Segment N.0
 s0 = 0 length = 2 npts = 401 no data set
+END Mesh[mesh]
 
 Model Parameters
 .......................................W = 0.1
@@ -52,11 +57,11 @@ Hyness --- start iterations ---
 [  4,  1] (1.01e-08 ,2.97e-13 ) [1.42e-06 ,5.79e-11 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 12.5[ms]      timeout        = 0 [ms]
+Elapsed Time   = 9.29[ms]      timeout        = 0 [ms]
 iteration      = 4             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 3212
 max acc. iter. = 800           N. System pars = 800
-Converged      = YES           Memory Used    = 366Kb (+90bytes)
+Converged      = YES           Memory Used    = 365Kb (+64bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

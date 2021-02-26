@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 19/1/2021                                        #
+#  version: 1.0   date 26/2/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,25 +20,25 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-js_max                   = 30
+jn_max                   = 65
 v_nom                    = 0.173
-mesh_segments            = 100
-js_min                   = -50
 deltaFeed                = v_nom
+js_min                   = -50
+js_max                   = 30
+mesh_segments            = 100
 path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
-jn_max                   = 65
 
 mechatronix do |data|
 
   # activate run time debug
   data.Debug = false
 
+  # Enable doctor
+  data.Doctor = false
+
   # Level of message
   data.InfoLevel = 4
-
-  # Activate dynamic debugging
-  data.Debug = false
 
   # maximum number of threads used for linear algebra and various solvers
   data.N_threads   = [1,$MAX_THREAD_NUM-1].max
@@ -46,9 +46,6 @@ mechatronix do |data|
   data.F_threaded  = true
   data.JF_threaded = true
   data.LU_threaded = true
-
-  # Enable doctor
-  data.Doctor = false
 
   # Enable check jacobian
   data.JacobianCheck            = false
@@ -66,7 +63,7 @@ mechatronix do |data|
   data.ControlSolver = {
     # ==============================================================
     # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
-    # 'LM' = Levenberg–Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
+    # 'LM' = Levenberg-Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',

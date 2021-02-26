@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_dll_pins.hh                                           |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -173,8 +173,8 @@ namespace CatalystDefine {
 
     CATALYST_API_DLL
     void
-    diagnostic( GenericContainer & gc_data )
-    { return model.diagnostic( gc_data ); }
+    diagnostic( GenericContainer const & gc_data, GenericContainer & gc_solution )
+    { return model.diagnostic( gc_data, gc_solution ); }
 
     CATALYST_API_DLL
     integer

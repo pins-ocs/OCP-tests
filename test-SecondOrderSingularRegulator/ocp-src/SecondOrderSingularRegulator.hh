@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SecondOrderSingularRegulator.hh                                |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -232,12 +232,6 @@ namespace SecondOrderSingularRegulatorDefine {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     void
     get_names( GenericContainer & out ) const;
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // do some check on the computed solution
-    SECONDORDERSINGULARREGULATOR_API_DLL
-    void
-    diagnostic( GenericContainer const & gc_solution );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Continuation phase update

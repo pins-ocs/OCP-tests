@@ -34,9 +34,14 @@ u_phiControl = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 401
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
 Segment N.0
 s0 = 0 length = 1 npts = 401 no data set
+END Mesh[mesh]
 
 Model Parameters
 .......................................L = 5
@@ -131,11 +136,11 @@ Hyness --- start iterations ---
 [ 49,  1] (2.58e-10 ,5.72e-15 ) [1.89e-11 ,5.47e-15 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 126.0[ms]     timeout        = 0 [ms]
+Elapsed Time   = 101.0[ms]     timeout        = 0 [ms]
 iteration      = 49            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 4825
 max acc. iter. = 800           N. System pars = 1200
-Converged      = YES           Memory Used    = 709Kb (+80bytes)
+Converged      = YES           Memory Used    = 706Kb (+77bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

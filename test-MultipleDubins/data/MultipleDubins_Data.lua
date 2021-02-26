@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 14/12/2020                                       |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
- |  Copyright (C) 2020                                                   |
+ |  Copyright (C) 2021                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,9 +17,17 @@
 
 --]]
 
+-- User Header
+
 -- Auxiliary values
 
 content = {
+
+  -- activate run time debug
+  data.Debug = false,
+
+  -- Enable doctor
+  Doctor = false,
 
   -- Level of message
   InfoLevel = 4,
@@ -30,12 +38,6 @@ content = {
   F_threaded  = true,
   JF_threaded = true,
   LU_threaded = true,
-
-  -- Enable doctor
-  Doctor = false,
-
-  -- Activate dynamic debugging
-  Debug = false,
 
   -- Enable check jacobian
   JacobianCheck            = false,
@@ -50,12 +52,21 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
-    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
+    -- ==============================================================
+    -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
+    -- "LM" = Levenberg-Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
+    solver = "QN",
+    -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",
-    MaxIter       = 50,
-    Tolerance     = 1e-9,
-    Iterative     = false,
-    InfoLevel     = -1 -- suppress all messages
+    -- "BFGS", "DFP", "SR1" for Quasi Newton
+    update = "BFGS",
+    -- 'EXACT', 'ARMIJO'
+    linesearch = "EXACT",
+    -- ==============================================================
+    MaxIter   = 50,
+    Tolerance = 1e-9,
+    Iterative = false,
+    InfoLevel = -1 -- suppress all messages
   },
 
   -- setup solver
@@ -143,8 +154,8 @@ content = {
   -- DiffModuleN
     diff2piN = 2*Math::PI,
   -- ClipIntervalWithErf
-    cliph = 0.001,
     clipdelta = 0,
+    cliph = 0.001,
   },
 
   -- Controls: No penalties or barriers constraint defined
@@ -162,8 +173,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 40,
+        length = 1,
       },
     },
   },

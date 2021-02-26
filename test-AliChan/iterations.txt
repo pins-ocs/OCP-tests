@@ -14,9 +14,14 @@ uControl = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 1001
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 1001
 Segment N.0
 s0 = 0 length = 1.5707963267948966 npts = 1001 no data set
+END Mesh[mesh]
 INFO CLASS = AliChan
   numNodes    = 1001
   dim         = u = 1, q = 1, x = 2, p = 0, omega = 2, big_bc = 6
@@ -323,11 +328,11 @@ Hyness --- start iterations ---
 [277,  1] (2.57e-09 ,5.24e-12 ) [5.76e-10 ,1.24e-12 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 0.718[sec]    timeout        = 0 [ms]
+Elapsed Time   = 0.658[sec]    timeout        = 0 [ms]
 iteration      = 277           tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 4006
 max acc. iter. = 800           N. System pars = 1000
-Converged      = YES           Memory Used    = 404Kb (+23bytes)
+Converged      = YES           Memory Used    = 403Kb (+57bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

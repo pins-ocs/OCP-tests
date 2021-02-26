@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,7 +80,7 @@ main() {
 
     // get solution (even if not converged)
     m_model->get_solution( gc_solution );
-    m_model->diagnostic( gc_data );
+    m_model->diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

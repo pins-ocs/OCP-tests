@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods.cc                                                |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -196,6 +196,8 @@ namespace CNOCDefine {
     iIndex[3 ] = 1   ; jIndex[3 ] = 12  ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   CNOC::DgDxlp_sparse(
     NodeType2 const    & NODE__,
@@ -241,6 +243,8 @@ namespace CNOCDefine {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CNOC::DgDu_sparse(
@@ -298,6 +302,8 @@ namespace CNOCDefine {
     real_type t5   = ModelPars[8];
     U__[ iU_jn ] = jnControl.solve(-L__[5], -t5, t5);
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CNOC::u_eval_analytic(
@@ -383,6 +389,8 @@ namespace CNOCDefine {
     DuDxlp(1, 13) = 0;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   CNOC::DuDxlp_full_analytic(
     NodeType2 const          & LEFT__,
@@ -418,229 +426,6 @@ namespace CNOCDefine {
     L__[5] = (LEFT__.lambda[5]+RIGHT__.lambda[5])/2;
     L__[6] = (LEFT__.lambda[6]+RIGHT__.lambda[6])/2;
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
-  }
-
-  /*\
-   |   ____                                  _   _     _       _
-   |  / ___|  ___  __ _ _ __ ___   ___ _ __ | |_| |   (_)_ __ | | __
-   |  \___ \ / _ \/ _` | '_ ` _ \ / _ \ '_ \| __| |   | | '_ \| |/ /
-   |   ___) |  __/ (_| | | | | | |  __/ | | | |_| |___| | | | |   <
-   |  |____/ \___|\__, |_| |_| |_|\___|_| |_|\__|_____|_|_| |_|_|\_\
-   |              |___/
-  \*/
-
-  integer
-  CNOC::segmentLink_numEqns() const
-  { return 0; }
-
-  void
-  CNOC::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
-  ) const {
-   UTILS_ERROR0("NON IMPLEMENTATA\n");
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  CNOC::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  CNOC::DsegmentLinkDxp_nnz() const
-  { return 0; }
-
-  void
-  CNOC::DsegmentLinkDxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-   UTILS_ERROR0("NON IMPLEMENTATA\n");
-  }
-
-  void
-  CNOC::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
-  ) const {
-   UTILS_ERROR0("NON IMPLEMENTATA\n");
-  }
-
-  /*\
-   |     _
-   |  _ | |_  _ _ __  _ __
-   | | || | || | '  \| '_ \
-   |  \__/ \_,_|_|_|_| .__/
-   |                 |_|
-  \*/
-
-  integer
-  CNOC::jump_numEqns() const
-  { return 14; }
-
-  void
-  CNOC::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
-    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->getSegmentByIndex(i_segment_left);
-    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->getSegmentByIndex(i_segment_right);
-    real_type t2   = QL__[0];
-    result__[ 0   ] = XL__[0] - t2;
-    result__[ 1   ] = XL__[1];
-    real_type t4   = ALIAS_theta_L(t2);
-    real_type t5   = QR__[0];
-    real_type t6   = ALIAS_theta_R(t5);
-    real_type t7   = t4 - t6;
-    real_type t8   = sin(t7);
-    real_type t9   = XL__[3];
-    real_type t11  = cos(t7);
-    real_type t12  = XL__[2];
-    result__[ 2   ] = -t12 * t11 + t9 * t8 + XR__[2];
-    result__[ 3   ] = -t9 * t11 - t12 * t8 + XR__[3];
-    real_type t18  = XL__[5];
-    real_type t20  = XL__[4];
-    result__[ 4   ] = -t20 * t11 + t18 * t8 + XR__[4];
-    result__[ 5   ] = -t18 * t11 - t20 * t8 + XR__[5];
-    result__[ 6   ] = LL__[6];
-    result__[ 7   ] = XR__[0] - t5;
-    result__[ 8   ] = XR__[1];
-    real_type t27  = LR__[3];
-    real_type t29  = LR__[2];
-    result__[ 9   ] = -t11 * t29 - t8 * t27 + LL__[2];
-    result__[ 10  ] = -t11 * t27 + t8 * t29 + LL__[3];
-    real_type t35  = LR__[5];
-    real_type t37  = LR__[4];
-    result__[ 11  ] = -t11 * t37 - t8 * t35 + LL__[4];
-    result__[ 12  ] = -t11 * t35 + t8 * t37 + LL__[5];
-    result__[ 13  ] = LR__[6];
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "jump_eval", 14, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::DjumpDxlp_numRows() const
-  { return 14; }
-
-  integer
-  CNOC::DjumpDxlp_numCols() const
-  { return 28; }
-
-  integer
-  CNOC::DjumpDxlp_nnz() const
-  { return 30; }
-
-  void
-  CNOC::DjumpDxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 3   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 16  ;
-    iIndex[5 ] = 3   ; jIndex[5 ] = 2   ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 17  ;
-    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
-    iIndex[9 ] = 4   ; jIndex[9 ] = 5   ;
-    iIndex[10] = 4   ; jIndex[10] = 18  ;
-    iIndex[11] = 5   ; jIndex[11] = 4   ;
-    iIndex[12] = 5   ; jIndex[12] = 5   ;
-    iIndex[13] = 5   ; jIndex[13] = 19  ;
-    iIndex[14] = 6   ; jIndex[14] = 13  ;
-    iIndex[15] = 7   ; jIndex[15] = 14  ;
-    iIndex[16] = 8   ; jIndex[16] = 15  ;
-    iIndex[17] = 9   ; jIndex[17] = 9   ;
-    iIndex[18] = 9   ; jIndex[18] = 23  ;
-    iIndex[19] = 9   ; jIndex[19] = 24  ;
-    iIndex[20] = 10  ; jIndex[20] = 10  ;
-    iIndex[21] = 10  ; jIndex[21] = 23  ;
-    iIndex[22] = 10  ; jIndex[22] = 24  ;
-    iIndex[23] = 11  ; jIndex[23] = 11  ;
-    iIndex[24] = 11  ; jIndex[24] = 25  ;
-    iIndex[25] = 11  ; jIndex[25] = 26  ;
-    iIndex[26] = 12  ; jIndex[26] = 12  ;
-    iIndex[27] = 12  ; jIndex[27] = 25  ;
-    iIndex[28] = 12  ; jIndex[28] = 26  ;
-    iIndex[29] = 13  ; jIndex[29] = 27  ;
-  }
-
-  void
-  CNOC::DjumpDxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
-    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->getSegmentByIndex(i_segment_left);
-    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = 1;
-    result__[ 1   ] = 1;
-    real_type t2   = ALIAS_theta_L(QL__[0]);
-    real_type t4   = ALIAS_theta_R(QR__[0]);
-    real_type t5   = t2 - t4;
-    real_type t6   = cos(t5);
-    result__[ 2   ] = -t6;
-    result__[ 3   ] = sin(t5);
-    result__[ 4   ] = 1;
-    result__[ 5   ] = -result__[3];
-    result__[ 6   ] = result__[2];
-    result__[ 7   ] = 1;
-    result__[ 8   ] = result__[6];
-    result__[ 9   ] = result__[3];
-    result__[ 10  ] = 1;
-    result__[ 11  ] = result__[5];
-    result__[ 12  ] = result__[8];
-    result__[ 13  ] = 1;
-    result__[ 14  ] = 1;
-    result__[ 15  ] = 1;
-    result__[ 16  ] = 1;
-    result__[ 17  ] = 1;
-    result__[ 18  ] = result__[12];
-    result__[ 19  ] = result__[11];
-    result__[ 20  ] = 1;
-    result__[ 21  ] = result__[9];
-    result__[ 22  ] = result__[18];
-    result__[ 23  ] = 1;
-    result__[ 24  ] = result__[22];
-    result__[ 25  ] = result__[19];
-    result__[ 26  ] = 1;
-    result__[ 27  ] = result__[21];
-    result__[ 28  ] = result__[24];
-    result__[ 29  ] = 1;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 30, i_segment_left, i_segment_right );
   }
 
 }

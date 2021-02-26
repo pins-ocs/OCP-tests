@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus03.hh                                              |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -233,12 +233,6 @@ namespace SingularLuus03Define {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     void
     get_names( GenericContainer & out ) const;
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // do some check on the computed solution
-    SINGULARLUUS03_API_DLL
-    void
-    diagnostic( GenericContainer const & gc_solution );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Continuation phase update

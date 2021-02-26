@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 25/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type vFmax = 10;
     real_type h0 = 0.1;
+    real_type vFmax = 10;
     real_type epsilon0 = 0.1;
     integer InfoLevel = 4;
 
@@ -157,8 +157,8 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta"] = 0;
     data_clip["h"] = h0;
+    data_clip["delta"] = 0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
@@ -177,8 +177,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFclip_data.Mesh["s0"] = 0;
-BangBangFclip_data.Mesh["segments"][0]["n"] = 400;
 BangBangFclip_data.Mesh["segments"][0]["length"] = 1;
+BangBangFclip_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers
@@ -203,7 +203,7 @@ BangBangFclip_data.Mesh["segments"][0]["length"] = 1;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

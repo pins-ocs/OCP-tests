@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type g = 9.81;
     real_type yf = -2;
-    real_type Tf = (-2.0*yf/g)^(1/2.0);
     real_type xf = 5;
+    real_type g = 9.81;
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
+    real_type Tf = (-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -164,8 +164,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Brachiostocrona2_data.Mesh["s0"] = 0;
-Brachiostocrona2_data.Mesh["segments"][0]["length"] = 1;
 Brachiostocrona2_data.Mesh["segments"][0]["n"] = 500;
+Brachiostocrona2_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -190,7 +190,7 @@ Brachiostocrona2_data.Mesh["segments"][0]["n"] = 500;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

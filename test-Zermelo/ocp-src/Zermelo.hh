@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo.hh                                                     |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -246,12 +246,6 @@ namespace ZermeloDefine {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     void
     get_names( GenericContainer & out ) const;
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // do some check on the computed solution
-    ZERMELO_API_DLL
-    void
-    diagnostic( GenericContainer const & gc_solution );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Continuation phase update

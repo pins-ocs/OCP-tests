@@ -90,7 +90,11 @@ ay_limit = {
 }
 
 User class (pointer)
-User function `pToolPath2D`: Mesh: toolPath2D  num. segments = 20 num. nodes = 2020
+
+User function `pToolPath2D`
+BEGIN Mesh[toolPath2D]
+num. segments = 20
+num. nodes = 2020
 Segment N.0
 s0 = 0 length = 0.030066592756745815 npts = 101 no data set
 Segment N.1
@@ -131,6 +135,7 @@ Segment N.18
 s0 = 0.43792161313481365 length = 0.030066592756745836 npts = 101 no data set
 Segment N.19
 s0 = 0.4679882058915595 length = 0.03006659275674578 npts = 101 no data set
+END Mesh[toolPath2D]
 
 Model Parameters
 ....................................an_f = 0
@@ -219,7 +224,7 @@ Hyness --- start iterations ---
 [ 48,  1] (1.23e-09 ,5.47e-14 ) [6.97e-08 ,1.11e-11 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 2.09[sec]     timeout        = 0 [ms]
+Elapsed Time   = 0.996[sec]    timeout        = 0 [ms]
 iteration      = 48            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 28292
 max acc. iter. = 800           N. System pars = 4038

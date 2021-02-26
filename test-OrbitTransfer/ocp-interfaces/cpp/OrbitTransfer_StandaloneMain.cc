@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -54,9 +54,9 @@ main() {
     real_type m0 = 1;
     real_type mu = 1;
     real_type tf = 16.60*(r0^3/mu)^(1/2.0);
+    real_type v0 = (mu/r0)^(1/2.0);
     real_type T = 0.1405e-1*m0*mu/r0^2;
     real_type mdot = 0.533*T*(mu/r0)^(1/2.0);
-    real_type v0 = (mu/r0)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -194,7 +194,7 @@ OrbitTransfer_data.Mesh["segments"][0]["length"] = 1;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

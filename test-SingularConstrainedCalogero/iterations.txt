@@ -23,9 +23,14 @@ uMaxBound = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 601
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 601
 Segment N.0
 s0 = 0 length = 3 npts = 601 no data set
+END Mesh[mesh]
 
 Model Parameters
 .................................tol_max = 0.01
@@ -91,11 +96,11 @@ Hyness --- start iterations ---
 [ 25,  1] (3.01e-10 ,1.24e-12 ) [6.63e-08 ,7.82e-12 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 63.7[ms]      timeout        = 0 [ms]
+Elapsed Time   = 43.9[ms]      timeout        = 0 [ms]
 iteration      = 25            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 1204
 max acc. iter. = 800           N. System pars = 600
-Converged      = YES           Memory Used    = 137Kb (+23bytes)
+Converged      = YES           Memory Used    = 136Kb (+83bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

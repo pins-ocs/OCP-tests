@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_epsi = 0.01;
     real_type epsilon_X = 1e-07;
-    real_type Tf = 6;
     real_type u_tol = 0.01;
+    real_type Tf = 6;
+    real_type u_epsi = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -169,8 +169,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularLuus04_data.Mesh["s0"] = 0;
-SingularLuus04_data.Mesh["segments"][0]["length"] = Tf;
 SingularLuus04_data.Mesh["segments"][0]["n"] = 2000;
+SingularLuus04_data.Mesh["segments"][0]["length"] = Tf;
 
 
     // alias for user object classes passed as pointers
@@ -195,7 +195,7 @@ SingularLuus04_data.Mesh["segments"][0]["n"] = 2000;
 
     // get solution (even if not converged)
     model.get_solution( gc_solution );
-    model.diagnostic( gc_data );
+    model.diagnostic( gc_data, gc_solution );
 
     std::ofstream file;
     if ( ok ) {

@@ -32,9 +32,14 @@ u3Control = {
 }
 
 User class (pointer)
-User function `pMesh`: Mesh: mesh  num. segments = 1 num. nodes = 1001
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 1001
 Segment N.0
 s0 = 0 length = 1 npts = 1001 no data set
+END Mesh[mesh]
 
 Model Parameters
 ..................................Tguess = 10
@@ -718,7 +723,7 @@ Hyness --- start iterations ---
 [525,  1] (7.78e-11 ,4.06e-15 ) [3.39e-10 ,4.39e-14 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 5.65[sec]     timeout        = 0 [ms]
+Elapsed Time   = 3.83[sec]     timeout        = 0 [ms]
 iteration      = 525           tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 12023
 max acc. iter. = 800           N. System pars = 3000

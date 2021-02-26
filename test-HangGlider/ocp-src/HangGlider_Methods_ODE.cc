@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 19/1/2021                                        |
+ |  version: 1.0   date 26/2/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -155,7 +155,7 @@ namespace HangGliderDefine {
     real_type t12  = t11 * t11;
     real_type t15  = t12 * ModelPars[6] + ModelPars[5];
     real_type t16  = Dfun(t4, t5, t6);
-    real_type t17  = t15 * t16;
+    real_type t17  = t16 * t15;
     real_type t19  = Lfun(t4, t5, t6);
     real_type t20  = t19 * t11;
     real_type t21  = w(t4, t6);
