@@ -1,6 +1,14 @@
+require "colorize"
 
 def do_test(dir)
-  system("cd #{dir}; rake clobber maple; rake clean main; ./bin/main | tee iterations.txt; cd .." ) ;
+  case RUBY_PLATFORM
+  when /mingw|mswin|cygwin/
+    cmd = "cd #{dir} & rake clobber maple & rake clean main & bin/main.exe | perl -ne \"print $_; print STDERR $_;\" 2> iterations.txt & cd ..";
+  else
+    cmd = "cd #{dir}; rake clobber maple; rake clean main; ./bin/main | tee iterations.txt; cd ..";
+  end
+  puts cmd.yellow
+  system(cmd);
 end
 
 #List of test that are excluded from
