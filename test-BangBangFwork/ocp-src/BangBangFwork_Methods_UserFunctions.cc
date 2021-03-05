@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -61,32 +61,56 @@ namespace BangBangFworkDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  BangBangFwork::fMax( real_type zeta__XO ) const {
-    real_type t2   = sin(zeta__XO);
-    real_type t6   = sin(10 * zeta__XO);
-    return t2 * ModelPars[0] + t6 * ModelPars[1] + 1;
+  BangBangFwork::fMax( real_type xo__zeta ) const {
+    real_type t2   = sin(xo__zeta);
+    real_type t6   = sin(10 * xo__zeta);
+    real_type result__ = t2 * ModelPars[iM_amp1] + t6 * ModelPars[iM_amp2] + 1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_fMax( zeta={} ) return {}\n",
+        xo__zeta, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  BangBangFwork::fMax_D( real_type zeta__XO ) const {
-    real_type t1   = ModelPars[1];
-    real_type t2   = cos(zeta__XO);
+  BangBangFwork::fMax_D( real_type xo__zeta ) const {
+    real_type t1   = ModelPars[iM_amp2];
+    real_type t2   = cos(xo__zeta);
     real_type t3   = t2 * t2;
     real_type t4   = t3 * t3;
     real_type t5   = t4 * t4;
-    return 11200 * t4 * t3 * t1 + 5120 * t5 * t3 * t1 + 500 * t3 * t1 - 4000 * t4 * t1 - 12800 * t5 * t1 + t2 * ModelPars[0] - 10 * t1;
+    real_type result__ = 11200 * t4 * t3 * t1 + 5120 * t5 * t3 * t1 + 500 * t3 * t1 - 4000 * t4 * t1 - 12800 * t5 * t1 + t2 * ModelPars[iM_amp1] - 10 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_fMax_D( zeta={} ) return {}\n",
+        xo__zeta, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  BangBangFwork::fMax_DD( real_type zeta__XO ) const {
-    real_type t1   = sin(zeta__XO);
-    real_type t2   = cos(zeta__XO);
+  BangBangFwork::fMax_DD( real_type xo__zeta ) const {
+    real_type t1   = sin(xo__zeta);
+    real_type t2   = cos(xo__zeta);
     real_type t3   = t2 * t2;
     real_type t4   = t3 * t3;
     real_type t5   = t4 * t4;
-    real_type t7   = ModelPars[1];
+    real_type t7   = ModelPars[iM_amp2];
     real_type t10  = t3 * t2;
-    return -(-102400 * t7 * t4 * t10 + 67200 * t7 * t4 * t2 + 51200 * t7 * t5 * t2 - 16000 * t7 * t10 + 1000 * t7 * t2 + ModelPars[0]) * t1;
+    real_type result__ = -(-102400 * t7 * t4 * t10 + 67200 * t7 * t4 * t2 + 51200 * t7 * t5 * t2 - 16000 * t7 * t10 + 1000 * t7 * t2 + ModelPars[iM_amp1]) * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_fMax_DD( zeta={} ) return {}\n",
+        xo__zeta, result__
+      );
+    }
+    return result__;
   }
 
 }

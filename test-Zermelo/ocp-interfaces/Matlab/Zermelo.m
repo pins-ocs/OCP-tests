@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Zermelo.m                                                      %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 6/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -647,56 +647,56 @@ classdef Zermelo < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = velX( self, x__XO, y__XO )
-      res = Zermelo_Mex('velX', self.objectHandle, x__XO, y__XO );
+    function res = velX( self, xo__x, xo__y )
+      res = Zermelo_Mex('velX', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velX_D_1( self, x__XO, y__XO )
-      res = Zermelo_Mex('velX_D_1', self.objectHandle, x__XO, y__XO );
+    function res = velX_D_1( self, xo__x, xo__y )
+      res = Zermelo_Mex('velX_D_1', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velX_D_2( self, x__XO, y__XO )
-      res = Zermelo_Mex('velX_D_2', self.objectHandle, x__XO, y__XO );
+    function res = velX_D_2( self, xo__x, xo__y )
+      res = Zermelo_Mex('velX_D_2', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velX_D_1_1( self, x__XO, y__XO )
-      res = Zermelo_Mex('velX_D_1_1', self.objectHandle, x__XO, y__XO );
+    function res = velX_D_1_1( self, xo__x, xo__y )
+      res = Zermelo_Mex('velX_D_1_1', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velX_D_1_2( self, x__XO, y__XO )
-      res = Zermelo_Mex('velX_D_1_2', self.objectHandle, x__XO, y__XO );
+    function res = velX_D_1_2( self, xo__x, xo__y )
+      res = Zermelo_Mex('velX_D_1_2', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velX_D_2_2( self, x__XO, y__XO )
-      res = Zermelo_Mex('velX_D_2_2', self.objectHandle, x__XO, y__XO );
+    function res = velX_D_2_2( self, xo__x, xo__y )
+      res = Zermelo_Mex('velX_D_2_2', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velY( self, x__XO, y__XO )
-      res = Zermelo_Mex('velY', self.objectHandle, x__XO, y__XO );
+    function res = velY( self, xo__x, xo__y )
+      res = Zermelo_Mex('velY', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velY_D_1( self, x__XO, y__XO )
-      res = Zermelo_Mex('velY_D_1', self.objectHandle, x__XO, y__XO );
+    function res = velY_D_1( self, xo__x, xo__y )
+      res = Zermelo_Mex('velY_D_1', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velY_D_2( self, x__XO, y__XO )
-      res = Zermelo_Mex('velY_D_2', self.objectHandle, x__XO, y__XO );
+    function res = velY_D_2( self, xo__x, xo__y )
+      res = Zermelo_Mex('velY_D_2', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velY_D_1_1( self, x__XO, y__XO )
-      res = Zermelo_Mex('velY_D_1_1', self.objectHandle, x__XO, y__XO );
+    function res = velY_D_1_1( self, xo__x, xo__y )
+      res = Zermelo_Mex('velY_D_1_1', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velY_D_1_2( self, x__XO, y__XO )
-      res = Zermelo_Mex('velY_D_1_2', self.objectHandle, x__XO, y__XO );
+    function res = velY_D_1_2( self, xo__x, xo__y )
+      res = Zermelo_Mex('velY_D_1_2', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = velY_D_2_2( self, x__XO, y__XO )
-      res = Zermelo_Mex('velY_D_2_2', self.objectHandle, x__XO, y__XO );
+    function res = velY_D_2_2( self, xo__x, xo__y )
+      res = Zermelo_Mex('velY_D_2_2', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = arctan2( self, y__XO, x__XO )
-      res = Zermelo_Mex('arctan2', self.objectHandle, y__XO, x__XO );
+    function res = arctan2( self, xo__y, xo__x )
+      res = Zermelo_Mex('arctan2', self.objectHandle, xo__y, xo__x );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

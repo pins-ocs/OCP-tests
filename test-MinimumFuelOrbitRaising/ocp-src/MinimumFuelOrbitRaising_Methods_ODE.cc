@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MinimumFuelOrbitRaising_Methods.cc                             |
+ |  file: MinimumFuelOrbitRaising_Methods_ODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,16 +65,16 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
-    real_type t1   = X__[2];
+    result__[ 0   ] = X__[iX_x2];
+    real_type t1   = X__[iX_x3];
     real_type t2   = t1 * t1;
-    real_type t4   = X__[0];
+    real_type t4   = X__[iX_x1];
     real_type t5   = 1.0 / t4;
     real_type t7   = t4 * t4;
-    real_type t9   = ModelPars[0];
-    real_type t10  = U__[0];
+    real_type t9   = ModelPars[iM_T];
+    real_type t10  = U__[iU_u];
     real_type t11  = sin(t10);
-    real_type t17  = 1.0 / (-Q__[0] * ModelPars[1] + 1);
+    real_type t17  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_md] + 1);
     result__[ 1   ] = t5 * t2 * t1 - 1.0 / t7 + t17 * t11 * t9;
     real_type t21  = cos(t10);
     result__[ 2   ] = -t5 * t1 * result__[0] + t17 * t21 * t9;
@@ -123,15 +123,15 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    real_type t1   = X__[2];
+    real_type t1   = X__[iX_x3];
     real_type t2   = t1 * t1;
-    real_type t4   = X__[0];
+    real_type t4   = X__[iX_x1];
     real_type t5   = t4 * t4;
     real_type t6   = 1.0 / t5;
     result__[ 1   ] = -t6 * t2 * t1 + 2 / t5 / t4;
     real_type t11  = 1.0 / t4;
     result__[ 2   ] = 3 * t11 * t2;
-    real_type t13  = X__[1];
+    real_type t13  = X__[iX_x2];
     result__[ 3   ] = t6 * t1 * t13;
     result__[ 4   ] = -t11 * t1;
     result__[ 5   ] = -t11 * t13;
@@ -208,10 +208,10 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = ModelPars[0];
-    real_type t2   = U__[0];
+    real_type t1   = ModelPars[iM_T];
+    real_type t2   = U__[iU_u];
     real_type t3   = cos(t2);
-    real_type t9   = 1.0 / (-Q__[0] * ModelPars[1] + 1);
+    real_type t9   = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_md] + 1);
     result__[ 0   ] = t9 * t3 * t1;
     real_type t10  = sin(t2);
     result__[ 1   ] = -t9 * t10 * t1;
@@ -269,4 +269,4 @@ namespace MinimumFuelOrbitRaisingDefine {
 
 }
 
-// EOF: MinimumFuelOrbitRaising_Methods.cc
+// EOF: MinimumFuelOrbitRaising_Methods_ODE.cc

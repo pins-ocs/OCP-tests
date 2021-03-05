@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Farmer_Methods.cc                                              |
+ |  file: Farmer_Methods_ODE.cc                                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -105,13 +105,13 @@ namespace FarmerDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = -(X__[0] - U__[0]) / ModelPars[5];
-    result__[ 1   ] = -(X__[1] - U__[1]) / ModelPars[6];
-    real_type t13  = X__[2];
-    result__[ 2   ] = -1.0 / ModelPars[7] * (t13 - U__[2]);
-    real_type t19  = X__[4];
-    result__[ 3   ] = -1.0 / ModelPars[8] * (-t13 + t19);
-    result__[ 4   ] = -1.0 / ModelPars[9] * (t19 - U__[3]);
+    result__[ 0   ] = -(X__[iX_x1] - U__[iU_x1__o]) / ModelPars[iM_tau__1];
+    result__[ 1   ] = -(X__[iX_x2] - U__[iU_x2__o]) / ModelPars[iM_tau__2];
+    real_type t13  = X__[iX_x3];
+    result__[ 2   ] = -1.0 / ModelPars[iM_tau__3] * (t13 - U__[iU_x3__o]);
+    real_type t19  = X__[iX_x4];
+    result__[ 3   ] = -1.0 / ModelPars[iM_tau__4] * (-t13 + t19);
+    result__[ 4   ] = -1.0 / ModelPars[iM_tau__5] * (t19 - U__[iU_x4__o]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 5, i_segment );
   }
@@ -156,12 +156,12 @@ namespace FarmerDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = -1.0 / ModelPars[5];
-    result__[ 1   ] = -1.0 / ModelPars[6];
-    result__[ 2   ] = -1.0 / ModelPars[7];
-    result__[ 3   ] = 1.0 / ModelPars[8];
+    result__[ 0   ] = -1.0 / ModelPars[iM_tau__1];
+    result__[ 1   ] = -1.0 / ModelPars[iM_tau__2];
+    result__[ 2   ] = -1.0 / ModelPars[iM_tau__3];
+    result__[ 3   ] = 1.0 / ModelPars[iM_tau__4];
     result__[ 4   ] = -result__[3];
-    result__[ 5   ] = -1.0 / ModelPars[9];
+    result__[ 5   ] = -1.0 / ModelPars[iM_tau__5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 6, i_segment );
   }
@@ -237,10 +237,10 @@ namespace FarmerDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 1.0 / ModelPars[5];
-    result__[ 1   ] = 1.0 / ModelPars[6];
-    result__[ 2   ] = 1.0 / ModelPars[7];
-    result__[ 3   ] = 1.0 / ModelPars[9];
+    result__[ 0   ] = 1.0 / ModelPars[iM_tau__1];
+    result__[ 1   ] = 1.0 / ModelPars[iM_tau__2];
+    result__[ 2   ] = 1.0 / ModelPars[iM_tau__3];
+    result__[ 3   ] = 1.0 / ModelPars[iM_tau__5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 4, i_segment );
   }
@@ -299,4 +299,4 @@ namespace FarmerDefine {
 
 }
 
-// EOF: Farmer_Methods.cc
+// EOF: Farmer_Methods_ODE.cc

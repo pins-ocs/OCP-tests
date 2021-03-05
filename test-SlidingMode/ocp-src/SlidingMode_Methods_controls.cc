@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SlidingMode_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,8 +78,8 @@ namespace SlidingModeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ALIAS_uControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = L__[0] + t3;
+    real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = L__[iL_lambda1__xo] + t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -161,7 +161,7 @@ namespace SlidingModeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1_1(U__[0], -1, 1);
+    result__[ 0   ] = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -196,7 +196,7 @@ namespace SlidingModeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_u ] = uControl.solve(-L__[0], -1, 1);
+    U__[ iU_u ] = uControl.solve(-L__[iL_lambda1__xo], -1, 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -247,7 +247,7 @@ namespace SlidingModeDefine {
     real_type const * L__ = NODE__.lambda;
     DuDxlp(0, 0) = 0;
     DuDxlp(0, 1) = 0;
-    DuDxlp(0, 2) = -uControl.solve_rhs(-L__[0], -1, 1);
+    DuDxlp(0, 2) = -uControl.solve_rhs(-L__[iL_lambda1__xo], -1, 1);
     DuDxlp(0, 3) = 0;
   }
 

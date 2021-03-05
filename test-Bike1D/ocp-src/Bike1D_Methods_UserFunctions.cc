@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods1.cc                                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,18 +79,42 @@ namespace Bike1DDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  Bike1D::Tmax_normalized( real_type v__XO ) const {
-    return ModelPars[0] / ModelPars[2] / ModelPars[1] * (1 - v__XO / ModelPars[8]);
+  Bike1D::Tmax_normalized( real_type xo__v ) const {
+    real_type result__ = ModelPars[iM_Pmax] / ModelPars[iM_m] / ModelPars[iM_g] * (1 - xo__v / ModelPars[iM_vmax]);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Tmax_normalized( v={} ) return {}\n",
+        xo__v, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Bike1D::Tmax_normalized_D( real_type v__XO ) const {
-    return -ModelPars[0] / ModelPars[2] / ModelPars[1] / ModelPars[8];
+  Bike1D::Tmax_normalized_D( real_type xo__v ) const {
+    real_type result__ = -ModelPars[iM_Pmax] / ModelPars[iM_m] / ModelPars[iM_g] / ModelPars[iM_vmax];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Tmax_normalized_D( v={} ) return {}\n",
+        xo__v, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Bike1D::Tmax_normalized_DD( real_type v__XO ) const {
-    return 0;
+  Bike1D::Tmax_normalized_DD( real_type xo__v ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Tmax_normalized_DD( v={} ) return {}\n",
+        xo__v, result__
+      );
+    }
+    return result__;
   }
 
 }

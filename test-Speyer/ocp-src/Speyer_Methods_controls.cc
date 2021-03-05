@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Speyer_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,7 +67,7 @@ namespace SpeyerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ModelPars[0] * U__[0] + L__[1];
+    result__[ 0   ] = ModelPars[iM_b] * U__[iU_u] + L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -149,7 +149,7 @@ namespace SpeyerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ModelPars[0];
+    result__[ 0   ] = ModelPars[iM_b];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -184,7 +184,7 @@ namespace SpeyerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_u ] = -L__[1] / ModelPars[0];
+    U__[ iU_u ] = -L__[iL_lambda2__xo] / ModelPars[iM_b];
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -236,7 +236,7 @@ namespace SpeyerDefine {
     DuDxlp(0, 0) = 0;
     DuDxlp(0, 1) = 0;
     DuDxlp(0, 2) = 0;
-    DuDxlp(0, 3) = -1.0 / ModelPars[0];
+    DuDxlp(0, 3) = -1.0 / ModelPars[iM_b];
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

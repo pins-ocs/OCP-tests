@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -176,11 +176,11 @@ namespace PointMassCarModel_4Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t3   = exp(X__[6]);
-    real_type t8   = ALIAS_v__fxControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = ModelPars[16] * t3 * L__[5] + t8 * t3;
-    real_type t15  = ALIAS_v__OmegaControl_D_1(U__[1], -1, 1);
-    result__[ 1   ] = ModelPars[15] * t3 * L__[4] + t15 * t3;
+    real_type t3   = exp(X__[iX_log_inv_Vseg]);
+    real_type t8   = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
+    result__[ 0   ] = ModelPars[iM_v__fx__max] * t3 * L__[iL_lambda6__xo] + t8 * t3;
+    real_type t15  = ALIAS_v__OmegaControl_D_1(U__[iU_v__Omega], -1, 1);
+    result__[ 1   ] = ModelPars[iM_v__Omega__max] * t3 * L__[iL_lambda5__xo] + t15 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -224,14 +224,14 @@ namespace PointMassCarModel_4Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t3   = exp(X__[6]);
-    real_type t5   = ModelPars[16];
-    real_type t8   = ALIAS_v__fxControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = t5 * t3 * L__[5] + t8 * t3;
+    real_type t3   = exp(X__[iX_log_inv_Vseg]);
+    real_type t5   = ModelPars[iM_v__fx__max];
+    real_type t8   = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
+    result__[ 0   ] = t5 * t3 * L__[iL_lambda6__xo] + t8 * t3;
     result__[ 1   ] = t5 * t3;
-    real_type t12  = ModelPars[15];
-    real_type t15  = ALIAS_v__OmegaControl_D_1(U__[1], -1, 1);
-    result__[ 2   ] = t12 * t3 * L__[4] + t15 * t3;
+    real_type t12  = ModelPars[iM_v__Omega__max];
+    real_type t15  = ALIAS_v__OmegaControl_D_1(U__[iU_v__Omega], -1, 1);
+    result__[ 2   ] = t12 * t3 * L__[iL_lambda5__xo] + t15 * t3;
     result__[ 3   ] = t12 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 4, i_segment );
@@ -274,10 +274,10 @@ namespace PointMassCarModel_4Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t2   = exp(X__[6]);
-    real_type t4   = ALIAS_v__fxControl_D_1_1(U__[0], -1, 1);
+    real_type t2   = exp(X__[iX_log_inv_Vseg]);
+    real_type t4   = ALIAS_v__fxControl_D_1_1(U__[iU_v__fx], -1, 1);
     result__[ 0   ] = t4 * t2;
-    real_type t6   = ALIAS_v__OmegaControl_D_1_1(U__[1], -1, 1);
+    real_type t6   = ALIAS_v__OmegaControl_D_1_1(U__[iU_v__Omega], -1, 1);
     result__[ 1   ] = t6 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
@@ -313,8 +313,8 @@ namespace PointMassCarModel_4Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    U__[ iU_v__fx    ] = v__fxControl.solve(-L__[5] * ModelPars[16], -1, 1);
-    U__[ iU_v__Omega ] = v__OmegaControl.solve(-L__[4] * ModelPars[15], -1, 1);
+    U__[ iU_v__fx    ] = v__fxControl.solve(-L__[iL_lambda6__xo] * ModelPars[iM_v__fx__max], -1, 1);
+    U__[ iU_v__Omega ] = v__OmegaControl.solve(-L__[iL_lambda5__xo] * ModelPars[iM_v__Omega__max], -1, 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -399,8 +399,8 @@ namespace PointMassCarModel_4Define {
     DuDxlp(0, 10) = 0;
     DuDxlp(1, 10) = 0;
     DuDxlp(0, 11) = 0;
-    DuDxlp(1, 11) = -v__OmegaControl.solve_rhs(-L__[4] * ModelPars[15], -1, 1) * ModelPars[15];
-    DuDxlp(0, 12) = -v__fxControl.solve_rhs(-L__[5] * ModelPars[16], -1, 1) * ModelPars[16];
+    DuDxlp(1, 11) = -v__OmegaControl.solve_rhs(-L__[iL_lambda5__xo] * ModelPars[iM_v__Omega__max], -1, 1) * ModelPars[iM_v__Omega__max];
+    DuDxlp(0, 12) = -v__fxControl.solve_rhs(-L__[iL_lambda6__xo] * ModelPars[iM_v__fx__max], -1, 1) * ModelPars[iM_v__fx__max];
     DuDxlp(1, 12) = 0;
     DuDxlp(0, 13) = 0;
     DuDxlp(1, 13) = 0;

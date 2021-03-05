@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: gtocX_2burn_pars_Guess.cc                                      |
+ |  file: gtocX_2burn_pars_Methods_Guess.cc                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -55,6 +55,8 @@ namespace gtocX_2burn_parsDefine {
     P__[ iP_p ] = p_guess(0);
     P__[ iP_h ] = h_guess(0);
     P__[ iP_k ] = k_guess(0);
+    if ( m_debug )
+      Mechatronix::check( P__.pointer(), "p_guess_eval", 3 );
   }
 
   void
@@ -66,13 +68,17 @@ namespace gtocX_2burn_parsDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = Q__[0];
-    real_type t3   = ModelPars[2];
-    real_type t7   = t3 * (1 - t1) + ModelPars[1] * t1;
+    real_type t1   = Q__[iQ_zeta];
+    real_type t3   = ModelPars[iM_time_i];
+    real_type t7   = t3 * (1 - t1) + ModelPars[iM_time_f] * t1;
     X__[ iX_f ] = f_guess(t7);
     X__[ iX_g ] = g_guess(t7);
     X__[ iX_L ] = L_guess(t7, t3);
 
+    if ( m_debug )
+      Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 3 );
+    if ( m_debug )
+      Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 3 );
   }
 
   /*\
@@ -83,8 +89,15 @@ namespace gtocX_2burn_parsDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__lt(A,B) ( (A) <  (B) )
-  #define Xoptima__check__le(A,B) ( (A) <= (B) )
+  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+
 
   // Node check strings
   #define __message_node_check_0 "0 < 1+f(zeta)*cos(L(zeta))+g(zeta)*sin(L(zeta))"
@@ -93,13 +106,12 @@ namespace gtocX_2burn_parsDefine {
   #define __message_cell_check_0 "0 < 1+f(zeta)*cos(L(zeta))+g(zeta)*sin(L(zeta))"
 
   // Pars check strings
-  #define __message_parameter_check_0 "0 < p"
+  #define __message_cell_check_0 "0 < p"
 
   bool
   gtocX_2burn_pars::p_check( P_const_pointer_type P__ ) const {
-    bool ok = true;
-    ok = ok && Xoptima__check__lt(0, P__[0]);
-    return ok;
+    Xoptima__check__pars__lt(0, P__[iP_p], __message_cell_check_0);
+    return true;
   }
 
   bool
@@ -108,17 +120,16 @@ namespace gtocX_2burn_parsDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[2];
+    real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
-    ok = ok && Xoptima__check__lt(0, t3 * X__[0] + t6 * X__[1] + 1);
-    return ok;
+    Xoptima__check__node__lt(0, t3 * X__[iX_f] + t6 * X__[iX_g] + 1, __message_node_check_0);
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -129,17 +140,16 @@ namespace gtocX_2burn_parsDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[2];
+    real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
-    ok = ok && Xoptima__check__lt(0, t3 * X__[0] + t6 * X__[1] + 1);
-    return ok;
+    Xoptima__check__cell__lt(0, t3 * X__[iX_f] + t6 * X__[iX_g] + 1, __message_cell_check_0);
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -151,7 +161,6 @@ namespace gtocX_2burn_parsDefine {
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
     NodeType2 NODE__;
     real_type Q__[1];
     real_type X__[3];
@@ -231,4 +240,4 @@ namespace gtocX_2burn_parsDefine {
 
 }
 
-// EOF: gtocX_2burn_pars_Guess.cc
+// EOF: gtocX_2burn_pars_Methods_Guess.cc

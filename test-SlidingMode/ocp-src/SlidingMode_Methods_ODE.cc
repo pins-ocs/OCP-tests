@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SlidingMode_Methods.cc                                         |
+ |  file: SlidingMode_Methods_ODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -76,8 +76,8 @@ namespace SlidingModeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = U__[0];
-    result__[ 1   ] = X__[0] * X__[0];
+    result__[ 0   ] = U__[iU_u];
+    result__[ 1   ] = X__[iX_x] * X__[iX_x];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
   }
@@ -117,7 +117,7 @@ namespace SlidingModeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 2 * X__[0];
+    result__[ 0   ] = 2 * X__[iX_x];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 1, i_segment );
   }
@@ -243,4 +243,4 @@ namespace SlidingModeDefine {
 
 }
 
-// EOF: SlidingMode_Methods.cc
+// EOF: SlidingMode_Methods_ODE.cc

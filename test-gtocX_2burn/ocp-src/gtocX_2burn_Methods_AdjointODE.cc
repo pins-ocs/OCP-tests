@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,26 +73,26 @@ namespace gtocX_2burnDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = 1 - ModelPars[3];
-    real_type t3   = X__[0];
-    real_type t4   = Q__[0];
-    real_type t6   = ModelPars[2];
-    real_type t8   = ModelPars[1];
+    real_type t2   = 1 - ModelPars[iM_w_guess];
+    real_type t3   = X__[iX_p];
+    real_type t4   = Q__[iQ_zeta];
+    real_type t6   = ModelPars[iM_time_i];
+    real_type t8   = ModelPars[iM_time_f];
     real_type t10  = t6 * (1 - t4) + t8 * t4;
     real_type t11  = p_guess(t10);
     real_type t12  = 1.0 / t11;
     real_type t19  = t8 - t6;
-    real_type t20  = t19 * L__[1];
+    real_type t20  = t19 * L__[iL_lambda2__xo];
     real_type t21  = sqrt(t3);
     real_type t22  = 1.0 / t21;
-    real_type t24  = ModelPars[0];
+    real_type t24  = ModelPars[iM_muS];
     real_type t25  = sqrt(t24);
     real_type t26  = 1.0 / t25;
-    real_type t27  = ModelPars[6];
+    real_type t27  = ModelPars[iM_w_nonlin];
     real_type t28  = t27 * t26;
-    real_type t29  = X__[1];
-    real_type t30  = X__[2];
-    real_type t31  = X__[5];
+    real_type t29  = X__[iX_f];
+    real_type t30  = X__[iX_g];
+    real_type t31  = X__[iX_L];
     real_type t32  = ray(t3, t29, t30, t31);
     real_type t33  = acceleration_r(t32, t24);
     real_type t34  = sin(t31);
@@ -102,11 +102,11 @@ namespace gtocX_2burnDefine {
     real_type t41  = acceleration_r_D_1(t32, t24);
     real_type t42  = t41 * t27;
     real_type t43  = ray_D_1(t3, t29, t30, t31);
-    real_type t48  = t19 * L__[2];
+    real_type t48  = t19 * L__[iL_lambda3__xo];
     real_type t50  = cos(t31);
     real_type t52  = t50 * t33 * t28;
     real_type t55  = t39 * t48;
-    real_type t60  = t19 * L__[5];
+    real_type t60  = t19 * L__[iL_lambda6__xo];
     real_type t63  = t50 * t29 + t34 * t30 + 1;
     real_type t64  = t63 * t63;
     real_type t65  = t3 * t3;
@@ -121,9 +121,9 @@ namespace gtocX_2burnDefine {
     real_type t97  = ray_D_3(t3, t29, t30, t31);
     result__[ 2   ] = t34 * t72 + (2 * t30 - 2 * t93) * t2 + t34 * t97 * t42 * t40 - t50 * t97 * t42 * t55 + 2 * t34 * t88 * t85;
     real_type t108 = h_guess(t10);
-    result__[ 3   ] = (2 * X__[3] - 2 * t108) * t2;
+    result__[ 3   ] = (2 * X__[iX_h] - 2 * t108) * t2;
     real_type t112 = k_guess(t10);
-    result__[ 4   ] = (2 * X__[4] - 2 * t112) * t2;
+    result__[ 4   ] = (2 * X__[iX_k] - 2 * t112) * t2;
     real_type t117 = -t34 * t29 + t50 * t30;
     real_type t119 = L_guess(t10, t6);
     real_type t123 = ray_D_4(t3, t29, t30, t31);
@@ -184,26 +184,26 @@ namespace gtocX_2burnDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = ModelPars[3];
+    real_type t1   = ModelPars[iM_w_guess];
     real_type t2   = 1 - t1;
-    real_type t3   = Q__[0];
-    real_type t5   = ModelPars[2];
-    real_type t7   = ModelPars[1];
+    real_type t3   = Q__[iQ_zeta];
+    real_type t5   = ModelPars[iM_time_i];
+    real_type t7   = ModelPars[iM_time_f];
     real_type t10  = p_guess(t5 * (1 - t3) + t7 * t3);
     real_type t11  = t10 * t10;
     real_type t16  = t7 - t5;
-    real_type t17  = t16 * L__[1];
-    real_type t18  = X__[0];
+    real_type t17  = t16 * L__[iL_lambda2__xo];
+    real_type t18  = X__[iX_p];
     real_type t19  = sqrt(t18);
     real_type t21  = 1.0 / t19 / t18;
-    real_type t23  = ModelPars[0];
+    real_type t23  = ModelPars[iM_muS];
     real_type t24  = sqrt(t23);
     real_type t25  = 1.0 / t24;
-    real_type t26  = ModelPars[6];
+    real_type t26  = ModelPars[iM_w_nonlin];
     real_type t27  = t26 * t25;
-    real_type t28  = X__[1];
-    real_type t29  = X__[2];
-    real_type t30  = X__[5];
+    real_type t28  = X__[iX_f];
+    real_type t29  = X__[iX_g];
+    real_type t30  = X__[iX_L];
     real_type t31  = ray(t18, t28, t29, t30);
     real_type t32  = acceleration_r(t31, t23);
     real_type t33  = sin(t30);
@@ -221,13 +221,13 @@ namespace gtocX_2burnDefine {
     real_type t50  = t49 * t26;
     real_type t51  = t43 * t43;
     real_type t55  = ray_D_1_1(t18, t28, t29, t30);
-    real_type t60  = t16 * L__[2];
+    real_type t60  = t16 * L__[iL_lambda3__xo];
     real_type t62  = cos(t30);
     real_type t64  = t62 * t32 * t27;
     real_type t67  = t39 * t60;
     real_type t69  = t62 * t43 * t42;
     real_type t71  = t47 * t60;
-    real_type t79  = t16 * L__[5];
+    real_type t79  = t16 * L__[iL_lambda6__xo];
     real_type t80  = t62 * t28;
     real_type t81  = t33 * t29;
     real_type t82  = 1 + t80 + t81;
@@ -515,12 +515,12 @@ namespace gtocX_2burnDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
-    result__[ 3   ] = L__[3];
-    result__[ 4   ] = L__[4];
-    result__[ 5   ] = L__[5];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    result__[ 4   ] = L__[iL_lambda5__xo];
+    result__[ 5   ] = L__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",6, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Crossroad_Methods.cc                                           |
+ |  file: Crossroad_Methods_ODE.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,10 +82,10 @@ namespace CrossroadDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[3];
-    result__[ 0   ] = X__[1] * t1;
-    result__[ 1   ] = X__[2] * t1;
-    result__[ 2   ] = U__[0] * t1;
+    real_type t1   = X__[iX_Ts];
+    result__[ 0   ] = X__[iX_v] * t1;
+    result__[ 1   ] = X__[iX_a] * t1;
+    result__[ 2   ] = U__[iU_jerk] * t1;
     result__[ 3   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
@@ -130,11 +130,11 @@ namespace CrossroadDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[3];
-    result__[ 1   ] = X__[1];
+    result__[ 0   ] = X__[iX_Ts];
+    result__[ 1   ] = X__[iX_v];
     result__[ 2   ] = result__[0];
-    result__[ 3   ] = X__[2];
-    result__[ 4   ] = U__[0];
+    result__[ 3   ] = X__[iX_a];
+    result__[ 4   ] = U__[iU_jerk];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 5, i_segment );
   }
@@ -207,7 +207,7 @@ namespace CrossroadDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[3];
+    result__[ 0   ] = X__[iX_Ts];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 1, i_segment );
   }
@@ -264,4 +264,4 @@ namespace CrossroadDefine {
 
 }
 
-// EOF: Crossroad_Methods.cc
+// EOF: Crossroad_Methods_ODE.cc

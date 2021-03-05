@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,10 +78,10 @@ namespace CatalystDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[1];
-    real_type t4   = X__[0];
-    real_type t12  = ALIAS_uControl_D_1(U__[0], 0, 1);
-    result__[ 0   ] = (10 * t2 - t4) * L__[0] + (t4 - 9 * t2) * L__[1] + t12;
+    real_type t2   = X__[iX_x2];
+    real_type t4   = X__[iX_x1];
+    real_type t12  = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    result__[ 0   ] = (10 * t2 - t4) * L__[iL_lambda1__xo] + (t4 - 9 * t2) * L__[iL_lambda2__xo] + t12;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -125,12 +125,12 @@ namespace CatalystDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[0];
-    real_type t2   = L__[1];
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = L__[iL_lambda2__xo];
     result__[ 0   ] = -t1 + t2;
     result__[ 1   ] = 10 * t1 - 9 * t2;
-    real_type t5   = X__[1];
-    real_type t7   = X__[0];
+    real_type t5   = X__[iX_x2];
+    real_type t7   = X__[iX_x1];
     result__[ 2   ] = 10 * t5 - t7;
     result__[ 3   ] = t7 - 9 * t5;
     if ( m_debug )
@@ -173,7 +173,7 @@ namespace CatalystDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1_1(U__[0], 0, 1);
+    result__[ 0   ] = ALIAS_uControl_D_1_1(U__[iU_u], 0, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -208,9 +208,9 @@ namespace CatalystDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[0];
-    real_type t2   = X__[1];
-    U__[ iU_u ] = uControl.solve(L__[0] * (t1 - 10 * t2) - (t1 - 9 * t2) * L__[1], 0, 1);
+    real_type t1   = X__[iX_x1];
+    real_type t2   = X__[iX_x2];
+    U__[ iU_u ] = uControl.solve(L__[iL_lambda1__xo] * (t1 - 10 * t2) - (t1 - 9 * t2) * L__[iL_lambda2__xo], 0, 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -259,10 +259,10 @@ namespace CatalystDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = uControl.solve_rhs((X__[0] - 10 * X__[1]) * L__[0] - L__[1] * (X__[0] - 9 * X__[1]), 0, 1) * (L__[0] - L__[1]);
-    DuDxlp(0, 1) = uControl.solve_rhs((X__[0] - 10 * X__[1]) * L__[0] - L__[1] * (X__[0] - 9 * X__[1]), 0, 1) * (-10 * L__[0] + 9 * L__[1]);
-    DuDxlp(0, 2) = uControl.solve_rhs((X__[0] - 10 * X__[1]) * L__[0] - L__[1] * (X__[0] - 9 * X__[1]), 0, 1) * (X__[0] - 10 * X__[1]);
-    DuDxlp(0, 3) = uControl.solve_rhs((X__[0] - 10 * X__[1]) * L__[0] - L__[1] * (X__[0] - 9 * X__[1]), 0, 1) * (-X__[0] + 9 * X__[1]);
+    DuDxlp(0, 0) = uControl.solve_rhs((X__[iX_x1] - 10 * X__[iX_x2]) * L__[iL_lambda1__xo] - L__[iL_lambda2__xo] * (X__[iX_x1] - 9 * X__[iX_x2]), 0, 1) * (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]);
+    DuDxlp(0, 1) = uControl.solve_rhs((X__[iX_x1] - 10 * X__[iX_x2]) * L__[iL_lambda1__xo] - L__[iL_lambda2__xo] * (X__[iX_x1] - 9 * X__[iX_x2]), 0, 1) * (-10 * L__[iL_lambda1__xo] + 9 * L__[iL_lambda2__xo]);
+    DuDxlp(0, 2) = uControl.solve_rhs((X__[iX_x1] - 10 * X__[iX_x2]) * L__[iL_lambda1__xo] - L__[iL_lambda2__xo] * (X__[iX_x1] - 9 * X__[iX_x2]), 0, 1) * (X__[iX_x1] - 10 * X__[iX_x2]);
+    DuDxlp(0, 3) = uControl.solve_rhs((X__[iX_x1] - 10 * X__[iX_x2]) * L__[iL_lambda1__xo] - L__[iL_lambda2__xo] * (X__[iX_x1] - 9 * X__[iX_x2]), 0, 1) * (-X__[iX_x1] + 9 * X__[iX_x2]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

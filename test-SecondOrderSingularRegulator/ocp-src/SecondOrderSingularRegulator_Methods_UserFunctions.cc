@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SecondOrderSingularRegulator_Methods1.cc                       |
+ |  file: SecondOrderSingularRegulator_Methods_UserFunctions.cc          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -55,4 +55,4 @@ using Mechatronix::MeshStd;
 namespace SecondOrderSingularRegulatorDefine {
 }
 
-// EOF: SecondOrderSingularRegulator_Methods1.cc
+// EOF: SecondOrderSingularRegulator_Methods_UserFunctions.cc

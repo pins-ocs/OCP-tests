@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: TwoStageCSTR.m                                                 %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 6/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -643,52 +643,52 @@ classdef TwoStageCSTR < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = R1( self, x1__XO, x2__XO )
-      res = TwoStageCSTR_Mex('R1', self.objectHandle, x1__XO, x2__XO );
+    function res = R1( self, xo__x1, xo__x2 )
+      res = TwoStageCSTR_Mex('R1', self.objectHandle, xo__x1, xo__x2 );
     end
     % ---------------------------------------------------------------------
-    function res = R1_D_1( self, x1__XO, x2__XO )
-      res = TwoStageCSTR_Mex('R1_D_1', self.objectHandle, x1__XO, x2__XO );
+    function res = R1_D_1( self, xo__x1, xo__x2 )
+      res = TwoStageCSTR_Mex('R1_D_1', self.objectHandle, xo__x1, xo__x2 );
     end
     % ---------------------------------------------------------------------
-    function res = R1_D_2( self, x1__XO, x2__XO )
-      res = TwoStageCSTR_Mex('R1_D_2', self.objectHandle, x1__XO, x2__XO );
+    function res = R1_D_2( self, xo__x1, xo__x2 )
+      res = TwoStageCSTR_Mex('R1_D_2', self.objectHandle, xo__x1, xo__x2 );
     end
     % ---------------------------------------------------------------------
-    function res = R1_D_1_1( self, x1__XO, x2__XO )
-      res = TwoStageCSTR_Mex('R1_D_1_1', self.objectHandle, x1__XO, x2__XO );
+    function res = R1_D_1_1( self, xo__x1, xo__x2 )
+      res = TwoStageCSTR_Mex('R1_D_1_1', self.objectHandle, xo__x1, xo__x2 );
     end
     % ---------------------------------------------------------------------
-    function res = R1_D_1_2( self, x1__XO, x2__XO )
-      res = TwoStageCSTR_Mex('R1_D_1_2', self.objectHandle, x1__XO, x2__XO );
+    function res = R1_D_1_2( self, xo__x1, xo__x2 )
+      res = TwoStageCSTR_Mex('R1_D_1_2', self.objectHandle, xo__x1, xo__x2 );
     end
     % ---------------------------------------------------------------------
-    function res = R1_D_2_2( self, x1__XO, x2__XO )
-      res = TwoStageCSTR_Mex('R1_D_2_2', self.objectHandle, x1__XO, x2__XO );
+    function res = R1_D_2_2( self, xo__x1, xo__x2 )
+      res = TwoStageCSTR_Mex('R1_D_2_2', self.objectHandle, xo__x1, xo__x2 );
     end
     % ---------------------------------------------------------------------
-    function res = R2( self, x3__XO, x4__XO )
-      res = TwoStageCSTR_Mex('R2', self.objectHandle, x3__XO, x4__XO );
+    function res = R2( self, xo__x3, xo__x4 )
+      res = TwoStageCSTR_Mex('R2', self.objectHandle, xo__x3, xo__x4 );
     end
     % ---------------------------------------------------------------------
-    function res = R2_D_1( self, x3__XO, x4__XO )
-      res = TwoStageCSTR_Mex('R2_D_1', self.objectHandle, x3__XO, x4__XO );
+    function res = R2_D_1( self, xo__x3, xo__x4 )
+      res = TwoStageCSTR_Mex('R2_D_1', self.objectHandle, xo__x3, xo__x4 );
     end
     % ---------------------------------------------------------------------
-    function res = R2_D_2( self, x3__XO, x4__XO )
-      res = TwoStageCSTR_Mex('R2_D_2', self.objectHandle, x3__XO, x4__XO );
+    function res = R2_D_2( self, xo__x3, xo__x4 )
+      res = TwoStageCSTR_Mex('R2_D_2', self.objectHandle, xo__x3, xo__x4 );
     end
     % ---------------------------------------------------------------------
-    function res = R2_D_1_1( self, x3__XO, x4__XO )
-      res = TwoStageCSTR_Mex('R2_D_1_1', self.objectHandle, x3__XO, x4__XO );
+    function res = R2_D_1_1( self, xo__x3, xo__x4 )
+      res = TwoStageCSTR_Mex('R2_D_1_1', self.objectHandle, xo__x3, xo__x4 );
     end
     % ---------------------------------------------------------------------
-    function res = R2_D_1_2( self, x3__XO, x4__XO )
-      res = TwoStageCSTR_Mex('R2_D_1_2', self.objectHandle, x3__XO, x4__XO );
+    function res = R2_D_1_2( self, xo__x3, xo__x4 )
+      res = TwoStageCSTR_Mex('R2_D_1_2', self.objectHandle, xo__x3, xo__x4 );
     end
     % ---------------------------------------------------------------------
-    function res = R2_D_2_2( self, x3__XO, x4__XO )
-      res = TwoStageCSTR_Mex('R2_D_2_2', self.objectHandle, x3__XO, x4__XO );
+    function res = R2_D_2_2( self, xo__x3, xo__x4 )
+      res = TwoStageCSTR_Mex('R2_D_2_2', self.objectHandle, xo__x3, xo__x4 );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

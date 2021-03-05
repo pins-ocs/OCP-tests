@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Brachiostocrona_Guess.cc                                       |
+ |  file: Brachiostocrona_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -59,7 +59,9 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::p_guess_eval( P_pointer_type P__ ) const {
-    P__[ iP_T ] = ModelPars[0];
+    P__[ iP_T ] = ModelPars[iM_Tf];
+    if ( m_debug )
+      Mechatronix::check( P__.pointer(), "p_guess_eval", 1 );
   }
 
   void
@@ -71,12 +73,16 @@ namespace BrachiostocronaDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = Q__[0];
-    X__[ iX_x     ] = ModelPars[4] * t1;
-    X__[ iX_y     ] = ModelPars[5] * t1;
-    X__[ iX_v     ] = ModelPars[1] * t1;
+    real_type t1   = Q__[iQ_zeta];
+    X__[ iX_x     ] = ModelPars[iM_xf] * t1;
+    X__[ iX_y     ] = ModelPars[iM_yf] * t1;
+    X__[ iX_v     ] = ModelPars[iM_Vf] * t1;
     X__[ iX_theta ] = -0.3141592654e1 / 2;
 
+    if ( m_debug )
+      Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 4 );
+    if ( m_debug )
+      Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 4 );
   }
 
   /*\
@@ -87,17 +93,23 @@ namespace BrachiostocronaDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__lt(A,B) ( (A) <  (B) )
-  #define Xoptima__check__le(A,B) ( (A) <= (B) )
+  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+
 
   // Pars check strings
-  #define __message_parameter_check_0 "0 < T"
+  #define __message_cell_check_0 "0 < T"
 
   bool
   Brachiostocrona::p_check( P_const_pointer_type P__ ) const {
-    bool ok = true;
-    ok = ok && Xoptima__check__lt(0, P__[0]);
-    return ok;
+    Xoptima__check__pars__lt(0, P__[iP_T], __message_cell_check_0);
+    return true;
   }
 
   bool
@@ -106,14 +118,7 @@ namespace BrachiostocronaDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    return ok;
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -220,10 +225,10 @@ namespace BrachiostocronaDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && vthetaControl.check_range(U__[0], -10, 10);
+    vthetaControl.check_range(U__[iU_vtheta], -10, 10);
     return ok;
   }
 
 }
 
-// EOF: Brachiostocrona_Guess.cc
+// EOF: Brachiostocrona_Methods_Guess.cc

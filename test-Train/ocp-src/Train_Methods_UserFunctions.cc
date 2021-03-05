@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Train_Methods1.cc                                              |
+ |  file: Train_Methods_UserFunctions.cc                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,37 +70,85 @@ namespace TrainDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  Train::acc( real_type x__XO, real_type v__XO ) const {
-    real_type t1   = h(x__XO);
-    real_type t3   = v__XO * v__XO;
-    return -t3 * ModelPars[2] - ModelPars[1] * v__XO + t1 - ModelPars[0];
+  Train::acc( real_type xo__x, real_type xo__v ) const {
+    real_type t1   = h(xo__x);
+    real_type t3   = xo__v * xo__v;
+    real_type result__ = -t3 * ModelPars[iM_gm] - ModelPars[iM_beta] * xo__v + t1 - ModelPars[iM_alpha];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_acc( x={}, v={} ) return {}\n",
+        xo__x, xo__v, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Train::acc_D_1( real_type x__XO, real_type v__XO ) const {
-    return h_D(x__XO);
+  Train::acc_D_1( real_type xo__x, real_type xo__v ) const {
+    real_type result__ = h_D(xo__x);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_acc_D_1( x={}, v={} ) return {}\n",
+        xo__x, xo__v, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Train::acc_D_1_1( real_type x__XO, real_type v__XO ) const {
-    return h_DD(x__XO);
+  Train::acc_D_1_1( real_type xo__x, real_type xo__v ) const {
+    real_type result__ = h_DD(xo__x);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_acc_D_1_1( x={}, v={} ) return {}\n",
+        xo__x, xo__v, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Train::acc_D_1_2( real_type x__XO, real_type v__XO ) const {
-    return 0;
+  Train::acc_D_1_2( real_type xo__x, real_type xo__v ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_acc_D_1_2( x={}, v={} ) return {}\n",
+        xo__x, xo__v, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Train::acc_D_2( real_type x__XO, real_type v__XO ) const {
-    return -2 * v__XO * ModelPars[2] - ModelPars[1];
+  Train::acc_D_2( real_type xo__x, real_type xo__v ) const {
+    real_type result__ = -2 * xo__v * ModelPars[iM_gm] - ModelPars[iM_beta];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_acc_D_2( x={}, v={} ) return {}\n",
+        xo__x, xo__v, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Train::acc_D_2_2( real_type x__XO, real_type v__XO ) const {
-    return -2 * ModelPars[2];
+  Train::acc_D_2_2( real_type xo__x, real_type xo__v ) const {
+    real_type result__ = -2 * ModelPars[iM_gm];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_acc_D_2_2( x={}, v={} ) return {}\n",
+        xo__x, xo__v, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: Train_Methods1.cc
+// EOF: Train_Methods_UserFunctions.cc

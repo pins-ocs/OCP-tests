@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Crossroad_Methods1.cc                                          |
+ |  file: Crossroad_Methods_UserFunctions.cc                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,20 +67,44 @@ namespace CrossroadDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  Crossroad::kappa( real_type s__XO ) const {
-    return (s__XO < ModelPars[0] / 2 ? 2 * ((ModelPars[0] / 2 - s__XO) * ModelPars[4] + s__XO * ModelPars[5]) / ModelPars[0] : 2 * ((ModelPars[0] - s__XO) * ModelPars[5] + (s__XO - ModelPars[0] / 2) * ModelPars[6]) / ModelPars[0]);
+  Crossroad::kappa( real_type xo__s ) const {
+    real_type result__ = (xo__s < ModelPars[iM_L] / 2 ? 2 * ((ModelPars[iM_L] / 2 - xo__s) * ModelPars[iM_kappa0] + xo__s * ModelPars[iM_kappa1]) / ModelPars[iM_L] : 2 * ((ModelPars[iM_L] - xo__s) * ModelPars[iM_kappa1] + (xo__s - ModelPars[iM_L] / 2) * ModelPars[iM_kappa2]) / ModelPars[iM_L]);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_kappa( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Crossroad::kappa_D( real_type s__XO ) const {
-    return (s__XO < ModelPars[0] / 2 ? 2 * (ModelPars[5] - ModelPars[4]) / ModelPars[0] : 2 * (ModelPars[6] - ModelPars[5]) / ModelPars[0]);
+  Crossroad::kappa_D( real_type xo__s ) const {
+    real_type result__ = (xo__s < ModelPars[iM_L] / 2 ? 2 * (ModelPars[iM_kappa1] - ModelPars[iM_kappa0]) / ModelPars[iM_L] : 2 * (ModelPars[iM_kappa2] - ModelPars[iM_kappa1]) / ModelPars[iM_L]);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_kappa_D( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Crossroad::kappa_DD( real_type s__XO ) const {
-    return 0;
+  Crossroad::kappa_DD( real_type xo__s ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_kappa_DD( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: Crossroad_Methods1.cc
+// EOF: Crossroad_Methods_UserFunctions.cc

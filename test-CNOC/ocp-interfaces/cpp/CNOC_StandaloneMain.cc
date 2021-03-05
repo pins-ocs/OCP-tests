@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,14 +50,14 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
-    real_type jn_max = 65;
+    real_type js_max = 30;
+    real_type js_min = -50;
     real_type v_nom = 0.173;
     real_type deltaFeed = v_nom;
-    real_type js_min = -50;
-    real_type js_max = 30;
-    real_type mesh_segments = 100;
+    real_type jn_max = 65;
     real_type path_following_tolerance = 1.0e-05;
     real_type pf_error = path_following_tolerance;
+    real_type mesh_segments = 100;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -184,20 +184,20 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_jsControl = data_Controls["jsControl"];
-    data_jsControl["type"]      = "LOGARITHMIC";
+    data_jsControl["type"]      = ;
     data_jsControl["epsilon"]   = 0.01;
     data_jsControl["tolerance"] = 0.01;
 
 
     GenericContainer & data_jnControl = data_Controls["jnControl"];
-    data_jnControl["type"]      = "LOGARITHMIC";
+    data_jnControl["type"]      = ;
     data_jnControl["epsilon"]   = 0.01;
     data_jnControl["tolerance"] = 0.01;
 
 
 
     // Constraint1D
-    // Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan

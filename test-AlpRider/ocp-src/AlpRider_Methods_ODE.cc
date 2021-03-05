@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,12 +69,12 @@ namespace AlpRiderDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = U__[0];
-    real_type t4   = U__[1];
-    result__[ 0   ] = -10 * X__[0] + t3 + t4;
-    result__[ 1   ] = -2 * X__[1] + t3 + 2 * t4;
-    real_type t8   = X__[2];
-    real_type t10  = X__[3];
+    real_type t3   = U__[iU_u1];
+    real_type t4   = U__[iU_u2];
+    result__[ 0   ] = -10 * X__[iX_y1] + t3 + t4;
+    result__[ 1   ] = -2 * X__[iX_y2] + t3 + 2 * t4;
+    real_type t8   = X__[iX_y3];
+    real_type t10  = X__[iX_y4];
     result__[ 2   ] = -3 * t8 + 5 * t10 + t3 - t4;
     result__[ 3   ] = 5 * t8 - 3 * t10 + t3 + 3 * t4;
     if ( m_debug )

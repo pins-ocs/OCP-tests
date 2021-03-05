@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: FlowInAchannel_Methods1.cc                                     |
+ |  file: FlowInAchannel_Methods_UserFunctions.cc                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,4 +44,4 @@ using Mechatronix::MeshStd;
 namespace FlowInAchannelDefine {
 }
 
-// EOF: FlowInAchannel_Methods1.cc
+// EOF: FlowInAchannel_Methods_UserFunctions.cc

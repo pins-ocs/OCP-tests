@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MultipleDubins_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -164,7 +164,7 @@ mechatronix do |data|
   data.MappedObjects[:diff2pi] = { :N => 2*Math::PI }
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :delta => 0, :h => 0.001 }
+  data.MappedObjects[:clip] = { :h => 0.001, :delta => 0 }
 
   # Controls: No penalties or barriers constraint defined
   data.Controls = {}

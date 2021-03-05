@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: HyperSensitive_Methods1.cc                                     |
+ |  file: HyperSensitive_Methods_UserFunctions.cc                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,4 +44,4 @@ using Mechatronix::MeshStd;
 namespace HyperSensitiveDefine {
 }
 
-// EOF: HyperSensitive_Methods1.cc
+// EOF: HyperSensitive_Methods_UserFunctions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods.cc                                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,13 +73,13 @@ namespace ZermeloDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[0];
-    real_type t2   = X__[4];
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = X__[iX_T];
     real_type t3   = t2 * t1;
-    real_type t4   = X__[0];
-    real_type t5   = X__[1];
+    real_type t4   = X__[iX_x];
+    real_type t5   = X__[iX_y];
     real_type t6   = velX_D_1(t4, t5);
-    real_type t8   = L__[1];
+    real_type t8   = L__[iL_lambda2__xo];
     real_type t9   = t2 * t8;
     real_type t10  = velY_D_1(t4, t5);
     result__[ 0   ] = t10 * t9 + t6 * t3;
@@ -91,11 +91,11 @@ namespace ZermeloDefine {
     real_type t16  = ALIAS_Tpositive_D(t2);
     real_type t18  = velX(t4, t5);
     real_type t22  = velY(t4, t5);
-    real_type t26  = ModelPars[0];
-    real_type t28  = U__[0];
+    real_type t26  = ModelPars[iM_S];
+    real_type t28  = U__[iU_u];
     real_type t29  = cos(t28);
     real_type t33  = sin(t28);
-    result__[ 4   ] = t16 + (X__[2] + t18) * t1 + (X__[3] + t22) * t8 + t29 * t26 * L__[2] + t33 * t26 * L__[3];
+    result__[ 4   ] = t16 + (X__[iX_vx] + t18) * t1 + (X__[iX_vy] + t22) * t8 + t29 * t26 * L__[iL_lambda3__xo] + t33 * t26 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }
@@ -147,13 +147,13 @@ namespace ZermeloDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[0];
-    real_type t2   = X__[4];
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = X__[iX_T];
     real_type t3   = t2 * t1;
-    real_type t4   = X__[0];
-    real_type t5   = X__[1];
+    real_type t4   = X__[iX_x];
+    real_type t5   = X__[iX_y];
     real_type t6   = velX_D_1_1(t4, t5);
-    real_type t8   = L__[1];
+    real_type t8   = L__[iL_lambda2__xo];
     real_type t9   = t2 * t8;
     real_type t10  = velY_D_1_1(t4, t5);
     result__[ 0   ] = t10 * t9 + t6 * t3;
@@ -240,12 +240,12 @@ namespace ZermeloDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[4];
-    real_type t4   = ModelPars[0];
-    real_type t5   = U__[0];
+    real_type t2   = X__[iX_T];
+    real_type t4   = ModelPars[iM_S];
+    real_type t5   = U__[iU_u];
     real_type t6   = sin(t5);
     real_type t11  = cos(t5);
-    result__[ 0   ] = t11 * t4 * t2 * L__[3] - t6 * t4 * t2 * L__[2];
+    result__[ 0   ] = t11 * t4 * t2 * L__[iL_lambda4__xo] - t6 * t4 * t2 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -286,11 +286,11 @@ namespace ZermeloDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[0];
-    real_type t4   = U__[0];
+    real_type t2   = ModelPars[iM_S];
+    real_type t4   = U__[iU_u];
     real_type t5   = sin(t4);
     real_type t9   = cos(t4);
-    result__[ 0   ] = -t5 * t2 * L__[2] + t9 * t2 * L__[3];
+    result__[ 0   ] = -t5 * t2 * L__[iL_lambda3__xo] + t9 * t2 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
@@ -416,11 +416,11 @@ namespace ZermeloDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
-    result__[ 3   ] = L__[3];
-    result__[ 4   ] = L__[4];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    result__[ 4   ] = L__[iL_lambda5__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",5, i_segment );
   }

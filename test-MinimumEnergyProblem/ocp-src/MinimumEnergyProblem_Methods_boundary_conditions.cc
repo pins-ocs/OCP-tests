@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods.cc                                |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,10 +77,10 @@ namespace MinimumEnergyProblemDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0] - ModelPars[5];
-    result__[ 1   ] = XL__[1] - ModelPars[7];
-    result__[ 2   ] = XR__[0] - ModelPars[4];
-    result__[ 3   ] = XR__[1] - ModelPars[6];
+    result__[ 0   ] = XL__[iX_x1] - ModelPars[iM_x1_i];
+    result__[ 1   ] = XL__[iX_x2] - ModelPars[iM_x2_i];
+    result__[ 2   ] = XR__[iX_x1] - ModelPars[iM_x1_f];
+    result__[ 3   ] = XR__[iX_x2] - ModelPars[iM_x2_f];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 4, i_segment_left, i_segment_right );
   }
@@ -190,10 +190,10 @@ namespace MinimumEnergyProblemDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[0];
-    result__[ 1   ] = OMEGA__[1] + LL__[1];
-    result__[ 2   ] = OMEGA__[2] - LR__[0];
-    result__[ 3   ] = OMEGA__[3] - LR__[1];
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
+    result__[ 2   ] = OMEGA__[2] - LR__[iL_lambda1__xo];
+    result__[ 3   ] = OMEGA__[3] - LR__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 4, i_segment_left, i_segment_right );
   }

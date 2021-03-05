@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MaximumAscent_Methods1.cc                                      |
+ |  file: MaximumAscent_Methods_UserFunctions.cc                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,50 +50,122 @@ namespace MaximumAscentDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  MaximumAscent::eta( real_type tf__XO ) const {
-    return ModelPars[11] * tf__XO / ModelPars[6];
+  MaximumAscent::eta( real_type xo__tf ) const {
+    real_type result__ = ModelPars[iM_v0] * xo__tf / ModelPars[iM_r0];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_eta( tf={} ) return {}\n",
+        xo__tf, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MaximumAscent::eta_D( real_type tf__XO ) const {
-    return ModelPars[11] / ModelPars[6];
+  MaximumAscent::eta_D( real_type xo__tf ) const {
+    real_type result__ = ModelPars[iM_v0] / ModelPars[iM_r0];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_eta_D( tf={} ) return {}\n",
+        xo__tf, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MaximumAscent::eta_DD( real_type tf__XO ) const {
-    return 0;
+  MaximumAscent::eta_DD( real_type xo__tf ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_eta_DD( tf={} ) return {}\n",
+        xo__tf, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MaximumAscent::Tbar( real_type tf__XO ) const {
-    return ModelPars[0] * tf__XO / ModelPars[11];
+  MaximumAscent::Tbar( real_type xo__tf ) const {
+    real_type result__ = ModelPars[iM_T] * xo__tf / ModelPars[iM_v0];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Tbar( tf={} ) return {}\n",
+        xo__tf, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MaximumAscent::Tbar_D( real_type tf__XO ) const {
-    return ModelPars[0] / ModelPars[11];
+  MaximumAscent::Tbar_D( real_type xo__tf ) const {
+    real_type result__ = ModelPars[iM_T] / ModelPars[iM_v0];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Tbar_D( tf={} ) return {}\n",
+        xo__tf, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MaximumAscent::Tbar_DD( real_type tf__XO ) const {
-    return 0;
+  MaximumAscent::Tbar_DD( real_type xo__tf ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Tbar_DD( tf={} ) return {}\n",
+        xo__tf, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MaximumAscent::tf( real_type days__XO ) const {
-    return 86400 * days__XO;
+  MaximumAscent::tf( real_type xo__days ) const {
+    real_type result__ = 86400 * xo__days;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_tf( days={} ) return {}\n",
+        xo__days, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MaximumAscent::tf_D( real_type days__XO ) const {
-    return 86400;
+  MaximumAscent::tf_D( real_type xo__days ) const {
+    real_type result__ = 86400;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_tf_D( days={} ) return {}\n",
+        xo__days, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MaximumAscent::tf_DD( real_type days__XO ) const {
-    return 0;
+  MaximumAscent::tf_DD( real_type xo__days ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_tf_DD( days={} ) return {}\n",
+        xo__days, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: MaximumAscent_Methods1.cc
+// EOF: MaximumAscent_Methods_UserFunctions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods.cc                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -92,12 +92,12 @@ namespace BangBangFredundantDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 0;
-    result__[ 1   ] = L__[0];
-    real_type t5   = ALIAS_Flim_D(X__[2] + X__[3]);
-    result__[ 2   ] = t5 * ModelPars[1] + L__[1];
+    result__[ 1   ] = L__[iL_lambda1__xo];
+    real_type t5   = ALIAS_Flim_D(X__[iX_F1] + X__[iX_F2]);
+    result__[ 2   ] = t5 * ModelPars[iM_w_F] + L__[iL_lambda2__xo];
     result__[ 3   ] = result__[2];
-    result__[ 4   ] = L__[2];
-    result__[ 5   ] = L__[3];
+    result__[ 4   ] = L__[iL_lambda3__xo];
+    result__[ 5   ] = L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 6, i_segment );
   }
@@ -140,8 +140,8 @@ namespace BangBangFredundantDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t5   = ALIAS_Flim_DD(X__[2] + X__[3]);
-    result__[ 0   ] = t5 * ModelPars[1];
+    real_type t5   = ALIAS_Flim_DD(X__[iX_F1] + X__[iX_F2]);
+    result__[ 0   ] = t5 * ModelPars[iM_w_F];
     result__[ 1   ] = result__[0];
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[2];
@@ -208,8 +208,8 @@ namespace BangBangFredundantDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[4];
-    result__[ 1   ] = L__[5];
+    result__[ 0   ] = L__[iL_lambda5__xo];
+    result__[ 1   ] = L__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }
@@ -368,12 +368,12 @@ namespace BangBangFredundantDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
-    result__[ 3   ] = L__[3];
-    result__[ 4   ] = L__[4];
-    result__[ 5   ] = L__[5];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    result__[ 4   ] = L__[iL_lambda5__xo];
+    result__[ 5   ] = L__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",6, i_segment );
   }

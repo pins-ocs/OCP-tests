@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods.cc                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,8 +67,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = atan2(-L__[1], -L__[2]);
-    result__[ 0   ] = U__[0] - t4;
+    real_type t4   = atan2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
+    result__[ 0   ] = U__[iU_u] - t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -110,8 +110,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[2];
-    real_type t3   = L__[1];
+    real_type t1   = L__[iL_lambda3__xo];
+    real_type t3   = L__[iL_lambda2__xo];
     real_type t4   = t3 * t3;
     real_type t5   = t1 * t1;
     real_type t6   = 1.0 / t5;
@@ -193,7 +193,7 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_u ] = atan2(-L__[1], -L__[2]);
+    U__[ iU_u ] = atan2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -248,8 +248,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     DuDxlp(0, 1) = 0;
     DuDxlp(0, 2) = 0;
     DuDxlp(0, 3) = 0;
-    DuDxlp(0, 4) = 1.0 / L__[2] / (1 + L__[1] * L__[1] * pow(L__[2], -2));
-    DuDxlp(0, 5) = -L__[1] * pow(L__[2], -2) / (1 + L__[1] * L__[1] * pow(L__[2], -2));
+    DuDxlp(0, 4) = 1.0 / L__[iL_lambda3__xo] / (1 + L__[iL_lambda2__xo] * L__[iL_lambda2__xo] * pow(L__[iL_lambda3__xo], -2));
+    DuDxlp(0, 5) = -L__[iL_lambda2__xo] * pow(L__[iL_lambda3__xo], -2) / (1 + L__[iL_lambda2__xo] * L__[iL_lambda2__xo] * pow(L__[iL_lambda3__xo], -2));
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

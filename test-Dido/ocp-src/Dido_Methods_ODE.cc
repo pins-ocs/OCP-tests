@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Dido_Methods.cc                                                |
+ |  file: Dido_Methods_ODE.cc                                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,7 +65,7 @@ namespace DidoDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
+    real_type t1   = U__[iU_theta];
     result__[ 0   ] = cos(t1);
     result__[ 1   ] = sin(t1);
     if ( m_debug )
@@ -174,7 +174,7 @@ namespace DidoDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
+    real_type t1   = U__[iU_theta];
     real_type t2   = sin(t1);
     result__[ 0   ] = -t2;
     result__[ 1   ] = cos(t1);
@@ -230,4 +230,4 @@ namespace DidoDefine {
 
 }
 
-// EOF: Dido_Methods.cc
+// EOF: Dido_Methods_ODE.cc

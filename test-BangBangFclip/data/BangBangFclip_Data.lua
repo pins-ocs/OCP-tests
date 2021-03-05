@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-h0       = 0.1
 vFmax    = 10
+h0       = 0.1
 epsilon0 = 0.1
 
 content = {
@@ -147,8 +147,8 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithErf
-    cliph = h0,
     clipdelta = 0,
+    cliph = h0,
   },
 
   -- Controls
@@ -156,7 +156,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     controlForce = {
-      type      = 'QUADRATIC',
+      type      = ,
       epsilon   = epsilon0,
       tolerance = 0.001,
     },

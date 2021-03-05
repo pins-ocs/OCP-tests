@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -178,10 +178,10 @@ namespace PointMassCarModel_4Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t2   = exp(X__[6]);
-    real_type t3   = X__[0];
+    real_type t2   = exp(X__[iX_log_inv_Vseg]);
+    real_type t3   = X__[iX_s];
     real_type t4   = ALIAS_leftWidth(t3);
-    real_type t5   = X__[1];
+    real_type t5   = X__[iX_n];
     real_type t6   = t4 - t5;
     real_type t7   = ALIAS_RoadLeftBorder_D(t6);
     real_type t8   = t7 * t2;
@@ -191,45 +191,45 @@ namespace PointMassCarModel_4Define {
     real_type t13  = ALIAS_RoadRightBorder_D(t12);
     real_type t14  = t13 * t2;
     real_type t15  = ALIAS_rightWidth_D(t3);
-    real_type t18  = t2 * L__[0];
-    real_type t19  = X__[3];
-    real_type t20  = X__[2];
+    real_type t18  = t2 * L__[iL_lambda1__xo];
+    real_type t19  = X__[iX_V];
+    real_type t20  = X__[iX_alpha];
     real_type t21  = ALIAS_Kappa(t3);
     real_type t22  = zeta__dot_D_4(t19, t20, t5, t21);
     real_type t23  = ALIAS_Kappa_D(t3);
-    real_type t26  = L__[2];
+    real_type t26  = L__[iL_lambda3__xo];
     real_type t27  = zeta__dot(t19, t20, t5, t21);
     result__[ 0   ] = t9 * t8 + t15 * t14 + t23 * t22 * t18 - t2 * (t23 * t22 * t21 + t27 * t23) * t26;
     real_type t34  = zeta__dot_D_3(t19, t20, t5, t21);
     real_type t36  = t21 * t26;
     result__[ 1   ] = -t2 * t34 * t36 + t34 * t18 + t14 - t8;
     real_type t39  = zeta__dot_D_2(t19, t20, t5, t21);
-    real_type t42  = t2 * L__[1];
+    real_type t42  = t2 * L__[iL_lambda2__xo];
     real_type t43  = cos(t20);
     result__[ 2   ] = t43 * t19 * t42 - t2 * t39 * t36 + t39 * t18;
-    real_type t48  = X__[5];
+    real_type t48  = X__[iX_fx];
     real_type t49  = t48 * t48;
-    real_type t51  = ModelPars[11] * ModelPars[11];
+    real_type t51  = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
     real_type t52  = 1.0 / t51;
-    real_type t55  = ModelPars[3] * ModelPars[3];
+    real_type t55  = ModelPars[iM_g] * ModelPars[iM_g];
     real_type t56  = 1.0 / t55;
-    real_type t58  = X__[4];
+    real_type t58  = X__[iX_Omega];
     real_type t59  = t58 * t58;
     real_type t60  = t19 * t19;
-    real_type t63  = ModelPars[12] * ModelPars[12];
+    real_type t63  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
     real_type t64  = 1.0 / t63;
     real_type t67  = -t56 * t64 * t60 * t59 - t56 * t52 * t49 + 1;
     real_type t68  = ALIAS_AdherenceEllipse_D(t67);
     real_type t69  = t68 * t2;
-    real_type t76  = ModelPars[5];
-    real_type t78  = 1.0 / ModelPars[0];
+    real_type t76  = ModelPars[iM_m];
+    real_type t78  = 1.0 / ModelPars[iM_Pmax];
     real_type t81  = -t78 * t76 * t48 * t19 + 1;
     real_type t82  = ALIAS_PowerLimit_D(t81);
     real_type t83  = t82 * t2;
     real_type t87  = zeta__dot_D_1(t19, t20, t5, t21);
     real_type t89  = sin(t20);
-    real_type t93  = L__[3];
-    real_type t94  = ModelPars[4];
+    real_type t93  = L__[iL_lambda4__xo];
+    real_type t94  = ModelPars[iM_kD];
     result__[ 3   ] = -2 * t56 * t64 * t19 * t59 * t69 - 2 * t2 * t19 * t94 * t93 - t78 * t76 * t48 * t83 - t2 * t87 * t36 + t87 * t18 + t89 * t42;
     result__[ 4   ] = -2 * t56 * t64 * t60 * t58 * t69 + t2 * t26;
     result__[ 5   ] = -t78 * t76 * t19 * t83 - 2 * t56 * t52 * t48 * t69 + t2 * t93;
@@ -237,7 +237,7 @@ namespace PointMassCarModel_4Define {
     real_type t115 = RoadLeftBorder(t6);
     real_type t117 = RoadRightBorder(t12);
     real_type t119 = PowerLimit(t81);
-    result__[ 6   ] = t113 * t2 + t115 * t2 + t117 * t2 + t119 * t2 + t2 * ModelPars[8] + t27 * t18 + t89 * t19 * t42 - t2 * (t27 * t21 - t58) * t26 + t2 * (-t60 * t94 + t48) * t93 + U__[1] * ModelPars[15] * t2 * L__[4] + U__[0] * ModelPars[16] * t2 * L__[5];
+    result__[ 6   ] = t113 * t2 + t115 * t2 + t117 * t2 + t119 * t2 + t2 * ModelPars[iM_wT] + t27 * t18 + t89 * t19 * t42 - t2 * (t27 * t21 - t58) * t26 + t2 * (-t60 * t94 + t48) * t93 + U__[iU_v__Omega] * ModelPars[iM_v__Omega__max] * t2 * L__[iL_lambda5__xo] + U__[iU_v__fx] * ModelPars[iM_v__fx__max] * t2 * L__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 7, i_segment );
   }
@@ -313,10 +313,10 @@ namespace PointMassCarModel_4Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t2   = exp(X__[6]);
-    real_type t3   = X__[0];
+    real_type t2   = exp(X__[iX_log_inv_Vseg]);
+    real_type t3   = X__[iX_s];
     real_type t4   = ALIAS_leftWidth(t3);
-    real_type t5   = X__[1];
+    real_type t5   = X__[iX_n];
     real_type t6   = t4 - t5;
     real_type t7   = ALIAS_RoadLeftBorder_DD(t6);
     real_type t8   = t7 * t2;
@@ -334,16 +334,16 @@ namespace PointMassCarModel_4Define {
     real_type t23  = ALIAS_RoadRightBorder_D(t17);
     real_type t24  = t23 * t2;
     real_type t25  = ALIAS_rightWidth_DD(t3);
-    real_type t28  = t2 * L__[0];
-    real_type t29  = X__[3];
-    real_type t30  = X__[2];
+    real_type t28  = t2 * L__[iL_lambda1__xo];
+    real_type t29  = X__[iX_V];
+    real_type t30  = X__[iX_alpha];
     real_type t31  = ALIAS_Kappa(t3);
     real_type t32  = zeta__dot_D_4_4(t29, t30, t5, t31);
     real_type t33  = ALIAS_Kappa_D(t3);
     real_type t34  = t33 * t33;
     real_type t37  = zeta__dot_D_4(t29, t30, t5, t31);
     real_type t38  = ALIAS_Kappa_DD(t3);
-    real_type t41  = L__[2];
+    real_type t41  = L__[iL_lambda3__xo];
     real_type t42  = zeta__dot(t29, t30, t5, t31);
     real_type t48  = t37 * t31;
     result__[ 0   ] = t10 * t8 + t14 * t13 + t21 * t19 + t25 * t24 + t34 * t32 * t28 + t38 * t37 * t28 - t2 * (t34 * t32 * t31 + 2 * t37 * t34 + t42 * t38 + t38 * t48) * t41;
@@ -380,7 +380,7 @@ namespace PointMassCarModel_4Define {
     result__[ 10  ] = -t2 * t66 * t97 - t114 * t94 + t67;
     result__[ 11  ] = result__[7];
     real_type t118 = zeta__dot_D_2_2(t29, t30, t5, t31);
-    real_type t121 = t2 * L__[1];
+    real_type t121 = t2 * L__[iL_lambda2__xo];
     real_type t122 = sin(t30);
     real_type t124 = t122 * t29 * t121;
     result__[ 12  ] = -t2 * t118 * t97 + t118 * t28 - t124;
@@ -392,16 +392,16 @@ namespace PointMassCarModel_4Define {
     result__[ 15  ] = -t2 * t76 * t97 - t137 * t94 + t77;
     result__[ 16  ] = result__[8];
     result__[ 17  ] = result__[13];
-    real_type t141 = X__[5];
+    real_type t141 = X__[iX_fx];
     real_type t142 = t141 * t141;
-    real_type t144 = ModelPars[11] * ModelPars[11];
+    real_type t144 = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
     real_type t145 = 1.0 / t144;
-    real_type t148 = ModelPars[3] * ModelPars[3];
+    real_type t148 = ModelPars[iM_g] * ModelPars[iM_g];
     real_type t149 = 1.0 / t148;
-    real_type t151 = X__[4];
+    real_type t151 = X__[iX_Omega];
     real_type t152 = t151 * t151;
     real_type t153 = t29 * t29;
-    real_type t156 = ModelPars[12] * ModelPars[12];
+    real_type t156 = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
     real_type t157 = 1.0 / t156;
     real_type t160 = -t149 * t157 * t153 * t152 - t149 * t145 * t142 + 1;
     real_type t161 = ALIAS_AdherenceEllipse_DD(t160);
@@ -413,8 +413,8 @@ namespace PointMassCarModel_4Define {
     real_type t169 = 1.0 / t168;
     real_type t173 = ALIAS_AdherenceEllipse_D(t160);
     real_type t174 = t173 * t2;
-    real_type t180 = ModelPars[5];
-    real_type t181 = ModelPars[0];
+    real_type t180 = ModelPars[iM_m];
+    real_type t181 = ModelPars[iM_Pmax];
     real_type t182 = 1.0 / t181;
     real_type t183 = t182 * t180;
     real_type t185 = -t183 * t141 * t29 + 1;
@@ -424,8 +424,8 @@ namespace PointMassCarModel_4Define {
     real_type t190 = t181 * t181;
     real_type t191 = 1.0 / t190;
     real_type t194 = zeta__dot_D_1_1(t29, t30, t5, t31);
-    real_type t198 = L__[3];
-    real_type t199 = ModelPars[4];
+    real_type t198 = L__[iL_lambda4__xo];
+    real_type t199 = ModelPars[iM_kD];
     real_type t200 = t199 * t198;
     result__[ 18  ] = 4 * t169 * t166 * t153 * t163 * t162 + t191 * t188 * t142 * t187 - 2 * t149 * t157 * t152 * t174 - t2 * t194 * t97 + t194 * t28 - 2 * t2 * t200;
     real_type t209 = t151 * t174;
@@ -460,7 +460,7 @@ namespace PointMassCarModel_4Define {
     real_type t276 = RoadLeftBorder(t6);
     real_type t278 = RoadRightBorder(t17);
     real_type t280 = PowerLimit(t185);
-    result__[ 36  ] = t274 * t2 + t276 * t2 + t278 * t2 + t280 * t2 + t2 * ModelPars[8] + t42 * t28 + t124 - t2 * (t42 * t31 - t151) * t41 + t2 * (-t153 * t199 + t141) * t198 + U__[1] * ModelPars[15] * t2 * L__[4] + U__[0] * ModelPars[16] * t2 * L__[5];
+    result__[ 36  ] = t274 * t2 + t276 * t2 + t278 * t2 + t280 * t2 + t2 * ModelPars[iM_wT] + t42 * t28 + t124 - t2 * (t42 * t31 - t151) * t41 + t2 * (-t153 * t199 + t141) * t198 + U__[iU_v__Omega] * ModelPars[iM_v__Omega__max] * t2 * L__[iL_lambda5__xo] + U__[iU_v__fx] * ModelPars[iM_v__fx__max] * t2 * L__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 37, i_segment );
   }
@@ -524,9 +524,9 @@ namespace PointMassCarModel_4Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t3   = exp(X__[6]);
-    result__[ 0   ] = ModelPars[16] * t3 * L__[5];
-    result__[ 1   ] = ModelPars[15] * t3 * L__[4];
+    real_type t3   = exp(X__[iX_log_inv_Vseg]);
+    result__[ 0   ] = ModelPars[iM_v__fx__max] * t3 * L__[iL_lambda6__xo];
+    result__[ 1   ] = ModelPars[iM_v__Omega__max] * t3 * L__[iL_lambda5__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }
@@ -568,9 +568,9 @@ namespace PointMassCarModel_4Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t3   = exp(X__[6]);
-    result__[ 0   ] = ModelPars[16] * t3 * L__[5];
-    result__[ 1   ] = ModelPars[15] * t3 * L__[4];
+    real_type t3   = exp(X__[iX_log_inv_Vseg]);
+    result__[ 0   ] = ModelPars[iM_v__fx__max] * t3 * L__[iL_lambda6__xo];
+    result__[ 1   ] = ModelPars[iM_v__Omega__max] * t3 * L__[iL_lambda5__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 2, i_segment );
   }
@@ -696,13 +696,13 @@ namespace PointMassCarModel_4Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
-    result__[ 3   ] = L__[3];
-    result__[ 4   ] = L__[4];
-    result__[ 5   ] = L__[5];
-    result__[ 6   ] = L__[6];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    result__[ 4   ] = L__[iL_lambda5__xo];
+    result__[ 5   ] = L__[iL_lambda6__xo];
+    result__[ 6   ] = L__[iL_lambda7__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",7, i_segment );
   }

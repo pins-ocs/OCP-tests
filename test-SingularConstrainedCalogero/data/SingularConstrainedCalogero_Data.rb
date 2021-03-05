@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularConstrainedCalogero_Data.rb                            #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_max = 0.01
 tol_max  = 0.01
+epsi_max = 0.01
 
 mechatronix do |data|
 
@@ -163,7 +163,7 @@ mechatronix do |data|
 
   data.Constraints = {}
   # Constraint1D
-  # Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:uMaxBound] = {
@@ -181,8 +181,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 3,
         :n      => 600,
+        :length => 3,
       },
     ],
   };

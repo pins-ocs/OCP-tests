@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods1.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,18 +82,19 @@ namespace BangBangFtauDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
+    real_type t1   = U__[iU_vsT];
     real_type t2   = vsTpositive(t1);
-    real_type t3   = U__[1];
+    real_type t3   = U__[iU_vsB];
     real_type t4   = vsBpositive(t3);
-    real_type t7   = vsTmax(ModelPars[2] - t1);
+    real_type t7   = vsTmax(ModelPars[iM_maxT] - t1);
     real_type t9   = vsTBInterval(t1 - t3);
     real_type t11  = t1 * t1;
     real_type t12  = t3 * t3;
-    real_type t19  = X__[2];
-    real_type t20  = X__[3];
-    real_type t24  = clip(t19 - t20, ModelPars[3], ModelPars[1]);
-    return t2 + t4 + t7 + t9 + (t11 + t12) * ModelPars[0] + L__[0] * X__[1] + t24 * L__[1] - 1.0 / ModelPars[5] * (t19 - t1) * L__[2] - 1.0 / ModelPars[4] * (t20 - t3) * L__[3];
+    real_type t19  = X__[iX_sT];
+    real_type t20  = X__[iX_sB];
+    real_type t24  = clip(t19 - t20, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    real_type result__ = t2 + t4 + t7 + t9 + (t11 + t12) * ModelPars[iM_epsiTB] + L__[iL_lambda1__xo] * X__[iX_v] + t24 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_tauT] * (t19 - t1) * L__[iL_lambda3__xo] - 1.0 / ModelPars[iM_tauB] * (t20 - t3) * L__[iL_lambda4__xo];
+    return result__;
   }
 
   /*\
@@ -113,13 +114,14 @@ namespace BangBangFtauDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
+    real_type t1   = U__[iU_vsT];
     real_type t2   = vsTpositive(t1);
-    real_type t3   = U__[1];
+    real_type t3   = U__[iU_vsB];
     real_type t4   = vsBpositive(t3);
-    real_type t7   = vsTmax(ModelPars[2] - t1);
+    real_type t7   = vsTmax(ModelPars[iM_maxT] - t1);
     real_type t9   = vsTBInterval(t1 - t3);
-    return t2 + t4 + t7 + t9;
+    real_type result__ = t2 + t4 + t7 + t9;
+    return result__;
   }
 
   real_type
@@ -132,7 +134,8 @@ namespace BangBangFtauDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -153,9 +156,10 @@ namespace BangBangFtauDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = U__[0] * U__[0];
-    real_type t5   = U__[1] * U__[1];
-    return (t3 + t5) * ModelPars[0];
+    real_type t3   = U__[iU_vsT] * U__[iU_vsT];
+    real_type t5   = U__[iU_vsB] * U__[iU_vsB];
+    real_type result__ = (t3 + t5) * ModelPars[iM_epsiTB];
+    return result__;
   }
 
   /*\
@@ -180,7 +184,8 @@ namespace BangBangFtauDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return -XR__[0];
+    real_type result__ = -XR__[iX_x];
+    return result__;
   }
 
   /*\
@@ -290,14 +295,14 @@ namespace BangBangFtauDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = XR__[3] - XL__[3];
-    result__[ 4   ] = LR__[0] - LL__[0];
-    result__[ 5   ] = LR__[1] - LL__[1];
-    result__[ 6   ] = LR__[2] - LL__[2];
-    result__[ 7   ] = LR__[3] - LL__[3];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = XR__[iX_v] - XL__[iX_v];
+    result__[ 2   ] = XR__[iX_sT] - XL__[iX_sT];
+    result__[ 3   ] = XR__[iX_sB] - XL__[iX_sB];
+    result__[ 4   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 5   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 6   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
+    result__[ 7   ] = LR__[iL_lambda4__xo] - LL__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }
@@ -402,8 +407,8 @@ namespace BangBangFtauDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[2] - X__[3];
-    result__[ 1   ] = clip(result__[0], ModelPars[3], ModelPars[1]);
+    result__[ 0   ] = X__[iX_sT] - X__[iX_sB];
+    result__[ 1   ] = clip(result__[0], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
     Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 

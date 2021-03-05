@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Dadebo1_Methods.cc                                             |
+ |  file: Dadebo1_Methods_ODE.cc                                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,9 +65,9 @@ namespace Dadebo1Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = U__[0];
+    result__[ 0   ] = U__[iU_u];
     real_type t1   = result__[0] * result__[0];
-    real_type t3   = X__[0] * X__[0];
+    real_type t3   = X__[iX_x] * X__[iX_x];
     result__[ 1   ] = t1 + t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
@@ -108,7 +108,7 @@ namespace Dadebo1Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 2 * X__[0];
+    result__[ 0   ] = 2 * X__[iX_x];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 1, i_segment );
   }
@@ -183,7 +183,7 @@ namespace Dadebo1Define {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    result__[ 1   ] = 2 * U__[0];
+    result__[ 1   ] = 2 * U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
@@ -236,4 +236,4 @@ namespace Dadebo1Define {
 
 }
 
-// EOF: Dadebo1_Methods.cc
+// EOF: Dadebo1_Methods_ODE.cc

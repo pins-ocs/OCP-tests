@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -107,18 +107,18 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = U__[0];
+    real_type t3   = U__[iU_x1__o];
     real_type t11  = ALIAS_x1__oControl_D_1(t3, -0.1e-2, 100);
-    result__[ 0   ] = 2 * (-X__[0] + t3) * ModelPars[14] + L__[0] / ModelPars[5] + t11;
-    real_type t14  = U__[1];
+    result__[ 0   ] = 2 * (-X__[iX_x1] + t3) * ModelPars[iM_wJ1] + L__[iL_lambda1__xo] / ModelPars[iM_tau__1] + t11;
+    real_type t14  = U__[iU_x2__o];
     real_type t22  = ALIAS_x2__oControl_D_1(t14, -0.1e-2, 100);
-    result__[ 1   ] = 2 * (-X__[1] + t14) * ModelPars[15] + L__[1] / ModelPars[6] + t22;
-    real_type t25  = U__[2];
+    result__[ 1   ] = 2 * (-X__[iX_x2] + t14) * ModelPars[iM_wJ2] + L__[iL_lambda2__xo] / ModelPars[iM_tau__2] + t22;
+    real_type t25  = U__[iU_x3__o];
     real_type t33  = ALIAS_x3__oControl_D_1(t25, -0.1e-2, 100);
-    result__[ 2   ] = 2 * (-X__[2] + t25) * ModelPars[16] + L__[2] / ModelPars[7] + t33;
-    real_type t36  = U__[3];
+    result__[ 2   ] = 2 * (-X__[iX_x3] + t25) * ModelPars[iM_wJ3] + L__[iL_lambda3__xo] / ModelPars[iM_tau__3] + t33;
+    real_type t36  = U__[iU_x4__o];
     real_type t44  = ALIAS_x4__oControl_D_1(t36, -0.1e-2, 100);
-    result__[ 3   ] = 2 * (-X__[4] + t36) * ModelPars[17] + L__[4] / ModelPars[9] + t44;
+    result__[ 3   ] = 2 * (-X__[iX_x4] + t36) * ModelPars[iM_wJ4] + L__[iL_lambda5__xo] / ModelPars[iM_tau__5] + t44;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 4, i_segment );
   }
@@ -166,14 +166,14 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = -2 * ModelPars[14];
-    result__[ 1   ] = 1.0 / ModelPars[5];
-    result__[ 2   ] = -2 * ModelPars[15];
-    result__[ 3   ] = 1.0 / ModelPars[6];
-    result__[ 4   ] = -2 * ModelPars[16];
-    result__[ 5   ] = 1.0 / ModelPars[7];
-    result__[ 6   ] = -2 * ModelPars[17];
-    result__[ 7   ] = 1.0 / ModelPars[9];
+    result__[ 0   ] = -2 * ModelPars[iM_wJ1];
+    result__[ 1   ] = 1.0 / ModelPars[iM_tau__1];
+    result__[ 2   ] = -2 * ModelPars[iM_wJ2];
+    result__[ 3   ] = 1.0 / ModelPars[iM_tau__2];
+    result__[ 4   ] = -2 * ModelPars[iM_wJ3];
+    result__[ 5   ] = 1.0 / ModelPars[iM_tau__3];
+    result__[ 6   ] = -2 * ModelPars[iM_wJ4];
+    result__[ 7   ] = 1.0 / ModelPars[iM_tau__5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 8, i_segment );
   }
@@ -217,14 +217,14 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = ALIAS_x1__oControl_D_1_1(U__[0], -0.1e-2, 100);
-    result__[ 0   ] = 2 * ModelPars[14] + t4;
-    real_type t8   = ALIAS_x2__oControl_D_1_1(U__[1], -0.1e-2, 100);
-    result__[ 1   ] = 2 * ModelPars[15] + t8;
-    real_type t12  = ALIAS_x3__oControl_D_1_1(U__[2], -0.1e-2, 100);
-    result__[ 2   ] = 2 * ModelPars[16] + t12;
-    real_type t16  = ALIAS_x4__oControl_D_1_1(U__[3], -0.1e-2, 100);
-    result__[ 3   ] = 2 * ModelPars[17] + t16;
+    real_type t4   = ALIAS_x1__oControl_D_1_1(U__[iU_x1__o], -0.1e-2, 100);
+    result__[ 0   ] = 2 * ModelPars[iM_wJ1] + t4;
+    real_type t8   = ALIAS_x2__oControl_D_1_1(U__[iU_x2__o], -0.1e-2, 100);
+    result__[ 1   ] = 2 * ModelPars[iM_wJ2] + t8;
+    real_type t12  = ALIAS_x3__oControl_D_1_1(U__[iU_x3__o], -0.1e-2, 100);
+    result__[ 2   ] = 2 * ModelPars[iM_wJ3] + t12;
+    real_type t16  = ALIAS_x4__oControl_D_1_1(U__[iU_x4__o], -0.1e-2, 100);
+    result__[ 3   ] = 2 * ModelPars[iM_wJ4] + t16;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 4, i_segment );
   }

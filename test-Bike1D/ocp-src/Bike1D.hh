@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D.hh                                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define BIKE1D_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace Bike1DDefine {
 
@@ -166,11 +166,11 @@ namespace Bike1DDefine {
     );
 
     BIKE1D_API_DLL virtual
-    ~Bike1D() MECHATRONIX_OVERRIDE;
+    ~Bike1D() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     BIKE1D_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "Bike1D"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -222,9 +222,9 @@ namespace Bike1DDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    BIKE1D_API_DLL real_type Tmax_normalized      ( real_type v__XO ) const;
-    BIKE1D_API_DLL real_type Tmax_normalized_D    ( real_type v__XO ) const;
-    BIKE1D_API_DLL real_type Tmax_normalized_DD   ( real_type v__XO ) const;
+    BIKE1D_API_DLL real_type Tmax_normalized      ( real_type xo__v ) const;
+    BIKE1D_API_DLL real_type Tmax_normalized_D    ( real_type xo__v ) const;
+    BIKE1D_API_DLL real_type Tmax_normalized_DD   ( real_type xo__v ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -247,12 +247,12 @@ namespace Bike1DDefine {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     BIKE1D_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

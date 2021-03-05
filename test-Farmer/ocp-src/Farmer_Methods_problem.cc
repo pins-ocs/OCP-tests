@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods1.cc                                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -103,40 +103,41 @@ namespace FarmerDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[1];
-    real_type t2   = X__[4];
+    real_type t1   = X__[iX_x2];
+    real_type t2   = X__[iX_x4];
     real_type t4   = LimitX2X4(0.12e0 - t1 - t2);
-    real_type t6   = ModelPars[10];
-    real_type t8   = X__[0];
-    real_type t10  = ModelPars[11];
-    real_type t13  = ModelPars[12];
-    real_type t15  = X__[2];
-    real_type t17  = ModelPars[13];
-    real_type t20  = ModelPars[3];
-    real_type t21  = ModelPars[4];
-    real_type t22  = Q__[0];
-    real_type t34  = pow(t8 / t6 + t1 / t10 + t15 / t13 + t2 / t17 - 1.0 / (-t21 + t20) * (ModelPars[0] * (t20 - t21 + t22 - 1) - (t22 - 1) * ModelPars[1]), 2);
+    real_type t6   = ModelPars[iM_w1];
+    real_type t8   = X__[iX_x1];
+    real_type t10  = ModelPars[iM_w2];
+    real_type t13  = ModelPars[iM_w3];
+    real_type t15  = X__[iX_x3];
+    real_type t17  = ModelPars[iM_w4];
+    real_type t20  = ModelPars[iM_t1];
+    real_type t21  = ModelPars[iM_t2];
+    real_type t22  = Q__[iQ_zeta];
+    real_type t34  = pow(t8 / t6 + t1 / t10 + t15 / t13 + t2 / t17 - 1.0 / (-t21 + t20) * (ModelPars[iM_P1] * (t20 - t21 + t22 - 1) - (t22 - 1) * ModelPars[iM_P2]), 2);
     real_type t36  = t8 * t8;
     real_type t38  = t1 * t1;
     real_type t40  = t15 * t15;
     real_type t42  = t2 * t2;
-    real_type t45  = U__[0];
+    real_type t45  = U__[iU_x1__o];
     real_type t46  = -t8 + t45;
     real_type t47  = t46 * t46;
-    real_type t50  = U__[1];
+    real_type t50  = U__[iU_x2__o];
     real_type t51  = -t1 + t50;
     real_type t52  = t51 * t51;
-    real_type t55  = U__[2];
+    real_type t55  = U__[iU_x3__o];
     real_type t56  = -t15 + t55;
     real_type t57  = t56 * t56;
-    real_type t60  = U__[3];
+    real_type t60  = U__[iU_x4__o];
     real_type t61  = -t2 + t60;
     real_type t62  = t61 * t61;
     real_type t94  = x1__oControl(t45, -0.1e-2, 100);
     real_type t95  = x2__oControl(t50, -0.1e-2, 100);
     real_type t96  = x3__oControl(t55, -0.1e-2, 100);
     real_type t97  = x4__oControl(t60, -0.1e-2, 100);
-    return t4 + t34 * ModelPars[18] + t36 * t6 + t38 * t10 + t40 * t13 + t42 * t17 + t47 * ModelPars[14] + t52 * ModelPars[15] + t57 * ModelPars[16] + t62 * ModelPars[17] + 1.0 / ModelPars[5] * t46 * L__[0] + 1.0 / ModelPars[6] * t51 * L__[1] + 1.0 / ModelPars[7] * t56 * L__[2] - 1.0 / ModelPars[8] * (-t15 + t2) * L__[3] + 1.0 / ModelPars[9] * t61 * L__[4] + t94 + t95 + t96 + t97;
+    real_type result__ = t4 + t34 * ModelPars[iM_wP] + t36 * t6 + t38 * t10 + t40 * t13 + t42 * t17 + t47 * ModelPars[iM_wJ1] + t52 * ModelPars[iM_wJ2] + t57 * ModelPars[iM_wJ3] + t62 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t46 * L__[iL_lambda1__xo] + 1.0 / ModelPars[iM_tau__2] * t51 * L__[iL_lambda2__xo] + 1.0 / ModelPars[iM_tau__3] * t56 * L__[iL_lambda3__xo] - 1.0 / ModelPars[iM_tau__4] * (-t15 + t2) * L__[iL_lambda4__xo] + 1.0 / ModelPars[iM_tau__5] * t61 * L__[iL_lambda5__xo] + t94 + t95 + t96 + t97;
+    return result__;
   }
 
   /*\
@@ -156,7 +157,8 @@ namespace FarmerDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return LimitX2X4(0.12e0 - X__[1] - X__[4]);
+    real_type result__ = LimitX2X4(0.12e0 - X__[iX_x2] - X__[iX_x4]);
+    return result__;
   }
 
   real_type
@@ -169,11 +171,12 @@ namespace FarmerDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = x1__oControl(U__[0], -0.1e-2, 100);
-    real_type t4   = x2__oControl(U__[1], -0.1e-2, 100);
-    real_type t6   = x3__oControl(U__[2], -0.1e-2, 100);
-    real_type t8   = x4__oControl(U__[3], -0.1e-2, 100);
-    return t2 + t4 + t6 + t8;
+    real_type t2   = x1__oControl(U__[iU_x1__o], -0.1e-2, 100);
+    real_type t4   = x2__oControl(U__[iU_x2__o], -0.1e-2, 100);
+    real_type t6   = x3__oControl(U__[iU_x3__o], -0.1e-2, 100);
+    real_type t8   = x4__oControl(U__[iU_x4__o], -0.1e-2, 100);
+    real_type result__ = t2 + t4 + t6 + t8;
+    return result__;
   }
 
   /*\
@@ -194,27 +197,28 @@ namespace FarmerDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[10];
-    real_type t4   = X__[0];
-    real_type t6   = ModelPars[11];
-    real_type t8   = X__[1];
-    real_type t10  = ModelPars[12];
-    real_type t12  = X__[2];
-    real_type t14  = ModelPars[13];
-    real_type t16  = X__[4];
-    real_type t18  = ModelPars[3];
-    real_type t19  = ModelPars[4];
-    real_type t20  = Q__[0];
-    real_type t32  = pow(t4 / t2 + t8 / t6 + t12 / t10 + t16 / t14 - 1.0 / (-t19 + t18) * (ModelPars[0] * (t18 - t19 + t20 - 1) - (t20 - 1) * ModelPars[1]), 2);
+    real_type t2   = ModelPars[iM_w1];
+    real_type t4   = X__[iX_x1];
+    real_type t6   = ModelPars[iM_w2];
+    real_type t8   = X__[iX_x2];
+    real_type t10  = ModelPars[iM_w3];
+    real_type t12  = X__[iX_x3];
+    real_type t14  = ModelPars[iM_w4];
+    real_type t16  = X__[iX_x4];
+    real_type t18  = ModelPars[iM_t1];
+    real_type t19  = ModelPars[iM_t2];
+    real_type t20  = Q__[iQ_zeta];
+    real_type t32  = pow(t4 / t2 + t8 / t6 + t12 / t10 + t16 / t14 - 1.0 / (-t19 + t18) * (ModelPars[iM_P1] * (t18 - t19 + t20 - 1) - (t20 - 1) * ModelPars[iM_P2]), 2);
     real_type t34  = t4 * t4;
     real_type t36  = t8 * t8;
     real_type t38  = t12 * t12;
     real_type t40  = t16 * t16;
-    real_type t45  = pow(-t4 + U__[0], 2);
-    real_type t50  = pow(-t8 + U__[1], 2);
-    real_type t55  = pow(-t12 + U__[2], 2);
-    real_type t60  = pow(-t16 + U__[3], 2);
-    return t38 * t10 + t40 * t14 + t34 * t2 + t32 * ModelPars[18] + t36 * t6 + t45 * ModelPars[14] + t50 * ModelPars[15] + t55 * ModelPars[16] + t60 * ModelPars[17];
+    real_type t45  = pow(-t4 + U__[iU_x1__o], 2);
+    real_type t50  = pow(-t8 + U__[iU_x2__o], 2);
+    real_type t55  = pow(-t12 + U__[iU_x3__o], 2);
+    real_type t60  = pow(-t16 + U__[iU_x4__o], 2);
+    real_type result__ = t38 * t10 + t40 * t14 + t34 * t2 + t32 * ModelPars[iM_wP] + t36 * t6 + t45 * ModelPars[iM_wJ1] + t50 * ModelPars[iM_wJ2] + t55 * ModelPars[iM_wJ3] + t60 * ModelPars[iM_wJ4];
+    return result__;
   }
 
   /*\
@@ -239,7 +243,8 @@ namespace FarmerDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -349,16 +354,16 @@ namespace FarmerDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = XR__[3] - XL__[3];
-    result__[ 4   ] = XR__[4] - XL__[4];
-    result__[ 5   ] = LR__[0] - LL__[0];
-    result__[ 6   ] = LR__[1] - LL__[1];
-    result__[ 7   ] = LR__[2] - LL__[2];
-    result__[ 8   ] = LR__[3] - LL__[3];
-    result__[ 9   ] = LR__[4] - LL__[4];
+    result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
+    result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
+    result__[ 2   ] = XR__[iX_x3] - XL__[iX_x3];
+    result__[ 3   ] = XR__[iX_res] - XL__[iX_res];
+    result__[ 4   ] = XR__[iX_x4] - XL__[iX_x4];
+    result__[ 5   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 6   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 7   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
+    result__[ 8   ] = LR__[iL_lambda4__xo] - LL__[iL_lambda4__xo];
+    result__[ 9   ] = LR__[iL_lambda5__xo] - LL__[iL_lambda5__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 10, i_segment_left, i_segment_right );
   }
@@ -471,11 +476,11 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 1.0 / ModelPars[10] * X__[0] + 1.0 / ModelPars[11] * X__[1] + 1.0 / ModelPars[12] * X__[2] + 1.0 / ModelPars[13] * X__[4];
-    real_type t17  = ModelPars[3];
-    real_type t18  = ModelPars[4];
-    real_type t19  = Q__[0];
-    result__[ 1   ] = 1.0 / (-t18 + t17) * (ModelPars[0] * (t17 - t18 + t19 - 1) - (t19 - 1) * ModelPars[1]);
+    result__[ 0   ] = 1.0 / ModelPars[iM_w1] * X__[iX_x1] + 1.0 / ModelPars[iM_w2] * X__[iX_x2] + 1.0 / ModelPars[iM_w3] * X__[iX_x3] + 1.0 / ModelPars[iM_w4] * X__[iX_x4];
+    real_type t17  = ModelPars[iM_t1];
+    real_type t18  = ModelPars[iM_t2];
+    real_type t19  = Q__[iQ_zeta];
+    result__[ 1   ] = 1.0 / (-t18 + t17) * (ModelPars[iM_P1] * (t17 - t18 + t19 - 1) - (t19 - 1) * ModelPars[iM_P2]);
     Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 

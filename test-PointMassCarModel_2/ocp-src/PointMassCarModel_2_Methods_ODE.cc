@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: PointMassCarModel_2_Methods.cc                                 |
+ |  file: PointMassCarModel_2_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -167,17 +167,17 @@ namespace PointMassCarModel_2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t1   = X__[2];
-    real_type t2   = X__[1];
+    real_type t1   = X__[iX_V];
+    real_type t2   = X__[iX_alpha];
     real_type t3   = sin(t2);
     result__[ 0   ] = t3 * t1;
-    real_type t5   = Q__[1];
-    real_type t7   = zeta__dot(t1, t2, X__[0], t5);
-    result__[ 1   ] = -t7 * t5 + X__[3];
+    real_type t5   = Q__[iQ_Kappa];
+    real_type t7   = zeta__dot(t1, t2, X__[iX_n], t5);
+    result__[ 1   ] = -t7 * t5 + X__[iX_Omega];
     real_type t10  = t1 * t1;
-    result__[ 2   ] = -t10 * ModelPars[3] + X__[4];
-    result__[ 3   ] = U__[0] * ModelPars[15];
-    result__[ 4   ] = U__[1] * ModelPars[14];
+    result__[ 2   ] = -t10 * ModelPars[iM_kD] + X__[iX_fx];
+    result__[ 3   ] = U__[iU_v__fx] * ModelPars[iM_v__fx__max];
+    result__[ 4   ] = U__[iU_v__Omega] * ModelPars[iM_v__Omega__max];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 5, i_segment );
   }
@@ -224,13 +224,13 @@ namespace PointMassCarModel_2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t1   = X__[2];
-    real_type t2   = X__[1];
+    real_type t1   = X__[iX_V];
+    real_type t2   = X__[iX_alpha];
     real_type t3   = cos(t2);
     result__[ 0   ] = t3 * t1;
     result__[ 1   ] = sin(t2);
-    real_type t4   = Q__[1];
-    real_type t5   = X__[0];
+    real_type t4   = Q__[iQ_Kappa];
+    real_type t5   = X__[iX_n];
     real_type t6   = zeta__dot_D_3(t1, t2, t5, t4);
     result__[ 2   ] = -t6 * t4;
     real_type t8   = zeta__dot_D_2(t1, t2, t5, t4);
@@ -238,7 +238,7 @@ namespace PointMassCarModel_2Define {
     real_type t10  = zeta__dot_D_1(t1, t2, t5, t4);
     result__[ 4   ] = -t10 * t4;
     result__[ 5   ] = 1;
-    result__[ 6   ] = -2 * t1 * ModelPars[3];
+    result__[ 6   ] = -2 * t1 * ModelPars[iM_kD];
     result__[ 7   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 8, i_segment );
@@ -313,8 +313,8 @@ namespace PointMassCarModel_2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ModelPars[15];
-    result__[ 1   ] = ModelPars[14];
+    result__[ 0   ] = ModelPars[iM_v__fx__max];
+    result__[ 1   ] = ModelPars[iM_v__Omega__max];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
@@ -362,7 +362,7 @@ namespace PointMassCarModel_2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    result__[ 0   ] = zeta__dot(X__[2], X__[1], X__[0], Q__[1]);
+    result__[ 0   ] = zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     result__[ 1   ] = result__[0];
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[2];
@@ -373,4 +373,4 @@ namespace PointMassCarModel_2Define {
 
 }
 
-// EOF: PointMassCarModel_2_Methods.cc
+// EOF: PointMassCarModel_2_Methods_ODE.cc

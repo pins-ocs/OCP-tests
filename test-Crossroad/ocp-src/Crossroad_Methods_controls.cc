@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,10 +84,10 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
-    real_type t4   = X__[3];
-    real_type t11  = ALIAS_jerkControl_D_1(t1, ModelPars[16], ModelPars[15]);
-    result__[ 0   ] = 2 * t4 * ModelPars[11] * t1 + t4 * L__[2] + t11;
+    real_type t1   = U__[iU_jerk];
+    real_type t4   = X__[iX_Ts];
+    real_type t11  = ALIAS_jerkControl_D_1(t1, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    result__[ 0   ] = 2 * t4 * ModelPars[iM_wJ] * t1 + t4 * L__[iL_lambda3__xo] + t11;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -129,8 +129,8 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 2 * U__[0] * ModelPars[11] + L__[2];
-    result__[ 1   ] = X__[3];
+    result__[ 0   ] = 2 * U__[iU_jerk] * ModelPars[iM_wJ] + L__[iL_lambda3__xo];
+    result__[ 1   ] = X__[iX_Ts];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
   }
@@ -171,8 +171,8 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t8   = ALIAS_jerkControl_D_1_1(U__[0], ModelPars[16], ModelPars[15]);
-    result__[ 0   ] = 2 * ModelPars[11] * X__[3] + t8;
+    real_type t8   = ALIAS_jerkControl_D_1_1(U__[iU_jerk], ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    result__[ 0   ] = 2 * ModelPars[iM_wJ] * X__[iX_Ts] + t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

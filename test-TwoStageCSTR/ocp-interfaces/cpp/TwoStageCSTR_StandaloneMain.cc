@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -156,13 +156,13 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u1Control = data_Controls["u1Control"];
-    data_u1Control["type"]      = "COS_LOGARITHMIC";
+    data_u1Control["type"]      = ;
     data_u1Control["epsilon"]   = epsi;
     data_u1Control["tolerance"] = tol;
 
 
     GenericContainer & data_u2Control = data_Controls["u2Control"];
-    data_u2Control["type"]      = "COS_LOGARITHMIC";
+    data_u2Control["type"]      = ;
     data_u2Control["epsilon"]   = epsi;
     data_u2Control["tolerance"] = tol;
 

@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_1_ruby_run.rb                                #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #

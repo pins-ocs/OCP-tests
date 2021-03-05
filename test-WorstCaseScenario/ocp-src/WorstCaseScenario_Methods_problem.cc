@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods1.cc                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -74,9 +74,10 @@ namespace WorstCaseScenarioDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t6   = U__[0];
+    real_type t6   = U__[iU_u];
     real_type t8   = uControl(t6, 0, 1);
-    return t6 * (1 - 2 * Q__[0]) * L__[0] + t8;
+    real_type result__ = t6 * (1 - 2 * Q__[iQ_zeta]) * L__[iL_lambda1__xo] + t8;
+    return result__;
   }
 
   /*\
@@ -96,7 +97,8 @@ namespace WorstCaseScenarioDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -109,7 +111,8 @@ namespace WorstCaseScenarioDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return uControl(U__[0], 0, 1);
+    real_type result__ = uControl(U__[iU_u], 0, 1);
+    return result__;
   }
 
   /*\
@@ -130,7 +133,8 @@ namespace WorstCaseScenarioDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -155,7 +159,8 @@ namespace WorstCaseScenarioDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return XR__[0];
+    real_type result__ = XR__[iX_x];
+    return result__;
   }
 
   /*\
@@ -265,8 +270,8 @@ namespace WorstCaseScenarioDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = LR__[0] - LL__[0];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 2, i_segment_left, i_segment_right );
   }

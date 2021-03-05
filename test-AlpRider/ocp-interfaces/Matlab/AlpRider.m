@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: AlpRider.m                                                     %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -651,56 +651,56 @@ classdef AlpRider < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = p( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_1( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p_D_1', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p_D_1( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_D_1', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_2( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p_D_2', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p_D_2( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_D_2', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_3( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p_D_3', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p_D_3( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_D_3', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_1_1( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p_D_1_1', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p_D_1_1( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_D_1_1', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_1_2( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p_D_1_2', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p_D_1_2( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_D_1_2', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_1_3( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p_D_1_3', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p_D_1_3( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_D_1_3', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_2_2( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p_D_2_2', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p_D_2_2( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_D_2_2', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_2_3( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p_D_2_3', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p_D_2_3( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_D_2_3', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_3_3( self, t__XO, a__XO, b__XO )
-      res = AlpRider_Mex('p_D_3_3', self.objectHandle, t__XO, a__XO, b__XO );
+    function res = p_D_3_3( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_D_3_3', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = q( self, t__XO )
-      res = AlpRider_Mex('q', self.objectHandle, t__XO );
+    function res = q( self, xo__t )
+      res = AlpRider_Mex('q', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = q_D( self, t__XO )
-      res = AlpRider_Mex('q_D', self.objectHandle, t__XO );
+    function res = q_D( self, xo__t )
+      res = AlpRider_Mex('q_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = q_DD( self, t__XO )
-      res = AlpRider_Mex('q_DD', self.objectHandle, t__XO );
+    function res = q_DD( self, xo__t )
+      res = AlpRider_Mex('q_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

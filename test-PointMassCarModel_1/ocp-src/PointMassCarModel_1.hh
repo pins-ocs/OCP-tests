@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1.hh                                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define POINTMASSCARMODEL_1_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace PointMassCarModel_1Define {
 
@@ -172,11 +172,11 @@ namespace PointMassCarModel_1Define {
     );
 
     POINTMASSCARMODEL_1_API_DLL virtual
-    ~PointMassCarModel_1() MECHATRONIX_OVERRIDE;
+    ~PointMassCarModel_1() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     POINTMASSCARMODEL_1_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "PointMassCarModel_1"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -228,21 +228,21 @@ namespace PointMassCarModel_1Define {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot      ( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1  ( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1_1( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1_2( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_2  ( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_2_2( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_2_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_2_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_3  ( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_3_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_3_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_4  ( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
-    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_4_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot      ( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1  ( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1_1( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1_2( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1_3( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_1_4( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_2  ( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_2_2( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_2_3( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_2_4( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_3  ( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_3_3( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_3_4( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_4  ( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
+    POINTMASSCARMODEL_1_API_DLL real_type inv_zeta__dot_D_4_4( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -265,12 +265,12 @@ namespace PointMassCarModel_1Define {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     POINTMASSCARMODEL_1_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

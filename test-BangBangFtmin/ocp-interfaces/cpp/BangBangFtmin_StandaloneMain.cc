@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -148,7 +148,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_Fcontrol = data_Controls["Fcontrol"];
-    data_Fcontrol["type"]      = "QUADRATIC";
+    data_Fcontrol["type"]      = ;
     data_Fcontrol["epsilon"]   = 0.001;
     data_Fcontrol["tolerance"] = 0.001;
 
@@ -160,14 +160,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFtmin_data.Mesh["s0"] = 0;
-BangBangFtmin_data.Mesh["segments"][0]["length"] = 0.1;
 BangBangFtmin_data.Mesh["segments"][0]["n"] = 10;
-BangBangFtmin_data.Mesh["segments"][1]["length"] = 0.4;
+BangBangFtmin_data.Mesh["segments"][0]["length"] = 0.1;
 BangBangFtmin_data.Mesh["segments"][1]["n"] = 40;
-BangBangFtmin_data.Mesh["segments"][2]["length"] = 0.4;
+BangBangFtmin_data.Mesh["segments"][1]["length"] = 0.4;
 BangBangFtmin_data.Mesh["segments"][2]["n"] = 40;
-BangBangFtmin_data.Mesh["segments"][3]["length"] = 0.1;
+BangBangFtmin_data.Mesh["segments"][2]["length"] = 0.4;
 BangBangFtmin_data.Mesh["segments"][3]["n"] = 10;
+BangBangFtmin_data.Mesh["segments"][3]["length"] = 0.1;
 
 
     // alias for user object classes passed as pointers

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoLinkRobotArm_Methods1.cc                                    |
+ |  file: TwoLinkRobotArm_Methods_UserFunctions.cc                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -64,4 +64,4 @@ using Mechatronix::MeshStd;
 namespace TwoLinkRobotArmDefine {
 }
 
-// EOF: TwoLinkRobotArm_Methods1.cc
+// EOF: TwoLinkRobotArm_Methods_UserFunctions.cc

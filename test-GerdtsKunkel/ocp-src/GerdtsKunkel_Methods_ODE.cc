@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GerdtsKunkel_Methods.cc                                        |
+ |  file: GerdtsKunkel_Methods_ODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,8 +69,8 @@ namespace GerdtsKunkelDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
-    result__[ 1   ] = U__[0];
+    result__[ 0   ] = X__[iX_x2];
+    result__[ 1   ] = U__[iU_u];
     real_type t1   = result__[1] * result__[1];
     result__[ 2   ] = t1 / 2;
     if ( m_debug )
@@ -187,7 +187,7 @@ namespace GerdtsKunkelDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    result__[ 1   ] = U__[0];
+    result__[ 1   ] = U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
@@ -242,4 +242,4 @@ namespace GerdtsKunkelDefine {
 
 }
 
-// EOF: GerdtsKunkel_Methods.cc
+// EOF: GerdtsKunkel_Methods_ODE.cc

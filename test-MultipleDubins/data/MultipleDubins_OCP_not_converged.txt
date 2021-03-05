@@ -1,5 +1,5 @@
-# Date:             15:48:30 2021-02-26
-# MX Version:       1.4.8-d015dirty-osx_10.15.7 hash: g8e9870e1
+# Date:             23:45:36 2021-03-05
+# MX Version:       1.4.8-d023dirty-osx_10.15.7 hash: g3d4e667a
 # Computation type: Optimal control solution
 # Model name:       MultipleDubins
 #
@@ -14,7 +14,7 @@
 # max_accumulated_iter = 800
 # tolerance            = 9.999999999999999e-10
 # iterations           = 301
-# cpu_time             = 227.513 ms
+# cpu_time             = 213.50900000000001 ms
 # solver_type          = CyclicReduction+LU and LastBlock LU
 # lapack version       = Accelerate
 #

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularLuus04_FreeTime_Methods.cc                             |
+ |  file: SingularLuus04_FreeTime_Methods_ODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -76,10 +76,10 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[3];
-    result__[ 0   ] = X__[1] * t1;
-    result__[ 1   ] = X__[2] * t1;
-    result__[ 2   ] = U__[0] * t1;
+    real_type t1   = X__[iX_T];
+    result__[ 0   ] = X__[iX_y] * t1;
+    result__[ 1   ] = X__[iX_z] * t1;
+    result__[ 2   ] = U__[iU_u] * t1;
     result__[ 3   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
@@ -124,11 +124,11 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[3];
-    result__[ 1   ] = X__[1];
+    result__[ 0   ] = X__[iX_T];
+    result__[ 1   ] = X__[iX_y];
     result__[ 2   ] = result__[0];
-    result__[ 3   ] = X__[2];
-    result__[ 4   ] = U__[0];
+    result__[ 3   ] = X__[iX_z];
+    result__[ 4   ] = U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 5, i_segment );
   }
@@ -201,7 +201,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[3];
+    result__[ 0   ] = X__[iX_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 1, i_segment );
   }
@@ -258,4 +258,4 @@ namespace SingularLuus04_FreeTimeDefine {
 
 }
 
-// EOF: SingularLuus04_FreeTime_Methods.cc
+// EOF: SingularLuus04_FreeTime_Methods_ODE.cc

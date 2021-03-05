@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -86,10 +86,10 @@ namespace BikeSteeringDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0] - ModelPars[6];
-    result__[ 1   ] = XL__[1] - ModelPars[8];
-    result__[ 2   ] = XR__[0] - ModelPars[5];
-    result__[ 3   ] = XR__[1] - ModelPars[7];
+    result__[ 0   ] = XL__[iX_omega] - ModelPars[iM_omega_i];
+    result__[ 1   ] = XL__[iX_phi] - ModelPars[iM_phi_i];
+    result__[ 2   ] = XR__[iX_omega] - ModelPars[iM_omega_f];
+    result__[ 3   ] = XR__[iX_phi] - ModelPars[iM_phi_f];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 4, i_segment_left, i_segment_right );
   }
@@ -199,13 +199,13 @@ namespace BikeSteeringDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    real_type t2   = ModelPars[1];
-    result__[ 0   ] = t2 * LL__[1] + OMEGA__[0];
-    result__[ 1   ] = OMEGA__[1] + LL__[0];
-    result__[ 2   ] = LL__[2];
-    result__[ 3   ] = -t2 * LR__[1] + OMEGA__[2];
-    result__[ 4   ] = OMEGA__[3] - LR__[0];
-    result__[ 5   ] = 1 - LR__[2];
+    real_type t2   = ModelPars[iM_Ix];
+    result__[ 0   ] = t2 * LL__[iL_lambda2__xo] + OMEGA__[0];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda1__xo];
+    result__[ 2   ] = LL__[iL_lambda3__xo];
+    result__[ 3   ] = -t2 * LR__[iL_lambda2__xo] + OMEGA__[2];
+    result__[ 4   ] = OMEGA__[3] - LR__[iL_lambda1__xo];
+    result__[ 5   ] = 1 - LR__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 6, i_segment_left, i_segment_right );
   }

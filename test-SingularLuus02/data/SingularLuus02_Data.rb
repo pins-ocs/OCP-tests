@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus02_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -169,8 +169,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => Tf,
         :n      => 400,
+        :length => Tf,
       },
     ],
   };

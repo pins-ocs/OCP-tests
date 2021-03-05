@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: HyperSensitive_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -158,11 +158,11 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
+        :length           => 10000,
         :density_function => {
           :C   => 50,
           :rho => 0.8,
         },
-        :length           => 10000,
       },
     ],
   };

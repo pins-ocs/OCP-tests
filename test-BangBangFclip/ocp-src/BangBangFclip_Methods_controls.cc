@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,9 +87,9 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ModelPars[4];
-    real_type t4   = ALIAS_controlForce_D_1(U__[0], -t3, t3);
-    result__[ 0   ] = L__[2] + t4;
+    real_type t3   = ModelPars[iM_vFmax];
+    real_type t4   = ALIAS_controlForce_D_1(U__[iU_vF], -t3, t3);
+    result__[ 0   ] = L__[iL_lambda3__xo] + t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -171,8 +171,8 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[4];
-    result__[ 0   ] = ALIAS_controlForce_D_1_1(U__[0], -t2, t2);
+    real_type t2   = ModelPars[iM_vFmax];
+    result__[ 0   ] = ALIAS_controlForce_D_1_1(U__[iU_vF], -t2, t2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -207,8 +207,8 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[4];
-    U__[ iU_vF ] = controlForce.solve(-L__[2], -t2, t2);
+    real_type t2   = ModelPars[iM_vFmax];
+    U__[ iU_vF ] = controlForce.solve(-L__[iL_lambda3__xo], -t2, t2);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -264,7 +264,7 @@ namespace BangBangFclipDefine {
     DuDxlp(0, 2) = 0;
     DuDxlp(0, 3) = 0;
     DuDxlp(0, 4) = 0;
-    DuDxlp(0, 5) = -controlForce.solve_rhs(-L__[2], -ModelPars[4], ModelPars[4]);
+    DuDxlp(0, 5) = -controlForce.solve_rhs(-L__[iL_lambda3__xo], -ModelPars[iM_vFmax], ModelPars[iM_vFmax]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

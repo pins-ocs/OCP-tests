@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -86,31 +86,31 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[2];
+    real_type t1   = X__[iX_a];
     real_type t2   = t1 * t1;
-    real_type t4   = ModelPars[14] * ModelPars[14];
+    real_type t4   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
     real_type t5   = 1.0 / t4;
-    real_type t7   = X__[1];
+    real_type t7   = X__[iX_v];
     real_type t8   = t7 * t7;
     real_type t9   = t8 * t8;
-    real_type t10  = X__[0];
+    real_type t10  = X__[iX_s];
     real_type t11  = kappa(t10);
     real_type t12  = t11 * t11;
-    real_type t15  = ModelPars[13] * ModelPars[13];
+    real_type t15  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
     real_type t16  = 1.0 / t15;
     real_type t19  = ALIAS_AccBound_D(-t16 * t12 * t9 - t5 * t2 + 1);
     real_type t22  = kappa_D(t10);
     result__[ 0   ] = -2 * t22 * t16 * t11 * t9 * t19;
     real_type t31  = ALIAS_VelBound_D(t7);
-    real_type t32  = L__[0];
-    real_type t33  = X__[3];
+    real_type t32  = L__[iL_lambda1__xo];
+    real_type t33  = X__[iX_Ts];
     result__[ 1   ] = -4 * t16 * t12 * t8 * t7 * t19 + t33 * t32 + t31;
-    real_type t38  = L__[1];
+    real_type t38  = L__[iL_lambda2__xo];
     result__[ 2   ] = -2 * t5 * t1 * t19 + t33 * t38;
     real_type t40  = ALIAS_Tpositive_D(t33);
-    real_type t43  = U__[0];
+    real_type t43  = U__[iU_jerk];
     real_type t44  = t43 * t43;
-    result__[ 3   ] = t1 * t38 + t7 * t32 + t43 * L__[2] + t44 * ModelPars[11] + t40 + ModelPars[12];
+    result__[ 3   ] = t1 * t38 + t7 * t32 + t43 * L__[iL_lambda3__xo] + t44 * ModelPars[iM_wJ] + t40 + ModelPars[iM_wT];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -163,17 +163,17 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[2];
+    real_type t1   = X__[iX_a];
     real_type t2   = t1 * t1;
-    real_type t4   = ModelPars[14] * ModelPars[14];
+    real_type t4   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
     real_type t5   = 1.0 / t4;
-    real_type t7   = X__[1];
+    real_type t7   = X__[iX_v];
     real_type t8   = t7 * t7;
     real_type t9   = t8 * t8;
-    real_type t10  = X__[0];
+    real_type t10  = X__[iX_s];
     real_type t11  = kappa(t10);
     real_type t12  = t11 * t11;
-    real_type t15  = ModelPars[13] * ModelPars[13];
+    real_type t15  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
     real_type t16  = 1.0 / t15;
     real_type t18  = -t16 * t12 * t9 - t5 * t2 + 1;
     real_type t19  = ALIAS_AccBound_DD(t18);
@@ -196,15 +196,15 @@ namespace CrossroadDefine {
     real_type t67  = ALIAS_VelBound_DD(t7);
     result__[ 4   ] = 16 * t23 * t59 * t9 * t8 * t19 - 12 * t16 * t12 * t8 * t30 + t67;
     result__[ 5   ] = 8 * t16 * t12 * t40 * t52;
-    result__[ 6   ] = L__[0];
+    result__[ 6   ] = L__[iL_lambda1__xo];
     result__[ 7   ] = result__[2];
     result__[ 8   ] = result__[5];
     real_type t72  = t4 * t4;
     result__[ 9   ] = 4 / t72 * t2 * t19 - 2 * t5 * t30;
-    result__[ 10  ] = L__[1];
+    result__[ 10  ] = L__[iL_lambda2__xo];
     result__[ 11  ] = result__[6];
     result__[ 12  ] = result__[10];
-    result__[ 13  ] = ALIAS_Tpositive_DD(X__[3]);
+    result__[ 13  ] = ALIAS_Tpositive_DD(X__[iX_Ts]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 14, i_segment );
   }
@@ -268,8 +268,8 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = X__[3];
-    result__[ 0   ] = 2 * t4 * ModelPars[11] * U__[0] + t4 * L__[2];
+    real_type t4   = X__[iX_Ts];
+    result__[ 0   ] = 2 * t4 * ModelPars[iM_wJ] * U__[iU_jerk] + t4 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -310,7 +310,7 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 2 * U__[0] * ModelPars[11] + L__[2];
+    result__[ 0   ] = 2 * U__[iU_jerk] * ModelPars[iM_wJ] + L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
@@ -436,10 +436,10 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
-    result__[ 3   ] = L__[3];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }

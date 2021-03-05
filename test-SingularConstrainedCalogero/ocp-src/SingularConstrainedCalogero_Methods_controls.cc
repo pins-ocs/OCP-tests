@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods.cc                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,11 +80,11 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
-    real_type t3   = Q__[0];
-    real_type t5   = ALIAS_uMaxBound_D(t1 - 1 - X__[0] + t3);
+    real_type t1   = U__[iU_u];
+    real_type t3   = Q__[iQ_zeta];
+    real_type t5   = ALIAS_uMaxBound_D(t1 - 1 - X__[iX_x] + t3);
     real_type t7   = ALIAS_uControl_D_1(t1, 0, 2);
-    result__[ 0   ] = t5 + t3 - 4 + L__[0] + t7;
+    result__[ 0   ] = t5 + t3 - 4 + L__[iL_lambda1__xo] + t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -126,7 +126,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t5   = ALIAS_uMaxBound_DD(U__[0] - 1 - X__[0] + Q__[0]);
+    real_type t5   = ALIAS_uMaxBound_DD(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
     result__[ 0   ] = -t5;
     result__[ 1   ] = 1;
     if ( m_debug )
@@ -169,8 +169,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
-    real_type t5   = ALIAS_uMaxBound_DD(t1 - 1 - X__[0] + Q__[0]);
+    real_type t1   = U__[iU_u];
+    real_type t5   = ALIAS_uMaxBound_DD(t1 - 1 - X__[iX_x] + Q__[iQ_zeta]);
     real_type t6   = ALIAS_uControl_D_1_1(t1, 0, 2);
     result__[ 0   ] = t5 + t6;
     if ( m_debug )

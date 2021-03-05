@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SecondOrderSingularRegulator_Methods.cc                        |
+ |  file: SecondOrderSingularRegulator_Methods_ODE.cc                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -76,8 +76,8 @@ namespace SecondOrderSingularRegulatorDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
-    result__[ 1   ] = U__[0];
+    result__[ 0   ] = X__[iX_y2];
+    result__[ 1   ] = U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
   }
@@ -243,4 +243,4 @@ namespace SecondOrderSingularRegulatorDefine {
 
 }
 
-// EOF: SecondOrderSingularRegulator_Methods.cc
+// EOF: SecondOrderSingularRegulator_Methods_ODE.cc

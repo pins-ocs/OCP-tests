@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -166,22 +166,22 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     x1__oControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = 0.001,
       tolerance = 0.001,
     },
     x2__oControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = 0.001,
       tolerance = 0.001,
     },
     x3__oControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = 0.001,
       tolerance = 0.001,
     },
     x4__oControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = 0.001,
       tolerance = 0.001,
     },
@@ -189,7 +189,7 @@ content = {
 
   Constraints = {
   -- Constraint1D
-  -- Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DGreaterThan
     LimitX2X4subType   = "PENALTY_REGULAR",
@@ -208,8 +208,8 @@ content = {
     segments = {
       
       {
-        length = 2,
         n      = 400,
+        length = 2,
       },
     },
   },

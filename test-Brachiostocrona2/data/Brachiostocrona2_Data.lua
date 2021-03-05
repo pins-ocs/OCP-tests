@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-yf = -2
 xf = 5
+yf = -2
 g  = 9.81
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 Tf = (-2.0*yf/g)**(1/2.0)
@@ -165,8 +165,8 @@ content = {
     segments = {
       
       {
-        n      = 500,
         length = 1,
+        n      = 500,
       },
     },
   },

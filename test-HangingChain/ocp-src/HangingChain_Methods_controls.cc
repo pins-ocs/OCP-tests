@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,10 +67,10 @@ namespace HangingChainDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
-    real_type t2   = t1 * t1;
-    real_type t4   = sqrt(t2 + 1);
-    result__[ 0   ] = (t1 * (L__[1] + X__[0]) + t4 * L__[0]) / t4;
+    real_type t4   = U__[iU_u];
+    real_type t7   = t4 * t4;
+    real_type t9   = sqrt(t7 + 1);
+    result__[ 0   ] = 1.0 / t9 * (t4 * (L__[iL_lambda2__xo] + X__[iX_x]) + t9 * L__[iL_lambda1__xo]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -113,7 +113,7 @@ namespace HangingChainDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
+    real_type t1   = U__[iU_u];
     real_type t2   = t1 * t1;
     real_type t4   = sqrt(t2 + 1);
     result__[ 0   ] = t1 / t4;
@@ -159,10 +159,10 @@ namespace HangingChainDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t5   = U__[0] * U__[0];
+    real_type t5   = U__[iU_u] * U__[iU_u];
     real_type t6   = t5 + 1;
     real_type t7   = sqrt(t6);
-    result__[ 0   ] = 1.0 / t7 / t6 * (L__[1] + X__[0]);
+    result__[ 0   ] = 1.0 / t7 / t6 * (L__[iL_lambda2__xo] + X__[iX_x]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

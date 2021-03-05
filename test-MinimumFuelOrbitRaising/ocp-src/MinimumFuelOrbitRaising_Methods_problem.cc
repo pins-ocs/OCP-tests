@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods1.cc                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -63,18 +63,19 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[1];
-    real_type t5   = X__[2];
+    real_type t1   = X__[iX_x2];
+    real_type t5   = X__[iX_x3];
     real_type t6   = t5 * t5;
-    real_type t8   = X__[0];
+    real_type t8   = X__[iX_x1];
     real_type t9   = 1.0 / t8;
     real_type t11  = t8 * t8;
-    real_type t13  = ModelPars[0];
-    real_type t14  = U__[0];
+    real_type t13  = ModelPars[iM_T];
+    real_type t14  = U__[iU_u];
     real_type t15  = sin(t14);
-    real_type t21  = 1.0 / (-Q__[0] * ModelPars[1] + 1);
+    real_type t21  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_md] + 1);
     real_type t28  = cos(t14);
-    return -t1 + t1 * L__[0] + (t9 * t6 * t5 - 1.0 / t11 + t21 * t15 * t13) * L__[1] + (-t9 * t5 * t1 + t21 * t28 * t13) * L__[2];
+    real_type result__ = -t1 + t1 * L__[iL_lambda1__xo] + (t9 * t6 * t5 - 1.0 / t11 + t21 * t15 * t13) * L__[iL_lambda2__xo] + (-t9 * t5 * t1 + t21 * t28 * t13) * L__[iL_lambda3__xo];
+    return result__;
   }
 
   /*\
@@ -94,7 +95,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -107,7 +109,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -128,7 +131,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return -X__[1];
+    real_type result__ = -X__[iX_x2];
+    return result__;
   }
 
   /*\
@@ -153,7 +157,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -263,12 +268,12 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = LR__[0] - LL__[0];
-    result__[ 4   ] = LR__[1] - LL__[1];
-    result__[ 5   ] = LR__[2] - LL__[2];
+    result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
+    result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
+    result__[ 2   ] = XR__[iX_x3] - XL__[iX_x3];
+    result__[ 3   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 4   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 5   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 6, i_segment_left, i_segment_right );
   }

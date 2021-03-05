@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -182,15 +182,15 @@ namespace PointMassCarModel_4Define {
     real_type const * XR__  = RIGHT__.x;
     Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
-    real_type t1   = XL__[3];
-    result__[ 0   ] = t1 - ModelPars[1];
-    result__[ 1   ] = XL__[0] - QL__[0];
-    result__[ 2   ] = XR__[0] - QR__[0];
-    result__[ 3   ] = XR__[1] - XL__[1];
-    result__[ 4   ] = XR__[2] - XL__[2];
-    result__[ 5   ] = XR__[3] - t1;
-    result__[ 6   ] = XR__[5] - XL__[5];
-    result__[ 7   ] = XR__[4] - XL__[4];
+    real_type t1   = XL__[iX_V];
+    result__[ 0   ] = t1 - ModelPars[iM_V0];
+    result__[ 1   ] = XL__[iX_s] - QL__[iQ_zeta];
+    result__[ 2   ] = XR__[iX_s] - QR__[iQ_zeta];
+    result__[ 3   ] = XR__[iX_n] - XL__[iX_n];
+    result__[ 4   ] = XR__[iX_alpha] - XL__[iX_alpha];
+    result__[ 5   ] = XR__[iX_V] - t1;
+    result__[ 6   ] = XR__[iX_fx] - XL__[iX_fx];
+    result__[ 7   ] = XR__[iX_Omega] - XL__[iX_Omega];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 8, i_segment_left, i_segment_right );
   }
@@ -318,25 +318,25 @@ namespace PointMassCarModel_4Define {
     real_type const * LR__  = RIGHT__.lambda;
     Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[1] + LL__[0];
+    result__[ 0   ] = OMEGA__[1] + LL__[iL_lambda1__xo];
     real_type t3   = OMEGA__[3];
-    result__[ 1   ] = -t3 + LL__[1];
+    result__[ 1   ] = -t3 + LL__[iL_lambda2__xo];
     real_type t5   = OMEGA__[4];
-    result__[ 2   ] = -t5 + LL__[2];
+    result__[ 2   ] = -t5 + LL__[iL_lambda3__xo];
     real_type t8   = OMEGA__[5];
-    result__[ 3   ] = OMEGA__[0] - t8 + LL__[3];
+    result__[ 3   ] = OMEGA__[0] - t8 + LL__[iL_lambda4__xo];
     real_type t10  = OMEGA__[7];
-    result__[ 4   ] = -t10 + LL__[4];
+    result__[ 4   ] = -t10 + LL__[iL_lambda5__xo];
     real_type t12  = OMEGA__[6];
-    result__[ 5   ] = -t12 + LL__[5];
-    result__[ 6   ] = LL__[6];
-    result__[ 7   ] = OMEGA__[2] - LR__[0];
-    result__[ 8   ] = t3 - LR__[1];
-    result__[ 9   ] = t5 - LR__[2];
-    result__[ 10  ] = t8 - LR__[3];
-    result__[ 11  ] = t10 - LR__[4];
-    result__[ 12  ] = t12 - LR__[5];
-    result__[ 13  ] = -LR__[6];
+    result__[ 5   ] = -t12 + LL__[iL_lambda6__xo];
+    result__[ 6   ] = LL__[iL_lambda7__xo];
+    result__[ 7   ] = OMEGA__[2] - LR__[iL_lambda1__xo];
+    result__[ 8   ] = t3 - LR__[iL_lambda2__xo];
+    result__[ 9   ] = t5 - LR__[iL_lambda3__xo];
+    result__[ 10  ] = t8 - LR__[iL_lambda4__xo];
+    result__[ 11  ] = t10 - LR__[iL_lambda5__xo];
+    result__[ 12  ] = t12 - LR__[iL_lambda6__xo];
+    result__[ 13  ] = -LR__[iL_lambda7__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 14, i_segment_left, i_segment_right );
   }

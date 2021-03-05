@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Methods1.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -62,7 +62,7 @@ namespace SingularLuus04Define {
 
   void
   SingularLuus04::continuationStep0( real_type s ) {
-    uControl.update_epsilon(ModelPars[0] * (1 - s) + s * ModelPars[5]);
+    uControl.update_epsilon(ModelPars[iM_u_epsi] * (1 - s) + s * ModelPars[iM_min_u_epsi]);
   }
 
   /*\
@@ -85,10 +85,11 @@ namespace SingularLuus04Define {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
-    real_type t10  = U__[0];
+    real_type t2   = X__[iX_x] * X__[iX_x];
+    real_type t10  = U__[iU_u];
     real_type t14  = uControl(t10, -1, 1);
-    return t2 + L__[0] * X__[1] + L__[1] * X__[2] + t10 * L__[2] + t14 * (t2 + ModelPars[4]);
+    real_type result__ = t2 + L__[iL_lambda1__xo] * X__[iX_y] + L__[iL_lambda2__xo] * X__[iX_z] + t10 * L__[iL_lambda3__xo] + t14 * (t2 + ModelPars[iM_epsilon_X]);
+    return result__;
   }
 
   /*\
@@ -108,7 +109,8 @@ namespace SingularLuus04Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -121,9 +123,10 @@ namespace SingularLuus04Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
-    real_type t6   = uControl(U__[0], -1, 1);
-    return t6 * (t2 + ModelPars[4]);
+    real_type t2   = X__[iX_x] * X__[iX_x];
+    real_type t6   = uControl(U__[iU_u], -1, 1);
+    real_type result__ = t6 * (t2 + ModelPars[iM_epsilon_X]);
+    return result__;
   }
 
   /*\
@@ -144,7 +147,8 @@ namespace SingularLuus04Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return X__[0] * X__[0];
+    real_type result__ = X__[iX_x] * X__[iX_x];
+    return result__;
   }
 
   /*\
@@ -169,7 +173,8 @@ namespace SingularLuus04Define {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -279,12 +284,12 @@ namespace SingularLuus04Define {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = LR__[0] - LL__[0];
-    result__[ 4   ] = LR__[1] - LL__[1];
-    result__[ 5   ] = LR__[2] - LL__[2];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = XR__[iX_y] - XL__[iX_y];
+    result__[ 2   ] = XR__[iX_z] - XL__[iX_z];
+    result__[ 3   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 4   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 5   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 6, i_segment_left, i_segment_right );
   }
@@ -396,7 +401,7 @@ namespace SingularLuus04Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[0] * X__[0];
+    result__[ 0   ] = X__[iX_x] * X__[iX_x];
     Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 

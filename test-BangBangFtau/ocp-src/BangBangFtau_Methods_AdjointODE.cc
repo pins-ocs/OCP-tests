@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -89,11 +89,11 @@ namespace BangBangFtauDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 0;
-    result__[ 1   ] = L__[0];
-    real_type t7   = ALIAS_clip_D_1(X__[2] - X__[3], ModelPars[3], ModelPars[1]);
-    real_type t8   = t7 * L__[1];
-    result__[ 2   ] = t8 - L__[2] / ModelPars[5];
-    result__[ 3   ] = -t8 - L__[3] / ModelPars[4];
+    result__[ 1   ] = L__[iL_lambda1__xo];
+    real_type t7   = ALIAS_clip_D_1(X__[iX_sT] - X__[iX_sB], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    real_type t8   = t7 * L__[iL_lambda2__xo];
+    result__[ 2   ] = t8 - L__[iL_lambda3__xo] / ModelPars[iM_tauT];
+    result__[ 3   ] = -t8 - L__[iL_lambda4__xo] / ModelPars[iM_tauB];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -136,8 +136,8 @@ namespace BangBangFtauDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t7   = ALIAS_clip_D_1_1(X__[2] - X__[3], ModelPars[3], ModelPars[1]);
-    result__[ 0   ] = t7 * L__[1];
+    real_type t7   = ALIAS_clip_D_1_1(X__[iX_sT] - X__[iX_sB], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    result__[ 0   ] = t7 * L__[iL_lambda2__xo];
     result__[ 1   ] = -result__[0];
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[0];
@@ -204,15 +204,15 @@ namespace BangBangFtauDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
+    real_type t1   = U__[iU_vsT];
     real_type t2   = ALIAS_vsTpositive_D(t1);
-    real_type t5   = ALIAS_vsTmax_D(ModelPars[2] - t1);
-    real_type t6   = U__[1];
+    real_type t5   = ALIAS_vsTmax_D(ModelPars[iM_maxT] - t1);
+    real_type t6   = U__[iU_vsB];
     real_type t8   = ALIAS_vsTBInterval_D(t1 - t6);
-    real_type t9   = ModelPars[0];
-    result__[ 0   ] = t2 - t5 + t8 + 2 * t1 * t9 + L__[2] / ModelPars[5];
+    real_type t9   = ModelPars[iM_epsiTB];
+    result__[ 0   ] = t2 - t5 + t8 + 2 * t1 * t9 + L__[iL_lambda3__xo] / ModelPars[iM_tauT];
     real_type t16  = ALIAS_vsBpositive_D(t6);
-    result__[ 1   ] = t16 - t8 + 2 * t6 * t9 + L__[3] / ModelPars[4];
+    result__[ 1   ] = t16 - t8 + 2 * t6 * t9 + L__[iL_lambda4__xo] / ModelPars[iM_tauB];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }
@@ -371,10 +371,10 @@ namespace BangBangFtauDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
-    result__[ 3   ] = L__[3];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods.cc                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -89,11 +89,11 @@ namespace BangBangFredundantDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ModelPars[0];
-    real_type t4   = ALIAS_aF1Control_D_1(U__[0], -t3, t3);
-    result__[ 0   ] = L__[4] + t4;
-    real_type t7   = ALIAS_aF2Control_D_1(U__[1], -t3, t3);
-    result__[ 1   ] = L__[5] + t7;
+    real_type t3   = ModelPars[iM_maxAF];
+    real_type t4   = ALIAS_aF1Control_D_1(U__[iU_aF1], -t3, t3);
+    result__[ 0   ] = L__[iL_lambda5__xo] + t4;
+    real_type t7   = ALIAS_aF2Control_D_1(U__[iU_aF2], -t3, t3);
+    result__[ 1   ] = L__[iL_lambda6__xo] + t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -178,9 +178,9 @@ namespace BangBangFredundantDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[0];
-    result__[ 0   ] = ALIAS_aF1Control_D_1_1(U__[0], -t2, t2);
-    result__[ 1   ] = ALIAS_aF2Control_D_1_1(U__[1], -t2, t2);
+    real_type t2   = ModelPars[iM_maxAF];
+    result__[ 0   ] = ALIAS_aF1Control_D_1_1(U__[iU_aF1], -t2, t2);
+    result__[ 1   ] = ALIAS_aF2Control_D_1_1(U__[iU_aF2], -t2, t2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -215,9 +215,9 @@ namespace BangBangFredundantDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[0];
-    U__[ iU_aF1 ] = aF1Control.solve(-L__[4], -t2, t2);
-    U__[ iU_aF2 ] = aF2Control.solve(-L__[5], -t2, t2);
+    real_type t2   = ModelPars[iM_maxAF];
+    U__[ iU_aF1 ] = aF1Control.solve(-L__[iL_lambda5__xo], -t2, t2);
+    U__[ iU_aF2 ] = aF2Control.solve(-L__[iL_lambda6__xo], -t2, t2);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -294,10 +294,10 @@ namespace BangBangFredundantDefine {
     DuDxlp(1, 8) = 0;
     DuDxlp(0, 9) = 0;
     DuDxlp(1, 9) = 0;
-    DuDxlp(0, 10) = -aF1Control.solve_rhs(-L__[4], -ModelPars[0], ModelPars[0]);
+    DuDxlp(0, 10) = -aF1Control.solve_rhs(-L__[iL_lambda5__xo], -ModelPars[iM_maxAF], ModelPars[iM_maxAF]);
     DuDxlp(1, 10) = 0;
     DuDxlp(0, 11) = 0;
-    DuDxlp(1, 11) = -aF2Control.solve_rhs(-L__[5], -ModelPars[0], ModelPars[0]);
+    DuDxlp(1, 11) = -aF2Control.solve_rhs(-L__[iL_lambda6__xo], -ModelPars[iM_maxAF], ModelPars[iM_maxAF]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

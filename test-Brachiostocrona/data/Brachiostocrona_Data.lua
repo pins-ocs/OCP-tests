@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
+xf = 5
 yf = -2
 g  = 9.81
 Tf = (-2.0*yf/g)**(1/2.0)
-xf = 5
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 
 content = {
@@ -154,7 +154,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     vthetaControl = {
-      type      = 'QUADRATIC',
+      type      = ,
       epsilon   = 0.001,
       tolerance = 0.001,
     },

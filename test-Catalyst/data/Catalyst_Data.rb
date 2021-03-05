@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Catalyst_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_ctrl = 1e-05
 tol_ctrl  = 1e-05
+epsi_ctrl = 1e-05
 
 mechatronix do |data|
 
@@ -168,8 +168,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 400,
         :length => 1,
+        :n      => 400,
       },
     ],
   };

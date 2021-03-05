@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -154,8 +154,8 @@ content = {
   -- DiffModuleN
     diff2piN = 2*Math::PI,
   -- ClipIntervalWithErf
-    clipdelta = 0,
     cliph = 0.001,
+    clipdelta = 0,
   },
 
   -- Controls: No penalties or barriers constraint defined

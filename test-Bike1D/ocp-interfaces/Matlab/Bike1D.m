@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Bike1D.m                                                       %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -623,16 +623,16 @@ classdef Bike1D < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = Tmax_normalized( self, v__XO )
-      res = Bike1D_Mex('Tmax_normalized', self.objectHandle, v__XO );
+    function res = Tmax_normalized( self, xo__v )
+      res = Bike1D_Mex('Tmax_normalized', self.objectHandle, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = Tmax_normalized_D( self, v__XO )
-      res = Bike1D_Mex('Tmax_normalized_D', self.objectHandle, v__XO );
+    function res = Tmax_normalized_D( self, xo__v )
+      res = Bike1D_Mex('Tmax_normalized_D', self.objectHandle, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = Tmax_normalized_DD( self, v__XO )
-      res = Bike1D_Mex('Tmax_normalized_DD', self.objectHandle, v__XO );
+    function res = Tmax_normalized_DD( self, xo__v )
+      res = Bike1D_Mex('Tmax_normalized_DD', self.objectHandle, xo__v );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

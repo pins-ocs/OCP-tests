@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -85,9 +85,9 @@ namespace BangBangFclipDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
-    result__[ 1   ] = clip(X__[2], ModelPars[3], ModelPars[2]);
-    result__[ 2   ] = U__[0];
+    result__[ 0   ] = X__[iX_v];
+    result__[ 1   ] = clip(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    result__[ 2   ] = U__[iU_vF];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
   }
@@ -129,7 +129,7 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    result__[ 1   ] = ALIAS_clip_D_1(X__[2], ModelPars[3], ModelPars[2]);
+    result__[ 1   ] = ALIAS_clip_D_1(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 2, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MinimumEnergyProblem_Methods1.cc                               |
+ |  file: MinimumEnergyProblem_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -54,89 +54,169 @@ namespace MinimumEnergyProblemDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  MinimumEnergyProblem::interpLog( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t2   = pow(v0__XO, 1 - s__XO);
-    real_type t3   = pow(v1__XO, s__XO);
-    return t3 * t2;
+  MinimumEnergyProblem::interpLog( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t2   = pow(xo__v0, 1 - xo__s);
+    real_type t3   = pow(xo__v1, xo__s);
+    real_type result__ = t3 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MinimumEnergyProblem::interpLog_D_1( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t2   = pow(v0__XO, 1 - s__XO);
-    real_type t3   = pow(v1__XO, s__XO);
-    real_type t5   = log(v1__XO);
-    real_type t6   = log(v0__XO);
-    return (t5 - t6) * t3 * t2;
+  MinimumEnergyProblem::interpLog_D_1( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t2   = pow(xo__v0, 1 - xo__s);
+    real_type t3   = pow(xo__v1, xo__s);
+    real_type t5   = log(xo__v1);
+    real_type t6   = log(xo__v0);
+    real_type result__ = (t5 - t6) * t3 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog_D_1( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MinimumEnergyProblem::interpLog_D_1_1( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t2   = pow(v0__XO, 1 - s__XO);
-    real_type t3   = pow(v1__XO, s__XO);
-    real_type t5   = log(v1__XO);
-    real_type t6   = log(v0__XO);
+  MinimumEnergyProblem::interpLog_D_1_1( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t2   = pow(xo__v0, 1 - xo__s);
+    real_type t3   = pow(xo__v1, xo__s);
+    real_type t5   = log(xo__v1);
+    real_type t6   = log(xo__v0);
     real_type t8   = pow(t5 - t6, 2);
-    return t8 * t3 * t2;
+    real_type result__ = t8 * t3 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog_D_1_1( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MinimumEnergyProblem::interpLog_D_1_2( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t1   = pow(v1__XO, s__XO);
-    real_type t2   = -1 + s__XO;
-    real_type t3   = log(v0__XO);
-    real_type t6   = log(v1__XO);
-    real_type t10  = pow(v0__XO, -s__XO);
-    return t10 * (t3 * t2 - t6 * t2 - 1) * t1;
+  MinimumEnergyProblem::interpLog_D_1_2( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t1   = -1 + xo__s;
+    real_type t2   = log(xo__v0);
+    real_type t5   = log(xo__v1);
+    real_type t8   = pow(xo__v1, xo__s);
+    real_type t10  = pow(xo__v0, -xo__s);
+    real_type result__ = t10 * t8 * (t2 * t1 - t5 * t1 - 1);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog_D_1_2( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MinimumEnergyProblem::interpLog_D_1_3( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t1   = 1 - s__XO;
-    real_type t2   = pow(v0__XO, t1);
-    real_type t4   = pow(v1__XO, -t1);
-    real_type t6   = log(v1__XO);
-    real_type t8   = log(v0__XO);
-    return (t6 * s__XO - t8 * s__XO + 1) * t4 * t2;
+  MinimumEnergyProblem::interpLog_D_1_3( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t1   = 1 - xo__s;
+    real_type t2   = pow(xo__v0, t1);
+    real_type t4   = pow(xo__v1, -t1);
+    real_type t6   = log(xo__v1);
+    real_type t8   = log(xo__v0);
+    real_type result__ = (t6 * xo__s - t8 * xo__s + 1) * t4 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog_D_1_3( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MinimumEnergyProblem::interpLog_D_2( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t1   = pow(v0__XO, -s__XO);
-    real_type t4   = pow(v1__XO, s__XO);
-    return t4 * (1 - s__XO) * t1;
+  MinimumEnergyProblem::interpLog_D_2( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t1   = pow(xo__v0, -xo__s);
+    real_type t4   = pow(xo__v1, xo__s);
+    real_type result__ = t4 * (1 - xo__s) * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog_D_2( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MinimumEnergyProblem::interpLog_D_2_2( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t2   = pow(v0__XO, -s__XO - 1);
-    real_type t5   = pow(v1__XO, s__XO);
-    return t5 * (-1 + s__XO) * s__XO * t2;
+  MinimumEnergyProblem::interpLog_D_2_2( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t2   = pow(xo__v0, -xo__s - 1);
+    real_type t5   = pow(xo__v1, xo__s);
+    real_type result__ = t5 * (-1 + xo__s) * xo__s * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog_D_2_2( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MinimumEnergyProblem::interpLog_D_2_3( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t1   = pow(v0__XO, -s__XO);
-    real_type t2   = 1 - s__XO;
-    real_type t5   = pow(v1__XO, -t2);
-    return s__XO * t5 * t2 * t1;
+  MinimumEnergyProblem::interpLog_D_2_3( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t1   = pow(xo__v0, -xo__s);
+    real_type t2   = 1 - xo__s;
+    real_type t5   = pow(xo__v1, -t2);
+    real_type result__ = xo__s * t5 * t2 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog_D_2_3( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MinimumEnergyProblem::interpLog_D_3( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t1   = 1 - s__XO;
-    real_type t2   = pow(v0__XO, t1);
-    real_type t4   = pow(v1__XO, -t1);
-    return s__XO * t4 * t2;
+  MinimumEnergyProblem::interpLog_D_3( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t1   = 1 - xo__s;
+    real_type t2   = pow(xo__v0, t1);
+    real_type t4   = pow(xo__v1, -t1);
+    real_type result__ = xo__s * t4 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog_D_3( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  MinimumEnergyProblem::interpLog_D_3_3( real_type s__XO, real_type v0__XO, real_type v1__XO ) const {
-    real_type t1   = 1 - s__XO;
-    real_type t2   = pow(v0__XO, t1);
-    real_type t4   = pow(v1__XO, -2 + s__XO);
-    return -s__XO * t1 * t4 * t2;
+  MinimumEnergyProblem::interpLog_D_3_3( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
+    real_type t1   = 1 - xo__s;
+    real_type t2   = pow(xo__v0, t1);
+    real_type t4   = pow(xo__v1, -2 + xo__s);
+    real_type result__ = -xo__s * t1 * t4 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_interpLog_D_3_3( s={}, v0={}, v1={} ) return {}\n",
+        xo__s, xo__v0, xo__v1, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: MinimumEnergyProblem_Methods1.cc
+// EOF: MinimumEnergyProblem_Methods_UserFunctions.cc

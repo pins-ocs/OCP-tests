@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -138,7 +138,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = 0.001,
       tolerance = 0.001,
     },
@@ -157,8 +157,8 @@ content = {
     segments = {
       
       {
-        length = 2,
         n      = 100,
+        length = 2,
       },
     },
   },

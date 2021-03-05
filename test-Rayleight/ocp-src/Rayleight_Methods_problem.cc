@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods1.cc                                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -63,13 +63,14 @@ namespace RayleightDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[0];
+    real_type t1   = X__[iX_x1];
     real_type t2   = t1 * t1;
-    real_type t3   = U__[0];
+    real_type t3   = U__[iU_u];
     real_type t4   = t3 * t3;
-    real_type t6   = X__[1];
+    real_type t6   = X__[iX_x2];
     real_type t9   = t6 * t6;
-    return t2 + t4 + t6 * L__[0] + (-t1 + t6 * (0.14e1 - 0.14e0 * t9) + 4 * t3) * L__[1];
+    real_type result__ = t2 + t4 + t6 * L__[iL_lambda1__xo] + (-t1 + t6 * (0.14e1 - 0.14e0 * t9) + 4 * t3) * L__[iL_lambda2__xo];
+    return result__;
   }
 
   /*\
@@ -89,7 +90,8 @@ namespace RayleightDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -102,7 +104,8 @@ namespace RayleightDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -123,9 +126,10 @@ namespace RayleightDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[0] * U__[0];
-    real_type t4   = X__[0] * X__[0];
-    return t2 + t4;
+    real_type t2   = U__[iU_u] * U__[iU_u];
+    real_type t4   = X__[iX_x1] * X__[iX_x1];
+    real_type result__ = t2 + t4;
+    return result__;
   }
 
   /*\
@@ -150,7 +154,8 @@ namespace RayleightDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -260,10 +265,10 @@ namespace RayleightDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = LR__[0] - LL__[0];
-    result__[ 3   ] = LR__[1] - LL__[1];
+    result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
+    result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }

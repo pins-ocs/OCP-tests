@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularArc_Methods.cc                                         |
+ |  file: SingularArc_Methods_ODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,9 +78,9 @@ namespace SingularArcDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    result__[ 0   ] = U__[0] * t1;
-    real_type t3   = X__[0];
+    real_type t1   = P__[iP_T];
+    result__[ 0   ] = U__[iU_u] * t1;
+    real_type t3   = X__[iX_x1];
     real_type t4   = cos(t3);
     result__[ 1   ] = t4 * t1;
     real_type t5   = sin(t3);
@@ -125,8 +125,8 @@ namespace SingularArcDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    real_type t2   = X__[0];
+    real_type t1   = P__[iP_T];
+    real_type t2   = X__[iX_x1];
     real_type t3   = sin(t2);
     result__[ 0   ] = -t3 * t1;
     real_type t5   = cos(t2);
@@ -172,8 +172,8 @@ namespace SingularArcDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = U__[0];
-    real_type t1   = X__[0];
+    result__[ 0   ] = U__[iU_u];
+    real_type t1   = X__[iX_x1];
     result__[ 1   ] = cos(t1);
     result__[ 2   ] = sin(t1);
     if ( m_debug )
@@ -215,7 +215,7 @@ namespace SingularArcDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = P__[0];
+    result__[ 0   ] = P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 1, i_segment );
   }
@@ -270,4 +270,4 @@ namespace SingularArcDefine {
 
 }
 
-// EOF: SingularArc_Methods.cc
+// EOF: SingularArc_Methods_ODE.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -90,10 +90,10 @@ namespace GoddardRocketDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0] - ModelPars[6];
-    result__[ 1   ] = XL__[1] - ModelPars[12];
-    result__[ 2   ] = XL__[2] - ModelPars[9];
-    result__[ 3   ] = XR__[2] - ModelPars[8];
+    result__[ 0   ] = XL__[iX_h] - ModelPars[iM_h_i];
+    result__[ 1   ] = XL__[iX_v] - ModelPars[iM_v_i];
+    result__[ 2   ] = XL__[iX_m] - ModelPars[iM_m_i];
+    result__[ 3   ] = XR__[iX_m] - ModelPars[iM_m_f];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 4, i_segment_left, i_segment_right );
   }
@@ -203,12 +203,12 @@ namespace GoddardRocketDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[0];
-    result__[ 1   ] = OMEGA__[1] + LL__[1];
-    result__[ 2   ] = OMEGA__[2] + LL__[2];
-    result__[ 3   ] = -1 - LR__[0];
-    result__[ 4   ] = -LR__[1];
-    result__[ 5   ] = OMEGA__[3] - LR__[2];
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
+    result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
+    result__[ 3   ] = -1 - LR__[iL_lambda1__xo];
+    result__[ 4   ] = -LR__[iL_lambda2__xo];
+    result__[ 5   ] = OMEGA__[3] - LR__[iL_lambda3__xo];
     result__[ 6   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 7, i_segment_left, i_segment_right );

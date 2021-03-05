@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFmodule_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-FmMax = 10
 FpMax = 10
+FmMax = 10
 
 mechatronix do |data|
 

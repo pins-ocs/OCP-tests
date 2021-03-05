@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: GoddardRocket.m                                                %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -639,80 +639,80 @@ classdef GoddardRocket < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = DD( self, h__XO, v__XO )
-      res = GoddardRocket_Mex('DD', self.objectHandle, h__XO, v__XO );
+    function res = DD( self, xo__h, xo__v )
+      res = GoddardRocket_Mex('DD', self.objectHandle, xo__h, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = DD_D_1( self, h__XO, v__XO )
-      res = GoddardRocket_Mex('DD_D_1', self.objectHandle, h__XO, v__XO );
+    function res = DD_D_1( self, xo__h, xo__v )
+      res = GoddardRocket_Mex('DD_D_1', self.objectHandle, xo__h, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = DD_D_2( self, h__XO, v__XO )
-      res = GoddardRocket_Mex('DD_D_2', self.objectHandle, h__XO, v__XO );
+    function res = DD_D_2( self, xo__h, xo__v )
+      res = GoddardRocket_Mex('DD_D_2', self.objectHandle, xo__h, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = DD_D_1_1( self, h__XO, v__XO )
-      res = GoddardRocket_Mex('DD_D_1_1', self.objectHandle, h__XO, v__XO );
+    function res = DD_D_1_1( self, xo__h, xo__v )
+      res = GoddardRocket_Mex('DD_D_1_1', self.objectHandle, xo__h, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = DD_D_1_2( self, h__XO, v__XO )
-      res = GoddardRocket_Mex('DD_D_1_2', self.objectHandle, h__XO, v__XO );
+    function res = DD_D_1_2( self, xo__h, xo__v )
+      res = GoddardRocket_Mex('DD_D_1_2', self.objectHandle, xo__h, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = DD_D_2_2( self, h__XO, v__XO )
-      res = GoddardRocket_Mex('DD_D_2_2', self.objectHandle, h__XO, v__XO );
+    function res = DD_D_2_2( self, xo__h, xo__v )
+      res = GoddardRocket_Mex('DD_D_2_2', self.objectHandle, xo__h, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = gg( self, h__XO )
-      res = GoddardRocket_Mex('gg', self.objectHandle, h__XO );
+    function res = gg( self, xo__h )
+      res = GoddardRocket_Mex('gg', self.objectHandle, xo__h );
     end
     % ---------------------------------------------------------------------
-    function res = gg_D( self, h__XO )
-      res = GoddardRocket_Mex('gg_D', self.objectHandle, h__XO );
+    function res = gg_D( self, xo__h )
+      res = GoddardRocket_Mex('gg_D', self.objectHandle, xo__h );
     end
     % ---------------------------------------------------------------------
-    function res = gg_DD( self, h__XO )
-      res = GoddardRocket_Mex('gg_DD', self.objectHandle, h__XO );
+    function res = gg_DD( self, xo__h )
+      res = GoddardRocket_Mex('gg_DD', self.objectHandle, xo__h );
     end
     % ---------------------------------------------------------------------
-    function res = explog( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = explog_D_1( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog_D_1', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog_D_1( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog_D_1', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = explog_D_2( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog_D_2', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog_D_2( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog_D_2', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = explog_D_3( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog_D_3', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog_D_3( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog_D_3', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = explog_D_1_1( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog_D_1_1', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog_D_1_1( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog_D_1_1', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = explog_D_1_2( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog_D_1_2', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog_D_1_2( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog_D_1_2', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = explog_D_1_3( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog_D_1_3', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog_D_1_3( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog_D_1_3', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = explog_D_2_2( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog_D_2_2', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog_D_2_2( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog_D_2_2', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = explog_D_2_3( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog_D_2_3', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog_D_2_3( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog_D_2_3', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = explog_D_3_3( self, s__XO, a__XO, b__XO )
-      res = GoddardRocket_Mex('explog_D_3_3', self.objectHandle, s__XO, a__XO, b__XO );
+    function res = explog_D_3_3( self, xo__s, xo__a, xo__b )
+      res = GoddardRocket_Mex('explog_D_3_3', self.objectHandle, xo__s, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

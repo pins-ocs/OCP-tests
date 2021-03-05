@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MultipleDubins_Guess.cc                                        |
+ |  file: MultipleDubins_Methods_Guess.cc                                |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -61,8 +61,8 @@ namespace MultipleDubinsDefine {
 
   void
   MultipleDubins::p_guess_eval( P_pointer_type P__ ) const {
-    real_type t4   = pow(ModelPars[2] - ModelPars[3], 2);
-    real_type t8   = pow(ModelPars[4] - ModelPars[5], 2);
+    real_type t4   = pow(ModelPars[iM_x_f] - ModelPars[iM_x_i], 2);
+    real_type t8   = pow(ModelPars[iM_y_f] - ModelPars[iM_y_i], 2);
     real_type t10  = sqrt(t4 + t8);
     P__[ iP_L1     ] = t10 / 3;
     P__[ iP_L2     ] = P__[0];
@@ -70,6 +70,8 @@ namespace MultipleDubinsDefine {
     P__[ iP_kappa1 ] = 0;
     P__[ iP_kappa2 ] = 0;
     P__[ iP_kappa3 ] = 0;
+    if ( m_debug )
+      Mechatronix::check( P__.pointer(), "p_guess_eval", 6 );
   }
 
   void
@@ -81,12 +83,12 @@ namespace MultipleDubinsDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = ModelPars[3];
-    real_type t2   = Q__[0];
-    real_type t4   = ModelPars[2] - t1;
+    real_type t1   = ModelPars[iM_x_i];
+    real_type t2   = Q__[iQ_zeta];
+    real_type t4   = ModelPars[iM_x_f] - t1;
     X__[ iX_x1     ] = t1 + t4 * t2 / 3;
-    real_type t7   = ModelPars[5];
-    real_type t9   = ModelPars[4] - t7;
+    real_type t7   = ModelPars[iM_y_i];
+    real_type t9   = ModelPars[iM_y_f] - t7;
     X__[ iX_y1     ] = t7 + t9 * t2 / 3;
     X__[ iX_theta1 ] = atan2(t9, t4);
     real_type t12  = 1 + t2;
@@ -98,6 +100,10 @@ namespace MultipleDubinsDefine {
     X__[ iX_y3     ] = t7 + t9 * t17 / 3;
     X__[ iX_theta3 ] = X__[5];
 
+    if ( m_debug )
+      Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 9 );
+    if ( m_debug )
+      Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 9 );
   }
 
   /*\
@@ -108,8 +114,15 @@ namespace MultipleDubinsDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__lt(A,B) ( (A) <  (B) )
-  #define Xoptima__check__le(A,B) ( (A) <= (B) )
+  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+
 
   // Pars check strings
   #define __message_cell_check_0 "0 < L1"
@@ -118,11 +131,10 @@ namespace MultipleDubinsDefine {
 
   bool
   MultipleDubins::p_check( P_const_pointer_type P__ ) const {
-    bool ok = true;
-    ok = ok && Xoptima__check__lt(0, P__[0]);
-    ok = ok && Xoptima__check__lt(0, P__[1]);
-    ok = ok && Xoptima__check__lt(0, P__[2]);
-    return ok;
+    Xoptima__check__pars__lt(0, P__[iP_L1], __message_cell_check_0);
+    Xoptima__check__pars__lt(0, P__[iP_L2], __message_cell_check_1);
+    Xoptima__check__pars__lt(0, P__[iP_L3], __message_cell_check_2);
+    return true;
   }
 
   bool
@@ -131,14 +143,7 @@ namespace MultipleDubinsDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    return ok;
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -222,4 +227,4 @@ namespace MultipleDubinsDefine {
 
 }
 
-// EOF: MultipleDubins_Guess.cc
+// EOF: MultipleDubins_Methods_Guess.cc

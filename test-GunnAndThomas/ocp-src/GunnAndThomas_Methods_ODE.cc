@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GunnAndThomas_Methods.cc                                       |
+ |  file: GunnAndThomas_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -76,9 +76,9 @@ namespace GunnAndThomasDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
-    real_type t2   = X__[1];
-    real_type t5   = 10 * t2 - X__[0];
+    real_type t1   = U__[iU_u];
+    real_type t2   = X__[iX_x2];
+    real_type t5   = 10 * t2 - X__[iX_x1];
     result__[ 0   ] = t5 * t1;
     result__[ 1   ] = -t5 * t1 - t2 * (1 - t1);
     if ( m_debug )
@@ -123,7 +123,7 @@ namespace GunnAndThomasDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
+    real_type t1   = U__[iU_u];
     result__[ 0   ] = -t1;
     result__[ 1   ] = 10 * t1;
     result__[ 2   ] = t1;
@@ -201,8 +201,8 @@ namespace GunnAndThomasDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[1];
-    real_type t3   = X__[0];
+    real_type t1   = X__[iX_x2];
+    real_type t3   = X__[iX_x1];
     result__[ 0   ] = 10 * t1 - t3;
     result__[ 1   ] = t3 - 9 * t1;
     if ( m_debug )
@@ -257,4 +257,4 @@ namespace GunnAndThomasDefine {
 
 }
 
-// EOF: GunnAndThomas_Methods.cc
+// EOF: GunnAndThomas_Methods_ODE.cc

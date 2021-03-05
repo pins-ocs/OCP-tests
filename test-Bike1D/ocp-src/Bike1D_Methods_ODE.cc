@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -94,7 +94,7 @@ namespace Bike1DDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ModelPars[1] * (U__[0] + U__[1]);
+    result__[ 0   ] = ModelPars[iM_g] * (U__[iU_mur] + U__[iU_muf]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 1, i_segment );
   }
@@ -201,7 +201,7 @@ namespace Bike1DDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ModelPars[1];
+    result__[ 0   ] = ModelPars[iM_g];
     result__[ 1   ] = result__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
@@ -246,7 +246,7 @@ namespace Bike1DDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[0];
+    result__[ 0   ] = X__[iX_v];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 1, i_segment );
   }

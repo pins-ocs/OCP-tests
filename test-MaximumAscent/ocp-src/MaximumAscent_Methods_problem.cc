@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -51,7 +51,7 @@ namespace MaximumAscentDefine {
 
   void
   MaximumAscent::continuationStep0( real_type s ) {
-    ModelPars[1] = (1 - s) * ModelPars[2] + s * ModelPars[3];
+    ModelPars[iM_days] = (1 - s) * ModelPars[iM_days0] + s * ModelPars[iM_days1];
   }
 
   /*\
@@ -74,21 +74,22 @@ namespace MaximumAscentDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = tf(ModelPars[1]);
+    real_type t3   = tf(ModelPars[iM_days]);
     real_type t4   = eta(t3);
-    real_type t6   = X__[1];
-    real_type t9   = X__[2];
+    real_type t6   = X__[iX_u];
+    real_type t9   = X__[iX_v];
     real_type t10  = t9 * t9;
-    real_type t11  = X__[0];
+    real_type t11  = X__[iX_r];
     real_type t12  = 1.0 / t11;
     real_type t14  = t11 * t11;
     real_type t18  = Tbar(t3);
-    real_type t26  = 1.0 / (-Q__[0] * ModelPars[5] * t3 + ModelPars[4]) * t18;
-    real_type t27  = U__[0];
+    real_type t26  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]) * t18;
+    real_type t27  = U__[iU_alpha];
     real_type t28  = sin(t27);
     real_type t34  = t12 * t9;
     real_type t36  = cos(t27);
-    return t6 * t4 * L__[0] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * L__[1] + (-t34 * t6 * t4 + t36 * t26) * L__[2] + t34 * t4 * L__[3];
+    real_type result__ = t6 * t4 * L__[iL_lambda1__xo] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * L__[iL_lambda2__xo] + (-t34 * t6 * t4 + t36 * t26) * L__[iL_lambda3__xo] + t34 * t4 * L__[iL_lambda4__xo];
+    return result__;
   }
 
   /*\
@@ -108,7 +109,8 @@ namespace MaximumAscentDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -121,7 +123,8 @@ namespace MaximumAscentDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -142,7 +145,8 @@ namespace MaximumAscentDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -167,7 +171,8 @@ namespace MaximumAscentDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return -XR__[0];
+    real_type result__ = -XR__[iX_r];
+    return result__;
   }
 
   /*\
@@ -277,14 +282,14 @@ namespace MaximumAscentDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = XR__[3] - XL__[3];
-    result__[ 4   ] = LR__[0] - LL__[0];
-    result__[ 5   ] = LR__[1] - LL__[1];
-    result__[ 6   ] = LR__[2] - LL__[2];
-    result__[ 7   ] = LR__[3] - LL__[3];
+    result__[ 0   ] = XR__[iX_r] - XL__[iX_r];
+    result__[ 1   ] = XR__[iX_u] - XL__[iX_u];
+    result__[ 2   ] = XR__[iX_v] - XL__[iX_v];
+    result__[ 3   ] = XR__[iX_theta] - XL__[iX_theta];
+    result__[ 4   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 5   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 6   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
+    result__[ 7   ] = LR__[iL_lambda4__xo] - LL__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }
@@ -389,13 +394,13 @@ namespace MaximumAscentDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = L__[1] * L__[1];
-    real_type t4   = L__[2] * L__[2];
+    real_type t2   = L__[iL_lambda2__xo] * L__[iL_lambda2__xo];
+    real_type t4   = L__[iL_lambda3__xo] * L__[iL_lambda3__xo];
     result__[ 0   ] = sqrt(t2 + t4);
-    result__[ 1   ] = X__[0] * ModelPars[6];
-    real_type t9   = ModelPars[11];
-    result__[ 2   ] = t9 * X__[1];
-    result__[ 3   ] = t9 * X__[2];
+    result__[ 1   ] = X__[iX_r] * ModelPars[iM_r0];
+    real_type t9   = ModelPars[iM_v0];
+    result__[ 2   ] = t9 * X__[iX_u];
+    result__[ 3   ] = t9 * X__[iX_v];
     Mechatronix::check_in_segment( result__, "post_eval", 4, i_segment );
   }
 

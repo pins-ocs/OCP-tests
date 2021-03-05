@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,23 +20,23 @@
 -- User Header
 
 -- Auxiliary values
-tol_v     = 0.01
 epsi_T    = 0.01
-tol_TS    = 0.01
 m_i       = 1
 epsi_TS   = 0.01
-h_i       = 1
-epsi_mass = 0.01
-mc        = 0.6
+tol_TS    = 0.01
 tol_T     = 0.01
-epsi_v    = 0.01
-vc        = 620
-m_f       = mc*m_i
+epsi_mass = 0.01
 g0        = 1
-Dc        = 0.5*vc*m_i/g0
-c         = 0.5*(g0*h_i)**(1/2.0)
 Tmax      = 3.5*g0*m_i
 tol_mass  = 0.01
+tol_v     = 0.01
+vc        = 620
+Dc        = 0.5*vc*m_i/g0
+epsi_v    = 0.01
+h_i       = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
+mc        = 0.6
+m_f       = mc*m_i
 
 content = {
 
@@ -176,7 +176,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     TControl = {
-      type      = 'QUADRATIC',
+      type      = ,
       epsilon   = epsi_T,
       tolerance = tol_T,
     },
@@ -184,7 +184,7 @@ content = {
 
   Constraints = {
   -- Constraint1D
-  -- Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DGreaterThan
     massPositivesubType   = "BARRIER_LOG",

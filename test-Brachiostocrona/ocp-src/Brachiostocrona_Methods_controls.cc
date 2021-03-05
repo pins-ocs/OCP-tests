@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,8 +78,8 @@ namespace BrachiostocronaDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = ALIAS_vthetaControl_D_1(U__[0], -10, 10);
-    result__[ 0   ] = t4 * P__[0] + L__[3];
+    real_type t4   = ALIAS_vthetaControl_D_1(U__[iU_vtheta], -10, 10);
+    result__[ 0   ] = t4 * P__[iP_T] + L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -122,7 +122,7 @@ namespace BrachiostocronaDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    result__[ 1   ] = ALIAS_vthetaControl_D_1(U__[0], -10, 10);
+    result__[ 1   ] = ALIAS_vthetaControl_D_1(U__[iU_vtheta], -10, 10);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
   }
@@ -163,8 +163,8 @@ namespace BrachiostocronaDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ALIAS_vthetaControl_D_1_1(U__[0], -10, 10);
-    result__[ 0   ] = t3 * P__[0];
+    real_type t3   = ALIAS_vthetaControl_D_1_1(U__[iU_vtheta], -10, 10);
+    result__[ 0   ] = t3 * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -199,7 +199,7 @@ namespace BrachiostocronaDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_vtheta ] = vthetaControl.solve(-L__[3] / P__[0], -10, 10);
+    U__[ iU_vtheta ] = vthetaControl.solve(-L__[iL_lambda4__xo] / P__[iP_T], -10, 10);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -259,8 +259,8 @@ namespace BrachiostocronaDefine {
     DuDxlp(0, 4) = 0;
     DuDxlp(0, 5) = 0;
     DuDxlp(0, 6) = 0;
-    DuDxlp(0, 7) = -vthetaControl.solve_rhs(-L__[3] / P__[0], -10, 10) / P__[0];
-    DuDxlp(0, 8) = vthetaControl.solve_rhs(-L__[3] / P__[0], -10, 10) * L__[3] * pow(P__[0], -2);
+    DuDxlp(0, 7) = -vthetaControl.solve_rhs(-L__[iL_lambda4__xo] / P__[iP_T], -10, 10) / P__[iP_T];
+    DuDxlp(0, 8) = vthetaControl.solve_rhs(-L__[iL_lambda4__xo] / P__[iP_T], -10, 10) * L__[iL_lambda4__xo] * pow(P__[iP_T], -2);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

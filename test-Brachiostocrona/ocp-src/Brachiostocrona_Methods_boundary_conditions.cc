@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,11 +84,11 @@ namespace BrachiostocronaDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0];
-    result__[ 1   ] = XL__[1];
-    result__[ 2   ] = XL__[2];
-    result__[ 3   ] = XR__[0] - ModelPars[4];
-    result__[ 4   ] = XR__[1] - ModelPars[5];
+    result__[ 0   ] = XL__[iX_x];
+    result__[ 1   ] = XL__[iX_y];
+    result__[ 2   ] = XL__[iX_v];
+    result__[ 3   ] = XR__[iX_x] - ModelPars[iM_xf];
+    result__[ 4   ] = XR__[iX_y] - ModelPars[iM_yf];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 5, i_segment_left, i_segment_right );
   }
@@ -200,15 +200,15 @@ namespace BrachiostocronaDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[0];
-    result__[ 1   ] = OMEGA__[1] + LL__[1];
-    real_type t6   = ModelPars[3];
-    result__[ 2   ] = t6 * LL__[2] + OMEGA__[2];
-    result__[ 3   ] = LL__[3];
-    result__[ 4   ] = OMEGA__[3] - LR__[0];
-    result__[ 5   ] = OMEGA__[4] - LR__[1];
-    result__[ 6   ] = -t6 * LR__[2];
-    result__[ 7   ] = -LR__[3];
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
+    real_type t6   = ModelPars[iM_mass];
+    result__[ 2   ] = t6 * LL__[iL_lambda3__xo] + OMEGA__[2];
+    result__[ 3   ] = LL__[iL_lambda4__xo];
+    result__[ 4   ] = OMEGA__[3] - LR__[iL_lambda1__xo];
+    result__[ 5   ] = OMEGA__[4] - LR__[iL_lambda2__xo];
+    result__[ 6   ] = -t6 * LR__[iL_lambda3__xo];
+    result__[ 7   ] = -LR__[iL_lambda4__xo];
     result__[ 8   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 9, i_segment_left, i_segment_right );

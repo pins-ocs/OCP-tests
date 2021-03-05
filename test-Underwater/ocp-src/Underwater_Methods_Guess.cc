@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Underwater_Guess.cc                                            |
+ |  file: Underwater_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,7 +77,9 @@ namespace UnderwaterDefine {
 
   void
   Underwater::p_guess_eval( P_pointer_type P__ ) const {
-    P__[ iP_T ] = ModelPars[0];
+    P__[ iP_T ] = ModelPars[iM_Tguess];
+    if ( m_debug )
+      Mechatronix::check( P__.pointer(), "p_guess_eval", 1 );
   }
 
   void
@@ -89,19 +91,23 @@ namespace UnderwaterDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = ModelPars[11];
-    real_type t2   = Q__[0];
-    real_type t4   = ModelPars[10] - t1;
+    real_type t1   = ModelPars[iM_x_i];
+    real_type t2   = Q__[iQ_zeta];
+    real_type t4   = ModelPars[iM_x_f] - t1;
     X__[ iX_x     ] = t4 * t2 + t1;
-    real_type t6   = ModelPars[13];
-    X__[ iX_z     ] = t6 + (ModelPars[12] - t6) * t2;
+    real_type t6   = ModelPars[iM_z_i];
+    X__[ iX_z     ] = t6 + (ModelPars[iM_z_f] - t6) * t2;
     X__[ iX_theta ] = 0;
-    real_type t11  = 1.0 / ModelPars[0];
+    real_type t11  = 1.0 / ModelPars[iM_Tguess];
     X__[ iX_vx    ] = t11 * t4;
     real_type t13  = sin(0.628e1 * t2);
     X__[ iX_vz    ] = t11 * t13;
     X__[ iX_Omega ] = 0;
 
+    if ( m_debug )
+      Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 6 );
+    if ( m_debug )
+      Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 6 );
   }
 
   /*\
@@ -112,14 +118,19 @@ namespace UnderwaterDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__lt(A,B) ( (A) <  (B) )
-  #define Xoptima__check__le(A,B) ( (A) <= (B) )
+  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+
 
   bool
   Underwater::p_check( P_const_pointer_type P__ ) const {
-    bool ok = true;
-
-    return ok;
+    return true;
   }
 
   bool
@@ -128,14 +139,7 @@ namespace UnderwaterDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    return ok;
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -248,12 +252,12 @@ namespace UnderwaterDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && u1Control.check_range(U__[0], -1, 1);
-    ok = ok && u2Control.check_range(U__[1], -1, 1);
-    ok = ok && u3Control.check_range(U__[2], -1, 1);
+    u1Control.check_range(U__[iU_u1], -1, 1);
+    u2Control.check_range(U__[iU_u2], -1, 1);
+    u3Control.check_range(U__[iU_u3], -1, 1);
     return ok;
   }
 
 }
 
-// EOF: Underwater_Guess.cc
+// EOF: Underwater_Methods_Guess.cc

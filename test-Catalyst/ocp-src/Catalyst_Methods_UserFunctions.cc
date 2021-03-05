@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Catalyst_Methods1.cc                                           |
+ |  file: Catalyst_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -55,4 +55,4 @@ using Mechatronix::MeshStd;
 namespace CatalystDefine {
 }
 
-// EOF: Catalyst_Methods1.cc
+// EOF: Catalyst_Methods_UserFunctions.cc

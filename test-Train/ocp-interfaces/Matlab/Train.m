@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Train.m                                                        %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -639,40 +639,40 @@ classdef Train < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = acc( self, x__XO, v__XO )
-      res = Train_Mex('acc', self.objectHandle, x__XO, v__XO );
+    function res = acc( self, xo__x, xo__v )
+      res = Train_Mex('acc', self.objectHandle, xo__x, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = acc_D_1( self, x__XO, v__XO )
-      res = Train_Mex('acc_D_1', self.objectHandle, x__XO, v__XO );
+    function res = acc_D_1( self, xo__x, xo__v )
+      res = Train_Mex('acc_D_1', self.objectHandle, xo__x, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = acc_D_2( self, x__XO, v__XO )
-      res = Train_Mex('acc_D_2', self.objectHandle, x__XO, v__XO );
+    function res = acc_D_2( self, xo__x, xo__v )
+      res = Train_Mex('acc_D_2', self.objectHandle, xo__x, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = acc_D_1_1( self, x__XO, v__XO )
-      res = Train_Mex('acc_D_1_1', self.objectHandle, x__XO, v__XO );
+    function res = acc_D_1_1( self, xo__x, xo__v )
+      res = Train_Mex('acc_D_1_1', self.objectHandle, xo__x, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = acc_D_1_2( self, x__XO, v__XO )
-      res = Train_Mex('acc_D_1_2', self.objectHandle, x__XO, v__XO );
+    function res = acc_D_1_2( self, xo__x, xo__v )
+      res = Train_Mex('acc_D_1_2', self.objectHandle, xo__x, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = acc_D_2_2( self, x__XO, v__XO )
-      res = Train_Mex('acc_D_2_2', self.objectHandle, x__XO, v__XO );
+    function res = acc_D_2_2( self, xo__x, xo__v )
+      res = Train_Mex('acc_D_2_2', self.objectHandle, xo__x, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = h( self, x__XO )
-      res = Train_Mex('h', self.objectHandle, x__XO );
+    function res = h( self, xo__x )
+      res = Train_Mex('h', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = h_D( self, x__XO )
-      res = Train_Mex('h_D', self.objectHandle, x__XO );
+    function res = h_D( self, xo__x )
+      res = Train_Mex('h_D', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = h_DD( self, x__XO )
-      res = Train_Mex('h_DD', self.objectHandle, x__XO );
+    function res = h_DD( self, xo__x )
+      res = Train_Mex('h_DD', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

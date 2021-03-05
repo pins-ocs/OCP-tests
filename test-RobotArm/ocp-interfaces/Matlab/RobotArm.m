@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: RobotArm.m                                                     %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -663,40 +663,40 @@ classdef RobotArm < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = I_phi( self, rho__XO )
-      res = RobotArm_Mex('I_phi', self.objectHandle, rho__XO );
+    function res = I_phi( self, xo__rho )
+      res = RobotArm_Mex('I_phi', self.objectHandle, xo__rho );
     end
     % ---------------------------------------------------------------------
-    function res = I_phi_D( self, rho__XO )
-      res = RobotArm_Mex('I_phi_D', self.objectHandle, rho__XO );
+    function res = I_phi_D( self, xo__rho )
+      res = RobotArm_Mex('I_phi_D', self.objectHandle, xo__rho );
     end
     % ---------------------------------------------------------------------
-    function res = I_phi_DD( self, rho__XO )
-      res = RobotArm_Mex('I_phi_DD', self.objectHandle, rho__XO );
+    function res = I_phi_DD( self, xo__rho )
+      res = RobotArm_Mex('I_phi_DD', self.objectHandle, xo__rho );
     end
     % ---------------------------------------------------------------------
-    function res = I_theta( self, rho__XO, phi__XO )
-      res = RobotArm_Mex('I_theta', self.objectHandle, rho__XO, phi__XO );
+    function res = I_theta( self, xo__rho, xo__phi )
+      res = RobotArm_Mex('I_theta', self.objectHandle, xo__rho, xo__phi );
     end
     % ---------------------------------------------------------------------
-    function res = I_theta_D_1( self, rho__XO, phi__XO )
-      res = RobotArm_Mex('I_theta_D_1', self.objectHandle, rho__XO, phi__XO );
+    function res = I_theta_D_1( self, xo__rho, xo__phi )
+      res = RobotArm_Mex('I_theta_D_1', self.objectHandle, xo__rho, xo__phi );
     end
     % ---------------------------------------------------------------------
-    function res = I_theta_D_2( self, rho__XO, phi__XO )
-      res = RobotArm_Mex('I_theta_D_2', self.objectHandle, rho__XO, phi__XO );
+    function res = I_theta_D_2( self, xo__rho, xo__phi )
+      res = RobotArm_Mex('I_theta_D_2', self.objectHandle, xo__rho, xo__phi );
     end
     % ---------------------------------------------------------------------
-    function res = I_theta_D_1_1( self, rho__XO, phi__XO )
-      res = RobotArm_Mex('I_theta_D_1_1', self.objectHandle, rho__XO, phi__XO );
+    function res = I_theta_D_1_1( self, xo__rho, xo__phi )
+      res = RobotArm_Mex('I_theta_D_1_1', self.objectHandle, xo__rho, xo__phi );
     end
     % ---------------------------------------------------------------------
-    function res = I_theta_D_1_2( self, rho__XO, phi__XO )
-      res = RobotArm_Mex('I_theta_D_1_2', self.objectHandle, rho__XO, phi__XO );
+    function res = I_theta_D_1_2( self, xo__rho, xo__phi )
+      res = RobotArm_Mex('I_theta_D_1_2', self.objectHandle, xo__rho, xo__phi );
     end
     % ---------------------------------------------------------------------
-    function res = I_theta_D_2_2( self, rho__XO, phi__XO )
-      res = RobotArm_Mex('I_theta_D_2_2', self.objectHandle, rho__XO, phi__XO );
+    function res = I_theta_D_2_2( self, xo__rho, xo__phi )
+      res = RobotArm_Mex('I_theta_D_2_2', self.objectHandle, xo__rho, xo__phi );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

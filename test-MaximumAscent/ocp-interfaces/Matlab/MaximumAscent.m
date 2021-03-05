@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: MaximumAscent.m                                                %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -655,40 +655,40 @@ classdef MaximumAscent < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = eta( self, tf__XO )
-      res = MaximumAscent_Mex('eta', self.objectHandle, tf__XO );
+    function res = eta( self, xo__tf )
+      res = MaximumAscent_Mex('eta', self.objectHandle, xo__tf );
     end
     % ---------------------------------------------------------------------
-    function res = eta_D( self, tf__XO )
-      res = MaximumAscent_Mex('eta_D', self.objectHandle, tf__XO );
+    function res = eta_D( self, xo__tf )
+      res = MaximumAscent_Mex('eta_D', self.objectHandle, xo__tf );
     end
     % ---------------------------------------------------------------------
-    function res = eta_DD( self, tf__XO )
-      res = MaximumAscent_Mex('eta_DD', self.objectHandle, tf__XO );
+    function res = eta_DD( self, xo__tf )
+      res = MaximumAscent_Mex('eta_DD', self.objectHandle, xo__tf );
     end
     % ---------------------------------------------------------------------
-    function res = Tbar( self, tf__XO )
-      res = MaximumAscent_Mex('Tbar', self.objectHandle, tf__XO );
+    function res = Tbar( self, xo__tf )
+      res = MaximumAscent_Mex('Tbar', self.objectHandle, xo__tf );
     end
     % ---------------------------------------------------------------------
-    function res = Tbar_D( self, tf__XO )
-      res = MaximumAscent_Mex('Tbar_D', self.objectHandle, tf__XO );
+    function res = Tbar_D( self, xo__tf )
+      res = MaximumAscent_Mex('Tbar_D', self.objectHandle, xo__tf );
     end
     % ---------------------------------------------------------------------
-    function res = Tbar_DD( self, tf__XO )
-      res = MaximumAscent_Mex('Tbar_DD', self.objectHandle, tf__XO );
+    function res = Tbar_DD( self, xo__tf )
+      res = MaximumAscent_Mex('Tbar_DD', self.objectHandle, xo__tf );
     end
     % ---------------------------------------------------------------------
-    function res = tf( self, days__XO )
-      res = MaximumAscent_Mex('tf', self.objectHandle, days__XO );
+    function res = tf( self, xo__days )
+      res = MaximumAscent_Mex('tf', self.objectHandle, xo__days );
     end
     % ---------------------------------------------------------------------
-    function res = tf_D( self, days__XO )
-      res = MaximumAscent_Mex('tf_D', self.objectHandle, days__XO );
+    function res = tf_D( self, xo__days )
+      res = MaximumAscent_Mex('tf_D', self.objectHandle, xo__days );
     end
     % ---------------------------------------------------------------------
-    function res = tf_DD( self, days__XO )
-      res = MaximumAscent_Mex('tf_DD', self.objectHandle, days__XO );
+    function res = tf_DD( self, xo__days )
+      res = MaximumAscent_Mex('tf_DD', self.objectHandle, xo__days );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

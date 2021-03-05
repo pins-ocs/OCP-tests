@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Methods1.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,10 +67,11 @@ namespace BrysonDenhamDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = X1bound(1.0 / 9.0 - X__[0]);
-    real_type t4   = U__[0];
+    real_type t3   = X1bound(1.0 / 9.0 - X__[iX_x]);
+    real_type t4   = U__[iU_u];
     real_type t5   = t4 * t4;
-    return t3 + t5 / 2 + L__[0] * X__[1] + t4 * L__[1];
+    real_type result__ = t3 + t5 / 2 + L__[iL_lambda1__xo] * X__[iX_v] + t4 * L__[iL_lambda2__xo];
+    return result__;
   }
 
   /*\
@@ -90,7 +91,8 @@ namespace BrysonDenhamDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return X1bound(1.0 / 9.0 - X__[0]);
+    real_type result__ = X1bound(1.0 / 9.0 - X__[iX_x]);
+    return result__;
   }
 
   real_type
@@ -103,7 +105,8 @@ namespace BrysonDenhamDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -124,8 +127,9 @@ namespace BrysonDenhamDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[0] * U__[0];
-    return t2 / 2;
+    real_type t2   = U__[iU_u] * U__[iU_u];
+    real_type result__ = t2 / 2;
+    return result__;
   }
 
   /*\
@@ -150,7 +154,8 @@ namespace BrysonDenhamDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -260,10 +265,10 @@ namespace BrysonDenhamDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = LR__[0] - LL__[0];
-    result__[ 3   ] = LR__[1] - LL__[1];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = XR__[iX_v] - XL__[iX_v];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }

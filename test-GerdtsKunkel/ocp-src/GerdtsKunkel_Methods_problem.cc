@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods1.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,10 +67,11 @@ namespace GerdtsKunkelDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = x1Limitation(1.0 / 9.0 - X__[0]);
-    real_type t8   = U__[0];
+    real_type t3   = x1Limitation(1.0 / 9.0 - X__[iX_x1]);
+    real_type t8   = U__[iU_u];
     real_type t11  = t8 * t8;
-    return t3 + L__[0] * X__[1] + t8 * L__[1] + t11 * L__[2] / 2;
+    real_type result__ = t3 + L__[iL_lambda1__xo] * X__[iX_x2] + t8 * L__[iL_lambda2__xo] + t11 * L__[iL_lambda3__xo] / 2;
+    return result__;
   }
 
   /*\
@@ -90,7 +91,8 @@ namespace GerdtsKunkelDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return x1Limitation(1.0 / 9.0 - X__[0]);
+    real_type result__ = x1Limitation(1.0 / 9.0 - X__[iX_x1]);
+    return result__;
   }
 
   real_type
@@ -103,7 +105,8 @@ namespace GerdtsKunkelDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -124,7 +127,8 @@ namespace GerdtsKunkelDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -149,7 +153,8 @@ namespace GerdtsKunkelDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return XR__[2];
+    real_type result__ = XR__[iX_x3];
+    return result__;
   }
 
   /*\
@@ -259,12 +264,12 @@ namespace GerdtsKunkelDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = LR__[0] - LL__[0];
-    result__[ 4   ] = LR__[1] - LL__[1];
-    result__[ 5   ] = LR__[2] - LL__[2];
+    result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
+    result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
+    result__[ 2   ] = XR__[iX_x3] - XL__[iX_x3];
+    result__[ 3   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 4   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 5   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 6, i_segment_left, i_segment_right );
   }

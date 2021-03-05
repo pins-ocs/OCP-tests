@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: RobotArm_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,9 +21,9 @@ include Mechatronix
 
 # Auxiliary values
 u_tolerance0 = 0.01
-u_tolerance  = u_tolerance0
 u_epsilon0   = 0.01
 u_epsilon    = u_epsilon0
+u_tolerance  = u_tolerance0
 
 mechatronix do |data|
 
@@ -197,8 +197,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 400,
+        :length => 1,
       },
     ],
   };

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm.hh                                                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define ROBOTARM_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace RobotArmDefine {
 
@@ -167,11 +167,11 @@ namespace RobotArmDefine {
     );
 
     ROBOTARM_API_DLL virtual
-    ~RobotArm() MECHATRONIX_OVERRIDE;
+    ~RobotArm() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ROBOTARM_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "RobotArm"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -223,15 +223,15 @@ namespace RobotArmDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    ROBOTARM_API_DLL real_type I_phi        ( real_type rho__XO ) const;
-    ROBOTARM_API_DLL real_type I_phi_D      ( real_type rho__XO ) const;
-    ROBOTARM_API_DLL real_type I_phi_DD     ( real_type rho__XO ) const;
-    ROBOTARM_API_DLL real_type I_theta      ( real_type rho__XO, real_type phi__XO ) const;
-    ROBOTARM_API_DLL real_type I_theta_D_1  ( real_type rho__XO, real_type phi__XO ) const;
-    ROBOTARM_API_DLL real_type I_theta_D_1_1( real_type rho__XO, real_type phi__XO ) const;
-    ROBOTARM_API_DLL real_type I_theta_D_1_2( real_type rho__XO, real_type phi__XO ) const;
-    ROBOTARM_API_DLL real_type I_theta_D_2  ( real_type rho__XO, real_type phi__XO ) const;
-    ROBOTARM_API_DLL real_type I_theta_D_2_2( real_type rho__XO, real_type phi__XO ) const;
+    ROBOTARM_API_DLL real_type I_phi        ( real_type xo__rho ) const;
+    ROBOTARM_API_DLL real_type I_phi_D      ( real_type xo__rho ) const;
+    ROBOTARM_API_DLL real_type I_phi_DD     ( real_type xo__rho ) const;
+    ROBOTARM_API_DLL real_type I_theta      ( real_type xo__rho, real_type xo__phi ) const;
+    ROBOTARM_API_DLL real_type I_theta_D_1  ( real_type xo__rho, real_type xo__phi ) const;
+    ROBOTARM_API_DLL real_type I_theta_D_1_1( real_type xo__rho, real_type xo__phi ) const;
+    ROBOTARM_API_DLL real_type I_theta_D_1_2( real_type xo__rho, real_type xo__phi ) const;
+    ROBOTARM_API_DLL real_type I_theta_D_2  ( real_type xo__rho, real_type xo__phi ) const;
+    ROBOTARM_API_DLL real_type I_theta_D_2_2( real_type xo__rho, real_type xo__phi ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -254,12 +254,12 @@ namespace RobotArmDefine {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     ROBOTARM_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

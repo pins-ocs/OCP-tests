@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,12 +71,12 @@ namespace AlpRiderDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = L__[0];
-    real_type t4   = L__[1];
-    real_type t5   = L__[2];
-    real_type t6   = L__[3];
-    result__[ 0   ] = 0.2e-1 * U__[0] + t3 + t4 + t5 + t6;
-    result__[ 1   ] = 0.2e-1 * U__[1] + t3 + 2 * t4 - t5 + 3 * t6;
+    real_type t3   = L__[iL_lambda1__xo];
+    real_type t4   = L__[iL_lambda2__xo];
+    real_type t5   = L__[iL_lambda3__xo];
+    real_type t6   = L__[iL_lambda4__xo];
+    result__[ 0   ] = 0.2e-1 * U__[iU_u1] + t3 + t4 + t5 + t6;
+    result__[ 1   ] = 0.2e-1 * U__[iU_u2] + t3 + 2 * t4 - t5 + 3 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -209,10 +209,10 @@ namespace AlpRiderDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = 0.50e2 * L__[0];
-    real_type t3   = L__[1];
-    real_type t6   = 0.50e2 * L__[2];
-    real_type t7   = L__[3];
+    real_type t2   = 0.50e2 * L__[iL_lambda1__xo];
+    real_type t3   = L__[iL_lambda2__xo];
+    real_type t6   = 0.50e2 * L__[iL_lambda3__xo];
+    real_type t7   = L__[iL_lambda4__xo];
     U__[ iU_u1 ] = -t2 - 0.50e2 * t3 - t6 - 0.50e2 * t7;
     U__[ iU_u2 ] = -t2 - 0.100e3 * t3 + t6 - 0.150e3 * t7;
   }

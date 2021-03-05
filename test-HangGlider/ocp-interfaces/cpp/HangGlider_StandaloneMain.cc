@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type epsi_max = 0.01;
     real_type cL_min = 0;
     real_type W0 = 1000;
     real_type W = W0;
     real_type tol_max = 0.01;
-    real_type epsi_max = 0.01;
     real_type cL_max = 1.4;
     integer InfoLevel = 4;
 
@@ -182,14 +182,14 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_cLControl = data_Controls["cLControl"];
-    data_cLControl["type"]      = "QUADRATIC2";
+    data_cLControl["type"]      = ;
     data_cLControl["epsilon"]   = epsi_max;
     data_cLControl["tolerance"] = tol_max;
 
 
 
     // Constraint1D
-    // Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
@@ -203,8 +203,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HangGlider_data.Mesh["s0"] = 0;
-HangGlider_data.Mesh["segments"][0]["length"] = 1;
 HangGlider_data.Mesh["segments"][0]["n"] = 400;
+HangGlider_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

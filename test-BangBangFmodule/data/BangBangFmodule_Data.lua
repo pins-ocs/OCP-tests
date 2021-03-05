@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-FmMax = 10
 FpMax = 10
+FmMax = 10
 
 content = {
 
@@ -146,12 +146,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     controlP = {
-      type      = 'CUBIC',
+      type      = ,
       epsilon   = 0.001,
       tolerance = 0.001,
     },
     controlM = {
-      type      = 'CUBIC',
+      type      = ,
       epsilon   = 0.001,
       tolerance = 0.001,
     },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,8 +67,8 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t6   = theta_sol(X__[2], L__[0], L__[1], L__[2]);
-    result__[ 0   ] = U__[0] - t6;
+    real_type t6   = theta_sol(X__[iX_v], L__[iL_lambda1__xo], L__[iL_lambda2__xo], L__[iL_lambda3__xo]);
+    result__[ 0   ] = U__[iU_theta] - t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -112,10 +112,10 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[2];
-    real_type t2   = L__[0];
-    real_type t3   = L__[1];
-    real_type t4   = L__[2];
+    real_type t1   = X__[iX_v];
+    real_type t2   = L__[iL_lambda1__xo];
+    real_type t3   = L__[iL_lambda2__xo];
+    real_type t4   = L__[iL_lambda3__xo];
     real_type t5   = theta_sol_D_1(t1, t2, t3, t4);
     result__[ 0   ] = -t5;
     real_type t6   = theta_sol_D_2(t1, t2, t3, t4);
@@ -199,7 +199,7 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_theta ] = theta_sol(X__[2], L__[0], L__[1], L__[2]);
+    U__[ iU_theta ] = theta_sol(X__[iX_v], L__[iL_lambda1__xo], L__[iL_lambda2__xo], L__[iL_lambda3__xo]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -252,10 +252,10 @@ namespace Brachiostocrona2Define {
     real_type const * L__ = NODE__.lambda;
     DuDxlp(0, 0) = 0;
     DuDxlp(0, 1) = 0;
-    DuDxlp(0, 2) = theta_sol_D_1(X__[2], L__[0], L__[1], L__[2]);
-    DuDxlp(0, 3) = theta_sol_D_2(X__[2], L__[0], L__[1], L__[2]);
-    DuDxlp(0, 4) = theta_sol_D_3(X__[2], L__[0], L__[1], L__[2]);
-    DuDxlp(0, 5) = theta_sol_D_4(X__[2], L__[0], L__[1], L__[2]);
+    DuDxlp(0, 2) = theta_sol_D_1(X__[iX_v], L__[iL_lambda1__xo], L__[iL_lambda2__xo], L__[iL_lambda3__xo]);
+    DuDxlp(0, 3) = theta_sol_D_2(X__[iX_v], L__[iL_lambda1__xo], L__[iL_lambda2__xo], L__[iL_lambda3__xo]);
+    DuDxlp(0, 4) = theta_sol_D_3(X__[iX_v], L__[iL_lambda1__xo], L__[iL_lambda2__xo], L__[iL_lambda3__xo]);
+    DuDxlp(0, 5) = theta_sol_D_4(X__[iX_v], L__[iL_lambda1__xo], L__[iL_lambda2__xo], L__[iL_lambda3__xo]);
     DuDxlp(0, 6) = 0;
   }
 

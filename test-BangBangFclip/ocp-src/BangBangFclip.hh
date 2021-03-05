@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip.hh                                               |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define BANGBANGFCLIP_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace BangBangFclipDefine {
 
@@ -166,11 +166,11 @@ namespace BangBangFclipDefine {
     );
 
     BANGBANGFCLIP_API_DLL virtual
-    ~BangBangFclip() MECHATRONIX_OVERRIDE;
+    ~BangBangFclip() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     BANGBANGFCLIP_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "BangBangFclip"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -222,9 +222,9 @@ namespace BangBangFclipDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    BANGBANGFCLIP_API_DLL real_type fun      ( real_type x__XO ) const;
-    BANGBANGFCLIP_API_DLL real_type fun_D    ( real_type x__XO ) const;
-    BANGBANGFCLIP_API_DLL real_type fun_DD   ( real_type x__XO ) const;
+    BANGBANGFCLIP_API_DLL real_type fun      ( real_type xo__x ) const;
+    BANGBANGFCLIP_API_DLL real_type fun_D    ( real_type xo__x ) const;
+    BANGBANGFCLIP_API_DLL real_type fun_DD   ( real_type xo__x ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -247,12 +247,12 @@ namespace BangBangFclipDefine {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     BANGBANGFCLIP_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

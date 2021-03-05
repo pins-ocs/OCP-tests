@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -175,13 +175,13 @@ namespace PointMassCarModel_2Define {
     real_type const * XR__  = RIGHT__.x;
     Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
-    real_type t1   = XL__[2];
-    result__[ 0   ] = t1 - ModelPars[1];
-    result__[ 1   ] = XR__[0] - XL__[0];
-    result__[ 2   ] = XR__[1] - XL__[1];
-    result__[ 3   ] = XR__[2] - t1;
-    result__[ 4   ] = XR__[4] - XL__[4];
-    result__[ 5   ] = XR__[3] - XL__[3];
+    real_type t1   = XL__[iX_V];
+    result__[ 0   ] = t1 - ModelPars[iM_V0];
+    result__[ 1   ] = XR__[iX_n] - XL__[iX_n];
+    result__[ 2   ] = XR__[iX_alpha] - XL__[iX_alpha];
+    result__[ 3   ] = XR__[iX_V] - t1;
+    result__[ 4   ] = XR__[iX_fx] - XL__[iX_fx];
+    result__[ 5   ] = XR__[iX_Omega] - XL__[iX_Omega];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 6, i_segment_left, i_segment_right );
   }
@@ -306,24 +306,24 @@ namespace PointMassCarModel_2Define {
     Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
     real_type t1   = OMEGA__[1];
-    real_type t6   = ALIAS_Kappa_L(QL__[0]);
-    real_type t7   = zeta__dot(XL__[2], XL__[1], XL__[0], t6);
-    result__[ 0   ] = LL__[0] * t7 - t1;
+    real_type t6   = ALIAS_Kappa_L(QL__[iQ_zeta]);
+    real_type t7   = zeta__dot(XL__[iX_V], XL__[iX_alpha], XL__[iX_n], t6);
+    result__[ 0   ] = LL__[iL_lambda1__xo] * t7 - t1;
     real_type t10  = OMEGA__[2];
-    result__[ 1   ] = LL__[1] * t7 - t10;
+    result__[ 1   ] = LL__[iL_lambda2__xo] * t7 - t10;
     real_type t14  = OMEGA__[3];
-    result__[ 2   ] = LL__[2] * t7 - t14 + OMEGA__[0];
+    result__[ 2   ] = LL__[iL_lambda3__xo] * t7 - t14 + OMEGA__[0];
     real_type t17  = OMEGA__[5];
-    result__[ 3   ] = LL__[4] * t7 - t17;
+    result__[ 3   ] = LL__[iL_lambda5__xo] * t7 - t17;
     real_type t20  = OMEGA__[4];
-    result__[ 4   ] = LL__[3] * t7 - t20;
-    real_type t27  = ALIAS_Kappa_R(QR__[0]);
-    real_type t28  = zeta__dot(XR__[2], XR__[1], XR__[0], t27);
-    result__[ 5   ] = -LR__[0] * t28 + t1;
-    result__[ 6   ] = -LR__[1] * t28 + t10;
-    result__[ 7   ] = -LR__[2] * t28 + t14;
-    result__[ 8   ] = -LR__[4] * t28 + t17;
-    result__[ 9   ] = -LR__[3] * t28 + t20;
+    result__[ 4   ] = LL__[iL_lambda4__xo] * t7 - t20;
+    real_type t27  = ALIAS_Kappa_R(QR__[iQ_zeta]);
+    real_type t28  = zeta__dot(XR__[iX_V], XR__[iX_alpha], XR__[iX_n], t27);
+    result__[ 5   ] = -LR__[iL_lambda1__xo] * t28 + t1;
+    result__[ 6   ] = -LR__[iL_lambda2__xo] * t28 + t10;
+    result__[ 7   ] = -LR__[iL_lambda3__xo] * t28 + t14;
+    result__[ 8   ] = -LR__[iL_lambda5__xo] * t28 + t17;
+    result__[ 9   ] = -LR__[iL_lambda4__xo] * t28 + t20;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 10, i_segment_left, i_segment_right );
   }
@@ -397,57 +397,57 @@ namespace PointMassCarModel_2Define {
     real_type const * LR__  = RIGHT__.lambda;
     Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
-    real_type t1   = XL__[2];
-    real_type t2   = XL__[1];
-    real_type t3   = XL__[0];
-    real_type t5   = ALIAS_Kappa_L(QL__[0]);
+    real_type t1   = XL__[iX_V];
+    real_type t2   = XL__[iX_alpha];
+    real_type t3   = XL__[iX_n];
+    real_type t5   = ALIAS_Kappa_L(QL__[iQ_zeta]);
     real_type t6   = zeta__dot_D_3(t1, t2, t3, t5);
-    real_type t7   = LL__[0];
+    real_type t7   = LL__[iL_lambda1__xo];
     result__[ 0   ] = t7 * t6;
     real_type t8   = zeta__dot_D_2(t1, t2, t3, t5);
     result__[ 1   ] = t7 * t8;
     real_type t9   = zeta__dot_D_1(t1, t2, t3, t5);
     result__[ 2   ] = t9 * t7;
-    real_type t10  = LL__[1];
+    real_type t10  = LL__[iL_lambda2__xo];
     result__[ 3   ] = t10 * t6;
     result__[ 4   ] = t10 * t8;
     result__[ 5   ] = t10 * t9;
-    real_type t11  = LL__[2];
+    real_type t11  = LL__[iL_lambda3__xo];
     result__[ 6   ] = t11 * t6;
     result__[ 7   ] = t11 * t8;
     result__[ 8   ] = t11 * t9;
-    real_type t12  = LL__[4];
+    real_type t12  = LL__[iL_lambda5__xo];
     result__[ 9   ] = t12 * t6;
     result__[ 10  ] = t12 * t8;
     result__[ 11  ] = t12 * t9;
-    real_type t13  = LL__[3];
+    real_type t13  = LL__[iL_lambda4__xo];
     result__[ 12  ] = t13 * t6;
     result__[ 13  ] = t13 * t8;
     result__[ 14  ] = t13 * t9;
-    real_type t14  = XR__[2];
-    real_type t15  = XR__[1];
-    real_type t16  = XR__[0];
-    real_type t18  = ALIAS_Kappa_R(QR__[0]);
+    real_type t14  = XR__[iX_V];
+    real_type t15  = XR__[iX_alpha];
+    real_type t16  = XR__[iX_n];
+    real_type t18  = ALIAS_Kappa_R(QR__[iQ_zeta]);
     real_type t19  = zeta__dot_D_3(t14, t15, t16, t18);
-    real_type t20  = LR__[0];
+    real_type t20  = LR__[iL_lambda1__xo];
     result__[ 15  ] = -t20 * t19;
     real_type t22  = zeta__dot_D_2(t14, t15, t16, t18);
     result__[ 16  ] = -t20 * t22;
     real_type t24  = zeta__dot_D_1(t14, t15, t16, t18);
     result__[ 17  ] = -t20 * t24;
-    real_type t26  = LR__[1];
+    real_type t26  = LR__[iL_lambda2__xo];
     result__[ 18  ] = -t26 * t19;
     result__[ 19  ] = -t26 * t22;
     result__[ 20  ] = -t26 * t24;
-    real_type t30  = LR__[2];
+    real_type t30  = LR__[iL_lambda3__xo];
     result__[ 21  ] = -t30 * t19;
     result__[ 22  ] = -t30 * t22;
     result__[ 23  ] = -t30 * t24;
-    real_type t34  = LR__[4];
+    real_type t34  = LR__[iL_lambda5__xo];
     result__[ 24  ] = -t34 * t19;
     result__[ 25  ] = -t34 * t22;
     result__[ 26  ] = -t34 * t24;
-    real_type t38  = LR__[3];
+    real_type t38  = LR__[iL_lambda4__xo];
     result__[ 27  ] = -t38 * t19;
     result__[ 28  ] = -t38 * t22;
     result__[ 29  ] = -t38 * t24;

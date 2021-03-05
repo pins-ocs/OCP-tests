@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_ctrl = 1e-05;
     real_type tol_ctrl = 1e-05;
+    real_type epsi_ctrl = 1e-05;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -150,7 +150,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
-    data_uControl["type"]      = "COS_LOGARITHMIC";
+    data_uControl["type"]      = ;
     data_uControl["epsilon"]   = epsi_ctrl;
     data_uControl["tolerance"] = tol_ctrl;
 
@@ -162,8 +162,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Catalyst_data.Mesh["s0"] = 0;
-Catalyst_data.Mesh["segments"][0]["n"] = 400;
 Catalyst_data.Mesh["segments"][0]["length"] = 1;
+Catalyst_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Methods1.cc                                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -74,9 +74,10 @@ namespace BangBangFDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t5   = U__[0];
+    real_type t5   = U__[iU_F];
     real_type t7   = FControl(t5, -1, 1);
-    return t5 * L__[1] + L__[0] * X__[1] + t7;
+    real_type result__ = t5 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t7;
+    return result__;
   }
 
   /*\
@@ -96,7 +97,8 @@ namespace BangBangFDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -109,7 +111,8 @@ namespace BangBangFDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return FControl(U__[0], -1, 1);
+    real_type result__ = FControl(U__[iU_F], -1, 1);
+    return result__;
   }
 
   /*\
@@ -130,7 +133,8 @@ namespace BangBangFDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -155,7 +159,8 @@ namespace BangBangFDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return -XR__[0];
+    real_type result__ = -XR__[iX_x];
+    return result__;
   }
 
   /*\
@@ -265,10 +270,10 @@ namespace BangBangFDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = LR__[0] - LL__[0];
-    result__[ 3   ] = LR__[1] - LL__[1];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = XR__[iX_v] - XL__[iX_v];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }

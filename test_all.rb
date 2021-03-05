@@ -1,25 +1,28 @@
-require "colorize"
+require 'fileutils'
+
+FileUtils.rm_rf "./collected_results/"
+FileUtils.mkdir "./collected_results/"
 
 def do_test(dir)
-  case RUBY_PLATFORM
-  when /mingw|mswin|cygwin/
-    cmd = "cd #{dir} & rake clobber maple & rake clean main & bin/main.exe | perl -ne \"print $_; print STDERR $_;\" 2> iterations.txt & cd ..";
+  system("cd #{dir}; rake clobber maple; rake clean main; cd .." );
+  system("cd #{dir}; ./bin/main | tee iterations.txt; cd .." );
+  name = dir.split("test-")[1];
+  ff   = "#{dir}/iterations.txt";
+  if File.exist? "#{dir}/data/#{name}_OCP_result.txt" then
+    gg = "./collected_results/#{name}_iterations.txt";
   else
-    cmd = "cd #{dir}; rake clobber maple; rake clean main; ./bin/main | tee iterations.txt; cd ..";
+    gg = "./collected_results/#{name}_iterations_NO_OK.txt";    
   end
-  puts cmd.yellow
-  system(cmd);
+  FileUtils.cp ff, gg if File.exist? ff
 end
 
 #List of test that are excluded from
-
-
 ##
 #figlet "OCP Tests"
 #figlet "Checker"
 banner =
 "==============================================================================\n" +
-"     TEST OPTIMAL BENCHMARK CONTROL PROBLEMS                                  \n"+
+"                 TEST OPTIMAL BENCHMARK CONTROL PROBLEMS                      \n"+
 "==============================================================================\n" 
 
 puts "#{banner}"
@@ -29,7 +32,10 @@ ocps_path = '.'
 tests_dirs = []
 excluded_tests = []
 Dir.entries(ocps_path).select {|f|
-  if File.directory?(f) && f != '.' &&  f != '..' && !(f.include? "-no-test") then
+  if File.directory?(f) && 
+     f != '.' &&  f != '..' && 
+     (f.include? "test-") && 
+     !(f.include? "-no-test") then
     tests_dirs << f
   end
   if f.include? "-no-test" then
@@ -37,9 +43,8 @@ Dir.entries(ocps_path).select {|f|
   end
 }
 
+#ordina directory
 tests_dirs.sort!
-
-#files = Dir.entries(ocps_path)
 
 tests_dirs.each_with_index { |f,i|
   puts "#{i}: #{f}"
@@ -47,8 +52,6 @@ tests_dirs.each_with_index { |f,i|
 excluded_tests.each_with_index { |f,i|
   puts "#{i}: #{f}"
 }
-
-
 
 puts "Start loop on tests"
 tests_dirs.each do |d|

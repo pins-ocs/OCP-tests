@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -98,8 +98,8 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
-    result__[ 0   ] = -1.0 / t2 - L__[0] * V__[0];
+    real_type t2   = X__[iX_v] * X__[iX_v];
+    result__[ 0   ] = -1.0 / t2 - L__[iL_lambda1__xo] * V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 1, i_segment );
   }
@@ -139,7 +139,7 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[0];
+    real_type t1   = X__[iX_v];
     real_type t2   = t1 * t1;
     result__[ 0   ] = 2 / t2 / t1;
     if ( m_debug )
@@ -205,7 +205,7 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0] * ModelPars[1];
+    result__[ 0   ] = L__[iL_lambda1__xo] * ModelPars[iM_g];
     result__[ 1   ] = result__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
@@ -365,7 +365,7 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[0] * L__[0];
+    result__[ 0   ] = X__[iX_v] * L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",1, i_segment );
   }
@@ -405,7 +405,7 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
+    result__[ 0   ] = L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DetaDx_sparse", 1, i_segment );
   }
@@ -464,7 +464,7 @@ namespace Bike1DDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[0] * V__[0];
+    result__[ 0   ] = X__[iX_v] * V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "nu_eval", 1, i_segment );
   }

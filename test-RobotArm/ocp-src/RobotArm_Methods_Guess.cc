@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: RobotArm_Guess.cc                                              |
+ |  file: RobotArm_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,7 +77,9 @@ namespace RobotArmDefine {
 
   void
   RobotArm::p_guess_eval( P_pointer_type P__ ) const {
-    P__[ iP_T ] = ModelPars[1];
+    P__[ iP_T ] = ModelPars[iM_Tguess];
+    if ( m_debug )
+      Mechatronix::check( P__.pointer(), "p_guess_eval", 1 );
   }
 
   void
@@ -90,9 +92,13 @@ namespace RobotArmDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     X__[ iX_rho    ] = 0.45e1;
-    X__[ iX_theta  ] = 2.0 / 3.0 * Q__[0] * 0.3141592654e1;
+    X__[ iX_theta  ] = 2.0 / 3.0 * Q__[iQ_zeta] * 0.3141592654e1;
     X__[ iX_phi    ] = 0.3141592654e1 / 4;
 
+    if ( m_debug )
+      Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 6 );
+    if ( m_debug )
+      Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 6 );
   }
 
   /*\
@@ -103,14 +109,19 @@ namespace RobotArmDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__lt(A,B) ( (A) <  (B) )
-  #define Xoptima__check__le(A,B) ( (A) <= (B) )
+  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+
 
   bool
   RobotArm::p_check( P_const_pointer_type P__ ) const {
-    bool ok = true;
-
-    return ok;
+    return true;
   }
 
   bool
@@ -119,14 +130,7 @@ namespace RobotArmDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    return ok;
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -239,12 +243,12 @@ namespace RobotArmDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && u_phiControl.check_range(U__[2], -1, 1);
-    ok = ok && u_rhoControl.check_range(U__[0], -1, 1);
-    ok = ok && u_thetaControl.check_range(U__[1], -1, 1);
+    u_phiControl.check_range(U__[iU_u_phi], -1, 1);
+    u_rhoControl.check_range(U__[iU_u_rho], -1, 1);
+    u_thetaControl.check_range(U__[iU_u_theta], -1, 1);
     return ok;
   }
 
 }
 
-// EOF: RobotArm_Guess.cc
+// EOF: RobotArm_Methods_Guess.cc

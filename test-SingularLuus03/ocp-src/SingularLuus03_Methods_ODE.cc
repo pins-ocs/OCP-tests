@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularLuus03_Methods.cc                                      |
+ |  file: SingularLuus03_Methods_ODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -76,9 +76,9 @@ namespace SingularLuus03Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
-    result__[ 1   ] = U__[0];
-    real_type t2   = X__[0] * X__[0];
+    result__[ 0   ] = X__[iX_x2];
+    result__[ 1   ] = U__[iU_u];
+    real_type t2   = X__[iX_x1] * X__[iX_x1];
     real_type t3   = result__[0] * result__[0];
     result__[ 2   ] = t2 + t3;
     if ( m_debug )
@@ -123,8 +123,8 @@ namespace SingularLuus03Define {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    result__[ 1   ] = 2 * X__[0];
-    result__[ 2   ] = 2 * X__[1];
+    result__[ 1   ] = 2 * X__[iX_x1];
+    result__[ 2   ] = 2 * X__[iX_x2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 3, i_segment );
   }
@@ -252,4 +252,4 @@ namespace SingularLuus03Define {
 
 }
 
-// EOF: SingularLuus03_Methods.cc
+// EOF: SingularLuus03_Methods_ODE.cc

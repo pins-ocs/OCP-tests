@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GoddardRocket_Guess.cc                                         |
+ |  file: GoddardRocket_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,7 +65,9 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::p_guess_eval( P_pointer_type P__ ) const {
-    P__[ iP_TimeSize ] = ModelPars[1];
+    P__[ iP_TimeSize ] = ModelPars[iM_Tmax];
+    if ( m_debug )
+      Mechatronix::check( P__.pointer(), "p_guess_eval", 1 );
   }
 
   void
@@ -77,12 +79,16 @@ namespace GoddardRocketDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    X__[ iX_h ] = ModelPars[6];
-    real_type t1   = Q__[0];
+    X__[ iX_h ] = ModelPars[iM_h_i];
+    real_type t1   = Q__[iQ_zeta];
     X__[ iX_v ] = (1 - t1) * t1;
-    real_type t3   = ModelPars[9];
-    X__[ iX_m ] = t3 + (ModelPars[8] - t3) * t1;
+    real_type t3   = ModelPars[iM_m_i];
+    X__[ iX_m ] = t3 + (ModelPars[iM_m_f] - t3) * t1;
 
+    if ( m_debug )
+      Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 3 );
+    if ( m_debug )
+      Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 3 );
   }
 
   /*\
@@ -93,8 +99,15 @@ namespace GoddardRocketDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__lt(A,B) ( (A) <  (B) )
-  #define Xoptima__check__le(A,B) ( (A) <= (B) )
+  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+
 
   // Node check strings
   #define __message_node_check_0 "0 < m(zeta)"
@@ -103,13 +116,12 @@ namespace GoddardRocketDefine {
   #define __message_cell_check_0 "0 < m(zeta)"
 
   // Pars check strings
-  #define __message_parameter_check_0 "0 < TimeSize"
+  #define __message_cell_check_0 "0 < TimeSize"
 
   bool
   GoddardRocket::p_check( P_const_pointer_type P__ ) const {
-    bool ok = true;
-    ok = ok && Xoptima__check__lt(0, P__[0]);
-    return ok;
+    Xoptima__check__pars__lt(0, P__[iP_TimeSize], __message_cell_check_0);
+    return true;
   }
 
   bool
@@ -118,14 +130,13 @@ namespace GoddardRocketDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && Xoptima__check__lt(0, X__[2]);
-    return ok;
+    Xoptima__check__node__lt(0, X__[iX_m], __message_node_check_0);
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -136,14 +147,13 @@ namespace GoddardRocketDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && Xoptima__check__lt(0, X__[2]);
-    return ok;
+    Xoptima__check__cell__lt(0, X__[iX_m], __message_cell_check_0);
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -155,7 +165,6 @@ namespace GoddardRocketDefine {
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
     NodeType2 NODE__;
     real_type Q__[1];
     real_type X__[3];
@@ -256,10 +265,10 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && TControl.check_range(U__[0], 0, ModelPars[1]);
+    TControl.check_range(U__[iU_T], 0, ModelPars[iM_Tmax]);
     return ok;
   }
 
 }
 
-// EOF: GoddardRocket_Guess.cc
+// EOF: GoddardRocket_Methods_Guess.cc

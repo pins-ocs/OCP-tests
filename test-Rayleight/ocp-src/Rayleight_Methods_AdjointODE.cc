@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,10 +69,10 @@ namespace RayleightDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = L__[1];
-    result__[ 0   ] = 2 * X__[0] - t3;
-    real_type t6   = X__[1] * X__[1];
-    result__[ 1   ] = L__[0] + (-0.42e0 * t6 + 0.14e1) * t3;
+    real_type t3   = L__[iL_lambda2__xo];
+    result__[ 0   ] = 2 * X__[iX_x1] - t3;
+    real_type t6   = X__[iX_x2] * X__[iX_x2];
+    result__[ 1   ] = L__[iL_lambda1__xo] + (-0.42e0 * t6 + 0.14e1) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 2, i_segment );
   }
@@ -114,7 +114,7 @@ namespace RayleightDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 2;
-    result__[ 1   ] = -0.84e0 * L__[1] * X__[1];
+    result__[ 1   ] = -0.84e0 * L__[iL_lambda2__xo] * X__[iX_x2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 2, i_segment );
   }
@@ -178,7 +178,7 @@ namespace RayleightDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 2 * U__[0] + 4 * L__[1];
+    result__[ 0   ] = 2 * U__[iU_u] + 4 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -337,8 +337,8 @@ namespace RayleightDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
   }

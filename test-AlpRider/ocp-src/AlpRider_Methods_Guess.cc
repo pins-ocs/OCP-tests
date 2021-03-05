@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: AlpRider_Guess.cc                                              |
+ |  file: AlpRider_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -63,16 +63,20 @@ namespace AlpRiderDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = ModelPars[7];
-    real_type t2   = Q__[0];
-    X__[ iX_y1 ] = t1 + (ModelPars[6] - t1) * t2;
-    real_type t6   = ModelPars[9];
-    X__[ iX_y2 ] = t6 + (ModelPars[8] - t6) * t2;
-    real_type t10  = ModelPars[11];
-    X__[ iX_y3 ] = t10 + (ModelPars[10] - t10) * t2;
-    real_type t14  = ModelPars[13];
-    X__[ iX_y4 ] = t14 + (ModelPars[12] - t14) * t2;
+    real_type t1   = ModelPars[iM_y1_i];
+    real_type t2   = Q__[iQ_zeta];
+    X__[ iX_y1 ] = t1 + (ModelPars[iM_y1_f] - t1) * t2;
+    real_type t6   = ModelPars[iM_y2_i];
+    X__[ iX_y2 ] = t6 + (ModelPars[iM_y2_f] - t6) * t2;
+    real_type t10  = ModelPars[iM_y3_i];
+    X__[ iX_y3 ] = t10 + (ModelPars[iM_y3_f] - t10) * t2;
+    real_type t14  = ModelPars[iM_y4_i];
+    X__[ iX_y4 ] = t14 + (ModelPars[iM_y4_f] - t14) * t2;
 
+    if ( m_debug )
+      Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 4 );
+    if ( m_debug )
+      Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 4 );
   }
 
   /*\
@@ -83,14 +87,19 @@ namespace AlpRiderDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__lt(A,B) ( (A) <  (B) )
-  #define Xoptima__check__le(A,B) ( (A) <= (B) )
+  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+
 
   bool
   AlpRider::p_check( P_const_pointer_type P__ ) const {
-    bool ok = true;
-
-    return ok;
+    return true;
   }
 
   bool
@@ -99,14 +108,7 @@ namespace AlpRiderDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    return ok;
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -219,4 +221,4 @@ namespace AlpRiderDefine {
 
 }
 
-// EOF: AlpRider_Guess.cc
+// EOF: AlpRider_Methods_Guess.cc

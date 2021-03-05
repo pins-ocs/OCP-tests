@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1.hh                                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define DADEBO1_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace Dadebo1Define {
 
@@ -162,11 +162,11 @@ namespace Dadebo1Define {
     );
 
     DADEBO1_API_DLL virtual
-    ~Dadebo1() MECHATRONIX_OVERRIDE;
+    ~Dadebo1() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DADEBO1_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "Dadebo1"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -240,12 +240,12 @@ namespace Dadebo1Define {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     DADEBO1_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

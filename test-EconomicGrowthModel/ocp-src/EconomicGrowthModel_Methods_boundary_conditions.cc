@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -86,10 +86,10 @@ namespace EconomicGrowthModelDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0] - ModelPars[1];
-    result__[ 1   ] = XL__[1] - ModelPars[2];
-    real_type t7   = Q(XR__[0], XR__[1]);
-    result__[ 2   ] = t7 - ModelPars[0];
+    result__[ 0   ] = XL__[iX_x1] - ModelPars[iM_x1_i];
+    result__[ 1   ] = XL__[iX_x2] - ModelPars[iM_x2_i];
+    real_type t7   = Q(XR__[iX_x1], XR__[iX_x2]);
+    result__[ 2   ] = t7 - ModelPars[iM_Qc];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 3, i_segment_left, i_segment_right );
   }
@@ -136,8 +136,8 @@ namespace EconomicGrowthModelDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
-    real_type t1   = XR__[0];
-    real_type t2   = XR__[1];
+    real_type t1   = XR__[iX_x1];
+    real_type t2   = XR__[iX_x2];
     result__[ 2   ] = Q_D_1(t1, t2);
     result__[ 3   ] = Q_D_2(t1, t2);
     if ( m_debug )
@@ -201,17 +201,17 @@ namespace EconomicGrowthModelDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[0];
-    result__[ 1   ] = OMEGA__[1] + LL__[1];
-    result__[ 2   ] = LL__[2];
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
+    result__[ 2   ] = LL__[iL_lambda3__xo];
     real_type t5   = OMEGA__[2];
-    real_type t6   = XR__[0];
-    real_type t7   = XR__[1];
+    real_type t6   = XR__[iX_x1];
+    real_type t7   = XR__[iX_x2];
     real_type t8   = Q_D_1(t6, t7);
-    result__[ 3   ] = t8 * t5 - LR__[0];
+    result__[ 3   ] = t8 * t5 - LR__[iL_lambda1__xo];
     real_type t11  = Q_D_2(t6, t7);
-    result__[ 4   ] = t11 * t5 - LR__[1];
-    result__[ 5   ] = 1 - LR__[2];
+    result__[ 4   ] = t11 * t5 - LR__[iL_lambda2__xo];
+    result__[ 5   ] = 1 - LR__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 6, i_segment_left, i_segment_right );
   }
@@ -260,8 +260,8 @@ namespace EconomicGrowthModelDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type t1   = OMEGA__[2];
-    real_type t2   = XR__[0];
-    real_type t3   = XR__[1];
+    real_type t2   = XR__[iX_x1];
+    real_type t3   = XR__[iX_x2];
     real_type t4   = Q_D_1_1(t2, t3);
     result__[ 0   ] = t4 * t1;
     real_type t5   = Q_D_1_2(t2, t3);

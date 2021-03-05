@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,9 +80,9 @@ namespace PathConstrainedDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
+    real_type t1   = U__[iU_u];
     real_type t4   = ALIAS_uControl_D_1(t1, -20, 20);
-    result__[ 0   ] = 0.10e-1 * t1 + L__[1] + t4;
+    result__[ 0   ] = 0.10e-1 * t1 + L__[iL_lambda2__xo] + t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -164,7 +164,7 @@ namespace PathConstrainedDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ALIAS_uControl_D_1_1(U__[0], -20, 20);
+    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], -20, 20);
     result__[ 0   ] = 0.10e-1 + t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );

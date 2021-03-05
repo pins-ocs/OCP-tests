@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: PointMassCarModel_3.m                                          %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -763,64 +763,64 @@ classdef PointMassCarModel_3 < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = zeta__dot( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_1( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_1', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_1( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_1', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_2( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_2', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_2( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_2', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_3( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_3', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_3( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_3', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_4( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_4', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_4( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_4', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_1_1( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_1_1', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_1_1( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_1_1', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_1_2( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_1_2', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_1_2( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_1_2', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_1_3( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_1_3', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_1_3( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_1_3', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_1_4( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_1_4', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_1_4( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_1_4', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_2_2( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_2_2', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_2_2( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_2_2', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_2_3( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_2_3', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_2_3( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_2_3', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_2_4( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_2_4', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_2_4( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_2_4', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_3_3( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_3_3', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_3_3( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_3_3', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_3_4( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_3_4', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_3_4( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_3_4', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
-    function res = zeta__dot_D_4_4( self, V__XO, alpha__XO, n__XO, Kappa__XO )
-      res = PointMassCarModel_3_Mex('zeta__dot_D_4_4', self.objectHandle, V__XO, alpha__XO, n__XO, Kappa__XO );
+    function res = zeta__dot_D_4_4( self, xo__V, xo__alpha, xo__n, xo__Kappa )
+      res = PointMassCarModel_3_Mex('zeta__dot_D_4_4', self.objectHandle, xo__V, xo__alpha, xo__n, xo__Kappa );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

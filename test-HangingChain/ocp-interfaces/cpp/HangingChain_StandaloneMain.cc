@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type b = 3;
     real_type a = 1;
+    real_type b = 3;
     real_type u0 = b-a;
     real_type L0 = (u0^2+1)^(1/2.0);
     real_type L = L0;
@@ -161,8 +161,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HangingChain_data.Mesh["s0"] = 0;
-HangingChain_data.Mesh["segments"][0]["n"] = 400;
 HangingChain_data.Mesh["segments"][0]["length"] = 1;
+HangingChain_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

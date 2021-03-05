@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,21 +69,21 @@ namespace MaximumAscentDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = tf(ModelPars[1]);
+    real_type t3   = tf(ModelPars[iM_days]);
     real_type t4   = eta(t3);
-    real_type t5   = t4 * L__[1];
-    real_type t6   = X__[2];
+    real_type t5   = t4 * L__[iL_lambda2__xo];
+    real_type t6   = X__[iX_v];
     real_type t7   = t6 * t6;
-    real_type t8   = X__[0];
+    real_type t8   = X__[iX_r];
     real_type t9   = t8 * t8;
     real_type t10  = 1.0 / t9;
-    real_type t18  = t4 * L__[2];
-    real_type t19  = X__[1];
-    real_type t24  = t4 * L__[3];
+    real_type t18  = t4 * L__[iL_lambda3__xo];
+    real_type t19  = X__[iX_u];
+    real_type t24  = t4 * L__[iL_lambda4__xo];
     result__[ 0   ] = (-t10 * t7 + 2 / t9 / t8) * t5 + t10 * t6 * t19 * t18 - t10 * t6 * t24;
     real_type t29  = 1.0 / t8;
     real_type t30  = t29 * t6;
-    result__[ 1   ] = -t30 * t18 + t4 * L__[0];
+    result__[ 1   ] = -t30 * t18 + t4 * L__[iL_lambda1__xo];
     result__[ 2   ] = -t29 * t19 * t18 + t29 * t24 + 2 * t30 * t5;
     result__[ 3   ] = 0;
     if ( m_debug )
@@ -132,18 +132,18 @@ namespace MaximumAscentDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = tf(ModelPars[1]);
+    real_type t3   = tf(ModelPars[iM_days]);
     real_type t4   = eta(t3);
-    real_type t5   = t4 * L__[1];
-    real_type t6   = X__[2];
+    real_type t5   = t4 * L__[iL_lambda2__xo];
+    real_type t6   = X__[iX_v];
     real_type t7   = t6 * t6;
-    real_type t8   = X__[0];
+    real_type t8   = X__[iX_r];
     real_type t9   = t8 * t8;
     real_type t11  = 1.0 / t9 / t8;
     real_type t14  = t9 * t9;
-    real_type t20  = t4 * L__[2];
-    real_type t21  = X__[1];
-    real_type t27  = t4 * L__[3];
+    real_type t20  = t4 * L__[iL_lambda3__xo];
+    real_type t21  = X__[iX_u];
+    real_type t27  = t4 * L__[iL_lambda4__xo];
     result__[ 0   ] = (2 * t11 * t7 - 6 / t14) * t5 - 2 * t11 * t6 * t21 * t20 + 2 * t11 * t6 * t27;
     real_type t31  = 1.0 / t9;
     real_type t32  = t31 * t6;
@@ -218,13 +218,13 @@ namespace MaximumAscentDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = tf(ModelPars[1]);
+    real_type t3   = tf(ModelPars[iM_days]);
     real_type t4   = Tbar(t3);
-    real_type t12  = 1.0 / (-Q__[0] * ModelPars[5] * t3 + ModelPars[4]);
-    real_type t13  = U__[0];
+    real_type t12  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]);
+    real_type t13  = U__[iU_alpha];
     real_type t14  = cos(t13);
     real_type t19  = sin(t13);
-    result__[ 0   ] = t14 * t12 * t4 * L__[1] - t19 * t12 * t4 * L__[2];
+    result__[ 0   ] = t14 * t12 * t4 * L__[iL_lambda2__xo] - t19 * t12 * t4 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -383,10 +383,10 @@ namespace MaximumAscentDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
-    result__[ 3   ] = L__[3];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }

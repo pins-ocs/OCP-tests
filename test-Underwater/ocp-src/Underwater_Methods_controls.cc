@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -96,13 +96,13 @@ namespace UnderwaterDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[0];
-    real_type t8   = ALIAS_u1Control_D_1(U__[0], -1, 1);
-    result__[ 0   ] = 1.0 / ModelPars[2] * t2 * L__[3] + t8 * t2;
-    real_type t16  = ALIAS_u2Control_D_1(U__[1], -1, 1);
-    result__[ 1   ] = 1.0 / ModelPars[3] * t2 * L__[4] + t16 * t2;
-    real_type t24  = ALIAS_u3Control_D_1(U__[2], -1, 1);
-    result__[ 2   ] = 1.0 / ModelPars[1] * t2 * L__[5] + t24 * t2;
+    real_type t2   = P__[iP_T];
+    real_type t8   = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
+    result__[ 0   ] = 1.0 / ModelPars[iM_m1] * t2 * L__[iL_lambda4__xo] + t8 * t2;
+    real_type t16  = ALIAS_u2Control_D_1(U__[iU_u2], -1, 1);
+    result__[ 1   ] = 1.0 / ModelPars[iM_m3] * t2 * L__[iL_lambda5__xo] + t16 * t2;
+    real_type t24  = ALIAS_u3Control_D_1(U__[iU_u3], -1, 1);
+    result__[ 2   ] = 1.0 / ModelPars[iM_inertia] * t2 * L__[iL_lambda6__xo] + t24 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 3, i_segment );
   }
@@ -148,19 +148,19 @@ namespace UnderwaterDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    real_type t3   = 1.0 / ModelPars[2];
+    real_type t1   = P__[iP_T];
+    real_type t3   = 1.0 / ModelPars[iM_m1];
     result__[ 0   ] = t3 * t1;
-    real_type t7   = ALIAS_u1Control_D_1(U__[0], -1, 1);
-    result__[ 1   ] = L__[3] * t3 + t7;
-    real_type t9   = 1.0 / ModelPars[3];
+    real_type t7   = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
+    result__[ 1   ] = L__[iL_lambda4__xo] * t3 + t7;
+    real_type t9   = 1.0 / ModelPars[iM_m3];
     result__[ 2   ] = t9 * t1;
-    real_type t13  = ALIAS_u2Control_D_1(U__[1], -1, 1);
-    result__[ 3   ] = L__[4] * t9 + t13;
-    real_type t15  = 1.0 / ModelPars[1];
+    real_type t13  = ALIAS_u2Control_D_1(U__[iU_u2], -1, 1);
+    result__[ 3   ] = L__[iL_lambda5__xo] * t9 + t13;
+    real_type t15  = 1.0 / ModelPars[iM_inertia];
     result__[ 4   ] = t15 * t1;
-    real_type t19  = ALIAS_u3Control_D_1(U__[2], -1, 1);
-    result__[ 5   ] = L__[5] * t15 + t19;
+    real_type t19  = ALIAS_u3Control_D_1(U__[iU_u3], -1, 1);
+    result__[ 5   ] = L__[iL_lambda6__xo] * t15 + t19;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 6, i_segment );
   }
@@ -203,12 +203,12 @@ namespace UnderwaterDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    real_type t3   = ALIAS_u1Control_D_1_1(U__[0], -1, 1);
+    real_type t1   = P__[iP_T];
+    real_type t3   = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
     result__[ 0   ] = t3 * t1;
-    real_type t5   = ALIAS_u2Control_D_1_1(U__[1], -1, 1);
+    real_type t5   = ALIAS_u2Control_D_1_1(U__[iU_u2], -1, 1);
     result__[ 1   ] = t5 * t1;
-    real_type t7   = ALIAS_u3Control_D_1_1(U__[2], -1, 1);
+    real_type t7   = ALIAS_u3Control_D_1_1(U__[iU_u3], -1, 1);
     result__[ 2   ] = t7 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 3, i_segment );
@@ -244,9 +244,9 @@ namespace UnderwaterDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_u1 ] = u1Control.solve(-1.0 / ModelPars[2] * L__[3], -1, 1);
-    U__[ iU_u2 ] = u2Control.solve(-1.0 / ModelPars[3] * L__[4], -1, 1);
-    U__[ iU_u3 ] = u3Control.solve(-1.0 / ModelPars[1] * L__[5], -1, 1);
+    U__[ iU_u1 ] = u1Control.solve(-1.0 / ModelPars[iM_m1] * L__[iL_lambda4__xo], -1, 1);
+    U__[ iU_u2 ] = u2Control.solve(-1.0 / ModelPars[iM_m3] * L__[iL_lambda5__xo], -1, 1);
+    U__[ iU_u3 ] = u3Control.solve(-1.0 / ModelPars[iM_inertia] * L__[iL_lambda6__xo], -1, 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -330,15 +330,15 @@ namespace UnderwaterDefine {
     DuDxlp(0, 8) = 0;
     DuDxlp(1, 8) = 0;
     DuDxlp(2, 8) = 0;
-    DuDxlp(0, 9) = -u1Control.solve_rhs(-1.0 / ModelPars[2] * L__[3], -1, 1) / ModelPars[2];
+    DuDxlp(0, 9) = -u1Control.solve_rhs(-1.0 / ModelPars[iM_m1] * L__[iL_lambda4__xo], -1, 1) / ModelPars[iM_m1];
     DuDxlp(1, 9) = 0;
     DuDxlp(2, 9) = 0;
     DuDxlp(0, 10) = 0;
-    DuDxlp(1, 10) = -u2Control.solve_rhs(-1.0 / ModelPars[3] * L__[4], -1, 1) / ModelPars[3];
+    DuDxlp(1, 10) = -u2Control.solve_rhs(-1.0 / ModelPars[iM_m3] * L__[iL_lambda5__xo], -1, 1) / ModelPars[iM_m3];
     DuDxlp(2, 10) = 0;
     DuDxlp(0, 11) = 0;
     DuDxlp(1, 11) = 0;
-    DuDxlp(2, 11) = -u3Control.solve_rhs(-1.0 / ModelPars[1] * L__[5], -1, 1) / ModelPars[1];
+    DuDxlp(2, 11) = -u3Control.solve_rhs(-1.0 / ModelPars[iM_inertia] * L__[iL_lambda6__xo], -1, 1) / ModelPars[iM_inertia];
     DuDxlp(0, 12) = 0;
     DuDxlp(1, 12) = 0;
     DuDxlp(2, 12) = 0;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods1.cc                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,8 +65,8 @@ namespace SingularConstrainedCalogeroDefine {
   void
   SingularConstrainedCalogero::continuationStep0( real_type s ) {
     real_type t2   = 1 - s;
-    uMaxBound.update_epsilon(s * ModelPars[5] + t2 * ModelPars[4]);
-    uMaxBound.update_tolerance(s * ModelPars[1] + t2 * ModelPars[0]);
+    uMaxBound.update_epsilon(s * ModelPars[iM_epsi_min] + t2 * ModelPars[iM_epsi_max]);
+    uMaxBound.update_tolerance(s * ModelPars[iM_tol_min] + t2 * ModelPars[iM_tol_max]);
   }
 
   /*\
@@ -89,11 +89,12 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
-    real_type t3   = Q__[0];
-    real_type t5   = uMaxBound(t1 - 1 - X__[0] + t3);
+    real_type t1   = U__[iU_u];
+    real_type t3   = Q__[iQ_zeta];
+    real_type t5   = uMaxBound(t1 - 1 - X__[iX_x] + t3);
     real_type t10  = uControl(t1, 0, 2);
-    return t5 + (t3 - 4) * t1 + t1 * L__[0] + t10;
+    real_type result__ = t5 + (t3 - 4) * t1 + t1 * L__[iL_lambda1__xo] + t10;
+    return result__;
   }
 
   /*\
@@ -113,7 +114,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return uMaxBound(U__[0] - 1 - X__[0] + Q__[0]);
+    real_type result__ = uMaxBound(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
+    return result__;
   }
 
   real_type
@@ -126,7 +128,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return uControl(U__[0], 0, 2);
+    real_type result__ = uControl(U__[iU_u], 0, 2);
+    return result__;
   }
 
   /*\
@@ -147,7 +150,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return U__[0] * (Q__[0] - 4);
+    real_type result__ = U__[iU_u] * (Q__[iQ_zeta] - 4);
+    return result__;
   }
 
   /*\
@@ -172,7 +176,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -282,8 +287,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = LR__[0] - LL__[0];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 2, i_segment_left, i_segment_right );
   }
@@ -364,7 +369,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[0] + 1 - Q__[0];
+    result__[ 0   ] = X__[iX_x] + 1 - Q__[iQ_zeta];
     Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
@@ -386,7 +391,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = U__[0] * (Q__[0] - 4);
+    result__[ 0   ] = U__[iU_u] * (Q__[iQ_zeta] - 4);
     Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -86,13 +86,13 @@ namespace HangGliderDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0] - ModelPars[20];
-    result__[ 1   ] = XL__[1] - ModelPars[22];
-    result__[ 2   ] = XL__[2] - ModelPars[17];
-    result__[ 3   ] = XL__[3] - ModelPars[19];
-    result__[ 4   ] = XR__[1] - ModelPars[21];
-    result__[ 5   ] = XR__[2] - ModelPars[16];
-    result__[ 6   ] = XR__[3] - ModelPars[18];
+    result__[ 0   ] = XL__[iX_x] - ModelPars[iM_x_i];
+    result__[ 1   ] = XL__[iX_y] - ModelPars[iM_y_i];
+    result__[ 2   ] = XL__[iX_vx] - ModelPars[iM_vx_i];
+    result__[ 3   ] = XL__[iX_vy] - ModelPars[iM_vy_i];
+    result__[ 4   ] = XR__[iX_y] - ModelPars[iM_y_f];
+    result__[ 5   ] = XR__[iX_vx] - ModelPars[iM_vx_f];
+    result__[ 6   ] = XR__[iX_vy] - ModelPars[iM_vy_f];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 7, i_segment_left, i_segment_right );
   }
@@ -208,14 +208,14 @@ namespace HangGliderDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[0];
-    result__[ 1   ] = OMEGA__[1] + LL__[1];
-    result__[ 2   ] = OMEGA__[2] + LL__[2];
-    result__[ 3   ] = OMEGA__[3] + LL__[3];
-    result__[ 4   ] = -1 - LR__[0];
-    result__[ 5   ] = OMEGA__[4] - LR__[1];
-    result__[ 6   ] = OMEGA__[5] - LR__[2];
-    result__[ 7   ] = OMEGA__[6] - LR__[3];
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
+    result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
+    result__[ 3   ] = OMEGA__[3] + LL__[iL_lambda4__xo];
+    result__[ 4   ] = -1 - LR__[iL_lambda1__xo];
+    result__[ 5   ] = OMEGA__[4] - LR__[iL_lambda2__xo];
+    result__[ 6   ] = OMEGA__[5] - LR__[iL_lambda3__xo];
+    result__[ 7   ] = OMEGA__[6] - LR__[iL_lambda4__xo];
     result__[ 8   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 9, i_segment_left, i_segment_right );

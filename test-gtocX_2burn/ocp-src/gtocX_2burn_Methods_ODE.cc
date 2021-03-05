@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: gtocX_2burn_Methods.cc                                         |
+ |  file: gtocX_2burn_Methods_ODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,18 +70,18 @@ namespace gtocX_2burnDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 0;
-    real_type t3   = ModelPars[1] - ModelPars[2];
-    real_type t4   = X__[0];
+    real_type t3   = ModelPars[iM_time_f] - ModelPars[iM_time_i];
+    real_type t4   = X__[iX_p];
     real_type t5   = sqrt(t4);
-    real_type t7   = ModelPars[0];
+    real_type t7   = ModelPars[iM_muS];
     real_type t8   = sqrt(t7);
     real_type t10  = 1.0 / t8 * t5 * t3;
-    real_type t12  = X__[1];
-    real_type t13  = X__[2];
-    real_type t14  = X__[5];
+    real_type t12  = X__[iX_f];
+    real_type t13  = X__[iX_g];
+    real_type t14  = X__[iX_L];
     real_type t15  = ray(t4, t12, t13, t14);
     real_type t16  = acceleration_r(t15, t7);
-    real_type t17  = t16 * ModelPars[6];
+    real_type t17  = t16 * ModelPars[iM_w_nonlin];
     real_type t18  = sin(t14);
     result__[ 1   ] = t18 * t17 * t10;
     real_type t20  = cos(t14);
@@ -140,17 +140,17 @@ namespace gtocX_2burnDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ModelPars[1] - ModelPars[2];
-    real_type t4   = X__[0];
+    real_type t3   = ModelPars[iM_time_f] - ModelPars[iM_time_i];
+    real_type t4   = X__[iX_p];
     real_type t5   = sqrt(t4);
-    real_type t8   = ModelPars[0];
+    real_type t8   = ModelPars[iM_muS];
     real_type t9   = sqrt(t8);
     real_type t10  = 1.0 / t9;
     real_type t11  = t10 / t5 * t3;
-    real_type t12  = ModelPars[6];
-    real_type t13  = X__[1];
-    real_type t14  = X__[2];
-    real_type t15  = X__[5];
+    real_type t12  = ModelPars[iM_w_nonlin];
+    real_type t13  = X__[iX_f];
+    real_type t14  = X__[iX_g];
+    real_type t15  = X__[iX_L];
     real_type t16  = ray(t4, t13, t14, t15);
     real_type t17  = acceleration_r(t16, t8);
     real_type t18  = t17 * t12;
@@ -308,4 +308,4 @@ namespace gtocX_2burnDefine {
 
 }
 
-// EOF: gtocX_2burn_Methods.cc
+// EOF: gtocX_2burn_Methods_ODE.cc

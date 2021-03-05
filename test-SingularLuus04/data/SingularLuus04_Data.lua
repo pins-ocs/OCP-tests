@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
-epsilon_X = 1e-07
-u_tol     = 0.01
-Tf        = 6
 u_epsi    = 0.01
+epsilon_X = 1e-07
+Tf        = 6
+u_tol     = 0.01
 
 content = {
 
@@ -151,7 +151,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = u_epsi,
       tolerance = u_tol,
     },
@@ -170,8 +170,8 @@ content = {
     segments = {
       
       {
-        n      = 2000,
         length = Tf,
+        n      = 2000,
       },
     },
   },

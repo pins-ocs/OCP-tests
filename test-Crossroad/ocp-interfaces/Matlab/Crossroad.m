@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Crossroad.m                                                    %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -651,16 +651,16 @@ classdef Crossroad < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = kappa( self, s__XO )
-      res = Crossroad_Mex('kappa', self.objectHandle, s__XO );
+    function res = kappa( self, xo__s )
+      res = Crossroad_Mex('kappa', self.objectHandle, xo__s );
     end
     % ---------------------------------------------------------------------
-    function res = kappa_D( self, s__XO )
-      res = Crossroad_Mex('kappa_D', self.objectHandle, s__XO );
+    function res = kappa_D( self, xo__s )
+      res = Crossroad_Mex('kappa_D', self.objectHandle, xo__s );
     end
     % ---------------------------------------------------------------------
-    function res = kappa_DD( self, s__XO )
-      res = Crossroad_Mex('kappa_DD', self.objectHandle, s__XO );
+    function res = kappa_DD( self, xo__s )
+      res = Crossroad_Mex('kappa_DD', self.objectHandle, xo__s );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods.cc                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,11 +69,11 @@ namespace FlowInAchannelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ModelPars[0] * L__[3];
-    result__[ 0   ] = -X__[3] * t3;
-    result__[ 1   ] = X__[2] * t3 + L__[0];
-    result__[ 2   ] = X__[1] * t3 + L__[1];
-    result__[ 3   ] = -X__[0] * t3 + L__[2];
+    real_type t3   = ModelPars[iM_R] * L__[iL_lambda4__xo];
+    result__[ 0   ] = -X__[iX_u3] * t3;
+    result__[ 1   ] = X__[iX_u2] * t3 + L__[iL_lambda1__xo];
+    result__[ 2   ] = X__[iX_u1] * t3 + L__[iL_lambda2__xo];
+    result__[ 3   ] = -X__[iX_u] * t3 + L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -116,7 +116,7 @@ namespace FlowInAchannelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = L__[3] * ModelPars[0];
+    real_type t3   = L__[iL_lambda4__xo] * ModelPars[iM_R];
     result__[ 0   ] = -t3;
     result__[ 1   ] = t3;
     result__[ 2   ] = result__[1];
@@ -343,10 +343,10 @@ namespace FlowInAchannelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
-    result__[ 3   ] = L__[3];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }

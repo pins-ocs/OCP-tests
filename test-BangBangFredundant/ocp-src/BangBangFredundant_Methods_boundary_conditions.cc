@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods.cc                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -95,9 +95,9 @@ namespace BangBangFredundantDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0];
-    result__[ 1   ] = XL__[1];
-    result__[ 2   ] = XR__[1];
+    result__[ 0   ] = XL__[iX_x];
+    result__[ 1   ] = XL__[iX_v];
+    result__[ 2   ] = XR__[iX_v];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 3, i_segment_left, i_segment_right );
   }
@@ -205,20 +205,20 @@ namespace BangBangFredundantDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[0];
-    result__[ 1   ] = OMEGA__[1] + LL__[1];
-    real_type t8   = ALIAS_Flim_D(XL__[2] + XL__[3]);
-    result__[ 2   ] = t8 + LL__[2];
-    result__[ 3   ] = t8 + LL__[3];
-    result__[ 4   ] = LL__[4];
-    result__[ 5   ] = LL__[5];
-    result__[ 6   ] = -1 - LR__[0];
-    result__[ 7   ] = OMEGA__[2] - LR__[1];
-    real_type t17  = ALIAS_Flim_D(XR__[2] + XR__[3]);
-    result__[ 8   ] = t17 - LR__[2];
-    result__[ 9   ] = t17 - LR__[3];
-    result__[ 10  ] = -LR__[4];
-    result__[ 11  ] = -LR__[5];
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
+    real_type t8   = ALIAS_Flim_D(XL__[iX_F1] + XL__[iX_F2]);
+    result__[ 2   ] = t8 + LL__[iL_lambda3__xo];
+    result__[ 3   ] = t8 + LL__[iL_lambda4__xo];
+    result__[ 4   ] = LL__[iL_lambda5__xo];
+    result__[ 5   ] = LL__[iL_lambda6__xo];
+    result__[ 6   ] = -1 - LR__[iL_lambda1__xo];
+    result__[ 7   ] = OMEGA__[2] - LR__[iL_lambda2__xo];
+    real_type t17  = ALIAS_Flim_D(XR__[iX_F1] + XR__[iX_F2]);
+    result__[ 8   ] = t17 - LR__[iL_lambda3__xo];
+    result__[ 9   ] = t17 - LR__[iL_lambda4__xo];
+    result__[ 10  ] = -LR__[iL_lambda5__xo];
+    result__[ 11  ] = -LR__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 12, i_segment_left, i_segment_right );
   }
@@ -270,11 +270,11 @@ namespace BangBangFredundantDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = ALIAS_Flim_DD(XL__[2] + XL__[3]);
+    result__[ 0   ] = ALIAS_Flim_DD(XL__[iX_F1] + XL__[iX_F2]);
     result__[ 1   ] = result__[0];
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[2];
-    result__[ 4   ] = ALIAS_Flim_DD(XR__[2] + XR__[3]);
+    result__[ 4   ] = ALIAS_Flim_DD(XR__[iX_F1] + XR__[iX_F2]);
     result__[ 5   ] = result__[4];
     result__[ 6   ] = result__[5];
     result__[ 7   ] = result__[6];

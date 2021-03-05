@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods.cc                                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,19 +80,19 @@ namespace HangGliderDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[0];
-    real_type t7   = P__[0];
-    real_type t11  = X__[0];
-    real_type t12  = X__[2];
-    real_type t13  = X__[3];
+    real_type t2   = U__[iU_cL];
+    real_type t7   = P__[iP_T];
+    real_type t11  = X__[iX_x];
+    real_type t12  = X__[iX_vx];
+    real_type t13  = X__[iX_vy];
     real_type t14  = v(t11, t12, t13);
-    real_type t16  = 1.0 / t14 / ModelPars[10];
-    real_type t18  = t2 * ModelPars[6];
+    real_type t16  = 1.0 / t14 / ModelPars[iM_m];
+    real_type t18  = t2 * ModelPars[iM_c1];
     real_type t19  = Dfun(t11, t12, t13);
     real_type t23  = Lfun(t11, t12, t13);
     real_type t24  = w(t11, t13);
-    real_type t40  = ALIAS_cLControl_D_1(t2, ModelPars[8], ModelPars[7]);
-    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[2] + (-2 * t12 * t19 * t18 - t24 * t23) * t16 * t7 * L__[2] + (-2 * t24 * t19 * t18 + t12 * t23) * t16 * t7 * L__[3] + t40;
+    real_type t40  = ALIAS_cLControl_D_1(t2, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
+    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[iM_W] + (-2 * t12 * t19 * t18 - t24 * t23) * t16 * t7 * L__[iL_lambda3__xo] + (-2 * t24 * t19 * t18 + t12 * t23) * t16 * t7 * L__[iL_lambda4__xo] + t40;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -138,18 +138,18 @@ namespace HangGliderDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[2];
-    real_type t2   = P__[0];
+    real_type t1   = L__[iL_lambda3__xo];
+    real_type t2   = P__[iP_T];
     real_type t3   = t2 * t1;
-    real_type t5   = 1.0 / ModelPars[10];
+    real_type t5   = 1.0 / ModelPars[iM_m];
     real_type t6   = t5 * t3;
-    real_type t7   = X__[0];
-    real_type t8   = X__[2];
-    real_type t9   = X__[3];
+    real_type t7   = X__[iX_x];
+    real_type t8   = X__[iX_vx];
+    real_type t9   = X__[iX_vy];
     real_type t10  = v(t7, t8, t9);
     real_type t11  = t10 * t10;
     real_type t12  = 1.0 / t11;
-    real_type t15  = ModelPars[6] * U__[0];
+    real_type t15  = ModelPars[iM_c1] * U__[iU_cL];
     real_type t16  = Dfun(t7, t8, t9);
     real_type t20  = Lfun(t7, t8, t9);
     real_type t21  = w(t7, t9);
@@ -161,7 +161,7 @@ namespace HangGliderDefine {
     real_type t30  = Dfun_D_1(t7, t8, t9);
     real_type t34  = Lfun_D_1(t7, t8, t9);
     real_type t36  = w_D_1(t7, t9);
-    real_type t41  = L__[3];
+    real_type t41  = L__[iL_lambda4__xo];
     real_type t42  = t2 * t41;
     real_type t43  = t5 * t42;
     real_type t48  = -2 * t21 * t16 * t15 + t8 * t20;
@@ -222,17 +222,17 @@ namespace HangGliderDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = P__[0];
-    real_type t7   = 1.0 / ModelPars[10];
-    real_type t9   = X__[0];
-    real_type t10  = X__[2];
-    real_type t11  = X__[3];
+    real_type t4   = P__[iP_T];
+    real_type t7   = 1.0 / ModelPars[iM_m];
+    real_type t9   = X__[iX_x];
+    real_type t10  = X__[iX_vx];
+    real_type t11  = X__[iX_vy];
     real_type t12  = v(t9, t10, t11);
-    real_type t15  = ModelPars[6] / t12;
+    real_type t15  = ModelPars[iM_c1] / t12;
     real_type t16  = Dfun(t9, t10, t11);
     real_type t24  = w(t9, t11);
-    real_type t32  = ALIAS_cLControl_D_1_1(U__[0], ModelPars[8], ModelPars[7]);
-    result__[ 0   ] = -2 * t10 * t16 * t15 * t7 * t4 * L__[2] - 2 * t24 * t16 * t15 * t7 * t4 * L__[3] + t32 + 2 * ModelPars[2];
+    real_type t32  = ALIAS_cLControl_D_1_1(U__[iU_cL], ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
+    result__[ 0   ] = -2 * t10 * t16 * t15 * t7 * t4 * L__[iL_lambda3__xo] - 2 * t24 * t16 * t15 * t7 * t4 * L__[iL_lambda4__xo] + t32 + 2 * ModelPars[iM_W];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods1.cc                           |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -62,10 +62,10 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::continuationStep0( real_type s ) {
-    real_type t1   = ModelPars[1];
-    real_type t5   = log(1.0 / t1 * ModelPars[4]);
+    real_type t1   = ModelPars[iM_epsilon];
+    real_type t5   = log(1.0 / t1 * ModelPars[iM_epsilon_min]);
     real_type t7   = exp(t5 * s);
-    ModelPars[1] = t7 * t1;
+    ModelPars[iM_epsilon] = t7 * t1;
   }
 
   /*\
@@ -88,11 +88,12 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = Q__[0] * Q__[0];
-    real_type t7   = pow(ModelPars[0] * t2 + X__[0] - 1, 2);
-    real_type t12  = U__[0];
+    real_type t2   = Q__[iQ_zeta] * Q__[iQ_zeta];
+    real_type t7   = pow(ModelPars[iM_C] * t2 + X__[iX_x] - 1, 2);
+    real_type t12  = U__[iU_u];
     real_type t16  = uControl(t12, -1, 1);
-    return t7 + L__[0] * X__[1] + t12 * L__[1] + t16 * (ModelPars[1] + t7);
+    real_type result__ = t7 + L__[iL_lambda1__xo] * X__[iX_y] + t12 * L__[iL_lambda2__xo] + t16 * (ModelPars[iM_epsilon] + t7);
+    return result__;
   }
 
   /*\
@@ -112,7 +113,8 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -125,10 +127,11 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = Q__[0] * Q__[0];
-    real_type t8   = pow(ModelPars[0] * t3 + X__[0] - 1, 2);
-    real_type t11  = uControl(U__[0], -1, 1);
-    return t11 * (ModelPars[1] + t8);
+    real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
+    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
+    real_type t11  = uControl(U__[iU_u], -1, 1);
+    real_type result__ = t11 * (ModelPars[iM_epsilon] + t8);
+    return result__;
   }
 
   /*\
@@ -149,8 +152,9 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = Q__[0] * Q__[0];
-    return pow(ModelPars[0] * t2 + X__[0] - 1, 2);
+    real_type t2   = Q__[iQ_zeta] * Q__[iQ_zeta];
+    real_type result__ = pow(ModelPars[iM_C] * t2 + X__[iX_x] - 1, 2);
+    return result__;
   }
 
   /*\
@@ -175,7 +179,8 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -285,10 +290,10 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = LR__[0] - LL__[0];
-    result__[ 3   ] = LR__[1] - LL__[1];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = XR__[iX_y] - XL__[iX_y];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }

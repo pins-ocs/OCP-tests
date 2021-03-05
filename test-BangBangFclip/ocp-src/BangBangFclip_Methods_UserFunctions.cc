@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,18 +70,42 @@ namespace BangBangFclipDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  BangBangFclip::fun( real_type x__XO ) const {
-    return x__XO * x__XO;
+  BangBangFclip::fun( real_type xo__x ) const {
+    real_type result__ = xo__x * xo__x;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_fun( x={} ) return {}\n",
+        xo__x, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  BangBangFclip::fun_D( real_type x__XO ) const {
-    return 2 * x__XO;
+  BangBangFclip::fun_D( real_type xo__x ) const {
+    real_type result__ = 2 * xo__x;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_fun_D( x={} ) return {}\n",
+        xo__x, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  BangBangFclip::fun_DD( real_type x__XO ) const {
-    return 2;
+  BangBangFclip::fun_DD( real_type xo__x ) const {
+    real_type result__ = 2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_fun_DD( x={} ) return {}\n",
+        xo__x, result__
+      );
+    }
+    return result__;
   }
 
 }

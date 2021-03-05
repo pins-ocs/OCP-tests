@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-epsi_ctrl = 1e-05
 tol_ctrl  = 1e-05
+epsi_ctrl = 1e-05
 
 content = {
 
@@ -144,7 +144,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = epsi_ctrl,
       tolerance = tol_ctrl,
     },
@@ -163,8 +163,8 @@ content = {
     segments = {
       
       {
-        n      = 400,
         length = 1,
+        n      = 400,
       },
     },
   },

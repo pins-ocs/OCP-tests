@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFtau_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -152,14 +152,14 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :h => 0.1, :delta => 0 }
+  data.MappedObjects[:clip] = { :delta => 0, :h => 0.1 }
 
   # Controls: No penalties or barriers constraint defined
   data.Controls = {}
 
   data.Constraints = {}
   # Constraint1D
-  # Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:vsTpositive] = {

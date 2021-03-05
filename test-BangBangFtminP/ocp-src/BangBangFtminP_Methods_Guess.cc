@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFtminP_Guess.cc                                        |
+ |  file: BangBangFtminP_Methods_Guess.cc                                |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -60,6 +60,8 @@ namespace BangBangFtminPDefine {
   void
   BangBangFtminP::p_guess_eval( P_pointer_type P__ ) const {
     P__[ iP_T ] = 1;
+    if ( m_debug )
+      Mechatronix::check( P__.pointer(), "p_guess_eval", 1 );
   }
 
   void
@@ -71,9 +73,13 @@ namespace BangBangFtminPDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    X__[ iX_x ] = Q__[0];
+    X__[ iX_x ] = Q__[iQ_zeta];
     X__[ iX_v ] = 1;
 
+    if ( m_debug )
+      Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 2 );
+    if ( m_debug )
+      Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 2 );
   }
 
   /*\
@@ -84,17 +90,23 @@ namespace BangBangFtminPDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__lt(A,B) ( (A) <  (B) )
-  #define Xoptima__check__le(A,B) ( (A) <= (B) )
+  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+
 
   // Pars check strings
-  #define __message_parameter_check_0 "0 < T"
+  #define __message_cell_check_0 "0 < T"
 
   bool
   BangBangFtminP::p_check( P_const_pointer_type P__ ) const {
-    bool ok = true;
-    ok = ok && Xoptima__check__lt(0, P__[0]);
-    return ok;
+    Xoptima__check__pars__lt(0, P__[iP_T], __message_cell_check_0);
+    return true;
   }
 
   bool
@@ -103,14 +115,7 @@ namespace BangBangFtminPDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    return ok;
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -213,10 +218,10 @@ namespace BangBangFtminPDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && Fcontrol.check_range(U__[0], -1, 1);
+    Fcontrol.check_range(U__[iU_F], -1, 1);
     return ok;
   }
 
 }
 
-// EOF: BangBangFtminP_Guess.cc
+// EOF: BangBangFtminP_Methods_Guess.cc

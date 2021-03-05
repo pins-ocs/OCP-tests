@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -51,9 +51,9 @@ main() {
 
     // Auxiliary values
     real_type u_tolerance0 = 0.01;
-    real_type u_tolerance = u_tolerance0;
     real_type u_epsilon0 = 0.01;
     real_type u_epsilon = u_epsilon0;
+    real_type u_tolerance = u_tolerance0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -167,19 +167,19 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u_rhoControl = data_Controls["u_rhoControl"];
-    data_u_rhoControl["type"]      = "COS_LOGARITHMIC";
+    data_u_rhoControl["type"]      = ;
     data_u_rhoControl["epsilon"]   = u_epsilon;
     data_u_rhoControl["tolerance"] = u_tolerance;
 
 
     GenericContainer & data_u_thetaControl = data_Controls["u_thetaControl"];
-    data_u_thetaControl["type"]      = "COS_LOGARITHMIC";
+    data_u_thetaControl["type"]      = ;
     data_u_thetaControl["epsilon"]   = u_epsilon;
     data_u_thetaControl["tolerance"] = u_tolerance;
 
 
     GenericContainer & data_u_phiControl = data_Controls["u_phiControl"];
-    data_u_phiControl["type"]      = "COS_LOGARITHMIC";
+    data_u_phiControl["type"]      = ;
     data_u_phiControl["epsilon"]   = u_epsilon;
     data_u_phiControl["tolerance"] = u_tolerance;
 
@@ -191,8 +191,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 RobotArm_data.Mesh["s0"] = 0;
-RobotArm_data.Mesh["segments"][0]["length"] = 1;
 RobotArm_data.Mesh["segments"][0]["n"] = 400;
+RobotArm_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

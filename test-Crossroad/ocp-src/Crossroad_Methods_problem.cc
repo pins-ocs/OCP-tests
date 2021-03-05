@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods1.cc                                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,23 +80,24 @@ namespace CrossroadDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[3];
+    real_type t1   = X__[iX_Ts];
     real_type t2   = Tpositive(t1);
-    real_type t3   = X__[2];
+    real_type t3   = X__[iX_a];
     real_type t4   = t3 * t3;
-    real_type t6   = ModelPars[14] * ModelPars[14];
-    real_type t9   = X__[1];
+    real_type t6   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
+    real_type t9   = X__[iX_v];
     real_type t10  = t9 * t9;
     real_type t11  = t10 * t10;
-    real_type t13  = kappa(X__[0]);
+    real_type t13  = kappa(X__[iX_s]);
     real_type t14  = t13 * t13;
-    real_type t17  = ModelPars[13] * ModelPars[13];
+    real_type t17  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
     real_type t21  = AccBound(1 - 1.0 / t6 * t4 - 1.0 / t17 * t14 * t11);
     real_type t22  = VelBound(t9);
-    real_type t24  = U__[0];
+    real_type t24  = U__[iU_jerk];
     real_type t25  = t24 * t24;
-    real_type t41  = jerkControl(t24, ModelPars[16], ModelPars[15]);
-    return t2 + t21 + t22 + t1 * (t25 * ModelPars[11] + ModelPars[12]) + t9 * t1 * L__[0] + t3 * t1 * L__[1] + t24 * t1 * L__[2] + t41;
+    real_type t41  = jerkControl(t24, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    real_type result__ = t2 + t21 + t22 + t1 * (t25 * ModelPars[iM_wJ] + ModelPars[iM_wT]) + t9 * t1 * L__[iL_lambda1__xo] + t3 * t1 * L__[iL_lambda2__xo] + t24 * t1 * L__[iL_lambda3__xo] + t41;
+    return result__;
   }
 
   /*\
@@ -116,18 +117,19 @@ namespace CrossroadDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = Tpositive(X__[3]);
-    real_type t4   = X__[2] * X__[2];
-    real_type t6   = ModelPars[14] * ModelPars[14];
-    real_type t9   = X__[1];
+    real_type t2   = Tpositive(X__[iX_Ts]);
+    real_type t4   = X__[iX_a] * X__[iX_a];
+    real_type t6   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
+    real_type t9   = X__[iX_v];
     real_type t10  = t9 * t9;
     real_type t11  = t10 * t10;
-    real_type t13  = kappa(X__[0]);
+    real_type t13  = kappa(X__[iX_s]);
     real_type t14  = t13 * t13;
-    real_type t17  = ModelPars[13] * ModelPars[13];
+    real_type t17  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
     real_type t21  = AccBound(1 - 1.0 / t6 * t4 - 1.0 / t17 * t14 * t11);
     real_type t22  = VelBound(t9);
-    return t2 + t21 + t22;
+    real_type result__ = t2 + t21 + t22;
+    return result__;
   }
 
   real_type
@@ -140,7 +142,8 @@ namespace CrossroadDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return jerkControl(U__[0], ModelPars[16], ModelPars[15]);
+    real_type result__ = jerkControl(U__[iU_jerk], ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    return result__;
   }
 
   /*\
@@ -161,8 +164,9 @@ namespace CrossroadDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = U__[0] * U__[0];
-    return X__[3] * (t3 * ModelPars[11] + ModelPars[12]);
+    real_type t3   = U__[iU_jerk] * U__[iU_jerk];
+    real_type result__ = X__[iX_Ts] * (t3 * ModelPars[iM_wJ] + ModelPars[iM_wT]);
+    return result__;
   }
 
   /*\
@@ -187,7 +191,8 @@ namespace CrossroadDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -297,15 +302,15 @@ namespace CrossroadDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    real_type t3   = ModelPars[0] / 2;
-    result__[ 0   ] = XL__[0] - t3;
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = LL__[3];
-    result__[ 4   ] = XR__[0] - t3;
-    result__[ 5   ] = LR__[1] - LL__[1];
-    result__[ 6   ] = LR__[2] - LL__[2];
-    result__[ 7   ] = LR__[3];
+    real_type t3   = ModelPars[iM_L] / 2;
+    result__[ 0   ] = XL__[iX_s] - t3;
+    result__[ 1   ] = XR__[iX_v] - XL__[iX_v];
+    result__[ 2   ] = XR__[iX_a] - XL__[iX_a];
+    result__[ 3   ] = LL__[iL_lambda4__xo];
+    result__[ 4   ] = XR__[iX_s] - t3;
+    result__[ 5   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 6   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
+    result__[ 7   ] = LR__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }
@@ -402,10 +407,10 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = kappa(X__[0]);
-    result__[ 1   ] = X__[2] / ModelPars[14];
-    real_type t6   = X__[1] * X__[1];
-    result__[ 2   ] = 1.0 / ModelPars[13] * result__[0] * t6;
+    result__[ 0   ] = kappa(X__[iX_s]);
+    result__[ 1   ] = X__[iX_a] / ModelPars[iM_along_max];
+    real_type t6   = X__[iX_v] * X__[iX_v];
+    result__[ 2   ] = 1.0 / ModelPars[iM_alat_max] * result__[0] * t6;
     Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: HangGlider_Methods1.cc                                         |
+ |  file: HangGlider_Methods_UserFunctions.cc                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -63,360 +63,776 @@ namespace HangGliderDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  HangGlider::r( real_type x__XO ) const {
-    return pow(x__XO / ModelPars[11] - 0.25e1, 2);
+  HangGlider::r( real_type xo__x ) const {
+    real_type result__ = pow(xo__x / ModelPars[iM_rc] - 0.25e1, 2);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_r( x={} ) return {}\n",
+        xo__x, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::r_D( real_type x__XO ) const {
-    real_type t2   = ModelPars[11];
+  HangGlider::r_D( real_type xo__x ) const {
+    real_type t2   = ModelPars[iM_rc];
     real_type t5   = t2 * t2;
-    return 1.0 / t5 * (2.0 * x__XO - 5.0 * t2);
+    real_type result__ = 1.0 / t5 * (2.0 * xo__x - 5.0 * t2);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_r_D( x={} ) return {}\n",
+        xo__x, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::r_DD( real_type x__XO ) const {
-    real_type t2   = ModelPars[11] * ModelPars[11];
-    return 2.0 / t2;
+  HangGlider::r_DD( real_type xo__x ) const {
+    real_type t2   = ModelPars[iM_rc] * ModelPars[iM_rc];
+    real_type result__ = 2.0 / t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_r_DD( x={} ) return {}\n",
+        xo__x, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::u( real_type x__XO ) const {
-    real_type t2   = r(x__XO);
+  HangGlider::u( real_type xo__x ) const {
+    real_type t2   = r(xo__x);
     real_type t5   = exp(-t2);
-    return t5 * (1 - t2) * ModelPars[15];
+    real_type result__ = t5 * (1 - t2) * ModelPars[iM_uc];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_u( x={} ) return {}\n",
+        xo__x, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::u_D( real_type x__XO ) const {
-    real_type t2   = r_D(x__XO);
-    real_type t4   = r(x__XO);
+  HangGlider::u_D( real_type xo__x ) const {
+    real_type t2   = r_D(xo__x);
+    real_type t4   = r(xo__x);
     real_type t5   = exp(-t4);
-    return (t4 - 2) * t5 * t2 * ModelPars[15];
+    real_type result__ = (t4 - 2) * t5 * t2 * ModelPars[iM_uc];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_u_D( x={} ) return {}\n",
+        xo__x, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::u_DD( real_type x__XO ) const {
-    real_type t1   = r(x__XO);
-    real_type t3   = r_DD(x__XO);
-    real_type t5   = r_D(x__XO);
+  HangGlider::u_DD( real_type xo__x ) const {
+    real_type t1   = r(xo__x);
+    real_type t3   = r_DD(xo__x);
+    real_type t5   = r_D(xo__x);
     real_type t6   = t5 * t5;
-    real_type t12  = exp(-t1);
-    return -t12 * ModelPars[15] * (t3 * (-t1 + 2) + (t1 - 3) * t6);
+    real_type t10  = exp(-t1);
+    real_type result__ = -ModelPars[iM_uc] * t10 * (t3 * (-t1 + 2) + (t1 - 3) * t6);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_u_DD( x={} ) return {}\n",
+        xo__x, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::w( real_type x__XO, real_type y1__XO ) const {
-    real_type t1   = u(x__XO);
-    return y1__XO - t1;
+  HangGlider::w( real_type xo__x, real_type xo__y1 ) const {
+    real_type t1   = u(xo__x);
+    real_type result__ = xo__y1 - t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_w( x={}, y1={} ) return {}\n",
+        xo__x, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::w_D_1( real_type x__XO, real_type y1__XO ) const {
-    real_type t1   = u_D(x__XO);
-    return -t1;
+  HangGlider::w_D_1( real_type xo__x, real_type xo__y1 ) const {
+    real_type t1   = u_D(xo__x);
+    real_type result__ = -t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_w_D_1( x={}, y1={} ) return {}\n",
+        xo__x, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::w_D_1_1( real_type x__XO, real_type y1__XO ) const {
-    real_type t1   = u_DD(x__XO);
-    return -t1;
+  HangGlider::w_D_1_1( real_type xo__x, real_type xo__y1 ) const {
+    real_type t1   = u_DD(xo__x);
+    real_type result__ = -t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_w_D_1_1( x={}, y1={} ) return {}\n",
+        xo__x, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::w_D_1_2( real_type x__XO, real_type y1__XO ) const {
-    return 0;
+  HangGlider::w_D_1_2( real_type xo__x, real_type xo__y1 ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_w_D_1_2( x={}, y1={} ) return {}\n",
+        xo__x, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::w_D_2( real_type x__XO, real_type y1__XO ) const {
-    return 1;
+  HangGlider::w_D_2( real_type xo__x, real_type xo__y1 ) const {
+    real_type result__ = 1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_w_D_2( x={}, y1={} ) return {}\n",
+        xo__x, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::w_D_2_2( real_type x__XO, real_type y1__XO ) const {
-    return 0;
+  HangGlider::w_D_2_2( real_type xo__x, real_type xo__y1 ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_w_D_2_2( x={}, y1={} ) return {}\n",
+        xo__x, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = x1__XO * x1__XO;
-    real_type t2   = w(x__XO, y1__XO);
+  HangGlider::v2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = xo__x1 * xo__x1;
+    real_type t2   = w(xo__x, xo__y1);
     real_type t3   = t2 * t2;
-    return t1 + t3;
+    real_type result__ = t1 + t3;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2_D_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w(x__XO, y1__XO);
-    real_type t2   = w_D_1(x__XO, y1__XO);
-    return 2 * t2 * t1;
+  HangGlider::v2_D_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = w(xo__x, xo__y1);
+    real_type t2   = w_D_1(xo__x, xo__y1);
+    real_type result__ = 2 * t2 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2_D_1( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w_D_1(x__XO, y1__XO);
+  HangGlider::v2_D_1_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = w_D_1(xo__x, xo__y1);
     real_type t2   = t1 * t1;
-    real_type t3   = w(x__XO, y1__XO);
-    real_type t4   = w_D_1_1(x__XO, y1__XO);
-    return 2 * t4 * t3 + 2 * t2;
+    real_type t3   = w(xo__x, xo__y1);
+    real_type t4   = w_D_1_1(xo__x, xo__y1);
+    real_type result__ = 2 * t4 * t3 + 2 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2_D_1_1( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    return 0;
+  HangGlider::v2_D_1_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2_D_1_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w_D_2(x__XO, y1__XO);
-    real_type t2   = w_D_1(x__XO, y1__XO);
-    real_type t4   = w(x__XO, y1__XO);
-    real_type t5   = w_D_1_2(x__XO, y1__XO);
-    return 2 * t2 * t1 + 2 * t5 * t4;
+  HangGlider::v2_D_1_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = w_D_2(xo__x, xo__y1);
+    real_type t2   = w_D_1(xo__x, xo__y1);
+    real_type t4   = w(xo__x, xo__y1);
+    real_type t5   = w_D_1_2(xo__x, xo__y1);
+    real_type result__ = 2 * t2 * t1 + 2 * t5 * t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2_D_1_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2_D_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    return 2 * x1__XO;
+  HangGlider::v2_D_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type result__ = 2 * xo__x1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2_D_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    return 2;
+  HangGlider::v2_D_2_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type result__ = 2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2_D_2_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    return 0;
+  HangGlider::v2_D_2_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2_D_2_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2_D_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w(x__XO, y1__XO);
-    real_type t2   = w_D_2(x__XO, y1__XO);
-    return 2 * t2 * t1;
+  HangGlider::v2_D_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = w(xo__x, xo__y1);
+    real_type t2   = w_D_2(xo__x, xo__y1);
+    real_type result__ = 2 * t2 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2_D_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v2_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = w_D_2(x__XO, y1__XO);
+  HangGlider::v2_D_3_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = w_D_2(xo__x, xo__y1);
     real_type t2   = t1 * t1;
-    real_type t3   = w(x__XO, y1__XO);
-    real_type t4   = w_D_2_2(x__XO, y1__XO);
-    return 2 * t4 * t3 + 2 * t2;
+    real_type t3   = w(xo__x, xo__y1);
+    real_type t4   = w_D_2_2(xo__x, xo__y1);
+    real_type result__ = 2 * t4 * t3 + 2 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v2_D_3_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2(x__XO, x1__XO, y1__XO);
-    return sqrt(t1);
+  HangGlider::v( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
+    real_type result__ = sqrt(t1);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v_D_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2(x__XO, x1__XO, y1__XO);
+  HangGlider::v_D_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
     real_type t2   = sqrt(t1);
-    real_type t4   = v2_D_1(x__XO, x1__XO, y1__XO);
-    return t4 / t2 / 2;
+    real_type t4   = v2_D_1(xo__x, xo__x1, xo__y1);
+    real_type result__ = t4 / t2 / 2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v_D_1( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_1_1(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_1(x__XO, x1__XO, y1__XO);
+  HangGlider::v_D_1_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2_D_1_1(xo__x, xo__x1, xo__y1);
+    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t5   = v2_D_1(xo__x, xo__x1, xo__y1);
     real_type t6   = t5 * t5;
     real_type t8   = sqrt(t2);
-    return 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
+    real_type result__ = 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v_D_1_1( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_1_2(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_1(x__XO, x1__XO, y1__XO);
-    real_type t6   = v2_D_2(x__XO, x1__XO, y1__XO);
+  HangGlider::v_D_1_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2_D_1_2(xo__x, xo__x1, xo__y1);
+    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t5   = v2_D_1(xo__x, xo__x1, xo__y1);
+    real_type t6   = v2_D_2(xo__x, xo__x1, xo__y1);
     real_type t9   = sqrt(t2);
-    return 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
+    real_type result__ = 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v_D_1_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_1_3(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_1(x__XO, x1__XO, y1__XO);
-    real_type t6   = v2_D_3(x__XO, x1__XO, y1__XO);
+  HangGlider::v_D_1_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2_D_1_3(xo__x, xo__x1, xo__y1);
+    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t5   = v2_D_1(xo__x, xo__x1, xo__y1);
+    real_type t6   = v2_D_3(xo__x, xo__x1, xo__y1);
     real_type t9   = sqrt(t2);
-    return 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
+    real_type result__ = 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v_D_1_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v_D_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2(x__XO, x1__XO, y1__XO);
+  HangGlider::v_D_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
     real_type t2   = sqrt(t1);
-    real_type t4   = v2_D_2(x__XO, x1__XO, y1__XO);
-    return t4 / t2 / 2;
+    real_type t4   = v2_D_2(xo__x, xo__x1, xo__y1);
+    real_type result__ = t4 / t2 / 2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v_D_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_2_2(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_2(x__XO, x1__XO, y1__XO);
+  HangGlider::v_D_2_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2_D_2_2(xo__x, xo__x1, xo__y1);
+    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t5   = v2_D_2(xo__x, xo__x1, xo__y1);
     real_type t6   = t5 * t5;
     real_type t8   = sqrt(t2);
-    return 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
+    real_type result__ = 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v_D_2_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_2_3(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_2(x__XO, x1__XO, y1__XO);
-    real_type t6   = v2_D_3(x__XO, x1__XO, y1__XO);
+  HangGlider::v_D_2_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2_D_2_3(xo__x, xo__x1, xo__y1);
+    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t5   = v2_D_2(xo__x, xo__x1, xo__y1);
+    real_type t6   = v2_D_3(xo__x, xo__x1, xo__y1);
     real_type t9   = sqrt(t2);
-    return 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
+    real_type result__ = 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v_D_2_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v_D_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2(x__XO, x1__XO, y1__XO);
+  HangGlider::v_D_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
     real_type t2   = sqrt(t1);
-    real_type t4   = v2_D_3(x__XO, x1__XO, y1__XO);
-    return t4 / t2 / 2;
+    real_type t4   = v2_D_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = t4 / t2 / 2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v_D_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::v_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t1   = v2_D_3_3(x__XO, x1__XO, y1__XO);
-    real_type t2   = v2(x__XO, x1__XO, y1__XO);
-    real_type t5   = v2_D_3(x__XO, x1__XO, y1__XO);
+  HangGlider::v_D_3_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t1   = v2_D_3_3(xo__x, xo__x1, xo__y1);
+    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t5   = v2_D_3(xo__x, xo__x1, xo__y1);
     real_type t6   = t5 * t5;
     real_type t8   = sqrt(t2);
-    return 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
+    real_type result__ = 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_v_D_3_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun_D_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun_D_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_1(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun_D_1( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_1(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun_D_1_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_1_1(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun_D_1_1( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun_D_1_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_1_2(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun_D_1_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun_D_1_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_1_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun_D_1_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun_D_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun_D_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_2(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun_D_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun_D_2_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_2_2(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun_D_2_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun_D_2_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_2_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun_D_2_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun_D_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun_D_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun_D_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Dfun_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_3_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Dfun_D_3_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_3_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Dfun_D_3_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun_D_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun_D_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_1(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun_D_1( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_1(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun_D_1_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_1_1(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun_D_1_1( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun_D_1_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_1_2(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun_D_1_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_1_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun_D_1_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_1_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun_D_1_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun_D_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun_D_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_2(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun_D_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2_2(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun_D_2_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_2_2(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun_D_2_2( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_2_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun_D_2_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_2_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun_D_2_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun_D_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun_D_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun_D_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  HangGlider::Lfun_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const {
-    real_type t4   = v2_D_3_3(x__XO, x1__XO, y1__XO);
-    return 0.5e0 * t4 * ModelPars[0] * ModelPars[12];
+  HangGlider::Lfun_D_3_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
+    real_type t4   = v2_D_3_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Lfun_D_3_3( x={}, x1={}, y1={} ) return {}\n",
+        xo__x, xo__x1, xo__y1, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: HangGlider_Methods1.cc
+// EOF: HangGlider_Methods_UserFunctions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -86,22 +86,22 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[0];
-    real_type t3   = t2 * L__[1];
-    real_type t4   = X__[0];
-    real_type t5   = X__[1];
+    real_type t2   = P__[iP_TimeSize];
+    real_type t3   = t2 * L__[iL_lambda2__xo];
+    real_type t4   = X__[iX_h];
+    real_type t5   = X__[iX_v];
     real_type t6   = DD_D_1(t4, t5);
-    real_type t7   = X__[2];
+    real_type t7   = X__[iX_m];
     real_type t8   = 1.0 / t7;
     real_type t10  = gg_D(t4);
     result__[ 0   ] = (-t8 * t6 - t10) * t3;
     real_type t12  = ALIAS_vPositive_D(t5);
     real_type t15  = DD_D_2(t4, t5);
-    result__[ 1   ] = -t8 * t15 * t3 + t2 * L__[0] + t12;
+    result__[ 1   ] = -t8 * t15 * t3 + t2 * L__[iL_lambda1__xo] + t12;
     real_type t18  = ALIAS_massPositive_D(t7);
     real_type t20  = DD(t4, t5);
     real_type t22  = t7 * t7;
-    result__[ 2   ] = t18 - 1.0 / t22 * (U__[0] - t20) * t3;
+    result__[ 2   ] = t18 - 1.0 / t22 * (U__[iU_T] - t20) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
@@ -149,14 +149,14 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = L__[1] * P__[0];
-    real_type t4   = X__[0];
-    real_type t5   = X__[1];
+    real_type t3   = L__[iL_lambda2__xo] * P__[iP_TimeSize];
+    real_type t4   = X__[iX_h];
+    real_type t5   = X__[iX_v];
     real_type t6   = DD_D_1_1(t4, t5);
-    real_type t7   = X__[2];
+    real_type t7   = X__[iX_m];
     real_type t8   = 1.0 / t7;
     real_type t10  = gg_DD(t4);
-    result__[ 0   ] = (-t6 * t8 - t10) * t3;
+    result__[ 0   ] = (-t8 * t6 - t10) * t3;
     real_type t12  = DD_D_1_2(t4, t5);
     result__[ 1   ] = -t8 * t12 * t3;
     real_type t15  = DD_D_1(t4, t5);
@@ -166,14 +166,14 @@ namespace GoddardRocketDefine {
     result__[ 3   ] = result__[1];
     real_type t19  = ALIAS_vPositive_DD(t5);
     real_type t20  = DD_D_2_2(t4, t5);
-    result__[ 4   ] = -t20 * t3 * t8 + t19;
+    result__[ 4   ] = -t8 * t20 * t3 + t19;
     real_type t23  = DD_D_2(t4, t5);
     result__[ 5   ] = t17 * t23 * t3;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
     real_type t25  = ALIAS_massPositive_DD(t7);
     real_type t27  = DD(t4, t5);
-    result__[ 8   ] = t25 + 2 / t16 / t7 * (U__[0] - t27) * t3;
+    result__[ 8   ] = t25 + 2 / t16 / t7 * (U__[iU_T] - t27) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
   }
@@ -217,19 +217,19 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[1];
-    real_type t2   = X__[0];
-    real_type t3   = X__[1];
+    real_type t1   = L__[iL_lambda2__xo];
+    real_type t2   = X__[iX_h];
+    real_type t3   = X__[iX_v];
     real_type t4   = DD_D_1(t2, t3);
-    real_type t5   = X__[2];
+    real_type t5   = X__[iX_m];
     real_type t6   = 1.0 / t5;
     real_type t8   = gg_D(t2);
     result__[ 0   ] = (-t6 * t4 - t8) * t1;
     real_type t11  = DD_D_2(t2, t3);
-    result__[ 1   ] = -t6 * t11 * t1 + L__[0];
+    result__[ 1   ] = -t6 * t11 * t1 + L__[iL_lambda1__xo];
     real_type t15  = DD(t2, t3);
     real_type t18  = t5 * t5;
-    result__[ 2   ] = -1.0 / t18 * (U__[0] - t15) * t1;
+    result__[ 2   ] = -1.0 / t18 * (U__[iU_T] - t15) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }
@@ -259,8 +259,8 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[0];
-    result__[ 0   ] = 1.0 / X__[2] * t2 * L__[1] - 1.0 / ModelPars[2] * t2 * L__[2];
+    real_type t2   = P__[iP_TimeSize];
+    result__[ 0   ] = 1.0 / X__[iX_m] * t2 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t2 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -301,8 +301,8 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t5   = X__[2] * X__[2];
-    result__[ 0   ] = -1.0 / t5 * P__[0] * L__[1];
+    real_type t5   = X__[iX_m] * X__[iX_m];
+    result__[ 0   ] = -1.0 / t5 * P__[iP_TimeSize] * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
@@ -343,7 +343,7 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[1] / X__[2] - L__[2] / ModelPars[2];
+    result__[ 0   ] = L__[iL_lambda2__xo] / X__[iX_m] - L__[iL_lambda3__xo] / ModelPars[iM_c];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
@@ -374,13 +374,13 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ALIAS_TSPositive_D(P__[0]);
-    real_type t4   = X__[1];
-    real_type t7   = U__[0];
-    real_type t8   = X__[0];
+    real_type t2   = ALIAS_TSPositive_D(P__[iP_TimeSize]);
+    real_type t4   = X__[iX_v];
+    real_type t7   = U__[iU_T];
+    real_type t8   = X__[iX_h];
     real_type t9   = DD(t8, t4);
     real_type t14  = gg(t8);
-    result__[ 0   ] = t2 + t4 * L__[0] + (1.0 / X__[2] * (t7 - t9) - t14) * L__[1] - 1.0 / ModelPars[2] * t7 * L__[2];
+    result__[ 0   ] = t2 + t4 * L__[iL_lambda1__xo] + (1.0 / X__[iX_m] * (t7 - t9) - t14) * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t7 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
@@ -422,7 +422,7 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ALIAS_TSPositive_DD(P__[0]);
+    result__[ 0   ] = ALIAS_TSPositive_DD(P__[iP_TimeSize]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,1, i_segment );
   }
@@ -450,9 +450,9 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }

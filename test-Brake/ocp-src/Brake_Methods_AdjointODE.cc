@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods.cc                                               |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -83,7 +83,7 @@ namespace BrakeDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 0;
-    result__[ 1   ] = L__[0] * P__[0];
+    result__[ 1   ] = L__[iL_lambda1__xo] * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 2, i_segment );
   }
@@ -157,7 +157,7 @@ namespace BrakeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
+    result__[ 0   ] = L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDp_sparse", 1, i_segment );
   }
@@ -187,7 +187,7 @@ namespace BrakeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[1] * P__[0];
+    result__[ 0   ] = L__[iL_lambda2__xo] * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -261,7 +261,7 @@ namespace BrakeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[1];
+    result__[ 0   ] = L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
@@ -292,8 +292,8 @@ namespace BrakeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ALIAS_Tpositive_D(P__[0]);
-    result__[ 0   ] = L__[0] * X__[1] + L__[1] * U__[0] + t2;
+    real_type t2   = ALIAS_Tpositive_D(P__[iP_T]);
+    result__[ 0   ] = L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda2__xo] * U__[iU_a] + t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
@@ -335,7 +335,7 @@ namespace BrakeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ALIAS_Tpositive_DD(P__[0]);
+    result__[ 0   ] = ALIAS_Tpositive_DD(P__[iP_T]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,1, i_segment );
   }
@@ -363,8 +363,8 @@ namespace BrakeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
   }

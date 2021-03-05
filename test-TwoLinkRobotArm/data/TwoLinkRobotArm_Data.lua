@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -156,12 +156,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     u1Control = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = u_epsilon,
       tolerance = u_tolerance,
     },
     u2Control = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = u_epsilon,
       tolerance = u_tolerance,
     },
@@ -180,8 +180,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

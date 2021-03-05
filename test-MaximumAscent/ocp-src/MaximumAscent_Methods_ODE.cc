@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MaximumAscent_Methods.cc                                       |
+ |  file: MaximumAscent_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,17 +65,17 @@ namespace MaximumAscentDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = tf(ModelPars[1]);
+    real_type t2   = tf(ModelPars[iM_days]);
     real_type t3   = eta(t2);
-    result__[ 0   ] = X__[1] * t3;
-    real_type t5   = X__[2];
+    result__[ 0   ] = X__[iX_u] * t3;
+    real_type t5   = X__[iX_v];
     real_type t6   = t5 * t5;
-    real_type t7   = X__[0];
+    real_type t7   = X__[iX_r];
     real_type t8   = 1.0 / t7;
     real_type t10  = t7 * t7;
     real_type t14  = Tbar(t2);
-    real_type t22  = 1.0 / (-Q__[0] * ModelPars[5] * t2 + ModelPars[4]) * t14;
-    real_type t23  = U__[0];
+    real_type t22  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0]) * t14;
+    real_type t23  = U__[iU_alpha];
     real_type t24  = sin(t23);
     result__[ 1   ] = (t8 * t6 - 1.0 / t10) * t3 + t24 * t22;
     real_type t28  = cos(t23);
@@ -127,11 +127,11 @@ namespace MaximumAscentDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = tf(ModelPars[1]);
+    real_type t2   = tf(ModelPars[iM_days]);
     result__[ 0   ] = eta(t2);
-    real_type t3   = X__[2];
+    real_type t3   = X__[iX_v];
     real_type t4   = t3 * t3;
-    real_type t5   = X__[0];
+    real_type t5   = X__[iX_r];
     real_type t6   = t5 * t5;
     real_type t7   = 1.0 / t6;
     result__[ 1   ] = (-t7 * t4 + 2 / t6 / t5) * result__[0];
@@ -139,7 +139,7 @@ namespace MaximumAscentDefine {
     real_type t14  = 1.0 / t5;
     real_type t15  = t14 * t13;
     result__[ 2   ] = 2 * t15;
-    real_type t17  = X__[1] * result__[0];
+    real_type t17  = X__[iX_u] * result__[0];
     result__[ 3   ] = t7 * t3 * t17;
     result__[ 4   ] = -t15;
     result__[ 5   ] = -t14 * t17;
@@ -218,10 +218,10 @@ namespace MaximumAscentDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = tf(ModelPars[1]);
+    real_type t2   = tf(ModelPars[iM_days]);
     real_type t3   = Tbar(t2);
-    real_type t11  = 1.0 / (-Q__[0] * ModelPars[5] * t2 + ModelPars[4]) * t3;
-    real_type t12  = U__[0];
+    real_type t11  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0]) * t3;
+    real_type t12  = U__[iU_alpha];
     real_type t13  = cos(t12);
     result__[ 0   ] = t13 * t11;
     real_type t14  = sin(t12);
@@ -282,4 +282,4 @@ namespace MaximumAscentDefine {
 
 }
 
-// EOF: MaximumAscent_Methods.cc
+// EOF: MaximumAscent_Methods_ODE.cc

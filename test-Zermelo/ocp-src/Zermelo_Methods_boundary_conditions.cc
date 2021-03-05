@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods.cc                                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,13 +77,13 @@ namespace ZermeloDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0];
-    result__[ 1   ] = XL__[1];
-    result__[ 2   ] = XL__[2];
-    result__[ 3   ] = XL__[3];
-    result__[ 4   ] = XR__[1] - 5;
-    result__[ 5   ] = XR__[2] - 45;
-    result__[ 6   ] = XR__[3];
+    result__[ 0   ] = XL__[iX_x];
+    result__[ 1   ] = XL__[iX_y];
+    result__[ 2   ] = XL__[iX_vx];
+    result__[ 3   ] = XL__[iX_vy];
+    result__[ 4   ] = XR__[iX_y] - 5;
+    result__[ 5   ] = XR__[iX_vx] - 45;
+    result__[ 6   ] = XR__[iX_vy];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 7, i_segment_left, i_segment_right );
   }
@@ -199,16 +199,16 @@ namespace ZermeloDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[0];
-    result__[ 1   ] = OMEGA__[1] + LL__[1];
-    result__[ 2   ] = OMEGA__[2] + LL__[2];
-    result__[ 3   ] = OMEGA__[3] + LL__[3];
-    result__[ 4   ] = LL__[4];
-    result__[ 5   ] = -LR__[0];
-    result__[ 6   ] = OMEGA__[4] - LR__[1];
-    result__[ 7   ] = OMEGA__[5] - LR__[2];
-    result__[ 8   ] = OMEGA__[6] - LR__[3];
-    result__[ 9   ] = 1 - LR__[4];
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
+    result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
+    result__[ 3   ] = OMEGA__[3] + LL__[iL_lambda4__xo];
+    result__[ 4   ] = LL__[iL_lambda5__xo];
+    result__[ 5   ] = -LR__[iL_lambda1__xo];
+    result__[ 6   ] = OMEGA__[4] - LR__[iL_lambda2__xo];
+    result__[ 7   ] = OMEGA__[5] - LR__[iL_lambda3__xo];
+    result__[ 8   ] = OMEGA__[6] - LR__[iL_lambda4__xo];
+    result__[ 9   ] = 1 - LR__[iL_lambda5__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 10, i_segment_left, i_segment_right );
   }

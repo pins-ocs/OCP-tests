@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: HangingChain_Methods.cc                                        |
+ |  file: HangingChain_Methods_ODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,7 +65,7 @@ namespace HangingChainDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = U__[0];
+    result__[ 0   ] = U__[iU_u];
     real_type t1   = result__[0] * result__[0];
     result__[ 1   ] = sqrt(t1 + 1);
     if ( m_debug )
@@ -175,7 +175,7 @@ namespace HangingChainDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    real_type t1   = U__[0];
+    real_type t1   = U__[iU_u];
     real_type t2   = t1 * t1;
     real_type t4   = sqrt(t2 + 1);
     result__[ 1   ] = t1 / t4;
@@ -231,4 +231,4 @@ namespace HangingChainDefine {
 
 }
 
-// EOF: HangingChain_Methods.cc
+// EOF: HangingChain_Methods_ODE.cc

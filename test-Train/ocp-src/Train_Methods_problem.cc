@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods1.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -72,10 +72,10 @@ namespace TrainDefine {
   void
   Train::continuationStep0( real_type s ) {
     real_type t2   = 1 - s;
-    real_type t6   = ModelPars[12] * s + t2 * ModelPars[11];
+    real_type t6   = ModelPars[iM_epsi_min] * s + t2 * ModelPars[iM_epsi_max];
     uaControl.update_epsilon(t6);
     ubControl.update_epsilon(t6);
-    real_type t11  = ModelPars[4] * s + t2 * ModelPars[3];
+    real_type t11  = ModelPars[iM_tol_min] * s + t2 * ModelPars[iM_tol_max];
     uaControl.update_tolerance(t11);
     ubControl.update_tolerance(t11);
   }
@@ -100,13 +100,14 @@ namespace TrainDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[0];
-    real_type t2   = X__[1];
-    real_type t8   = acc(X__[0], t2);
-    real_type t9   = U__[1];
-    real_type t13  = uaControl(t1, 0, ModelPars[5]);
-    real_type t15  = ubControl(t9, 0, ModelPars[6]);
-    return t2 * t1 + t2 * L__[0] + (t8 + t1 - t9) * L__[1] + t13 + t15;
+    real_type t1   = U__[iU_ua];
+    real_type t2   = X__[iX_v];
+    real_type t8   = acc(X__[iX_x], t2);
+    real_type t9   = U__[iU_ub];
+    real_type t13  = uaControl(t1, 0, ModelPars[iM_uaMax]);
+    real_type t15  = ubControl(t9, 0, ModelPars[iM_ubMax]);
+    real_type result__ = t2 * t1 + t2 * L__[iL_lambda1__xo] + (t8 + t1 - t9) * L__[iL_lambda2__xo] + t13 + t15;
+    return result__;
   }
 
   /*\
@@ -126,7 +127,8 @@ namespace TrainDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -139,9 +141,10 @@ namespace TrainDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = uaControl(U__[0], 0, ModelPars[5]);
-    real_type t6   = ubControl(U__[1], 0, ModelPars[6]);
-    return t3 + t6;
+    real_type t3   = uaControl(U__[iU_ua], 0, ModelPars[iM_uaMax]);
+    real_type t6   = ubControl(U__[iU_ub], 0, ModelPars[iM_ubMax]);
+    real_type result__ = t3 + t6;
+    return result__;
   }
 
   /*\
@@ -162,7 +165,8 @@ namespace TrainDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return U__[0] * X__[1];
+    real_type result__ = U__[iU_ua] * X__[iX_v];
+    return result__;
   }
 
   /*\
@@ -187,7 +191,8 @@ namespace TrainDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -297,10 +302,10 @@ namespace TrainDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = LR__[0] - LL__[0];
-    result__[ 3   ] = LR__[1] - LL__[1];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = XR__[iX_v] - XL__[iX_v];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }
@@ -389,9 +394,9 @@ namespace TrainDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = uaControl(U__[0], 0, ModelPars[5]);
-    result__[ 1   ] = ubControl(U__[1], 0, ModelPars[6]);
-    result__[ 2   ] = h(X__[0]);
+    result__[ 0   ] = uaControl(U__[iU_ua], 0, ModelPars[iM_uaMax]);
+    result__[ 1   ] = ubControl(U__[iU_ub], 0, ModelPars[iM_ubMax]);
+    result__[ 2   ] = h(X__[iX_x]);
     Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 

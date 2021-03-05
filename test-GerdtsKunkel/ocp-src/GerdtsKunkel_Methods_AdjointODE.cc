@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,9 +73,9 @@ namespace GerdtsKunkelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ALIAS_x1Limitation_D(1.0 / 9.0 - X__[0]);
+    real_type t3   = ALIAS_x1Limitation_D(1.0 / 9.0 - X__[iX_x1]);
     result__[ 0   ] = -t3;
-    result__[ 1   ] = L__[0];
+    result__[ 1   ] = L__[iL_lambda1__xo];
     result__[ 2   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
@@ -116,7 +116,7 @@ namespace GerdtsKunkelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ALIAS_x1Limitation_DD(1.0 / 9.0 - X__[0]);
+    result__[ 0   ] = ALIAS_x1Limitation_DD(1.0 / 9.0 - X__[iX_x1]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
   }
@@ -180,7 +180,7 @@ namespace GerdtsKunkelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[2] * U__[0] + L__[1];
+    result__[ 0   ] = L__[iL_lambda3__xo] * U__[iU_u] + L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -339,9 +339,9 @@ namespace GerdtsKunkelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }

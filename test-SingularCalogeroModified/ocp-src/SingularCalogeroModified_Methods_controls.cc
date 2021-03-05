@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods.cc                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,10 +78,10 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = Q__[0] * Q__[0];
-    real_type t9   = pow(ModelPars[0] * t4 + X__[0] - 1, 2);
-    real_type t12  = ALIAS_uControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = L__[1] + t12 * (ModelPars[1] + t9);
+    real_type t4   = Q__[iQ_zeta] * Q__[iQ_zeta];
+    real_type t9   = pow(ModelPars[iM_C] * t4 + X__[iX_x] - 1, 2);
+    real_type t12  = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = L__[iL_lambda2__xo] + t12 * (ModelPars[iM_epsilon] + t9);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -123,9 +123,9 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = Q__[0] * Q__[0];
-    real_type t9   = ALIAS_uControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = t9 * (2 * t3 * ModelPars[0] + 2 * X__[0] - 2);
+    real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
+    real_type t9   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t9 * (2 * t3 * ModelPars[iM_C] + 2 * X__[iX_x] - 2);
     result__[ 1   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
@@ -167,10 +167,10 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = Q__[0] * Q__[0];
-    real_type t8   = pow(ModelPars[0] * t3 + X__[0] - 1, 2);
-    real_type t11  = ALIAS_uControl_D_1_1(U__[0], -1, 1);
-    result__[ 0   ] = t11 * (ModelPars[1] + t8);
+    real_type t4   = Q__[iQ_zeta] * Q__[iQ_zeta];
+    real_type t8   = pow(t4 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
+    real_type t11  = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t11 * (ModelPars[iM_epsilon] + t8);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -205,14 +205,14 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0];
+    real_type t2   = X__[iX_x];
     real_type t3   = t2 * t2;
-    real_type t5   = Q__[0] * Q__[0];
-    real_type t6   = ModelPars[0];
+    real_type t5   = Q__[iQ_zeta] * Q__[iQ_zeta];
+    real_type t6   = ModelPars[iM_C];
     real_type t7   = t6 * t5;
     real_type t11  = t6 * t6;
     real_type t12  = t5 * t5;
-    U__[ iU_u ] = uControl.solve(-1.0 / (t3 + t2 * (2 * t7 - 2) + t12 * t11 - 2 * t7 + ModelPars[1] + 1) * L__[1], -1, 1);
+    U__[ iU_u ] = uControl.solve(-1.0 / (t3 + t2 * (2 * t7 - 2) + t12 * t11 - 2 * t7 + ModelPars[iM_epsilon] + 1) * L__[iL_lambda2__xo], -1, 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -261,10 +261,10 @@ namespace SingularCalogeroModifiedDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = uControl.solve_rhs(-L__[1] / (X__[0] * X__[0] + (2 * ModelPars[0] * Q__[0] * Q__[0] - 2) * X__[0] + ModelPars[0] * ModelPars[0] * pow(Q__[0], 4) - 2 * ModelPars[0] * Q__[0] * Q__[0] + ModelPars[1] + 1), -1, 1) * L__[1] * pow(X__[0] * X__[0] + (2 * ModelPars[0] * Q__[0] * Q__[0] - 2) * X__[0] + ModelPars[0] * ModelPars[0] * pow(Q__[0], 4) - 2 * ModelPars[0] * Q__[0] * Q__[0] + ModelPars[1] + 1, -2) * (2 * ModelPars[0] * Q__[0] * Q__[0] + 2 * X__[0] - 2);
+    DuDxlp(0, 0) = uControl.solve_rhs(-L__[iL_lambda2__xo] / (X__[iX_x] * X__[iX_x] + (2 * ModelPars[iM_C] * Q__[iQ_zeta] * Q__[iQ_zeta] - 2) * X__[iX_x] + ModelPars[iM_C] * ModelPars[iM_C] * pow(Q__[iQ_zeta], 4) - 2 * ModelPars[iM_C] * Q__[iQ_zeta] * Q__[iQ_zeta] + ModelPars[iM_epsilon] + 1), -1, 1) * L__[iL_lambda2__xo] * pow(X__[iX_x] * X__[iX_x] + (2 * ModelPars[iM_C] * Q__[iQ_zeta] * Q__[iQ_zeta] - 2) * X__[iX_x] + ModelPars[iM_C] * ModelPars[iM_C] * pow(Q__[iQ_zeta], 4) - 2 * ModelPars[iM_C] * Q__[iQ_zeta] * Q__[iQ_zeta] + ModelPars[iM_epsilon] + 1, -2) * (2 * ModelPars[iM_C] * Q__[iQ_zeta] * Q__[iQ_zeta] + 2 * X__[iX_x] - 2);
     DuDxlp(0, 1) = 0;
     DuDxlp(0, 2) = 0;
-    DuDxlp(0, 3) = -uControl.solve_rhs(-L__[1] / (X__[0] * X__[0] + (2 * ModelPars[0] * Q__[0] * Q__[0] - 2) * X__[0] + ModelPars[0] * ModelPars[0] * pow(Q__[0], 4) - 2 * ModelPars[0] * Q__[0] * Q__[0] + ModelPars[1] + 1), -1, 1) / (X__[0] * X__[0] + (2 * ModelPars[0] * Q__[0] * Q__[0] - 2) * X__[0] + ModelPars[0] * ModelPars[0] * pow(Q__[0], 4) - 2 * ModelPars[0] * Q__[0] * Q__[0] + ModelPars[1] + 1);
+    DuDxlp(0, 3) = -uControl.solve_rhs(-L__[iL_lambda2__xo] / (X__[iX_x] * X__[iX_x] + (2 * ModelPars[iM_C] * Q__[iQ_zeta] * Q__[iQ_zeta] - 2) * X__[iX_x] + ModelPars[iM_C] * ModelPars[iM_C] * pow(Q__[iQ_zeta], 4) - 2 * ModelPars[iM_C] * Q__[iQ_zeta] * Q__[iQ_zeta] + ModelPars[iM_epsilon] + 1), -1, 1) / (X__[iX_x] * X__[iX_x] + (2 * ModelPars[iM_C] * Q__[iQ_zeta] * Q__[iQ_zeta] - 2) * X__[iX_x] + ModelPars[iM_C] * ModelPars[iM_C] * pow(Q__[iQ_zeta], 4) - 2 * ModelPars[iM_C] * Q__[iQ_zeta] * Q__[iQ_zeta] + ModelPars[iM_epsilon] + 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

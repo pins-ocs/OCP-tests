@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Train_Methods.cc                                               |
+ |  file: Train_Methods_ODE.cc                                           |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -85,9 +85,9 @@ namespace TrainDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
-    real_type t2   = acc(X__[0], result__[0]);
-    result__[ 1   ] = t2 + U__[0] - U__[1];
+    result__[ 0   ] = X__[iX_v];
+    real_type t2   = acc(X__[iX_x], result__[0]);
+    result__[ 1   ] = t2 + U__[iU_ua] - U__[iU_ub];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
   }
@@ -130,8 +130,8 @@ namespace TrainDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    real_type t1   = X__[0];
-    real_type t2   = X__[1];
+    real_type t1   = X__[iX_x];
+    real_type t2   = X__[iX_v];
     result__[ 1   ] = acc_D_1(t1, t2);
     result__[ 2   ] = acc_D_2(t1, t2);
     if ( m_debug )
@@ -261,4 +261,4 @@ namespace TrainDefine {
 
 }
 
-// EOF: Train_Methods.cc
+// EOF: Train_Methods_ODE.cc

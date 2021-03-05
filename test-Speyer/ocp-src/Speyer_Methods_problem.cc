@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Speyer_Methods1.cc                                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -51,7 +51,7 @@ namespace SpeyerDefine {
 
   void
   Speyer::continuationStep0( real_type s ) {
-    ModelPars[0] = ModelPars[1] * (1 - s) + ModelPars[2] * s;
+    ModelPars[iM_b] = ModelPars[iM_b0] * (1 - s) + ModelPars[iM_b1] * s;
   }
 
   /*\
@@ -74,13 +74,14 @@ namespace SpeyerDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
-    real_type t4   = X__[1];
+    real_type t2   = X__[iX_x1] * X__[iX_x1];
+    real_type t4   = X__[iX_x2];
     real_type t5   = t4 * t4;
     real_type t6   = t5 * t5;
-    real_type t10  = U__[0];
+    real_type t10  = U__[iU_u];
     real_type t11  = t10 * t10;
-    return t2 / 4 + t6 / 4 - t5 / 2 + t11 * ModelPars[0] / 2 + t4 * L__[0] + t10 * L__[1];
+    real_type result__ = t2 / 4 + t6 / 4 - t5 / 2 + t11 * ModelPars[iM_b] / 2 + t4 * L__[iL_lambda1__xo] + t10 * L__[iL_lambda2__xo];
+    return result__;
   }
 
   /*\
@@ -100,7 +101,8 @@ namespace SpeyerDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -113,7 +115,8 @@ namespace SpeyerDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -134,11 +137,12 @@ namespace SpeyerDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
-    real_type t5   = X__[1] * X__[1];
+    real_type t2   = X__[iX_x1] * X__[iX_x1];
+    real_type t5   = X__[iX_x2] * X__[iX_x2];
     real_type t6   = t5 * t5;
-    real_type t11  = U__[0] * U__[0];
-    return t2 / 4 + t6 / 4 - t5 / 2 + t11 * ModelPars[0] / 2;
+    real_type t11  = U__[iU_u] * U__[iU_u];
+    real_type result__ = t2 / 4 + t6 / 4 - t5 / 2 + t11 * ModelPars[iM_b] / 2;
+    return result__;
   }
 
   /*\
@@ -163,7 +167,8 @@ namespace SpeyerDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -273,10 +278,10 @@ namespace SpeyerDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = LR__[0] - LL__[0];
-    result__[ 3   ] = LR__[1] - LL__[1];
+    result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
+    result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }

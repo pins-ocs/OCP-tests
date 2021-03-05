@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -142,7 +142,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     Fcontrol = {
-      type      = 'QUADRATIC',
+      type      = ,
       epsilon   = 0.001,
       tolerance = 0.001,
     },
@@ -161,23 +161,23 @@ content = {
     segments = {
       
       {
-        length = 0.1,
         n      = 10,
-      },
-      
-      {
-        length = 0.4,
-        n      = 40,
-      },
-      
-      {
-        length = 0.4,
-        n      = 40,
-      },
-      
-      {
         length = 0.1,
+      },
+      
+      {
+        n      = 40,
+        length = 0.4,
+      },
+      
+      {
+        n      = 40,
+        length = 0.4,
+      },
+      
+      {
         n      = 10,
+        length = 0.1,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: HyperSensitive_Methods.cc                                      |
+ |  file: HyperSensitive_Methods_ODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,9 +65,9 @@ namespace HyperSensitiveDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[0];
+    real_type t1   = X__[iX_y];
     real_type t2   = t1 * t1;
-    result__[ 0   ] = -t2 * t1 + U__[0];
+    result__[ 0   ] = -t2 * t1 + U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 1, i_segment );
   }
@@ -107,7 +107,7 @@ namespace HyperSensitiveDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
+    real_type t2   = X__[iX_y] * X__[iX_y];
     result__[ 0   ] = -3 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 1, i_segment );
@@ -232,4 +232,4 @@ namespace HyperSensitiveDefine {
 
 }
 
-// EOF: HyperSensitive_Methods.cc
+// EOF: HyperSensitive_Methods_ODE.cc

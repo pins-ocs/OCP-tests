@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Speyer_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,10 +69,10 @@ namespace SpeyerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[0] / 2;
-    real_type t2   = X__[1];
+    result__[ 0   ] = X__[iX_x1] / 2;
+    real_type t2   = X__[iX_x2];
     real_type t3   = t2 * t2;
-    result__[ 1   ] = t3 * t2 - t2 + L__[0];
+    result__[ 1   ] = t3 * t2 - t2 + L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 2, i_segment );
   }
@@ -114,7 +114,7 @@ namespace SpeyerDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1.0 / 2.0;
-    real_type t2   = X__[1] * X__[1];
+    real_type t2   = X__[iX_x2] * X__[iX_x2];
     result__[ 1   ] = 3 * t2 - 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 2, i_segment );
@@ -179,7 +179,7 @@ namespace SpeyerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ModelPars[0] * U__[0] + L__[1];
+    result__[ 0   ] = ModelPars[iM_b] * U__[iU_u] + L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -338,8 +338,8 @@ namespace SpeyerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
   }

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: BangBangFclip.m                                                %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -635,16 +635,16 @@ classdef BangBangFclip < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = fun( self, x__XO )
-      res = BangBangFclip_Mex('fun', self.objectHandle, x__XO );
+    function res = fun( self, xo__x )
+      res = BangBangFclip_Mex('fun', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = fun_D( self, x__XO )
-      res = BangBangFclip_Mex('fun_D', self.objectHandle, x__XO );
+    function res = fun_D( self, xo__x )
+      res = BangBangFclip_Mex('fun_D', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = fun_DD( self, x__XO )
-      res = BangBangFclip_Mex('fun_DD', self.objectHandle, x__XO );
+    function res = fun_DD( self, xo__x )
+      res = BangBangFclip_Mex('fun_DD', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularConstrainedCalogero_Guess.cc                           |
+ |  file: SingularConstrainedCalogero_Methods_Guess.cc                   |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -72,8 +72,12 @@ namespace SingularConstrainedCalogeroDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    X__[ iX_x ] = Q__[0];
+    X__[ iX_x ] = Q__[iQ_zeta];
 
+    if ( m_debug )
+      Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 1 );
+    if ( m_debug )
+      Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 1 );
   }
 
   /*\
@@ -84,14 +88,19 @@ namespace SingularConstrainedCalogeroDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__lt(A,B) ( (A) <  (B) )
-  #define Xoptima__check__le(A,B) ( (A) <= (B) )
+  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
+  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+
 
   bool
   SingularConstrainedCalogero::p_check( P_const_pointer_type P__ ) const {
-    bool ok = true;
-
-    return ok;
+    return true;
   }
 
   bool
@@ -100,14 +109,7 @@ namespace SingularConstrainedCalogeroDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    bool ok = true;
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    return ok;
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -157,7 +159,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * L__ = NODE__.lambda;
       MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
-    real_type t5   = fmax(0.1e0, X__[0] / 2 + 1.0 / 2.0 - Q__[0] / 2);
+    real_type t5   = fmax(0.1e0, X__[iX_x] / 2 + 1.0 / 2.0 - Q__[iQ_zeta] / 2);
     UGUESS__[ iU_u ] = fmin(0.19e1, t5 + 1);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
@@ -209,10 +211,10 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    ok = ok && uControl.check_range(U__[0], 0, 2);
+    uControl.check_range(U__[iU_u], 0, 2);
     return ok;
   }
 
 }
 
-// EOF: SingularConstrainedCalogero_Guess.cc
+// EOF: SingularConstrainedCalogero_Methods_Guess.cc

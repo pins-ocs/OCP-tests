@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: PointMassCarModel_1_Methods1.cc                                |
+ |  file: PointMassCarModel_1_Methods_UserFunctions.cc                   |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -152,107 +152,227 @@ namespace PointMassCarModel_1Define {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  PointMassCarModel_1::inv_zeta__dot( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t5   = cos(alpha__XO);
-    return 1.0 / t5 / V__XO * (-n__XO * Kappa__XO + 1);
+  PointMassCarModel_1::inv_zeta__dot( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t5   = cos(xo__alpha);
+    real_type result__ = 1.0 / t5 / xo__V * (-xo__n * xo__Kappa + 1);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_1( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t3   = V__XO * V__XO;
-    real_type t6   = cos(alpha__XO);
-    return 1.0 / t6 / t3 * (n__XO * Kappa__XO - 1);
+  PointMassCarModel_1::inv_zeta__dot_D_1( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t3   = xo__V * xo__V;
+    real_type t6   = cos(xo__alpha);
+    real_type result__ = 1.0 / t6 / t3 * (xo__n * xo__Kappa - 1);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_1( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_1_1( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t4   = V__XO * V__XO;
-    real_type t8   = cos(alpha__XO);
-    return 1.0 / t8 / t4 / V__XO * (-2 * n__XO * Kappa__XO + 2);
+  PointMassCarModel_1::inv_zeta__dot_D_1_1( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t4   = xo__V * xo__V;
+    real_type t8   = cos(xo__alpha);
+    real_type result__ = 1.0 / t8 / t4 / xo__V * (-2 * xo__n * xo__Kappa + 2);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_1_1( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_1_2( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t3   = V__XO * V__XO;
-    real_type t6   = cos(alpha__XO);
+  PointMassCarModel_1::inv_zeta__dot_D_1_2( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t3   = xo__V * xo__V;
+    real_type t6   = cos(xo__alpha);
     real_type t7   = t6 * t6;
-    real_type t9   = sin(alpha__XO);
-    return t9 / t7 / t3 * (n__XO * Kappa__XO - 1);
+    real_type t9   = sin(xo__alpha);
+    real_type result__ = t9 / t7 / t3 * (xo__n * xo__Kappa - 1);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_1_2( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_1_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = V__XO * V__XO;
-    real_type t4   = cos(alpha__XO);
-    return 1.0 / t4 / t1 * Kappa__XO;
+  PointMassCarModel_1::inv_zeta__dot_D_1_3( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t1   = xo__V * xo__V;
+    real_type t4   = cos(xo__alpha);
+    real_type result__ = 1.0 / t4 / t1 * xo__Kappa;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_1_3( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_1_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = V__XO * V__XO;
-    real_type t4   = cos(alpha__XO);
-    return 1.0 / t4 / t1 * n__XO;
+  PointMassCarModel_1::inv_zeta__dot_D_1_4( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t1   = xo__V * xo__V;
+    real_type t4   = cos(xo__alpha);
+    real_type result__ = 1.0 / t4 / t1 * xo__n;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_1_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_2( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t5   = cos(alpha__XO);
+  PointMassCarModel_1::inv_zeta__dot_D_2( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t5   = cos(xo__alpha);
     real_type t6   = t5 * t5;
-    real_type t8   = sin(alpha__XO);
-    return t8 / t6 * (-n__XO * Kappa__XO + 1) / V__XO;
+    real_type t8   = sin(xo__alpha);
+    real_type result__ = t8 / t6 * (-xo__n * xo__Kappa + 1) / xo__V;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_2( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_2_2( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t1   = cos(alpha__XO);
+  PointMassCarModel_1::inv_zeta__dot_D_2_2( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t1   = cos(xo__alpha);
     real_type t2   = t1 * t1;
-    return 1.0 / t2 / t1 / V__XO * (n__XO * Kappa__XO - 1) * (t2 - 2);
+    real_type result__ = 1.0 / t2 / t1 / xo__V * (xo__n * xo__Kappa - 1) * (t2 - 2);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_2_2( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_2_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t3   = cos(alpha__XO);
+  PointMassCarModel_1::inv_zeta__dot_D_2_3( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t3   = cos(xo__alpha);
     real_type t4   = t3 * t3;
-    real_type t6   = sin(alpha__XO);
-    return -t6 / t4 * Kappa__XO / V__XO;
+    real_type t6   = sin(xo__alpha);
+    real_type result__ = -t6 / t4 * xo__Kappa / xo__V;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_2_3( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_2_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t3   = cos(alpha__XO);
+  PointMassCarModel_1::inv_zeta__dot_D_2_4( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t3   = cos(xo__alpha);
     real_type t4   = t3 * t3;
-    real_type t6   = sin(alpha__XO);
-    return -t6 / t4 * n__XO / V__XO;
+    real_type t6   = sin(xo__alpha);
+    real_type result__ = -t6 / t4 * xo__n / xo__V;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_2_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t3   = cos(alpha__XO);
-    return -1.0 / t3 / V__XO * Kappa__XO;
+  PointMassCarModel_1::inv_zeta__dot_D_3( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t3   = cos(xo__alpha);
+    real_type result__ = -1.0 / t3 / xo__V * xo__Kappa;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_3( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_3_3( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    return 0;
+  PointMassCarModel_1::inv_zeta__dot_D_3_3( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_3_3( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_3_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t2   = cos(alpha__XO);
-    return -1.0 / t2 / V__XO;
+  PointMassCarModel_1::inv_zeta__dot_D_3_4( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t2   = cos(xo__alpha);
+    real_type result__ = -1.0 / t2 / xo__V;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_3_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    real_type t3   = cos(alpha__XO);
-    return -1.0 / t3 / V__XO * n__XO;
+  PointMassCarModel_1::inv_zeta__dot_D_4( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type t3   = cos(xo__alpha);
+    real_type result__ = -1.0 / t3 / xo__V * xo__n;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  PointMassCarModel_1::inv_zeta__dot_D_4_4( real_type V__XO, real_type alpha__XO, real_type n__XO, real_type Kappa__XO ) const {
-    return 0;
+  PointMassCarModel_1::inv_zeta__dot_D_4_4( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_inv_zeta__dot_D_4_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
+        xo__V, xo__alpha, xo__n, xo__Kappa, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: PointMassCarModel_1_Methods1.cc
+// EOF: PointMassCarModel_1_Methods_UserFunctions.cc

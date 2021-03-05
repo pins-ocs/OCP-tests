@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_3_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,15 +20,15 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+up_tol0   = 0.01
 road_tol0 = 0.01
+p_tol0    = 0.1
+p_epsi0   = 0.1
+wT0       = 0.01
+wT        = wT0
 up_epsi0  = 0.1
 m         = 700
 kD        = 0.2500000000/m
-p_tol0    = 0.1
-wT0       = 0.01
-wT        = wT0
-up_tol0   = 0.01
-p_epsi0   = 0.1
 
 mechatronix do |data|
 
@@ -193,7 +193,7 @@ mechatronix do |data|
 
   data.Constraints = {}
   # Constraint1D
-  # Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:AdherenceEllipse] = {
@@ -236,73 +236,73 @@ mechatronix do |data|
     :is_SAE   => false,
     :segments => [
       {
-        :leftWidth  => 15/2.0,
+        :curvature  => 0,
         :length     => 190,
+        :leftWidth  => 15/2.0,
         :rightWidth => 60,
-        :curvature  => 0,
         :gridSize   => 1,
       },
       {
-        :leftWidth  => 60,
-        :length     => 973.8937227,
-        :rightWidth => 30,
         :curvature  => 0.003225806452,
+        :length     => 973.8937227,
+        :leftWidth  => 60,
+        :rightWidth => 30,
         :gridSize   => 1,
       },
       {
-        :leftWidth  => 30,
+        :curvature  => 0,
         :length     => 180,
+        :leftWidth  => 30,
         :rightWidth => 30,
-        :curvature  => 0,
         :gridSize   => 1,
       },
       {
-        :leftWidth  => 20,
-        :length     => 235.619449,
-        :rightWidth => 15,
         :curvature  => 0.006666666667,
-        :gridSize   => 1,
-      },
-      {
-        :leftWidth  => 30,
-        :length     => 240,
-        :rightWidth => 30,
-        :curvature  => 0,
-        :gridSize   => 1,
-      },
-      {
-        :leftWidth  => 30,
         :length     => 235.619449,
+        :leftWidth  => 20,
+        :rightWidth => 15,
+        :gridSize   => 1,
+      },
+      {
+        :curvature  => 0,
+        :length     => 240,
+        :leftWidth  => 30,
         :rightWidth => 30,
+        :gridSize   => 1,
+      },
+      {
         :curvature  => -1/150.0,
+        :length     => 235.619449,
+        :leftWidth  => 30,
+        :rightWidth => 30,
         :gridSize   => 1,
       },
       {
-        :leftWidth  => 30,
+        :curvature  => 0,
         :length     => 200,
+        :leftWidth  => 30,
         :rightWidth => 30,
-        :curvature  => 0,
         :gridSize   => 1,
       },
       {
-        :leftWidth  => 30,
-        :length     => 125.6637062,
-        :rightWidth => 30,
         :curvature  => 0.025,
+        :length     => 125.6637062,
+        :leftWidth  => 30,
+        :rightWidth => 30,
         :gridSize   => 1,
       },
       {
-        :leftWidth  => 30,
+        :curvature  => 0,
         :length     => 480,
+        :leftWidth  => 30,
         :rightWidth => 30,
-        :curvature  => 0,
         :gridSize   => 1,
       },
       {
-        :leftWidth  => 30,
-        :length     => 10,
-        :rightWidth => 30,
         :curvature  => 0,
+        :length     => 10,
+        :leftWidth  => 30,
+        :rightWidth => 30,
         :gridSize   => 0.1,
       },
     ],

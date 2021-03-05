@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Data.lua                                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
-ubMax    = 2
-tol_max  = 0.01
 uaMax    = 10
 epsi_max = 0.01
+tol_max  = 0.01
+ubMax    = 2
 
 content = {
 
@@ -159,12 +159,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uaControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = epsi_max,
       tolerance = tol_max,
     },
     ubControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = epsi_max,
       tolerance = tol_max,
     },
@@ -183,18 +183,18 @@ content = {
     segments = {
       
       {
-        n      = 25,
         length = 0.25,
+        n      = 25,
       },
       
       {
-        n      = 3000,
         length = 0.75,
+        n      = 3000,
       },
       
       {
-        n      = 100,
         length = 3.8,
+        n      = 100,
       },
     },
   },

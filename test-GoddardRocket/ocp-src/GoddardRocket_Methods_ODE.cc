@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GoddardRocket_Methods.cc                                       |
+ |  file: GoddardRocket_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,15 +82,15 @@ namespace GoddardRocketDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    real_type t2   = X__[1];
+    real_type t1   = P__[iP_TimeSize];
+    real_type t2   = X__[iX_v];
     result__[ 0   ] = t2 * t1;
-    real_type t3   = U__[0];
-    real_type t4   = X__[0];
+    real_type t3   = U__[iU_T];
+    real_type t4   = X__[iX_h];
     real_type t5   = DD(t4, t2);
     real_type t10  = gg(t4);
-    result__[ 1   ] = (1.0 / X__[2] * (t3 - t5) - t10) * t1;
-    result__[ 2   ] = -1.0 / ModelPars[2] * t3 * t1;
+    result__[ 1   ] = (1.0 / X__[iX_m] * (t3 - t5) - t10) * t1;
+    result__[ 2   ] = -1.0 / ModelPars[iM_c] * t3 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
   }
@@ -133,11 +133,11 @@ namespace GoddardRocketDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = P__[0];
-    real_type t1   = X__[0];
-    real_type t2   = X__[1];
+    result__[ 0   ] = P__[iP_TimeSize];
+    real_type t1   = X__[iX_h];
+    real_type t2   = X__[iX_v];
     real_type t3   = DD_D_1(t1, t2);
-    real_type t4   = X__[2];
+    real_type t4   = X__[iX_m];
     real_type t5   = 1.0 / t4;
     real_type t7   = gg_D(t1);
     result__[ 1   ] = (-t5 * t3 - t7) * result__[0];
@@ -145,7 +145,7 @@ namespace GoddardRocketDefine {
     result__[ 2   ] = -t5 * t9 * result__[0];
     real_type t13  = DD(t1, t2);
     real_type t16  = t4 * t4;
-    result__[ 3   ] = -1.0 / t16 * (U__[0] - t13) * result__[0];
+    result__[ 3   ] = -1.0 / t16 * (U__[iU_T] - t13) * result__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 4, i_segment );
   }
@@ -187,13 +187,13 @@ namespace GoddardRocketDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
-    real_type t1   = U__[0];
-    real_type t2   = X__[0];
+    result__[ 0   ] = X__[iX_v];
+    real_type t1   = U__[iU_T];
+    real_type t2   = X__[iX_h];
     real_type t3   = DD(t2, result__[0]);
     real_type t8   = gg(t2);
-    result__[ 1   ] = 1.0 / X__[2] * (t1 - t3) - t8;
-    result__[ 2   ] = -1.0 / ModelPars[2] * t1;
+    result__[ 1   ] = 1.0 / X__[iX_m] * (t1 - t3) - t8;
+    result__[ 2   ] = -1.0 / ModelPars[iM_c] * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 3, i_segment );
   }
@@ -234,9 +234,9 @@ namespace GoddardRocketDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    result__[ 0   ] = 1.0 / X__[2] * t1;
-    result__[ 1   ] = -1.0 / ModelPars[2] * t1;
+    real_type t1   = P__[iP_TimeSize];
+    result__[ 0   ] = 1.0 / X__[iX_m] * t1;
+    result__[ 1   ] = -1.0 / ModelPars[iM_c] * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
@@ -291,4 +291,4 @@ namespace GoddardRocketDefine {
 
 }
 
-// EOF: GoddardRocket_Methods.cc
+// EOF: GoddardRocket_Methods_ODE.cc

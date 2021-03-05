@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Rayleight_Methods.cc                                           |
+ |  file: Rayleight_Methods_ODE.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,9 +65,9 @@ namespace RayleightDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
+    result__[ 0   ] = X__[iX_x2];
     real_type t2   = result__[0] * result__[0];
-    result__[ 1   ] = -X__[0] + result__[0] * (0.14e1 - 0.14e0 * t2) + 4 * U__[0];
+    result__[ 1   ] = -X__[iX_x1] + result__[0] * (0.14e1 - 0.14e0 * t2) + 4 * U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
   }
@@ -111,7 +111,7 @@ namespace RayleightDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = -1;
-    real_type t2   = X__[1] * X__[1];
+    real_type t2   = X__[iX_x2] * X__[iX_x2];
     result__[ 2   ] = -0.42e0 * t2 + 0.14e1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 3, i_segment );
@@ -238,4 +238,4 @@ namespace RayleightDefine {
 
 }
 
-// EOF: Rayleight_Methods.cc
+// EOF: Rayleight_Methods_ODE.cc

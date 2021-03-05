@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,9 +82,9 @@ namespace TwoPhaseSchwartzDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ALIAS_u1Control_D_1(U__[0], -1, 1);
-    result__[ 0   ] = L__[1] + t3;
-    result__[ 1   ] = L__[3] * ModelPars[0] + 2 * ModelPars[3] * U__[1];
+    real_type t3   = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
+    result__[ 0   ] = L__[iL_lambda2__xo] + t3;
+    result__[ 1   ] = L__[iL_lambda4__xo] * ModelPars[iM_T2] + 2 * U__[iU_u2] * ModelPars[iM_epsilon];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -127,7 +127,7 @@ namespace TwoPhaseSchwartzDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    result__[ 1   ] = ModelPars[0];
+    result__[ 1   ] = ModelPars[iM_T2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
   }
@@ -169,8 +169,8 @@ namespace TwoPhaseSchwartzDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ALIAS_u1Control_D_1_1(U__[0], -1, 1);
-    result__[ 1   ] = 2 * ModelPars[3];
+    result__[ 0   ] = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
+    result__[ 1   ] = 2 * ModelPars[iM_epsilon];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }

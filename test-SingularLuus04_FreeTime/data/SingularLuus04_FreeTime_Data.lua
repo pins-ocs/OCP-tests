@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Data.lua                               |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-u_epsi = 0.01
 u_tol  = 0.01
+u_epsi = 0.01
 theta0 = 1
 theta  = theta0
 
@@ -160,7 +160,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
-      type      = 'COS_LOGARITHMIC',
+      type      = ,
       epsilon   = u_epsi,
       tolerance = u_tol,
     },
@@ -179,8 +179,8 @@ content = {
     segments = {
       
       {
-        n      = 5000,
         length = 1,
+        n      = 5000,
       },
     },
   },

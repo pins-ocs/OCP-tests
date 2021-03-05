@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: gtocX_2burn_pars.m                                             %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 6/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -707,1260 +707,1260 @@ classdef gtocX_2burn_pars < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = cont( self, s__XO, eps0__XO, eps1__XO )
-      res = gtocX_2burn_pars_Mex('cont', self.objectHandle, s__XO, eps0__XO, eps1__XO );
+    function res = cont( self, xo__s, xo__eps0, xo__eps1 )
+      res = gtocX_2burn_pars_Mex('cont', self.objectHandle, xo__s, xo__eps0, xo__eps1 );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_1_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_1_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_1_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_1_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_1_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_1_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_1_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_1_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_1_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_1_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_1_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_1_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_1_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_1_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_1_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_1_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_1_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_1_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_1_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_1_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_1_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_1_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_1_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_1_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_1_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_1_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_1_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_1_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_2_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_2_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_2_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_2_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_2_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_2_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_2_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_2_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_2_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_2_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_2_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_2_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_2_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_2_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_2_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_2_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_2_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_2_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_2_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_2_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_2_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_2_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_2_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_2_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_3_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_3_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_3_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_3_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_3_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_3_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_3_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_3_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_3_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_3_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_3_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_3_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_3_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_3_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_3_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_3_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_3_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_3_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_3_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_3_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_4_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_4_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_4_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_4_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_4_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_4_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_4_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_4_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_4_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_4_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_4_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_4_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_4_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_4_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_4_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_4_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_5_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_5_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_5_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_5_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_5_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_5_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_5_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_5_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_5_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_5_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_5_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_5_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_6_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_6_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_6_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_6_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_6_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_6_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_6_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_6_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xPosition_D_7_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xPosition_D_7_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xPosition_D_7_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xPosition_D_7_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_1_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_1_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_1_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_1_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_1_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_1_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_1_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_1_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_1_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_1_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_1_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_1_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_1_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_1_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_1_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_1_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_1_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_1_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_1_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_1_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_1_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_1_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_1_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_1_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_1_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_1_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_1_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_1_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_2_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_2_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_2_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_2_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_2_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_2_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_2_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_2_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_2_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_2_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_2_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_2_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_2_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_2_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_2_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_2_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_2_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_2_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_2_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_2_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_2_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_2_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_2_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_2_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_3_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_3_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_3_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_3_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_3_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_3_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_3_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_3_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_3_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_3_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_3_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_3_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_3_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_3_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_3_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_3_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_3_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_3_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_3_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_3_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_4_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_4_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_4_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_4_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_4_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_4_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_4_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_4_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_4_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_4_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_4_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_4_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_4_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_4_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_4_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_4_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_5_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_5_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_5_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_5_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_5_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_5_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_5_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_5_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_5_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_5_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_5_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_5_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_6_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_6_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_6_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_6_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_6_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_6_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_6_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_6_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yPosition_D_7_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yPosition_D_7_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yPosition_D_7_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yPosition_D_7_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_1_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_1_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_1_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_1_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_1_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_1_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_1_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_1_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_1_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_1_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_1_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_1_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_1_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_1_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_1_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_1_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_1_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_1_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_1_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_1_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_1_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_1_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_1_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_1_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_1_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_1_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_1_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_1_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_2_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_2_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_2_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_2_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_2_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_2_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_2_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_2_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_2_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_2_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_2_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_2_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_2_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_2_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_2_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_2_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_2_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_2_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_2_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_2_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_2_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_2_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_2_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_2_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_3_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_3_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_3_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_3_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_3_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_3_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_3_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_3_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_3_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_3_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_3_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_3_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_3_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_3_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_3_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_3_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_3_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_3_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_3_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_3_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_4_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_4_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_4_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_4_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_4_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_4_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_4_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_4_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_4_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_4_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_4_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_4_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_4_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_4_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_4_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_4_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_5_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_5_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_5_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_5_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_5_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_5_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_5_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_5_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_5_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_5_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_5_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_5_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_6_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_6_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_6_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_6_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_6_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_6_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_6_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_6_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zPosition_D_7_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zPosition_D_7_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zPosition_D_7_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zPosition_D_7_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_1_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_1_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_1_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_1_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_1_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_1_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_1_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_1_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_1_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_1_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_1_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_1_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_1_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_1_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_1_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_1_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_1_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_1_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_1_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_1_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_1_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_1_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_1_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_1_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_1_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_1_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_1_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_1_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_2_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_2_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_2_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_2_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_2_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_2_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_2_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_2_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_2_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_2_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_2_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_2_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_2_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_2_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_2_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_2_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_2_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_2_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_2_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_2_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_2_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_2_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_2_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_2_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_3_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_3_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_3_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_3_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_3_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_3_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_3_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_3_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_3_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_3_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_3_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_3_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_3_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_3_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_3_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_3_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_3_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_3_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_3_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_3_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_4_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_4_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_4_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_4_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_4_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_4_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_4_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_4_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_4_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_4_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_4_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_4_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_4_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_4_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_4_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_4_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_5_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_5_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_5_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_5_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_5_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_5_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_5_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_5_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_5_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_5_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_5_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_5_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_6_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_6_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_6_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_6_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_6_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_6_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_6_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_6_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = xVelocity_D_7_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('xVelocity_D_7_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = xVelocity_D_7_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('xVelocity_D_7_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_1_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_1_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_1_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_1_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_1_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_1_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_1_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_1_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_1_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_1_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_1_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_1_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_1_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_1_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_1_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_1_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_1_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_1_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_1_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_1_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_1_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_1_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_1_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_1_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_1_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_1_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_1_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_1_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_2_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_2_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_2_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_2_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_2_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_2_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_2_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_2_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_2_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_2_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_2_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_2_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_2_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_2_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_2_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_2_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_2_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_2_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_2_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_2_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_2_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_2_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_2_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_2_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_3_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_3_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_3_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_3_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_3_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_3_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_3_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_3_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_3_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_3_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_3_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_3_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_3_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_3_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_3_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_3_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_3_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_3_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_3_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_3_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_4_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_4_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_4_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_4_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_4_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_4_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_4_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_4_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_4_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_4_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_4_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_4_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_4_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_4_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_4_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_4_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_5_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_5_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_5_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_5_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_5_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_5_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_5_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_5_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_5_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_5_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_5_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_5_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_6_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_6_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_6_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_6_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_6_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_6_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_6_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_6_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = yVelocity_D_7_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('yVelocity_D_7_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = yVelocity_D_7_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('yVelocity_D_7_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_1_1( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_1_1', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_1_1( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_1_1', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_1_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_1_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_1_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_1_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_1_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_1_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_1_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_1_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_1_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_1_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_1_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_1_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_1_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_1_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_1_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_1_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_1_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_1_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_1_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_1_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_1_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_1_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_1_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_1_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_2_2( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_2_2', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_2_2( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_2_2', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_2_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_2_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_2_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_2_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_2_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_2_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_2_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_2_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_2_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_2_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_2_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_2_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_2_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_2_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_2_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_2_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_2_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_2_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_2_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_2_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_3_3( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_3_3', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_3_3( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_3_3', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_3_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_3_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_3_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_3_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_3_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_3_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_3_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_3_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_3_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_3_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_3_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_3_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_3_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_3_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_3_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_3_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_4_4( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_4_4', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_4_4( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_4_4', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_4_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_4_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_4_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_4_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_4_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_4_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_4_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_4_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_4_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_4_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_4_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_4_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_5_5( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_5_5', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_5_5( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_5_5', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_5_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_5_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_5_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_5_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_5_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_5_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_5_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_5_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_6_6( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_6_6', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_6_6( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_6_6', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_6_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_6_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_6_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_6_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = zVelocity_D_7_7( self, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO )
-      res = gtocX_2burn_pars_Mex('zVelocity_D_7_7', self.objectHandle, p__XO, f__XO, g__XO, h__XO, k__XO, L__XO, retrograde__XO );
+    function res = zVelocity_D_7_7( self, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde )
+      res = gtocX_2burn_pars_Mex('zVelocity_D_7_7', self.objectHandle, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg_D_1( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg_D_1', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg_D_1( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg_D_1', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg_D_2( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg_D_2', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg_D_2( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg_D_2', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg_D_3( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg_D_3', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg_D_3( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg_D_3', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg_D_1_1( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg_D_1_1', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg_D_1_1( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg_D_1_1', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg_D_1_2( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg_D_1_2', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg_D_1_2( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg_D_1_2', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg_D_1_3( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg_D_1_3', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg_D_1_3( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg_D_1_3', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg_D_2_2( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg_D_2_2', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg_D_2_2( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg_D_2_2', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg_D_2_3( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg_D_2_3', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg_D_2_3( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg_D_2_3', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = norm_reg_D_3_3( self, x__XO, y__XO, z__XO )
-      res = gtocX_2burn_pars_Mex('norm_reg_D_3_3', self.objectHandle, x__XO, y__XO, z__XO );
+    function res = norm_reg_D_3_3( self, xo__x, xo__y, xo__z )
+      res = gtocX_2burn_pars_Mex('norm_reg_D_3_3', self.objectHandle, xo__x, xo__y, xo__z );
     end
     % ---------------------------------------------------------------------
-    function res = ray( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_1( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_1', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_1( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_1', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_2( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_2', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_2( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_2', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_3( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_3', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_3( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_3', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_4( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_4( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_1_1( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_1_1', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_1_1( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_1_1', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_1_2( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_1_2', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_1_2( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_1_2', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_1_3( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_1_3', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_1_3( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_1_3', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_1_4( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_1_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_1_4( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_1_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_2_2( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_2_2', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_2_2( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_2_2', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_2_3( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_2_3', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_2_3( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_2_3', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_2_4( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_2_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_2_4( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_2_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_3_3( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_3_3', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_3_3( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_3_3', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_3_4( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_3_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_3_4( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_3_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = ray_D_4_4( self, p__XO, f__XO, g__XO, L__XO )
-      res = gtocX_2burn_pars_Mex('ray_D_4_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO );
+    function res = ray_D_4_4( self, xo__p, xo__f, xo__g, xo__L )
+      res = gtocX_2burn_pars_Mex('ray_D_4_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L );
     end
     % ---------------------------------------------------------------------
-    function res = vel( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_1( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_1', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_1( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_1', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_2( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_2', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_2( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_2', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_3( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_3', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_3( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_3', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_4( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_4( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_5( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_5', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_5( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_5', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_1_1( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_1_1', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_1_1( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_1_1', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_1_2( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_1_2', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_1_2( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_1_2', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_1_3( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_1_3', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_1_3( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_1_3', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_1_4( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_1_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_1_4( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_1_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_1_5( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_1_5', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_1_5( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_1_5', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_2_2( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_2_2', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_2_2( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_2_2', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_2_3( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_2_3', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_2_3( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_2_3', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_2_4( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_2_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_2_4( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_2_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_2_5( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_2_5', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_2_5( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_2_5', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_3_3( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_3_3', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_3_3( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_3_3', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_3_4( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_3_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_3_4( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_3_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_3_5( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_3_5', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_3_5( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_3_5', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_4_4( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_4_4', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_4_4( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_4_4', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_4_5( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_4_5', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_4_5( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_4_5', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vel_D_5_5( self, p__XO, f__XO, g__XO, L__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('vel_D_5_5', self.objectHandle, p__XO, f__XO, g__XO, L__XO, muS__XO );
+    function res = vel_D_5_5( self, xo__p, xo__f, xo__g, xo__L, xo__muS )
+      res = gtocX_2burn_pars_Mex('vel_D_5_5', self.objectHandle, xo__p, xo__f, xo__g, xo__L, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = vc( self, r__XO )
-      res = gtocX_2burn_pars_Mex('vc', self.objectHandle, r__XO );
+    function res = vc( self, xo__r )
+      res = gtocX_2burn_pars_Mex('vc', self.objectHandle, xo__r );
     end
     % ---------------------------------------------------------------------
-    function res = vc_D( self, r__XO )
-      res = gtocX_2burn_pars_Mex('vc_D', self.objectHandle, r__XO );
+    function res = vc_D( self, xo__r )
+      res = gtocX_2burn_pars_Mex('vc_D', self.objectHandle, xo__r );
     end
     % ---------------------------------------------------------------------
-    function res = vc_DD( self, r__XO )
-      res = gtocX_2burn_pars_Mex('vc_DD', self.objectHandle, r__XO );
+    function res = vc_DD( self, xo__r )
+      res = gtocX_2burn_pars_Mex('vc_DD', self.objectHandle, xo__r );
     end
     % ---------------------------------------------------------------------
-    function res = acceleration_r( self, r__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('acceleration_r', self.objectHandle, r__XO, muS__XO );
+    function res = acceleration_r( self, xo__r, xo__muS )
+      res = gtocX_2burn_pars_Mex('acceleration_r', self.objectHandle, xo__r, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = acceleration_r_D_1( self, r__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('acceleration_r_D_1', self.objectHandle, r__XO, muS__XO );
+    function res = acceleration_r_D_1( self, xo__r, xo__muS )
+      res = gtocX_2burn_pars_Mex('acceleration_r_D_1', self.objectHandle, xo__r, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = acceleration_r_D_2( self, r__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('acceleration_r_D_2', self.objectHandle, r__XO, muS__XO );
+    function res = acceleration_r_D_2( self, xo__r, xo__muS )
+      res = gtocX_2burn_pars_Mex('acceleration_r_D_2', self.objectHandle, xo__r, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = acceleration_r_D_1_1( self, r__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('acceleration_r_D_1_1', self.objectHandle, r__XO, muS__XO );
+    function res = acceleration_r_D_1_1( self, xo__r, xo__muS )
+      res = gtocX_2burn_pars_Mex('acceleration_r_D_1_1', self.objectHandle, xo__r, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = acceleration_r_D_1_2( self, r__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('acceleration_r_D_1_2', self.objectHandle, r__XO, muS__XO );
+    function res = acceleration_r_D_1_2( self, xo__r, xo__muS )
+      res = gtocX_2burn_pars_Mex('acceleration_r_D_1_2', self.objectHandle, xo__r, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = acceleration_r_D_2_2( self, r__XO, muS__XO )
-      res = gtocX_2burn_pars_Mex('acceleration_r_D_2_2', self.objectHandle, r__XO, muS__XO );
+    function res = acceleration_r_D_2_2( self, xo__r, xo__muS )
+      res = gtocX_2burn_pars_Mex('acceleration_r_D_2_2', self.objectHandle, xo__r, xo__muS );
     end
     % ---------------------------------------------------------------------
-    function res = X_begin( self, t__XO )
-      res = gtocX_2burn_pars_Mex('X_begin', self.objectHandle, t__XO );
+    function res = X_begin( self, xo__t )
+      res = gtocX_2burn_pars_Mex('X_begin', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = X_begin_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('X_begin_D', self.objectHandle, t__XO );
+    function res = X_begin_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('X_begin_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = X_begin_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('X_begin_DD', self.objectHandle, t__XO );
+    function res = X_begin_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('X_begin_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Y_begin( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Y_begin', self.objectHandle, t__XO );
+    function res = Y_begin( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Y_begin', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Y_begin_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Y_begin_D', self.objectHandle, t__XO );
+    function res = Y_begin_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Y_begin_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Y_begin_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Y_begin_DD', self.objectHandle, t__XO );
+    function res = Y_begin_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Y_begin_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Z_begin( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Z_begin', self.objectHandle, t__XO );
+    function res = Z_begin( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Z_begin', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Z_begin_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Z_begin_D', self.objectHandle, t__XO );
+    function res = Z_begin_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Z_begin_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Z_begin_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Z_begin_DD', self.objectHandle, t__XO );
+    function res = Z_begin_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Z_begin_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VX_begin( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VX_begin', self.objectHandle, t__XO );
+    function res = VX_begin( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VX_begin', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VX_begin_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VX_begin_D', self.objectHandle, t__XO );
+    function res = VX_begin_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VX_begin_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VX_begin_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VX_begin_DD', self.objectHandle, t__XO );
+    function res = VX_begin_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VX_begin_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VY_begin( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VY_begin', self.objectHandle, t__XO );
+    function res = VY_begin( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VY_begin', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VY_begin_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VY_begin_D', self.objectHandle, t__XO );
+    function res = VY_begin_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VY_begin_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VY_begin_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VY_begin_DD', self.objectHandle, t__XO );
+    function res = VY_begin_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VY_begin_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VZ_begin( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VZ_begin', self.objectHandle, t__XO );
+    function res = VZ_begin( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VZ_begin', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VZ_begin_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VZ_begin_D', self.objectHandle, t__XO );
+    function res = VZ_begin_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VZ_begin_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VZ_begin_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VZ_begin_DD', self.objectHandle, t__XO );
+    function res = VZ_begin_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VZ_begin_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = X_end( self, t__XO )
-      res = gtocX_2burn_pars_Mex('X_end', self.objectHandle, t__XO );
+    function res = X_end( self, xo__t )
+      res = gtocX_2burn_pars_Mex('X_end', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = X_end_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('X_end_D', self.objectHandle, t__XO );
+    function res = X_end_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('X_end_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = X_end_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('X_end_DD', self.objectHandle, t__XO );
+    function res = X_end_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('X_end_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Y_end( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Y_end', self.objectHandle, t__XO );
+    function res = Y_end( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Y_end', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Y_end_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Y_end_D', self.objectHandle, t__XO );
+    function res = Y_end_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Y_end_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Y_end_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Y_end_DD', self.objectHandle, t__XO );
+    function res = Y_end_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Y_end_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Z_end( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Z_end', self.objectHandle, t__XO );
+    function res = Z_end( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Z_end', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Z_end_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Z_end_D', self.objectHandle, t__XO );
+    function res = Z_end_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Z_end_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = Z_end_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('Z_end_DD', self.objectHandle, t__XO );
+    function res = Z_end_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('Z_end_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VX_end( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VX_end', self.objectHandle, t__XO );
+    function res = VX_end( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VX_end', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VX_end_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VX_end_D', self.objectHandle, t__XO );
+    function res = VX_end_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VX_end_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VX_end_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VX_end_DD', self.objectHandle, t__XO );
+    function res = VX_end_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VX_end_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VY_end( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VY_end', self.objectHandle, t__XO );
+    function res = VY_end( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VY_end', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VY_end_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VY_end_D', self.objectHandle, t__XO );
+    function res = VY_end_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VY_end_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VY_end_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VY_end_DD', self.objectHandle, t__XO );
+    function res = VY_end_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VY_end_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VZ_end( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VZ_end', self.objectHandle, t__XO );
+    function res = VZ_end( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VZ_end', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VZ_end_D( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VZ_end_D', self.objectHandle, t__XO );
+    function res = VZ_end_D( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VZ_end_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = VZ_end_DD( self, t__XO )
-      res = gtocX_2burn_pars_Mex('VZ_end_DD', self.objectHandle, t__XO );
+    function res = VZ_end_DD( self, xo__t )
+      res = gtocX_2burn_pars_Mex('VZ_end_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = p_guess( self, t__XO )
-      res = gtocX_2burn_pars_Mex('p_guess', self.objectHandle, t__XO );
+    function res = p_guess( self, xo__t )
+      res = gtocX_2burn_pars_Mex('p_guess', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = f_guess( self, t__XO )
-      res = gtocX_2burn_pars_Mex('f_guess', self.objectHandle, t__XO );
+    function res = f_guess( self, xo__t )
+      res = gtocX_2burn_pars_Mex('f_guess', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = g_guess( self, t__XO )
-      res = gtocX_2burn_pars_Mex('g_guess', self.objectHandle, t__XO );
+    function res = g_guess( self, xo__t )
+      res = gtocX_2burn_pars_Mex('g_guess', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = h_guess( self, t__XO )
-      res = gtocX_2burn_pars_Mex('h_guess', self.objectHandle, t__XO );
+    function res = h_guess( self, xo__t )
+      res = gtocX_2burn_pars_Mex('h_guess', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = k_guess( self, t__XO )
-      res = gtocX_2burn_pars_Mex('k_guess', self.objectHandle, t__XO );
+    function res = k_guess( self, xo__t )
+      res = gtocX_2burn_pars_Mex('k_guess', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = L_guess( self, t__XO, t0__XO )
-      res = gtocX_2burn_pars_Mex('L_guess', self.objectHandle, t__XO, t0__XO );
+    function res = L_guess( self, xo__t, xo__t0 )
+      res = gtocX_2burn_pars_Mex('L_guess', self.objectHandle, xo__t, xo__t0 );
     end
     % ---------------------------------------------------------------------
     function res = guess_setup( self )

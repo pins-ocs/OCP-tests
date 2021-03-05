@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type h0 = 0.1;
     real_type vFmax = 10;
+    real_type h0 = 0.1;
     real_type epsilon0 = 0.1;
     integer InfoLevel = 4;
 
@@ -157,15 +157,15 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["h"] = h0;
     data_clip["delta"] = 0;
+    data_clip["h"] = h0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_controlForce = data_Controls["controlForce"];
-    data_controlForce["type"]      = "QUADRATIC";
+    data_controlForce["type"]      = ;
     data_controlForce["epsilon"]   = epsilon0;
     data_controlForce["tolerance"] = 0.001;
 

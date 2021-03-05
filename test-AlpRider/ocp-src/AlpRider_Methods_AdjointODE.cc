@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,21 +73,21 @@ namespace AlpRiderDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[0];
+    real_type t1   = X__[iX_y1];
     real_type t2   = t1 * t1;
-    real_type t3   = X__[1];
+    real_type t3   = X__[iX_y2];
     real_type t4   = t3 * t3;
-    real_type t5   = X__[2];
+    real_type t5   = X__[iX_y3];
     real_type t6   = t5 * t5;
-    real_type t7   = X__[3];
+    real_type t7   = X__[iX_y4];
     real_type t8   = t7 * t7;
-    real_type t10  = q(Q__[0]);
+    real_type t10  = q(Q__[iQ_zeta]);
     real_type t12  = ALIAS_Ybound_D(t2 + t4 + t6 + t8 - t10);
-    real_type t15  = ModelPars[0];
-    result__[ 0   ] = 2 * t1 * t12 + 2 * t1 * t15 - 10 * L__[0];
-    result__[ 1   ] = 2 * t3 * t12 + 2 * t3 * t15 - 2 * L__[1];
-    real_type t28  = L__[2];
-    real_type t30  = L__[3];
+    real_type t15  = ModelPars[iM_W];
+    result__[ 0   ] = 2 * t1 * t12 + 2 * t1 * t15 - 10 * L__[iL_lambda1__xo];
+    result__[ 1   ] = 2 * t3 * t12 + 2 * t3 * t15 - 2 * L__[iL_lambda2__xo];
+    real_type t28  = L__[iL_lambda3__xo];
+    real_type t30  = L__[iL_lambda4__xo];
     result__[ 2   ] = 2 * t5 * t12 + 2 * t5 * t15 - 3 * t28 + 5 * t30;
     result__[ 3   ] = 2 * t7 * t12 + 2 * t7 * t15 + 5 * t28 - 3 * t30;
     if ( m_debug )
@@ -144,20 +144,20 @@ namespace AlpRiderDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[0];
+    real_type t1   = X__[iX_y1];
     real_type t2   = t1 * t1;
-    real_type t3   = X__[1];
+    real_type t3   = X__[iX_y2];
     real_type t4   = t3 * t3;
-    real_type t5   = X__[2];
+    real_type t5   = X__[iX_y3];
     real_type t6   = t5 * t5;
-    real_type t7   = X__[3];
+    real_type t7   = X__[iX_y4];
     real_type t8   = t7 * t7;
-    real_type t10  = q(Q__[0]);
+    real_type t10  = q(Q__[iQ_zeta]);
     real_type t11  = t2 + t4 + t6 + t8 - t10;
     real_type t12  = ALIAS_Ybound_DD(t11);
     real_type t15  = ALIAS_Ybound_D(t11);
     real_type t16  = 2 * t15;
-    real_type t18  = 2 * ModelPars[0];
+    real_type t18  = 2 * ModelPars[iM_W];
     result__[ 0   ] = 4 * t2 * t12 + t16 + t18;
     result__[ 1   ] = 4 * t1 * t3 * t12;
     real_type t21  = t5 * t12;
@@ -239,12 +239,12 @@ namespace AlpRiderDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = L__[0];
-    real_type t4   = L__[1];
-    real_type t5   = L__[2];
-    real_type t6   = L__[3];
-    result__[ 0   ] = 0.2e-1 * U__[0] + t3 + t4 + t5 + t6;
-    result__[ 1   ] = 0.2e-1 * U__[1] + t3 + 2 * t4 - t5 + 3 * t6;
+    real_type t3   = L__[iL_lambda1__xo];
+    real_type t4   = L__[iL_lambda2__xo];
+    real_type t5   = L__[iL_lambda3__xo];
+    real_type t6   = L__[iL_lambda4__xo];
+    result__[ 0   ] = 0.2e-1 * U__[iU_u1] + t3 + t4 + t5 + t6;
+    result__[ 1   ] = 0.2e-1 * U__[iU_u2] + t3 + 2 * t4 - t5 + 3 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }
@@ -403,10 +403,10 @@ namespace AlpRiderDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
-    result__[ 3   ] = L__[3];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
   }

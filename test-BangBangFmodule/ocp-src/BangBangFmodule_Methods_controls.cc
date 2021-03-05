@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,10 +87,10 @@ namespace BangBangFmoduleDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[1];
-    real_type t4   = ALIAS_controlP_D_1(U__[0], 0, ModelPars[1]);
+    real_type t1   = L__[iL_lambda2__xo];
+    real_type t4   = ALIAS_controlP_D_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
     result__[ 0   ] = 1 + t1 + t4;
-    real_type t7   = ALIAS_controlM_D_1(U__[1], 0, ModelPars[0]);
+    real_type t7   = ALIAS_controlM_D_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
     result__[ 1   ] = 1 - t1 + t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
@@ -176,8 +176,8 @@ namespace BangBangFmoduleDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ALIAS_controlP_D_1_1(U__[0], 0, ModelPars[1]);
-    result__[ 1   ] = ALIAS_controlM_D_1_1(U__[1], 0, ModelPars[0]);
+    result__[ 0   ] = ALIAS_controlP_D_1_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
+    result__[ 1   ] = ALIAS_controlM_D_1_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -212,9 +212,9 @@ namespace BangBangFmoduleDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[1];
-    U__[ iU_Fp ] = controlP.solve(-1 - t1, 0, ModelPars[1]);
-    U__[ iU_Fm ] = controlM.solve(-1 + t1, 0, ModelPars[0]);
+    real_type t1   = L__[iL_lambda2__xo];
+    U__[ iU_Fp ] = controlP.solve(-1 - t1, 0, ModelPars[iM_FpMax]);
+    U__[ iU_Fm ] = controlM.solve(-1 + t1, 0, ModelPars[iM_FmMax]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -269,8 +269,8 @@ namespace BangBangFmoduleDefine {
     DuDxlp(1, 1) = 0;
     DuDxlp(0, 2) = 0;
     DuDxlp(1, 2) = 0;
-    DuDxlp(0, 3) = -controlP.solve_rhs(-1 - L__[1], 0, ModelPars[1]);
-    DuDxlp(1, 3) = controlM.solve_rhs(-1 + L__[1], 0, ModelPars[0]);
+    DuDxlp(0, 3) = -controlP.solve_rhs(-1 - L__[iL_lambda2__xo], 0, ModelPars[iM_FpMax]);
+    DuDxlp(1, 3) = controlM.solve_rhs(-1 + L__[iL_lambda2__xo], 0, ModelPars[iM_FmMax]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MinimumEnergyProblem_Methods.cc                                |
+ |  file: MinimumEnergyProblem_Methods_ODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,8 +69,8 @@ namespace MinimumEnergyProblemDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
-    result__[ 1   ] = U__[0];
+    result__[ 0   ] = X__[iX_x2];
+    result__[ 1   ] = U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
   }
@@ -236,4 +236,4 @@ namespace MinimumEnergyProblemDefine {
 
 }
 
-// EOF: MinimumEnergyProblem_Methods.cc
+// EOF: MinimumEnergyProblem_Methods_ODE.cc

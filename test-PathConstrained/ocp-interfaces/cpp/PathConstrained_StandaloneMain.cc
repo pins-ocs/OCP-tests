@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -154,14 +154,14 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
-    data_uControl["type"]      = "COS_LOGARITHMIC";
+    data_uControl["type"]      = ;
     data_uControl["epsilon"]   = epsi_ctrl;
     data_uControl["tolerance"] = tol_ctrl;
 
 
 
     // Constraint1D
-    // Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
@@ -175,8 +175,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 PathConstrained_data.Mesh["s0"] = 0;
-PathConstrained_data.Mesh["segments"][0]["n"] = 400;
 PathConstrained_data.Mesh["segments"][0]["length"] = 1;
+PathConstrained_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

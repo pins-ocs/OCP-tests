@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Zermelo_Methods1.cc                                            |
+ |  file: Zermelo_Methods_UserFunctions.cc                               |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -54,65 +54,161 @@ namespace ZermeloDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  Zermelo::velX( real_type x__XO, real_type y__XO ) const {
-    return -y__XO;
+  Zermelo::velX( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = -xo__y;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velX( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velX_D_1( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  Zermelo::velX_D_1( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velX_D_1( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velX_D_1_1( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  Zermelo::velX_D_1_1( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velX_D_1_1( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velX_D_1_2( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  Zermelo::velX_D_1_2( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velX_D_1_2( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velX_D_2( real_type x__XO, real_type y__XO ) const {
-    return -1;
+  Zermelo::velX_D_2( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = -1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velX_D_2( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velX_D_2_2( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  Zermelo::velX_D_2_2( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velX_D_2_2( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velY( real_type x__XO, real_type y__XO ) const {
-    return x__XO;
+  Zermelo::velY( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = xo__x;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velY( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velY_D_1( real_type x__XO, real_type y__XO ) const {
-    return 1;
+  Zermelo::velY_D_1( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velY_D_1( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velY_D_1_1( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  Zermelo::velY_D_1_1( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velY_D_1_1( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velY_D_1_2( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  Zermelo::velY_D_1_2( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velY_D_1_2( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velY_D_2( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  Zermelo::velY_D_2( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velY_D_2( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  Zermelo::velY_D_2_2( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  Zermelo::velY_D_2_2( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_velY_D_2_2( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: Zermelo_Methods1.cc
+// EOF: Zermelo_Methods_UserFunctions.cc

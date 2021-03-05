@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods.cc                                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,11 +71,11 @@ namespace Brachiostocrona2Define {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
-    real_type t2   = P__[0];
-    real_type t4   = U__[0];
+    real_type t2   = P__[iP_T];
+    real_type t4   = U__[iU_theta];
     real_type t5   = cos(t4);
     real_type t9   = sin(t4);
-    result__[ 2   ] = t5 * t2 * L__[0] + t9 * t2 * L__[1];
+    result__[ 2   ] = t5 * t2 * L__[iL_lambda1__xo] + t9 * t2 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
@@ -149,10 +149,10 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[0];
+    real_type t2   = U__[iU_theta];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
-    result__[ 0   ] = t3 * L__[0] + t6 * L__[1];
+    result__[ 0   ] = t3 * L__[iL_lambda1__xo] + t6 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDp_sparse", 1, i_segment );
   }
@@ -182,12 +182,12 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[0];
-    real_type t4   = X__[2];
-    real_type t5   = U__[0];
+    real_type t2   = P__[iP_T];
+    real_type t4   = X__[iX_v];
+    real_type t5   = U__[iU_theta];
     real_type t6   = sin(t5);
     real_type t11  = cos(t5);
-    result__[ 0   ] = t11 * t4 * t2 * L__[1] - t11 * ModelPars[2] * t2 * L__[2] - t6 * t4 * t2 * L__[0];
+    result__[ 0   ] = t11 * t4 * t2 * L__[iL_lambda2__xo] - t11 * ModelPars[iM_g] * t2 * L__[iL_lambda3__xo] - t6 * t4 * t2 * L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -228,11 +228,11 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[0];
-    real_type t4   = U__[0];
+    real_type t2   = P__[iP_T];
+    real_type t4   = U__[iU_theta];
     real_type t5   = sin(t4);
     real_type t9   = cos(t4);
-    result__[ 0   ] = -t5 * t2 * L__[0] + t9 * t2 * L__[1];
+    result__[ 0   ] = -t2 * t5 * L__[iL_lambda1__xo] + t2 * t9 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
@@ -273,11 +273,11 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[2];
-    real_type t4   = U__[0];
+    real_type t2   = X__[iX_v];
+    real_type t4   = U__[iU_theta];
     real_type t5   = sin(t4);
     real_type t9   = cos(t4);
-    result__[ 0   ] = -t5 * t2 * L__[0] + t9 * t2 * L__[1] - t9 * ModelPars[2] * L__[2];
+    result__[ 0   ] = -t2 * t5 * L__[iL_lambda1__xo] + t2 * t9 * L__[iL_lambda2__xo] - t9 * ModelPars[iM_g] * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
@@ -308,11 +308,11 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[2];
-    real_type t4   = U__[0];
+    real_type t2   = X__[iX_v];
+    real_type t4   = U__[iU_theta];
     real_type t5   = cos(t4);
     real_type t9   = sin(t4);
-    result__[ 0   ] = t5 * t2 * L__[0] + t9 * t2 * L__[1] - t9 * ModelPars[2] * L__[2];
+    result__[ 0   ] = t5 * t2 * L__[iL_lambda1__xo] + t9 * t2 * L__[iL_lambda2__xo] - t9 * ModelPars[iM_g] * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
@@ -374,9 +374,9 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = ModelPars[4] * L__[2];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = ModelPars[iM_mass] * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }
@@ -469,7 +469,7 @@ namespace Brachiostocrona2Define {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
-    result__[ 2   ] = ModelPars[4] * V__[2];
+    result__[ 2   ] = ModelPars[iM_mass] * V__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );
   }

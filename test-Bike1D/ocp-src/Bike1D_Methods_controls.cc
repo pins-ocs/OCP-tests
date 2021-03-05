@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -96,14 +96,14 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = L__[0] * ModelPars[1];
-    real_type t4   = X__[0];
+    real_type t3   = L__[iL_lambda1__xo] * ModelPars[iM_g];
+    real_type t4   = X__[iX_v];
     real_type t5   = 1.0 / t4;
     real_type t8   = Tmax_normalized(t4);
-    real_type t10  = clip(t8, 0, ModelPars[4]);
-    real_type t11  = ALIAS_murControl_D_1(U__[0], ModelPars[5], t10);
+    real_type t10  = clip(t8, 0, ModelPars[iM_mur_max]);
+    real_type t11  = ALIAS_murControl_D_1(U__[iU_mur], ModelPars[iM_mur_min], t10);
     result__[ 0   ] = t11 * t5 + t3;
-    real_type t15  = ALIAS_mufControl_D_1(U__[1], ModelPars[3], 0);
+    real_type t15  = ALIAS_mufControl_D_1(U__[iU_muf], ModelPars[iM_muf_min], 0);
     result__[ 1   ] = t15 * t5 + t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
@@ -148,21 +148,21 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[0];
+    real_type t1   = X__[iX_v];
     real_type t2   = t1 * t1;
     real_type t3   = 1.0 / t2;
-    real_type t4   = U__[0];
-    real_type t5   = ModelPars[5];
+    real_type t4   = U__[iU_mur];
+    real_type t5   = ModelPars[iM_mur_min];
     real_type t6   = Tmax_normalized(t1);
-    real_type t7   = ModelPars[4];
+    real_type t7   = ModelPars[iM_mur_max];
     real_type t8   = clip(t6, 0, t7);
     real_type t9   = ALIAS_murControl_D_1(t4, t5, t8);
     real_type t12  = ALIAS_murControl_D_1_3(t4, t5, t8);
     real_type t14  = ALIAS_clip_D_1(t6, 0, t7);
     real_type t15  = Tmax_normalized_D(t1);
     result__[ 0   ] = -t9 * t3 + t15 * t14 * t12 / t1;
-    result__[ 1   ] = ModelPars[1];
-    real_type t20  = ALIAS_mufControl_D_1(U__[1], ModelPars[3], 0);
+    result__[ 1   ] = ModelPars[iM_g];
+    real_type t20  = ALIAS_mufControl_D_1(U__[iU_muf], ModelPars[iM_muf_min], 0);
     result__[ 2   ] = -t20 * t3;
     result__[ 3   ] = result__[1];
     if ( m_debug )
@@ -206,13 +206,13 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[0];
+    real_type t1   = X__[iX_v];
     real_type t2   = 1.0 / t1;
     real_type t5   = Tmax_normalized(t1);
-    real_type t7   = clip(t5, 0, ModelPars[4]);
-    real_type t8   = ALIAS_murControl_D_1_1(U__[0], ModelPars[5], t7);
+    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
+    real_type t8   = ALIAS_murControl_D_1_1(U__[iU_mur], ModelPars[iM_mur_min], t7);
     result__[ 0   ] = t8 * t2;
-    real_type t11  = ALIAS_mufControl_D_1_1(U__[1], ModelPars[3], 0);
+    real_type t11  = ALIAS_mufControl_D_1_1(U__[iU_muf], ModelPars[iM_muf_min], 0);
     result__[ 1   ] = t11 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
@@ -248,12 +248,12 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = X__[0];
-    real_type t5   = t4 * ModelPars[1] * L__[0];
+    real_type t4   = X__[iX_v];
+    real_type t5   = t4 * ModelPars[iM_g] * L__[iL_lambda1__xo];
     real_type t7   = Tmax_normalized(t4);
-    real_type t9   = clip(t7, 0, ModelPars[4]);
-    U__[ iU_mur ] = murControl.solve(-t5, ModelPars[5], t9);
-    U__[ iU_muf ] = mufControl.solve(-t5, ModelPars[3], 0);
+    real_type t9   = clip(t7, 0, ModelPars[iM_mur_max]);
+    U__[ iU_mur ] = murControl.solve(-t5, ModelPars[iM_mur_min], t9);
+    U__[ iU_muf ] = mufControl.solve(-t5, ModelPars[iM_muf_min], 0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -300,10 +300,10 @@ namespace Bike1DDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = -murControl.solve_rhs(-L__[0] * ModelPars[1] * X__[0], ModelPars[5], clip(Tmax_normalized(X__[0]), 0, ModelPars[4])) * L__[0] * ModelPars[1] + murControl.solve_b(-L__[0] * ModelPars[1] * X__[0], ModelPars[5], clip(Tmax_normalized(X__[0]), 0, ModelPars[4])) * ALIAS_clip_D_1(Tmax_normalized(X__[0]), 0, ModelPars[4]) * Tmax_normalized_D(X__[0]);
-    DuDxlp(1, 0) = -mufControl.solve_rhs(-L__[0] * ModelPars[1] * X__[0], ModelPars[3], 0) * L__[0] * ModelPars[1];
-    DuDxlp(0, 1) = -murControl.solve_rhs(-L__[0] * ModelPars[1] * X__[0], ModelPars[5], clip(Tmax_normalized(X__[0]), 0, ModelPars[4])) * ModelPars[1] * X__[0];
-    DuDxlp(1, 1) = -mufControl.solve_rhs(-L__[0] * ModelPars[1] * X__[0], ModelPars[3], 0) * ModelPars[1] * X__[0];
+    DuDxlp(0, 0) = -murControl.solve_rhs(-L__[iL_lambda1__xo] * ModelPars[iM_g] * X__[iX_v], ModelPars[iM_mur_min], clip(Tmax_normalized(X__[iX_v]), 0, ModelPars[iM_mur_max])) * L__[iL_lambda1__xo] * ModelPars[iM_g] + murControl.solve_b(-L__[iL_lambda1__xo] * ModelPars[iM_g] * X__[iX_v], ModelPars[iM_mur_min], clip(Tmax_normalized(X__[iX_v]), 0, ModelPars[iM_mur_max])) * ALIAS_clip_D_1(Tmax_normalized(X__[iX_v]), 0, ModelPars[iM_mur_max]) * Tmax_normalized_D(X__[iX_v]);
+    DuDxlp(1, 0) = -mufControl.solve_rhs(-L__[iL_lambda1__xo] * ModelPars[iM_g] * X__[iX_v], ModelPars[iM_muf_min], 0) * L__[iL_lambda1__xo] * ModelPars[iM_g];
+    DuDxlp(0, 1) = -murControl.solve_rhs(-L__[iL_lambda1__xo] * ModelPars[iM_g] * X__[iX_v], ModelPars[iM_mur_min], clip(Tmax_normalized(X__[iX_v]), 0, ModelPars[iM_mur_max])) * ModelPars[iM_g] * X__[iX_v];
+    DuDxlp(1, 1) = -mufControl.solve_rhs(-L__[iL_lambda1__xo] * ModelPars[iM_g] * X__[iX_v], ModelPars[iM_muf_min], 0) * ModelPars[iM_g] * X__[iX_v];
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

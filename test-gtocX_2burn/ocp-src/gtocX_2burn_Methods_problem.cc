@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods1.cc                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -55,7 +55,7 @@ namespace gtocX_2burnDefine {
 
   void
   gtocX_2burn::continuationStep0( real_type s ) {
-    ModelPars[3] = s;
+    ModelPars[iM_w_guess] = s;
   }
   /*\
    |   ___         _   _               _   _
@@ -66,7 +66,7 @@ namespace gtocX_2burnDefine {
 
   void
   gtocX_2burn::continuationStep1( real_type s ) {
-    ModelPars[6] = s;
+    ModelPars[iM_w_nonlin] = s;
   }
 
   /*\
@@ -89,17 +89,17 @@ namespace gtocX_2burnDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[1];
-    real_type t2   = X__[5];
+    real_type t1   = X__[iX_f];
+    real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
-    real_type t5   = X__[2];
+    real_type t5   = X__[iX_g];
     real_type t6   = sin(t2);
     real_type t8   = t3 * t1 + t6 * t5 + 1;
     real_type t9   = ray_positive(t8);
-    real_type t12  = X__[0];
-    real_type t13  = Q__[0];
-    real_type t15  = ModelPars[2];
-    real_type t17  = ModelPars[1];
+    real_type t12  = X__[iX_p];
+    real_type t13  = Q__[iQ_zeta];
+    real_type t15  = ModelPars[iM_time_i];
+    real_type t17  = ModelPars[iM_time_f];
     real_type t19  = t15 * (1 - t13) + t17 * t13;
     real_type t20  = p_guess(t19);
     real_type t24  = pow(1.0 / t20 * t12 - 1, 2);
@@ -108,20 +108,21 @@ namespace gtocX_2burnDefine {
     real_type t28  = g_guess(t19);
     real_type t30  = pow(t5 - t28, 2);
     real_type t32  = h_guess(t19);
-    real_type t34  = pow(X__[3] - t32, 2);
+    real_type t34  = pow(X__[iX_h] - t32, 2);
     real_type t36  = k_guess(t19);
-    real_type t38  = pow(X__[4] - t36, 2);
+    real_type t38  = pow(X__[iX_k] - t36, 2);
     real_type t39  = L_guess(t19, t15);
     real_type t41  = pow(t2 - t39, 2);
     real_type t45  = t17 - t15;
     real_type t47  = sqrt(t12);
-    real_type t49  = ModelPars[0];
+    real_type t49  = ModelPars[iM_muS];
     real_type t50  = sqrt(t49);
-    real_type t53  = ModelPars[6] / t50;
+    real_type t53  = ModelPars[iM_w_nonlin] / t50;
     real_type t54  = ray(t12, t1, t5, t2);
     real_type t55  = acceleration_r(t54, t49);
     real_type t67  = t8 * t8;
-    return t9 + (t24 + t27 + t30 + t34 + t38 + t41) * (1 - ModelPars[3]) + t6 * t55 * t53 * t47 * t45 * L__[1] - t3 * t55 * t53 * t47 * t45 * L__[2] + t50 / t47 / t12 * t67 * t45 * L__[5];
+    real_type result__ = t9 + (t24 + t27 + t30 + t34 + t38 + t41) * (1 - ModelPars[iM_w_guess]) + t6 * t55 * t53 * t47 * t45 * L__[iL_lambda2__xo] - t3 * t55 * t53 * t47 * t45 * L__[iL_lambda3__xo] + t50 / t47 / t12 * t67 * t45 * L__[iL_lambda6__xo];
+    return result__;
   }
 
   /*\
@@ -141,10 +142,11 @@ namespace gtocX_2burnDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[5];
+    real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
-    return ray_positive(t3 * X__[1] + t6 * X__[2] + 1);
+    real_type result__ = ray_positive(t3 * X__[iX_f] + t6 * X__[iX_g] + 1);
+    return result__;
   }
 
   real_type
@@ -157,7 +159,8 @@ namespace gtocX_2burnDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -178,22 +181,23 @@ namespace gtocX_2burnDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = Q__[0];
-    real_type t6   = ModelPars[2];
-    real_type t10  = t6 * (1 - t4) + ModelPars[1] * t4;
+    real_type t4   = Q__[iQ_zeta];
+    real_type t6   = ModelPars[iM_time_i];
+    real_type t10  = t6 * (1 - t4) + ModelPars[iM_time_f] * t4;
     real_type t11  = p_guess(t10);
-    real_type t15  = pow(1.0 / t11 * X__[0] - 1, 2);
+    real_type t15  = pow(1.0 / t11 * X__[iX_p] - 1, 2);
     real_type t17  = f_guess(t10);
-    real_type t19  = pow(X__[1] - t17, 2);
+    real_type t19  = pow(X__[iX_f] - t17, 2);
     real_type t21  = g_guess(t10);
-    real_type t23  = pow(X__[2] - t21, 2);
+    real_type t23  = pow(X__[iX_g] - t21, 2);
     real_type t25  = h_guess(t10);
-    real_type t27  = pow(X__[3] - t25, 2);
+    real_type t27  = pow(X__[iX_h] - t25, 2);
     real_type t29  = k_guess(t10);
-    real_type t31  = pow(X__[4] - t29, 2);
+    real_type t31  = pow(X__[iX_k] - t29, 2);
     real_type t33  = L_guess(t10, t6);
-    real_type t35  = pow(X__[5] - t33, 2);
-    return (t15 + t19 + t23 + t27 + t31 + t35) * (1 - ModelPars[3]);
+    real_type t35  = pow(X__[iX_L] - t33, 2);
+    real_type result__ = (t15 + t19 + t23 + t27 + t31 + t35) * (1 - ModelPars[iM_w_guess]);
+    return result__;
   }
 
   /*\
@@ -218,7 +222,8 @@ namespace gtocX_2burnDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -328,18 +333,18 @@ namespace gtocX_2burnDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = XR__[3] - XL__[3];
-    result__[ 4   ] = XR__[4] - XL__[4];
-    result__[ 5   ] = XR__[5] - XL__[5];
-    result__[ 6   ] = LR__[0] - LL__[0];
-    result__[ 7   ] = LR__[1] - LL__[1];
-    result__[ 8   ] = LR__[2] - LL__[2];
-    result__[ 9   ] = LR__[3] - LL__[3];
-    result__[ 10  ] = LR__[4] - LL__[4];
-    result__[ 11  ] = LR__[5] - LL__[5];
+    result__[ 0   ] = XR__[iX_p] - XL__[iX_p];
+    result__[ 1   ] = XR__[iX_f] - XL__[iX_f];
+    result__[ 2   ] = XR__[iX_g] - XL__[iX_g];
+    result__[ 3   ] = XR__[iX_h] - XL__[iX_h];
+    result__[ 4   ] = XR__[iX_k] - XL__[iX_k];
+    result__[ 5   ] = XR__[iX_L] - XL__[iX_L];
+    result__[ 6   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 7   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 8   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
+    result__[ 9   ] = LR__[iL_lambda4__xo] - LL__[iL_lambda4__xo];
+    result__[ 10  ] = LR__[iL_lambda5__xo] - LL__[iL_lambda5__xo];
+    result__[ 11  ] = LR__[iL_lambda6__xo] - LL__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 12, i_segment_left, i_segment_right );
   }
@@ -460,16 +465,16 @@ namespace gtocX_2burnDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = Q__[0];
-    result__[ 0   ] = ModelPars[2] * (1 - t1) + ModelPars[1] * t1;
-    real_type t7   = X__[0];
-    real_type t8   = X__[1];
-    real_type t9   = X__[2];
-    real_type t10  = X__[5];
+    real_type t1   = Q__[iQ_zeta];
+    result__[ 0   ] = ModelPars[iM_time_i] * (1 - t1) + ModelPars[iM_time_f] * t1;
+    real_type t7   = X__[iX_p];
+    real_type t8   = X__[iX_f];
+    real_type t9   = X__[iX_g];
+    real_type t10  = X__[iX_L];
     result__[ 1   ] = ray(t7, t8, t9, t10);
-    real_type t11  = X__[3];
-    real_type t12  = X__[4];
-    real_type t13  = ModelPars[5];
+    real_type t11  = X__[iX_h];
+    real_type t12  = X__[iX_k];
+    real_type t13  = ModelPars[iM_retrograde];
     result__[ 2   ] = xPosition(t7, t8, t9, t11, t12, t10, t13);
     result__[ 3   ] = yPosition(t7, t8, t9, t11, t12, t10, t13);
     result__[ 4   ] = zPosition(t7, t8, t9, t11, t12, t10, t13);

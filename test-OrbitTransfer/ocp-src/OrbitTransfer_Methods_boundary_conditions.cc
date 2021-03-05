@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,14 +73,14 @@ namespace OrbitTransferDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0] - ModelPars[1];
-    result__[ 1   ] = XL__[1];
-    result__[ 2   ] = XL__[2] - ModelPars[4];
-    result__[ 3   ] = XL__[3];
-    result__[ 4   ] = XL__[4] - ModelPars[6];
-    result__[ 5   ] = XR__[3];
-    real_type t12  = sqrt(ModelPars[3] / XR__[2]);
-    result__[ 6   ] = XR__[4] - t12;
+    result__[ 0   ] = XL__[iX_m] - ModelPars[iM_m0];
+    result__[ 1   ] = XL__[iX_alpha];
+    result__[ 2   ] = XL__[iX_r] - ModelPars[iM_r0];
+    result__[ 3   ] = XL__[iX_u];
+    result__[ 4   ] = XL__[iX_v] - ModelPars[iM_v0];
+    result__[ 5   ] = XR__[iX_u];
+    real_type t12  = sqrt(ModelPars[iM_mu] / XR__[iX_r]);
+    result__[ 6   ] = XR__[iX_v] - t12;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 7, i_segment_left, i_segment_right );
   }
@@ -135,8 +135,8 @@ namespace OrbitTransferDefine {
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
     result__[ 5   ] = 1;
-    real_type t1   = ModelPars[3];
-    real_type t2   = XR__[2];
+    real_type t1   = ModelPars[iM_mu];
+    real_type t2   = XR__[iX_r];
     real_type t5   = sqrt(1.0 / t2 * t1);
     real_type t8   = t2 * t2;
     result__[ 6   ] = 1.0 / t8 * t1 / t5 / 2;
@@ -202,21 +202,21 @@ namespace OrbitTransferDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[3];
-    result__[ 1   ] = OMEGA__[1] + LL__[4];
-    result__[ 2   ] = OMEGA__[2] + LL__[0];
-    result__[ 3   ] = OMEGA__[3] + LL__[1];
-    result__[ 4   ] = OMEGA__[4] + LL__[2];
-    result__[ 5   ] = -LR__[3];
-    result__[ 6   ] = -LR__[4];
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda4__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda5__xo];
+    result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda1__xo];
+    result__[ 3   ] = OMEGA__[3] + LL__[iL_lambda2__xo];
+    result__[ 4   ] = OMEGA__[4] + LL__[iL_lambda3__xo];
+    result__[ 5   ] = -LR__[iL_lambda4__xo];
+    result__[ 6   ] = -LR__[iL_lambda5__xo];
     real_type t13  = OMEGA__[6];
-    real_type t14  = ModelPars[3];
-    real_type t15  = XR__[2];
+    real_type t14  = ModelPars[iM_mu];
+    real_type t15  = XR__[iX_r];
     real_type t18  = sqrt(1.0 / t15 * t14);
     real_type t21  = t15 * t15;
-    result__[ 7   ] = -1 + 1.0 / t21 * t14 / t18 * t13 / 2 - LR__[0];
-    result__[ 8   ] = OMEGA__[5] - LR__[1];
-    result__[ 9   ] = t13 - LR__[2];
+    result__[ 7   ] = -1 + 1.0 / t21 * t14 / t18 * t13 / 2 - LR__[iL_lambda1__xo];
+    result__[ 8   ] = OMEGA__[5] - LR__[iL_lambda2__xo];
+    result__[ 9   ] = t13 - LR__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 10, i_segment_left, i_segment_right );
   }
@@ -262,8 +262,8 @@ namespace OrbitTransferDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type t1   = OMEGA__[6];
-    real_type t2   = ModelPars[3];
-    real_type t3   = XR__[2];
+    real_type t2   = ModelPars[iM_mu];
+    real_type t3   = XR__[iX_r];
     real_type t5   = 1.0 / t3 * t2;
     real_type t6   = sqrt(t5);
     real_type t10  = t2 * t2;

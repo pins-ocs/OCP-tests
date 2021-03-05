@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Data.lua                                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,14 +20,14 @@
 -- User Header
 
 -- Auxiliary values
-jn_max                   = 65
+js_max                   = 30
+js_min                   = -50
 v_nom                    = 0.173
 deltaFeed                = v_nom
-js_min                   = -50
-js_max                   = 30
-mesh_segments            = 100
+jn_max                   = 65
 path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
+mesh_segments            = 100
 
 content = {
 
@@ -178,12 +178,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     jsControl = {
-      type      = 'LOGARITHMIC',
+      type      = ,
       epsilon   = 0.01,
       tolerance = 0.01,
     },
     jnControl = {
-      type      = 'LOGARITHMIC',
+      type      = ,
       epsilon   = 0.01,
       tolerance = 0.01,
     },
@@ -191,7 +191,7 @@ content = {
 
   Constraints = {
   -- Constraint1D
-  -- Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DGreaterThan
     timePositivesubType   = "BARRIER_LOG",

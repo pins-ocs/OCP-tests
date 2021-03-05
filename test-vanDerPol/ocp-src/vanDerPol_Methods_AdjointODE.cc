@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,12 +80,12 @@ namespace vanDerPolDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[0];
-    real_type t3   = L__[1];
-    real_type t4   = X__[1];
+    real_type t1   = X__[iX_x1];
+    real_type t3   = L__[iL_lambda2__xo];
+    real_type t4   = X__[iX_x2];
     result__[ 0   ] = 2 * t1 + (-2 * t4 * t1 - 1) * t3;
     real_type t11  = t1 * t1;
-    result__[ 1   ] = 2 * t4 + L__[0] + (-t11 + 1) * t3;
+    result__[ 1   ] = 2 * t4 + L__[iL_lambda1__xo] + (-t11 + 1) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 2, i_segment );
   }
@@ -128,9 +128,9 @@ namespace vanDerPolDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[1];
-    result__[ 0   ] = -2 * X__[1] * t1 + 2;
-    result__[ 1   ] = -2 * X__[0] * t1;
+    real_type t1   = L__[iL_lambda2__xo];
+    result__[ 0   ] = -2 * X__[iX_x2] * t1 + 2;
+    result__[ 1   ] = -2 * X__[iX_x1] * t1;
     result__[ 2   ] = result__[1];
     result__[ 3   ] = 2;
     if ( m_debug )
@@ -196,7 +196,7 @@ namespace vanDerPolDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[1];
+    result__[ 0   ] = L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -355,8 +355,8 @@ namespace vanDerPolDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
   }

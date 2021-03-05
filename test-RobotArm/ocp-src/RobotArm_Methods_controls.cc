@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -96,13 +96,13 @@ namespace RobotArmDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[0];
-    real_type t5   = ALIAS_u_rhoControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = t5 * t2 + t2 * L__[0];
-    real_type t10  = ALIAS_u_thetaControl_D_1(U__[1], -1, 1);
-    result__[ 1   ] = t10 * t2 + t2 * L__[1];
-    real_type t15  = ALIAS_u_phiControl_D_1(U__[2], -1, 1);
-    result__[ 2   ] = t15 * t2 + t2 * L__[2];
+    real_type t2   = P__[iP_T];
+    real_type t5   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
+    result__[ 0   ] = t5 * t2 + t2 * L__[iL_lambda1__xo];
+    real_type t10  = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
+    result__[ 1   ] = t10 * t2 + t2 * L__[iL_lambda2__xo];
+    real_type t15  = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);
+    result__[ 2   ] = t15 * t2 + t2 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 3, i_segment );
   }
@@ -148,15 +148,15 @@ namespace RobotArmDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = P__[0];
-    real_type t3   = ALIAS_u_rhoControl_D_1(U__[0], -1, 1);
-    result__[ 1   ] = L__[0] + t3;
+    result__[ 0   ] = P__[iP_T];
+    real_type t3   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
+    result__[ 1   ] = L__[iL_lambda1__xo] + t3;
     result__[ 2   ] = result__[0];
-    real_type t6   = ALIAS_u_thetaControl_D_1(U__[1], -1, 1);
-    result__[ 3   ] = L__[1] + t6;
+    real_type t6   = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
+    result__[ 3   ] = L__[iL_lambda2__xo] + t6;
     result__[ 4   ] = result__[2];
-    real_type t9   = ALIAS_u_phiControl_D_1(U__[2], -1, 1);
-    result__[ 5   ] = L__[2] + t9;
+    real_type t9   = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);
+    result__[ 5   ] = L__[iL_lambda3__xo] + t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 6, i_segment );
   }
@@ -199,12 +199,12 @@ namespace RobotArmDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    real_type t3   = ALIAS_u_rhoControl_D_1_1(U__[0], -1, 1);
+    real_type t1   = P__[iP_T];
+    real_type t3   = ALIAS_u_rhoControl_D_1_1(U__[iU_u_rho], -1, 1);
     result__[ 0   ] = t3 * t1;
-    real_type t5   = ALIAS_u_thetaControl_D_1_1(U__[1], -1, 1);
+    real_type t5   = ALIAS_u_thetaControl_D_1_1(U__[iU_u_theta], -1, 1);
     result__[ 1   ] = t5 * t1;
-    real_type t7   = ALIAS_u_phiControl_D_1_1(U__[2], -1, 1);
+    real_type t7   = ALIAS_u_phiControl_D_1_1(U__[iU_u_phi], -1, 1);
     result__[ 2   ] = t7 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 3, i_segment );
@@ -240,9 +240,9 @@ namespace RobotArmDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_u_rho   ] = u_rhoControl.solve(-L__[0], -1, 1);
-    U__[ iU_u_theta ] = u_thetaControl.solve(-L__[1], -1, 1);
-    U__[ iU_u_phi   ] = u_phiControl.solve(-L__[2], -1, 1);
+    U__[ iU_u_rho   ] = u_rhoControl.solve(-L__[iL_lambda1__xo], -1, 1);
+    U__[ iU_u_theta ] = u_thetaControl.solve(-L__[iL_lambda2__xo], -1, 1);
+    U__[ iU_u_phi   ] = u_phiControl.solve(-L__[iL_lambda3__xo], -1, 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -317,15 +317,15 @@ namespace RobotArmDefine {
     DuDxlp(0, 5) = 0;
     DuDxlp(1, 5) = 0;
     DuDxlp(2, 5) = 0;
-    DuDxlp(0, 6) = -u_rhoControl.solve_rhs(-L__[0], -1, 1);
+    DuDxlp(0, 6) = -u_rhoControl.solve_rhs(-L__[iL_lambda1__xo], -1, 1);
     DuDxlp(1, 6) = 0;
     DuDxlp(2, 6) = 0;
     DuDxlp(0, 7) = 0;
-    DuDxlp(1, 7) = -u_thetaControl.solve_rhs(-L__[1], -1, 1);
+    DuDxlp(1, 7) = -u_thetaControl.solve_rhs(-L__[iL_lambda2__xo], -1, 1);
     DuDxlp(2, 7) = 0;
     DuDxlp(0, 8) = 0;
     DuDxlp(1, 8) = 0;
-    DuDxlp(2, 8) = -u_phiControl.solve_rhs(-L__[2], -1, 1);
+    DuDxlp(2, 8) = -u_phiControl.solve_rhs(-L__[iL_lambda3__xo], -1, 1);
     DuDxlp(0, 9) = 0;
     DuDxlp(1, 9) = 0;
     DuDxlp(2, 9) = 0;

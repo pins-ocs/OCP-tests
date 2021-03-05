@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods.cc                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,17 +69,17 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[1];
-    real_type t2   = X__[2];
+    real_type t1   = L__[iL_lambda2__xo];
+    real_type t2   = X__[iX_x3];
     real_type t3   = t2 * t2;
-    real_type t5   = X__[0];
+    real_type t5   = X__[iX_x1];
     real_type t6   = t5 * t5;
     real_type t7   = 1.0 / t6;
-    real_type t14  = L__[2];
-    real_type t16  = X__[1] * t14;
+    real_type t14  = L__[iL_lambda3__xo];
+    real_type t16  = X__[iX_x2] * t14;
     result__[ 0   ] = (-t7 * t3 * t2 + 2 / t6 / t5) * t1 + t7 * t2 * t16;
     real_type t21  = 1.0 / t5;
-    result__[ 1   ] = -t21 * t2 * t14 + L__[0] - 1;
+    result__[ 1   ] = -t21 * t2 * t14 + L__[iL_lambda1__xo] - 1;
     result__[ 2   ] = 3 * t21 * t3 * t1 - t21 * t16;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
@@ -127,15 +127,15 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[1];
-    real_type t2   = X__[2];
+    real_type t1   = L__[iL_lambda2__xo];
+    real_type t2   = X__[iX_x3];
     real_type t3   = t2 * t2;
-    real_type t5   = X__[0];
+    real_type t5   = X__[iX_x1];
     real_type t6   = t5 * t5;
     real_type t8   = 1.0 / t6 / t5;
     real_type t11  = t6 * t6;
-    real_type t16  = L__[2];
-    real_type t18  = X__[1] * t16;
+    real_type t16  = L__[iL_lambda3__xo];
+    real_type t18  = X__[iX_x2] * t16;
     result__[ 0   ] = (2 * t8 * t3 * t2 - 6 / t11) * t1 - 2 * t8 * t2 * t18;
     real_type t23  = 1.0 / t6;
     result__[ 1   ] = t23 * t2 * t16;
@@ -209,12 +209,12 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[0];
-    real_type t4   = U__[0];
+    real_type t2   = ModelPars[iM_T];
+    real_type t4   = U__[iU_u];
     real_type t5   = cos(t4);
-    real_type t10  = 1.0 / (-Q__[0] * ModelPars[1] + 1);
+    real_type t10  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_md] + 1);
     real_type t15  = sin(t4);
-    result__[ 0   ] = -t10 * t15 * t2 * L__[2] + t10 * t5 * t2 * L__[1];
+    result__[ 0   ] = -t10 * t15 * t2 * L__[iL_lambda3__xo] + t10 * t5 * t2 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -373,9 +373,9 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }

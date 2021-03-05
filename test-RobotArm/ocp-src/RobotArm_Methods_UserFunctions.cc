@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: RobotArm_Methods1.cc                                           |
+ |  file: RobotArm_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,72 +79,144 @@ namespace RobotArmDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  RobotArm::I_phi( real_type rho__XO ) const {
-    real_type t2   = ModelPars[0] - rho__XO;
+  RobotArm::I_phi( real_type xo__rho ) const {
+    real_type t2   = ModelPars[iM_L] - xo__rho;
     real_type t3   = t2 * t2;
-    real_type t5   = rho__XO * rho__XO;
-    return t5 * rho__XO / 3 + t3 * t2 / 3;
+    real_type t5   = xo__rho * xo__rho;
+    real_type result__ = t3 * t2 / 3 + t5 * xo__rho / 3;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_I_phi( rho={} ) return {}\n",
+        xo__rho, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  RobotArm::I_phi_D( real_type rho__XO ) const {
-    real_type t1   = ModelPars[0];
-    return -(t1 - 2 * rho__XO) * t1;
+  RobotArm::I_phi_D( real_type xo__rho ) const {
+    real_type t1   = ModelPars[iM_L];
+    real_type result__ = -(t1 - 2 * xo__rho) * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_I_phi_D( rho={} ) return {}\n",
+        xo__rho, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  RobotArm::I_phi_DD( real_type rho__XO ) const {
-    return 2 * ModelPars[0];
+  RobotArm::I_phi_DD( real_type xo__rho ) const {
+    real_type result__ = 2 * ModelPars[iM_L];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_I_phi_DD( rho={} ) return {}\n",
+        xo__rho, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  RobotArm::I_theta( real_type rho__XO, real_type phi__XO ) const {
-    real_type t1   = I_phi(rho__XO);
-    real_type t2   = sin(phi__XO);
+  RobotArm::I_theta( real_type xo__rho, real_type xo__phi ) const {
+    real_type t1   = I_phi(xo__rho);
+    real_type t2   = sin(xo__phi);
     real_type t3   = t2 * t2;
-    return t3 * t1;
+    real_type result__ = t3 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_I_theta( rho={}, phi={} ) return {}\n",
+        xo__rho, xo__phi, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  RobotArm::I_theta_D_1( real_type rho__XO, real_type phi__XO ) const {
-    real_type t1   = I_phi_D(rho__XO);
-    real_type t2   = sin(phi__XO);
+  RobotArm::I_theta_D_1( real_type xo__rho, real_type xo__phi ) const {
+    real_type t1   = I_phi_D(xo__rho);
+    real_type t2   = sin(xo__phi);
     real_type t3   = t2 * t2;
-    return t3 * t1;
+    real_type result__ = t3 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_I_theta_D_1( rho={}, phi={} ) return {}\n",
+        xo__rho, xo__phi, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  RobotArm::I_theta_D_1_1( real_type rho__XO, real_type phi__XO ) const {
-    real_type t1   = I_phi_DD(rho__XO);
-    real_type t2   = sin(phi__XO);
+  RobotArm::I_theta_D_1_1( real_type xo__rho, real_type xo__phi ) const {
+    real_type t1   = I_phi_DD(xo__rho);
+    real_type t2   = sin(xo__phi);
     real_type t3   = t2 * t2;
-    return t3 * t1;
+    real_type result__ = t3 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_I_theta_D_1_1( rho={}, phi={} ) return {}\n",
+        xo__rho, xo__phi, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  RobotArm::I_theta_D_1_2( real_type rho__XO, real_type phi__XO ) const {
-    real_type t1   = I_phi_D(rho__XO);
-    real_type t2   = sin(phi__XO);
-    real_type t4   = cos(phi__XO);
-    return 2 * t4 * t2 * t1;
+  RobotArm::I_theta_D_1_2( real_type xo__rho, real_type xo__phi ) const {
+    real_type t1   = I_phi_D(xo__rho);
+    real_type t2   = sin(xo__phi);
+    real_type t4   = cos(xo__phi);
+    real_type result__ = 2 * t4 * t2 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_I_theta_D_1_2( rho={}, phi={} ) return {}\n",
+        xo__rho, xo__phi, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  RobotArm::I_theta_D_2( real_type rho__XO, real_type phi__XO ) const {
-    real_type t1   = I_phi(rho__XO);
-    real_type t2   = sin(phi__XO);
-    real_type t4   = cos(phi__XO);
-    return 2 * t4 * t2 * t1;
+  RobotArm::I_theta_D_2( real_type xo__rho, real_type xo__phi ) const {
+    real_type t1   = I_phi(xo__rho);
+    real_type t2   = sin(xo__phi);
+    real_type t4   = cos(xo__phi);
+    real_type result__ = 2 * t4 * t2 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_I_theta_D_2( rho={}, phi={} ) return {}\n",
+        xo__rho, xo__phi, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  RobotArm::I_theta_D_2_2( real_type rho__XO, real_type phi__XO ) const {
-    real_type t1   = cos(phi__XO);
+  RobotArm::I_theta_D_2_2( real_type xo__rho, real_type xo__phi ) const {
+    real_type t1   = cos(xo__phi);
     real_type t2   = t1 * t1;
-    real_type t5   = I_phi(rho__XO);
-    return t5 * (4 * t2 - 2);
+    real_type t5   = I_phi(xo__rho);
+    real_type result__ = t5 * (4 * t2 - 2);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_I_theta_D_2_2( rho={}, phi={} ) return {}\n",
+        xo__rho, xo__phi, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: RobotArm_Methods1.cc
+// EOF: RobotArm_Methods_UserFunctions.cc

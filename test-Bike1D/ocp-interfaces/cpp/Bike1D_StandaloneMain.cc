@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -164,13 +164,13 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_murControl = data_Controls["murControl"];
-    data_murControl["type"]      = "LOGARITHMIC";
+    data_murControl["type"]      = ;
     data_murControl["epsilon"]   = 0.001;
     data_murControl["tolerance"] = 0.001;
 
 
     GenericContainer & data_mufControl = data_Controls["mufControl"];
-    data_mufControl["type"]      = "LOGARITHMIC";
+    data_mufControl["type"]      = ;
     data_mufControl["epsilon"]   = 0.001;
     data_mufControl["tolerance"] = 0.001;
 

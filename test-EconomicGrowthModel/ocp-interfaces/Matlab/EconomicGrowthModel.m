@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: EconomicGrowthModel.m                                          %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -635,28 +635,28 @@ classdef EconomicGrowthModel < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = Q( self, x__XO, y__XO )
-      res = EconomicGrowthModel_Mex('Q', self.objectHandle, x__XO, y__XO );
+    function res = Q( self, xo__x, xo__y )
+      res = EconomicGrowthModel_Mex('Q', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = Q_D_1( self, x__XO, y__XO )
-      res = EconomicGrowthModel_Mex('Q_D_1', self.objectHandle, x__XO, y__XO );
+    function res = Q_D_1( self, xo__x, xo__y )
+      res = EconomicGrowthModel_Mex('Q_D_1', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = Q_D_2( self, x__XO, y__XO )
-      res = EconomicGrowthModel_Mex('Q_D_2', self.objectHandle, x__XO, y__XO );
+    function res = Q_D_2( self, xo__x, xo__y )
+      res = EconomicGrowthModel_Mex('Q_D_2', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = Q_D_1_1( self, x__XO, y__XO )
-      res = EconomicGrowthModel_Mex('Q_D_1_1', self.objectHandle, x__XO, y__XO );
+    function res = Q_D_1_1( self, xo__x, xo__y )
+      res = EconomicGrowthModel_Mex('Q_D_1_1', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = Q_D_1_2( self, x__XO, y__XO )
-      res = EconomicGrowthModel_Mex('Q_D_1_2', self.objectHandle, x__XO, y__XO );
+    function res = Q_D_1_2( self, xo__x, xo__y )
+      res = EconomicGrowthModel_Mex('Q_D_1_2', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
-    function res = Q_D_2_2( self, x__XO, y__XO )
-      res = EconomicGrowthModel_Mex('Q_D_2_2', self.objectHandle, x__XO, y__XO );
+    function res = Q_D_2_2( self, xo__x, xo__y )
+      res = EconomicGrowthModel_Mex('Q_D_2_2', self.objectHandle, xo__x, xo__y );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

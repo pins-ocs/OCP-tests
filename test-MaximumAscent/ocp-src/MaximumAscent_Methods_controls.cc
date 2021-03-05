@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,8 +67,8 @@ namespace MaximumAscentDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = arctan2(-L__[1], -L__[2]);
-    result__[ 0   ] = U__[0] - t4;
+    real_type t4   = arctan2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
+    result__[ 0   ] = U__[iU_alpha] - t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -110,8 +110,8 @@ namespace MaximumAscentDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[1];
-    real_type t2   = L__[2];
+    real_type t1   = L__[iL_lambda2__xo];
+    real_type t2   = L__[iL_lambda3__xo];
     result__[ 0   ] = arctan2_D_1(-t1, -t2);
     result__[ 1   ] = arctan2_D_2(-t1, -t2);
     if ( m_debug )
@@ -189,7 +189,7 @@ namespace MaximumAscentDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_alpha ] = arctan2(-L__[1], -L__[2]);
+    U__[ iU_alpha ] = arctan2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -247,8 +247,8 @@ namespace MaximumAscentDefine {
     DuDxlp(0, 2) = 0;
     DuDxlp(0, 3) = 0;
     DuDxlp(0, 4) = 0;
-    DuDxlp(0, 5) = -arctan2_D_1(-L__[1], -L__[2]);
-    DuDxlp(0, 6) = -arctan2_D_2(-L__[1], -L__[2]);
+    DuDxlp(0, 5) = -arctan2_D_1(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
+    DuDxlp(0, 6) = -arctan2_D_2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
     DuDxlp(0, 7) = 0;
   }
 

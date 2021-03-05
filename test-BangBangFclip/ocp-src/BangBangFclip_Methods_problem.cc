@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -72,8 +72,8 @@ namespace BangBangFclipDefine {
   void
   BangBangFclip::continuationStep0( real_type s ) {
     real_type t2   = 1 - s;
-    clip.update_h(s * ModelPars[1] + t2 * ModelPars[0]);
-    controlForce.update_epsilon(s * ModelPars[6] + ModelPars[5] * t2);
+    clip.update_h(s * ModelPars[iM_h1] + t2 * ModelPars[iM_h0]);
+    controlForce.update_epsilon(s * ModelPars[iM_epsilon1] + ModelPars[iM_epsilon0] * t2);
   }
 
   /*\
@@ -96,11 +96,12 @@ namespace BangBangFclipDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t8   = clip(X__[2], ModelPars[3], ModelPars[2]);
-    real_type t11  = U__[0];
-    real_type t13  = ModelPars[4];
+    real_type t8   = clip(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    real_type t11  = U__[iU_vF];
+    real_type t13  = ModelPars[iM_vFmax];
     real_type t14  = controlForce(t11, -t13, t13);
-    return t11 * L__[2] + t8 * L__[1] + L__[0] * X__[1] + t14;
+    real_type result__ = t11 * L__[iL_lambda3__xo] + t8 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t14;
+    return result__;
   }
 
   /*\
@@ -120,7 +121,8 @@ namespace BangBangFclipDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -133,8 +135,9 @@ namespace BangBangFclipDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[4];
-    return controlForce(U__[0], -t2, t2);
+    real_type t2   = ModelPars[iM_vFmax];
+    real_type result__ = controlForce(U__[iU_vF], -t2, t2);
+    return result__;
   }
 
   /*\
@@ -155,7 +158,8 @@ namespace BangBangFclipDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -180,7 +184,8 @@ namespace BangBangFclipDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return -XR__[0];
+    real_type result__ = -XR__[iX_x];
+    return result__;
   }
 
   /*\
@@ -290,12 +295,12 @@ namespace BangBangFclipDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = LR__[0] - LL__[0];
-    result__[ 4   ] = LR__[1] - LL__[1];
-    result__[ 5   ] = LR__[2] - LL__[2];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = XR__[iX_v] - XL__[iX_v];
+    result__[ 2   ] = XR__[iX_F] - XL__[iX_F];
+    result__[ 3   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 4   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 5   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 6, i_segment_left, i_segment_right );
   }
@@ -392,7 +397,7 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = clip(X__[2], ModelPars[3], ModelPars[2]);
+    result__[ 0   ] = clip(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
     Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 

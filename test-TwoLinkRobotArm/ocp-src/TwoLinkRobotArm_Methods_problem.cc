@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods1.cc                                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,7 +71,7 @@ namespace TwoLinkRobotArmDefine {
 
   void
   TwoLinkRobotArm::continuationStep0( real_type s ) {
-    ModelPars[1] = s;
+    ModelPars[iM_W] = s;
   }
   /*\
    |   ___         _   _               _   _
@@ -83,12 +83,12 @@ namespace TwoLinkRobotArmDefine {
   void
   TwoLinkRobotArm::continuationStep1( real_type s ) {
     real_type t2   = 1 - s;
-    real_type t3   = pow(ModelPars[2], t2);
-    real_type t5   = pow(ModelPars[3], s);
+    real_type t3   = pow(ModelPars[iM_u_epsilon0], t2);
+    real_type t5   = pow(ModelPars[iM_u_epsilon1], s);
     real_type t6   = t5 * t3;
     u1Control.update_epsilon(t6);
-    real_type t8   = pow(ModelPars[4], t2);
-    real_type t10  = pow(ModelPars[5], s);
+    real_type t8   = pow(ModelPars[iM_u_tolerance0], t2);
+    real_type t10  = pow(ModelPars[iM_u_tolerance1], s);
     real_type t11  = t10 * t8;
     u1Control.update_tolerance(t11);
     u2Control.update_epsilon(t6);
@@ -115,21 +115,22 @@ namespace TwoLinkRobotArmDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[0];
-    real_type t4   = X__[2];
+    real_type t2   = P__[iP_T];
+    real_type t4   = X__[iX_x3];
     real_type t5   = sin(t4);
     real_type t6   = cos(t4);
-    real_type t7   = X__[0];
+    real_type t7   = X__[iX_x1];
     real_type t8   = t7 * t7;
-    real_type t11  = X__[1];
+    real_type t11  = X__[iX_x2];
     real_type t12  = t11 * t11;
-    real_type t16  = U__[0];
-    real_type t18  = U__[1];
+    real_type t16  = U__[iU_u1];
+    real_type t18  = U__[iU_u2];
     real_type t23  = t5 * t5;
     real_type t26  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t23);
     real_type t50  = u1Control(t16, -1, 1);
     real_type t51  = u2Control(t18, -1, 1);
-    return t26 * ((9.0 / 4.0 * t8 * t6 + 2 * t12) * t5 + 4.0 / 3.0 * t16 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t6) * t2 * L__[0] - t26 * ((7.0 / 2.0 * t8 + 9.0 / 4.0 * t12 * t6) * t5 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t16 - t18) * t6) * t2 * L__[1] + (t11 - t7) * t2 * L__[2] + t7 * t2 * L__[3] + t50 + t51;
+    real_type result__ = t26 * ((9.0 / 4.0 * t8 * t6 + 2 * t12) * t5 + 4.0 / 3.0 * t16 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t6) * t2 * L__[iL_lambda1__xo] - t26 * ((7.0 / 2.0 * t8 + 9.0 / 4.0 * t12 * t6) * t5 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t16 - t18) * t6) * t2 * L__[iL_lambda2__xo] + (t11 - t7) * t2 * L__[iL_lambda3__xo] + t7 * t2 * L__[iL_lambda4__xo] + t50 + t51;
+    return result__;
   }
 
   /*\
@@ -149,7 +150,8 @@ namespace TwoLinkRobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -162,9 +164,10 @@ namespace TwoLinkRobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = u1Control(U__[0], -1, 1);
-    real_type t4   = u2Control(U__[1], -1, 1);
-    return t2 + t4;
+    real_type t2   = u1Control(U__[iU_u1], -1, 1);
+    real_type t4   = u2Control(U__[iU_u2], -1, 1);
+    real_type result__ = t2 + t4;
+    return result__;
   }
 
   /*\
@@ -185,7 +188,8 @@ namespace TwoLinkRobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -210,10 +214,11 @@ namespace TwoLinkRobotArmDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    real_type t1   = P__[0];
+    real_type t1   = P__[iP_T];
     real_type t2   = t1 * t1;
-    real_type t3   = ModelPars[1];
-    return 21 * t3 * t1 - t3 * t2 - 20 * t1 + t2 - 100 * t3 + 100;
+    real_type t3   = ModelPars[iM_W];
+    real_type result__ = 21 * t3 * t1 - t3 * t2 - 20 * t1 + t2 - 100 * t3 + 100;
+    return result__;
   }
 
   /*\
@@ -323,14 +328,14 @@ namespace TwoLinkRobotArmDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = XR__[3] - XL__[3];
-    result__[ 4   ] = LR__[0] - LL__[0];
-    result__[ 5   ] = LR__[1] - LL__[1];
-    result__[ 6   ] = LR__[2] - LL__[2];
-    result__[ 7   ] = LR__[3] - LL__[3];
+    result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
+    result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
+    result__[ 2   ] = XR__[iX_x3] - XL__[iX_x3];
+    result__[ 3   ] = XR__[iX_x4] - XL__[iX_x4];
+    result__[ 4   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 5   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 6   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
+    result__[ 7   ] = LR__[iL_lambda4__xo] - LL__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 8, i_segment_left, i_segment_right );
   }

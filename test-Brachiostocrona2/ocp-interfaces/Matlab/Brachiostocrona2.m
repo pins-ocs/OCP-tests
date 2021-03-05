@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Brachiostocrona2.m                                             %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -631,36 +631,36 @@ classdef Brachiostocrona2 < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = arctan2( self, y__XO, x__XO )
-      res = Brachiostocrona2_Mex('arctan2', self.objectHandle, y__XO, x__XO );
+    function res = arctan2( self, xo__y, xo__x )
+      res = Brachiostocrona2_Mex('arctan2', self.objectHandle, xo__y, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = arctan2_D_1( self, y__XO, x__XO )
-      res = Brachiostocrona2_Mex('arctan2_D_1', self.objectHandle, y__XO, x__XO );
+    function res = arctan2_D_1( self, xo__y, xo__x )
+      res = Brachiostocrona2_Mex('arctan2_D_1', self.objectHandle, xo__y, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = arctan2_D_2( self, y__XO, x__XO )
-      res = Brachiostocrona2_Mex('arctan2_D_2', self.objectHandle, y__XO, x__XO );
+    function res = arctan2_D_2( self, xo__y, xo__x )
+      res = Brachiostocrona2_Mex('arctan2_D_2', self.objectHandle, xo__y, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = theta_sol( self, v__XO, l1__XO, l2__XO, l3__XO )
-      res = Brachiostocrona2_Mex('theta_sol', self.objectHandle, v__XO, l1__XO, l2__XO, l3__XO );
+    function res = theta_sol( self, xo__v, xo__l1, xo__l2, xo__l3 )
+      res = Brachiostocrona2_Mex('theta_sol', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
     end
     % ---------------------------------------------------------------------
-    function res = theta_sol_D_1( self, v__XO, l1__XO, l2__XO, l3__XO )
-      res = Brachiostocrona2_Mex('theta_sol_D_1', self.objectHandle, v__XO, l1__XO, l2__XO, l3__XO );
+    function res = theta_sol_D_1( self, xo__v, xo__l1, xo__l2, xo__l3 )
+      res = Brachiostocrona2_Mex('theta_sol_D_1', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
     end
     % ---------------------------------------------------------------------
-    function res = theta_sol_D_2( self, v__XO, l1__XO, l2__XO, l3__XO )
-      res = Brachiostocrona2_Mex('theta_sol_D_2', self.objectHandle, v__XO, l1__XO, l2__XO, l3__XO );
+    function res = theta_sol_D_2( self, xo__v, xo__l1, xo__l2, xo__l3 )
+      res = Brachiostocrona2_Mex('theta_sol_D_2', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
     end
     % ---------------------------------------------------------------------
-    function res = theta_sol_D_3( self, v__XO, l1__XO, l2__XO, l3__XO )
-      res = Brachiostocrona2_Mex('theta_sol_D_3', self.objectHandle, v__XO, l1__XO, l2__XO, l3__XO );
+    function res = theta_sol_D_3( self, xo__v, xo__l1, xo__l2, xo__l3 )
+      res = Brachiostocrona2_Mex('theta_sol_D_3', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
     end
     % ---------------------------------------------------------------------
-    function res = theta_sol_D_4( self, v__XO, l1__XO, l2__XO, l3__XO )
-      res = Brachiostocrona2_Mex('theta_sol_D_4', self.objectHandle, v__XO, l1__XO, l2__XO, l3__XO );
+    function res = theta_sol_D_4( self, xo__v, xo__l1, xo__l2, xo__l3 )
+      res = Brachiostocrona2_Mex('theta_sol_D_4', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

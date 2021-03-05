@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: PointMassCarModel_1_Methods.cc                                 |
+ |  file: PointMassCarModel_1_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -167,17 +167,17 @@ namespace PointMassCarModel_1Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t1   = X__[2];
-    real_type t2   = X__[1];
+    real_type t1   = X__[iX_V];
+    real_type t2   = X__[iX_alpha];
     real_type t3   = sin(t2);
-    real_type t6   = Q__[1];
-    real_type t7   = inv_zeta__dot(t1, t2, X__[0], t6);
+    real_type t6   = Q__[iQ_Kappa];
+    real_type t7   = inv_zeta__dot(t1, t2, X__[iX_n], t6);
     result__[ 0   ] = t7 * t3 * t1;
-    result__[ 1   ] = t7 * X__[3] - t6;
-    real_type t10  = t1 * t1;
-    result__[ 2   ] = (-ModelPars[3] * t10 + X__[4]) * t7;
-    result__[ 3   ] = t7 * ModelPars[14] * U__[1];
-    result__[ 4   ] = t7 * ModelPars[15] * U__[0];
+    result__[ 1   ] = t7 * X__[iX_Omega] - t6;
+    real_type t11  = t1 * t1;
+    result__[ 2   ] = (-t11 * ModelPars[iM_kD] + X__[iX_fx]) * t7;
+    result__[ 3   ] = t7 * ModelPars[iM_v__Omega__max] * U__[iU_v__Omega];
+    result__[ 4   ] = t7 * ModelPars[iM_v__fx__max] * U__[iU_v__fx];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 5, i_segment );
   }
@@ -233,12 +233,12 @@ namespace PointMassCarModel_1Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t1   = X__[2];
-    real_type t2   = X__[1];
+    real_type t1   = X__[iX_V];
+    real_type t2   = X__[iX_alpha];
     real_type t3   = sin(t2);
     real_type t4   = t3 * t1;
-    real_type t5   = X__[0];
-    real_type t6   = Q__[1];
+    real_type t5   = X__[iX_n];
+    real_type t6   = Q__[iQ_Kappa];
     real_type t7   = inv_zeta__dot_D_3(t1, t2, t5, t6);
     result__[ 0   ] = t7 * t4;
     real_type t8   = cos(t2);
@@ -247,23 +247,23 @@ namespace PointMassCarModel_1Define {
     result__[ 1   ] = t10 * t8 * t1 + t12 * t4;
     real_type t15  = inv_zeta__dot_D_1(t1, t2, t5, t6);
     result__[ 2   ] = t10 * t3 + t15 * t4;
-    real_type t17  = X__[3];
+    real_type t17  = X__[iX_Omega];
     result__[ 3   ] = t7 * t17;
     result__[ 4   ] = t12 * t17;
     result__[ 5   ] = t15 * t17;
     result__[ 6   ] = t10;
-    real_type t18  = ModelPars[3];
-    real_type t19  = t1 * t1;
-    real_type t22  = -t19 * t18 + X__[4];
+    real_type t18  = t1 * t1;
+    real_type t19  = ModelPars[iM_kD];
+    real_type t22  = -t19 * t18 + X__[iX_fx];
     result__[ 7   ] = t22 * t7;
     result__[ 8   ] = t22 * t12;
-    result__[ 9   ] = -2 * t1 * t18 * result__[6] + t22 * t15;
+    result__[ 9   ] = -2 * t1 * t19 * result__[6] + t22 * t15;
     result__[ 10  ] = result__[6];
-    real_type t29  = ModelPars[14] * U__[1];
+    real_type t29  = ModelPars[iM_v__Omega__max] * U__[iU_v__Omega];
     result__[ 11  ] = t7 * t29;
     result__[ 12  ] = t12 * t29;
     result__[ 13  ] = t15 * t29;
-    real_type t32  = ModelPars[15] * U__[0];
+    real_type t32  = ModelPars[iM_v__fx__max] * U__[iU_v__fx];
     result__[ 14  ] = t7 * t32;
     result__[ 15  ] = t12 * t32;
     result__[ 16  ] = t15 * t32;
@@ -340,9 +340,9 @@ namespace PointMassCarModel_1Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t6   = inv_zeta__dot(X__[2], X__[1], X__[0], Q__[1]);
-    result__[ 0   ] = t6 * ModelPars[14];
-    result__[ 1   ] = t6 * ModelPars[15];
+    real_type t6   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
+    result__[ 0   ] = t6 * ModelPars[iM_v__Omega__max];
+    result__[ 1   ] = t6 * ModelPars[iM_v__fx__max];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
@@ -401,4 +401,4 @@ namespace PointMassCarModel_1Define {
 
 }
 
-// EOF: PointMassCarModel_1_Methods.cc
+// EOF: PointMassCarModel_1_Methods_ODE.cc

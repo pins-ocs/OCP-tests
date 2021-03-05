@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel.hh                                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define ECONOMICGROWTHMODEL_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace EconomicGrowthModelDefine {
 
@@ -165,11 +165,11 @@ namespace EconomicGrowthModelDefine {
     );
 
     ECONOMICGROWTHMODEL_API_DLL virtual
-    ~EconomicGrowthModel() MECHATRONIX_OVERRIDE;
+    ~EconomicGrowthModel() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ECONOMICGROWTHMODEL_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "EconomicGrowthModel"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -221,12 +221,12 @@ namespace EconomicGrowthModelDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    ECONOMICGROWTHMODEL_API_DLL real_type Q      ( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_1  ( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_1_1( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_1_2( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_2  ( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_2_2( real_type x__XO, real_type y__XO ) const;
+    ECONOMICGROWTHMODEL_API_DLL real_type Q      ( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_1  ( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_1_1( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_1_2( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_2  ( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL_API_DLL real_type Q_D_2_2( real_type xo__x, real_type xo__y ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -249,12 +249,12 @@ namespace EconomicGrowthModelDefine {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     ECONOMICGROWTHMODEL_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

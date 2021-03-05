@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -102,19 +102,19 @@ namespace RobotArmDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[0] - 0.45e1;
-    result__[ 1   ] = XL__[1];
+    result__[ 0   ] = XL__[iX_rho] - 0.45e1;
+    result__[ 1   ] = XL__[iX_theta];
     real_type t3   = 0.3141592654e1 / 4;
-    result__[ 2   ] = XL__[2] - t3;
-    result__[ 3   ] = XL__[3];
-    result__[ 4   ] = XL__[4];
-    result__[ 5   ] = XL__[5];
-    result__[ 6   ] = XR__[0] - 0.45e1;
-    result__[ 7   ] = XR__[1] - 2.0 / 3.0 * 0.3141592654e1;
-    result__[ 8   ] = XR__[2] - t3;
-    result__[ 9   ] = XR__[3];
-    result__[ 10  ] = XR__[4];
-    result__[ 11  ] = XR__[5];
+    result__[ 2   ] = XL__[iX_phi] - t3;
+    result__[ 3   ] = XL__[iX_rho1];
+    result__[ 4   ] = XL__[iX_theta1];
+    result__[ 5   ] = XL__[iX_phi1];
+    result__[ 6   ] = XR__[iX_rho] - 0.45e1;
+    result__[ 7   ] = XR__[iX_theta] - 2.0 / 3.0 * 0.3141592654e1;
+    result__[ 8   ] = XR__[iX_phi] - t3;
+    result__[ 9   ] = XR__[iX_rho1];
+    result__[ 10  ] = XR__[iX_theta1];
+    result__[ 11  ] = XR__[iX_phi1];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 12, i_segment_left, i_segment_right );
   }
@@ -240,27 +240,27 @@ namespace RobotArmDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[3];
-    result__[ 1   ] = OMEGA__[1] + LL__[4];
-    result__[ 2   ] = OMEGA__[2] + LL__[5];
-    real_type t8   = ModelPars[0];
-    result__[ 3   ] = t8 * LL__[0] + OMEGA__[3];
-    real_type t12  = XL__[0];
-    real_type t14  = I_theta(t12, XL__[2]);
-    result__[ 4   ] = LL__[1] * t14 + OMEGA__[4];
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda4__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda5__xo];
+    result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda6__xo];
+    real_type t8   = ModelPars[iM_L];
+    result__[ 3   ] = t8 * LL__[iL_lambda1__xo] + OMEGA__[3];
+    real_type t12  = XL__[iX_rho];
+    real_type t14  = I_theta(t12, XL__[iX_phi]);
+    result__[ 4   ] = LL__[iL_lambda2__xo] * t14 + OMEGA__[4];
     real_type t18  = I_phi(t12);
-    result__[ 5   ] = LL__[2] * t18 + OMEGA__[5];
-    result__[ 6   ] = OMEGA__[6] - LR__[3];
-    result__[ 7   ] = OMEGA__[7] - LR__[4];
-    result__[ 8   ] = OMEGA__[8] - LR__[5];
-    result__[ 9   ] = -t8 * LR__[0] + OMEGA__[9];
-    real_type t31  = XR__[0];
-    real_type t33  = I_theta(t31, XR__[2]);
-    result__[ 10  ] = -LR__[1] * t33 + OMEGA__[10];
+    result__[ 5   ] = LL__[iL_lambda3__xo] * t18 + OMEGA__[5];
+    result__[ 6   ] = OMEGA__[6] - LR__[iL_lambda4__xo];
+    result__[ 7   ] = OMEGA__[7] - LR__[iL_lambda5__xo];
+    result__[ 8   ] = OMEGA__[8] - LR__[iL_lambda6__xo];
+    result__[ 9   ] = -t8 * LR__[iL_lambda1__xo] + OMEGA__[9];
+    real_type t31  = XR__[iX_rho];
+    real_type t33  = I_theta(t31, XR__[iX_phi]);
+    result__[ 10  ] = -LR__[iL_lambda2__xo] * t33 + OMEGA__[10];
     real_type t37  = I_phi(t31);
-    result__[ 11  ] = -LR__[2] * t37 + OMEGA__[11];
-    real_type t40  = ModelPars[2];
-    result__[ 12  ] = -2 * P__[0] * (t40 - 1) + t40;
+    result__[ 11  ] = -LR__[iL_lambda3__xo] * t37 + OMEGA__[11];
+    real_type t40  = ModelPars[iM_W];
+    result__[ 12  ] = -2 * P__[iP_T] * (t40 - 1) + t40;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 13, i_segment_left, i_segment_right );
   }
@@ -310,24 +310,24 @@ namespace RobotArmDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    real_type t1   = XL__[0];
-    real_type t2   = XL__[2];
+    real_type t1   = XL__[iX_rho];
+    real_type t2   = XL__[iX_phi];
     real_type t3   = I_theta_D_1(t1, t2);
-    real_type t4   = LL__[1];
+    real_type t4   = LL__[iL_lambda2__xo];
     result__[ 0   ] = t4 * t3;
     real_type t5   = I_theta_D_2(t1, t2);
     result__[ 1   ] = t5 * t4;
     real_type t6   = I_phi_D(t1);
-    result__[ 2   ] = LL__[2] * t6;
-    real_type t8   = XR__[0];
-    real_type t9   = XR__[2];
+    result__[ 2   ] = LL__[iL_lambda3__xo] * t6;
+    real_type t8   = XR__[iX_rho];
+    real_type t9   = XR__[iX_phi];
     real_type t10  = I_theta_D_1(t8, t9);
-    real_type t11  = LR__[1];
+    real_type t11  = LR__[iL_lambda2__xo];
     result__[ 3   ] = -t11 * t10;
     real_type t13  = I_theta_D_2(t8, t9);
     result__[ 4   ] = -t11 * t13;
     real_type t15  = I_phi_D(t8);
-    result__[ 5   ] = -LR__[2] * t15;
+    result__[ 5   ] = -LR__[iL_lambda3__xo] * t15;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 6, i_segment_left, i_segment_right );
   }
@@ -372,7 +372,7 @@ namespace RobotArmDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = -2 * ModelPars[2] + 2;
+    result__[ 0   ] = -2 * ModelPars[iM_W] + 2;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 1, i_segment_left, i_segment_right );
   }

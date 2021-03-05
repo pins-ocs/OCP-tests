@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: BangBangFwork.m                                                %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -623,16 +623,16 @@ classdef BangBangFwork < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = fMax( self, zeta__XO )
-      res = BangBangFwork_Mex('fMax', self.objectHandle, zeta__XO );
+    function res = fMax( self, xo__zeta )
+      res = BangBangFwork_Mex('fMax', self.objectHandle, xo__zeta );
     end
     % ---------------------------------------------------------------------
-    function res = fMax_D( self, zeta__XO )
-      res = BangBangFwork_Mex('fMax_D', self.objectHandle, zeta__XO );
+    function res = fMax_D( self, xo__zeta )
+      res = BangBangFwork_Mex('fMax_D', self.objectHandle, xo__zeta );
     end
     % ---------------------------------------------------------------------
-    function res = fMax_DD( self, zeta__XO )
-      res = BangBangFwork_Mex('fMax_DD', self.objectHandle, zeta__XO );
+    function res = fMax_DD( self, xo__zeta )
+      res = BangBangFwork_Mex('fMax_DD', self.objectHandle, xo__zeta );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

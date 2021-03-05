@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MultipleDubins_Methods.cc                                      |
+ |  file: MultipleDubins_Methods_ODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,27 +78,27 @@ namespace MultipleDubinsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    real_type t2   = X__[2];
+    real_type t1   = P__[iP_L1];
+    real_type t2   = X__[iX_theta1];
     real_type t3   = cos(t2);
     result__[ 0   ] = t3 * t1;
     real_type t4   = sin(t2);
     result__[ 1   ] = t4 * t1;
-    result__[ 2   ] = P__[3] * t1;
-    real_type t6   = P__[1];
-    real_type t7   = X__[5];
+    result__[ 2   ] = P__[iP_kappa1] * t1;
+    real_type t6   = P__[iP_L2];
+    real_type t7   = X__[iX_theta2];
     real_type t8   = cos(t7);
     result__[ 3   ] = t8 * t6;
     real_type t9   = sin(t7);
     result__[ 4   ] = t9 * t6;
-    result__[ 5   ] = P__[4] * t6;
-    real_type t11  = P__[2];
-    real_type t12  = X__[8];
+    result__[ 5   ] = P__[iP_kappa2] * t6;
+    real_type t11  = P__[iP_L3];
+    real_type t12  = X__[iX_theta3];
     real_type t13  = cos(t12);
     result__[ 6   ] = t13 * t11;
     real_type t14  = sin(t12);
     result__[ 7   ] = t14 * t11;
-    result__[ 8   ] = P__[5] * t11;
+    result__[ 8   ] = P__[iP_kappa3] * t11;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 9, i_segment );
   }
@@ -143,20 +143,20 @@ namespace MultipleDubinsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    real_type t2   = X__[2];
+    real_type t1   = P__[iP_L1];
+    real_type t2   = X__[iX_theta1];
     real_type t3   = sin(t2);
     result__[ 0   ] = -t3 * t1;
     real_type t5   = cos(t2);
     result__[ 1   ] = t5 * t1;
-    real_type t6   = P__[1];
-    real_type t7   = X__[5];
+    real_type t6   = P__[iP_L2];
+    real_type t7   = X__[iX_theta2];
     real_type t8   = sin(t7);
     result__[ 2   ] = -t8 * t6;
     real_type t10  = cos(t7);
     result__[ 3   ] = t10 * t6;
-    real_type t11  = P__[2];
-    real_type t12  = X__[8];
+    real_type t11  = P__[iP_L3];
+    real_type t12  = X__[iX_theta3];
     real_type t13  = sin(t12);
     result__[ 4   ] = -t13 * t11;
     real_type t15  = cos(t12);
@@ -211,21 +211,21 @@ namespace MultipleDubinsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[2];
+    real_type t1   = X__[iX_theta1];
     result__[ 0   ] = cos(t1);
     result__[ 1   ] = sin(t1);
-    result__[ 2   ] = P__[3];
-    result__[ 3   ] = P__[0];
-    real_type t2   = X__[5];
+    result__[ 2   ] = P__[iP_kappa1];
+    result__[ 3   ] = P__[iP_L1];
+    real_type t2   = X__[iX_theta2];
     result__[ 4   ] = cos(t2);
     result__[ 5   ] = sin(t2);
-    result__[ 6   ] = P__[4];
-    result__[ 7   ] = P__[1];
-    real_type t3   = X__[8];
+    result__[ 6   ] = P__[iP_kappa2];
+    result__[ 7   ] = P__[iP_L2];
+    real_type t3   = X__[iX_theta3];
     result__[ 8   ] = cos(t3);
     result__[ 9   ] = sin(t3);
-    result__[ 10  ] = P__[5];
-    result__[ 11  ] = P__[2];
+    result__[ 10  ] = P__[iP_kappa3];
+    result__[ 11  ] = P__[iP_L3];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 12, i_segment );
   }
@@ -325,4 +325,4 @@ namespace MultipleDubinsDefine {
 
 }
 
-// EOF: MultipleDubins_Methods.cc
+// EOF: MultipleDubins_Methods_ODE.cc

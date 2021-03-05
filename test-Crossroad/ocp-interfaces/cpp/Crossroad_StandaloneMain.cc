@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type L = 100;
-    real_type s_f = L;
-    real_type v_max = 30;
     real_type jerk_min = -10;
     real_type jerk_max = 10;
     real_type wJ = 1/jerk_max^2;
+    real_type v_max = 30;
+    real_type L = 100;
+    real_type s_f = L;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -173,14 +173,14 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_jerkControl = data_Controls["jerkControl"];
-    data_jerkControl["type"]      = "LOGARITHMIC";
+    data_jerkControl["type"]      = ;
     data_jerkControl["epsilon"]   = 0.01;
     data_jerkControl["tolerance"] = 0.01;
 
 
 
     // Constraint1D
-    // Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan

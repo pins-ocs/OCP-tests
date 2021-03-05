@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type FmMax = 10;
     real_type FpMax = 10;
+    real_type FmMax = 10;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -152,13 +152,13 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_controlP = data_Controls["controlP"];
-    data_controlP["type"]      = "CUBIC";
+    data_controlP["type"]      = ;
     data_controlP["epsilon"]   = 0.001;
     data_controlP["tolerance"] = 0.001;
 
 
     GenericContainer & data_controlM = data_Controls["controlM"];
-    data_controlM["type"]      = "CUBIC";
+    data_controlM["type"]      = ;
     data_controlM["epsilon"]   = 0.001;
     data_controlM["tolerance"] = 0.001;
 

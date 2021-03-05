@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus02_Methods1.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -74,11 +74,12 @@ namespace SingularLuus02Define {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
-    real_type t7   = U__[0];
-    real_type t10  = ModelPars[0] * ModelPars[0];
+    real_type t2   = X__[iX_x] * X__[iX_x];
+    real_type t7   = U__[iU_u];
+    real_type t10  = ModelPars[iM_epsi_x] * ModelPars[iM_epsi_x];
     real_type t12  = uControl(t7, -1, 1);
-    return t2 + L__[0] * X__[1] + t7 * L__[1] + t12 * (t2 + t10);
+    real_type result__ = t2 + L__[iL_lambda1__xo] * X__[iX_y] + t7 * L__[iL_lambda2__xo] + t12 * (t2 + t10);
+    return result__;
   }
 
   /*\
@@ -98,7 +99,8 @@ namespace SingularLuus02Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -111,10 +113,11 @@ namespace SingularLuus02Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
-    real_type t4   = ModelPars[0] * ModelPars[0];
-    real_type t7   = uControl(U__[0], -1, 1);
-    return t7 * (t2 + t4);
+    real_type t2   = X__[iX_x] * X__[iX_x];
+    real_type t4   = ModelPars[iM_epsi_x] * ModelPars[iM_epsi_x];
+    real_type t7   = uControl(U__[iU_u], -1, 1);
+    real_type result__ = t7 * (t2 + t4);
+    return result__;
   }
 
   /*\
@@ -135,7 +138,8 @@ namespace SingularLuus02Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return X__[0] * X__[0];
+    real_type result__ = X__[iX_x] * X__[iX_x];
+    return result__;
   }
 
   /*\
@@ -160,7 +164,8 @@ namespace SingularLuus02Define {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -270,10 +275,10 @@ namespace SingularLuus02Define {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = LR__[0] - LL__[0];
-    result__[ 3   ] = LR__[1] - LL__[1];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = XR__[iX_y] - XL__[iX_y];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }
@@ -377,7 +382,7 @@ namespace SingularLuus02Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[0] * X__[0];
+    result__[ 0   ] = X__[iX_x] * X__[iX_x];
     Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 

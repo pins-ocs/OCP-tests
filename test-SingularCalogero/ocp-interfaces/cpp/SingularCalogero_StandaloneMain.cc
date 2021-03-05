@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -144,7 +144,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
-    data_uControl["type"]      = "COS_LOGARITHMIC";
+    data_uControl["type"]      = ;
     data_uControl["epsilon"]   = 0.001;
     data_uControl["tolerance"] = 0.001;
 
@@ -156,8 +156,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularCalogero_data.Mesh["s0"] = -1;
-SingularCalogero_data.Mesh["segments"][0]["length"] = 2;
 SingularCalogero_data.Mesh["segments"][0]["n"] = 100;
+SingularCalogero_data.Mesh["segments"][0]["length"] = 2;
 
 
     // alias for user object classes passed as pointers

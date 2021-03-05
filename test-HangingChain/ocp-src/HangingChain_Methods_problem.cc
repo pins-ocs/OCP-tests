@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods1.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -51,7 +51,7 @@ namespace HangingChainDefine {
 
   void
   HangingChain::continuationStep0( real_type s ) {
-    ModelPars[0] = ModelPars[1] * (1 - s) + ModelPars[2] * s;
+    ModelPars[iM_L] = ModelPars[iM_L0] * (1 - s) + ModelPars[iM_L1] * s;
   }
 
   /*\
@@ -74,10 +74,11 @@ namespace HangingChainDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = U__[0];
+    real_type t4   = U__[iU_u];
     real_type t5   = t4 * t4;
     real_type t7   = sqrt(t5 + 1);
-    return t7 * (L__[1] + X__[0]) + t4 * L__[0];
+    real_type result__ = t7 * (L__[iL_lambda2__xo] + X__[iX_x]) + t4 * L__[iL_lambda1__xo];
+    return result__;
   }
 
   /*\
@@ -97,7 +98,8 @@ namespace HangingChainDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -110,7 +112,8 @@ namespace HangingChainDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -131,9 +134,10 @@ namespace HangingChainDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = U__[0] * U__[0];
+    real_type t3   = U__[iU_u] * U__[iU_u];
     real_type t5   = sqrt(t3 + 1);
-    return t5 * X__[0];
+    real_type result__ = t5 * X__[iX_x];
+    return result__;
   }
 
   /*\
@@ -158,7 +162,8 @@ namespace HangingChainDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return pow(XR__[1] - ModelPars[0], 2);
+    real_type result__ = pow(XR__[iX_z] - ModelPars[iM_L], 2);
+    return result__;
   }
 
   /*\
@@ -268,10 +273,10 @@ namespace HangingChainDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = LR__[0] - LL__[0];
-    result__[ 3   ] = LR__[1] - LL__[1];
+    result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
+    result__[ 1   ] = XR__[iX_z] - XL__[iX_z];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }

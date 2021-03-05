@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods.cc                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,12 +87,12 @@ namespace BangBangFredundantDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[1];
-    result__[ 1   ] = X__[2] + X__[3];
-    result__[ 2   ] = X__[4];
-    result__[ 3   ] = X__[5];
-    result__[ 4   ] = U__[0];
-    result__[ 5   ] = U__[1];
+    result__[ 0   ] = X__[iX_v];
+    result__[ 1   ] = X__[iX_F1] + X__[iX_F2];
+    result__[ 2   ] = X__[iX_vF1];
+    result__[ 3   ] = X__[iX_vF2];
+    result__[ 4   ] = U__[iU_aF1];
+    result__[ 5   ] = U__[iU_aF2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 6, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods.cc                                           |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,10 +78,10 @@ namespace vanDerPolDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = X__[0] * X__[0];
-    real_type t5   = X__[1] * X__[1];
-    real_type t9   = ALIAS_uControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = L__[1] + t9 * (t3 + t5 + ModelPars[0]);
+    real_type t3   = X__[iX_x1] * X__[iX_x1];
+    real_type t5   = X__[iX_x2] * X__[iX_x2];
+    real_type t9   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = L__[iL_lambda2__xo] + t9 * (t3 + t5 + ModelPars[iM_epsilon]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -124,9 +124,9 @@ namespace vanDerPolDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ALIAS_uControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = 2 * t3 * X__[0];
-    result__[ 1   ] = 2 * t3 * X__[1];
+    real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = 2 * t3 * X__[iX_x1];
+    result__[ 1   ] = 2 * t3 * X__[iX_x2];
     result__[ 2   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 3, i_segment );
@@ -168,10 +168,10 @@ namespace vanDerPolDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
-    real_type t4   = X__[1] * X__[1];
-    real_type t8   = ALIAS_uControl_D_1_1(U__[0], -1, 1);
-    result__[ 0   ] = t8 * (t2 + t4 + ModelPars[0]);
+    real_type t2   = X__[iX_x1] * X__[iX_x1];
+    real_type t4   = X__[iX_x2] * X__[iX_x2];
+    real_type t8   = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t8 * (t2 + t4 + ModelPars[iM_epsilon]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -206,9 +206,9 @@ namespace vanDerPolDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = X__[0] * X__[0];
-    real_type t5   = X__[1] * X__[1];
-    U__[ iU_u ] = uControl.solve(-1.0 / (t3 + t5 + ModelPars[0]) * L__[1], -1, 1);
+    real_type t3   = X__[iX_x1] * X__[iX_x1];
+    real_type t5   = X__[iX_x2] * X__[iX_x2];
+    U__[ iU_u ] = uControl.solve(-1.0 / (t3 + t5 + ModelPars[iM_epsilon]) * L__[iL_lambda2__xo], -1, 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -257,10 +257,10 @@ namespace vanDerPolDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = 2 * uControl.solve_rhs(-L__[1] / (X__[0] * X__[0] + X__[1] * X__[1] + ModelPars[0]), -1, 1) * L__[1] * pow(X__[0] * X__[0] + X__[1] * X__[1] + ModelPars[0], -2) * X__[0];
-    DuDxlp(0, 1) = 2 * uControl.solve_rhs(-L__[1] / (X__[0] * X__[0] + X__[1] * X__[1] + ModelPars[0]), -1, 1) * L__[1] * pow(X__[0] * X__[0] + X__[1] * X__[1] + ModelPars[0], -2) * X__[1];
+    DuDxlp(0, 0) = 2 * uControl.solve_rhs(-L__[iL_lambda2__xo] / (X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon]), -1, 1) * L__[iL_lambda2__xo] * pow(X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon], -2) * X__[iX_x1];
+    DuDxlp(0, 1) = 2 * uControl.solve_rhs(-L__[iL_lambda2__xo] / (X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon]), -1, 1) * L__[iL_lambda2__xo] * pow(X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon], -2) * X__[iX_x2];
     DuDxlp(0, 2) = 0;
-    DuDxlp(0, 3) = -uControl.solve_rhs(-L__[1] / (X__[0] * X__[0] + X__[1] * X__[1] + ModelPars[0]), -1, 1) / (X__[0] * X__[0] + X__[1] * X__[1] + ModelPars[0]);
+    DuDxlp(0, 3) = -uControl.solve_rhs(-L__[iL_lambda2__xo] / (X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon]), -1, 1) / (X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

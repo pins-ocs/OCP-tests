@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -172,32 +172,32 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_x1__oControl = data_Controls["x1__oControl"];
-    data_x1__oControl["type"]      = "COS_LOGARITHMIC";
+    data_x1__oControl["type"]      = ;
     data_x1__oControl["epsilon"]   = 0.001;
     data_x1__oControl["tolerance"] = 0.001;
 
 
     GenericContainer & data_x2__oControl = data_Controls["x2__oControl"];
-    data_x2__oControl["type"]      = "COS_LOGARITHMIC";
+    data_x2__oControl["type"]      = ;
     data_x2__oControl["epsilon"]   = 0.001;
     data_x2__oControl["tolerance"] = 0.001;
 
 
     GenericContainer & data_x3__oControl = data_Controls["x3__oControl"];
-    data_x3__oControl["type"]      = "COS_LOGARITHMIC";
+    data_x3__oControl["type"]      = ;
     data_x3__oControl["epsilon"]   = 0.001;
     data_x3__oControl["tolerance"] = 0.001;
 
 
     GenericContainer & data_x4__oControl = data_Controls["x4__oControl"];
-    data_x4__oControl["type"]      = "COS_LOGARITHMIC";
+    data_x4__oControl["type"]      = ;
     data_x4__oControl["epsilon"]   = 0.001;
     data_x4__oControl["tolerance"] = 0.001;
 
 
 
     // Constraint1D
-    // Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
@@ -211,8 +211,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Farmer_data.Mesh["s0"] = 0;
-Farmer_data.Mesh["segments"][0]["length"] = 2;
 Farmer_data.Mesh["segments"][0]["n"] = 400;
+Farmer_data.Mesh["segments"][0]["length"] = 2;
 
 
     // alias for user object classes passed as pointers

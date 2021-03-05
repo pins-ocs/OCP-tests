@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Methods1.cc                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -74,11 +74,12 @@ namespace GunnAndThomasDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[0];
-    real_type t4   = X__[1];
-    real_type t7   = 10 * t4 - X__[0];
+    real_type t2   = U__[iU_u];
+    real_type t4   = X__[iX_x2];
+    real_type t7   = 10 * t4 - X__[iX_x1];
     real_type t16  = uControl(t2, 0, 1);
-    return t7 * t2 * L__[0] + (-t7 * t2 - t4 * (1 - t2)) * L__[1] + t16;
+    real_type result__ = t7 * t2 * L__[iL_lambda1__xo] + (-t7 * t2 - t4 * (1 - t2)) * L__[iL_lambda2__xo] + t16;
+    return result__;
   }
 
   /*\
@@ -98,7 +99,8 @@ namespace GunnAndThomasDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -111,7 +113,8 @@ namespace GunnAndThomasDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return uControl(U__[0], 0, 1);
+    real_type result__ = uControl(U__[iU_u], 0, 1);
+    return result__;
   }
 
   /*\
@@ -132,7 +135,8 @@ namespace GunnAndThomasDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -157,7 +161,8 @@ namespace GunnAndThomasDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return XR__[0] + XR__[1] - 1;
+    real_type result__ = XR__[iX_x1] + XR__[iX_x2] - 1;
+    return result__;
   }
 
   /*\
@@ -267,10 +272,10 @@ namespace GunnAndThomasDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = LR__[0] - LL__[0];
-    result__[ 3   ] = LR__[1] - LL__[1];
+    result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
+    result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Methods.cc                                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,9 +80,9 @@ namespace CatalystDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[0];
-    real_type t3   = t2 * L__[0];
-    real_type t4   = L__[1];
+    real_type t2   = U__[iU_u];
+    real_type t3   = t2 * L__[iL_lambda1__xo];
+    real_type t4   = L__[iL_lambda2__xo];
     result__[ 0   ] = t2 * t4 - t3;
     result__[ 1   ] = 10 * t3 + (-9 * t2 - 1) * t4;
     if ( m_debug )
@@ -180,9 +180,9 @@ namespace CatalystDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[1];
-    real_type t4   = X__[0];
-    result__[ 0   ] = (10 * t2 - t4) * L__[0] + (t4 - 9 * t2) * L__[1];
+    real_type t2   = X__[iX_x2];
+    real_type t4   = X__[iX_x1];
+    result__[ 0   ] = (10 * t2 - t4) * L__[iL_lambda1__xo] + (t4 - 9 * t2) * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -224,8 +224,8 @@ namespace CatalystDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[0];
-    real_type t2   = L__[1];
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = L__[iL_lambda2__xo];
     result__[ 0   ] = -t1 + t2;
     result__[ 1   ] = 10 * t1 - 9 * t2;
     if ( m_debug )
@@ -353,8 +353,8 @@ namespace CatalystDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
   }

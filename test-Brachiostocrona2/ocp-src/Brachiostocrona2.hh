@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2.hh                                            |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define BRACHIOSTOCRONA2_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace Brachiostocrona2Define {
 
@@ -163,11 +163,11 @@ namespace Brachiostocrona2Define {
     );
 
     BRACHIOSTOCRONA2_API_DLL virtual
-    ~Brachiostocrona2() MECHATRONIX_OVERRIDE;
+    ~Brachiostocrona2() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     BRACHIOSTOCRONA2_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "Brachiostocrona2"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -219,14 +219,14 @@ namespace Brachiostocrona2Define {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    BRACHIOSTOCRONA2_API_DLL real_type arctan2        ( real_type y__XO, real_type x__XO ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type arctan2_D_1    ( real_type y__XO, real_type x__XO ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type arctan2_D_2    ( real_type y__XO, real_type x__XO ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol      ( real_type v__XO, real_type l1__XO, real_type l2__XO, real_type l3__XO ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_1  ( real_type v__XO, real_type l1__XO, real_type l2__XO, real_type l3__XO ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_2  ( real_type v__XO, real_type l1__XO, real_type l2__XO, real_type l3__XO ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_3  ( real_type v__XO, real_type l1__XO, real_type l2__XO, real_type l3__XO ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_4  ( real_type v__XO, real_type l1__XO, real_type l2__XO, real_type l3__XO ) const;
+    BRACHIOSTOCRONA2_API_DLL real_type arctan2        ( real_type xo__y, real_type xo__x ) const;
+    BRACHIOSTOCRONA2_API_DLL real_type arctan2_D_1    ( real_type xo__y, real_type xo__x ) const;
+    BRACHIOSTOCRONA2_API_DLL real_type arctan2_D_2    ( real_type xo__y, real_type xo__x ) const;
+    BRACHIOSTOCRONA2_API_DLL real_type theta_sol      ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
+    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_1  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
+    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_2  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
+    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_3  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
+    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_4  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -249,12 +249,12 @@ namespace Brachiostocrona2Define {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     BRACHIOSTOCRONA2_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

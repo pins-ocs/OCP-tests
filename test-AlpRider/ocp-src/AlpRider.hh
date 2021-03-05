@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider.hh                                                    |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define ALPRIDER_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace AlpRiderDefine {
 
@@ -166,11 +166,11 @@ namespace AlpRiderDefine {
     );
 
     ALPRIDER_API_DLL virtual
-    ~AlpRider() MECHATRONIX_OVERRIDE;
+    ~AlpRider() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ALPRIDER_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "AlpRider"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -222,19 +222,19 @@ namespace AlpRiderDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    ALPRIDER_API_DLL real_type p      ( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type p_D_1  ( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type p_D_1_1( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type p_D_1_2( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type p_D_1_3( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type p_D_2  ( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type p_D_2_2( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type p_D_2_3( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type p_D_3  ( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type p_D_3_3( real_type t__XO, real_type a__XO, real_type b__XO ) const;
-    ALPRIDER_API_DLL real_type q      ( real_type t__XO ) const;
-    ALPRIDER_API_DLL real_type q_D    ( real_type t__XO ) const;
-    ALPRIDER_API_DLL real_type q_DD   ( real_type t__XO ) const;
+    ALPRIDER_API_DLL real_type p      ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_D_1  ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_D_1_1( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_D_1_2( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_D_1_3( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_D_2  ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_D_2_2( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_D_2_3( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_D_3  ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_D_3_3( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type q      ( real_type xo__t ) const;
+    ALPRIDER_API_DLL real_type q_D    ( real_type xo__t ) const;
+    ALPRIDER_API_DLL real_type q_DD   ( real_type xo__t ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -257,12 +257,12 @@ namespace AlpRiderDefine {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     ALPRIDER_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

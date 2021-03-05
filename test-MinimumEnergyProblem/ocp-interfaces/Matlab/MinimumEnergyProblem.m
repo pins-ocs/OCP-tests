@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: MinimumEnergyProblem.m                                         %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -623,44 +623,44 @@ classdef MinimumEnergyProblem < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = interpLog( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
-    function res = interpLog_D_1( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog_D_1', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog_D_1( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog_D_1', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
-    function res = interpLog_D_2( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog_D_2', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog_D_2( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog_D_2', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
-    function res = interpLog_D_3( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog_D_3', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog_D_3( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog_D_3', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
-    function res = interpLog_D_1_1( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog_D_1_1', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog_D_1_1( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog_D_1_1', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
-    function res = interpLog_D_1_2( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog_D_1_2', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog_D_1_2( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog_D_1_2', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
-    function res = interpLog_D_1_3( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog_D_1_3', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog_D_1_3( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog_D_1_3', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
-    function res = interpLog_D_2_2( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog_D_2_2', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog_D_2_2( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog_D_2_2', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
-    function res = interpLog_D_2_3( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog_D_2_3', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog_D_2_3( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog_D_2_3', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
-    function res = interpLog_D_3_3( self, s__XO, v0__XO, v1__XO )
-      res = MinimumEnergyProblem_Mex('interpLog_D_3_3', self.objectHandle, s__XO, v0__XO, v1__XO );
+    function res = interpLog_D_3_3( self, xo__s, xo__v0, xo__v1 )
+      res = MinimumEnergyProblem_Mex('interpLog_D_3_3', self.objectHandle, xo__s, xo__v0, xo__v1 );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoStageCSTR_Methods1.cc                                       |
+ |  file: TwoStageCSTR_Methods_UserFunctions.cc                          |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,87 +70,183 @@ namespace TwoStageCSTRDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  TwoStageCSTR::R1( real_type x1__XO, real_type x2__XO ) const {
-    real_type t6   = exp(25 * x2__XO / (x2__XO + 2));
-    return t6 * (x1__XO + 0.5e0);
+  TwoStageCSTR::R1( real_type xo__x1, real_type xo__x2 ) const {
+    real_type t6   = exp(25 * xo__x2 / (xo__x2 + 2));
+    real_type result__ = t6 * (xo__x1 + 0.5e0);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R1( x1={}, x2={} ) return {}\n",
+        xo__x1, xo__x2, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R1_D_1( real_type x1__XO, real_type x2__XO ) const {
-    return exp(25 * x2__XO / (x2__XO + 2));
+  TwoStageCSTR::R1_D_1( real_type xo__x1, real_type xo__x2 ) const {
+    real_type result__ = exp(25 * xo__x2 / (xo__x2 + 2));
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R1_D_1( x1={}, x2={} ) return {}\n",
+        xo__x1, xo__x2, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R1_D_1_1( real_type x1__XO, real_type x2__XO ) const {
-    return 0;
+  TwoStageCSTR::R1_D_1_1( real_type xo__x1, real_type xo__x2 ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R1_D_1_1( x1={}, x2={} ) return {}\n",
+        xo__x1, xo__x2, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R1_D_1_2( real_type x1__XO, real_type x2__XO ) const {
-    real_type t1   = x2__XO + 2;
+  TwoStageCSTR::R1_D_1_2( real_type xo__x1, real_type xo__x2 ) const {
+    real_type t1   = xo__x2 + 2;
     real_type t2   = t1 * t1;
-    real_type t7   = exp(25 / t1 * x2__XO);
-    return 50 * t7 / t2;
+    real_type t7   = exp(25 / t1 * xo__x2);
+    real_type result__ = 50 * t7 / t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R1_D_1_2( x1={}, x2={} ) return {}\n",
+        xo__x1, xo__x2, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R1_D_2( real_type x1__XO, real_type x2__XO ) const {
-    real_type t2   = x2__XO + 2;
+  TwoStageCSTR::R1_D_2( real_type xo__x1, real_type xo__x2 ) const {
+    real_type t2   = xo__x2 + 2;
     real_type t3   = t2 * t2;
-    real_type t9   = exp(25 / t2 * x2__XO);
-    return 50 * t9 / t3 * (x1__XO + 0.5e0);
+    real_type t9   = exp(25 / t2 * xo__x2);
+    real_type result__ = 50 * t9 / t3 * (xo__x1 + 0.5e0);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R1_D_2( x1={}, x2={} ) return {}\n",
+        xo__x1, xo__x2, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R1_D_2_2( real_type x1__XO, real_type x2__XO ) const {
-    real_type t2   = x2__XO + 2;
-    real_type t6   = exp(25 / t2 * x2__XO);
+  TwoStageCSTR::R1_D_2_2( real_type xo__x1, real_type xo__x2 ) const {
+    real_type t2   = xo__x2 + 2;
+    real_type t6   = exp(25 / t2 * xo__x2);
     real_type t9   = t2 * t2;
     real_type t10  = t9 * t9;
-    return -100 / t10 * (x2__XO - 23) * t6 * (x1__XO + 0.5e0);
+    real_type result__ = -100 / t10 * (xo__x2 - 23) * t6 * (xo__x1 + 0.5e0);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R1_D_2_2( x1={}, x2={} ) return {}\n",
+        xo__x1, xo__x2, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R2( real_type x3__XO, real_type x4__XO ) const {
-    real_type t6   = exp(25 * x4__XO / (x4__XO + 2));
-    return t6 * (x3__XO + 0.25e0);
+  TwoStageCSTR::R2( real_type xo__x3, real_type xo__x4 ) const {
+    real_type t6   = exp(25 * xo__x4 / (xo__x4 + 2));
+    real_type result__ = t6 * (xo__x3 + 0.25e0);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R2( x3={}, x4={} ) return {}\n",
+        xo__x3, xo__x4, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R2_D_1( real_type x3__XO, real_type x4__XO ) const {
-    return exp(25 * x4__XO / (x4__XO + 2));
+  TwoStageCSTR::R2_D_1( real_type xo__x3, real_type xo__x4 ) const {
+    real_type result__ = exp(25 * xo__x4 / (xo__x4 + 2));
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R2_D_1( x3={}, x4={} ) return {}\n",
+        xo__x3, xo__x4, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R2_D_1_1( real_type x3__XO, real_type x4__XO ) const {
-    return 0;
+  TwoStageCSTR::R2_D_1_1( real_type xo__x3, real_type xo__x4 ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R2_D_1_1( x3={}, x4={} ) return {}\n",
+        xo__x3, xo__x4, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R2_D_1_2( real_type x3__XO, real_type x4__XO ) const {
-    real_type t1   = x4__XO + 2;
+  TwoStageCSTR::R2_D_1_2( real_type xo__x3, real_type xo__x4 ) const {
+    real_type t1   = xo__x4 + 2;
     real_type t2   = t1 * t1;
-    real_type t7   = exp(25 / t1 * x4__XO);
-    return 50 * t7 / t2;
+    real_type t7   = exp(25 / t1 * xo__x4);
+    real_type result__ = 50 * t7 / t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R2_D_1_2( x3={}, x4={} ) return {}\n",
+        xo__x3, xo__x4, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R2_D_2( real_type x3__XO, real_type x4__XO ) const {
-    real_type t2   = x4__XO + 2;
+  TwoStageCSTR::R2_D_2( real_type xo__x3, real_type xo__x4 ) const {
+    real_type t2   = xo__x4 + 2;
     real_type t3   = t2 * t2;
-    real_type t9   = exp(25 / t2 * x4__XO);
-    return 50 * t9 / t3 * (x3__XO + 0.25e0);
+    real_type t9   = exp(25 / t2 * xo__x4);
+    real_type result__ = 50 * t9 / t3 * (xo__x3 + 0.25e0);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R2_D_2( x3={}, x4={} ) return {}\n",
+        xo__x3, xo__x4, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  TwoStageCSTR::R2_D_2_2( real_type x3__XO, real_type x4__XO ) const {
-    real_type t2   = x4__XO + 2;
-    real_type t6   = exp(25 / t2 * x4__XO);
+  TwoStageCSTR::R2_D_2_2( real_type xo__x3, real_type xo__x4 ) const {
+    real_type t2   = xo__x4 + 2;
+    real_type t6   = exp(25 / t2 * xo__x4);
     real_type t9   = t2 * t2;
     real_type t10  = t9 * t9;
-    return -100 / t10 * (x4__XO - 23) * t6 * (x3__XO + 0.25e0);
+    real_type result__ = -100 / t10 * (xo__x4 - 23) * t6 * (xo__x3 + 0.25e0);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_R2_D_2_2( x3={}, x4={} ) return {}\n",
+        xo__x3, xo__x4, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: TwoStageCSTR_Methods1.cc
+// EOF: TwoStageCSTR_Methods_UserFunctions.cc

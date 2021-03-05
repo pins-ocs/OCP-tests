@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2.hh                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define ECONOMICGROWTHMODEL2_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace EconomicGrowthModel2Define {
 
@@ -166,11 +166,11 @@ namespace EconomicGrowthModel2Define {
     );
 
     ECONOMICGROWTHMODEL2_API_DLL virtual
-    ~EconomicGrowthModel2() MECHATRONIX_OVERRIDE;
+    ~EconomicGrowthModel2() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ECONOMICGROWTHMODEL2_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "EconomicGrowthModel2"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -222,22 +222,22 @@ namespace EconomicGrowthModel2Define {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    ECONOMICGROWTHMODEL2_API_DLL real_type Q           ( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_1       ( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_1_1     ( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_1_2     ( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_2       ( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_2_2     ( real_type x__XO, real_type y__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog      ( real_type a__XO, real_type b__XO, real_type s__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_1  ( real_type a__XO, real_type b__XO, real_type s__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_1_1( real_type a__XO, real_type b__XO, real_type s__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_1_2( real_type a__XO, real_type b__XO, real_type s__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_1_3( real_type a__XO, real_type b__XO, real_type s__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_2  ( real_type a__XO, real_type b__XO, real_type s__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_2_2( real_type a__XO, real_type b__XO, real_type s__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_2_3( real_type a__XO, real_type b__XO, real_type s__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_3  ( real_type a__XO, real_type b__XO, real_type s__XO ) const;
-    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_3_3( real_type a__XO, real_type b__XO, real_type s__XO ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type Q           ( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_1       ( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_1_1     ( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_1_2     ( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_2       ( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type Q_D_2_2     ( real_type xo__x, real_type xo__y ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog      ( real_type xo__a, real_type xo__b, real_type xo__s ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_1  ( real_type xo__a, real_type xo__b, real_type xo__s ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_1_1( real_type xo__a, real_type xo__b, real_type xo__s ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_1_2( real_type xo__a, real_type xo__b, real_type xo__s ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_1_3( real_type xo__a, real_type xo__b, real_type xo__s ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_2  ( real_type xo__a, real_type xo__b, real_type xo__s ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_2_2( real_type xo__a, real_type xo__b, real_type xo__s ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_2_3( real_type xo__a, real_type xo__b, real_type xo__s ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_3  ( real_type xo__a, real_type xo__b, real_type xo__s ) const;
+    ECONOMICGROWTHMODEL2_API_DLL real_type explog_D_3_3( real_type xo__a, real_type xo__b, real_type xo__s ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -260,12 +260,12 @@ namespace EconomicGrowthModel2Define {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     ECONOMICGROWTHMODEL2_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

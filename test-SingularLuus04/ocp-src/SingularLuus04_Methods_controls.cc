@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Methods.cc                                      |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,9 +78,9 @@ namespace SingularLuus04Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = X__[0] * X__[0];
-    real_type t7   = ALIAS_uControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = L__[2] + t7 * (t3 + ModelPars[4]);
+    real_type t3   = X__[iX_x] * X__[iX_x];
+    real_type t7   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = L__[iL_lambda3__xo] + t7 * (t3 + ModelPars[iM_epsilon_X]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -122,8 +122,8 @@ namespace SingularLuus04Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ALIAS_uControl_D_1(U__[0], -1, 1);
-    result__[ 0   ] = 2 * t3 * X__[0];
+    real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = 2 * t3 * X__[iX_x];
     result__[ 1   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
@@ -165,9 +165,9 @@ namespace SingularLuus04Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0] * X__[0];
-    real_type t6   = ALIAS_uControl_D_1_1(U__[0], -1, 1);
-    result__[ 0   ] = t6 * (t2 + ModelPars[4]);
+    real_type t2   = X__[iX_x] * X__[iX_x];
+    real_type t6   = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t6 * (t2 + ModelPars[iM_epsilon_X]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -202,8 +202,8 @@ namespace SingularLuus04Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = X__[0] * X__[0];
-    U__[ iU_u ] = uControl.solve(-1.0 / (t3 + ModelPars[4]) * L__[2], -1, 1);
+    real_type t3   = X__[iX_x] * X__[iX_x];
+    U__[ iU_u ] = uControl.solve(-1.0 / (t3 + ModelPars[iM_epsilon_X]) * L__[iL_lambda3__xo], -1, 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -254,12 +254,12 @@ namespace SingularLuus04Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = 2 * uControl.solve_rhs(-L__[2] / (X__[0] * X__[0] + ModelPars[4]), -1, 1) * L__[2] * pow(X__[0] * X__[0] + ModelPars[4], -2) * X__[0];
+    DuDxlp(0, 0) = 2 * uControl.solve_rhs(-L__[iL_lambda3__xo] / (X__[iX_x] * X__[iX_x] + ModelPars[iM_epsilon_X]), -1, 1) * L__[iL_lambda3__xo] * pow(X__[iX_x] * X__[iX_x] + ModelPars[iM_epsilon_X], -2) * X__[iX_x];
     DuDxlp(0, 1) = 0;
     DuDxlp(0, 2) = 0;
     DuDxlp(0, 3) = 0;
     DuDxlp(0, 4) = 0;
-    DuDxlp(0, 5) = -uControl.solve_rhs(-L__[2] / (X__[0] * X__[0] + ModelPars[4]), -1, 1) / (X__[0] * X__[0] + ModelPars[4]);
+    DuDxlp(0, 5) = -uControl.solve_rhs(-L__[iL_lambda3__xo] / (X__[iX_x] * X__[iX_x] + ModelPars[iM_epsilon_X]), -1, 1) / (X__[iX_x] * X__[iX_x] + ModelPars[iM_epsilon_X]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

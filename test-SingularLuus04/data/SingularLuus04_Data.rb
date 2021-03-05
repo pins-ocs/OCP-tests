@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus04_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsilon_X = 1e-07
-u_tol     = 0.01
-Tf        = 6
 u_epsi    = 0.01
+epsilon_X = 1e-07
+Tf        = 6
+u_tol     = 0.01
 
 mechatronix do |data|
 
@@ -175,8 +175,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 2000,
         :length => Tf,
+        :n      => 2000,
       },
     ],
   };

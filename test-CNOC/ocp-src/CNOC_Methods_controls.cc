@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods.cc                                                |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -161,12 +161,12 @@ namespace CNOCDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
-    real_type t2   = X__[6];
-    real_type t7   = ALIAS_jsControl_D_1(U__[0], ModelPars[10], ModelPars[9]);
-    result__[ 0   ] = t7 * t2 + t2 * L__[4];
-    real_type t12  = ModelPars[8];
-    real_type t13  = ALIAS_jnControl_D_1(U__[1], -t12, t12);
-    result__[ 1   ] = t13 * t2 + t2 * L__[5];
+    real_type t2   = X__[iX_coV];
+    real_type t7   = ALIAS_jsControl_D_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    result__[ 0   ] = t7 * t2 + t2 * L__[iL_lambda5__xo];
+    real_type t12  = ModelPars[iM_jn_max];
+    real_type t13  = ALIAS_jnControl_D_1(U__[iU_jn], -t12, t12);
+    result__[ 1   ] = t13 * t2 + t2 * L__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -210,12 +210,12 @@ namespace CNOCDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
-    real_type t5   = ALIAS_jsControl_D_1(U__[0], ModelPars[10], ModelPars[9]);
-    result__[ 0   ] = L__[4] + t5;
-    result__[ 1   ] = X__[6];
-    real_type t8   = ModelPars[8];
-    real_type t9   = ALIAS_jnControl_D_1(U__[1], -t8, t8);
-    result__[ 2   ] = L__[5] + t9;
+    real_type t5   = ALIAS_jsControl_D_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    result__[ 0   ] = L__[iL_lambda5__xo] + t5;
+    result__[ 1   ] = X__[iX_coV];
+    real_type t8   = ModelPars[iM_jn_max];
+    real_type t9   = ALIAS_jnControl_D_1(U__[iU_jn], -t8, t8);
+    result__[ 2   ] = L__[iL_lambda6__xo] + t9;
     result__[ 3   ] = result__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 4, i_segment );
@@ -258,11 +258,11 @@ namespace CNOCDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
-    real_type t1   = X__[6];
-    real_type t5   = ALIAS_jsControl_D_1_1(U__[0], ModelPars[10], ModelPars[9]);
+    real_type t1   = X__[iX_coV];
+    real_type t5   = ALIAS_jsControl_D_1_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     result__[ 0   ] = t5 * t1;
-    real_type t7   = ModelPars[8];
-    real_type t8   = ALIAS_jnControl_D_1_1(U__[1], -t7, t7);
+    real_type t7   = ModelPars[iM_jn_max];
+    real_type t8   = ALIAS_jnControl_D_1_1(U__[iU_jn], -t7, t7);
     result__[ 1   ] = t8 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
@@ -298,9 +298,9 @@ namespace CNOCDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
-    U__[ iU_js ] = jsControl.solve(-L__[4], ModelPars[10], ModelPars[9]);
-    real_type t5   = ModelPars[8];
-    U__[ iU_jn ] = jnControl.solve(-L__[5], -t5, t5);
+    U__[ iU_js ] = jsControl.solve(-L__[iL_lambda5__xo], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t5   = ModelPars[iM_jn_max];
+    U__[ iU_jn ] = jnControl.solve(-L__[iL_lambda6__xo], -t5, t5);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -381,10 +381,10 @@ namespace CNOCDefine {
     DuDxlp(1, 9) = 0;
     DuDxlp(0, 10) = 0;
     DuDxlp(1, 10) = 0;
-    DuDxlp(0, 11) = -jsControl.solve_rhs(-L__[4], ModelPars[10], ModelPars[9]);
+    DuDxlp(0, 11) = -jsControl.solve_rhs(-L__[iL_lambda5__xo], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     DuDxlp(1, 11) = 0;
     DuDxlp(0, 12) = 0;
-    DuDxlp(1, 12) = -jnControl.solve_rhs(-L__[5], -ModelPars[8], ModelPars[8]);
+    DuDxlp(1, 12) = -jnControl.solve_rhs(-L__[iL_lambda6__xo], -ModelPars[iM_jn_max], ModelPars[iM_jn_max]);
     DuDxlp(0, 13) = 0;
     DuDxlp(1, 13) = 0;
   }

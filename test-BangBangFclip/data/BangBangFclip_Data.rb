@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFclip_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-h0       = 0.1
 vFmax    = 10
+h0       = 0.1
 epsilon0 = 0.1
 
 mechatronix do |data|
@@ -156,7 +156,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :h => h0, :delta => 0 }
+  data.MappedObjects[:clip] = { :delta => 0, :h => h0 }
 
   # Controls
   # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC

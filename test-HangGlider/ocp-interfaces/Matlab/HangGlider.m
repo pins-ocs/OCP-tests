@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: HangGlider.m                                                   %
 %                                                                       %
-%  version: 1.0   date 26/2/2021                                        %
+%  version: 1.0   date 5/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -639,212 +639,212 @@ classdef HangGlider < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = r( self, x__XO )
-      res = HangGlider_Mex('r', self.objectHandle, x__XO );
+    function res = r( self, xo__x )
+      res = HangGlider_Mex('r', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = r_D( self, x__XO )
-      res = HangGlider_Mex('r_D', self.objectHandle, x__XO );
+    function res = r_D( self, xo__x )
+      res = HangGlider_Mex('r_D', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = r_DD( self, x__XO )
-      res = HangGlider_Mex('r_DD', self.objectHandle, x__XO );
+    function res = r_DD( self, xo__x )
+      res = HangGlider_Mex('r_DD', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = u( self, x__XO )
-      res = HangGlider_Mex('u', self.objectHandle, x__XO );
+    function res = u( self, xo__x )
+      res = HangGlider_Mex('u', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = u_D( self, x__XO )
-      res = HangGlider_Mex('u_D', self.objectHandle, x__XO );
+    function res = u_D( self, xo__x )
+      res = HangGlider_Mex('u_D', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = u_DD( self, x__XO )
-      res = HangGlider_Mex('u_DD', self.objectHandle, x__XO );
+    function res = u_DD( self, xo__x )
+      res = HangGlider_Mex('u_DD', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
-    function res = w( self, x__XO, y1__XO )
-      res = HangGlider_Mex('w', self.objectHandle, x__XO, y1__XO );
+    function res = w( self, xo__x, xo__y1 )
+      res = HangGlider_Mex('w', self.objectHandle, xo__x, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = w_D_1( self, x__XO, y1__XO )
-      res = HangGlider_Mex('w_D_1', self.objectHandle, x__XO, y1__XO );
+    function res = w_D_1( self, xo__x, xo__y1 )
+      res = HangGlider_Mex('w_D_1', self.objectHandle, xo__x, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = w_D_2( self, x__XO, y1__XO )
-      res = HangGlider_Mex('w_D_2', self.objectHandle, x__XO, y1__XO );
+    function res = w_D_2( self, xo__x, xo__y1 )
+      res = HangGlider_Mex('w_D_2', self.objectHandle, xo__x, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = w_D_1_1( self, x__XO, y1__XO )
-      res = HangGlider_Mex('w_D_1_1', self.objectHandle, x__XO, y1__XO );
+    function res = w_D_1_1( self, xo__x, xo__y1 )
+      res = HangGlider_Mex('w_D_1_1', self.objectHandle, xo__x, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = w_D_1_2( self, x__XO, y1__XO )
-      res = HangGlider_Mex('w_D_1_2', self.objectHandle, x__XO, y1__XO );
+    function res = w_D_1_2( self, xo__x, xo__y1 )
+      res = HangGlider_Mex('w_D_1_2', self.objectHandle, xo__x, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = w_D_2_2( self, x__XO, y1__XO )
-      res = HangGlider_Mex('w_D_2_2', self.objectHandle, x__XO, y1__XO );
+    function res = w_D_2_2( self, xo__x, xo__y1 )
+      res = HangGlider_Mex('w_D_2_2', self.objectHandle, xo__x, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2_D_1( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2_D_1', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2_D_1( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2_D_1', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2_D_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2_D_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2_D_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2_D_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2_D_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2_D_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2_D_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2_D_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2_D_1_1( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2_D_1_1', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2_D_1_1( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2_D_1_1', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2_D_1_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2_D_1_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2_D_1_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2_D_1_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2_D_1_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2_D_1_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2_D_1_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2_D_1_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2_D_2_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2_D_2_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2_D_2_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2_D_2_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2_D_2_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2_D_2_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2_D_2_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2_D_2_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v2_D_3_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v2_D_3_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v2_D_3_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v2_D_3_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v_D_1( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v_D_1', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v_D_1( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v_D_1', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v_D_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v_D_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v_D_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v_D_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v_D_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v_D_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v_D_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v_D_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v_D_1_1( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v_D_1_1', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v_D_1_1( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v_D_1_1', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v_D_1_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v_D_1_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v_D_1_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v_D_1_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v_D_1_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v_D_1_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v_D_1_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v_D_1_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v_D_2_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v_D_2_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v_D_2_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v_D_2_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v_D_2_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v_D_2_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v_D_2_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v_D_2_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = v_D_3_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('v_D_3_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = v_D_3_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('v_D_3_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun_D_1( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun_D_1', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun_D_1( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun_D_1', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun_D_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun_D_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun_D_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun_D_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun_D_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun_D_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun_D_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun_D_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun_D_1_1( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun_D_1_1', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun_D_1_1( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun_D_1_1', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun_D_1_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun_D_1_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun_D_1_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun_D_1_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun_D_1_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun_D_1_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun_D_1_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun_D_1_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun_D_2_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun_D_2_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun_D_2_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun_D_2_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun_D_2_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun_D_2_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun_D_2_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun_D_2_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Dfun_D_3_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Dfun_D_3_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Dfun_D_3_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Dfun_D_3_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun_D_1( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun_D_1', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun_D_1( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun_D_1', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun_D_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun_D_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun_D_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun_D_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun_D_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun_D_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun_D_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun_D_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun_D_1_1( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun_D_1_1', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun_D_1_1( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun_D_1_1', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun_D_1_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun_D_1_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun_D_1_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun_D_1_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun_D_1_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun_D_1_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun_D_1_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun_D_1_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun_D_2_2( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun_D_2_2', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun_D_2_2( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun_D_2_2', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun_D_2_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun_D_2_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun_D_2_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun_D_2_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
-    function res = Lfun_D_3_3( self, x__XO, x1__XO, y1__XO )
-      res = HangGlider_Mex('Lfun_D_3_3', self.objectHandle, x__XO, x1__XO, y1__XO );
+    function res = Lfun_D_3_3( self, xo__x, xo__x1, xo__y1 )
+      res = HangGlider_Mex('Lfun_D_3_3', self.objectHandle, xo__x, xo__x1, xo__y1 );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

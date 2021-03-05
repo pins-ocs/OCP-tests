@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider.hh                                                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define HANGGLIDER_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace HangGliderDefine {
 
@@ -167,11 +167,11 @@ namespace HangGliderDefine {
     );
 
     HANGGLIDER_API_DLL virtual
-    ~HangGlider() MECHATRONIX_OVERRIDE;
+    ~HangGlider() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     HANGGLIDER_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "HangGlider"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -223,58 +223,58 @@ namespace HangGliderDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    HANGGLIDER_API_DLL real_type r         ( real_type x__XO ) const;
-    HANGGLIDER_API_DLL real_type r_D       ( real_type x__XO ) const;
-    HANGGLIDER_API_DLL real_type r_DD      ( real_type x__XO ) const;
-    HANGGLIDER_API_DLL real_type u         ( real_type x__XO ) const;
-    HANGGLIDER_API_DLL real_type u_D       ( real_type x__XO ) const;
-    HANGGLIDER_API_DLL real_type u_DD      ( real_type x__XO ) const;
-    HANGGLIDER_API_DLL real_type w         ( real_type x__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type w_D_1     ( real_type x__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type w_D_1_1   ( real_type x__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type w_D_1_2   ( real_type x__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type w_D_2     ( real_type x__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type w_D_2_2   ( real_type x__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2        ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2_D_1    ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2_D_1_1  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2_D_1_2  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2_D_1_3  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2_D_2    ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2_D_2_2  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2_D_2_3  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2_D_3    ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v2_D_3_3  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v         ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v_D_1     ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v_D_1_1   ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v_D_1_2   ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v_D_1_3   ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v_D_2     ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v_D_2_2   ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v_D_2_3   ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v_D_3     ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type v_D_3_3   ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun      ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun_D_1  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun_D_2  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun_D_3  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Dfun_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun      ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun_D_1  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun_D_1_1( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun_D_1_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun_D_1_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun_D_2  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun_D_2_2( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun_D_2_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun_D_3  ( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
-    HANGGLIDER_API_DLL real_type Lfun_D_3_3( real_type x__XO, real_type x1__XO, real_type y1__XO ) const;
+    HANGGLIDER_API_DLL real_type r         ( real_type xo__x ) const;
+    HANGGLIDER_API_DLL real_type r_D       ( real_type xo__x ) const;
+    HANGGLIDER_API_DLL real_type r_DD      ( real_type xo__x ) const;
+    HANGGLIDER_API_DLL real_type u         ( real_type xo__x ) const;
+    HANGGLIDER_API_DLL real_type u_D       ( real_type xo__x ) const;
+    HANGGLIDER_API_DLL real_type u_DD      ( real_type xo__x ) const;
+    HANGGLIDER_API_DLL real_type w         ( real_type xo__x, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type w_D_1     ( real_type xo__x, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type w_D_1_1   ( real_type xo__x, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type w_D_1_2   ( real_type xo__x, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type w_D_2     ( real_type xo__x, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type w_D_2_2   ( real_type xo__x, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2        ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2_D_1    ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2_D_1_1  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2_D_1_2  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2_D_1_3  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2_D_2    ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2_D_2_2  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2_D_2_3  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2_D_3    ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v2_D_3_3  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v         ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v_D_1     ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v_D_1_1   ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v_D_1_2   ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v_D_1_3   ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v_D_2     ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v_D_2_2   ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v_D_2_3   ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v_D_3     ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type v_D_3_3   ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun      ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun_D_1  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun_D_1_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun_D_1_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun_D_1_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun_D_2  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun_D_2_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun_D_2_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun_D_3  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Dfun_D_3_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun      ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun_D_1  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun_D_1_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun_D_1_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun_D_1_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun_D_2  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun_D_2_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun_D_2_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun_D_3  ( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
+    HANGGLIDER_API_DLL real_type Lfun_D_3_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -297,12 +297,12 @@ namespace HangGliderDefine {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     HANGGLIDER_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

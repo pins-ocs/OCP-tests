@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Methods1.cc                                     |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -76,28 +76,29 @@ namespace MultipleDubinsDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    real_type t2   = P__[1];
-    real_type t3   = P__[2];
+    real_type t1   = P__[iP_L1];
+    real_type t2   = P__[iP_L2];
+    real_type t3   = P__[iP_L3];
     real_type t5   = t1 * t1;
     real_type t6   = t2 * t2;
     real_type t7   = t3 * t3;
-    real_type t11  = P__[3];
+    real_type t11  = P__[iP_kappa1];
     real_type t12  = t11 * t11;
-    real_type t13  = P__[4];
+    real_type t13  = P__[iP_kappa2];
     real_type t14  = t13 * t13;
-    real_type t15  = P__[5];
+    real_type t15  = P__[iP_kappa3];
     real_type t16  = t15 * t15;
-    real_type t21  = X__[2];
+    real_type t21  = X__[iX_theta1];
     real_type t22  = cos(t21);
     real_type t26  = sin(t21);
-    real_type t33  = X__[5];
+    real_type t33  = X__[iX_theta2];
     real_type t34  = cos(t33);
     real_type t38  = sin(t33);
-    real_type t45  = X__[8];
+    real_type t45  = X__[iX_theta3];
     real_type t46  = cos(t45);
     real_type t50  = sin(t45);
-    return t1 + t2 + t3 + (t5 + t6 + t7) * ModelPars[7] + (t12 + t14 + t16) * ModelPars[6] + t22 * t1 * L__[0] + t26 * t1 * L__[1] + t11 * t1 * L__[2] + t34 * t2 * L__[3] + t38 * t2 * L__[4] + t13 * t2 * L__[5] + t46 * t3 * L__[6] + t50 * t3 * L__[7] + t15 * t3 * L__[8];
+    real_type result__ = t1 + t2 + t3 + (t5 + t6 + t7) * ModelPars[iM_epsilon_L] + (t12 + t14 + t16) * ModelPars[iM_epsilon_K] + t22 * t1 * L__[iL_lambda1__xo] + t26 * t1 * L__[iL_lambda2__xo] + t11 * t1 * L__[iL_lambda3__xo] + t34 * t2 * L__[iL_lambda4__xo] + t38 * t2 * L__[iL_lambda5__xo] + t13 * t2 * L__[iL_lambda6__xo] + t46 * t3 * L__[iL_lambda7__xo] + t50 * t3 * L__[iL_lambda8__xo] + t15 * t3 * L__[iL_lambda9__xo];
+    return result__;
   }
 
   /*\
@@ -117,7 +118,8 @@ namespace MultipleDubinsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   real_type
@@ -130,7 +132,8 @@ namespace MultipleDubinsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -151,16 +154,17 @@ namespace MultipleDubinsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
-    real_type t2   = P__[1];
-    real_type t3   = P__[2];
+    real_type t1   = P__[iP_L1];
+    real_type t2   = P__[iP_L2];
+    real_type t3   = P__[iP_L3];
     real_type t5   = t1 * t1;
     real_type t6   = t2 * t2;
     real_type t7   = t3 * t3;
-    real_type t12  = P__[3] * P__[3];
-    real_type t14  = P__[4] * P__[4];
-    real_type t16  = P__[5] * P__[5];
-    return t1 + t2 + t3 + (t5 + t6 + t7) * ModelPars[7] + (t12 + t14 + t16) * ModelPars[6];
+    real_type t12  = P__[iP_kappa1] * P__[iP_kappa1];
+    real_type t14  = P__[iP_kappa2] * P__[iP_kappa2];
+    real_type t16  = P__[iP_kappa3] * P__[iP_kappa3];
+    real_type result__ = t1 + t2 + t3 + (t5 + t6 + t7) * ModelPars[iM_epsilon_L] + (t12 + t14 + t16) * ModelPars[iM_epsilon_K];
+    return result__;
   }
 
   /*\
@@ -185,7 +189,8 @@ namespace MultipleDubinsDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -295,24 +300,24 @@ namespace MultipleDubinsDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = XR__[3] - XL__[3];
-    result__[ 4   ] = XR__[4] - XL__[4];
-    result__[ 5   ] = XR__[5] - XL__[5];
-    result__[ 6   ] = XR__[6] - XL__[6];
-    result__[ 7   ] = XR__[7] - XL__[7];
-    result__[ 8   ] = XR__[8] - XL__[8];
-    result__[ 9   ] = LR__[0] - LL__[0];
-    result__[ 10  ] = LR__[1] - LL__[1];
-    result__[ 11  ] = LR__[2] - LL__[2];
-    result__[ 12  ] = LR__[3] - LL__[3];
-    result__[ 13  ] = LR__[4] - LL__[4];
-    result__[ 14  ] = LR__[5] - LL__[5];
-    result__[ 15  ] = LR__[6] - LL__[6];
-    result__[ 16  ] = LR__[7] - LL__[7];
-    result__[ 17  ] = LR__[8] - LL__[8];
+    result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
+    result__[ 1   ] = XR__[iX_y1] - XL__[iX_y1];
+    result__[ 2   ] = XR__[iX_theta1] - XL__[iX_theta1];
+    result__[ 3   ] = XR__[iX_x2] - XL__[iX_x2];
+    result__[ 4   ] = XR__[iX_y2] - XL__[iX_y2];
+    result__[ 5   ] = XR__[iX_theta2] - XL__[iX_theta2];
+    result__[ 6   ] = XR__[iX_x3] - XL__[iX_x3];
+    result__[ 7   ] = XR__[iX_y3] - XL__[iX_y3];
+    result__[ 8   ] = XR__[iX_theta3] - XL__[iX_theta3];
+    result__[ 9   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 10  ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 11  ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
+    result__[ 12  ] = LR__[iL_lambda4__xo] - LL__[iL_lambda4__xo];
+    result__[ 13  ] = LR__[iL_lambda5__xo] - LL__[iL_lambda5__xo];
+    result__[ 14  ] = LR__[iL_lambda6__xo] - LL__[iL_lambda6__xo];
+    result__[ 15  ] = LR__[iL_lambda7__xo] - LL__[iL_lambda7__xo];
+    result__[ 16  ] = LR__[iL_lambda8__xo] - LL__[iL_lambda8__xo];
+    result__[ 17  ] = LR__[iL_lambda9__xo] - LL__[iL_lambda9__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 18, i_segment_left, i_segment_right );
   }

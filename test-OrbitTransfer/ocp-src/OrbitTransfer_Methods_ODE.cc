@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: OrbitTransfer_Methods.cc                                       |
+ |  file: OrbitTransfer_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,22 +65,22 @@ namespace OrbitTransferDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = ModelPars[5];
-    real_type t2   = X__[3];
+    real_type t1   = ModelPars[iM_tf];
+    real_type t2   = X__[iX_u];
     result__[ 0   ] = t2 * t1;
-    real_type t3   = X__[4];
+    real_type t3   = X__[iX_v];
     real_type t4   = t3 * t3;
-    real_type t5   = X__[2];
+    real_type t5   = X__[iX_r];
     real_type t6   = 1.0 / t5;
     real_type t9   = t5 * t5;
-    real_type t12  = ModelPars[0];
-    real_type t13  = U__[0];
+    real_type t12  = ModelPars[iM_T];
+    real_type t13  = U__[iU_theta];
     real_type t14  = sin(t13);
-    real_type t17  = 1.0 / X__[0];
-    result__[ 1   ] = (t6 * t4 - 1.0 / t9 * ModelPars[3] + t17 * t14 * t12) * t1;
+    real_type t17  = 1.0 / X__[iX_m];
+    result__[ 1   ] = (t6 * t4 - 1.0 / t9 * ModelPars[iM_mu] + t17 * t14 * t12) * t1;
     real_type t22  = cos(t13);
     result__[ 2   ] = (t17 * t22 * t12 - t6 * t2 * t3) * t1;
-    result__[ 3   ] = -ModelPars[2] * t1;
+    result__[ 3   ] = -ModelPars[iM_mdot] * t1;
     result__[ 4   ] = t6 * t3 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 5, i_segment );
@@ -130,26 +130,26 @@ namespace OrbitTransferDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ModelPars[5];
-    real_type t2   = ModelPars[0] * result__[0];
-    real_type t3   = U__[0];
+    result__[ 0   ] = ModelPars[iM_tf];
+    real_type t2   = ModelPars[iM_T] * result__[0];
+    real_type t3   = U__[iU_theta];
     real_type t4   = sin(t3);
-    real_type t6   = X__[0] * X__[0];
+    real_type t6   = X__[iX_m] * X__[iX_m];
     real_type t7   = 1.0 / t6;
     result__[ 1   ] = -t7 * t4 * t2;
-    real_type t10  = X__[4];
+    real_type t10  = X__[iX_v];
     real_type t11  = t10 * t10;
-    real_type t12  = X__[2];
+    real_type t12  = X__[iX_r];
     real_type t13  = t12 * t12;
     real_type t14  = 1.0 / t13;
-    result__[ 2   ] = (-t14 * t11 + 2 / t13 / t12 * ModelPars[3]) * result__[0];
+    result__[ 2   ] = (-t14 * t11 + 2 / t13 / t12 * ModelPars[iM_mu]) * result__[0];
     real_type t22  = t10 * result__[0];
     real_type t23  = 1.0 / t12;
     real_type t24  = t23 * t22;
     result__[ 3   ] = 2 * t24;
     real_type t25  = cos(t3);
     result__[ 4   ] = -t7 * t25 * t2;
-    real_type t28  = X__[3];
+    real_type t28  = X__[iX_u];
     result__[ 5   ] = t14 * t28 * t22;
     result__[ 6   ] = -t24;
     result__[ 7   ] = -t23 * t28 * result__[0];
@@ -228,10 +228,10 @@ namespace OrbitTransferDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ModelPars[5] * ModelPars[0];
-    real_type t4   = U__[0];
+    real_type t3   = ModelPars[iM_tf] * ModelPars[iM_T];
+    real_type t4   = U__[iU_theta];
     real_type t5   = cos(t4);
-    real_type t7   = 1.0 / X__[0];
+    real_type t7   = 1.0 / X__[iX_m];
     result__[ 0   ] = t7 * t5 * t3;
     real_type t9   = sin(t4);
     result__[ 1   ] = -t7 * t9 * t3;
@@ -293,4 +293,4 @@ namespace OrbitTransferDefine {
 
 }
 
-// EOF: OrbitTransfer_Methods.cc
+// EOF: OrbitTransfer_Methods_ODE.cc

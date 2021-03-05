@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods.cc                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,15 +82,15 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[0];
-    real_type t2   = X__[2];
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = X__[iX_TimeSize];
     result__[ 0   ] = t2 * t1;
-    real_type t3   = L__[1];
-    real_type t7   = ModelPars[4] * ModelPars[2];
-    real_type t8   = ModelPars[3];
+    real_type t3   = L__[iL_lambda2__xo];
+    real_type t7   = ModelPars[iM_m] * ModelPars[iM_g];
+    real_type t8   = ModelPars[iM_h];
     result__[ 1   ] = t8 * t7 * t2 * t3;
     real_type t10  = ALIAS_minimumTimeSize_D(t2);
-    result__[ 2   ] = t10 + X__[0] * t1 + (X__[1] * t8 * t7 - U__[0] * t8) * t3;
+    result__[ 2   ] = t10 + X__[iX_omega] * t1 + (X__[iX_phi] * t8 * t7 - U__[iU_Fy] * t8) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
@@ -134,11 +134,11 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1] * ModelPars[4] * ModelPars[2] * ModelPars[3];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo] * ModelPars[iM_m] * ModelPars[iM_g] * ModelPars[iM_h];
     result__[ 2   ] = result__[0];
     result__[ 3   ] = result__[1];
-    result__[ 4   ] = ALIAS_minimumTimeSize_DD(X__[2]);
+    result__[ 4   ] = ALIAS_minimumTimeSize_DD(X__[iX_TimeSize]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 5, i_segment );
   }
@@ -202,7 +202,7 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = -L__[1] * X__[2] * ModelPars[3];
+    result__[ 0   ] = -L__[iL_lambda2__xo] * X__[iX_TimeSize] * ModelPars[iM_h];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -243,7 +243,7 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = -L__[1] * ModelPars[3];
+    result__[ 0   ] = -L__[iL_lambda2__xo] * ModelPars[iM_h];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
@@ -369,9 +369,9 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ModelPars[1] * L__[1];
-    result__[ 1   ] = L__[0];
-    result__[ 2   ] = L__[2];
+    result__[ 0   ] = ModelPars[iM_Ix] * L__[iL_lambda2__xo];
+    result__[ 1   ] = L__[iL_lambda1__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }
@@ -463,7 +463,7 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = V__[1];
-    result__[ 1   ] = ModelPars[1] * V__[0];
+    result__[ 1   ] = ModelPars[iM_Ix] * V__[0];
     result__[ 2   ] = V__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );

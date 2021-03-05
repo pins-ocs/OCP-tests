@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Methods.cc                                         |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,11 +82,11 @@ namespace SingularArcDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[0];
-    real_type t4   = X__[0];
+    real_type t2   = P__[iP_T];
+    real_type t4   = X__[iX_x1];
     real_type t5   = sin(t4);
     real_type t9   = cos(t4);
-    result__[ 0   ] = -t5 * t2 * L__[1] + t9 * t2 * L__[2];
+    result__[ 0   ] = -t5 * t2 * L__[iL_lambda2__xo] + t9 * t2 * L__[iL_lambda3__xo];
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
     if ( m_debug )
@@ -128,11 +128,11 @@ namespace SingularArcDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[0];
-    real_type t4   = X__[0];
+    real_type t2   = P__[iP_T];
+    real_type t4   = X__[iX_x1];
     real_type t5   = cos(t4);
     real_type t9   = sin(t4);
-    result__[ 0   ] = -t5 * t2 * L__[1] - t9 * t2 * L__[2];
+    result__[ 0   ] = -t5 * t2 * L__[iL_lambda2__xo] - t9 * t2 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
   }
@@ -174,10 +174,10 @@ namespace SingularArcDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[0];
+    real_type t2   = X__[iX_x1];
     real_type t3   = sin(t2);
     real_type t6   = cos(t2);
-    result__[ 0   ] = -t3 * L__[1] + t6 * L__[2];
+    result__[ 0   ] = -t3 * L__[iL_lambda2__xo] + t6 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDp_sparse", 1, i_segment );
   }
@@ -207,7 +207,7 @@ namespace SingularArcDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0] * P__[0];
+    result__[ 0   ] = L__[iL_lambda1__xo] * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -281,7 +281,7 @@ namespace SingularArcDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
+    result__[ 0   ] = L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
@@ -312,11 +312,11 @@ namespace SingularArcDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = ALIAS_tfbound_D(P__[0]);
-    real_type t7   = X__[0];
+    real_type t2   = ALIAS_tfbound_D(P__[iP_T]);
+    real_type t7   = X__[iX_x1];
     real_type t8   = cos(t7);
     real_type t11  = sin(t7);
-    result__[ 0   ] = t11 * L__[2] + t8 * L__[1] + L__[0] * U__[0] + t2;
+    result__[ 0   ] = t11 * L__[iL_lambda3__xo] + t8 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * U__[iU_u] + t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
@@ -358,7 +358,7 @@ namespace SingularArcDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = ALIAS_tfbound_DD(P__[0]);
+    result__[ 0   ] = ALIAS_tfbound_DD(P__[iP_T]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,1, i_segment );
   }
@@ -386,9 +386,9 @@ namespace SingularArcDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[0];
-    result__[ 1   ] = L__[1];
-    result__[ 2   ] = L__[2];
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
   }

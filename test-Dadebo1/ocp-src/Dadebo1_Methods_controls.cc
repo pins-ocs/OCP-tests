@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Methods.cc                                             |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,7 +67,7 @@ namespace Dadebo1Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 2 * L__[1] * U__[0] + L__[0];
+    result__[ 0   ] = 2 * L__[iL_lambda2__xo] * U__[iU_u] + L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -110,7 +110,7 @@ namespace Dadebo1Define {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = 1;
-    result__[ 1   ] = 2 * U__[0];
+    result__[ 1   ] = 2 * U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
   }
@@ -151,7 +151,7 @@ namespace Dadebo1Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 2 * L__[1];
+    result__[ 0   ] = 2 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -186,7 +186,7 @@ namespace Dadebo1Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_u ] = -L__[0] / L__[1] / 2;
+    U__[ iU_u ] = -L__[iL_lambda1__xo] / L__[iL_lambda2__xo] / 2;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -237,8 +237,8 @@ namespace Dadebo1Define {
     real_type const * L__ = NODE__.lambda;
     DuDxlp(0, 0) = 0;
     DuDxlp(0, 1) = 0;
-    DuDxlp(0, 2) = -1.0 / L__[1] / 2;
-    DuDxlp(0, 3) = L__[0] * pow(L__[1], -2) / 2;
+    DuDxlp(0, 2) = -1.0 / L__[iL_lambda2__xo] / 2;
+    DuDxlp(0, 3) = L__[iL_lambda1__xo] * pow(L__[iL_lambda2__xo], -2) / 2;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

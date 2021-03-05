@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: EconomicGrowthModel2_Methods1.cc                               |
+ |  file: EconomicGrowthModel2_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -63,119 +63,247 @@ namespace EconomicGrowthModel2Define {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  EconomicGrowthModel2::Q( real_type x__XO, real_type y__XO ) const {
-    return x__XO * y__XO;
+  EconomicGrowthModel2::Q( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = xo__x * xo__y;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Q( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::Q_D_1( real_type x__XO, real_type y__XO ) const {
-    return y__XO;
+  EconomicGrowthModel2::Q_D_1( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = xo__y;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Q_D_1( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::Q_D_1_1( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  EconomicGrowthModel2::Q_D_1_1( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Q_D_1_1( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::Q_D_1_2( real_type x__XO, real_type y__XO ) const {
-    return 1;
+  EconomicGrowthModel2::Q_D_1_2( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Q_D_1_2( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::Q_D_2( real_type x__XO, real_type y__XO ) const {
-    return x__XO;
+  EconomicGrowthModel2::Q_D_2( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = xo__x;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Q_D_2( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::Q_D_2_2( real_type x__XO, real_type y__XO ) const {
-    return 0;
+  EconomicGrowthModel2::Q_D_2_2( real_type xo__x, real_type xo__y ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Q_D_2_2( x={}, y={} ) return {}\n",
+        xo__x, xo__y, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t1   = log(a__XO);
-    real_type t4   = log(b__XO);
-    return exp((1 - s__XO) * t1 + s__XO * t4);
+  EconomicGrowthModel2::explog( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t1   = log(xo__a);
+    real_type t4   = log(xo__b);
+    real_type result__ = exp((1 - xo__s) * t1 + xo__s * t4);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog_D_1( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t2   = pow(a__XO, -s__XO);
-    real_type t4   = pow(b__XO, s__XO);
-    return -t4 * t2 * (-1 + s__XO);
+  EconomicGrowthModel2::explog_D_1( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t2   = pow(xo__a, -xo__s);
+    real_type t4   = pow(xo__b, xo__s);
+    real_type result__ = -t4 * t2 * (-1 + xo__s);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog_D_1( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog_D_1_1( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t3   = pow(a__XO, -s__XO - 1);
-    real_type t5   = pow(b__XO, s__XO);
-    return t5 * s__XO * t3 * (-1 + s__XO);
+  EconomicGrowthModel2::explog_D_1_1( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t3   = pow(xo__a, -xo__s - 1);
+    real_type t5   = pow(xo__b, xo__s);
+    real_type result__ = t5 * xo__s * t3 * (-1 + xo__s);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog_D_1_1( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog_D_1_2( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t1   = -1 + s__XO;
-    real_type t2   = pow(a__XO, -s__XO);
-    real_type t4   = pow(b__XO, t1);
-    return -s__XO * t4 * t2 * t1;
+  EconomicGrowthModel2::explog_D_1_2( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t1   = -1 + xo__s;
+    real_type t2   = pow(xo__a, -xo__s);
+    real_type t4   = pow(xo__b, t1);
+    real_type result__ = -xo__s * t4 * t2 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog_D_1_2( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog_D_1_3( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t1   = pow(b__XO, s__XO);
-    real_type t2   = pow(a__XO, -s__XO);
-    real_type t4   = -1 + s__XO;
-    real_type t5   = log(a__XO);
-    real_type t8   = log(b__XO);
-    return (t5 * t4 - t8 * t4 - 1) * t2 * t1;
+  EconomicGrowthModel2::explog_D_1_3( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t1   = -1 + xo__s;
+    real_type t2   = log(xo__a);
+    real_type t5   = log(xo__b);
+    real_type t8   = pow(xo__b, xo__s);
+    real_type t10  = pow(xo__a, -xo__s);
+    real_type result__ = t10 * t8 * (t2 * t1 - t5 * t1 - 1);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog_D_1_3( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog_D_2( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t1   = -1 + s__XO;
-    real_type t2   = pow(b__XO, t1);
-    real_type t5   = pow(a__XO, -t1);
-    return t5 * t2 * s__XO;
+  EconomicGrowthModel2::explog_D_2( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t1   = -1 + xo__s;
+    real_type t2   = pow(xo__b, t1);
+    real_type t5   = pow(xo__a, -t1);
+    real_type result__ = t5 * t2 * xo__s;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog_D_2( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog_D_2_2( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t2   = pow(b__XO, -2 + s__XO);
-    real_type t4   = -1 + s__XO;
-    real_type t6   = pow(a__XO, -t4);
-    return t6 * t4 * t2 * s__XO;
+  EconomicGrowthModel2::explog_D_2_2( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t2   = pow(xo__b, -2 + xo__s);
+    real_type t4   = -1 + xo__s;
+    real_type t6   = pow(xo__a, -t4);
+    real_type result__ = t6 * t4 * t2 * xo__s;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog_D_2_2( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog_D_2_3( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t1   = 1 - s__XO;
-    real_type t2   = pow(a__XO, t1);
-    real_type t4   = pow(b__XO, -t1);
-    real_type t6   = log(a__XO);
-    real_type t8   = log(b__XO);
-    return -(s__XO * t6 - s__XO * t8 - 1) * t4 * t2;
+  EconomicGrowthModel2::explog_D_2_3( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t1   = 1 - xo__s;
+    real_type t2   = pow(xo__a, t1);
+    real_type t4   = pow(xo__b, -t1);
+    real_type t6   = log(xo__a);
+    real_type t8   = log(xo__b);
+    real_type result__ = -(xo__s * t6 - xo__s * t8 - 1) * t4 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog_D_2_3( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog_D_3( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t1   = log(a__XO);
-    real_type t2   = log(b__XO);
-    real_type t5   = pow(a__XO, 1 - s__XO);
-    real_type t7   = pow(b__XO, s__XO);
-    return -t7 * t5 * (t1 - t2);
+  EconomicGrowthModel2::explog_D_3( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t1   = log(xo__a);
+    real_type t2   = log(xo__b);
+    real_type t5   = pow(xo__a, 1 - xo__s);
+    real_type t7   = pow(xo__b, xo__s);
+    real_type result__ = -t7 * t5 * (t1 - t2);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog_D_3( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
   real_type
-  EconomicGrowthModel2::explog_D_3_3( real_type a__XO, real_type b__XO, real_type s__XO ) const {
-    real_type t1   = log(a__XO);
-    real_type t2   = log(b__XO);
+  EconomicGrowthModel2::explog_D_3_3( real_type xo__a, real_type xo__b, real_type xo__s ) const {
+    real_type t1   = log(xo__a);
+    real_type t2   = log(xo__b);
     real_type t4   = pow(t1 - t2, 2);
-    real_type t6   = pow(a__XO, 1 - s__XO);
-    real_type t8   = pow(b__XO, s__XO);
-    return t8 * t6 * t4;
+    real_type t6   = pow(xo__a, 1 - xo__s);
+    real_type t8   = pow(xo__b, xo__s);
+    real_type result__ = t8 * t6 * t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_explog_D_3_3( a={}, b={}, s={} ) return {}\n",
+        xo__a, xo__b, xo__s, result__
+      );
+    }
+    return result__;
   }
 
 }
 
-// EOF: EconomicGrowthModel2_Methods1.cc
+// EOF: EconomicGrowthModel2_Methods_UserFunctions.cc

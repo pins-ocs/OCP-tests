@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Methods.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,9 +78,9 @@ namespace BangBangFworkDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = fMax(Q__[0]);
-    real_type t5   = ALIAS_Fcontrol_D_1(U__[0], -t4, t4);
-    result__[ 0   ] = L__[1] + t5;
+    real_type t4   = fMax(Q__[iQ_zeta]);
+    real_type t5   = ALIAS_Fcontrol_D_1(U__[iU_F], -t4, t4);
+    result__[ 0   ] = L__[iL_lambda2__xo] + t5;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -162,8 +162,8 @@ namespace BangBangFworkDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = fMax(Q__[0]);
-    result__[ 0   ] = ALIAS_Fcontrol_D_1_1(U__[0], -t3, t3);
+    real_type t3   = fMax(Q__[iQ_zeta]);
+    result__[ 0   ] = ALIAS_Fcontrol_D_1_1(U__[iU_F], -t3, t3);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -198,8 +198,8 @@ namespace BangBangFworkDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = fMax(Q__[0]);
-    U__[ iU_F ] = Fcontrol.solve(-L__[1], -t3, t3);
+    real_type t3   = fMax(Q__[iQ_zeta]);
+    U__[ iU_F ] = Fcontrol.solve(-L__[iL_lambda2__xo], -t3, t3);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -251,7 +251,7 @@ namespace BangBangFworkDefine {
     DuDxlp(0, 0) = 0;
     DuDxlp(0, 1) = 0;
     DuDxlp(0, 2) = 0;
-    DuDxlp(0, 3) = -Fcontrol.solve_rhs(-L__[1], -fMax(Q__[0]), fMax(Q__[0]));
+    DuDxlp(0, 3) = -Fcontrol.solve_rhs(-L__[iL_lambda2__xo], -fMax(Q__[iQ_zeta]), fMax(Q__[iQ_zeta]));
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

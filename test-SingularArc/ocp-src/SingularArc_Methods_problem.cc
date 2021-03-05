@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Methods1.cc                                        |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,11 +65,11 @@ namespace SingularArcDefine {
   void
   SingularArc::continuationStep0( real_type s ) {
     real_type t2   = 1 - s;
-    real_type t3   = pow(ModelPars[4], t2);
-    real_type t5   = pow(ModelPars[5], s);
+    real_type t3   = pow(ModelPars[iM_epsi_ctrl0], t2);
+    real_type t5   = pow(ModelPars[iM_epsi_ctrl1], s);
     uControl.update_epsilon(t5 * t3);
-    real_type t8   = pow(ModelPars[6], t2);
-    real_type t10  = pow(ModelPars[7], s);
+    real_type t8   = pow(ModelPars[iM_tol_ctrl0], t2);
+    real_type t10  = pow(ModelPars[iM_tol_ctrl1], s);
     uControl.update_tolerance(t10 * t8);
   }
 
@@ -93,14 +93,15 @@ namespace SingularArcDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[0];
+    real_type t1   = P__[iP_T];
     real_type t2   = tfbound(t1);
-    real_type t5   = U__[0];
-    real_type t9   = X__[0];
+    real_type t5   = U__[iU_u];
+    real_type t9   = X__[iX_x1];
     real_type t10  = cos(t9);
     real_type t14  = sin(t9);
     real_type t16  = uControl(t5, -2, 2);
-    return t10 * t1 * L__[1] + t14 * t1 * L__[2] + t5 * t1 * L__[0] + t16 + t2;
+    real_type result__ = t10 * t1 * L__[iL_lambda2__xo] + t14 * t1 * L__[iL_lambda3__xo] + t5 * t1 * L__[iL_lambda1__xo] + t16 + t2;
+    return result__;
   }
 
   /*\
@@ -120,7 +121,8 @@ namespace SingularArcDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return tfbound(P__[0]);
+    real_type result__ = tfbound(P__[iP_T]);
+    return result__;
   }
 
   real_type
@@ -133,7 +135,8 @@ namespace SingularArcDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return uControl(U__[0], -2, 2);
+    real_type result__ = uControl(U__[iU_u], -2, 2);
+    return result__;
   }
 
   /*\
@@ -154,7 +157,8 @@ namespace SingularArcDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -179,7 +183,8 @@ namespace SingularArcDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return P__[0];
+    real_type result__ = P__[iP_T];
+    return result__;
   }
 
   /*\
@@ -289,12 +294,12 @@ namespace SingularArcDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    result__[ 3   ] = LR__[0] - LL__[0];
-    result__[ 4   ] = LR__[1] - LL__[1];
-    result__[ 5   ] = LR__[2] - LL__[2];
+    result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
+    result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
+    result__[ 2   ] = XR__[iX_x3] - XL__[iX_x3];
+    result__[ 3   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 4   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 5   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 6, i_segment_left, i_segment_right );
   }

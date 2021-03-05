@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods1.cc                                       |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -76,13 +76,14 @@ namespace BikeSteeringDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[2];
+    real_type t1   = X__[iX_TimeSize];
     real_type t2   = minimumTimeSize(t1);
-    real_type t11  = ModelPars[3];
-    real_type t17  = U__[0];
-    real_type t21  = ModelPars[0];
+    real_type t11  = ModelPars[iM_h];
+    real_type t17  = U__[iU_Fy];
+    real_type t21  = ModelPars[iM_Fmax];
     real_type t22  = FyControl(t17, -t21, t21);
-    return t2 + X__[0] * t1 * L__[0] + (X__[1] * t11 * ModelPars[2] * ModelPars[4] * t1 - t17 * t11 * t1) * L__[1] + t22 * t1;
+    real_type result__ = t2 + X__[iX_omega] * t1 * L__[iL_lambda1__xo] + (X__[iX_phi] * t11 * ModelPars[iM_g] * ModelPars[iM_m] * t1 - t17 * t11 * t1) * L__[iL_lambda2__xo] + t22 * t1;
+    return result__;
   }
 
   /*\
@@ -102,7 +103,8 @@ namespace BikeSteeringDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return minimumTimeSize(X__[2]);
+    real_type result__ = minimumTimeSize(X__[iX_TimeSize]);
+    return result__;
   }
 
   real_type
@@ -115,9 +117,10 @@ namespace BikeSteeringDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ModelPars[0];
-    real_type t4   = FyControl(U__[0], -t3, t3);
-    return t4 * X__[2];
+    real_type t3   = ModelPars[iM_Fmax];
+    real_type t4   = FyControl(U__[iU_Fy], -t3, t3);
+    real_type result__ = t4 * X__[iX_TimeSize];
+    return result__;
   }
 
   /*\
@@ -138,7 +141,8 @@ namespace BikeSteeringDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    return 0;
+    real_type result__ = 0;
+    return result__;
   }
 
   /*\
@@ -163,7 +167,8 @@ namespace BikeSteeringDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    return XR__[2];
+    real_type result__ = XR__[iX_TimeSize];
+    return result__;
   }
 
   /*\
@@ -273,13 +278,13 @@ namespace BikeSteeringDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XR__[0] - XL__[0];
-    result__[ 1   ] = XR__[1] - XL__[1];
-    result__[ 2   ] = XR__[2] - XL__[2];
-    real_type t8   = ModelPars[1];
-    result__[ 3   ] = -t8 * LL__[1] + t8 * LR__[1];
-    result__[ 4   ] = LR__[0] - LL__[0];
-    result__[ 5   ] = LR__[2] - LL__[2];
+    result__[ 0   ] = XR__[iX_omega] - XL__[iX_omega];
+    result__[ 1   ] = XR__[iX_phi] - XL__[iX_phi];
+    result__[ 2   ] = XR__[iX_TimeSize] - XL__[iX_TimeSize];
+    real_type t8   = ModelPars[iM_Ix];
+    result__[ 3   ] = -t8 * LL__[iL_lambda2__xo] + t8 * LR__[iL_lambda2__xo];
+    result__[ 4   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 5   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 6, i_segment_left, i_segment_right );
   }
@@ -342,7 +347,7 @@ namespace BikeSteeringDefine {
     result__[ 3   ] = 1;
     result__[ 4   ] = -1;
     result__[ 5   ] = 1;
-    real_type t1   = ModelPars[1];
+    real_type t1   = ModelPars[iM_Ix];
     result__[ 6   ] = -t1;
     result__[ 7   ] = t1;
     result__[ 8   ] = -1;
@@ -377,8 +382,8 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = X__[2];
-    real_type t9   = sqrt(ModelPars[4] * ModelPars[2] * ModelPars[3] / ModelPars[1]);
+    result__[ 0   ] = X__[iX_TimeSize];
+    real_type t9   = sqrt(ModelPars[iM_m] * ModelPars[iM_g] * ModelPars[iM_h] / ModelPars[iM_Ix]);
     result__[ 1   ] = t9 * result__[0];
     Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }

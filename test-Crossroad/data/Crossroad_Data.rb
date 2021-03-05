@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Crossroad_Data.rb                                              #
 #                                                                       #
-#  version: 1.0   date 26/2/2021                                        #
+#  version: 1.0   date 5/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,12 +20,12 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-L        = 100
-s_f      = L
-v_max    = 30
 jerk_min = -10
 jerk_max = 10
 wJ       = 1/jerk_max**2
+v_max    = 30
+L        = 100
+s_f      = L
 
 mechatronix do |data|
 
@@ -182,7 +182,7 @@ mechatronix do |data|
 
   data.Constraints = {}
   # Constraint1D
-  # Penalty subtype: PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:Tpositive] = {

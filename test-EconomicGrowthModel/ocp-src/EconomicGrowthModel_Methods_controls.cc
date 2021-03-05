@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods.cc                                 |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,10 +80,10 @@ namespace EconomicGrowthModelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = Q(X__[0], X__[1]);
-    real_type t6   = X__[2];
-    real_type t12  = ALIAS_uControl_D_1(U__[0], 0, 1);
-    result__[ 0   ] = t6 * t4 * L__[0] - t6 * t4 * L__[1] + t12 * t6;
+    real_type t4   = Q(X__[iX_x1], X__[iX_x2]);
+    real_type t6   = X__[iX_T];
+    real_type t12  = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    result__[ 0   ] = t6 * t4 * L__[iL_lambda1__xo] - t6 * t4 * L__[iL_lambda2__xo] + t12 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -128,17 +128,17 @@ namespace EconomicGrowthModelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[0];
-    real_type t2   = X__[0];
-    real_type t3   = X__[1];
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = X__[iX_x1];
+    real_type t3   = X__[iX_x2];
     real_type t4   = Q_D_1(t2, t3);
-    real_type t6   = X__[2];
-    real_type t8   = L__[1];
+    real_type t6   = X__[iX_T];
+    real_type t8   = L__[iL_lambda2__xo];
     result__[ 0   ] = t6 * t4 * t1 - t6 * t4 * t8;
     real_type t11  = Q_D_2(t2, t3);
     result__[ 1   ] = t6 * t11 * t1 - t6 * t11 * t8;
     real_type t16  = Q(t2, t3);
-    real_type t20  = ALIAS_uControl_D_1(U__[0], 0, 1);
+    real_type t20  = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
     result__[ 2   ] = t16 * t1 - t16 * t8 + t20;
     result__[ 3   ] = t6 * t16;
     result__[ 4   ] = -result__[3];
@@ -182,8 +182,8 @@ namespace EconomicGrowthModelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = ALIAS_uControl_D_1_1(U__[0], 0, 1);
-    result__[ 0   ] = t3 * X__[2];
+    real_type t3   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 1);
+    result__[ 0   ] = t3 * X__[iX_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -218,8 +218,8 @@ namespace EconomicGrowthModelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = Q(X__[0], X__[1]);
-    U__[ iU_u ] = uControl.solve(-(L__[0] - L__[1]) * t3, 0, 1);
+    real_type t3   = Q(X__[iX_x1], X__[iX_x2]);
+    U__[ iU_u ] = uControl.solve(-(L__[iL_lambda1__xo] - L__[iL_lambda2__xo]) * t3, 0, 1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -270,11 +270,11 @@ namespace EconomicGrowthModelDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = -uControl.solve_rhs(-Q(X__[0], X__[1]) * (L__[0] - L__[1]), 0, 1) * Q_D_1(X__[0], X__[1]) * (L__[0] - L__[1]);
-    DuDxlp(0, 1) = -uControl.solve_rhs(-Q(X__[0], X__[1]) * (L__[0] - L__[1]), 0, 1) * Q_D_2(X__[0], X__[1]) * (L__[0] - L__[1]);
+    DuDxlp(0, 0) = -uControl.solve_rhs(-Q(X__[iX_x1], X__[iX_x2]) * (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]), 0, 1) * Q_D_1(X__[iX_x1], X__[iX_x2]) * (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]);
+    DuDxlp(0, 1) = -uControl.solve_rhs(-Q(X__[iX_x1], X__[iX_x2]) * (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]), 0, 1) * Q_D_2(X__[iX_x1], X__[iX_x2]) * (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]);
     DuDxlp(0, 2) = 0;
-    DuDxlp(0, 3) = -uControl.solve_rhs(-Q(X__[0], X__[1]) * (L__[0] - L__[1]), 0, 1) * Q(X__[0], X__[1]);
-    DuDxlp(0, 4) = uControl.solve_rhs(-Q(X__[0], X__[1]) * (L__[0] - L__[1]), 0, 1) * Q(X__[0], X__[1]);
+    DuDxlp(0, 3) = -uControl.solve_rhs(-Q(X__[iX_x1], X__[iX_x2]) * (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]), 0, 1) * Q(X__[iX_x1], X__[iX_x2]);
+    DuDxlp(0, 4) = uControl.solve_rhs(-Q(X__[iX_x1], X__[iX_x2]) * (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]), 0, 1) * Q(X__[iX_x1], X__[iX_x2]);
     DuDxlp(0, 5) = 0;
   }
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket.hh                                               |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -44,8 +44,8 @@
   #define GODDARDROCKET_API_DLL
 #endif
 
-#define OCP_VIRTUAL          MECHATRONIX_OVERRIDE
-#define INDIRECT_OCP_VIRTUAL MECHATRONIX_OVERRIDE
+#define OCP_VIRTUAL          override
+#define INDIRECT_OCP_VIRTUAL override
 
 namespace GoddardRocketDefine {
 
@@ -168,11 +168,11 @@ namespace GoddardRocketDefine {
     );
 
     GODDARDROCKET_API_DLL virtual
-    ~GoddardRocket() MECHATRONIX_OVERRIDE;
+    ~GoddardRocket() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     GODDARDROCKET_API_DLL virtual
-    char const * model_name() const MECHATRONIX_OVERRIDE
+    char const * model_name() const override
     { return "GoddardRocket"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -224,25 +224,25 @@ namespace GoddardRocketDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    GODDARDROCKET_API_DLL real_type DD          ( real_type h__XO, real_type v__XO ) const;
-    GODDARDROCKET_API_DLL real_type DD_D_1      ( real_type h__XO, real_type v__XO ) const;
-    GODDARDROCKET_API_DLL real_type DD_D_1_1    ( real_type h__XO, real_type v__XO ) const;
-    GODDARDROCKET_API_DLL real_type DD_D_1_2    ( real_type h__XO, real_type v__XO ) const;
-    GODDARDROCKET_API_DLL real_type DD_D_2      ( real_type h__XO, real_type v__XO ) const;
-    GODDARDROCKET_API_DLL real_type DD_D_2_2    ( real_type h__XO, real_type v__XO ) const;
-    GODDARDROCKET_API_DLL real_type gg          ( real_type h__XO ) const;
-    GODDARDROCKET_API_DLL real_type gg_D        ( real_type h__XO ) const;
-    GODDARDROCKET_API_DLL real_type gg_DD       ( real_type h__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog      ( real_type s__XO, real_type a__XO, real_type b__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog_D_1  ( real_type s__XO, real_type a__XO, real_type b__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog_D_1_1( real_type s__XO, real_type a__XO, real_type b__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog_D_1_2( real_type s__XO, real_type a__XO, real_type b__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog_D_1_3( real_type s__XO, real_type a__XO, real_type b__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog_D_2  ( real_type s__XO, real_type a__XO, real_type b__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog_D_2_2( real_type s__XO, real_type a__XO, real_type b__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog_D_2_3( real_type s__XO, real_type a__XO, real_type b__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog_D_3  ( real_type s__XO, real_type a__XO, real_type b__XO ) const;
-    GODDARDROCKET_API_DLL real_type explog_D_3_3( real_type s__XO, real_type a__XO, real_type b__XO ) const;
+    GODDARDROCKET_API_DLL real_type DD          ( real_type xo__h, real_type xo__v ) const;
+    GODDARDROCKET_API_DLL real_type DD_D_1      ( real_type xo__h, real_type xo__v ) const;
+    GODDARDROCKET_API_DLL real_type DD_D_1_1    ( real_type xo__h, real_type xo__v ) const;
+    GODDARDROCKET_API_DLL real_type DD_D_1_2    ( real_type xo__h, real_type xo__v ) const;
+    GODDARDROCKET_API_DLL real_type DD_D_2      ( real_type xo__h, real_type xo__v ) const;
+    GODDARDROCKET_API_DLL real_type DD_D_2_2    ( real_type xo__h, real_type xo__v ) const;
+    GODDARDROCKET_API_DLL real_type gg          ( real_type xo__h ) const;
+    GODDARDROCKET_API_DLL real_type gg_D        ( real_type xo__h ) const;
+    GODDARDROCKET_API_DLL real_type gg_DD       ( real_type xo__h ) const;
+    GODDARDROCKET_API_DLL real_type explog      ( real_type xo__s, real_type xo__a, real_type xo__b ) const;
+    GODDARDROCKET_API_DLL real_type explog_D_1  ( real_type xo__s, real_type xo__a, real_type xo__b ) const;
+    GODDARDROCKET_API_DLL real_type explog_D_1_1( real_type xo__s, real_type xo__a, real_type xo__b ) const;
+    GODDARDROCKET_API_DLL real_type explog_D_1_2( real_type xo__s, real_type xo__a, real_type xo__b ) const;
+    GODDARDROCKET_API_DLL real_type explog_D_1_3( real_type xo__s, real_type xo__a, real_type xo__b ) const;
+    GODDARDROCKET_API_DLL real_type explog_D_2  ( real_type xo__s, real_type xo__a, real_type xo__b ) const;
+    GODDARDROCKET_API_DLL real_type explog_D_2_2( real_type xo__s, real_type xo__a, real_type xo__b ) const;
+    GODDARDROCKET_API_DLL real_type explog_D_2_3( real_type xo__s, real_type xo__a, real_type xo__b ) const;
+    GODDARDROCKET_API_DLL real_type explog_D_3  ( real_type xo__s, real_type xo__a, real_type xo__b ) const;
+    GODDARDROCKET_API_DLL real_type explog_D_3_3( real_type xo__s, real_type xo__a, real_type xo__b ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>
@@ -265,12 +265,12 @@ namespace GoddardRocketDefine {
       integer   phase,
       real_type old_s,
       real_type s
-    ) MECHATRONIX_OVERRIDE;
+    ) override;
 
     // save model parameters
     GODDARDROCKET_API_DLL virtual
     void
-    save_OCP_info( GenericContainer & gc ) const MECHATRONIX_OVERRIDE;
+    save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

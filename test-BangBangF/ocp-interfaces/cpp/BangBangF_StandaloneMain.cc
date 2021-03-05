@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -147,7 +147,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_FControl = data_Controls["FControl"];
-    data_FControl["type"]      = "COS_LOGARITHMIC";
+    data_FControl["type"]      = ;
     data_FControl["epsilon"]   = 0.001;
     data_FControl["tolerance"] = 0.001;
 

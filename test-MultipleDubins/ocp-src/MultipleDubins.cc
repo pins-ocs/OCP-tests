@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins.cc                                              |
  |                                                                       |
- |  version: 1.0   date 26/2/2021                                        |
+ |  version: 1.0   date 5/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -382,7 +382,9 @@ namespace MultipleDubinsDefine {
 
     m_console->message("\nUser mapped functions\n",msg_level);
     mstr.str("");
+    mstr << "User function ``diff2pi'' mapped with: ";
     diff2pi.info(mstr);
+    mstr << "User function ``clip'' mapped with: ";
     clip.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
