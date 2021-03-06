@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoStageCSTR_Methods.cc                                        |
+ |  file: TwoStageCSTR_Methods_AdjointODE.cc                             |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -245,7 +245,7 @@ namespace TwoStageCSTRDefine {
     real_type t1   = ModelPars[iM_W];
     real_type t7   = -X__[iX_x2] - 0.25e0;
     real_type t9   = L__[iL_lambda4__xo];
-    result__[ 0   ] = -t7 * ModelPars[iM_tau] * t9 + 2 * U__[iU_u1] * t1 + t7 * L__[iL_lambda2__xo];
+    result__[ 0   ] = -t7 * t9 * ModelPars[iM_tau] + 2 * t1 * U__[iU_u1] + t7 * L__[iL_lambda2__xo];
     result__[ 1   ] = 2 * U__[iU_u2] * t1 + (-X__[iX_x4] - 0.25e0) * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
@@ -349,14 +349,7 @@ namespace TwoStageCSTRDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -400,7 +393,6 @@ namespace TwoStageCSTRDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   TwoStageCSTR::eta_numEqns() const
   { return 4; }
@@ -586,4 +578,4 @@ namespace TwoStageCSTRDefine {
 
 }
 
-// EOF: TwoStageCSTR_Methods.cc
+// EOF: TwoStageCSTR_Methods_AdjointODE.cc

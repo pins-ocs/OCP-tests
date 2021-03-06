@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: vanDerPol_Methods1.cc                                          |
+ |  file: vanDerPol_Methods_problem.cc                                   |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -73,6 +73,7 @@ namespace vanDerPolDefine {
    |
   \*/
 
+#if 1
   real_type
   vanDerPol::H_eval(
     integer              i_segment,
@@ -94,6 +95,31 @@ namespace vanDerPolDefine {
     real_type result__ = t2 + t4 + t3 * L__[iL_lambda1__xo] + (t3 * (-t2 + 1) - t1 + t10) * L__[iL_lambda2__xo] + t15 * (t2 + t4 + ModelPars[iM_epsilon]);
     return result__;
   }
+#else
+  real_type
+  vanDerPol::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_x1];
+    real_type t2   = t1 * t1;
+    real_type t3   = X__[iX_x2];
+    real_type t4   = t3 * t3;
+    real_type t10  = U__[iU_u];
+    real_type t15  = uControl(t10, -1, 1);
+    real_type result__ = t2 + t4 + t3 * L__[iL_lambda1__xo] + (t3 * (-t2 + 1) - t1 + t10) * L__[iL_lambda2__xo] + t15 * (t2 + t4 + ModelPars[iM_epsilon]);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -113,8 +139,13 @@ namespace vanDerPolDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   vanDerPol::control_penalties_eval(
@@ -130,6 +161,9 @@ namespace vanDerPolDefine {
     real_type t4   = X__[iX_x2] * X__[iX_x2];
     real_type t8   = uControl(U__[iU_u], -1, 1);
     real_type result__ = t8 * (t2 + t4 + ModelPars[iM_epsilon]);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -154,6 +188,9 @@ namespace vanDerPolDefine {
     real_type t2   = X__[iX_x1] * X__[iX_x1];
     real_type t4   = X__[iX_x2] * X__[iX_x2];
     real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -180,6 +217,9 @@ namespace vanDerPolDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -377,6 +417,7 @@ namespace vanDerPolDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -392,8 +433,9 @@ namespace vanDerPolDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: vanDerPol_Methods1.cc
+// EOF: vanDerPol_Methods_problem.cc

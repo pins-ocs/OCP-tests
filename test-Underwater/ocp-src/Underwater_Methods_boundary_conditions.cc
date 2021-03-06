@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: Underwater_Methods.cc                                          |
+ |  file: Underwater_Methods_boundary_conditions.cc                      |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -195,7 +195,6 @@ namespace UnderwaterDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -269,7 +268,6 @@ namespace UnderwaterDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -302,7 +300,6 @@ namespace UnderwaterDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -318,4 +315,4 @@ namespace UnderwaterDefine {
 
 }
 
-// EOF: Underwater_Methods.cc
+// EOF: Underwater_Methods_boundary_conditions.cc

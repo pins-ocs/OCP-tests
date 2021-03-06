@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: Zermelo_Methods.cc                                             |
+ |  file: Zermelo_Methods_controls.cc                                    |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -208,6 +208,8 @@ namespace ZermeloDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_u ] = atan(L__[iL_lambda4__xo] / L__[iL_lambda3__xo]);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -272,6 +274,8 @@ namespace ZermeloDefine {
     DuDxlp(0, 7) = -L__[iL_lambda4__xo] * pow(L__[iL_lambda3__xo], -2) / (L__[iL_lambda4__xo] * L__[iL_lambda4__xo] * pow(L__[iL_lambda3__xo], -2) + 1);
     DuDxlp(0, 8) = 1.0 / L__[iL_lambda3__xo] / (L__[iL_lambda4__xo] * L__[iL_lambda4__xo] * pow(L__[iL_lambda3__xo], -2) + 1);
     DuDxlp(0, 9) = 0;
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -311,4 +315,4 @@ namespace ZermeloDefine {
 
 }
 
-// EOF: Zermelo_Methods.cc
+// EOF: Zermelo_Methods_controls.cc

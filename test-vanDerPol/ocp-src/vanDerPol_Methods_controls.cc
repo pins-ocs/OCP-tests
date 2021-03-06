@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: vanDerPol_Methods.cc                                           |
+ |  file: vanDerPol_Methods_controls.cc                                  |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -209,6 +209,8 @@ namespace vanDerPolDefine {
     real_type t3   = X__[iX_x1] * X__[iX_x1];
     real_type t5   = X__[iX_x2] * X__[iX_x2];
     U__[ iU_u ] = uControl.solve(-1.0 / (t3 + t5 + ModelPars[iM_epsilon]) * L__[iL_lambda2__xo], -1, 1);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -261,6 +263,8 @@ namespace vanDerPolDefine {
     DuDxlp(0, 1) = 2 * uControl.solve_rhs(-L__[iL_lambda2__xo] / (X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon]), -1, 1) * L__[iL_lambda2__xo] * pow(X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon], -2) * X__[iX_x2];
     DuDxlp(0, 2) = 0;
     DuDxlp(0, 3) = -uControl.solve_rhs(-L__[iL_lambda2__xo] / (X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon]), -1, 1) / (X__[iX_x1] * X__[iX_x1] + X__[iX_x2] * X__[iX_x2] + ModelPars[iM_epsilon]);
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -294,4 +298,4 @@ namespace vanDerPolDefine {
 
 }
 
-// EOF: vanDerPol_Methods.cc
+// EOF: vanDerPol_Methods_controls.cc

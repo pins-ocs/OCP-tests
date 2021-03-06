@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: Zermelo_Methods.cc                                             |
+ |  file: Zermelo_Methods_boundary_conditions.cc                         |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -161,7 +161,6 @@ namespace ZermeloDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -232,7 +231,6 @@ namespace ZermeloDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -265,7 +263,6 @@ namespace ZermeloDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -281,4 +278,4 @@ namespace ZermeloDefine {
 
 }
 
-// EOF: Zermelo_Methods.cc
+// EOF: Zermelo_Methods_boundary_conditions.cc

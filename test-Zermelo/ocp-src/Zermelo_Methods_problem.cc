@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: Zermelo_Methods1.cc                                            |
+ |  file: Zermelo_Methods_problem.cc                                     |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -55,6 +55,7 @@ namespace ZermeloDefine {
    |
   \*/
 
+#if 1
   real_type
   Zermelo::H_eval(
     integer              i_segment,
@@ -80,6 +81,35 @@ namespace ZermeloDefine {
     real_type result__ = t2 + (X__[iX_vx] + t8) * t1 * L__[iL_lambda1__xo] + (X__[iX_vy] + t14) * t1 * L__[iL_lambda2__xo] + t21 * t19 * t1 * L__[iL_lambda3__xo] + t26 * t19 * t1 * L__[iL_lambda4__xo];
     return result__;
   }
+#else
+  real_type
+  Zermelo::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_T];
+    real_type t2   = Tpositive(t1);
+    real_type t6   = X__[iX_x];
+    real_type t7   = X__[iX_y];
+    real_type t8   = velX(t6, t7);
+    real_type t14  = velY(t6, t7);
+    real_type t19  = ModelPars[iM_S];
+    real_type t20  = U__[iU_u];
+    real_type t21  = cos(t20);
+    real_type t26  = sin(t20);
+    real_type result__ = t2 + (X__[iX_vx] + t8) * t1 * L__[iL_lambda1__xo] + (X__[iX_vy] + t14) * t1 * L__[iL_lambda2__xo] + t21 * t19 * t1 * L__[iL_lambda3__xo] + t26 * t19 * t1 * L__[iL_lambda4__xo];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -99,8 +129,13 @@ namespace ZermeloDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = Tpositive(X__[iX_T]);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Zermelo::control_penalties_eval(
@@ -113,6 +148,9 @@ namespace ZermeloDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -135,6 +173,9 @@ namespace ZermeloDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -161,6 +202,9 @@ namespace ZermeloDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = XR__[iX_T];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -388,6 +432,7 @@ namespace ZermeloDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -414,4 +459,4 @@ namespace ZermeloDefine {
 
 }
 
-// EOF: Zermelo_Methods1.cc
+// EOF: Zermelo_Methods_problem.cc

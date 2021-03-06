@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: Underwater_Methods1.cc                                         |
+ |  file: Underwater_Methods_problem.cc                                  |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -105,6 +105,7 @@ namespace UnderwaterDefine {
    |
   \*/
 
+#if 1
   real_type
   Underwater::H_eval(
     integer              i_segment,
@@ -138,6 +139,43 @@ namespace UnderwaterDefine {
     real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + (-t27 * t30 * t21 * t8 + t27 * t25) * t2 * L__[iL_lambda4__xo] + (t38 * t26 * t21 * t4 + t38 * t37) * t2 * L__[iL_lambda5__xo] + (t49 * t47 + t49 * (t30 - t26) * t8 * t4) * t2 * L__[iL_lambda6__xo] + t57 * t2 + t59 * t2 + t61 * t2;
     return result__;
   }
+#else
+  real_type
+  Underwater::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = P__[iP_T];
+    real_type t4   = X__[iX_vx];
+    real_type t5   = X__[iX_theta];
+    real_type t6   = cos(t5);
+    real_type t8   = X__[iX_vz];
+    real_type t9   = sin(t5);
+    real_type t21  = X__[iX_Omega];
+    real_type t25  = U__[iU_u1];
+    real_type t26  = ModelPars[iM_m1];
+    real_type t27  = 1.0 / t26;
+    real_type t30  = ModelPars[iM_m3];
+    real_type t37  = U__[iU_u2];
+    real_type t38  = 1.0 / t30;
+    real_type t47  = U__[iU_u3];
+    real_type t49  = 1.0 / ModelPars[iM_inertia];
+    real_type t57  = u1Control(t25, -1, 1);
+    real_type t59  = u2Control(t37, -1, 1);
+    real_type t61  = u3Control(t47, -1, 1);
+    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + (-t27 * t30 * t21 * t8 + t27 * t25) * t2 * L__[iL_lambda4__xo] + (t38 * t26 * t21 * t4 + t38 * t37) * t2 * L__[iL_lambda5__xo] + (t49 * t47 + t49 * (t30 - t26) * t8 * t4) * t2 * L__[iL_lambda6__xo] + t57 * t2 + t59 * t2 + t61 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -157,8 +195,13 @@ namespace UnderwaterDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Underwater::control_penalties_eval(
@@ -175,6 +218,9 @@ namespace UnderwaterDefine {
     real_type t6   = u2Control(U__[iU_u2], -1, 1);
     real_type t9   = u3Control(U__[iU_u3], -1, 1);
     real_type result__ = t3 * t1 + t6 * t1 + t9 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -197,6 +243,9 @@ namespace UnderwaterDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -223,6 +272,9 @@ namespace UnderwaterDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = P__[iP_T];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -460,6 +512,7 @@ namespace UnderwaterDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -475,8 +528,9 @@ namespace UnderwaterDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: Underwater_Methods1.cc
+// EOF: Underwater_Methods_problem.cc

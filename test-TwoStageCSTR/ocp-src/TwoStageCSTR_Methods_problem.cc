@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoStageCSTR_Methods1.cc                                       |
+ |  file: TwoStageCSTR_Methods_problem.cc                                |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -71,6 +71,7 @@ namespace TwoStageCSTRDefine {
    |
   \*/
 
+#if 1
   real_type
   TwoStageCSTR::H_eval(
     integer              i_segment,
@@ -105,6 +106,44 @@ namespace TwoStageCSTRDefine {
     real_type result__ = t2 + t4 + t6 + t8 + (t11 + t13) * ModelPars[iM_W] + t18 * L__[iL_lambda1__xo] + t24 * L__[iL_lambda2__xo] + (t1 - t5 - t18 * t27 - t29 + 0.25e0) * L__[iL_lambda3__xo] + (t3 - 2 * t7 - (t7 + 0.25e0) * t12 - t24 * t27 + t29 - 0.25e0) * L__[iL_lambda4__xo] + t39 + t40;
     return result__;
   }
+#else
+  real_type
+  TwoStageCSTR::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_x1];
+    real_type t2   = t1 * t1;
+    real_type t3   = X__[iX_x2];
+    real_type t4   = t3 * t3;
+    real_type t5   = X__[iX_x3];
+    real_type t6   = t5 * t5;
+    real_type t7   = X__[iX_x4];
+    real_type t8   = t7 * t7;
+    real_type t10  = U__[iU_u1];
+    real_type t11  = t10 * t10;
+    real_type t12  = U__[iU_u2];
+    real_type t13  = t12 * t12;
+    real_type t17  = R1(t1, t3);
+    real_type t18  = 0.5e0 - t1 - t17;
+    real_type t24  = t17 - (2 + t10) * (t3 + 0.25e0);
+    real_type t27  = ModelPars[iM_tau];
+    real_type t29  = R2(t5, t7);
+    real_type t39  = u1Control(t10, -0.5e0, 0.5e0);
+    real_type t40  = u2Control(t12, -0.5e0, 0.5e0);
+    real_type result__ = t2 + t4 + t6 + t8 + (t11 + t13) * ModelPars[iM_W] + t18 * L__[iL_lambda1__xo] + t24 * L__[iL_lambda2__xo] + (t1 - t5 - t18 * t27 - t29 + 0.25e0) * L__[iL_lambda3__xo] + (t3 - 2 * t7 - (t7 + 0.25e0) * t12 - t24 * t27 + t29 - 0.25e0) * L__[iL_lambda4__xo] + t39 + t40;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -124,8 +163,13 @@ namespace TwoStageCSTRDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   TwoStageCSTR::control_penalties_eval(
@@ -140,6 +184,9 @@ namespace TwoStageCSTRDefine {
     real_type t2   = u1Control(U__[iU_u1], -0.5e0, 0.5e0);
     real_type t4   = u2Control(U__[iU_u2], -0.5e0, 0.5e0);
     real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -168,6 +215,9 @@ namespace TwoStageCSTRDefine {
     real_type t11  = U__[iU_u1] * U__[iU_u1];
     real_type t13  = U__[iU_u2] * U__[iU_u2];
     real_type result__ = t2 + t4 + t6 + t8 + (t11 + t13) * ModelPars[iM_W];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -194,6 +244,9 @@ namespace TwoStageCSTRDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -411,6 +464,7 @@ namespace TwoStageCSTRDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -426,8 +480,9 @@ namespace TwoStageCSTRDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: TwoStageCSTR_Methods1.cc
+// EOF: TwoStageCSTR_Methods_problem.cc

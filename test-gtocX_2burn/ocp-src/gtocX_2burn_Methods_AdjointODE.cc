@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: gtocX_2burn_Methods.cc                                         |
+ |  file: gtocX_2burn_Methods_AdjointODE.cc                              |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -351,14 +351,6 @@ namespace gtocX_2burnDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -448,14 +440,7 @@ namespace gtocX_2burnDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -499,7 +484,6 @@ namespace gtocX_2burnDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   gtocX_2burn::eta_numEqns() const
   { return 6; }
@@ -689,4 +673,4 @@ namespace gtocX_2burnDefine {
 
 }
 
-// EOF: gtocX_2burn_Methods.cc
+// EOF: gtocX_2burn_Methods_AdjointODE.cc

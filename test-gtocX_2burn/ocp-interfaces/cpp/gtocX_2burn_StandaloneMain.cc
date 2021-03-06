@@ -171,8 +171,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 gtocX_2burn_data.Mesh["s0"] = 0;
-gtocX_2burn_data.Mesh["segments"][0]["length"] = 1;
 gtocX_2burn_data.Mesh["segments"][0]["n"] = 50;
+gtocX_2burn_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

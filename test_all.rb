@@ -4,9 +4,14 @@ FileUtils.rm_rf "./collected_results/"
 FileUtils.mkdir "./collected_results/"
 
 def do_test(dir)
-  system("cd #{dir}; rake clobber maple; rake clean main; cd .." );
-  system("cd #{dir}; ./bin/main | tee iterations.txt; cd .." );
   name = dir.split("test-")[1];
+  puts "\n\n"
+  system("cd #{dir}; rake clobber maple; cd .." );
+  puts "\n\n"
+  system("cd #{dir}; pins #{name}_pins_run.rb -f -b -main; cd .." );
+  puts "\n\n"
+  system("cd #{dir}; ./bin/main | tee iterations.txt; cd .." );
+  puts "\n\n"
   ff   = "#{dir}/iterations.txt";
   if File.exist? "#{dir}/data/#{name}_OCP_result.txt" then
     gg = "./collected_results/#{name}_iterations.txt";

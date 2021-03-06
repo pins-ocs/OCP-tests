@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: WorstCaseScenario_Methods.cc                                   |
+ |  file: WorstCaseScenario_Methods_AdjointODE.cc                        |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -268,14 +268,7 @@ namespace WorstCaseScenarioDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -319,7 +312,6 @@ namespace WorstCaseScenarioDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   WorstCaseScenario::eta_numEqns() const
   { return 1; }
@@ -499,4 +491,4 @@ namespace WorstCaseScenarioDefine {
 
 }
 
-// EOF: WorstCaseScenario_Methods.cc
+// EOF: WorstCaseScenario_Methods_AdjointODE.cc

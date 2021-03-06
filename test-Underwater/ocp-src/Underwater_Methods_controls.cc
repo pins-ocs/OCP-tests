@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: Underwater_Methods.cc                                          |
+ |  file: Underwater_Methods_controls.cc                                 |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -247,6 +247,8 @@ namespace UnderwaterDefine {
     U__[ iU_u1 ] = u1Control.solve(-1.0 / ModelPars[iM_m1] * L__[iL_lambda4__xo], -1, 1);
     U__[ iU_u2 ] = u2Control.solve(-1.0 / ModelPars[iM_m3] * L__[iL_lambda5__xo], -1, 1);
     U__[ iU_u3 ] = u3Control.solve(-1.0 / ModelPars[iM_inertia] * L__[iL_lambda6__xo], -1, 1);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 3 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -342,6 +344,8 @@ namespace UnderwaterDefine {
     DuDxlp(0, 12) = 0;
     DuDxlp(1, 12) = 0;
     DuDxlp(2, 12) = 0;
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 3 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -383,4 +387,4 @@ namespace UnderwaterDefine {
 
 }
 
-// EOF: Underwater_Methods.cc
+// EOF: Underwater_Methods_controls.cc

@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: gtocX_2burn_pars_Methods.cc                                    |
+ |  file: gtocX_2burn_pars_Methods_AdjointODE.cc                         |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -339,14 +339,6 @@ namespace gtocX_2burn_parsDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 0, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -468,7 +460,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t45  = cos(t26);
     real_type t59  = pow(t45 * t24 + t29 * t25 + 1, 2);
     real_type t60  = t3 * t3;
-    result__[ 0   ] = 2 * t5 * (t3 * t5 - 1) * t2 + t29 * t28 * t23 * t17 * t15 / 2 + t29 * t38 * t37 * t34 * t15 - t45 * t28 * t23 * t17 * t43 / 2 - t45 * t38 * t37 * t34 * t43 - 3.0 / 2.0 * t20 / t16 / t60 * t59 * t14 * L__[iL_lambda3__xo];
+    result__[ 0   ] = 2 * t5 * (t5 * t3 - 1) * t2 + t29 * t28 * t23 * t17 * t15 / 2 + t29 * t38 * t37 * t34 * t15 - t45 * t28 * t23 * t17 * t43 / 2 - t45 * t38 * t37 * t34 * t43 - 3.0 / 2.0 * t20 / t16 / t60 * t59 * t14 * L__[iL_lambda3__xo];
     real_type t68  = h_guess(0);
     result__[ 1   ] = (2 * P__[iP_h] - 2 * t68) * t2;
     real_type t72  = k_guess(0);
@@ -564,7 +556,6 @@ namespace gtocX_2burn_parsDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   gtocX_2burn_pars::eta_numEqns() const
   { return 3; }
@@ -748,4 +739,4 @@ namespace gtocX_2burn_parsDefine {
 
 }
 
-// EOF: gtocX_2burn_pars_Methods.cc
+// EOF: gtocX_2burn_pars_Methods_AdjointODE.cc

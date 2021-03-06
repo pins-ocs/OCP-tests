@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoStageCSTR_Methods.cc                                        |
+ |  file: TwoStageCSTR_Methods_controls.cc                               |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -229,6 +229,8 @@ namespace TwoStageCSTRDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_u1 ] = 0;
     U__[ iU_u2 ] = 0;
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -297,6 +299,8 @@ namespace TwoStageCSTRDefine {
     DuDxlp(1, 6) = 0;
     DuDxlp(0, 7) = 0;
     DuDxlp(1, 7) = 0;
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -334,4 +338,4 @@ namespace TwoStageCSTRDefine {
 
 }
 
-// EOF: TwoStageCSTR_Methods.cc
+// EOF: TwoStageCSTR_Methods_controls.cc

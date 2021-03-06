@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: WorstCaseScenario_Methods1.cc                                  |
+ |  file: WorstCaseScenario_Methods_problem.cc                           |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -62,6 +62,7 @@ namespace WorstCaseScenarioDefine {
    |
   \*/
 
+#if 1
   real_type
   WorstCaseScenario::H_eval(
     integer              i_segment,
@@ -79,6 +80,27 @@ namespace WorstCaseScenarioDefine {
     real_type result__ = t6 * (1 - 2 * Q__[iQ_zeta]) * L__[iL_lambda1__xo] + t8;
     return result__;
   }
+#else
+  real_type
+  WorstCaseScenario::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t6   = U__[iU_u];
+    real_type t8   = uControl(t6, 0, 1);
+    real_type result__ = t6 * (1 - 2 * Q__[iQ_zeta]) * L__[iL_lambda1__xo] + t8;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -98,8 +120,13 @@ namespace WorstCaseScenarioDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   WorstCaseScenario::control_penalties_eval(
@@ -112,6 +139,9 @@ namespace WorstCaseScenarioDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = uControl(U__[iU_u], 0, 1);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -134,6 +164,9 @@ namespace WorstCaseScenarioDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -160,6 +193,9 @@ namespace WorstCaseScenarioDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = XR__[iX_x];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -347,6 +383,7 @@ namespace WorstCaseScenarioDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -362,8 +399,9 @@ namespace WorstCaseScenarioDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: WorstCaseScenario_Methods1.cc
+// EOF: WorstCaseScenario_Methods_problem.cc

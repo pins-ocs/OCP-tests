@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: WorstCaseScenario_Methods.cc                                   |
+ |  file: WorstCaseScenario_Methods_controls.cc                          |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -197,6 +197,8 @@ namespace WorstCaseScenarioDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_u ] = uControl.solve(L__[iL_lambda1__xo] * (-1 + 2 * Q__[iQ_zeta]), 0, 1);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -245,6 +247,8 @@ namespace WorstCaseScenarioDefine {
     real_type const * L__ = NODE__.lambda;
     DuDxlp(0, 0) = 0;
     DuDxlp(0, 1) = uControl.solve_rhs(L__[iL_lambda1__xo] * (-1 + 2 * Q__[iQ_zeta]), 0, 1) * (-1 + 2 * Q__[iQ_zeta]);
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -276,4 +280,4 @@ namespace WorstCaseScenarioDefine {
 
 }
 
-// EOF: WorstCaseScenario_Methods.cc
+// EOF: WorstCaseScenario_Methods_controls.cc

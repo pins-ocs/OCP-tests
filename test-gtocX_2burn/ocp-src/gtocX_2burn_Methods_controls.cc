@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: gtocX_2burn_Methods.cc                                         |
+ |  file: gtocX_2burn_Methods_controls.cc                                |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -218,4 +218,4 @@ namespace gtocX_2burnDefine {
 
 }
 
-// EOF: gtocX_2burn_Methods.cc
+// EOF: gtocX_2burn_Methods_controls.cc

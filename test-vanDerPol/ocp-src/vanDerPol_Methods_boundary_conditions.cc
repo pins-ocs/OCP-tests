@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: vanDerPol_Methods.cc                                           |
+ |  file: vanDerPol_Methods_boundary_conditions.cc                       |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -153,7 +153,6 @@ namespace vanDerPolDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -218,7 +217,6 @@ namespace vanDerPolDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -251,7 +249,6 @@ namespace vanDerPolDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -267,4 +264,4 @@ namespace vanDerPolDefine {
 
 }
 
-// EOF: vanDerPol_Methods.cc
+// EOF: vanDerPol_Methods_boundary_conditions.cc

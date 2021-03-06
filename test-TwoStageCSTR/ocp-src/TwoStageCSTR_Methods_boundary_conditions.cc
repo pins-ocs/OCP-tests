@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoStageCSTR_Methods.cc                                        |
+ |  file: TwoStageCSTR_Methods_boundary_conditions.cc                    |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -168,7 +168,6 @@ namespace TwoStageCSTRDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -237,7 +236,6 @@ namespace TwoStageCSTRDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -270,7 +268,6 @@ namespace TwoStageCSTRDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -286,4 +283,4 @@ namespace TwoStageCSTRDefine {
 
 }
 
-// EOF: TwoStageCSTR_Methods.cc
+// EOF: TwoStageCSTR_Methods_boundary_conditions.cc

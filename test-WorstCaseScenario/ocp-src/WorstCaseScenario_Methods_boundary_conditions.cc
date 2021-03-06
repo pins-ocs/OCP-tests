@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*\
- |  file: WorstCaseScenario_Methods.cc                                   |
+ |  file: WorstCaseScenario_Methods_boundary_conditions.cc               |
  |                                                                       |
  |  version: 1.0   date 6/3/2021                                         |
  |                                                                       |
@@ -150,7 +150,6 @@ namespace WorstCaseScenarioDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -213,7 +212,6 @@ namespace WorstCaseScenarioDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -246,7 +244,6 @@ namespace WorstCaseScenarioDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -262,4 +259,4 @@ namespace WorstCaseScenarioDefine {
 
 }
 
-// EOF: WorstCaseScenario_Methods.cc
+// EOF: WorstCaseScenario_Methods_boundary_conditions.cc
