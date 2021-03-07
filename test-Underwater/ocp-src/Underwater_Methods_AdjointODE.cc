@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_AdjointODE.cc                               |
  |                                                                       |
- |  version: 1.0   date 6/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -117,11 +117,11 @@ namespace UnderwaterDefine {
     real_type t31  = t2 * L__[iL_lambda6__xo];
     real_type t32  = t26 - t24;
     real_type t35  = 1.0 / ModelPars[iM_inertia];
-    result__[ 3   ] = t27 * t24 * t23 * t22 + t35 * t32 * t4 * t31 - t9 * t14 + t6 * t3;
+    result__[ 3   ] = t22 * t23 * t24 * t27 + t31 * t32 * t35 * t4 - t14 * t9 + t3 * t6;
     real_type t41  = t2 * L__[iL_lambda4__xo];
     real_type t43  = 1.0 / t24;
-    result__[ 4   ] = -t43 * t26 * t23 * t41 + t35 * t32 * t8 * t31 + t6 * t14 + t9 * t3;
-    result__[ 5   ] = t27 * t24 * t8 * t22 - t43 * t26 * t4 * t41 + t2 * L__[iL_lambda3__xo];
+    result__[ 4   ] = -t23 * t26 * t41 * t43 + t31 * t32 * t35 * t8 + t14 * t6 + t3 * t9;
+    result__[ 5   ] = t22 * t24 * t27 * t8 - t26 * t4 * t41 * t43 + t2 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 6, i_segment );
   }

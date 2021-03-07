@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFwork_Methods1.cc                                      |
+ |  file: BangBangFwork_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -62,6 +62,7 @@ namespace BangBangFworkDefine {
    |
   \*/
 
+#if 0
   real_type
   BangBangFwork::H_eval(
     integer              i_segment,
@@ -80,6 +81,28 @@ namespace BangBangFworkDefine {
     real_type result__ = t5 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t9;
     return result__;
   }
+#else
+  real_type
+  BangBangFwork::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t5   = U__[iU_F];
+    real_type t8   = fMax(Q__[iQ_zeta]);
+    real_type t9   = Fcontrol(t5, -t8, t8);
+    real_type result__ = t5 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t9;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -99,8 +122,13 @@ namespace BangBangFworkDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   BangBangFwork::control_penalties_eval(
@@ -114,6 +142,9 @@ namespace BangBangFworkDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = fMax(Q__[iQ_zeta]);
     real_type result__ = Fcontrol(U__[iU_F], -t3, t3);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -136,6 +167,9 @@ namespace BangBangFworkDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -162,7 +196,124 @@ namespace BangBangFworkDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = -XR__[iX_x];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  BangBangFwork::DmayerDx_numEqns() const
+  { return 4; }
+
+  void
+  BangBangFwork::DmayerDx_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = -1;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 4, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  BangBangFwork::DmayerDp_numEqns() const
+  { return 0; }
+
+  void
+  BangBangFwork::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _
+   |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
+   |  | |   / _` |/ _` | '__/ _` | '_ \ / _` |/ _ \
+   |  | |__| (_| | (_| | | | (_| | | | | (_| |  __/
+   |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
+   |              |___/                 |___/
+  \*/
+
+  integer
+  BangBangFwork::DJDx_numEqns() const
+  { return 2; }
+
+  void
+  BangBangFwork::DJDx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  BangBangFwork::DJDp_numEqns() const
+  { return 0; }
+
+  void
+  BangBangFwork::DJDp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  BangBangFwork::DJDu_numEqns() const
+  { return 1; }
+
+  void
+  BangBangFwork::DJDu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t3   = fMax(Q__[iQ_zeta]);
+    result__[ 0   ] = ALIAS_Fcontrol_D_1(U__[iU_F], -t3, t3);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
   }
 
   /*\
@@ -359,6 +510,7 @@ namespace BangBangFworkDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -374,8 +526,9 @@ namespace BangBangFworkDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: BangBangFwork_Methods1.cc
+// EOF: BangBangFwork_Methods_problem.cc

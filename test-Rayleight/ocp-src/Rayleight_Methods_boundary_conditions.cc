@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Rayleight_Methods.cc                                           |
+ |  file: Rayleight_Methods_boundary_conditions.cc                       |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -142,7 +142,6 @@ namespace RayleightDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -207,7 +206,6 @@ namespace RayleightDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -240,7 +238,6 @@ namespace RayleightDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -256,4 +253,4 @@ namespace RayleightDefine {
 
 }
 
-// EOF: Rayleight_Methods.cc
+// EOF: Rayleight_Methods_boundary_conditions.cc

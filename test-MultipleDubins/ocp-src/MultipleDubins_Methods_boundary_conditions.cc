@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MultipleDubins_Methods.cc                                      |
+ |  file: MultipleDubins_Methods_boundary_conditions.cc                  |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -197,7 +197,6 @@ namespace MultipleDubinsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -335,7 +334,6 @@ namespace MultipleDubinsDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -351,4 +349,4 @@ namespace MultipleDubinsDefine {
 
 }
 
-// EOF: MultipleDubins_Methods.cc
+// EOF: MultipleDubins_Methods_boundary_conditions.cc

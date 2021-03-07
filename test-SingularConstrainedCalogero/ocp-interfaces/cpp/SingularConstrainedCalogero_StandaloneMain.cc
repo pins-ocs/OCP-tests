@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Main.cc                            |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -175,8 +175,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularConstrainedCalogero_data.Mesh["s0"] = 0;
-SingularConstrainedCalogero_data.Mesh["segments"][0]["n"] = 600;
 SingularConstrainedCalogero_data.Mesh["segments"][0]["length"] = 3;
+SingularConstrainedCalogero_data.Mesh["segments"][0]["n"] = 600;
 
 
     // alias for user object classes passed as pointers

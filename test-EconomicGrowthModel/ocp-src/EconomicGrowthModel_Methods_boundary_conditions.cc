@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: EconomicGrowthModel_Methods.cc                                 |
+ |  file: EconomicGrowthModel_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -163,7 +163,6 @@ namespace EconomicGrowthModelDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -292,7 +291,6 @@ namespace EconomicGrowthModelDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -308,4 +306,4 @@ namespace EconomicGrowthModelDefine {
 
 }
 
-// EOF: EconomicGrowthModel_Methods.cc
+// EOF: EconomicGrowthModel_Methods_boundary_conditions.cc

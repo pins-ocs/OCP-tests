@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Dadebo1_Methods.cc                                             |
+ |  file: Dadebo1_Methods_boundary_conditions.cc                         |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -145,7 +145,6 @@ namespace Dadebo1Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -210,7 +209,6 @@ namespace Dadebo1Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -243,7 +241,6 @@ namespace Dadebo1Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -259,4 +256,4 @@ namespace Dadebo1Define {
 
 }
 
-// EOF: Dadebo1_Methods.cc
+// EOF: Dadebo1_Methods_boundary_conditions.cc

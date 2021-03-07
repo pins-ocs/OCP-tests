@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 6/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -214,6 +214,111 @@ namespace gtocX_2burnDefine {
     MatrixWrapper<real_type> & DuDxlp
   ) const {
     // no controls to compute
+  }
+
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  gtocX_2burn::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_f];
+    real_type t2   = X__[iX_L];
+    real_type t3   = cos(t2);
+    real_type t5   = X__[iX_g];
+    real_type t6   = sin(t2);
+    real_type t8   = t3 * t1 + t6 * t5 + 1;
+    real_type t9   = ray_positive(t8);
+    real_type t11  = V__[0] * V__[0];
+    real_type t15  = ModelPars[iM_time_f] - ModelPars[iM_time_i];
+    real_type t16  = X__[iX_p];
+    real_type t17  = sqrt(t16);
+    real_type t19  = ModelPars[iM_muS];
+    real_type t20  = sqrt(t19);
+    real_type t22  = 1.0 / t20 * t17 * t15;
+    real_type t24  = ray(t16, t1, t5, t2);
+    real_type t25  = acceleration_r(t24, t19);
+    real_type t26  = t25 * ModelPars[iM_w_nonlin];
+    real_type t30  = pow(-t6 * t26 * t22 + V__[1], 2);
+    real_type t35  = pow(t3 * t26 * t22 + V__[2], 2);
+    real_type t37  = V__[3] * V__[3];
+    real_type t39  = V__[4] * V__[4];
+    real_type t41  = t8 * t8;
+    real_type t48  = pow(V__[5] - t20 / t17 / t16 * t41 * t15, 2);
+    real_type result__ = t9 + t11 + t30 + t35 + t37 + t39 + t48;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  gtocX_2burn::DmDu_numEqns() const
+  { return 0; }
+
+  void
+  gtocX_2burn::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 0, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  gtocX_2burn::DmDuu_numRows() const
+  { return 0; }
+
+  integer
+  gtocX_2burn::DmDuu_numCols() const
+  { return 0; }
+
+  integer
+  gtocX_2burn::DmDuu_nnz() const
+  { return 0; }
+
+  void
+  gtocX_2burn::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  gtocX_2burn::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

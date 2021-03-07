@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Bike1D_Methods1.cc                                             |
+ |  file: Bike1D_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,6 +80,7 @@ namespace Bike1DDefine {
    |
   \*/
 
+#if 0
   real_type
   Bike1D::H_eval(
     integer              i_segment,
@@ -103,6 +104,33 @@ namespace Bike1DDefine {
     real_type result__ = t2 + (t6 + t7) * ModelPars[iM_g] * L__[iL_lambda1__xo] + t14 * t2 + t17 * t2;
     return result__;
   }
+#else
+  real_type
+  Bike1D::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_v];
+    real_type t2   = 1.0 / t1;
+    real_type t6   = U__[iU_mur];
+    real_type t7   = U__[iU_muf];
+    real_type t11  = Tmax_normalized(t1);
+    real_type t13  = clip(t11, 0, ModelPars[iM_mur_max]);
+    real_type t14  = murControl(t6, ModelPars[iM_mur_min], t13);
+    real_type t17  = mufControl(t7, ModelPars[iM_muf_min], 0);
+    real_type result__ = t2 + (t6 + t7) * ModelPars[iM_g] * L__[iL_lambda1__xo] + t14 * t2 + t17 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -122,8 +150,13 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Bike1D::control_penalties_eval(
@@ -142,6 +175,9 @@ namespace Bike1DDefine {
     real_type t8   = murControl(U__[iU_mur], ModelPars[iM_mur_min], t7);
     real_type t12  = mufControl(U__[iU_muf], ModelPars[iM_muf_min], 0);
     real_type result__ = t12 * t2 + t8 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -164,6 +200,9 @@ namespace Bike1DDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 1.0 / X__[iX_v];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -190,7 +229,140 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Bike1D::DmayerDx_numEqns() const
+  { return 2; }
+
+  void
+  Bike1D::DmayerDx_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 2, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Bike1D::DmayerDp_numEqns() const
+  { return 0; }
+
+  void
+  Bike1D::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _
+   |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
+   |  | |   / _` |/ _` | '__/ _` | '_ \ / _` |/ _ \
+   |  | |__| (_| | (_| | | | (_| | | | | (_| |  __/
+   |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
+   |              |___/                 |___/
+  \*/
+
+  integer
+  Bike1D::DJDx_numEqns() const
+  { return 1; }
+
+  void
+  Bike1D::DJDx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_v];
+    real_type t2   = t1 * t1;
+    real_type t3   = 1.0 / t2;
+    real_type t4   = U__[iU_mur];
+    real_type t5   = ModelPars[iM_mur_min];
+    real_type t6   = Tmax_normalized(t1);
+    real_type t7   = ModelPars[iM_mur_max];
+    real_type t8   = clip(t6, 0, t7);
+    real_type t9   = murControl(t4, t5, t8);
+    real_type t12  = ALIAS_murControl_D_3(t4, t5, t8);
+    real_type t14  = ALIAS_clip_D_1(t6, 0, t7);
+    real_type t15  = Tmax_normalized_D(t1);
+    real_type t20  = mufControl(U__[iU_muf], ModelPars[iM_muf_min], 0);
+    result__[ 0   ] = -t9 * t3 + t15 * t14 * t12 / t1 - t20 * t3;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Bike1D::DJDp_numEqns() const
+  { return 0; }
+
+  void
+  Bike1D::DJDp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Bike1D::DJDu_numEqns() const
+  { return 2; }
+
+  void
+  Bike1D::DJDu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_v];
+    real_type t2   = 1.0 / t1;
+    real_type t5   = Tmax_normalized(t1);
+    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
+    real_type t8   = ALIAS_murControl_D_1(U__[iU_mur], ModelPars[iM_mur_min], t7);
+    result__[ 0   ] = t8 * t2;
+    real_type t11  = ALIAS_mufControl_D_1(U__[iU_muf], ModelPars[iM_muf_min], 0);
+    result__[ 1   ] = t11 * t2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDu_eval", 2, i_segment );
   }
 
   /*\
@@ -303,7 +475,7 @@ namespace Bike1DDefine {
     real_type t1   = XR__[iX_v];
     real_type t2   = XL__[iX_v];
     result__[ 0   ] = t1 - t2;
-    result__[ 1   ] = t1 * LR__[iL_lambda1__xo] - t2 * LL__[iL_lambda1__xo];
+    result__[ 1   ] = LR__[iL_lambda1__xo] * t1 - LL__[iL_lambda1__xo] * t2;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 2, i_segment_left, i_segment_right );
   }
@@ -416,4 +588,4 @@ namespace Bike1DDefine {
 
 }
 
-// EOF: Bike1D_Methods1.cc
+// EOF: Bike1D_Methods_problem.cc

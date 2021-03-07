@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: AlpRider_Methods1.cc                                           |
+ |  file: AlpRider_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,6 +79,7 @@ namespace AlpRiderDefine {
    |
   \*/
 
+#if 0
   real_type
   AlpRider::H_eval(
     integer              i_segment,
@@ -108,6 +109,39 @@ namespace AlpRiderDefine {
     real_type result__ = t12 + (t2 + t4 + t6 + t8) * ModelPars[iM_W] + 0.1e-1 * t17 + 0.1e-1 * t20 + (-10 * t1 + t16 + t19) * L__[iL_lambda1__xo] + (-2 * t3 + t16 + 2 * t19) * L__[iL_lambda2__xo] + (-3 * t5 + 5 * t7 + t16 - t19) * L__[iL_lambda3__xo] + (5 * t5 - 3 * t7 + t16 + 3 * t19) * L__[iL_lambda4__xo];
     return result__;
   }
+#else
+  real_type
+  AlpRider::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_y1];
+    real_type t2   = t1 * t1;
+    real_type t3   = X__[iX_y2];
+    real_type t4   = t3 * t3;
+    real_type t5   = X__[iX_y3];
+    real_type t6   = t5 * t5;
+    real_type t7   = X__[iX_y4];
+    real_type t8   = t7 * t7;
+    real_type t10  = q(Q__[iQ_zeta]);
+    real_type t12  = Ybound(t2 + t4 + t6 + t8 - t10);
+    real_type t16  = U__[iU_u1];
+    real_type t17  = t16 * t16;
+    real_type t19  = U__[iU_u2];
+    real_type t20  = t19 * t19;
+    real_type result__ = t12 + (t2 + t4 + t6 + t8) * ModelPars[iM_W] + 0.1e-1 * t17 + 0.1e-1 * t20 + (-10 * t1 + t16 + t19) * L__[iL_lambda1__xo] + (-2 * t3 + t16 + 2 * t19) * L__[iL_lambda2__xo] + (-3 * t5 + 5 * t7 + t16 - t19) * L__[iL_lambda3__xo] + (5 * t5 - 3 * t7 + t16 + 3 * t19) * L__[iL_lambda4__xo];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -132,8 +166,13 @@ namespace AlpRiderDefine {
     real_type t8   = X__[iX_y4] * X__[iX_y4];
     real_type t10  = q(Q__[iQ_zeta]);
     real_type result__ = Ybound(t2 + t4 + t6 + t8 - t10);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   AlpRider::control_penalties_eval(
@@ -146,6 +185,9 @@ namespace AlpRiderDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -174,6 +216,9 @@ namespace AlpRiderDefine {
     real_type t13  = U__[iU_u1] * U__[iU_u1];
     real_type t16  = U__[iU_u2] * U__[iU_u2];
     real_type result__ = (t3 + t5 + t7 + t9) * ModelPars[iM_W] + 0.1e-1 * t13 + 0.1e-1 * t16;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -200,7 +245,140 @@ namespace AlpRiderDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  AlpRider::DmayerDx_numEqns() const
+  { return 8; }
+
+  void
+  AlpRider::DmayerDx_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    result__[ 7   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 8, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  AlpRider::DmayerDp_numEqns() const
+  { return 0; }
+
+  void
+  AlpRider::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _
+   |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
+   |  | |   / _` |/ _` | '__/ _` | '_ \ / _` |/ _ \
+   |  | |__| (_| | (_| | | | (_| | | | | (_| |  __/
+   |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
+   |              |___/                 |___/
+  \*/
+
+  integer
+  AlpRider::DJDx_numEqns() const
+  { return 4; }
+
+  void
+  AlpRider::DJDx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_y1];
+    real_type t2   = t1 * t1;
+    real_type t3   = X__[iX_y2];
+    real_type t4   = t3 * t3;
+    real_type t5   = X__[iX_y3];
+    real_type t6   = t5 * t5;
+    real_type t7   = X__[iX_y4];
+    real_type t8   = t7 * t7;
+    real_type t10  = q(Q__[iQ_zeta]);
+    real_type t12  = ALIAS_Ybound_D(t2 + t4 + t6 + t8 - t10);
+    result__[ 0   ] = 2 * t1 * t12;
+    result__[ 1   ] = 2 * t3 * t12;
+    result__[ 2   ] = 2 * t5 * t12;
+    result__[ 3   ] = 2 * t7 * t12;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  AlpRider::DJDp_numEqns() const
+  { return 0; }
+
+  void
+  AlpRider::DJDp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  AlpRider::DJDu_numEqns() const
+  { return 2; }
+
+  void
+  AlpRider::DJDu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDu_eval", 2, i_segment );
   }
 
   /*\
@@ -444,8 +622,9 @@ namespace AlpRiderDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: AlpRider_Methods1.cc
+// EOF: AlpRider_Methods_problem.cc

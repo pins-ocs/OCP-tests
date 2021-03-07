@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularCalogero_Methods.cc                                    |
+ |  file: SingularCalogero_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -76,17 +76,7 @@ namespace SingularCalogeroDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 0, i_segment_left, i_segment_right );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -108,7 +98,6 @@ namespace SingularCalogeroDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -140,7 +129,6 @@ namespace SingularCalogeroDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -203,7 +191,6 @@ namespace SingularCalogeroDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -236,7 +223,6 @@ namespace SingularCalogeroDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -252,4 +238,4 @@ namespace SingularCalogeroDefine {
 
 }
 
-// EOF: SingularCalogero_Methods.cc
+// EOF: SingularCalogero_Methods_boundary_conditions.cc

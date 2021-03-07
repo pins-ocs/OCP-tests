@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFmodule_Methods.cc                                     |
+ |  file: BangBangFmodule_Methods_boundary_conditions.cc                 |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -168,7 +168,6 @@ namespace BangBangFmoduleDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -233,7 +232,6 @@ namespace BangBangFmoduleDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -266,7 +264,6 @@ namespace BangBangFmoduleDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -282,4 +279,4 @@ namespace BangBangFmoduleDefine {
 
 }
 
-// EOF: BangBangFmodule_Methods.cc
+// EOF: BangBangFmodule_Methods_boundary_conditions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GoddardRocket_Methods.cc                                       |
+ |  file: GoddardRocket_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -165,7 +165,6 @@ namespace GoddardRocketDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -233,7 +232,6 @@ namespace GoddardRocketDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -266,7 +264,6 @@ namespace GoddardRocketDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -282,4 +279,4 @@ namespace GoddardRocketDefine {
 
 }
 
-// EOF: GoddardRocket_Methods.cc
+// EOF: GoddardRocket_Methods_boundary_conditions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFclip_Methods.cc                                       |
+ |  file: BangBangFclip_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -257,4 +257,4 @@ namespace BangBangFclipDefine {
 
 }
 
-// EOF: BangBangFclip_Methods.cc
+// EOF: BangBangFclip_Methods_ODE.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoLinkRobotArm_Methods1.cc                                    |
+ |  file: TwoLinkRobotArm_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -103,6 +103,7 @@ namespace TwoLinkRobotArmDefine {
    |
   \*/
 
+#if 0
   real_type
   TwoLinkRobotArm::H_eval(
     integer              i_segment,
@@ -132,6 +133,39 @@ namespace TwoLinkRobotArmDefine {
     real_type result__ = t26 * ((9.0 / 4.0 * t8 * t6 + 2 * t12) * t5 + 4.0 / 3.0 * t16 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t6) * t2 * L__[iL_lambda1__xo] - t26 * ((7.0 / 2.0 * t8 + 9.0 / 4.0 * t12 * t6) * t5 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t16 - t18) * t6) * t2 * L__[iL_lambda2__xo] + (t11 - t7) * t2 * L__[iL_lambda3__xo] + t7 * t2 * L__[iL_lambda4__xo] + t50 + t51;
     return result__;
   }
+#else
+  real_type
+  TwoLinkRobotArm::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = P__[iP_T];
+    real_type t4   = X__[iX_x3];
+    real_type t5   = sin(t4);
+    real_type t6   = cos(t4);
+    real_type t7   = X__[iX_x1];
+    real_type t8   = t7 * t7;
+    real_type t11  = X__[iX_x2];
+    real_type t12  = t11 * t11;
+    real_type t16  = U__[iU_u1];
+    real_type t18  = U__[iU_u2];
+    real_type t23  = t5 * t5;
+    real_type t26  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t23);
+    real_type t50  = u1Control(t16, -1, 1);
+    real_type t51  = u2Control(t18, -1, 1);
+    real_type result__ = t26 * ((9.0 / 4.0 * t8 * t6 + 2 * t12) * t5 + 4.0 / 3.0 * t16 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t6) * t2 * L__[iL_lambda1__xo] - t26 * ((7.0 / 2.0 * t8 + 9.0 / 4.0 * t12 * t6) * t5 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t16 - t18) * t6) * t2 * L__[iL_lambda2__xo] + (t11 - t7) * t2 * L__[iL_lambda3__xo] + t7 * t2 * L__[iL_lambda4__xo] + t50 + t51;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -151,8 +185,13 @@ namespace TwoLinkRobotArmDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   TwoLinkRobotArm::control_penalties_eval(
@@ -167,6 +206,9 @@ namespace TwoLinkRobotArmDefine {
     real_type t2   = u1Control(U__[iU_u1], -1, 1);
     real_type t4   = u2Control(U__[iU_u2], -1, 1);
     real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -189,6 +231,9 @@ namespace TwoLinkRobotArmDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -218,7 +263,148 @@ namespace TwoLinkRobotArmDefine {
     real_type t2   = t1 * t1;
     real_type t3   = ModelPars[iM_W];
     real_type result__ = 21 * t3 * t1 - t3 * t2 - 20 * t1 + t2 - 100 * t3 + 100;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoLinkRobotArm::DmayerDx_numEqns() const
+  { return 8; }
+
+  void
+  TwoLinkRobotArm::DmayerDx_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    result__[ 7   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 8, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoLinkRobotArm::DmayerDp_numEqns() const
+  { return 1; }
+
+  void
+  TwoLinkRobotArm::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    real_type t1   = P__[iP_T];
+    real_type t2   = ModelPars[iM_W];
+    result__[ 0   ] = -2 * t2 * t1 + 2 * t1 + 21 * t2 - 20;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDp_eval", 1, i_segment_left, i_segment_right );
+  }
+
+  /*\
+   |   _
+   |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
+   |  | |   / _` |/ _` | '__/ _` | '_ \ / _` |/ _ \
+   |  | |__| (_| | (_| | | | (_| | | | | (_| |  __/
+   |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
+   |              |___/                 |___/
+  \*/
+
+  integer
+  TwoLinkRobotArm::DJDx_numEqns() const
+  { return 4; }
+
+  void
+  TwoLinkRobotArm::DJDx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoLinkRobotArm::DJDp_numEqns() const
+  { return 1; }
+
+  void
+  TwoLinkRobotArm::DJDp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDp_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoLinkRobotArm::DJDu_numEqns() const
+  { return 2; }
+
+  void
+  TwoLinkRobotArm::DJDu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
+    result__[ 1   ] = ALIAS_u2Control_D_1(U__[iU_u2], -1, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDu_eval", 2, i_segment );
   }
 
   /*\
@@ -435,6 +621,7 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -450,8 +637,9 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: TwoLinkRobotArm_Methods1.cc
+// EOF: TwoLinkRobotArm_Methods_problem.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: HyperSensitive_Methods.cc                                      |
+ |  file: HyperSensitive_Methods_boundary_conditions.cc                  |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -142,7 +142,6 @@ namespace HyperSensitiveDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -205,7 +204,6 @@ namespace HyperSensitiveDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -238,7 +236,6 @@ namespace HyperSensitiveDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -254,4 +251,4 @@ namespace HyperSensitiveDefine {
 
 }
 
-// EOF: HyperSensitive_Methods.cc
+// EOF: HyperSensitive_Methods_boundary_conditions.cc

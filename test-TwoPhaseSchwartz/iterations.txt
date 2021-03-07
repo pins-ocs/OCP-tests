@@ -58,7 +58,10 @@ INFO CLASS = TwoPhaseSchwartz
   index start = omega = 808, p = 812
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -103,14 +106,14 @@ Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 21,  1] (0.00623  ,9.77e-07 ) [0.000846 ,0.000165 ] 1.00       0: 0
 [ 22,  1] (9.77e-07 ,4.49e-10 ) [0.000164 ,2.32e-08 ] 1.00       0: 0
-[ 23,  1] (4.49e-10 ,9.09e-16 ) [2.32e-08 ,1.56e-13 ] 1.00       0: 0
+[ 23,  1] (4.49e-10 ,9.08e-16 ) [2.32e-08 ,1.56e-13 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 20.4[ms]      timeout        = 0 [ms]
+Elapsed Time   = 47.4[ms]      timeout        = 0 [ms]
 iteration      = 23            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 812
 max acc. iter. = 4000          N. System pars = 200
-Converged      = YES           Memory Used    = 109Kb (+1bytes)
+Converged      = YES           Memory Used    = 111Kb (+48bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoLinkRobotArm_Methods.cc                                     |
+ |  file: TwoLinkRobotArm_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -516,7 +516,6 @@ namespace TwoLinkRobotArmDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   TwoLinkRobotArm::eta_numEqns() const
   { return 4; }
@@ -702,4 +701,4 @@ namespace TwoLinkRobotArmDefine {
 
 }
 
-// EOF: TwoLinkRobotArm_Methods.cc
+// EOF: TwoLinkRobotArm_Methods_AdjointODE.cc

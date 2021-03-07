@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: CNOC_Methods.cc                                                |
+ |  file: CNOC_Methods_boundary_conditions.cc                            |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -266,7 +266,6 @@ namespace CNOCDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -341,7 +340,6 @@ namespace CNOCDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -374,7 +372,6 @@ namespace CNOCDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -390,4 +387,4 @@ namespace CNOCDefine {
 
 }
 
-// EOF: CNOC_Methods.cc
+// EOF: CNOC_Methods_boundary_conditions.cc

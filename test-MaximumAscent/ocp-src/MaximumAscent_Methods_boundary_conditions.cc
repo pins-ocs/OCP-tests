@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MaximumAscent_Methods.cc                                       |
+ |  file: MaximumAscent_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -158,7 +158,6 @@ namespace MaximumAscentDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -281,7 +280,6 @@ namespace MaximumAscentDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -297,4 +295,4 @@ namespace MaximumAscentDefine {
 
 }
 
-// EOF: MaximumAscent_Methods.cc
+// EOF: MaximumAscent_Methods_boundary_conditions.cc

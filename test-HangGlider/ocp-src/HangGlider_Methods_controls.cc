@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: HangGlider_Methods.cc                                          |
+ |  file: HangGlider_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -268,6 +268,8 @@ namespace HangGliderDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_cL ] = 0;
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -329,6 +331,8 @@ namespace HangGliderDefine {
     DuDxlp(0, 6) = 0;
     DuDxlp(0, 7) = 0;
     DuDxlp(0, 8) = 0;
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -364,6 +368,163 @@ namespace HangGliderDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  HangGlider::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = P__[iP_T];
+    real_type t2   = Tbound(t1);
+    real_type t3   = U__[iU_cL];
+    real_type t6   = cLControl(t3, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
+    real_type t7   = X__[iX_vx];
+    real_type t11  = pow(-t7 * t1 + V__[0], 2);
+    real_type t12  = X__[iX_vy];
+    real_type t16  = pow(-t12 * t1 + V__[1], 2);
+    real_type t20  = 1.0 / ModelPars[iM_m] * t1;
+    real_type t21  = X__[iX_x];
+    real_type t22  = v(t21, t7, t12);
+    real_type t23  = 1.0 / t22;
+    real_type t24  = t3 * t3;
+    real_type t29  = Dfun(t21, t7, t12);
+    real_type t30  = t29 * (ModelPars[iM_c1] * t24 + ModelPars[iM_c0]);
+    real_type t32  = Lfun(t21, t7, t12);
+    real_type t33  = t32 * t3;
+    real_type t34  = w(t21, t12);
+    real_type t40  = pow(V__[2] - (-t7 * t30 - t34 * t33) * t23 * t20, 2);
+    real_type t50  = pow(V__[3] - (-t34 * t30 + t7 * t33) * t23 * t20 + ModelPars[iM_g] * t1, 2);
+    real_type result__ = t2 + t6 + t11 + t16 + t40 + t50;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  HangGlider::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  HangGlider::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_cL];
+    real_type t4   = ALIAS_cLControl_D_1(t1, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
+    real_type t6   = P__[iP_T];
+    real_type t8   = 1.0 / ModelPars[iM_m];
+    real_type t9   = t8 * t6;
+    real_type t10  = X__[iX_x];
+    real_type t11  = X__[iX_vx];
+    real_type t12  = X__[iX_vy];
+    real_type t13  = v(t10, t11, t12);
+    real_type t14  = 1.0 / t13;
+    real_type t15  = t1 * t1;
+    real_type t16  = ModelPars[iM_c1];
+    real_type t20  = Dfun(t10, t11, t12);
+    real_type t21  = t20 * (t16 * t15 + ModelPars[iM_c0]);
+    real_type t23  = Lfun(t10, t11, t12);
+    real_type t24  = t23 * t1;
+    real_type t25  = w(t10, t12);
+    real_type t32  = t14 * t8;
+    real_type t33  = t1 * t16;
+    result__[ 0   ] = t4 - 2 * (-2 * t11 * t20 * t33 - t25 * t23) * t32 * t6 * (V__[2] - (-t11 * t21 - t25 * t24) * t14 * t9) - 2 * (-2 * t25 * t20 * t33 + t11 * t23) * t32 * t6 * (V__[3] - (t11 * t24 - t25 * t21) * t14 * t9 + ModelPars[iM_g] * t6);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  HangGlider::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  HangGlider::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  HangGlider::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  HangGlider::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  HangGlider::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_cL];
+    real_type t4   = ALIAS_cLControl_D_1_1(t1, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
+    real_type t5   = P__[iP_T];
+    real_type t6   = t5 * t5;
+    real_type t7   = ModelPars[iM_m];
+    real_type t8   = t7 * t7;
+    real_type t10  = 1.0 / t8 * t6;
+    real_type t11  = X__[iX_x];
+    real_type t12  = X__[iX_vx];
+    real_type t13  = X__[iX_vy];
+    real_type t14  = v(t11, t12, t13);
+    real_type t15  = t14 * t14;
+    real_type t16  = 1.0 / t15;
+    real_type t17  = ModelPars[iM_c1];
+    real_type t18  = t1 * t17;
+    real_type t19  = Dfun(t11, t12, t13);
+    real_type t20  = t12 * t19;
+    real_type t23  = Lfun(t11, t12, t13);
+    real_type t24  = w(t11, t13);
+    real_type t27  = pow(-2 * t20 * t18 - t24 * t23, 2);
+    real_type t32  = 1.0 / t7;
+    real_type t33  = t32 * t5;
+    real_type t34  = 1.0 / t14;
+    real_type t35  = t1 * t1;
+    real_type t39  = t19 * (t35 * t17 + ModelPars[iM_c0]);
+    real_type t41  = t23 * t1;
+    real_type t49  = t17 * t34;
+    real_type t53  = t24 * t19;
+    real_type t58  = pow(t23 * t12 - 2 * t53 * t18, 2);
+    result__[ 0   ] = t4 + 2 * t27 * t16 * t10 + 4 * t20 * t49 * t32 * t5 * (V__[2] - (-t12 * t39 - t24 * t41) * t34 * t33) + 2 * t58 * t16 * t10 + 4 * t53 * t49 * t32 * t5 * (V__[3] - (t12 * t41 - t24 * t39) * t34 * t33 + ModelPars[iM_g] * t5);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
+  }
+
 }
 
-// EOF: HangGlider_Methods.cc
+// EOF: HangGlider_Methods_controls.cc

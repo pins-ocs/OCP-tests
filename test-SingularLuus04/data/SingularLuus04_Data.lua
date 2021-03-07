@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-u_epsi    = 0.01
-epsilon_X = 1e-07
 Tf        = 6
 u_tol     = 0.01
+epsilon_X = 1e-07
+u_epsi    = 0.01
 
 content = {
 
   -- activate run time debug
-  data.Debug = false,
+  data.Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -56,9 +56,11 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
+    -- "LM" = Levenberg-Marquardt
+    -- "YS" = Yixun Shi
+    -- "QN" = Quasi Newton
     -- ==============================================================
     -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
-    -- "LM" = Levenberg-Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
     solver = "QN",
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",
@@ -71,6 +73,11 @@ content = {
     Tolerance = 1e-9,
     Iterative = false,
     InfoLevel = -1 -- suppress all messages
+    -- ==============================================================
+    -- "LM", "YS", "QN"
+    InitSolver    = "QN",
+    InitMaxIter   = 10,
+    InitTolerance = 1e-4
   },
 
   -- setup solver
@@ -81,7 +88,7 @@ content = {
 
     -- Last Block selection:
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
-    last_factorization = "LU",
+    last_factorization = "LUPQ",
 
     -- choose solves: Hyness, NewtonDumped
     solver = "Hyness",
@@ -116,7 +123,11 @@ content = {
     -- possible value: zero, default, none, warm
     initialize = "zero",
     -- possible value: default, none, warm, spline, table
-    guess_type = "default"
+    guess_type = "default",
+    -- initilize or not lagrange multiplier with redundant linear system
+    initialize_multipliers = true,
+    -- "use_guess", "minimize", "none"
+    initialize_controls    = "use_guess"
   },
 
   Parameters = {
@@ -170,8 +181,8 @@ content = {
     segments = {
       
       {
-        length = Tf,
         n      = 2000,
+        length = Tf,
       },
     },
   },

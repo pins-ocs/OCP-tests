@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type mur_min = -1;
     real_type muf_min = -1;
+    real_type mur_min = -1;
     real_type mur_max = 1;
     integer InfoLevel = 4;
 
@@ -182,8 +182,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Bike1D_data.Mesh["s0"] = 0;
-Bike1D_data.Mesh["segments"][0]["length"] = 1000;
 Bike1D_data.Mesh["segments"][0]["n"] = 1000;
+Bike1D_data.Mesh["segments"][0]["length"] = 1000;
 
 
     // alias for user object classes passed as pointers

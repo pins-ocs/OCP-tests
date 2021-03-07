@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularLuus03_Methods.cc                                      |
+ |  file: SingularLuus03_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -197,6 +197,8 @@ namespace SingularLuus03Define {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_u ] = uControl.solve(-L__[iL_lambda2__xo], -1, 1);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -253,6 +255,8 @@ namespace SingularLuus03Define {
     DuDxlp(0, 3) = 0;
     DuDxlp(0, 4) = -uControl.solve_rhs(-L__[iL_lambda2__xo], -1, 1);
     DuDxlp(0, 5) = 0;
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -286,6 +290,106 @@ namespace SingularLuus03Define {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  SingularLuus03::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, -1, 1);
+    real_type t4   = X__[iX_x2];
+    real_type t6   = pow(V__[0] - t4, 2);
+    real_type t9   = pow(V__[1] - t1, 2);
+    real_type t11  = X__[iX_x1] * X__[iX_x1];
+    real_type t12  = t4 * t4;
+    real_type t15  = pow(-t11 - t12 + V__[2], 2);
+    real_type result__ = t2 + t6 + t9 + t15;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  SingularLuus03::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  SingularLuus03::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u];
+    real_type t2   = ALIAS_uControl_D_1(t1, -1, 1);
+    result__[ 0   ] = t2 - 2 * V__[1] + 2 * t1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  SingularLuus03::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  SingularLuus03::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  SingularLuus03::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  SingularLuus03::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  SingularLuus03::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t2 + 2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
+  }
+
 }
 
-// EOF: SingularLuus03_Methods.cc
+// EOF: SingularLuus03_Methods_controls.cc

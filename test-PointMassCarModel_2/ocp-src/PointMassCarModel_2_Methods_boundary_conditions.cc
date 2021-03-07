@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: PointMassCarModel_2_Methods.cc                                 |
+ |  file: PointMassCarModel_2_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -267,7 +267,6 @@ namespace PointMassCarModel_2Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -407,7 +406,7 @@ namespace PointMassCarModel_2Define {
     real_type t8   = zeta__dot_D_2(t1, t2, t3, t5);
     result__[ 1   ] = t7 * t8;
     real_type t9   = zeta__dot_D_1(t1, t2, t3, t5);
-    result__[ 2   ] = t9 * t7;
+    result__[ 2   ] = t7 * t9;
     real_type t10  = LL__[iL_lambda2__xo];
     result__[ 3   ] = t10 * t6;
     result__[ 4   ] = t10 * t8;
@@ -474,7 +473,6 @@ namespace PointMassCarModel_2Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -490,4 +488,4 @@ namespace PointMassCarModel_2Define {
 
 }
 
-// EOF: PointMassCarModel_2_Methods.cc
+// EOF: PointMassCarModel_2_Methods_boundary_conditions.cc

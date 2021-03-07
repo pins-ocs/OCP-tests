@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,12 +87,12 @@ namespace HangGliderDefine {
     real_type t7   = X__[iX_x];
     real_type t8   = v(t7, t2, t3);
     real_type t9   = 1.0 / t8;
-    real_type t11  = U__[iU_cL];
-    real_type t12  = t11 * t11;
+    real_type t10  = U__[iU_cL];
+    real_type t11  = t10 * t10;
     real_type t16  = Dfun(t7, t2, t3);
-    real_type t17  = t16 * (t12 * ModelPars[iM_c1] + ModelPars[iM_c0]);
+    real_type t17  = t16 * (ModelPars[iM_c1] * t11 + ModelPars[iM_c0]);
     real_type t19  = Lfun(t7, t2, t3);
-    real_type t20  = t19 * t11;
+    real_type t20  = t19 * t10;
     real_type t21  = w(t7, t3);
     result__[ 2   ] = (-t2 * t17 - t21 * t20) * t9 * t6;
     result__[ 3   ] = (-t21 * t17 + t2 * t20) * t9 * t6 - ModelPars[iM_g] * t1;

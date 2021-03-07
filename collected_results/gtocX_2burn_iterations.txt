@@ -45,7 +45,10 @@ INFO CLASS = gtocX_2burn
   index start = omega = 612, p = 618
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -70,7 +73,7 @@ Hyness --- start iterations ---
 Continuation step N.1 s=0.95, ds=0.4500
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[  7,  1] (8.01e-07 ,3.26e-17 ) [7.37e-05 ,8.37e-17 ] 1.00       0: 0
+[  7,  1] (8.01e-07 ,3.26e-17 ) [7.37e-05 ,8.38e-17 ] 1.00       0: 0
 [  8,  2] (3.26e-17 ,3.04e-17 ) [8.37e-17 ,1.42e-16 ] 0.499      0: 0
 
 Continuation step N.1 s=1.0, ds=0.05000
@@ -106,14 +109,14 @@ Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 19,  1] (0.000104 ,3.05e-06 ) [0.00926  ,0.000122 ] 1.00       0: 0
 [ 20,  1] (3.05e-06 ,3.55e-10 ) [0.000121 ,2.28e-08 ] 1.00       0: 0
-[ 21,  1] (3.55e-10 ,4.14e-17 ) [2.28e-08 ,4.37e-16 ] 1.00       0: 0
+[ 21,  1] (3.55e-10 ,4.20e-17 ) [2.28e-08 ,4.70e-16 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 8.99[ms]      timeout        = 0 [ms]
+Elapsed Time   = 10.0[ms]      timeout        = 0 [ms]
 iteration      = 21            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 618
 max acc. iter. = 800           N. System pars = 0
-Converged      = YES           Memory Used    = 82Kb (+32bytes)
+Converged      = YES           Memory Used    = 80Kb (+13bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -122,7 +125,7 @@ Few iterations = 8
 Function       = 31            Jacobian       = 21        
 Factorization  = 21            Inversion      = 43        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 2.7589e-15    last||d1||_inf = 1.7728e-07
+last ||d||_inf = 2.9181e-15    last||d1||_inf = 1.7728e-07
 last ||f||_inf = 8.0102e-09    last||f1||_1   = 3.5483e-10
 ------------------------------------------------------------
 

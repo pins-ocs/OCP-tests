@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: PathConstrained_Methods.cc                                     |
+ |  file: PathConstrained_Methods_boundary_conditions.cc                 |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -155,7 +155,6 @@ namespace PathConstrainedDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -220,7 +219,6 @@ namespace PathConstrainedDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -253,7 +251,6 @@ namespace PathConstrainedDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -269,4 +266,4 @@ namespace PathConstrainedDefine {
 
 }
 
-// EOF: PathConstrained_Methods.cc
+// EOF: PathConstrained_Methods_boundary_conditions.cc

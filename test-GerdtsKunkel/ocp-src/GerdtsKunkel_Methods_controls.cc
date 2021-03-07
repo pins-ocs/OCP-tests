@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GerdtsKunkel_Methods.cc                                        |
+ |  file: GerdtsKunkel_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -191,6 +191,8 @@ namespace GerdtsKunkelDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_u ] = -L__[iL_lambda2__xo] / L__[iL_lambda3__xo];
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -247,6 +249,8 @@ namespace GerdtsKunkelDefine {
     DuDxlp(0, 3) = 0;
     DuDxlp(0, 4) = -1.0 / L__[iL_lambda3__xo];
     DuDxlp(0, 5) = L__[iL_lambda2__xo] * pow(L__[iL_lambda3__xo], -2);
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -280,6 +284,104 @@ namespace GerdtsKunkelDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  GerdtsKunkel::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t3   = x1Limitation(1.0 / 9.0 - X__[iX_x1]);
+    real_type t7   = pow(V__[0] - X__[iX_x2], 2);
+    real_type t9   = U__[iU_u];
+    real_type t11  = pow(V__[1] - t9, 2);
+    real_type t13  = t9 * t9;
+    real_type t16  = pow(V__[2] - t13 / 2, 2);
+    real_type result__ = t3 + t7 + t11 + t16;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GerdtsKunkel::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  GerdtsKunkel::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = U__[iU_u];
+    real_type t4   = t2 * t2;
+    result__[ 0   ] = -2 * V__[1] + 2 * t2 - 2 * t2 * (V__[2] - t4 / 2);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GerdtsKunkel::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  GerdtsKunkel::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  GerdtsKunkel::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  GerdtsKunkel::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  GerdtsKunkel::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = U__[iU_u] * U__[iU_u];
+    result__[ 0   ] = 3 * t2 - 2 * V__[2] + 2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
+  }
+
 }
 
-// EOF: GerdtsKunkel_Methods.cc
+// EOF: GerdtsKunkel_Methods_controls.cc

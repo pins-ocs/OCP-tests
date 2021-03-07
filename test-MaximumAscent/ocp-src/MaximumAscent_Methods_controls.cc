@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MaximumAscent_Methods.cc                                       |
+ |  file: MaximumAscent_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -190,6 +190,8 @@ namespace MaximumAscentDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_alpha ] = arctan2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -250,6 +252,8 @@ namespace MaximumAscentDefine {
     DuDxlp(0, 5) = -arctan2_D_1(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
     DuDxlp(0, 6) = -arctan2_D_2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
     DuDxlp(0, 7) = 0;
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -285,6 +289,144 @@ namespace MaximumAscentDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  MaximumAscent::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t3   = tf(ModelPars[iM_days]);
+    real_type t4   = eta(t3);
+    real_type t6   = X__[iX_u] * t4;
+    real_type t8   = pow(V__[0] - t6, 2);
+    real_type t10  = X__[iX_v];
+    real_type t11  = t10 * t10;
+    real_type t12  = X__[iX_r];
+    real_type t13  = 1.0 / t12;
+    real_type t15  = t12 * t12;
+    real_type t19  = Tbar(t3);
+    real_type t27  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]) * t19;
+    real_type t28  = U__[iU_alpha];
+    real_type t29  = sin(t28);
+    real_type t32  = pow(V__[1] - (t13 * t11 - 1.0 / t15) * t4 - t29 * t27, 2);
+    real_type t36  = cos(t28);
+    real_type t39  = pow(t13 * t10 * t6 - t36 * t27 + V__[2], 2);
+    real_type t44  = pow(-t13 * t10 * t4 + V__[3], 2);
+    real_type result__ = t8 + t32 + t39 + t44;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MaximumAscent::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  MaximumAscent::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t3   = tf(ModelPars[iM_days]);
+    real_type t4   = eta(t3);
+    real_type t5   = X__[iX_v];
+    real_type t6   = t5 * t5;
+    real_type t7   = X__[iX_r];
+    real_type t8   = 1.0 / t7;
+    real_type t10  = t7 * t7;
+    real_type t14  = Tbar(t3);
+    real_type t21  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]);
+    real_type t22  = t21 * t14;
+    real_type t23  = U__[iU_alpha];
+    real_type t24  = sin(t23);
+    real_type t28  = cos(t23);
+    result__[ 0   ] = -2 * t28 * t21 * t14 * (V__[1] - (t8 * t6 - 1.0 / t10) * t4 - t24 * t22) + 2 * t24 * t21 * t14 * (t8 * t5 * X__[iX_u] * t4 - t28 * t22 + V__[2]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MaximumAscent::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  MaximumAscent::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  MaximumAscent::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  MaximumAscent::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  MaximumAscent::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = tf(ModelPars[iM_days]);
+    real_type t3   = Tbar(t2);
+    real_type t4   = t3 * t3;
+    real_type t10  = -Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0];
+    real_type t11  = t10 * t10;
+    real_type t13  = 1.0 / t11 * t4;
+    real_type t14  = U__[iU_alpha];
+    real_type t15  = cos(t14);
+    real_type t16  = t15 * t15;
+    real_type t19  = eta(t2);
+    real_type t20  = X__[iX_v];
+    real_type t21  = t20 * t20;
+    real_type t22  = X__[iX_r];
+    real_type t23  = 1.0 / t22;
+    real_type t25  = t22 * t22;
+    real_type t29  = 1.0 / t10;
+    real_type t30  = t29 * t3;
+    real_type t31  = sin(t14);
+    real_type t37  = t31 * t31;
+    result__[ 0   ] = 2 * t16 * t13 + 2 * t31 * t29 * t3 * (V__[1] - (t23 * t21 - 1.0 / t25) * t19 - t31 * t30) + 2 * t37 * t13 + 2 * t15 * t29 * t3 * (t23 * t20 * X__[iX_u] * t19 - t15 * t30 + V__[2]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
+  }
+
 }
 
-// EOF: MaximumAscent_Methods.cc
+// EOF: MaximumAscent_Methods_controls.cc

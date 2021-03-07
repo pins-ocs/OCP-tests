@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MinimumFuelOrbitRaising_Methods.cc                             |
+ |  file: MinimumFuelOrbitRaising_Methods_controls.cc                    |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -194,6 +194,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_u ] = atan2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -250,6 +252,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     DuDxlp(0, 3) = 0;
     DuDxlp(0, 4) = 1.0 / L__[iL_lambda3__xo] / (1 + L__[iL_lambda2__xo] * L__[iL_lambda2__xo] * pow(L__[iL_lambda3__xo], -2));
     DuDxlp(0, 5) = -L__[iL_lambda2__xo] * pow(L__[iL_lambda3__xo], -2) / (1 + L__[iL_lambda2__xo] * L__[iL_lambda2__xo] * pow(L__[iL_lambda3__xo], -2));
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -283,6 +287,135 @@ namespace MinimumFuelOrbitRaisingDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  MinimumFuelOrbitRaising::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = X__[iX_x2];
+    real_type t4   = pow(V__[0] - t2, 2);
+    real_type t6   = X__[iX_x3];
+    real_type t7   = t6 * t6;
+    real_type t9   = X__[iX_x1];
+    real_type t10  = 1.0 / t9;
+    real_type t12  = t9 * t9;
+    real_type t14  = ModelPars[iM_T];
+    real_type t15  = U__[iU_u];
+    real_type t16  = sin(t15);
+    real_type t22  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_md] + 1);
+    real_type t25  = pow(V__[1] - t10 * t7 * t6 + 1.0 / t12 - t22 * t16 * t14, 2);
+    real_type t29  = cos(t15);
+    real_type t33  = pow(t10 * t6 * t2 - t22 * t29 * t14 + V__[2], 2);
+    real_type result__ = t4 + t25 + t33;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MinimumFuelOrbitRaising::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  MinimumFuelOrbitRaising::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = X__[iX_x3];
+    real_type t3   = t2 * t2;
+    real_type t5   = X__[iX_x1];
+    real_type t6   = 1.0 / t5;
+    real_type t8   = t5 * t5;
+    real_type t10  = ModelPars[iM_T];
+    real_type t11  = U__[iU_u];
+    real_type t12  = sin(t11);
+    real_type t18  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_md] + 1);
+    real_type t22  = cos(t11);
+    result__[ 0   ] = -2 * t18 * t22 * t10 * (V__[1] - t6 * t3 * t2 + 1.0 / t8 - t18 * t12 * t10) + 2 * t18 * t12 * t10 * (-t18 * t22 * t10 + t6 * t2 * X__[iX_x2] + V__[2]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MinimumFuelOrbitRaising::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  MinimumFuelOrbitRaising::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  MinimumFuelOrbitRaising::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  MinimumFuelOrbitRaising::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  MinimumFuelOrbitRaising::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = ModelPars[iM_T];
+    real_type t2   = t1 * t1;
+    real_type t3   = U__[iU_u];
+    real_type t4   = cos(t3);
+    real_type t5   = t4 * t4;
+    real_type t10  = -Q__[iQ_zeta] * ModelPars[iM_md] + 1;
+    real_type t11  = t10 * t10;
+    real_type t12  = 1.0 / t11;
+    real_type t15  = X__[iX_x3];
+    real_type t16  = t15 * t15;
+    real_type t18  = X__[iX_x1];
+    real_type t19  = 1.0 / t18;
+    real_type t21  = t18 * t18;
+    real_type t23  = sin(t3);
+    real_type t25  = 1.0 / t10;
+    real_type t31  = t23 * t23;
+    result__[ 0   ] = 2 * t12 * t5 * t2 + 2 * t25 * t23 * t1 * (V__[1] - t19 * t16 * t15 + 1.0 / t21 - t25 * t23 * t1) + 2 * t12 * t31 * t2 + 2 * t25 * t4 * t1 * (-t25 * t4 * t1 + t19 * t15 * X__[iX_x2] + V__[2]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
+  }
+
 }
 
-// EOF: MinimumFuelOrbitRaising_Methods.cc
+// EOF: MinimumFuelOrbitRaising_Methods_controls.cc

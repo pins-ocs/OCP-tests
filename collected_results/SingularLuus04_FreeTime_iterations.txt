@@ -48,7 +48,10 @@ INFO CLASS = SingularLuus04_FreeTime
   index start = omega = 40008, p = 40014
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -84,7 +87,7 @@ Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 17,  1] (4.73e-05 ,4.92e-08 ) [0.527    ,0.000131 ] 1.00       0: 0
 [ 18,  1] (4.92e-08 ,9.07e-11 ) [0.000112 ,1.19e-08 ] 1.00       0: 0
-[ 19,  1] (9.07e-11 ,6.75e-17 ) [1.19e-08 ,6.64e-16 ] 1.00       0: 0
+[ 19,  1] (9.07e-11 ,6.76e-17 ) [1.19e-08 ,6.64e-16 ] 1.00       0: 0
 
 Continuation step N.1 s=0.95, ds=0.4500
 Hyness --- start iterations ---
@@ -101,7 +104,7 @@ Hyness --- start iterations ---
 [ 25,  1] (9.00e-09 ,1.94e-14 ) [4.71e-07 ,8.48e-13 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 229.0[ms]     timeout        = 0 [ms]
+Elapsed Time   = 399.0[ms]     timeout        = 0 [ms]
 iteration      = 25            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 40014
 max acc. iter. = 800           N. System pars = 5000

@@ -79,7 +79,10 @@ INFO CLASS = Crossroad
   index start = omega = 1616, p = 1622
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -125,11 +128,11 @@ Hyness --- start iterations ---
 [ 38,  1] (1.70e-09 ,3.52e-14 ) [3.01e-09 ,5.44e-14 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 69.6[ms]      timeout        = 0 [ms]
+Elapsed Time   = 178.0[ms]     timeout        = 0 [ms]
 iteration      = 38            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 1622
 max acc. iter. = 800           N. System pars = 201
-Converged      = YES           Memory Used    = 171Kb (+15bytes)
+Converged      = YES           Memory Used    = 171Kb (+86bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -138,7 +141,7 @@ Few iterations = 8
 Function       = 100           Jacobian       = 38        
 Factorization  = 38            Inversion      = 137       
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 5.3666e-12    last||d1||_inf = 2.9038e-07
+last ||d||_inf = 5.3663e-12    last||d1||_inf = 2.9038e-07
 last ||f||_inf = 1.7741e-06    last||f1||_1   = 1.6982e-09
 ------------------------------------------------------------
 

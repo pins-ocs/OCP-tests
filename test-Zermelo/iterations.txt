@@ -40,7 +40,10 @@ INFO CLASS = Zermelo
   index start = omega = 10010, p = 10017
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -58,11 +61,11 @@ Hyness --- start iterations ---
 [ 11,  1] (2.86e-09 ,9.92e-16 ) [9.25e-07 ,4.26e-13 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 37.5[ms]      timeout        = 0 [ms]
+Elapsed Time   = 53.2[ms]      timeout        = 0 [ms]
 iteration      = 11            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 10017
 max acc. iter. = 800           N. System pars = 1000
-Converged      = YES           Memory Used    = 951Kb (+92bytes)
+Converged      = YES           Memory Used    = 952Kb (+7bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

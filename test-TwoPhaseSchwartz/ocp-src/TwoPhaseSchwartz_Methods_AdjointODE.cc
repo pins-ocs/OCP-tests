@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoPhaseSchwartz_Methods.cc                                    |
+ |  file: TwoPhaseSchwartz_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -232,7 +232,7 @@ namespace TwoPhaseSchwartzDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = L__[iL_lambda2__xo];
-    result__[ 1   ] = L__[iL_lambda4__xo] * ModelPars[iM_T2] + 2 * U__[iU_u2] * ModelPars[iM_epsilon];
+    result__[ 1   ] = L__[iL_lambda4__xo] * ModelPars[iM_T2] + 2 * ModelPars[iM_epsilon] * U__[iU_u2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }
@@ -324,14 +324,7 @@ namespace TwoPhaseSchwartzDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -375,7 +368,6 @@ namespace TwoPhaseSchwartzDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   TwoPhaseSchwartz::eta_numEqns() const
   { return 4; }
@@ -561,4 +553,4 @@ namespace TwoPhaseSchwartzDefine {
 
 }
 
-// EOF: TwoPhaseSchwartz_Methods.cc
+// EOF: TwoPhaseSchwartz_Methods_AdjointODE.cc

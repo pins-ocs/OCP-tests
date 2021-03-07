@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoLinkRobotArm_Methods.cc                                     |
+ |  file: TwoLinkRobotArm_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -96,7 +96,7 @@ namespace TwoLinkRobotArmDefine {
     real_type t13  = t2 * L__[iL_lambda2__xo];
     real_type t14  = cos(t4);
     real_type t19  = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
-    result__[ 0   ] = 4.0 / 3.0 * t9 * t3 - 3.0 / 2.0 * t9 * t14 * t13 + t19;
+    result__[ 0   ] = 4.0 / 3.0 * t3 * t9 - 3.0 / 2.0 * t9 * t14 * t13 + t19;
     real_type t20  = 3.0 / 2.0 * t14;
     real_type t28  = ALIAS_u2Control_D_1(U__[iU_u2], -1, 1);
     result__[ 1   ] = t9 * (-4.0 / 3.0 - t20) * t3 - t9 * (-7.0 / 3.0 - t20) * t13 + t28;
@@ -262,6 +262,8 @@ namespace TwoLinkRobotArmDefine {
     real_type t15  = 1.0 / (81 * t12 + 31);
     U__[ iU_u1 ] = u1Control.solve(-6 * t15 * (-9 * t4 * t2 + 8 * t7) * t1, -1, 1);
     U__[ iU_u2 ] = u2Control.solve(54 * t15 * (t4 * (t7 - t2) + 8.0 / 9.0 * t7 - 0.14e2 / 9.0 * t2) * t1, -1, 1);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -332,6 +334,8 @@ namespace TwoLinkRobotArmDefine {
     DuDxlp(1, 7) = 0;
     DuDxlp(0, 8) = -6 * u1Control.solve_rhs(-6 * P__[iP_T] * (-9 * L__[iL_lambda2__xo] * cos(X__[iX_x3]) + 8 * L__[iL_lambda1__xo]) / (81 * pow(sin(X__[iX_x3]), 2) + 31), -1, 1) * (-9 * L__[iL_lambda2__xo] * cos(X__[iX_x3]) + 8 * L__[iL_lambda1__xo]) / (81 * pow(sin(X__[iX_x3]), 2) + 31);
     DuDxlp(1, 8) = 54 * u2Control.solve_rhs(54 * P__[iP_T] * ((L__[iL_lambda1__xo] - L__[iL_lambda2__xo]) * cos(X__[iX_x3]) + 8.0 / 9.0 * L__[iL_lambda1__xo] - 0.14e2 / 9.0 * L__[iL_lambda2__xo]) / (81 * pow(sin(X__[iX_x3]), 2) + 31), -1, 1) * ((L__[iL_lambda1__xo] - L__[iL_lambda2__xo]) * cos(X__[iX_x3]) + 8.0 / 9.0 * L__[iL_lambda1__xo] - 0.14e2 / 9.0 * L__[iL_lambda2__xo]) / (81 * pow(sin(X__[iX_x3]), 2) + 31);
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -367,6 +371,150 @@ namespace TwoLinkRobotArmDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  TwoLinkRobotArm::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u1];
+    real_type t2   = u1Control(t1, -1, 1);
+    real_type t3   = U__[iU_u2];
+    real_type t4   = u2Control(t3, -1, 1);
+    real_type t6   = P__[iP_T];
+    real_type t7   = X__[iX_x3];
+    real_type t8   = sin(t7);
+    real_type t9   = cos(t7);
+    real_type t10  = X__[iX_x1];
+    real_type t11  = t10 * t10;
+    real_type t14  = X__[iX_x2];
+    real_type t15  = t14 * t14;
+    real_type t25  = t8 * t8;
+    real_type t28  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t25);
+    real_type t31  = pow(V__[0] - t28 * ((9.0 / 4.0 * t11 * t9 + 2 * t15) * t8 + 4.0 / 3.0 * t1 - 4.0 / 3.0 * t3 - 3.0 / 2.0 * t3 * t9) * t6, 2);
+    real_type t46  = pow(V__[1] + t28 * ((7.0 / 2.0 * t11 + 9.0 / 4.0 * t15 * t9) * t8 - 7.0 / 3.0 * t3 + 3.0 / 2.0 * (t1 - t3) * t9) * t6, 2);
+    real_type t51  = pow(V__[2] - (t14 - t10) * t6, 2);
+    real_type t55  = pow(-t10 * t6 + V__[3], 2);
+    real_type result__ = t2 + t4 + t31 + t46 + t51 + t55;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoLinkRobotArm::DmDu_numEqns() const
+  { return 2; }
+
+  void
+  TwoLinkRobotArm::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u1];
+    real_type t2   = ALIAS_u1Control_D_1(t1, -1, 1);
+    real_type t4   = P__[iP_T];
+    real_type t5   = X__[iX_x3];
+    real_type t6   = sin(t5);
+    real_type t7   = cos(t5);
+    real_type t9   = X__[iX_x1] * X__[iX_x1];
+    real_type t13  = X__[iX_x2] * X__[iX_x2];
+    real_type t18  = U__[iU_u2];
+    real_type t24  = t6 * t6;
+    real_type t27  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t24);
+    real_type t30  = t4 * (V__[0] - t27 * ((9.0 / 4.0 * t9 * t7 + 2 * t13) * t6 + 4.0 / 3.0 * t1 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t7) * t4);
+    real_type t47  = t4 * (V__[1] + t27 * ((7.0 / 2.0 * t9 + 9.0 / 4.0 * t13 * t7) * t6 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t1 - t18) * t7) * t4);
+    result__[ 0   ] = t2 - 8.0 / 3.0 * t27 * t30 + 3 * t27 * t7 * t47;
+    real_type t51  = ALIAS_u2Control_D_1(t18, -1, 1);
+    real_type t52  = 3.0 / 2.0 * t7;
+    result__[ 1   ] = t51 - 2 * t27 * (-4.0 / 3.0 - t52) * t30 + 2 * t27 * (-7.0 / 3.0 - t52) * t47;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoLinkRobotArm::DmDuu_numRows() const
+  { return 2; }
+
+  integer
+  TwoLinkRobotArm::DmDuu_numCols() const
+  { return 2; }
+
+  integer
+  TwoLinkRobotArm::DmDuu_nnz() const
+  { return 4; }
+
+  void
+  TwoLinkRobotArm::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  TwoLinkRobotArm::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
+    real_type t4   = P__[iP_T] * P__[iP_T];
+    real_type t5   = X__[iX_x3];
+    real_type t6   = sin(t5);
+    real_type t7   = t6 * t6;
+    real_type t10  = pow(0.31e2 / 0.36e2 + 9.0 / 4.0 * t7, 2);
+    real_type t11  = 1.0 / t10;
+    real_type t14  = cos(t5);
+    real_type t15  = t14 * t14;
+    result__[ 0   ] = t2 + 0.32e2 / 9.0 * t11 * t4 + 9.0 / 2.0 * t11 * t15 * t4;
+    real_type t19  = 3.0 / 2.0 * t14;
+    real_type t20  = -4.0 / 3.0 - t19;
+    real_type t24  = -7.0 / 3.0 - t19;
+    result__[ 1   ] = 8.0 / 3.0 * t11 * t20 * t4 + 3 * t14 * t11 * t24 * t4;
+    result__[ 2   ] = result__[1];
+    real_type t30  = ALIAS_u2Control_D_1_1(U__[iU_u2], -1, 1);
+    real_type t31  = t20 * t20;
+    real_type t35  = t24 * t24;
+    result__[ 3   ] = 2 * t11 * t31 * t4 + 2 * t11 * t35 * t4 + t30;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 4, i_segment );
+  }
+
 }
 
-// EOF: TwoLinkRobotArm_Methods.cc
+// EOF: TwoLinkRobotArm_Methods_controls.cc

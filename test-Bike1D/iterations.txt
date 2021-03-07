@@ -28,7 +28,7 @@ Segment N.0: s0 = 0.000 length = 1000.0 npts = 1001 no data set
 END Mesh[mesh]
 
 User mapped functions
-ClipIntervalWithSinAtan, h=0.010000, delta=0.0000
+User function ``clip'' mapped with: ClipIntervalWithSinAtan, h=0.010000, delta=0.0000
 
 Model Parameters
 ....................................Pmax = 50000
@@ -49,7 +49,10 @@ INFO CLASS = Bike1D
   index start = omega = 2002, p = 2004
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -67,14 +70,14 @@ Hyness --- start iterations ---
 [ 11,  1] (0.868    ,0.0468   ) [0.274    ,0.00591  ] 1.00       0: 0
 [ 12,  1] (0.0468   ,0.000695 ) [0.00676  ,7.24e-05 ] 1.00       0: 0
 [ 13,  1] (0.000695 ,3.83e-08 ) [7.33e-05 ,9.66e-09 ] 1.00       0: 0
-[ 14,  1] (3.83e-08 ,1.60e-13 ) [9.66e-09 ,1.57e-15 ] 1.00       0: 0
+[ 14,  1] (3.83e-08 ,1.62e-13 ) [9.66e-09 ,1.58e-15 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 22.4[ms]      timeout        = 0 [ms]
+Elapsed Time   = 24.3[ms]      timeout        = 0 [ms]
 iteration      = 14            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 2004
 max acc. iter. = 800           N. System pars = 2000
-Converged      = YES           Memory Used    = 280Kb (+87bytes)
+Converged      = YES           Memory Used    = 284Kb (+59bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -83,7 +86,7 @@ Few iterations = 8
 Function       = 15            Jacobian       = 14        
 Factorization  = 14            Inversion      = 28        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 4.6712e-14    last||d1||_inf = 3.6589e-07
+last ||d||_inf = 4.6717e-14    last||d1||_inf = 3.6589e-07
 last ||f||_inf = 2.7250e-05    last||f1||_1   = 3.8256e-08
 ------------------------------------------------------------
 

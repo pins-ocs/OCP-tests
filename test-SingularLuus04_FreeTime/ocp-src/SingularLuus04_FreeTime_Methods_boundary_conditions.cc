@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularLuus04_FreeTime_Methods.cc                             |
+ |  file: SingularLuus04_FreeTime_Methods_boundary_conditions.cc         |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -165,7 +165,6 @@ namespace SingularLuus04_FreeTimeDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -234,7 +233,6 @@ namespace SingularLuus04_FreeTimeDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -267,7 +265,6 @@ namespace SingularLuus04_FreeTimeDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -283,4 +280,4 @@ namespace SingularLuus04_FreeTimeDefine {
 
 }
 
-// EOF: SingularLuus04_FreeTime_Methods.cc
+// EOF: SingularLuus04_FreeTime_Methods_boundary_conditions.cc

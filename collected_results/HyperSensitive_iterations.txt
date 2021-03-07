@@ -27,7 +27,10 @@ INFO CLASS = HyperSensitive
   index start = omega = 102, p = 104
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -39,11 +42,11 @@ Hyness --- start iterations ---
 [  5,  1] (2.73e-06 ,2.17e-11 ) [6.34e-06 ,6.18e-11 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 1.71[ms]      timeout        = 0 [ms]
+Elapsed Time   = 2.27[ms]      timeout        = 0 [ms]
 iteration      = 5             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 104
 max acc. iter. = 800           N. System pars = 50
-Converged      = YES           Memory Used    = 15Kb (+92bytes)
+Converged      = YES           Memory Used    = 17Kb (+47bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

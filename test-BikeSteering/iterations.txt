@@ -55,7 +55,10 @@ INFO CLASS = BikeSteering
   index start = omega = 624, p = 628
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -73,17 +76,17 @@ Hyness --- start iterations ---
 [ 11,  3] (0.0210   ,0.0247   ) [0.203    ,0.138    ] 0.100      0: 1
 [ 12,  4] (0.0247   ,0.0237   ) [0.206    ,0.186    ] 0.0142     1: 3
 [ 13,  1] (0.0237   ,0.0167   ) [0.130    ,0.0972   ] 0.239      0: 2
-[ 14,  1] (0.0167   ,0.000529 ) [0.0889   ,0.00931  ] 0.977      0: 1
-[ 15,  1] (0.000529 ,1.31e-06 ) [0.00765  ,4.70e-05 ] 1.00       0: 0
+[ 14,  1] (0.0167   ,0.000528 ) [0.0889   ,0.00931  ] 0.977      0: 1
+[ 15,  1] (0.000528 ,1.31e-06 ) [0.00765  ,4.70e-05 ] 1.00       0: 0
 [ 16,  1] (1.31e-06 ,2.19e-11 ) [4.75e-05 ,1.01e-09 ] 1.00       0: 0
-[ 17,  1] (2.19e-11 ,4.86e-16 ) [1.01e-09 ,1.61e-17 ] 1.00       0: 0
+[ 17,  1] (2.19e-11 ,5.43e-16 ) [1.01e-09 ,1.66e-17 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 26.5[ms]      timeout        = 0 [ms]
+Elapsed Time   = 25.8[ms]      timeout        = 0 [ms]
 iteration      = 17            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 628
 max acc. iter. = 800           N. System pars = 103
-Converged      = YES           Memory Used    = 72Kb (+33bytes)
+Converged      = YES           Memory Used    = 73Kb (+69bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -92,8 +95,8 @@ Few iterations = 8
 Function       = 53            Jacobian       = 17        
 Factorization  = 17            Inversion      = 69        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 1.8888e-16    last||d1||_inf = 5.6679e-09
-last ||f||_inf = 5.7459e-09    last||f1||_1   = 2.1897e-11
+last ||d||_inf = 2.8199e-16    last||d1||_inf = 5.6678e-09
+last ||f||_inf = 5.7360e-09    last||f1||_1   = 2.1881e-11
 ------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SlidingMode_Methods.cc                                         |
+ |  file: SlidingMode_Methods_boundary_conditions.cc                     |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -156,7 +156,6 @@ namespace SlidingModeDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -221,7 +220,6 @@ namespace SlidingModeDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -254,7 +252,6 @@ namespace SlidingModeDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -270,4 +267,4 @@ namespace SlidingModeDefine {
 
 }
 
-// EOF: SlidingMode_Methods.cc
+// EOF: SlidingMode_Methods_boundary_conditions.cc

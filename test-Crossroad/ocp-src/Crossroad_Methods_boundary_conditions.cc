@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Crossroad_Methods.cc                                           |
+ |  file: Crossroad_Methods_boundary_conditions.cc                       |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -171,7 +171,6 @@ namespace CrossroadDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -240,7 +239,6 @@ namespace CrossroadDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -273,7 +271,6 @@ namespace CrossroadDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -289,4 +286,4 @@ namespace CrossroadDefine {
 
 }
 
-// EOF: Crossroad_Methods.cc
+// EOF: Crossroad_Methods_boundary_conditions.cc

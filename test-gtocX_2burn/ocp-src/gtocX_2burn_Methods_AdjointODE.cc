@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 6/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -253,7 +253,7 @@ namespace gtocX_2burnDefine {
     real_type t156 = t43 * t148;
     real_type t160 = ray_D_1_4(t18, t28, t29, t30);
     real_type t166 = t62 * t148 * t42;
-    real_type t181 = -t33 * t28 + t62 * t29;
+    real_type t181 = -t28 * t33 + t29 * t62;
     result__[ 3   ] = t150 * t40 / 2 + t64 * t38 * t17 / 2 + t33 * t156 * t50 * t48 + t33 * t160 * t42 * t48 + t69 * t48 - t166 * t67 / 2 + t35 * t38 * t60 / 2 - t62 * t156 * t50 * t71 - t62 * t160 * t42 * t71 + t45 * t71 - 3 * t181 * t118 * t115;
     result__[ 4   ] = result__[1];
     real_type t185 = ALIAS_ray_positive_DD(t82);
@@ -261,28 +261,28 @@ namespace gtocX_2burnDefine {
     real_type t188 = 2 * t1;
     real_type t189 = t92 * t92;
     real_type t193 = ray_D_2_2(t18, t28, t29, t30);
-    result__[ 5   ] = 2 * t24 * t21 * t186 * t79 + t33 * t189 * t50 * t48 - t62 * t189 * t50 * t71 + t33 * t193 * t42 * t48 - t62 * t193 * t42 * t71 + t186 * t185 - t188 + 2;
+    result__[ 5   ] = 2 * t186 * t21 * t24 * t79 + t189 * t33 * t48 * t50 - t189 * t50 * t62 * t71 + t193 * t33 * t42 * t48 - t193 * t42 * t62 * t71 + t185 * t186 - t188 + 2;
     real_type t209 = t92 * t122;
     real_type t213 = ray_D_2_3(t18, t28, t29, t30);
     real_type t224 = t24 * t21;
     real_type t225 = t62 * t224;
-    result__[ 6   ] = t33 * t209 * t50 * t48 - t62 * t209 * t50 * t71 + t33 * t213 * t42 * t48 - t62 * t213 * t42 * t71 + t62 * t33 * t185 + 2 * t225 * t33 * t79;
+    result__[ 6   ] = t209 * t33 * t48 * t50 - t209 * t50 * t62 * t71 + t213 * t33 * t42 * t48 - t213 * t42 * t62 * t71 + t185 * t33 * t62 + 2 * t225 * t33 * t79;
     real_type t228 = t181 * t185;
     real_type t230 = ALIAS_ray_positive_D(t82);
     real_type t232 = t92 * t148;
     real_type t236 = ray_D_2_4(t18, t28, t29, t30);
     real_type t248 = t181 * t79;
     real_type t251 = t33 * t224;
-    result__[ 7   ] = t33 * t232 * t50 * t48 - t62 * t232 * t50 * t71 + t33 * t236 * t42 * t48 - t62 * t236 * t42 * t71 + t106 * t48 - 2 * t251 * t115 + 2 * t225 * t248 + t62 * t228 - t33 * t230 + t94 * t71;
+    result__[ 7   ] = t232 * t33 * t48 * t50 - t232 * t50 * t62 * t71 + t236 * t33 * t42 * t48 - t236 * t42 * t62 * t71 + t106 * t48 - 2 * t115 * t251 + 2 * t225 * t248 + t228 * t62 - t230 * t33 + t71 * t94;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
     real_type t254 = t33 * t33;
     real_type t256 = t122 * t122;
     real_type t260 = ray_D_3_3(t18, t28, t29, t30);
-    result__[ 10  ] = 2 * t24 * t21 * t254 * t79 + t33 * t256 * t50 * t48 - t62 * t256 * t50 * t71 + t33 * t260 * t42 * t48 - t62 * t260 * t42 * t71 + t254 * t185 - t188 + 2;
+    result__[ 10  ] = 2 * t21 * t24 * t254 * t79 + t256 * t33 * t48 * t50 - t256 * t50 * t62 * t71 + t260 * t33 * t42 * t48 - t260 * t42 * t62 * t71 + t185 * t254 - t188 + 2;
     real_type t276 = t122 * t148;
     real_type t280 = ray_D_3_4(t18, t28, t29, t30);
-    result__[ 11  ] = t33 * t276 * t50 * t48 - t62 * t276 * t50 * t71 + t33 * t280 * t42 * t48 - t62 * t280 * t42 * t71 + 2 * t225 * t115 + t124 * t71 + t136 * t48 + t33 * t228 + t62 * t230 + 2 * t251 * t248;
+    result__[ 11  ] = t276 * t33 * t48 * t50 - t276 * t50 * t62 * t71 + t280 * t33 * t42 * t48 - t280 * t42 * t62 * t71 + 2 * t115 * t225 + t124 * t71 + t136 * t48 + t228 * t33 + t230 * t62 + 2 * t248 * t251;
     result__[ 12  ] = 2 * t2;
     result__[ 13  ] = result__[12];
     result__[ 14  ] = result__[3];
@@ -292,7 +292,7 @@ namespace gtocX_2burnDefine {
     real_type t298 = -t80 - t81;
     real_type t300 = t148 * t148;
     real_type t304 = ray_D_4_4(t18, t28, t29, t30);
-    result__[ 17  ] = 2 * t24 * t21 * t296 * t79 + t33 * t300 * t50 * t48 - t62 * t300 * t50 * t71 + t33 * t304 * t42 * t48 - t62 * t304 * t42 * t71 + 2 * t298 * t224 * t115 - t35 * t19 * t17 + t64 * t19 * t60 + 2 * t150 * t71 + 2 * t166 * t48 + t296 * t185 + t298 * t230 - t188 + 2;
+    result__[ 17  ] = 2 * t21 * t24 * t296 * t79 + t300 * t33 * t48 * t50 - t300 * t50 * t62 * t71 + t304 * t33 * t42 * t48 - t304 * t42 * t62 * t71 + 2 * t115 * t224 * t298 - t17 * t19 * t35 + t19 * t60 * t64 + 2 * t150 * t71 + 2 * t166 * t48 + t185 * t296 + t230 * t298 - t188 + 2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 18, i_segment );
   }

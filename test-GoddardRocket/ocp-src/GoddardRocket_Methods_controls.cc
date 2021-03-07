@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GoddardRocket_Methods.cc                                       |
+ |  file: GoddardRocket_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -218,6 +218,8 @@ namespace GoddardRocketDefine {
     real_type t3   = ModelPars[iM_c];
     real_type t6   = X__[iX_m];
     U__[ iU_T ] = TControl.solve(-1.0 / t3 / t6 * (t3 * L__[iL_lambda2__xo] - t6 * L__[iL_lambda3__xo]) * P__[iP_TimeSize], 0, ModelPars[iM_Tmax]);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -275,6 +277,8 @@ namespace GoddardRocketDefine {
     DuDxlp(0, 4) = -TControl.solve_rhs(-P__[iP_TimeSize] * (L__[iL_lambda2__xo] * ModelPars[iM_c] - L__[iL_lambda3__xo] * X__[iX_m]) / X__[iX_m] / ModelPars[iM_c], 0, ModelPars[iM_Tmax]) * P__[iP_TimeSize] / X__[iX_m];
     DuDxlp(0, 5) = TControl.solve_rhs(-P__[iP_TimeSize] * (L__[iL_lambda2__xo] * ModelPars[iM_c] - L__[iL_lambda3__xo] * X__[iX_m]) / X__[iX_m] / ModelPars[iM_c], 0, ModelPars[iM_Tmax]) * P__[iP_TimeSize] / ModelPars[iM_c];
     DuDxlp(0, 6) = -TControl.solve_rhs(-P__[iP_TimeSize] * (L__[iL_lambda2__xo] * ModelPars[iM_c] - L__[iL_lambda3__xo] * X__[iX_m]) / X__[iX_m] / ModelPars[iM_c], 0, ModelPars[iM_Tmax]) * (L__[iL_lambda2__xo] * ModelPars[iM_c] - L__[iL_lambda3__xo] * X__[iX_m]) / X__[iX_m] / ModelPars[iM_c];
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -308,6 +312,121 @@ namespace GoddardRocketDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  GoddardRocket::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_m];
+    real_type t2   = massPositive(t1);
+    real_type t3   = P__[iP_TimeSize];
+    real_type t4   = TSPositive(t3);
+    real_type t5   = X__[iX_v];
+    real_type t6   = vPositive(t5);
+    real_type t7   = U__[iU_T];
+    real_type t9   = TControl(t7, 0, ModelPars[iM_Tmax]);
+    real_type t13  = pow(-t5 * t3 + V__[0], 2);
+    real_type t15  = X__[iX_h];
+    real_type t16  = DD(t15, t5);
+    real_type t20  = gg(t15);
+    real_type t24  = pow(V__[1] - (1.0 / t1 * (t7 - t16) - t20) * t3, 2);
+    real_type t31  = pow(V__[2] + 1.0 / ModelPars[iM_c] * t7 * t3, 2);
+    real_type result__ = t2 + t4 + t6 + t9 + t13 + t24 + t31;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GoddardRocket::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  GoddardRocket::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_T];
+    real_type t3   = ALIAS_TControl_D_1(t1, 0, ModelPars[iM_Tmax]);
+    real_type t5   = P__[iP_TimeSize];
+    real_type t6   = X__[iX_h];
+    real_type t8   = DD(t6, X__[iX_v]);
+    real_type t11  = 1.0 / X__[iX_m];
+    real_type t13  = gg(t6);
+    real_type t23  = 1.0 / ModelPars[iM_c];
+    result__[ 0   ] = t3 - 2 * t11 * t5 * (V__[1] - (t11 * (t1 - t8) - t13) * t5) + 2 * t23 * t5 * (t23 * t1 * t5 + V__[2]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GoddardRocket::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  GoddardRocket::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  GoddardRocket::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  GoddardRocket::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  GoddardRocket::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t3   = ALIAS_TControl_D_1_1(U__[iU_T], 0, ModelPars[iM_Tmax]);
+    real_type t5   = P__[iP_TimeSize] * P__[iP_TimeSize];
+    real_type t7   = X__[iX_m] * X__[iX_m];
+    real_type t12  = ModelPars[iM_c] * ModelPars[iM_c];
+    result__[ 0   ] = t3 + 2 / t7 * t5 + 2 / t12 * t5;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
+  }
+
 }
 
-// EOF: GoddardRocket_Methods.cc
+// EOF: GoddardRocket_Methods_controls.cc

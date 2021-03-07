@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BikeSteering_Methods.cc                                        |
+ |  file: BikeSteering_Methods_ODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -81,7 +81,7 @@ namespace BikeSteeringDefine {
     real_type t1   = X__[iX_TimeSize];
     result__[ 0   ] = X__[iX_omega] * t1;
     real_type t6   = ModelPars[iM_h];
-    result__[ 1   ] = ModelPars[iM_m] * t6 * ModelPars[iM_g] * t1 * X__[iX_phi] - t6 * t1 * U__[iU_Fy];
+    result__[ 1   ] = X__[iX_phi] * t6 * ModelPars[iM_g] * ModelPars[iM_m] * t1 - U__[iU_Fy] * t6 * t1;
     result__[ 2   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
@@ -259,4 +259,4 @@ namespace BikeSteeringDefine {
 
 }
 
-// EOF: BikeSteering_Methods.cc
+// EOF: BikeSteering_Methods_ODE.cc

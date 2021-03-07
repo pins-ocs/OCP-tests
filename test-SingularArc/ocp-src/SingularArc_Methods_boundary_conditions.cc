@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularArc_Methods.cc                                         |
+ |  file: SingularArc_Methods_boundary_conditions.cc                     |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -164,7 +164,6 @@ namespace SingularArcDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -232,7 +231,6 @@ namespace SingularArcDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -265,7 +263,6 @@ namespace SingularArcDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -281,4 +278,4 @@ namespace SingularArcDefine {
 
 }
 
-// EOF: SingularArc_Methods.cc
+// EOF: SingularArc_Methods_boundary_conditions.cc

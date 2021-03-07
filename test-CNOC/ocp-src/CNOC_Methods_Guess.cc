@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_Guess.cc                                          |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -185,11 +185,15 @@ namespace CNOCDefine {
   #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
 
 
-  // Node check strings
-  #define __message_node_check_0 "0 < coV(zeta)"
 
-  // Cell check strings
-  #define __message_cell_check_0 "0 < coV(zeta)"
+  // node_check_strings
+  #define Xoptima__message_node_check_0 "0 < coV(zeta)"
+
+
+  // cell_check_strings
+  #define Xoptima__message_cell_check_0 "0 < coV(zeta)"
+
+
 
   bool
   CNOC::p_check( P_const_pointer_type P__ ) const {
@@ -207,7 +211,7 @@ namespace CNOCDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
-    Xoptima__check__node__lt(0, X__[iX_coV], __message_node_check_0);
+    Xoptima__check__node__lt(0, X__[iX_coV], Xoptima__message_node_check_0);
     return true;
   }
 
@@ -224,7 +228,7 @@ namespace CNOCDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
-    Xoptima__check__cell__lt(0, X__[iX_coV], __message_cell_check_0);
+    Xoptima__check__cell__lt(0, X__[iX_coV], Xoptima__message_cell_check_0);
     return true;
   }
 

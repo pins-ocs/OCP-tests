@@ -31,32 +31,35 @@ INFO CLASS = BangBangF
   index start = omega = 404, p = 407
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [  1,  3] (0.00409  ,0.762    ) [80.9     ,4.41     ] 0.474      0: 0
 [  2,  1] (0.762    ,5.47e-06 ) [38.3     ,7.04e-05 ] 1.00       0: 1
-[  3,  1] (5.47e-06 ,4.73e-18 ) [7.04e-05 ,4.12e-18 ] 1.00       0: 0
-[  4,  1] (4.73e-18 ,4.77e-18 ) [4.12e-18 ,4.11e-18 ] 1.00       0: 0
+[  3,  1] (5.47e-06 ,4.72e-18 ) [7.04e-05 ,4.96e-18 ] 1.00       0: 0
+[  4,  2] (4.72e-18 ,4.67e-18 ) [4.96e-18 ,4.11e-18 ] 0.494      0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 2.14[ms]      timeout        = 0 [ms]
+Elapsed Time   = 2.32[ms]      timeout        = 0 [ms]
 iteration      = 4             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 407
 max acc. iter. = 800           N. System pars = 100
-Converged      = YES           Memory Used    = 47Kb (+76bytes)
+Converged      = YES           Memory Used    = 49Kb (+17bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
 Few iterations = 8         
 ----------------------- EVALUATIONS ------------------------
-Function       = 7             Jacobian       = 4         
-Factorization  = 4             Inversion      = 10        
+Function       = 8             Jacobian       = 4         
+Factorization  = 4             Inversion      = 11        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 2.7235e-17    last||d1||_inf = 2.8231e-17
-last ||f||_inf = 4.5103e-17    last||f1||_1   = 4.7252e-18
+last ||d||_inf = 2.7235e-17    last||d1||_inf = 3.1071e-17
+last ||f||_inf = 4.8572e-17    last||f1||_1   = 4.7151e-18
 ------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              

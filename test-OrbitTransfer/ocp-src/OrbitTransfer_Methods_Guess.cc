@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -91,9 +91,13 @@ namespace OrbitTransferDefine {
   #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
 
 
-  // Node check strings
-  #define __message_node_check_0 "0 < m(zeta)"
-  #define __message_node_check_1 "0 < r(zeta)"
+
+  // node_check_strings
+  #define Xoptima__message_node_check_0 "0 < m(zeta)"
+  #define Xoptima__message_node_check_1 "0 < r(zeta)"
+
+
+
 
   bool
   OrbitTransfer::p_check( P_const_pointer_type P__ ) const {
@@ -111,8 +115,8 @@ namespace OrbitTransferDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    Xoptima__check__node__lt(0, X__[iX_m], __message_node_check_0);
-    Xoptima__check__node__lt(0, X__[iX_r], __message_node_check_1);
+    Xoptima__check__node__lt(0, X__[iX_m], Xoptima__message_node_check_0);
+    Xoptima__check__node__lt(0, X__[iX_r], Xoptima__message_node_check_1);
     return true;
   }
 

@@ -45,7 +45,10 @@ INFO CLASS = TwoStageCSTR
   index start = omega = 3208, p = 3212
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -56,11 +59,11 @@ Hyness --- start iterations ---
 [  4,  1] (1.01e-08 ,2.97e-13 ) [1.42e-06 ,5.79e-11 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 9.39[ms]      timeout        = 0 [ms]
+Elapsed Time   = 23.8[ms]      timeout        = 0 [ms]
 iteration      = 4             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 3212
 max acc. iter. = 800           N. System pars = 800
-Converged      = YES           Memory Used    = 365Kb (+64bytes)
+Converged      = YES           Memory Used    = 367Kb (+67bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

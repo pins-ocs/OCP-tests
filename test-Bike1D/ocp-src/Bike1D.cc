@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D.cc                                                      |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -357,6 +357,7 @@ namespace Bike1DDefine {
 
     m_console->message("\nUser mapped functions\n",msg_level);
     mstr.str("");
+    mstr << "User function ``clip'' mapped with: ";
     clip.info(mstr);
     m_console->message(mstr.str(),msg_level);
 

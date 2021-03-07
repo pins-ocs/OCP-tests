@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: OrbitTransfer_Methods.cc                                       |
+ |  file: OrbitTransfer_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -211,6 +211,8 @@ namespace OrbitTransferDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_theta ] = atan(L__[iL_lambda2__xo] / L__[iL_lambda3__xo]);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -275,6 +277,8 @@ namespace OrbitTransferDefine {
     DuDxlp(0, 7) = -L__[iL_lambda2__xo] * pow(L__[iL_lambda3__xo], -2) / (L__[iL_lambda2__xo] * L__[iL_lambda2__xo] * pow(L__[iL_lambda3__xo], -2) + 1);
     DuDxlp(0, 8) = 0;
     DuDxlp(0, 9) = 0;
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -312,6 +316,146 @@ namespace OrbitTransferDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  OrbitTransfer::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = ModelPars[iM_tf];
+    real_type t2   = X__[iX_u];
+    real_type t6   = pow(-t2 * t1 + V__[2], 2);
+    real_type t8   = X__[iX_v];
+    real_type t9   = t8 * t8;
+    real_type t10  = X__[iX_r];
+    real_type t11  = 1.0 / t10;
+    real_type t14  = t10 * t10;
+    real_type t17  = ModelPars[iM_T];
+    real_type t18  = U__[iU_theta];
+    real_type t19  = sin(t18);
+    real_type t22  = 1.0 / X__[iX_m];
+    real_type t27  = pow(V__[3] - (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t1, 2);
+    real_type t31  = cos(t18);
+    real_type t37  = pow(V__[4] - (-t11 * t2 * t8 + t22 * t31 * t17) * t1, 2);
+    real_type t42  = pow(ModelPars[iM_mdot] * t1 + V__[0], 2);
+    real_type t47  = pow(-t11 * t8 * t1 + V__[1], 2);
+    real_type result__ = t6 + t27 + t37 + t42 + t47;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  OrbitTransfer::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  OrbitTransfer::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = ModelPars[iM_tf];
+    real_type t3   = X__[iX_v];
+    real_type t4   = t3 * t3;
+    real_type t5   = X__[iX_r];
+    real_type t6   = 1.0 / t5;
+    real_type t9   = t5 * t5;
+    real_type t12  = ModelPars[iM_T];
+    real_type t13  = U__[iU_theta];
+    real_type t14  = sin(t13);
+    real_type t17  = 1.0 / X__[iX_m];
+    real_type t18  = t17 * t14 * t12;
+    real_type t23  = cos(t13);
+    real_type t25  = t17 * t23 * t12;
+    result__[ 0   ] = -2 * t25 * t2 * (V__[3] - (t6 * t4 - 1.0 / t9 * ModelPars[iM_mu] + t18) * t2) + 2 * t18 * t2 * (V__[4] - (-t6 * X__[iX_u] * t3 + t25) * t2);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  OrbitTransfer::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  OrbitTransfer::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  OrbitTransfer::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  OrbitTransfer::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  OrbitTransfer::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = ModelPars[iM_tf];
+    real_type t2   = t1 * t1;
+    real_type t3   = ModelPars[iM_T];
+    real_type t4   = t3 * t3;
+    real_type t5   = t4 * t2;
+    real_type t6   = U__[iU_theta];
+    real_type t7   = cos(t6);
+    real_type t8   = t7 * t7;
+    real_type t9   = X__[iX_m];
+    real_type t10  = t9 * t9;
+    real_type t11  = 1.0 / t10;
+    real_type t15  = X__[iX_v];
+    real_type t16  = t15 * t15;
+    real_type t17  = X__[iX_r];
+    real_type t18  = 1.0 / t17;
+    real_type t21  = t17 * t17;
+    real_type t24  = sin(t6);
+    real_type t26  = 1.0 / t9;
+    real_type t27  = t26 * t24 * t3;
+    real_type t33  = t24 * t24;
+    real_type t41  = t26 * t7 * t3;
+    result__[ 0   ] = 2 * t11 * t8 * t5 + 2 * t27 * t1 * (V__[3] - (t18 * t16 - 1.0 / t21 * ModelPars[iM_mu] + t27) * t1) + 2 * t11 * t33 * t5 + 2 * t41 * t1 * (V__[4] - (-t15 * t18 * X__[iX_u] + t41) * t1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
+  }
+
 }
 
-// EOF: OrbitTransfer_Methods.cc
+// EOF: OrbitTransfer_Methods_controls.cc

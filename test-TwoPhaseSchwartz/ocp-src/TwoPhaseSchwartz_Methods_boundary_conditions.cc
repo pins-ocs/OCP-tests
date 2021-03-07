@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoPhaseSchwartz_Methods.cc                                    |
+ |  file: TwoPhaseSchwartz_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -167,7 +167,6 @@ namespace TwoPhaseSchwartzDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -285,7 +284,6 @@ namespace TwoPhaseSchwartzDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -301,4 +299,4 @@ namespace TwoPhaseSchwartzDefine {
 
 }
 
-// EOF: TwoPhaseSchwartz_Methods.cc
+// EOF: TwoPhaseSchwartz_Methods_boundary_conditions.cc

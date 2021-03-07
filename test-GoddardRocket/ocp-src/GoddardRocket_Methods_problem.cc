@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GoddardRocket_Methods1.cc                                      |
+ |  file: GoddardRocket_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -86,6 +86,7 @@ namespace GoddardRocketDefine {
    |
   \*/
 
+#if 0
   real_type
   GoddardRocket::H_eval(
     integer              i_segment,
@@ -112,6 +113,36 @@ namespace GoddardRocketDefine {
     real_type result__ = t2 + t4 + t6 + t5 * t3 * L__[iL_lambda1__xo] + (1.0 / t1 * (t12 - t14) - t18) * t3 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t12 * t3 * L__[iL_lambda3__xo] + t28;
     return result__;
   }
+#else
+  real_type
+  GoddardRocket::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_m];
+    real_type t2   = massPositive(t1);
+    real_type t3   = P__[iP_TimeSize];
+    real_type t4   = TSPositive(t3);
+    real_type t5   = X__[iX_v];
+    real_type t6   = vPositive(t5);
+    real_type t12  = U__[iU_T];
+    real_type t13  = X__[iX_h];
+    real_type t14  = DD(t13, t5);
+    real_type t18  = gg(t13);
+    real_type t28  = TControl(t12, 0, ModelPars[iM_Tmax]);
+    real_type result__ = t2 + t4 + t6 + t5 * t3 * L__[iL_lambda1__xo] + (1.0 / t1 * (t12 - t14) - t18) * t3 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t12 * t3 * L__[iL_lambda3__xo] + t28;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -134,8 +165,13 @@ namespace GoddardRocketDefine {
     real_type t4   = TSPositive(P__[iP_TimeSize]);
     real_type t6   = vPositive(X__[iX_v]);
     real_type result__ = t2 + t4 + t6;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   GoddardRocket::control_penalties_eval(
@@ -148,6 +184,9 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = TControl(U__[iU_T], 0, ModelPars[iM_Tmax]);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -170,6 +209,9 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -196,7 +238,142 @@ namespace GoddardRocketDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = -XR__[iX_h];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GoddardRocket::DmayerDx_numEqns() const
+  { return 6; }
+
+  void
+  GoddardRocket::DmayerDx_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = -1;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 6, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GoddardRocket::DmayerDp_numEqns() const
+  { return 1; }
+
+  void
+  GoddardRocket::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDp_eval", 1, i_segment_left, i_segment_right );
+  }
+
+  /*\
+   |   _
+   |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
+   |  | |   / _` |/ _` | '__/ _` | '_ \ / _` |/ _ \
+   |  | |__| (_| | (_| | | | (_| | | | | (_| |  __/
+   |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
+   |              |___/                 |___/
+  \*/
+
+  integer
+  GoddardRocket::DJDx_numEqns() const
+  { return 3; }
+
+  void
+  GoddardRocket::DJDx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = ALIAS_vPositive_D(X__[iX_v]);
+    result__[ 2   ] = ALIAS_massPositive_D(X__[iX_m]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GoddardRocket::DJDp_numEqns() const
+  { return 1; }
+
+  void
+  GoddardRocket::DJDp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = ALIAS_TSPositive_D(P__[iP_TimeSize]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDp_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  GoddardRocket::DJDu_numEqns() const
+  { return 1; }
+
+  void
+  GoddardRocket::DJDu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = ALIAS_TControl_D_1(U__[iU_T], 0, ModelPars[iM_Tmax]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
   }
 
   /*\
@@ -427,8 +604,9 @@ namespace GoddardRocketDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: GoddardRocket_Methods1.cc
+// EOF: GoddardRocket_Methods_problem.cc

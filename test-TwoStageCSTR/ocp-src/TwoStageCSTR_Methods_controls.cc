@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 6/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -334,6 +334,141 @@ namespace TwoStageCSTRDefine {
     L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
     L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
+  }
+
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  TwoStageCSTR::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u1];
+    real_type t2   = u1Control(t1, -0.5e0, 0.5e0);
+    real_type t3   = U__[iU_u2];
+    real_type t4   = u2Control(t3, -0.5e0, 0.5e0);
+    real_type t6   = X__[iX_x1];
+    real_type t7   = X__[iX_x2];
+    real_type t8   = R1(t6, t7);
+    real_type t10  = pow(V__[0] - 0.5e0 + t6 + t8, 2);
+    real_type t14  = (2 + t1) * (t7 + 0.25e0);
+    real_type t16  = pow(V__[1] - t8 + t14, 2);
+    real_type t18  = X__[iX_x3];
+    real_type t19  = ModelPars[iM_tau];
+    real_type t22  = X__[iX_x4];
+    real_type t23  = R2(t18, t22);
+    real_type t25  = pow(V__[2] - t6 + t18 + (0.5e0 - t6 - t8) * t19 + t23 - 0.25e0, 2);
+    real_type t33  = pow(V__[3] - t7 + 2 * t22 + (t22 + 0.25e0) * t3 + (t8 - t14) * t19 - t23 + 0.25e0, 2);
+    real_type result__ = t2 + t4 + t10 + t16 + t25 + t33;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoStageCSTR::DmDu_numEqns() const
+  { return 2; }
+
+  void
+  TwoStageCSTR::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u1];
+    real_type t2   = ALIAS_u1Control_D_1(t1, -0.5e0, 0.5e0);
+    real_type t5   = X__[iX_x2];
+    real_type t6   = R1(X__[iX_x1], t5);
+    real_type t7   = t5 + 0.25e0;
+    real_type t9   = (2 + t1) * t7;
+    real_type t14  = X__[iX_x4];
+    real_type t16  = U__[iU_u2];
+    real_type t17  = t14 + 0.25e0;
+    real_type t19  = ModelPars[iM_tau];
+    real_type t23  = R2(X__[iX_x3], t14);
+    real_type t24  = V__[3] - t5 + 2 * t14 + t17 * t16 + (t6 - t9) * t19 - t23 + 0.25e0;
+    result__[ 0   ] = t2 + 2 * t7 * (V__[1] - t6 + t9) - 2 * t7 * t19 * t24;
+    real_type t29  = ALIAS_u2Control_D_1(t16, -0.5e0, 0.5e0);
+    result__[ 1   ] = 2 * t17 * t24 + t29;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoStageCSTR::DmDuu_numRows() const
+  { return 2; }
+
+  integer
+  TwoStageCSTR::DmDuu_numCols() const
+  { return 2; }
+
+  integer
+  TwoStageCSTR::DmDuu_nnz() const
+  { return 4; }
+
+  void
+  TwoStageCSTR::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  TwoStageCSTR::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = ALIAS_u1Control_D_1_1(U__[iU_u1], -0.5e0, 0.5e0);
+    real_type t4   = X__[iX_x2] + 0.25e0;
+    real_type t5   = t4 * t4;
+    real_type t7   = ModelPars[iM_tau];
+    real_type t8   = t7 * t7;
+    real_type t9   = -t4;
+    real_type t10  = t9 * t9;
+    result__[ 0   ] = 2 * t10 * t8 + t2 + 2 * t5;
+    real_type t14  = X__[iX_x4] + 0.25e0;
+    result__[ 1   ] = 2 * t9 * t7 * t14;
+    result__[ 2   ] = result__[1];
+    real_type t18  = ALIAS_u2Control_D_1_1(U__[iU_u2], -0.5e0, 0.5e0);
+    real_type t19  = t14 * t14;
+    result__[ 3   ] = t18 + 2 * t19;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 4, i_segment );
   }
 
 }

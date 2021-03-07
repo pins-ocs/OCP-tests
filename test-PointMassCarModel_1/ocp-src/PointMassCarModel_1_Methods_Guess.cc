@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -188,8 +188,12 @@ namespace PointMassCarModel_1Define {
   #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
 
 
-  // Node check strings
-  #define __message_node_check_0 "0 < V(zeta)"
+
+  // node_check_strings
+  #define Xoptima__message_node_check_0 "0 < V(zeta)"
+
+
+
 
   bool
   PointMassCarModel_1::p_check( P_const_pointer_type P__ ) const {
@@ -207,7 +211,7 @@ namespace PointMassCarModel_1Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    Xoptima__check__node__lt(0, X__[iX_V], __message_node_check_0);
+    Xoptima__check__node__lt(0, X__[iX_V], Xoptima__message_node_check_0);
     return true;
   }
 

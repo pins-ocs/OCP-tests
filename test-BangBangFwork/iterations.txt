@@ -38,21 +38,24 @@ INFO CLASS = BangBangFwork
   index start = omega = 416, p = 419
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [  1,  3] (0.00239  ,0.155    ) [17.1     ,0.986    ] 0.478      0: 0
-[  2,  1] (0.155    ,7.15e-16 ) [8.10     ,1.81e-15 ] 1.00       0: 1
-[  3,  1] (7.15e-16 ,5.74e-18 ) [1.81e-15 ,6.22e-18 ] 1.00       0: 0
+[  2,  1] (0.155    ,6.70e-16 ) [8.10     ,1.59e-15 ] 1.00       0: 1
+[  3,  1] (6.70e-16 ,5.74e-18 ) [1.59e-15 ,6.22e-18 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 1.92[ms]      timeout        = 0 [ms]
+Elapsed Time   = 1.99[ms]      timeout        = 0 [ms]
 iteration      = 3             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 419
 max acc. iter. = 800           N. System pars = 103
-Converged      = YES           Memory Used    = 49Kb (+14bytes)
+Converged      = YES           Memory Used    = 50Kb (+16bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -62,7 +65,7 @@ Function       = 6             Jacobian       = 3
 Factorization  = 3             Inversion      = 8         
 ------------------------ USER INFO -------------------------
 last ||d||_inf = 4.5202e-17    last||d1||_inf = 1.4870e-14
-last ||f||_inf = 8.8593e-15    last||f1||_1   = 7.1519e-16
+last ||f||_inf = 8.8593e-15    last||f1||_1   = 6.7020e-16
 ------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              

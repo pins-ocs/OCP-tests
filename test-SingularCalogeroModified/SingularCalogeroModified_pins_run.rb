@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularCalogeroModified_pins_run.rb                           #
 #                                                                       #
-#  version: 1.0   date 5/3/2021                                         #
+#  version: 1.0   date 9/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #

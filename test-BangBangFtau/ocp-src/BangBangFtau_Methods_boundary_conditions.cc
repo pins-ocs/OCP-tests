@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFtau_Methods.cc                                        |
+ |  file: BangBangFtau_Methods_boundary_conditions.cc                    |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -170,7 +170,6 @@ namespace BangBangFtauDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -239,7 +238,6 @@ namespace BangBangFtauDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -272,7 +270,6 @@ namespace BangBangFtauDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -288,4 +285,4 @@ namespace BangBangFtauDefine {
 
 }
 
-// EOF: BangBangFtau_Methods.cc
+// EOF: BangBangFtau_Methods_boundary_conditions.cc

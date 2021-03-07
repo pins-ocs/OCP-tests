@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Farmer_Methods1.cc                                             |
+ |  file: Farmer_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -91,6 +91,7 @@ namespace FarmerDefine {
    |
   \*/
 
+#if 0
   real_type
   Farmer::H_eval(
     integer              i_segment,
@@ -139,6 +140,58 @@ namespace FarmerDefine {
     real_type result__ = t4 + t34 * ModelPars[iM_wP] + t36 * t6 + t38 * t10 + t40 * t13 + t42 * t17 + t47 * ModelPars[iM_wJ1] + t52 * ModelPars[iM_wJ2] + t57 * ModelPars[iM_wJ3] + t62 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t46 * L__[iL_lambda1__xo] + 1.0 / ModelPars[iM_tau__2] * t51 * L__[iL_lambda2__xo] + 1.0 / ModelPars[iM_tau__3] * t56 * L__[iL_lambda3__xo] - 1.0 / ModelPars[iM_tau__4] * (-t15 + t2) * L__[iL_lambda4__xo] + 1.0 / ModelPars[iM_tau__5] * t61 * L__[iL_lambda5__xo] + t94 + t95 + t96 + t97;
     return result__;
   }
+#else
+  real_type
+  Farmer::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_x2];
+    real_type t2   = X__[iX_x4];
+    real_type t4   = LimitX2X4(0.12e0 - t1 - t2);
+    real_type t6   = ModelPars[iM_w1];
+    real_type t8   = X__[iX_x1];
+    real_type t10  = ModelPars[iM_w2];
+    real_type t13  = ModelPars[iM_w3];
+    real_type t15  = X__[iX_x3];
+    real_type t17  = ModelPars[iM_w4];
+    real_type t20  = ModelPars[iM_t1];
+    real_type t21  = ModelPars[iM_t2];
+    real_type t22  = Q__[iQ_zeta];
+    real_type t34  = pow(t8 / t6 + t1 / t10 + t15 / t13 + t2 / t17 - 1.0 / (-t21 + t20) * (ModelPars[iM_P1] * (t20 - t21 + t22 - 1) - (t22 - 1) * ModelPars[iM_P2]), 2);
+    real_type t36  = t8 * t8;
+    real_type t38  = t1 * t1;
+    real_type t40  = t15 * t15;
+    real_type t42  = t2 * t2;
+    real_type t45  = U__[iU_x1__o];
+    real_type t46  = -t8 + t45;
+    real_type t47  = t46 * t46;
+    real_type t50  = U__[iU_x2__o];
+    real_type t51  = -t1 + t50;
+    real_type t52  = t51 * t51;
+    real_type t55  = U__[iU_x3__o];
+    real_type t56  = -t15 + t55;
+    real_type t57  = t56 * t56;
+    real_type t60  = U__[iU_x4__o];
+    real_type t61  = -t2 + t60;
+    real_type t62  = t61 * t61;
+    real_type t94  = x1__oControl(t45, -0.1e-2, 100);
+    real_type t95  = x2__oControl(t50, -0.1e-2, 100);
+    real_type t96  = x3__oControl(t55, -0.1e-2, 100);
+    real_type t97  = x4__oControl(t60, -0.1e-2, 100);
+    real_type result__ = t4 + t34 * ModelPars[iM_wP] + t36 * t6 + t38 * t10 + t40 * t13 + t42 * t17 + t47 * ModelPars[iM_wJ1] + t52 * ModelPars[iM_wJ2] + t57 * ModelPars[iM_wJ3] + t62 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t46 * L__[iL_lambda1__xo] + 1.0 / ModelPars[iM_tau__2] * t51 * L__[iL_lambda2__xo] + 1.0 / ModelPars[iM_tau__3] * t56 * L__[iL_lambda3__xo] - 1.0 / ModelPars[iM_tau__4] * (-t15 + t2) * L__[iL_lambda4__xo] + 1.0 / ModelPars[iM_tau__5] * t61 * L__[iL_lambda5__xo] + t94 + t95 + t96 + t97;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -158,8 +211,13 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = LimitX2X4(0.12e0 - X__[iX_x2] - X__[iX_x4]);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Farmer::control_penalties_eval(
@@ -176,6 +234,9 @@ namespace FarmerDefine {
     real_type t6   = x3__oControl(U__[iU_x3__o], -0.1e-2, 100);
     real_type t8   = x4__oControl(U__[iU_x4__o], -0.1e-2, 100);
     real_type result__ = t2 + t4 + t6 + t8;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -218,6 +279,9 @@ namespace FarmerDefine {
     real_type t55  = pow(-t12 + U__[iU_x3__o], 2);
     real_type t60  = pow(-t16 + U__[iU_x4__o], 2);
     real_type result__ = t38 * t10 + t40 * t14 + t34 * t2 + t32 * ModelPars[iM_wP] + t36 * t6 + t45 * ModelPars[iM_wJ1] + t50 * ModelPars[iM_wJ2] + t55 * ModelPars[iM_wJ3] + t60 * ModelPars[iM_wJ4];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -244,7 +308,136 @@ namespace FarmerDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Farmer::DmayerDx_numEqns() const
+  { return 10; }
+
+  void
+  Farmer::DmayerDx_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    result__[ 7   ] = 0;
+    result__[ 8   ] = 0;
+    result__[ 9   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 10, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Farmer::DmayerDp_numEqns() const
+  { return 0; }
+
+  void
+  Farmer::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _
+   |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
+   |  | |   / _` |/ _` | '__/ _` | '_ \ / _` |/ _ \
+   |  | |__| (_| | (_| | | | (_| | | | | (_| |  __/
+   |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
+   |              |___/                 |___/
+  \*/
+
+  integer
+  Farmer::DJDx_numEqns() const
+  { return 5; }
+
+  void
+  Farmer::DJDx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = 0;
+    real_type t4   = ALIAS_LimitX2X4_D(0.12e0 - X__[iX_x2] - X__[iX_x4]);
+    result__[ 1   ] = -t4;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = result__[1];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Farmer::DJDp_numEqns() const
+  { return 0; }
+
+  void
+  Farmer::DJDp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Farmer::DJDu_numEqns() const
+  { return 4; }
+
+  void
+  Farmer::DJDu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = ALIAS_x1__oControl_D_1(U__[iU_x1__o], -0.1e-2, 100);
+    result__[ 1   ] = ALIAS_x2__oControl_D_1(U__[iU_x2__o], -0.1e-2, 100);
+    result__[ 2   ] = ALIAS_x3__oControl_D_1(U__[iU_x3__o], -0.1e-2, 100);
+    result__[ 3   ] = ALIAS_x4__oControl_D_1(U__[iU_x4__o], -0.1e-2, 100);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDu_eval", 4, i_segment );
   }
 
   /*\
@@ -497,8 +690,9 @@ namespace FarmerDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: Farmer_Methods1.cc
+// EOF: Farmer_Methods_problem.cc

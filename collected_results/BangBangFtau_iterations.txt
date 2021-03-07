@@ -54,7 +54,7 @@ Segment N.3: s0 = 0.9000 length = 0.1000 npts = 11 no data set
 END Mesh[mesh]
 
 User mapped functions
-ClipIntervalWithErf, h=0.10000, delta=0.0000
+User function ``clip'' mapped with: ClipIntervalWithErf, h=0.10000, delta=0.0000
 
 Model Parameters
 ..................................epsiTB = 0.001
@@ -72,7 +72,10 @@ INFO CLASS = BangBangFtau
   index start = omega = 832, p = 837
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -103,11 +106,11 @@ Hyness --- start iterations ---
 [ 23,  1] (1.69e-10 ,1.49e-11 ) [1.01e-10 ,1.72e-12 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 36.5[ms]      timeout        = 0 [ms]
+Elapsed Time   = 40.5[ms]      timeout        = 0 [ms]
 iteration      = 23            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 837
 max acc. iter. = 800           N. System pars = 206
-Converged      = YES           Memory Used    = 111Kb (+79bytes)
+Converged      = YES           Memory Used    = 114Kb (+77bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -117,7 +120,7 @@ Function       = 73            Jacobian       = 23
 Factorization  = 23            Inversion      = 95        
 ------------------------ USER INFO -------------------------
 last ||d||_inf = 1.1173e-10    last||d1||_inf = 5.9600e-09
-last ||f||_inf = 7.1618e-08    last||f1||_1   = 1.6869e-10
+last ||f||_inf = 7.1619e-08    last||f1||_1   = 1.6869e-10
 ------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus02_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type Tf = 5;
     real_type epsi_x = 0.0001;
+    real_type Tf = 5;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -163,8 +163,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularLuus02_data.Mesh["s0"] = 0;
-SingularLuus02_data.Mesh["segments"][0]["n"] = 400;
 SingularLuus02_data.Mesh["segments"][0]["length"] = Tf;
+SingularLuus02_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

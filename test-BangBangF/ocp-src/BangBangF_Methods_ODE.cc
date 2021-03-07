@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangF_Methods.cc                                           |
+ |  file: BangBangF_Methods_ODE.cc                                       |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -243,4 +243,4 @@ namespace BangBangFDefine {
 
 }
 
-// EOF: BangBangF_Methods.cc
+// EOF: BangBangF_Methods_ODE.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: AlpRider_Methods.cc                                            |
+ |  file: AlpRider_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -336,14 +336,7 @@ namespace AlpRiderDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -387,7 +380,6 @@ namespace AlpRiderDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   AlpRider::eta_numEqns() const
   { return 4; }
@@ -573,4 +565,4 @@ namespace AlpRiderDefine {
 
 }
 
-// EOF: AlpRider_Methods.cc
+// EOF: AlpRider_Methods_AdjointODE.cc

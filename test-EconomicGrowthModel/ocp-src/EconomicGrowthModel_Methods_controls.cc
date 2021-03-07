@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: EconomicGrowthModel_Methods.cc                                 |
+ |  file: EconomicGrowthModel_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -220,6 +220,8 @@ namespace EconomicGrowthModelDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = Q(X__[iX_x1], X__[iX_x2]);
     U__[ iU_u ] = uControl.solve(-(L__[iL_lambda1__xo] - L__[iL_lambda2__xo]) * t3, 0, 1);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -276,6 +278,8 @@ namespace EconomicGrowthModelDefine {
     DuDxlp(0, 3) = -uControl.solve_rhs(-Q(X__[iX_x1], X__[iX_x2]) * (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]), 0, 1) * Q(X__[iX_x1], X__[iX_x2]);
     DuDxlp(0, 4) = uControl.solve_rhs(-Q(X__[iX_x1], X__[iX_x2]) * (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]), 0, 1) * Q(X__[iX_x1], X__[iX_x2]);
     DuDxlp(0, 5) = 0;
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -309,6 +313,112 @@ namespace EconomicGrowthModelDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  EconomicGrowthModel::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_T];
+    real_type t2   = Tpositive(t1);
+    real_type t3   = U__[iU_u];
+    real_type t4   = uControl(t3, 0, 1);
+    real_type t9   = Q(X__[iX_x1], X__[iX_x2]);
+    real_type t13  = pow(-t1 * t9 * t3 + V__[0], 2);
+    real_type t19  = pow(V__[1] - t1 * t9 * (1 - t3), 2);
+    real_type t21  = V__[2] * V__[2];
+    real_type result__ = t4 * t1 + t13 + t19 + t2 + t21;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  EconomicGrowthModel::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  EconomicGrowthModel::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_T];
+    real_type t2   = U__[iU_u];
+    real_type t3   = ALIAS_uControl_D_1(t2, 0, 1);
+    real_type t8   = Q(X__[iX_x1], X__[iX_x2]);
+    result__[ 0   ] = t3 * t1 - 2 * t1 * t8 * (-t1 * t8 * t2 + V__[0]) + 2 * t1 * t8 * (V__[1] - t1 * t8 * (1 - t2));
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  EconomicGrowthModel::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  EconomicGrowthModel::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  EconomicGrowthModel::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  EconomicGrowthModel::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  EconomicGrowthModel::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_T];
+    real_type t3   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 1);
+    real_type t7   = Q(X__[iX_x1], X__[iX_x2]);
+    real_type t8   = t7 * t7;
+    real_type t9   = t1 * t1;
+    result__[ 0   ] = t3 * t1 + 4 * t9 * t8;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
+  }
+
 }
 
-// EOF: EconomicGrowthModel_Methods.cc
+// EOF: EconomicGrowthModel_Methods_controls.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: AlpRider_Methods.cc                                            |
+ |  file: AlpRider_Methods_boundary_conditions.cc                        |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -164,7 +164,6 @@ namespace AlpRiderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -233,7 +232,6 @@ namespace AlpRiderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -266,7 +264,6 @@ namespace AlpRiderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -282,4 +279,4 @@ namespace AlpRiderDefine {
 
 }
 
-// EOF: AlpRider_Methods.cc
+// EOF: AlpRider_Methods_boundary_conditions.cc

@@ -35,7 +35,10 @@ INFO CLASS = Brachiostocrona2
   index start = omega = 3006, p = 3011
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -91,14 +94,14 @@ Failed check on parameter: 0 < T
 [ 29,  1] (0.00102  ,0.000138 ) [0.0439   ,0.0127   ] 1.00       0: 0
 [ 30,  1] (0.000138 ,8.70e-06 ) [0.0175   ,0.000676 ] 1.00       0: 0
 [ 31,  1] (8.70e-06 ,5.63e-09 ) [0.000661 ,4.76e-07 ] 1.00       0: 0
-[ 32,  1] (5.63e-09 ,9.12e-15 ) [4.75e-07 ,7.12e-13 ] 1.00       0: 0
+[ 32,  1] (5.63e-09 ,9.13e-15 ) [4.75e-07 ,7.13e-13 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 40.2[ms]      timeout        = 0 [ms]
+Elapsed Time   = 42.5[ms]      timeout        = 0 [ms]
 iteration      = 32            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 3012
 max acc. iter. = 800           N. System pars = 500
-Converged      = YES           Memory Used    = 367Kb (+11bytes)
+Converged      = YES           Memory Used    = 368Kb (+1bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -107,8 +110,8 @@ Few iterations = 8
 Function       = 43            Jacobian       = 32        
 Factorization  = 32            Inversion      = 74        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 3.0324e-12    last||d1||_inf = 3.2777e-06
-last ||f||_inf = 3.3389e-07    last||f1||_1   = 5.6257e-09
+last ||d||_inf = 3.0350e-12    last||d1||_inf = 3.2791e-06
+last ||f||_inf = 3.3405e-07    last||f1||_1   = 5.6283e-09
 ------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              
@@ -118,5 +121,5 @@ last ||f||_inf = 3.3389e-07    last||f1||_1   = 5.6257e-09
 target [Lagrange,Mayer]       = [ 0.000, 1.293 ]
 [Penalties/Barriers,Controls] = [ 0.000, 0.000 ]
 Optimization parameters:
-T: 1.29313697316147125
+T: 1.29313697316147014
 All Done Folks!

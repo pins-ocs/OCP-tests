@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MinimumFuelOrbitRaising_Methods.cc                             |
+ |  file: MinimumFuelOrbitRaising_Methods_boundary_conditions.cc         |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -155,7 +155,6 @@ namespace MinimumFuelOrbitRaisingDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -275,7 +274,6 @@ namespace MinimumFuelOrbitRaisingDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -291,4 +289,4 @@ namespace MinimumFuelOrbitRaisingDefine {
 
 }
 
-// EOF: MinimumFuelOrbitRaising_Methods.cc
+// EOF: MinimumFuelOrbitRaising_Methods_boundary_conditions.cc

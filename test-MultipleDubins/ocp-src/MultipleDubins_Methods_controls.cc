@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MultipleDubins_Methods.cc                                      |
+ |  file: MultipleDubins_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -225,6 +225,109 @@ namespace MultipleDubinsDefine {
     // no controls to compute
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  MultipleDubins::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = P__[iP_L1];
+    real_type t3   = X__[iX_theta1];
+    real_type t4   = cos(t3);
+    real_type t7   = pow(-t4 * t2 + V__[0], 2);
+    real_type t9   = sin(t3);
+    real_type t12  = pow(-t9 * t2 + V__[1], 2);
+    real_type t17  = pow(-P__[iP_kappa1] * t2 + V__[2], 2);
+    real_type t19  = P__[iP_L2];
+    real_type t20  = X__[iX_theta2];
+    real_type t21  = cos(t20);
+    real_type t24  = pow(-t21 * t19 + V__[3], 2);
+    real_type t26  = sin(t20);
+    real_type t29  = pow(-t26 * t19 + V__[4], 2);
+    real_type t34  = pow(-P__[iP_kappa2] * t19 + V__[5], 2);
+    real_type t36  = P__[iP_L3];
+    real_type t37  = X__[iX_theta3];
+    real_type t38  = cos(t37);
+    real_type t41  = pow(-t38 * t36 + V__[6], 2);
+    real_type t43  = sin(t37);
+    real_type t46  = pow(-t43 * t36 + V__[7], 2);
+    real_type t51  = pow(-P__[iP_kappa3] * t36 + V__[8], 2);
+    real_type result__ = t7 + t12 + t17 + t24 + t29 + t34 + t41 + t46 + t51;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MultipleDubins::DmDu_numEqns() const
+  { return 0; }
+
+  void
+  MultipleDubins::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 0, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MultipleDubins::DmDuu_numRows() const
+  { return 0; }
+
+  integer
+  MultipleDubins::DmDuu_numCols() const
+  { return 0; }
+
+  integer
+  MultipleDubins::DmDuu_nnz() const
+  { return 0; }
+
+  void
+  MultipleDubins::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  MultipleDubins::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
 }
 
-// EOF: MultipleDubins_Methods.cc
+// EOF: MultipleDubins_Methods_controls.cc

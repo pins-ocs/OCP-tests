@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -183,10 +183,10 @@ namespace PointMassCarModel_3Define {
     real_type t9   = sin(t2);
     result__[ 1   ] = t8 * t9 * t1;
     result__[ 2   ] = (-t5 * t6 + X__[iX_Omega]) * t8;
-    real_type t15  = t1 * t1;
-    result__[ 3   ] = (-t15 * ModelPars[iM_kD] + X__[iX_fx]) * t8;
-    result__[ 4   ] = t8 * ModelPars[iM_v__Omega__max] * U__[iU_v__Omega];
-    result__[ 5   ] = t8 * ModelPars[iM_v__fx__max] * U__[iU_v__fx];
+    real_type t14  = t1 * t1;
+    result__[ 3   ] = (-ModelPars[iM_kD] * t14 + X__[iX_fx]) * t8;
+    result__[ 4   ] = ModelPars[iM_v__Omega__max] * t8 * U__[iU_v__Omega];
+    result__[ 5   ] = ModelPars[iM_v__fx__max] * t8 * U__[iU_v__fx];
     result__[ 6   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 7, i_segment );
@@ -279,7 +279,7 @@ namespace PointMassCarModel_3Define {
     result__[ 14  ] = -2 * t1 * t34 * result__[12];
     result__[ 15  ] = result__[12];
     real_type t38  = t1 * t1;
-    result__[ 16  ] = 2 * (-t34 * t38 + X__[iX_fx]) * t9;
+    result__[ 16  ] = 2 * (-t38 * t34 + X__[iX_fx]) * t9;
     result__[ 17  ] = 2 * t9 * ModelPars[iM_v__Omega__max] * U__[iU_v__Omega];
     result__[ 18  ] = 2 * t9 * ModelPars[iM_v__fx__max] * U__[iU_v__fx];
     if ( m_debug )

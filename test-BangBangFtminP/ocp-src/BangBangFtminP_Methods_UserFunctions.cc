@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFtminP_Methods1.cc                                     |
+ |  file: BangBangFtminP_Methods_UserFunctions.cc                        |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -55,4 +55,4 @@ using Mechatronix::MeshStd;
 namespace BangBangFtminPDefine {
 }
 
-// EOF: BangBangFtminP_Methods1.cc
+// EOF: BangBangFtminP_Methods_UserFunctions.cc

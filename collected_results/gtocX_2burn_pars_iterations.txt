@@ -45,7 +45,10 @@ INFO CLASS = gtocX_2burn_pars
   index start = omega = 306, p = 312
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -70,13 +73,13 @@ Hyness --- start iterations ---
 Continuation step N.1 s=0.95, ds=0.4500
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[  7,  1] (1.57e-06 ,6.66e-17 ) [0.000135 ,8.65e-17 ] 1.00       0: 0
-[  8,  1] (6.66e-17 ,6.58e-17 ) [8.65e-17 ,7.22e-17 ] 1.00       0: 0
+[  7,  1] (1.57e-06 ,6.66e-17 ) [0.000135 ,8.66e-17 ] 1.00       0: 0
+[  8,  1] (6.66e-17 ,6.58e-17 ) [8.66e-17 ,7.22e-17 ] 1.00       0: 0
 
 Continuation step N.1 s=1.0, ds=0.05000
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[  9,  1] (1.75e-07 ,7.28e-17 ) [1.50e-05 ,8.41e-17 ] 1.00       0: 0
+[  9,  1] (1.75e-07 ,7.28e-17 ) [1.50e-05 ,8.40e-17 ] 1.00       0: 0
 
 Continuation step N.2
 
@@ -85,7 +88,7 @@ Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 10,  1] (0.000702 ,7.36e-06 ) [0.00925  ,0.000173 ] 1.00       0: 0
 [ 11,  1] (7.36e-06 ,2.17e-09 ) [0.000167 ,9.46e-08 ] 1.00       0: 0
-[ 12,  1] (2.17e-09 ,4.14e-16 ) [9.47e-08 ,1.00e-14 ] 1.00       0: 0
+[ 12,  1] (2.17e-09 ,4.14e-16 ) [9.47e-08 ,1.01e-14 ] 1.00       0: 0
 
 Continuation step N.2 s=0.50, ds=0.3000
 Hyness --- start iterations ---
@@ -106,14 +109,14 @@ Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 19,  1] (0.000204 ,5.99e-06 ) [0.00430  ,8.01e-05 ] 1.00       0: 0
 [ 20,  1] (5.99e-06 ,6.96e-10 ) [7.96e-05 ,1.66e-08 ] 1.00       0: 0
-[ 21,  1] (6.96e-10 ,8.84e-17 ) [1.66e-08 ,4.69e-16 ] 1.00       0: 0
+[ 21,  1] (6.96e-10 ,9.22e-17 ) [1.66e-08 ,4.95e-16 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 7.55[ms]      timeout        = 0 [ms]
+Elapsed Time   = 8.49[ms]      timeout        = 0 [ms]
 iteration      = 21            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 315
 max acc. iter. = 800           N. System pars = 0
-Converged      = YES           Memory Used    = 62Kb (+57bytes)
+Converged      = YES           Memory Used    = 61Kb (+53bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -122,7 +125,7 @@ Few iterations = 8
 Function       = 30            Jacobian       = 21        
 Factorization  = 21            Inversion      = 42        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 3.4245e-15    last||d1||_inf = 1.7728e-07
+last ||d||_inf = 3.7799e-15    last||d1||_inf = 1.7728e-07
 last ||f||_inf = 8.0102e-09    last||f1||_1   = 6.9614e-10
 ------------------------------------------------------------
 
@@ -134,6 +137,6 @@ target [Lagrange,Mayer]       = [ 0.000, 0.000 ]
 [Penalties/Barriers,Controls] = [ 3.030e-102, 0.000 ]
 Optimization parameters:
 h: -0.0655370757577170421
-k: 1.03010878211225711e-31
-p: 1.85767113762416436
+k: 9.79624621252080386e-32
+p: 1.85767113762416458
 All Done Folks!

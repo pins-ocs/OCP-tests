@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: RobotArm_Methods.cc                                            |
+ |  file: RobotArm_Methods_boundary_conditions.cc                        |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -202,7 +202,6 @@ namespace RobotArmDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -379,4 +378,4 @@ namespace RobotArmDefine {
 
 }
 
-// EOF: RobotArm_Methods.cc
+// EOF: RobotArm_Methods_boundary_conditions.cc

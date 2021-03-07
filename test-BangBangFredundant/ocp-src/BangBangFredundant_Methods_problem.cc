@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFredundant_Methods1.cc                                 |
+ |  file: BangBangFredundant_Methods_problem.cc                          |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,6 +73,7 @@ namespace BangBangFredundantDefine {
    |
   \*/
 
+#if 0
   real_type
   BangBangFredundant::H_eval(
     integer              i_segment,
@@ -95,6 +96,32 @@ namespace BangBangFredundantDefine {
     real_type result__ = t19 * L__[iL_lambda5__xo] + t22 * L__[iL_lambda6__xo] + t4 * L__[iL_lambda2__xo] + t5 * ModelPars[iM_w_F] + L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda3__xo] * X__[iX_vF1] + L__[iL_lambda4__xo] * X__[iX_vF2] + t25 + t26;
     return result__;
   }
+#else
+  real_type
+  BangBangFredundant::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t4   = X__[iX_F1] + X__[iX_F2];
+    real_type t5   = Flim(t4);
+    real_type t19  = U__[iU_aF1];
+    real_type t22  = U__[iU_aF2];
+    real_type t24  = ModelPars[iM_maxAF];
+    real_type t25  = aF1Control(t19, -t24, t24);
+    real_type t26  = aF2Control(t22, -t24, t24);
+    real_type result__ = t19 * L__[iL_lambda5__xo] + t22 * L__[iL_lambda6__xo] + t4 * L__[iL_lambda2__xo] + t5 * ModelPars[iM_w_F] + L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda3__xo] * X__[iX_vF1] + L__[iL_lambda4__xo] * X__[iX_vF2] + t25 + t26;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -115,8 +142,13 @@ namespace BangBangFredundantDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t5   = Flim(X__[iX_F1] + X__[iX_F2]);
     real_type result__ = t5 * ModelPars[iM_w_F];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   BangBangFredundant::control_penalties_eval(
@@ -132,6 +164,9 @@ namespace BangBangFredundantDefine {
     real_type t3   = aF1Control(U__[iU_aF1], -t2, t2);
     real_type t5   = aF2Control(U__[iU_aF2], -t2, t2);
     real_type result__ = t3 + t5;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -154,6 +189,9 @@ namespace BangBangFredundantDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -182,7 +220,138 @@ namespace BangBangFredundantDefine {
     real_type t5   = Flim(XL__[iX_F1] + XL__[iX_F2]);
     real_type t9   = Flim(XR__[iX_F1] + XR__[iX_F2]);
     real_type result__ = -XR__[iX_x] + t5 + t9;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  BangBangFredundant::DmayerDx_numEqns() const
+  { return 12; }
+
+  void
+  BangBangFredundant::DmayerDx_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = ALIAS_Flim_D(XL__[iX_F1] + XL__[iX_F2]);
+    result__[ 3   ] = result__[2];
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = -1;
+    result__[ 7   ] = 0;
+    result__[ 8   ] = ALIAS_Flim_D(XR__[iX_F1] + XR__[iX_F2]);
+    result__[ 9   ] = result__[8];
+    result__[ 10  ] = 0;
+    result__[ 11  ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 12, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  BangBangFredundant::DmayerDp_numEqns() const
+  { return 0; }
+
+  void
+  BangBangFredundant::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _
+   |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
+   |  | |   / _` |/ _` | '__/ _` | '_ \ / _` |/ _ \
+   |  | |__| (_| | (_| | | | (_| | | | | (_| |  __/
+   |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
+   |              |___/                 |___/
+  \*/
+
+  integer
+  BangBangFredundant::DJDx_numEqns() const
+  { return 6; }
+
+  void
+  BangBangFredundant::DJDx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    real_type t5   = ALIAS_Flim_D(X__[iX_F1] + X__[iX_F2]);
+    result__[ 2   ] = t5 * ModelPars[iM_w_F];
+    result__[ 3   ] = result__[2];
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  BangBangFredundant::DJDp_numEqns() const
+  { return 0; }
+
+  void
+  BangBangFredundant::DJDp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  BangBangFredundant::DJDu_numEqns() const
+  { return 2; }
+
+  void
+  BangBangFredundant::DJDu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = ModelPars[iM_maxAF];
+    result__[ 0   ] = ALIAS_aF1Control_D_1(U__[iU_aF1], -t2, t2);
+    result__[ 1   ] = ALIAS_aF2Control_D_1(U__[iU_aF2], -t2, t2);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDu_eval", 2, i_segment );
   }
 
   /*\
@@ -446,8 +615,9 @@ namespace BangBangFredundantDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: BangBangFredundant_Methods1.cc
+// EOF: BangBangFredundant_Methods_problem.cc

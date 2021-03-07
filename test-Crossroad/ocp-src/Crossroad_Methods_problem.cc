@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Crossroad_Methods1.cc                                          |
+ |  file: Crossroad_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -68,6 +68,7 @@ namespace CrossroadDefine {
    |
   \*/
 
+#if 0
   real_type
   Crossroad::H_eval(
     integer              i_segment,
@@ -99,6 +100,41 @@ namespace CrossroadDefine {
     real_type result__ = t2 + t21 + t22 + t1 * (t25 * ModelPars[iM_wJ] + ModelPars[iM_wT]) + t9 * t1 * L__[iL_lambda1__xo] + t3 * t1 * L__[iL_lambda2__xo] + t24 * t1 * L__[iL_lambda3__xo] + t41;
     return result__;
   }
+#else
+  real_type
+  Crossroad::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_Ts];
+    real_type t2   = Tpositive(t1);
+    real_type t3   = X__[iX_a];
+    real_type t4   = t3 * t3;
+    real_type t6   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
+    real_type t9   = X__[iX_v];
+    real_type t10  = t9 * t9;
+    real_type t11  = t10 * t10;
+    real_type t13  = kappa(X__[iX_s]);
+    real_type t14  = t13 * t13;
+    real_type t17  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
+    real_type t21  = AccBound(1 - 1.0 / t6 * t4 - 1.0 / t17 * t14 * t11);
+    real_type t22  = VelBound(t9);
+    real_type t24  = U__[iU_jerk];
+    real_type t25  = t24 * t24;
+    real_type t41  = jerkControl(t24, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    real_type result__ = t2 + t21 + t22 + t1 * (t25 * ModelPars[iM_wJ] + ModelPars[iM_wT]) + t9 * t1 * L__[iL_lambda1__xo] + t3 * t1 * L__[iL_lambda2__xo] + t24 * t1 * L__[iL_lambda3__xo] + t41;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -129,8 +165,13 @@ namespace CrossroadDefine {
     real_type t21  = AccBound(1 - 1.0 / t6 * t4 - 1.0 / t17 * t14 * t11);
     real_type t22  = VelBound(t9);
     real_type result__ = t2 + t21 + t22;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Crossroad::control_penalties_eval(
@@ -143,6 +184,9 @@ namespace CrossroadDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = jerkControl(U__[iU_jerk], ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -166,6 +210,9 @@ namespace CrossroadDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = U__[iU_jerk] * U__[iU_jerk];
     real_type result__ = X__[iX_Ts] * (t3 * ModelPars[iM_wJ] + ModelPars[iM_wT]);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -192,7 +239,144 @@ namespace CrossroadDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Crossroad::DmayerDx_numEqns() const
+  { return 8; }
+
+  void
+  Crossroad::DmayerDx_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    result__[ 7   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 8, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Crossroad::DmayerDp_numEqns() const
+  { return 0; }
+
+  void
+  Crossroad::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _
+   |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
+   |  | |   / _` |/ _` | '__/ _` | '_ \ / _` |/ _ \
+   |  | |__| (_| | (_| | | | (_| | | | | (_| |  __/
+   |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
+   |              |___/                 |___/
+  \*/
+
+  integer
+  Crossroad::DJDx_numEqns() const
+  { return 4; }
+
+  void
+  Crossroad::DJDx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_a];
+    real_type t2   = t1 * t1;
+    real_type t4   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
+    real_type t5   = 1.0 / t4;
+    real_type t7   = X__[iX_v];
+    real_type t8   = t7 * t7;
+    real_type t9   = t8 * t8;
+    real_type t10  = X__[iX_s];
+    real_type t11  = kappa(t10);
+    real_type t12  = t11 * t11;
+    real_type t15  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
+    real_type t16  = 1.0 / t15;
+    real_type t19  = ALIAS_AccBound_D(-t16 * t12 * t9 - t5 * t2 + 1);
+    real_type t22  = kappa_D(t10);
+    result__[ 0   ] = -2 * t22 * t16 * t11 * t9 * t19;
+    real_type t31  = ALIAS_VelBound_D(t7);
+    result__[ 1   ] = -4 * t16 * t12 * t8 * t7 * t19 + t31;
+    result__[ 2   ] = -2 * t5 * t1 * t19;
+    result__[ 3   ] = ALIAS_Tpositive_D(X__[iX_Ts]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Crossroad::DJDp_numEqns() const
+  { return 0; }
+
+  void
+  Crossroad::DJDp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Crossroad::DJDu_numEqns() const
+  { return 1; }
+
+  void
+  Crossroad::DJDu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = ALIAS_jerkControl_D_1(U__[iU_jerk], ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
   }
 
   /*\
@@ -427,8 +611,9 @@ namespace CrossroadDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: Crossroad_Methods1.cc
+// EOF: Crossroad_Methods_problem.cc

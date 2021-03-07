@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_Guess.cc                              |
  |                                                                       |
- |  version: 1.0   date 6/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -99,18 +99,22 @@ namespace gtocX_2burn_parsDefine {
   #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
 
 
-  // Node check strings
-  #define __message_node_check_0 "0 < 1+f(zeta)*cos(L(zeta))+g(zeta)*sin(L(zeta))"
 
-  // Cell check strings
-  #define __message_cell_check_0 "0 < 1+f(zeta)*cos(L(zeta))+g(zeta)*sin(L(zeta))"
+  // node_check_strings
+  #define Xoptima__message_node_check_0 "0 < 1+f(zeta)*cos(L(zeta))+g(zeta)*sin(L(zeta))"
 
-  // Pars check strings
-  #define __message_cell_check_0 "0 < p"
+
+  // cell_check_strings
+  #define Xoptima__message_cell_check_0 "0 < 1+f(zeta)*cos(L(zeta))+g(zeta)*sin(L(zeta))"
+
+
+  // pars_check_strings
+  #define Xoptima__message_pars_check_0 "0 < p"
+
 
   bool
   gtocX_2burn_pars::p_check( P_const_pointer_type P__ ) const {
-    Xoptima__check__pars__lt(0, P__[iP_p], __message_cell_check_0);
+    Xoptima__check__pars__lt(0, P__[iP_p], Xoptima__message_pars_check_0);
     return true;
   }
 
@@ -128,7 +132,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
-    Xoptima__check__node__lt(0, t3 * X__[iX_f] + t6 * X__[iX_g] + 1, __message_node_check_0);
+    Xoptima__check__node__lt(0, t3 * X__[iX_f] + t6 * X__[iX_g] + 1, Xoptima__message_node_check_0);
     return true;
   }
 
@@ -148,7 +152,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
-    Xoptima__check__cell__lt(0, t3 * X__[iX_f] + t6 * X__[iX_g] + 1, __message_cell_check_0);
+    Xoptima__check__cell__lt(0, t3 * X__[iX_f] + t6 * X__[iX_g] + 1, Xoptima__message_cell_check_0);
     return true;
   }
 

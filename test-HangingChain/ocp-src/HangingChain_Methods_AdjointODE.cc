@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: HangingChain_Methods.cc                                        |
+ |  file: HangingChain_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -167,10 +167,10 @@ namespace HangingChainDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = U__[iU_u];
-    real_type t7   = t4 * t4;
-    real_type t9   = sqrt(t7 + 1);
-    result__[ 0   ] = 1.0 / t9 * (t4 * (L__[iL_lambda2__xo] + X__[iX_x]) + t9 * L__[iL_lambda1__xo]);
+    real_type t1   = U__[iU_u];
+    real_type t2   = t1 * t1;
+    real_type t4   = sqrt(t2 + 1);
+    result__[ 0   ] = (t1 * (L__[iL_lambda2__xo] + X__[iX_x]) + t4 * L__[iL_lambda1__xo]) / t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -273,14 +273,7 @@ namespace HangingChainDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -324,7 +317,6 @@ namespace HangingChainDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   HangingChain::eta_numEqns() const
   { return 2; }
@@ -506,4 +498,4 @@ namespace HangingChainDefine {
 
 }
 
-// EOF: HangingChain_Methods.cc
+// EOF: HangingChain_Methods_AdjointODE.cc

@@ -52,7 +52,10 @@ INFO CLASS = SingularArc
   index start = omega = 2406, p = 2411
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -90,7 +93,7 @@ Failed check on parameter: 0 < T
 [ 25,  1] (8.48e-05 ,2.82e-05 ) [0.000105 ,4.34e-05 ] 1.00       0: 0
 [ 26,  1] (2.82e-05 ,1.12e-06 ) [2.89e-05 ,1.53e-06 ] 1.00       0: 0
 [ 27,  1] (1.12e-06 ,1.01e-10 ) [1.43e-06 ,7.17e-10 ] 1.00       0: 0
-[ 28,  1] (1.01e-10 ,3.02e-17 ) [7.17e-10 ,7.07e-17 ] 1.00       0: 0
+[ 28,  1] (1.01e-10 ,3.09e-17 ) [7.17e-10 ,5.81e-16 ] 1.00       0: 0
 
 Continuation step N.1
 
@@ -101,7 +104,7 @@ Hyness --- start iterations ---
 [ 30,  1] (2.40e-05 ,5.89e-06 ) [5.72e-05 ,1.21e-05 ] 1.00       0: 0
 [ 31,  1] (5.89e-06 ,8.91e-08 ) [1.59e-05 ,3.76e-07 ] 1.00       0: 0
 [ 32,  1] (8.91e-08 ,1.33e-10 ) [3.94e-07 ,6.35e-10 ] 1.00       0: 0
-[ 33,  1] (1.33e-10 ,4.72e-16 ) [6.37e-10 ,2.36e-15 ] 1.00       0: 0
+[ 33,  1] (1.33e-10 ,4.72e-16 ) [6.37e-10 ,2.35e-15 ] 1.00       0: 0
 
 Continuation step N.1 s=0.50, ds=0.3000
 Hyness --- start iterations ---
@@ -134,11 +137,11 @@ Hyness --- start iterations ---
 [ 51,  1] (1.17e-12 ,3.21e-17 ) [6.62e-13 ,2.48e-16 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 51.9[ms]      timeout        = 0 [ms]
+Elapsed Time   = 71.1[ms]      timeout        = 0 [ms]
 iteration      = 51            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 2412
 max acc. iter. = 800           N. System pars = 400
-Converged      = YES           Memory Used    = 296Kb (+59bytes)
+Converged      = YES           Memory Used    = 297Kb (+50bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

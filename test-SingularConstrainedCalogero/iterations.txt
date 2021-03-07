@@ -47,7 +47,10 @@ INFO CLASS = SingularConstrainedCalogero
   index start = omega = 1202, p = 1204
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -58,7 +61,7 @@ Hyness --- start iterations ---
 [  4,  1] (2.24e-07 ,5.87e-09 ) [1.49     ,0.00241  ] 1.00       0: 0
 [  5,  1] (5.87e-09 ,2.58e-10 ) [0.00242  ,4.90e-08 ] 1.00       0: 0
 [  6,  1] (2.58e-10 ,6.78e-11 ) [4.90e-08 ,1.49e-08 ] 1.00       0: 0
-[  7,  1] (6.78e-11 ,1.33e-14 ) [1.49e-08 ,1.30e-13 ] 1.00       0: 0
+[  7,  1] (6.78e-11 ,1.38e-14 ) [1.49e-08 ,1.43e-13 ] 1.00       0: 0
 
 Continuation step N.1
 
@@ -77,7 +80,7 @@ Hyness --- start iterations ---
 [ 13,  1] (1.20e-07 ,2.95e-09 ) [2.65     ,0.00415  ] 1.00       0: 0
 [ 14,  1] (2.95e-09 ,4.14e-10 ) [0.00416  ,7.87e-08 ] 1.00       0: 0
 [ 15,  1] (4.14e-10 ,1.09e-10 ) [7.87e-08 ,2.40e-08 ] 1.00       0: 0
-[ 16,  1] (1.09e-10 ,4.07e-14 ) [2.40e-08 ,4.83e-13 ] 1.00       0: 0
+[ 16,  1] (1.09e-10 ,4.00e-14 ) [2.40e-08 ,5.31e-13 ] 1.00       0: 0
 
 Continuation step N.1 s=0.95, ds=0.4500
 Hyness --- start iterations ---
@@ -85,7 +88,7 @@ Hyness --- start iterations ---
 [ 17,  1] (3.85e-06 ,3.08e-07 ) [366.0    ,70.9     ] 1.00       0: 0
 [ 18,  1] (3.08e-07 ,1.35e-08 ) [100.0    ,1.83     ] 1.00       0: 0
 [ 19,  1] (1.35e-08 ,9.33e-11 ) [1.89     ,0.000544 ] 1.00       0: 0
-[ 20,  1] (9.33e-11 ,2.00e-12 ) [0.000544 ,3.73e-10 ] 1.00       0: 0
+[ 20,  1] (9.33e-11 ,2.00e-12 ) [0.000544 ,3.72e-10 ] 1.00       0: 0
 
 Continuation step N.1 s=1.0, ds=0.05000
 Hyness --- start iterations ---
@@ -93,15 +96,15 @@ Hyness --- start iterations ---
 [ 21,  1] (4.78e-07 ,2.34e-08 ) [273.0    ,11.5     ] 1.00       0: 0
 [ 22,  1] (2.34e-08 ,2.75e-09 ) [12.4     ,0.0163   ] 1.00       0: 0
 [ 23,  1] (2.75e-09 ,1.15e-09 ) [0.0163   ,2.19e-07 ] 1.00       0: 0
-[ 24,  1] (1.15e-09 ,3.01e-10 ) [2.19e-07 ,6.63e-08 ] 1.00       0: 0
-[ 25,  1] (3.01e-10 ,1.20e-12 ) [6.63e-08 ,1.79e-11 ] 1.00       0: 0
+[ 24,  1] (1.15e-09 ,3.01e-10 ) [2.19e-07 ,6.62e-08 ] 1.00       0: 0
+[ 25,  1] (3.01e-10 ,1.16e-12 ) [6.62e-08 ,1.07e-11 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 43.9[ms]      timeout        = 0 [ms]
+Elapsed Time   = 101.0[ms]     timeout        = 0 [ms]
 iteration      = 25            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 1204
 max acc. iter. = 800           N. System pars = 600
-Converged      = YES           Memory Used    = 136Kb (+83bytes)
+Converged      = YES           Memory Used    = 138Kb (+39bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -110,8 +113,8 @@ Few iterations = 8
 Function       = 30            Jacobian       = 25        
 Factorization  = 25            Inversion      = 50        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 8.3605e-11    last||d1||_inf = 1.4809e-07
-last ||f||_inf = 8.2679e-10    last||f1||_1   = 3.0060e-10
+last ||d||_inf = 5.2336e-11    last||d1||_inf = 1.4809e-07
+last ||f||_inf = 8.2679e-10    last||f1||_1   = 3.0053e-10
 ------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              

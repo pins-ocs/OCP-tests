@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BikeSteering_Methods.cc                                        |
+ |  file: BikeSteering_Methods_boundary_conditions.cc                    |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -161,7 +161,6 @@ namespace BikeSteeringDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -229,7 +228,6 @@ namespace BikeSteeringDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -262,7 +260,6 @@ namespace BikeSteeringDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -278,4 +275,4 @@ namespace BikeSteeringDefine {
 
 }
 
-// EOF: BikeSteering_Methods.cc
+// EOF: BikeSteering_Methods_boundary_conditions.cc

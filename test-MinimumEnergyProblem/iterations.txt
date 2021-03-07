@@ -44,7 +44,10 @@ INFO CLASS = MinimumEnergyProblem
   index start = omega = 80004, p = 80008
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -52,7 +55,7 @@ Hyness --- start iterations ---
 [  1,  1] (3.51e-05 ,0.000533 ) [0.894    ,4.02     ] 1.00       0: 0
 [  2,  1] (0.000533 ,6.20e-06 ) [2.22     ,0.0266   ] 1.00       0: 0
 [  3,  1] (6.20e-06 ,1.81e-09 ) [0.0274   ,8.39e-06 ] 1.00       0: 0
-[  4,  1] (1.81e-09 ,2.63e-16 ) [8.40e-06 ,8.07e-13 ] 1.00       0: 0
+[  4,  1] (1.81e-09 ,2.63e-16 ) [8.40e-06 ,8.08e-13 ] 1.00       0: 0
 
 Continuation step N.1
 
@@ -82,7 +85,7 @@ Hyness --- start iterations ---
 [ 21,  1] (4.90e-05 ,4.74e-06 ) [0.00413  ,0.000538 ] 1.00       0: 0
 [ 22,  1] (4.74e-06 ,2.10e-07 ) [0.000767 ,2.63e-05 ] 1.00       0: 0
 [ 23,  1] (2.10e-07 ,3.84e-10 ) [2.84e-05 ,4.69e-08 ] 1.00       0: 0
-[ 24,  1] (3.84e-10 ,2.82e-15 ) [4.71e-08 ,1.30e-13 ] 1.00       0: 0
+[ 24,  1] (3.84e-10 ,2.82e-15 ) [4.71e-08 ,1.31e-13 ] 1.00       0: 0
 
 Continuation step N.1 s=0.80, ds=0.3000
 Hyness --- start iterations ---
@@ -120,11 +123,11 @@ Hyness --- start iterations ---
 [ 51,  1] (4.04e-05 ,5.21e-06 ) [0.000120 ,2.38e-05 ] 1.00       0: 0
 [ 52,  1] (5.21e-06 ,3.34e-07 ) [3.97e-05 ,3.11e-06 ] 1.00       0: 0
 [ 53,  1] (3.34e-07 ,1.95e-09 ) [3.93e-06 ,7.30e-08 ] 1.00       0: 0
-[ 54,  1] (1.95e-09 ,2.28e-11 ) [7.68e-08 ,5.88e-11 ] 1.00       0: 0
-[ 55,  1] (2.28e-11 ,1.36e-11 ) [5.89e-11 ,1.06e-11 ] 1.00       0: 0
+[ 54,  1] (1.95e-09 ,2.56e-11 ) [7.68e-08 ,6.17e-11 ] 1.00       0: 0
+[ 55,  1] (2.56e-11 ,1.29e-11 ) [6.18e-11 ,1.04e-11 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 1.64[sec]     timeout        = 0 [ms]
+Elapsed Time   = 2.57[sec]     timeout        = 0 [ms]
 iteration      = 55            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 80008
 max acc. iter. = 800           N. System pars = 20000
@@ -138,7 +141,7 @@ Function       = 189           Jacobian       = 55
 Factorization  = 55            Inversion      = 239       
 ------------------------ USER INFO -------------------------
 last ||d||_inf = 9.0479e-08    last||d1||_inf = 1.6226e-07
-last ||f||_inf = 1.7299e-07    last||f1||_1   = 2.2834e-11
+last ||f||_inf = 1.7299e-07    last||f1||_1   = 2.5643e-11
 ------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              

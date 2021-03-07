@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Train_Methods.cc                                               |
+ |  file: Train_Methods_controls.cc                                      |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -217,6 +217,8 @@ namespace TrainDefine {
     real_type t2   = L__[iL_lambda2__xo];
     U__[ iU_ua ] = uaControl.solve(-X__[iX_v] - t2, 0, ModelPars[iM_uaMax]);
     U__[ iU_ub ] = ubControl.solve(t2, 0, ModelPars[iM_ubMax]);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -273,6 +275,8 @@ namespace TrainDefine {
     DuDxlp(1, 2) = 0;
     DuDxlp(0, 3) = -uaControl.solve_rhs(-X__[iX_v] - L__[iL_lambda2__xo], 0, ModelPars[iM_uaMax]);
     DuDxlp(1, 3) = ubControl.solve_rhs(L__[iL_lambda2__xo], 0, ModelPars[iM_ubMax]);
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -304,6 +308,121 @@ namespace TrainDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  Train::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_ua];
+    real_type t3   = uaControl(t1, 0, ModelPars[iM_uaMax]);
+    real_type t4   = U__[iU_ub];
+    real_type t6   = ubControl(t4, 0, ModelPars[iM_ubMax]);
+    real_type t8   = X__[iX_v];
+    real_type t10  = pow(V__[0] - t8, 2);
+    real_type t13  = acc(X__[iX_x], t8);
+    real_type t15  = pow(V__[1] - t13 - t1 + t4, 2);
+    real_type result__ = t3 + t6 + t10 + t15;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Train::DmDu_numEqns() const
+  { return 2; }
+
+  void
+  Train::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_ua];
+    real_type t3   = ALIAS_uaControl_D_1(t1, 0, ModelPars[iM_uaMax]);
+    real_type t5   = 2 * V__[1];
+    real_type t8   = acc(X__[iX_x], X__[iX_v]);
+    real_type t9   = 2 * t8;
+    real_type t10  = 2 * t1;
+    real_type t11  = U__[iU_ub];
+    real_type t12  = 2 * t11;
+    result__[ 0   ] = t3 - t5 + t9 + t10 - t12;
+    real_type t14  = ALIAS_ubControl_D_1(t11, 0, ModelPars[iM_ubMax]);
+    result__[ 1   ] = t14 + t5 - t9 - t10 + t12;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Train::DmDuu_numRows() const
+  { return 2; }
+
+  integer
+  Train::DmDuu_numCols() const
+  { return 2; }
+
+  integer
+  Train::DmDuu_nnz() const
+  { return 4; }
+
+  void
+  Train::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Train::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t3   = ALIAS_uaControl_D_1_1(U__[iU_ua], 0, ModelPars[iM_uaMax]);
+    result__[ 0   ] = t3 + 2;
+    result__[ 1   ] = -2;
+    result__[ 2   ] = -2;
+    real_type t6   = ALIAS_ubControl_D_1_1(U__[iU_ub], 0, ModelPars[iM_ubMax]);
+    result__[ 3   ] = t6 + 2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 4, i_segment );
+  }
+
 }
 
-// EOF: Train_Methods.cc
+// EOF: Train_Methods_controls.cc

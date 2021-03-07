@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Brachiostocrona_Methods.cc                                     |
+ |  file: Brachiostocrona_Methods_boundary_conditions.cc                 |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -162,7 +162,6 @@ namespace BrachiostocronaDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -207,7 +206,7 @@ namespace BrachiostocronaDefine {
     result__[ 3   ] = LL__[iL_lambda4__xo];
     result__[ 4   ] = OMEGA__[3] - LR__[iL_lambda1__xo];
     result__[ 5   ] = OMEGA__[4] - LR__[iL_lambda2__xo];
-    result__[ 6   ] = -t6 * LR__[iL_lambda3__xo];
+    result__[ 6   ] = -LR__[iL_lambda3__xo] * t6;
     result__[ 7   ] = -LR__[iL_lambda4__xo];
     result__[ 8   ] = 1;
     if ( m_debug )
@@ -233,7 +232,6 @@ namespace BrachiostocronaDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -266,7 +264,6 @@ namespace BrachiostocronaDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -282,4 +279,4 @@ namespace BrachiostocronaDefine {
 
 }
 
-// EOF: Brachiostocrona_Methods.cc
+// EOF: Brachiostocrona_Methods_boundary_conditions.cc

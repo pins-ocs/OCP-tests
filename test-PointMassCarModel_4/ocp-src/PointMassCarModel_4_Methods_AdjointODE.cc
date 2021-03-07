@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: PointMassCarModel_4_Methods.cc                                 |
+ |  file: PointMassCarModel_4_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -629,14 +629,7 @@ namespace PointMassCarModel_4Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -680,7 +673,6 @@ namespace PointMassCarModel_4Define {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   PointMassCarModel_4::eta_numEqns() const
   { return 7; }
@@ -872,4 +864,4 @@ namespace PointMassCarModel_4Define {
 
 }
 
-// EOF: PointMassCarModel_4_Methods.cc
+// EOF: PointMassCarModel_4_Methods_AdjointODE.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_Guess.cc                       |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -99,9 +99,13 @@ namespace SingularLuus04_FreeTimeDefine {
   #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
 
 
-  // Node check strings
-  #define __message_node_check_0 "0 < T(zeta)"
-  #define __message_node_check_1 "T(zeta) < 100"
+
+  // node_check_strings
+  #define Xoptima__message_node_check_0 "0 < T(zeta)"
+  #define Xoptima__message_node_check_1 "T(zeta) < 100"
+
+
+
 
   bool
   SingularLuus04_FreeTime::p_check( P_const_pointer_type P__ ) const {
@@ -120,8 +124,8 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = X__[iX_T];
-    Xoptima__check__node__lt(0, t1, __message_node_check_0);
-    Xoptima__check__node__lt(t1, 100, __message_node_check_1);
+    Xoptima__check__node__lt(0, t1, Xoptima__message_node_check_0);
+    Xoptima__check__node__lt(t1, 100, Xoptima__message_node_check_1);
     return true;
   }
 

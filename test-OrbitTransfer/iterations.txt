@@ -37,7 +37,10 @@ INFO CLASS = OrbitTransfer
   index start = omega = 10010, p = 10017
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -50,14 +53,14 @@ Hyness --- start iterations ---
 [  6,  1] (0.000345 ,1.98e-05 ) [0.107    ,0.0108   ] 1.00       0: 1
 [  7,  1] (1.98e-05 ,1.83e-07 ) [0.0116   ,0.000182 ] 1.00       0: 0
 [  8,  1] (1.83e-07 ,5.17e-11 ) [0.000175 ,1.06e-07 ] 1.00       0: 0
-[  9,  1] (5.17e-11 ,9.47e-17 ) [1.07e-07 ,5.76e-14 ] 1.00       0: 0
+[  9,  1] (5.17e-11 ,9.59e-17 ) [1.07e-07 ,5.79e-14 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 33.8[ms]      timeout        = 0 [ms]
+Elapsed Time   = 39.8[ms]      timeout        = 0 [ms]
 iteration      = 9             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 10017
 max acc. iter. = 800           N. System pars = 1000
-Converged      = YES           Memory Used    = 951Kb (+68bytes)
+Converged      = YES           Memory Used    = 951Kb (+83bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -66,7 +69,7 @@ Few iterations = 8
 Function       = 26            Jacobian       = 9         
 Factorization  = 9             Inversion      = 34        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 5.5369e-13    last||d1||_inf = 1.0260e-06
+last ||d||_inf = 5.5677e-13    last||d1||_inf = 1.0260e-06
 last ||f||_inf = 5.9127e-09    last||f1||_1   = 5.1680e-11
 ------------------------------------------------------------
 

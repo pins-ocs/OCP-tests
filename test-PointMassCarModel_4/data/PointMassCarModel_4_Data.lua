@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,20 +20,20 @@
 -- User Header
 
 -- Auxiliary values
-p_tol0    = 0.1
-p_epsi0   = 0.1
-road_tol0 = 0.01
-wT0       = 0.01
 up_epsi0  = 0.1
-up_tol0   = 0.01
+wT0       = 0.01
 wT        = wT0
+p_epsi0   = 0.1
+p_tol0    = 0.1
+up_tol0   = 0.01
 m         = 700
 kD        = 0.2500000000/m
+road_tol0 = 0.01
 
 content = {
 
   -- activate run time debug
-  data.Debug = false,
+  data.Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -61,9 +61,11 @@ content = {
   -- OutputSplines = [0],
 
   ControlSolver = {
+    -- "LM" = Levenberg-Marquardt
+    -- "YS" = Yixun Shi
+    -- "QN" = Quasi Newton
     -- ==============================================================
     -- "Hyness", "NewtonDumped", "LM", "YS", "QN"
-    -- "LM" = Levenberg-Marquardt, "YS" = Yixun Shi, "QN" = Quasi Newton
     solver = "QN",
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV" for Hyness and NewtonDumped
     factorization = "LU",
@@ -76,6 +78,11 @@ content = {
     Tolerance = 1e-9,
     Iterative = false,
     InfoLevel = -1 -- suppress all messages
+    -- ==============================================================
+    -- "LM", "YS", "QN"
+    InitSolver    = "QN",
+    InitMaxIter   = 10,
+    InitTolerance = 1e-4
   },
 
   -- setup solver
@@ -86,7 +93,7 @@ content = {
 
     -- Last Block selection:
     -- "LU", "LUPQ", "QR", "QRP", "SVD", "LSS", "LSY", "PINV"
-    last_factorization = "LU",
+    last_factorization = "LUPQ",
 
     -- choose solves: Hyness, NewtonDumped
     solver = "Hyness",
@@ -126,7 +133,11 @@ content = {
     -- possible value: zero, default, none, warm
     initialize = "zero",
     -- possible value: default, none, warm, spline, table
-    guess_type = "default"
+    guess_type = "default",
+    -- initilize or not lagrange multiplier with redundant linear system
+    initialize_multipliers = true,
+    -- "use_guess", "minimize", "none"
+    initialize_controls    = "use_guess"
   },
 
   Parameters = {
@@ -226,83 +237,83 @@ content = {
     segments = {
       
       {
-        curvature  = 0,
         rightWidth = 60,
         leftWidth  = 15/2.0,
-        length     = 190,
         gridSize   = 1,
+        length     = 190,
+        curvature  = 0,
       },
       
       {
-        curvature  = 0.003225806452,
         rightWidth = 30,
         leftWidth  = 60,
-        length     = 973.8937227,
         gridSize   = 1,
+        length     = 973.8937227,
+        curvature  = 0.003225806452,
       },
       
       {
-        curvature  = 0,
         rightWidth = 30,
         leftWidth  = 30,
-        length     = 180,
         gridSize   = 1,
+        length     = 180,
+        curvature  = 0,
       },
       
       {
-        curvature  = 0.006666666667,
         rightWidth = 15,
         leftWidth  = 20,
-        length     = 235.619449,
         gridSize   = 1,
+        length     = 235.619449,
+        curvature  = 0.006666666667,
       },
       
       {
-        curvature  = 0,
         rightWidth = 30,
         leftWidth  = 30,
+        gridSize   = 1,
         length     = 240,
-        gridSize   = 1,
+        curvature  = 0,
       },
       
       {
-        curvature  = -1/150.0,
         rightWidth = 30,
         leftWidth  = 30,
+        gridSize   = 1,
         length     = 235.619449,
-        gridSize   = 1,
+        curvature  = -1/150.0,
       },
       
       {
-        curvature  = 0,
         rightWidth = 30,
         leftWidth  = 30,
+        gridSize   = 1,
         length     = 200,
-        gridSize   = 1,
+        curvature  = 0,
       },
       
       {
-        curvature  = 0.025,
         rightWidth = 30,
         leftWidth  = 30,
+        gridSize   = 1,
         length     = 125.6637062,
-        gridSize   = 1,
+        curvature  = 0.025,
       },
       
       {
-        curvature  = 0,
         rightWidth = 30,
         leftWidth  = 30,
+        gridSize   = 1,
         length     = 480,
-        gridSize   = 1,
+        curvature  = 0,
       },
       
       {
-        curvature  = 0,
         rightWidth = 30,
         leftWidth  = 30,
-        length     = 10,
         gridSize   = 0.1,
+        length     = 10,
+        curvature  = 0,
       },
     },
   },

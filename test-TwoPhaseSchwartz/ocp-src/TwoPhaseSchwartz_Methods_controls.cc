@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: TwoPhaseSchwartz_Methods.cc                                    |
+ |  file: TwoPhaseSchwartz_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,7 +84,7 @@ namespace TwoPhaseSchwartzDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
     result__[ 0   ] = L__[iL_lambda2__xo] + t3;
-    result__[ 1   ] = L__[iL_lambda4__xo] * ModelPars[iM_T2] + 2 * U__[iU_u2] * ModelPars[iM_epsilon];
+    result__[ 1   ] = L__[iL_lambda4__xo] * ModelPars[iM_T2] + 2 * ModelPars[iM_epsilon] * U__[iU_u2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -207,6 +207,8 @@ namespace TwoPhaseSchwartzDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_u1 ] = 0;
     U__[ iU_u2 ] = 0;
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -275,6 +277,8 @@ namespace TwoPhaseSchwartzDefine {
     DuDxlp(1, 6) = 0;
     DuDxlp(0, 7) = 0;
     DuDxlp(1, 7) = 0;
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -310,6 +314,121 @@ namespace TwoPhaseSchwartzDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  TwoPhaseSchwartz::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_x1];
+    real_type t3   = pow(t1 - 1, 2);
+    real_type t5   = X__[iX_x2];
+    real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
+    real_type t10  = bound1(-1 + 9 * t3 + t8);
+    real_type t12  = bound2(0.8e0 + t5);
+    real_type t13  = U__[iU_u1];
+    real_type t14  = u1Control(t13, -1, 1);
+    real_type t17  = pow(V__[0] - t5, 2);
+    real_type t19  = t1 * t1;
+    real_type t25  = pow(V__[1] - t13 + 0.1e0 * t5 * (2 * t19 + 1), 2);
+    real_type t26  = ModelPars[iM_T2];
+    real_type t27  = X__[iX_x4];
+    real_type t31  = pow(-t27 * t26 + V__[2], 2);
+    real_type t35  = X__[iX_x3] * X__[iX_x3];
+    real_type t43  = pow(V__[3] - (U__[iU_u2] - 0.1e0 * t27 * (2 * t35 + 1)) * t26, 2);
+    real_type result__ = t10 + t12 + t14 + t17 + t25 + t31 + t43;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoPhaseSchwartz::DmDu_numEqns() const
+  { return 2; }
+
+  void
+  TwoPhaseSchwartz::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u1];
+    real_type t2   = ALIAS_u1Control_D_1(t1, -1, 1);
+    real_type t7   = X__[iX_x1] * X__[iX_x1];
+    result__[ 0   ] = t2 - 2 * V__[1] + 2 * t1 - 0.2e0 * X__[iX_x2] * (2 * t7 + 1);
+    real_type t14  = ModelPars[iM_T2];
+    real_type t17  = X__[iX_x3] * X__[iX_x3];
+    result__[ 1   ] = -2 * t14 * (V__[3] - (U__[iU_u2] - 0.1e0 * X__[iX_x4] * (2 * t17 + 1)) * t14);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  TwoPhaseSchwartz::DmDuu_numRows() const
+  { return 2; }
+
+  integer
+  TwoPhaseSchwartz::DmDuu_numCols() const
+  { return 2; }
+
+  integer
+  TwoPhaseSchwartz::DmDuu_nnz() const
+  { return 2; }
+
+  void
+  TwoPhaseSchwartz::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  TwoPhaseSchwartz::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
+    result__[ 0   ] = t2 + 2;
+    real_type t4   = ModelPars[iM_T2] * ModelPars[iM_T2];
+    result__[ 1   ] = 2 * t4;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 2, i_segment );
+  }
+
 }
 
-// EOF: TwoPhaseSchwartz_Methods.cc
+// EOF: TwoPhaseSchwartz_Methods_controls.cc

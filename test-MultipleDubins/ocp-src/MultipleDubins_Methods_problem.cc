@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MultipleDubins_Methods1.cc                                     |
+ |  file: MultipleDubins_Methods_problem.cc                              |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -64,6 +64,7 @@ namespace MultipleDubinsDefine {
    |
   \*/
 
+#if 0
   real_type
   MultipleDubins::H_eval(
     integer              i_segment,
@@ -100,6 +101,46 @@ namespace MultipleDubinsDefine {
     real_type result__ = t1 + t2 + t3 + (t5 + t6 + t7) * ModelPars[iM_epsilon_L] + (t12 + t14 + t16) * ModelPars[iM_epsilon_K] + t22 * t1 * L__[iL_lambda1__xo] + t26 * t1 * L__[iL_lambda2__xo] + t11 * t1 * L__[iL_lambda3__xo] + t34 * t2 * L__[iL_lambda4__xo] + t38 * t2 * L__[iL_lambda5__xo] + t13 * t2 * L__[iL_lambda6__xo] + t46 * t3 * L__[iL_lambda7__xo] + t50 * t3 * L__[iL_lambda8__xo] + t15 * t3 * L__[iL_lambda9__xo];
     return result__;
   }
+#else
+  real_type
+  MultipleDubins::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = P__[iP_L1];
+    real_type t2   = P__[iP_L2];
+    real_type t3   = P__[iP_L3];
+    real_type t5   = t1 * t1;
+    real_type t6   = t2 * t2;
+    real_type t7   = t3 * t3;
+    real_type t11  = P__[iP_kappa1];
+    real_type t12  = t11 * t11;
+    real_type t13  = P__[iP_kappa2];
+    real_type t14  = t13 * t13;
+    real_type t15  = P__[iP_kappa3];
+    real_type t16  = t15 * t15;
+    real_type t21  = X__[iX_theta1];
+    real_type t22  = cos(t21);
+    real_type t26  = sin(t21);
+    real_type t33  = X__[iX_theta2];
+    real_type t34  = cos(t33);
+    real_type t38  = sin(t33);
+    real_type t45  = X__[iX_theta3];
+    real_type t46  = cos(t45);
+    real_type t50  = sin(t45);
+    real_type result__ = t1 + t2 + t3 + (t5 + t6 + t7) * ModelPars[iM_epsilon_L] + (t12 + t14 + t16) * ModelPars[iM_epsilon_K] + t22 * t1 * L__[iL_lambda1__xo] + t26 * t1 * L__[iL_lambda2__xo] + t11 * t1 * L__[iL_lambda3__xo] + t34 * t2 * L__[iL_lambda4__xo] + t38 * t2 * L__[iL_lambda5__xo] + t13 * t2 * L__[iL_lambda6__xo] + t46 * t3 * L__[iL_lambda7__xo] + t50 * t3 * L__[iL_lambda8__xo] + t15 * t3 * L__[iL_lambda9__xo];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -119,8 +160,13 @@ namespace MultipleDubinsDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   MultipleDubins::control_penalties_eval(
@@ -133,6 +179,9 @@ namespace MultipleDubinsDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -164,6 +213,9 @@ namespace MultipleDubinsDefine {
     real_type t14  = P__[iP_kappa2] * P__[iP_kappa2];
     real_type t16  = P__[iP_kappa3] * P__[iP_kappa3];
     real_type result__ = t1 + t2 + t3 + (t5 + t6 + t7) * ModelPars[iM_epsilon_L] + (t12 + t14 + t16) * ModelPars[iM_epsilon_K];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+    }
     return result__;
   }
 
@@ -190,7 +242,164 @@ namespace MultipleDubinsDefine {
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+    }
     return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MultipleDubins::DmayerDx_numEqns() const
+  { return 18; }
+
+  void
+  MultipleDubins::DmayerDx_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    result__[ 7   ] = 0;
+    result__[ 8   ] = 0;
+    result__[ 9   ] = 0;
+    result__[ 10  ] = 0;
+    result__[ 11  ] = 0;
+    result__[ 12  ] = 0;
+    result__[ 13  ] = 0;
+    result__[ 14  ] = 0;
+    result__[ 15  ] = 0;
+    result__[ 16  ] = 0;
+    result__[ 17  ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 18, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MultipleDubins::DmayerDp_numEqns() const
+  { return 6; }
+
+  void
+  MultipleDubins::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDp_eval", 6, i_segment_left, i_segment_right );
+  }
+
+  /*\
+   |   _
+   |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
+   |  | |   / _` |/ _` | '__/ _` | '_ \ / _` |/ _ \
+   |  | |__| (_| | (_| | | | (_| | | | | (_| |  __/
+   |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
+   |              |___/                 |___/
+  \*/
+
+  integer
+  MultipleDubins::DJDx_numEqns() const
+  { return 9; }
+
+  void
+  MultipleDubins::DJDx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    result__[ 7   ] = 0;
+    result__[ 8   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 9, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MultipleDubins::DJDp_numEqns() const
+  { return 6; }
+
+  void
+  MultipleDubins::DJDp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDp_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  MultipleDubins::DJDu_numEqns() const
+  { return 0; }
+
+  void
+  MultipleDubins::DJDu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
   /*\
@@ -457,6 +666,7 @@ namespace MultipleDubinsDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -472,8 +682,9 @@ namespace MultipleDubinsDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
+   // EMPTY!
   }
 
 }
 
-// EOF: MultipleDubins_Methods1.cc
+// EOF: MultipleDubins_Methods_problem.cc

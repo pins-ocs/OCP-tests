@@ -1,4 +1,19 @@
 require 'fileutils'
+require 'rbconfig'
+
+host_os = RbConfig::CONFIG['host_os']
+case host_os
+when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+  OS = :windows
+when /darwin|mac os/
+  OS = :macosx
+when /linux/
+  OS = :linux
+when /solaris|bsd/
+  OS = :unix
+else
+  raise Error::WebDriverError, "unknown os: #{host_os.inspect}"
+end
 
 FileUtils.rm_rf "./collected_results/"
 FileUtils.mkdir "./collected_results/"
@@ -6,12 +21,20 @@ FileUtils.mkdir "./collected_results/"
 def do_test(dir)
   name = dir.split("test-")[1];
   puts "\n\n"
-  system("cd #{dir}; rake clobber maple; cd .." );
+  FileUtils.cd dir
+  system("rake clobber maple" );
   puts "\n\n"
-  system("cd #{dir}; pins #{name}_pins_run.rb -f -b -main; cd .." );
+  system("pins #{name}_pins_run.rb -f -b -main" );
   puts "\n\n"
-  system("cd #{dir}; ./bin/main | tee iterations.txt; cd .." );
+  if OS == :windows then
+    cmd = 'bin\main | ' + "perl -ne \"print \$_; print STDERR \$_;\" 2> iterations.txt" ;
+  else
+    cmd = "./bin/main | tee iterations.txt";
+  end
+  puts "EXECUTE: #{cmd}\n"
+  system( cmd );
   puts "\n\n"
+  FileUtils.cd ".."
   ff   = "#{dir}/iterations.txt";
   if File.exist? "#{dir}/data/#{name}_OCP_result.txt" then
     gg = "./collected_results/#{name}_iterations.txt";

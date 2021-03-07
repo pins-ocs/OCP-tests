@@ -47,7 +47,10 @@ INFO CLASS = MultipleDubins
   index start = omega = 738, p = 750
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -639,305 +642,296 @@ Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[146,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 8.88e-19   0:561
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[147,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 4.60e-17   0:565
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[148,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.31e-16   0:569
+[146,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.27e-15   0:561
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[149,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.47e-19   0:573
+[147,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 9.09e-19   0:565
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[150,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.88e-17   0:577
+[148,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 4.66e-17   0:569
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[151,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.62e-16   0:581
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[152,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.09e-19   0:585
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[153,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.71e-17   0:589
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[154,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.54e-16   0:593
+[149,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.33e-16   0:573
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[155,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.04e-19   0:597
+[150,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.48e-19   0:577
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[156,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.69e-17   0:601
+[151,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.88e-17   0:581
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[157,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 9.90e-20   0:605
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[158,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.54e-17   0:609
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[159,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.91e-16   0:613
+[152,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.62e-16   0:585
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[160,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.64e-19   0:617
+[153,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.09e-19   0:589
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+[154,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.71e-17   0:593
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+[155,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.54e-16   0:597
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+[156,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.04e-19   0:601
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+[157,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.69e-17   0:605
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+[158,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 9.90e-20   0:609
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+[159,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.54e-17   0:613
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+Failed check on parameter: 0 < L2
+[160,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 7.48e-20   0:617
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[161,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.51e-17   0:621
+[161,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.34e-17   0:621
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[162,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 9.55e-20   0:625
+[162,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.97e-20   0:625
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[163,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.29e-17   0:629
 Failed check on parameter: 0 < L2
-[163,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 5.90e-21   0:629
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[164,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.85e-20   0:633
 Failed check on parameter: 0 < L2
-[164,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.46e-21   0:633
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[165,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.28e-17   0:637
 Failed check on parameter: 0 < L2
-[165,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.87e-18   0:637
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[166,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.82e-20   0:641
 Failed check on parameter: 0 < L2
-[166,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.61e-20   0:641
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[167,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.27e-17   0:645
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[167,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.08e-21   0:645
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[168,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.81e-20   0:649
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[168,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.06e-21   0:649
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[169,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.27e-17   0:653
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[169,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.21e-22   0:653
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[170,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.81e-20   0:657
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[170,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 4.75e-22   0:657
 Failed check on parameter: 0 < L2
+[171,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.27e-17   0:661
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[171,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 4.16e-22   0:661
 Failed check on parameter: 0 < L2
+[172,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.81e-20   0:665
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[172,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.89e-22   0:665
+[173,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.27e-17   0:669
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[173,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.76e-22   0:669
+[174,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.81e-20   0:673
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[175,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.27e-17   0:677
 Failed check on parameter: 0 < L2
-[174,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.70e-22   0:673
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[176,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.81e-20   0:681
 Failed check on parameter: 0 < L2
-[175,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.67e-22   0:677
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[177,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 4.98e-21   0:685
 Failed check on parameter: 0 < L2
-[176,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.65e-22   0:681
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[178,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.44e-18   0:689
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[177,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.65e-22   0:685
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[179,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.54e-20   0:693
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[178,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:689
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[179,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:693
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[180,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:697
-Failed check on parameter: 0 < L2
+[180,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.59e-21   0:697
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[181,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:701
+[181,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.93e-18   0:701
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[182,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:705
+[182,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.26e-20   0:705
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[183,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:709
+[183,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.44e-21   0:709
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-[184,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:713
+[184,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.12e-21   0:713
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[185,  5] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.63e-18   0:717
 Failed check on parameter: 0 < L2
-[185,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:717
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[186,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.44e-20   0:721
 Failed check on parameter: 0 < L2
-[186,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:721
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[187,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 2.98e-21   0:725
 Failed check on parameter: 0 < L2
-[187,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:725
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[188,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 1.04e-21   0:729
 Failed check on parameter: 0 < L2
-[188,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:729
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[189,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 6.15e-22   0:733
 Failed check on parameter: 0 < L2
-[189,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:733
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[190,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 4.73e-22   0:737
 Failed check on parameter: 0 < L2
-[190,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:737
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[191,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 4.15e-22   0:741
 Failed check on parameter: 0 < L2
-[191,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:741
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[192,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.89e-22   0:745
 Failed check on parameter: 0 < L2
-[192,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:745
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[193,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.76e-22   0:749
 Failed check on parameter: 0 < L2
-[193,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:749
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[194,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.70e-22   0:753
 Failed check on parameter: 0 < L2
-[194,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:753
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[195,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.67e-22   0:757
 Failed check on parameter: 0 < L2
-[195,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:757
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
+[196,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.65e-22   0:761
 Failed check on parameter: 0 < L2
-[196,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:761
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
-Failed check on parameter: 0 < L2
-[197,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:765
+[197,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.65e-22   0:765
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
 Failed check on parameter: 0 < L2
@@ -1563,11 +1557,11 @@ Failed check on parameter: 0 < L2
 [300,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:1177
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 214.0[ms]     timeout        = 0 [ms]
+Elapsed Time   = 279.0[ms]     timeout        = 0 [ms]
 iteration      = 301           tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 756
 max acc. iter. = 800           N. System pars = 0
-Converged      = NO            Memory Used    = 236Kb (+30bytes)
+Converged      = NO            Memory Used    = 227Kb (+72bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -1581,7 +1575,7 @@ last ||f||_inf = 0.95970       last||f1||_1   = 0.0044858
 ------------------------------------------------------------
 
 Hyness[solverHyness]::solve, Too many iterations!
-Iter = 301, maxIter = 300, tolerance = 9.999999999999999e-10, ||d||_inf = 7.560268112387054
+Iter = 301, maxIter = 300, tolerance = 9.999999999999999e-10, ||d||_inf = 7.560268112391568
 
           __  ___     __   __             ___  __   __   ___  __      
     |\ | /  \  |     /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \     
@@ -1591,10 +1585,10 @@ no error
 target [Lagrange,Mayer]       = [ 0.6588, 0.000 ]
 [Penalties/Barriers,Controls] = [ 0.000, 0.000 ]
 Optimization parameters:
-L1: 0.309756474958276462
-L2: 7.57941840966421062e-19
-L3: 0.300378630090953169
-kappa1: 5.3084096025590064
-kappa2: -0.0878837474867041057
-kappa3: -4.50128033499480917
+L1: 0.30975647495827674
+L2: 1.88308467150121105e-18
+L3: 0.300378630090952725
+kappa1: 5.30840960255901084
+kappa2: -0.0878837474867044666
+kappa3: -4.50128033499481273
 All Done Folks!

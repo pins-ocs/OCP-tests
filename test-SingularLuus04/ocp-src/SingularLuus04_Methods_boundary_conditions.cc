@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularLuus04_Methods.cc                                      |
+ |  file: SingularLuus04_Methods_boundary_conditions.cc                  |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -156,7 +156,6 @@ namespace SingularLuus04Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -223,7 +222,6 @@ namespace SingularLuus04Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -256,7 +254,6 @@ namespace SingularLuus04Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -272,4 +269,4 @@ namespace SingularLuus04Define {
 
 }
 
-// EOF: SingularLuus04_Methods.cc
+// EOF: SingularLuus04_Methods_boundary_conditions.cc

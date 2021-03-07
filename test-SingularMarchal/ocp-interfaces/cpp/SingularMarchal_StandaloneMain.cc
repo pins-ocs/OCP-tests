@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -166,8 +166,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularMarchal_data.Mesh["s0"] = 0;
-SingularMarchal_data.Mesh["segments"][0]["n"] = 1000;
 SingularMarchal_data.Mesh["segments"][0]["length"] = 8;
+SingularMarchal_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

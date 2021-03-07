@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Brachiostocrona2_Methods1.cc                                   |
+ |  file: Brachiostocrona2_Methods_UserFunctions.cc                      |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -125,4 +125,4 @@ namespace Brachiostocrona2Define {
 
 }
 
-// EOF: Brachiostocrona2_Methods1.cc
+// EOF: Brachiostocrona2_Methods_UserFunctions.cc

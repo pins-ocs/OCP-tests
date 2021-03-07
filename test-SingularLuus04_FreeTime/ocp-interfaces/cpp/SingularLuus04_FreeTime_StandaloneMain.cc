@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Main.cc                                |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_tol = 0.01;
-    real_type u_epsi = 0.01;
     real_type theta0 = 1;
+    real_type u_epsi = 0.01;
     real_type theta = theta0;
+    real_type u_tol = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -178,8 +178,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularLuus04_FreeTime_data.Mesh["s0"] = 0;
-SingularLuus04_FreeTime_data.Mesh["segments"][0]["length"] = 1;
 SingularLuus04_FreeTime_data.Mesh["segments"][0]["n"] = 5000;
+SingularLuus04_FreeTime_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

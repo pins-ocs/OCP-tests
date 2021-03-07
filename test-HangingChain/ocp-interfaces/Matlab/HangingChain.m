@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: HangingChain.m                                                 %
 %                                                                       %
-%  version: 1.0   date 5/3/2021                                         %
+%  version: 1.0   date 9/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -153,6 +153,16 @@ classdef HangingChain < handle
     function N_thread( self, nt )
       % set information level
       HangingChain_Mex( 'N_thread', self.objectHandle, nt );
+    end
+
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % REMESH
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    function remesh( self, new_mesh )
+      % use structure to initialize mesh
+      HangingChain_Mex( 'remesh', self.objectHandle, new_mesh );
     end
 
     % ---------------------------------------------------------------------

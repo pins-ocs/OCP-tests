@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BikeSteering_Methods.cc                                        |
+ |  file: BikeSteering_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -302,14 +302,7 @@ namespace BikeSteeringDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -353,7 +346,6 @@ namespace BikeSteeringDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   BikeSteering::eta_numEqns() const
   { return 3; }
@@ -463,7 +455,7 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = V__[1];
-    result__[ 1   ] = ModelPars[iM_Ix] * V__[0];
+    result__[ 1   ] = V__[0] * ModelPars[iM_Ix];
     result__[ 2   ] = V__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );
@@ -537,4 +529,4 @@ namespace BikeSteeringDefine {
 
 }
 
-// EOF: BikeSteering_Methods.cc
+// EOF: BikeSteering_Methods_AdjointODE.cc

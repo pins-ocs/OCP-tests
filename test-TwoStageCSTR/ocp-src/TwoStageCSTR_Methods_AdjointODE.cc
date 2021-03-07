@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 6/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -245,7 +245,7 @@ namespace TwoStageCSTRDefine {
     real_type t1   = ModelPars[iM_W];
     real_type t7   = -X__[iX_x2] - 0.25e0;
     real_type t9   = L__[iL_lambda4__xo];
-    result__[ 0   ] = -t7 * t9 * ModelPars[iM_tau] + 2 * t1 * U__[iU_u1] + t7 * L__[iL_lambda2__xo];
+    result__[ 0   ] = -t7 * ModelPars[iM_tau] * t9 + 2 * U__[iU_u1] * t1 + t7 * L__[iL_lambda2__xo];
     result__[ 1   ] = 2 * U__[iU_u2] * t1 + (-X__[iX_x4] - 0.25e0) * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );

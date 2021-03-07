@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Brachiostocrona2_Methods.cc                                    |
+ |  file: Brachiostocrona2_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -232,7 +232,7 @@ namespace Brachiostocrona2Define {
     real_type t4   = U__[iU_theta];
     real_type t5   = sin(t4);
     real_type t9   = cos(t4);
-    result__[ 0   ] = -t2 * t5 * L__[iL_lambda1__xo] + t2 * t9 * L__[iL_lambda2__xo];
+    result__[ 0   ] = -t5 * t2 * L__[iL_lambda1__xo] + t9 * t2 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
@@ -277,7 +277,7 @@ namespace Brachiostocrona2Define {
     real_type t4   = U__[iU_theta];
     real_type t5   = sin(t4);
     real_type t9   = cos(t4);
-    result__[ 0   ] = -t2 * t5 * L__[iL_lambda1__xo] + t2 * t9 * L__[iL_lambda2__xo] - t9 * ModelPars[iM_g] * L__[iL_lambda3__xo];
+    result__[ 0   ] = -t5 * t2 * L__[iL_lambda1__xo] + t9 * t2 * L__[iL_lambda2__xo] - t9 * ModelPars[iM_g] * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
@@ -358,7 +358,6 @@ namespace Brachiostocrona2Define {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   Brachiostocrona2::eta_numEqns() const
   { return 3; }
@@ -542,4 +541,4 @@ namespace Brachiostocrona2Define {
 
 }
 
-// EOF: Brachiostocrona2_Methods.cc
+// EOF: Brachiostocrona2_Methods_AdjointODE.cc

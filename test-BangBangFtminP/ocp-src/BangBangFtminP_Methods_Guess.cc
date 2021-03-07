@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtminP_Methods_Guess.cc                                |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -100,12 +100,16 @@ namespace BangBangFtminPDefine {
   #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
 
 
-  // Pars check strings
-  #define __message_cell_check_0 "0 < T"
+
+
+
+  // pars_check_strings
+  #define Xoptima__message_pars_check_0 "0 < T"
+
 
   bool
   BangBangFtminP::p_check( P_const_pointer_type P__ ) const {
-    Xoptima__check__pars__lt(0, P__[iP_T], __message_cell_check_0);
+    Xoptima__check__pars__lt(0, P__[iP_T], Xoptima__message_pars_check_0);
     return true;
   }
 

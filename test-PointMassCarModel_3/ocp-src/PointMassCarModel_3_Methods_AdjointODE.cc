@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: PointMassCarModel_3_Methods.cc                                 |
+ |  file: PointMassCarModel_3_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -240,7 +240,7 @@ namespace PointMassCarModel_3Define {
     real_type t116 = RoadLeftBorder(t6);
     real_type t118 = RoadRightBorder(t12);
     real_type t120 = PowerLimit(t82);
-    real_type t148 = t114 * t1 + t116 * t1 + t118 * t1 + t120 * t1 + t1 * ModelPars[iM_wT] + t1 * t30 * t17 + t1 * t91 * t43 + (-t20 * t30 + t59) * t1 * t26 + (-t61 * t98 + t49) * t1 * t96 + t1 * ModelPars[iM_v__Omega__max] * L__[iL_lambda5__xo] * U__[iU_v__Omega] + t1 * ModelPars[iM_v__fx__max] * L__[iL_lambda6__xo] * U__[iU_v__fx];
+    real_type t148 = t114 * t1 + t116 * t1 + t118 * t1 + t120 * t1 + t1 * ModelPars[iM_wT] + t1 * t30 * t17 + t1 * t91 * t43 + (-t20 * t30 + t59) * t1 * t26 + (-t98 * t61 + t49) * t1 * t96 + t1 * ModelPars[iM_v__Omega__max] * L__[iL_lambda5__xo] * U__[iU_v__Omega] + t1 * ModelPars[iM_v__fx__max] * L__[iL_lambda6__xo] * U__[iU_v__fx];
     result__[ 6   ] = 2 * t148;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 7, i_segment );
@@ -466,7 +466,7 @@ namespace PointMassCarModel_3Define {
     real_type t295 = RoadLeftBorder(t6);
     real_type t296 = RoadRightBorder(t17);
     real_type t297 = PowerLimit(t192);
-    real_type t317 = t294 + t295 + t296 + t297 + ModelPars[iM_wT] + t50 * t27 + t126 * t125 + (-t30 * t50 + t158) * t42 + (-t208 * t160 + t148) * t206 + L__[iL_lambda5__xo] * U__[iU_v__Omega] * ModelPars[iM_v__Omega__max] + L__[iL_lambda6__xo] * U__[iU_v__fx] * ModelPars[iM_v__fx__max];
+    real_type t317 = t294 + t295 + t296 + t297 + ModelPars[iM_wT] + t50 * t27 + t126 * t125 + (-t30 * t50 + t158) * t42 + (-t160 * t208 + t148) * t206 + L__[iL_lambda5__xo] * U__[iU_v__Omega] * ModelPars[iM_v__Omega__max] + L__[iL_lambda6__xo] * U__[iU_v__fx] * ModelPars[iM_v__fx__max];
     result__[ 36  ] = 2 * t317;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 37, i_segment );
@@ -636,14 +636,7 @@ namespace PointMassCarModel_3Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -687,7 +680,6 @@ namespace PointMassCarModel_3Define {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   PointMassCarModel_3::eta_numEqns() const
   { return 7; }
@@ -879,4 +871,4 @@ namespace PointMassCarModel_3Define {
 
 }
 
-// EOF: PointMassCarModel_3_Methods.cc
+// EOF: PointMassCarModel_3_Methods_AdjointODE.cc

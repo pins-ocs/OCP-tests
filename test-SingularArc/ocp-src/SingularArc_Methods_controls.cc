@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularArc_Methods.cc                                         |
+ |  file: SingularArc_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -201,6 +201,8 @@ namespace SingularArcDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_u ] = uControl.solve(-L__[iL_lambda1__xo] * P__[iP_T], -2, 2);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -258,6 +260,8 @@ namespace SingularArcDefine {
     DuDxlp(0, 4) = 0;
     DuDxlp(0, 5) = 0;
     DuDxlp(0, 6) = -uControl.solve_rhs(-L__[iL_lambda1__xo] * P__[iP_T], -2, 2) * L__[iL_lambda1__xo];
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -291,6 +295,110 @@ namespace SingularArcDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  SingularArc::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = P__[iP_T];
+    real_type t2   = tfbound(t1);
+    real_type t3   = U__[iU_u];
+    real_type t4   = uControl(t3, -2, 2);
+    real_type t8   = pow(-t3 * t1 + V__[0], 2);
+    real_type t10  = X__[iX_x1];
+    real_type t11  = cos(t10);
+    real_type t14  = pow(-t11 * t1 + V__[1], 2);
+    real_type t16  = sin(t10);
+    real_type t19  = pow(-t16 * t1 + V__[2], 2);
+    real_type result__ = t2 + t4 + t8 + t14 + t19;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  SingularArc::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  SingularArc::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u];
+    real_type t2   = ALIAS_uControl_D_1(t1, -2, 2);
+    real_type t3   = P__[iP_T];
+    result__[ 0   ] = t2 - 2 * t3 * (-t3 * t1 + V__[0]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  SingularArc::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  SingularArc::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  SingularArc::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  SingularArc::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  SingularArc::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], -2, 2);
+    real_type t4   = P__[iP_T] * P__[iP_T];
+    result__[ 0   ] = t2 + 2 * t4;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
+  }
+
 }
 
-// EOF: SingularArc_Methods.cc
+// EOF: SingularArc_Methods_controls.cc

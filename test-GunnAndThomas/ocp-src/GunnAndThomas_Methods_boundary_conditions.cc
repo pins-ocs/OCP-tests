@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GunnAndThomas_Methods.cc                                       |
+ |  file: GunnAndThomas_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -153,7 +153,6 @@ namespace GunnAndThomasDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -218,7 +217,6 @@ namespace GunnAndThomasDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -251,7 +249,6 @@ namespace GunnAndThomasDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -267,4 +264,4 @@ namespace GunnAndThomasDefine {
 
 }
 
-// EOF: GunnAndThomas_Methods.cc
+// EOF: GunnAndThomas_Methods_boundary_conditions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFclip_Methods.cc                                       |
+ |  file: BangBangFclip_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -171,7 +171,6 @@ namespace BangBangFclipDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -238,7 +237,6 @@ namespace BangBangFclipDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -271,7 +269,6 @@ namespace BangBangFclipDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -287,4 +284,4 @@ namespace BangBangFclipDefine {
 
 }
 
-// EOF: BangBangFclip_Methods.cc
+// EOF: BangBangFclip_Methods_boundary_conditions.cc

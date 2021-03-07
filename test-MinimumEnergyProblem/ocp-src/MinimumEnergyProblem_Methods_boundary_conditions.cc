@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: MinimumEnergyProblem_Methods.cc                                |
+ |  file: MinimumEnergyProblem_Methods_boundary_conditions.cc            |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -152,7 +152,6 @@ namespace MinimumEnergyProblemDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -217,7 +216,6 @@ namespace MinimumEnergyProblemDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -250,7 +248,6 @@ namespace MinimumEnergyProblemDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -266,4 +263,4 @@ namespace MinimumEnergyProblemDefine {
 
 }
 
-// EOF: MinimumEnergyProblem_Methods.cc
+// EOF: MinimumEnergyProblem_Methods_boundary_conditions.cc

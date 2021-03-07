@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFtminP_Methods.cc                                      |
+ |  file: BangBangFtminP_Methods_ODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -253,4 +253,4 @@ namespace BangBangFtminPDefine {
 
 }
 
-// EOF: BangBangFtminP_Methods.cc
+// EOF: BangBangFtminP_Methods_ODE.cc

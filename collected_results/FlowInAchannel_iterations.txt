@@ -28,7 +28,10 @@ INFO CLASS = FlowInAchannel
   index start = omega = 808, p = 812
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -37,14 +40,14 @@ Hyness --- start iterations ---
 [  2,  1] (92.9     ,5.11     ) [40.3     ,1.84     ] 1.00       0: 1
 [  3,  1] (5.11     ,0.0229   ) [1.67     ,0.00709  ] 1.00       0: 0
 [  4,  1] (0.0229   ,3.26e-07 ) [0.00711  ,1.55e-07 ] 1.00       0: 0
-[  5,  1] (3.26e-07 ,7.41e-15 ) [1.55e-07 ,6.59e-15 ] 1.00       0: 0
+[  5,  1] (3.26e-07 ,6.63e-15 ) [1.55e-07 ,5.81e-15 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 2.23[ms]      timeout        = 0 [ms]
+Elapsed Time   = 2.53[ms]      timeout        = 0 [ms]
 iteration      = 5             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 812
 max acc. iter. = 800           N. System pars = 0
-Converged      = YES           Memory Used    = 79Kb (+89bytes)
+Converged      = YES           Memory Used    = 79Kb (+9bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -53,7 +56,7 @@ Few iterations = 8
 Function       = 7             Jacobian       = 5         
 Factorization  = 5             Inversion      = 11        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 2.1493e-12    last||d1||_inf = 3.5223e-05
+last ||d||_inf = 2.5740e-12    last||d1||_inf = 3.5223e-05
 last ||f||_inf = 8.7767e-05    last||f1||_1   = 3.2615e-07
 ------------------------------------------------------------
 

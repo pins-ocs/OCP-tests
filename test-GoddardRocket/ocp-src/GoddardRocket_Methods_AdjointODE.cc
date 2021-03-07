@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: GoddardRocket_Methods.cc                                       |
+ |  file: GoddardRocket_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -434,7 +434,6 @@ namespace GoddardRocketDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   GoddardRocket::eta_numEqns() const
   { return 3; }
@@ -618,4 +617,4 @@ namespace GoddardRocketDefine {
 
 }
 
-// EOF: GoddardRocket_Methods.cc
+// EOF: GoddardRocket_Methods_AdjointODE.cc

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: gtocX_2burn_pars.m                                             %
 %                                                                       %
-%  version: 1.0   date 6/3/2021                                         %
+%  version: 1.0   date 9/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -153,6 +153,16 @@ classdef gtocX_2burn_pars < handle
     function N_thread( self, nt )
       % set information level
       gtocX_2burn_pars_Mex( 'N_thread', self.objectHandle, nt );
+    end
+
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % REMESH
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    function remesh( self, new_mesh )
+      % use structure to initialize mesh
+      gtocX_2burn_pars_Mex( 'remesh', self.objectHandle, new_mesh );
     end
 
     % ---------------------------------------------------------------------

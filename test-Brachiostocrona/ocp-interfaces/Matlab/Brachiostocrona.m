@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Brachiostocrona.m                                              %
 %                                                                       %
-%  version: 1.0   date 5/3/2021                                         %
+%  version: 1.0   date 9/3/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -153,6 +153,16 @@ classdef Brachiostocrona < handle
     function N_thread( self, nt )
       % set information level
       Brachiostocrona_Mex( 'N_thread', self.objectHandle, nt );
+    end
+
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % REMESH
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    function remesh( self, new_mesh )
+      % use structure to initialize mesh
+      Brachiostocrona_Mex( 'remesh', self.objectHandle, new_mesh );
     end
 
     % ---------------------------------------------------------------------

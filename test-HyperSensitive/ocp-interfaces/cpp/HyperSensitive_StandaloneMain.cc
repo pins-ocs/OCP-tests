@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -151,9 +151,9 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HyperSensitive_data.Mesh["s0"] = 0;
-HyperSensitive_data.Mesh["segments"][0]["length"] = 10000;
 HyperSensitive_data.Mesh["segments"][0]["density_function"]["C"] = 50;
 HyperSensitive_data.Mesh["segments"][0]["density_function"]["rho"] = 0.8;
+HyperSensitive_data.Mesh["segments"][0]["length"] = 10000;
 
 
     // alias for user object classes passed as pointers

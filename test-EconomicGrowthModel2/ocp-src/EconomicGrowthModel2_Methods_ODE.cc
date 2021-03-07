@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_ODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -150,7 +150,7 @@ namespace EconomicGrowthModel2Define {
     real_type t9   = 1 - t1;
     result__[ 7   ] = result__[5] * t4 * t9;
     result__[ 8   ] = result__[5] * t6 * t9;
-    result__[ 9   ] = t8 * t9;
+    result__[ 9   ] = t9 * t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 10, i_segment );
   }
@@ -225,7 +225,7 @@ namespace EconomicGrowthModel2Define {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = Q(X__[iX_x1], X__[iX_x2]);
-    result__[ 0   ] = X__[iX_T] * t3;
+    result__[ 0   ] = t3 * X__[iX_T];
     result__[ 1   ] = -result__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );

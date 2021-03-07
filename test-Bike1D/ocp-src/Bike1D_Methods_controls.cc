@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: Bike1D_Methods.cc                                              |
+ |  file: Bike1D_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -254,6 +254,8 @@ namespace Bike1DDefine {
     real_type t9   = clip(t7, 0, ModelPars[iM_mur_max]);
     U__[ iU_mur ] = murControl.solve(-t5, ModelPars[iM_mur_min], t9);
     U__[ iU_muf ] = mufControl.solve(-t5, ModelPars[iM_muf_min], 0);
+    if ( m_debug )
+      Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -304,6 +306,8 @@ namespace Bike1DDefine {
     DuDxlp(1, 0) = -mufControl.solve_rhs(-L__[iL_lambda1__xo] * ModelPars[iM_g] * X__[iX_v], ModelPars[iM_muf_min], 0) * L__[iL_lambda1__xo] * ModelPars[iM_g];
     DuDxlp(0, 1) = -murControl.solve_rhs(-L__[iL_lambda1__xo] * ModelPars[iM_g] * X__[iX_v], ModelPars[iM_mur_min], clip(Tmax_normalized(X__[iX_v]), 0, ModelPars[iM_mur_max])) * ModelPars[iM_g] * X__[iX_v];
     DuDxlp(1, 1) = -mufControl.solve_rhs(-L__[iL_lambda1__xo] * ModelPars[iM_g] * X__[iX_v], ModelPars[iM_muf_min], 0) * ModelPars[iM_g] * X__[iX_v];
+    if ( m_debug )
+      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -333,6 +337,129 @@ namespace Bike1DDefine {
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
   }
 
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  Bike1D::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_v];
+    real_type t2   = 1.0 / t1;
+    real_type t3   = U__[iU_mur];
+    real_type t5   = Tmax_normalized(t1);
+    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
+    real_type t8   = murControl(t3, ModelPars[iM_mur_min], t7);
+    real_type t10  = U__[iU_muf];
+    real_type t12  = mufControl(t10, ModelPars[iM_muf_min], 0);
+    real_type t20  = pow(V__[0] * t1 - (t3 + t10) * ModelPars[iM_g], 2);
+    real_type result__ = t12 * t2 + t8 * t2 + t20;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Bike1D::DmDu_numEqns() const
+  { return 2; }
+
+  void
+  Bike1D::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_v];
+    real_type t2   = 1.0 / t1;
+    real_type t3   = U__[iU_mur];
+    real_type t5   = Tmax_normalized(t1);
+    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
+    real_type t8   = ALIAS_murControl_D_1(t3, ModelPars[iM_mur_min], t7);
+    real_type t12  = ModelPars[iM_g];
+    real_type t13  = U__[iU_muf];
+    real_type t18  = 2 * t12 * (V__[0] * t1 - (t3 + t13) * t12);
+    result__[ 0   ] = t8 * t2 - t18;
+    real_type t20  = ALIAS_mufControl_D_1(t13, ModelPars[iM_muf_min], 0);
+    result__[ 1   ] = t20 * t2 - t18;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Bike1D::DmDuu_numRows() const
+  { return 2; }
+
+  integer
+  Bike1D::DmDuu_numCols() const
+  { return 2; }
+
+  integer
+  Bike1D::DmDuu_nnz() const
+  { return 4; }
+
+  void
+  Bike1D::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Bike1D::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = X__[iX_v];
+    real_type t2   = 1.0 / t1;
+    real_type t5   = Tmax_normalized(t1);
+    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
+    real_type t8   = ALIAS_murControl_D_1_1(U__[iU_mur], ModelPars[iM_mur_min], t7);
+    real_type t11  = ModelPars[iM_g] * ModelPars[iM_g];
+    real_type t12  = 2 * t11;
+    result__[ 0   ] = t8 * t2 + t12;
+    result__[ 1   ] = t12;
+    result__[ 2   ] = result__[1];
+    real_type t15  = ALIAS_mufControl_D_1_1(U__[iU_muf], ModelPars[iM_muf_min], 0);
+    result__[ 3   ] = t15 * t2 + result__[2];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 4, i_segment );
+  }
+
 }
 
-// EOF: Bike1D_Methods.cc
+// EOF: Bike1D_Methods_controls.cc

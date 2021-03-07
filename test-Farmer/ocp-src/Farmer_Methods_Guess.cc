@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -129,12 +129,16 @@ namespace FarmerDefine {
   #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
 
 
-  // Node check strings
-  #define __message_node_check_3 "0 <= res(zeta)"
-  #define __message_node_check_0 "0 <= x1(zeta)"
-  #define __message_node_check_1 "0 <= x2(zeta)"
-  #define __message_node_check_2 "0 <= x3(zeta)"
-  #define __message_node_check_4 "0 <= x4(zeta)"
+
+  // node_check_strings
+  #define Xoptima__message_node_check_3 "0 <= res(zeta)"
+  #define Xoptima__message_node_check_0 "0 <= x1(zeta)"
+  #define Xoptima__message_node_check_1 "0 <= x2(zeta)"
+  #define Xoptima__message_node_check_2 "0 <= x3(zeta)"
+  #define Xoptima__message_node_check_4 "0 <= x4(zeta)"
+
+
+
 
   bool
   Farmer::p_check( P_const_pointer_type P__ ) const {
@@ -152,11 +156,11 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    Xoptima__check__node__le(0, X__[iX_res], __message_node_check_3);
-    Xoptima__check__node__le(0, X__[iX_x1], __message_node_check_0);
-    Xoptima__check__node__le(0, X__[iX_x2], __message_node_check_1);
-    Xoptima__check__node__le(0, X__[iX_x3], __message_node_check_2);
-    Xoptima__check__node__le(0, X__[iX_x4], __message_node_check_4);
+    Xoptima__check__node__le(0, X__[iX_res], Xoptima__message_node_check_3);
+    Xoptima__check__node__le(0, X__[iX_x1], Xoptima__message_node_check_0);
+    Xoptima__check__node__le(0, X__[iX_x2], Xoptima__message_node_check_1);
+    Xoptima__check__node__le(0, X__[iX_x3], Xoptima__message_node_check_2);
+    Xoptima__check__node__le(0, X__[iX_x4], Xoptima__message_node_check_4);
     return true;
   }
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: SingularMarchal_Methods.cc                                     |
+ |  file: SingularMarchal_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -277,14 +277,7 @@ namespace SingularMarchalDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hp_eval", 0, i_segment );
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -328,7 +321,6 @@ namespace SingularMarchalDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   SingularMarchal::eta_numEqns() const
   { return 2; }
@@ -510,4 +502,4 @@ namespace SingularMarchalDefine {
 
 }
 
-// EOF: SingularMarchal_Methods.cc
+// EOF: SingularMarchal_Methods_AdjointODE.cc

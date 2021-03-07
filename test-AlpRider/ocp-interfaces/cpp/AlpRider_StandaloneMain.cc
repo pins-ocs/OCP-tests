@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -182,12 +182,12 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 AlpRider_data.Mesh["s0"] = 0;
-AlpRider_data.Mesh["segments"][0]["n"] = 400;
 AlpRider_data.Mesh["segments"][0]["length"] = 1;
-AlpRider_data.Mesh["segments"][1]["n"] = 400;
+AlpRider_data.Mesh["segments"][0]["n"] = 400;
 AlpRider_data.Mesh["segments"][1]["length"] = 18;
-AlpRider_data.Mesh["segments"][2]["n"] = 400;
+AlpRider_data.Mesh["segments"][1]["n"] = 400;
 AlpRider_data.Mesh["segments"][2]["length"] = 1;
+AlpRider_data.Mesh["segments"][2]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

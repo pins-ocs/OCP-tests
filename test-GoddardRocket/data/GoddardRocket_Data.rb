@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 5/3/2021                                         #
+#  version: 1.0   date 9/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,28 +20,28 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_T    = 0.01
-m_i       = 1
-epsi_TS   = 0.01
+mc        = 0.6
+epsi_mass = 0.01
+vc        = 620
+tol_mass  = 0.01
 tol_TS    = 0.01
 tol_T     = 0.01
-epsi_mass = 0.01
-g0        = 1
-Tmax      = 3.5*g0*m_i
-tol_mass  = 0.01
-tol_v     = 0.01
-vc        = 620
-Dc        = 0.5*vc*m_i/g0
-epsi_v    = 0.01
 h_i       = 1
-c         = 0.5*(g0*h_i)**(1/2.0)
-mc        = 0.6
+m_i       = 1
 m_f       = mc*m_i
+epsi_TS   = 0.01
+epsi_v    = 0.01
+tol_v     = 0.01
+epsi_T    = 0.01
+g0        = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
+Tmax      = 3.5*g0*m_i
+Dc        = 0.5*vc*m_i/g0
 
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = false
+  data.Debug = true
 
   # Enable doctor
   data.Doctor = false
@@ -70,9 +70,11 @@ mechatronix do |data|
 
   # setup solver for controls
   data.ControlSolver = {
+    # 'LM' = Levenberg-Marquard'
+    # 'YS' = Yixun Shi
+    # 'QN' = Quasi Newton
     # ==============================================================
     # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
-    # 'LM' = Levenberg-Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
@@ -85,6 +87,11 @@ mechatronix do |data|
     :Tolerance => 1e-9,
     :Iterative => false,
     :InfoLevel => -1,     # suppress all messages
+    # ==============================================================
+    # 'LM', 'YS', 'QN'
+    :InitSolver    => 'QN',
+    :InitMaxIter   => 10,
+    :InitTolerance => 1e-4
   }
 
   # setup solver
@@ -98,8 +105,7 @@ mechatronix do |data|
     # Last Block selection:
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
-    :last_factorization => 'LU',
-    #:last_factorization => 'PINV',
+    :last_factorization => 'LUPQ', # automatically use PINV if singular
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped
@@ -139,6 +145,10 @@ mechatronix do |data|
     :initialize => 'zero',
     # possible value: default, none, warm, spline, table
     :guess_type => 'default',
+    # initilize or not lagrange multiplier with redundant linear system
+    :initialize_multipliers => false,
+    # 'use_guess', 'minimize', 'none'
+    :initialize_controls    => 'use_guess'
   }
 
   data.Parameters = {
@@ -195,21 +205,21 @@ mechatronix do |data|
   # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:massPositive] = {
-    :subType   => 'BARRIER_LOG',
+    :subType   => "BARRIER_LOG",
     :epsilon   => epsi_mass,
     :tolerance => tol_mass,
     :active    => true
   }
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:vPositive] = {
-    :subType   => 'PENALTY_REGULAR',
+    :subType   => "PENALTY_REGULAR",
     :epsilon   => epsi_v,
     :tolerance => tol_v,
     :active    => true
   }
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:TSPositive] = {
-    :subType   => 'BARRIER_LOG',
+    :subType   => "BARRIER_LOG",
     :epsilon   => epsi_TS,
     :tolerance => tol_TS,
     :active    => true

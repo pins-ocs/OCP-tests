@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: HangGlider_Methods.cc                                          |
+ |  file: HangGlider_Methods_AdjointODE.cc                               |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -92,13 +92,13 @@ namespace HangGliderDefine {
     real_type t10  = v(t7, t8, t9);
     real_type t11  = t10 * t10;
     real_type t12  = 1.0 / t11;
-    real_type t14  = U__[iU_cL];
-    real_type t15  = t14 * t14;
-    real_type t18  = t15 * ModelPars[iM_c1] + ModelPars[iM_c0];
+    real_type t13  = U__[iU_cL];
+    real_type t14  = t13 * t13;
+    real_type t18  = ModelPars[iM_c1] * t14 + ModelPars[iM_c0];
     real_type t19  = Dfun(t7, t8, t9);
     real_type t20  = t19 * t18;
     real_type t22  = Lfun(t7, t8, t9);
-    real_type t23  = t22 * t14;
+    real_type t23  = t22 * t13;
     real_type t24  = w(t7, t9);
     real_type t27  = (-t8 * t20 - t24 * t23) * t12;
     real_type t28  = v_D_1(t7, t8, t9);
@@ -107,7 +107,7 @@ namespace HangGliderDefine {
     real_type t33  = Dfun_D_1(t7, t8, t9);
     real_type t34  = t33 * t18;
     real_type t36  = Lfun_D_1(t7, t8, t9);
-    real_type t37  = t36 * t14;
+    real_type t37  = t36 * t13;
     real_type t39  = w_D_1(t7, t9);
     real_type t44  = L__[iL_lambda4__xo];
     real_type t45  = t5 * t2;
@@ -118,13 +118,13 @@ namespace HangGliderDefine {
     real_type t65  = Dfun_D_2(t7, t8, t9);
     real_type t66  = t65 * t18;
     real_type t68  = Lfun_D_2(t7, t8, t9);
-    real_type t69  = t68 * t14;
+    real_type t69  = t68 * t13;
     result__[ 2   ] = t2 * L__[iL_lambda1__xo] - t62 * t27 * t6 + (-t24 * t69 - t8 * t66 - t20) * t32 * t3 + (-t62 * t49 * t45 + (-t24 * t66 + t8 * t69 + t23) * t31 * t45) * t44;
     real_type t85  = v_D_3(t7, t8, t9);
     real_type t88  = Dfun_D_3(t7, t8, t9);
     real_type t89  = t88 * t18;
     real_type t91  = Lfun_D_3(t7, t8, t9);
-    real_type t92  = t91 * t14;
+    real_type t92  = t91 * t13;
     real_type t94  = w_D_2(t7, t9);
     result__[ 3   ] = t2 * L__[iL_lambda2__xo] - t85 * t27 * t6 + (-t94 * t23 - t24 * t92 - t8 * t89) * t32 * t3 + (-t85 * t49 * t45 + (-t94 * t20 - t24 * t89 + t8 * t92) * t31 * t45) * t44;
     if ( m_debug )
@@ -562,12 +562,12 @@ namespace HangGliderDefine {
     real_type t13  = X__[iX_x];
     real_type t14  = v(t13, t4, t7);
     real_type t15  = 1.0 / t14;
-    real_type t17  = U__[iU_cL];
-    real_type t18  = t17 * t17;
+    real_type t16  = U__[iU_cL];
+    real_type t17  = t16 * t16;
     real_type t22  = Dfun(t13, t4, t7);
-    real_type t23  = t22 * (t18 * ModelPars[iM_c1] + ModelPars[iM_c0]);
+    real_type t23  = t22 * (ModelPars[iM_c1] * t17 + ModelPars[iM_c0]);
     real_type t25  = Lfun(t13, t4, t7);
-    real_type t26  = t25 * t17;
+    real_type t26  = t25 * t16;
     real_type t27  = w(t13, t7);
     result__[ 0   ] = t2 + t4 * L__[iL_lambda1__xo] + t7 * L__[iL_lambda2__xo] + (-t4 * t23 - t27 * t26) * t15 * t11 * L__[iL_lambda3__xo] + ((-t27 * t23 + t4 * t26) * t15 * t11 - ModelPars[iM_g]) * L__[iL_lambda4__xo];
     if ( m_debug )
@@ -623,7 +623,6 @@ namespace HangGliderDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-
   integer
   HangGlider::eta_numEqns() const
   { return 4; }
@@ -809,4 +808,4 @@ namespace HangGliderDefine {
 
 }
 
-// EOF: HangGlider_Methods.cc
+// EOF: HangGlider_Methods_AdjointODE.cc

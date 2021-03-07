@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 6/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -383,6 +383,148 @@ namespace UnderwaterDefine {
     L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
     L__[5] = (LEFT__.lambda[5]+RIGHT__.lambda[5])/2;
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
+  }
+
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  Underwater::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = P__[iP_T];
+    real_type t2   = U__[iU_u1];
+    real_type t3   = u1Control(t2, -1, 1);
+    real_type t5   = U__[iU_u2];
+    real_type t6   = u2Control(t5, -1, 1);
+    real_type t8   = U__[iU_u3];
+    real_type t9   = u3Control(t8, -1, 1);
+    real_type t12  = X__[iX_vx];
+    real_type t13  = X__[iX_theta];
+    real_type t14  = cos(t13);
+    real_type t16  = X__[iX_vz];
+    real_type t17  = sin(t13);
+    real_type t22  = pow(V__[0] - (t14 * t12 + t17 * t16) * t1, 2);
+    real_type t29  = pow(V__[1] - (-t17 * t12 + t14 * t16) * t1, 2);
+    real_type t30  = X__[iX_Omega];
+    real_type t34  = pow(-t30 * t1 + V__[2], 2);
+    real_type t36  = ModelPars[iM_m1];
+    real_type t37  = 1.0 / t36;
+    real_type t40  = ModelPars[iM_m3];
+    real_type t46  = pow(V__[3] - (-t37 * t40 * t30 * t16 + t37 * t2) * t1, 2);
+    real_type t48  = 1.0 / t40;
+    real_type t56  = pow(V__[4] - (t48 * t36 * t30 * t12 + t48 * t5) * t1, 2);
+    real_type t59  = 1.0 / ModelPars[iM_inertia];
+    real_type t68  = pow(V__[5] - (t59 * t8 + t59 * (t40 - t36) * t16 * t12) * t1, 2);
+    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1 + t22 + t29 + t34 + t46 + t56 + t68;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Underwater::DmDu_numEqns() const
+  { return 3; }
+
+  void
+  Underwater::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = P__[iP_T];
+    real_type t2   = U__[iU_u1];
+    real_type t3   = ALIAS_u1Control_D_1(t2, -1, 1);
+    real_type t6   = ModelPars[iM_m1];
+    real_type t7   = 1.0 / t6;
+    real_type t9   = X__[iX_vz];
+    real_type t10  = X__[iX_Omega];
+    real_type t12  = ModelPars[iM_m3];
+    result__[ 0   ] = t3 * t1 - 2 * t7 * t1 * (V__[3] - (-t7 * t12 * t10 * t9 + t7 * t2) * t1);
+    real_type t21  = U__[iU_u2];
+    real_type t22  = ALIAS_u2Control_D_1(t21, -1, 1);
+    real_type t25  = 1.0 / t12;
+    real_type t27  = X__[iX_vx];
+    result__[ 1   ] = t22 * t1 - 2 * t25 * t1 * (V__[4] - (t25 * t6 * t10 * t27 + t25 * t21) * t1);
+    real_type t37  = U__[iU_u3];
+    real_type t38  = ALIAS_u3Control_D_1(t37, -1, 1);
+    real_type t42  = 1.0 / ModelPars[iM_inertia];
+    result__[ 2   ] = t38 * t1 - 2 * t42 * t1 * (V__[5] - (t42 * t37 + t42 * (t12 - t6) * t9 * t27) * t1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Underwater::DmDuu_numRows() const
+  { return 3; }
+
+  integer
+  Underwater::DmDuu_numCols() const
+  { return 3; }
+
+  integer
+  Underwater::DmDuu_nnz() const
+  { return 3; }
+
+  void
+  Underwater::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Underwater::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = P__[iP_T];
+    real_type t3   = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
+    real_type t5   = t1 * t1;
+    real_type t7   = ModelPars[iM_m1] * ModelPars[iM_m1];
+    result__[ 0   ] = t3 * t1 + 2 / t7 * t5;
+    real_type t12  = ALIAS_u2Control_D_1_1(U__[iU_u2], -1, 1);
+    real_type t15  = ModelPars[iM_m3] * ModelPars[iM_m3];
+    result__[ 1   ] = t12 * t1 + 2 / t15 * t5;
+    real_type t20  = ALIAS_u3Control_D_1_1(U__[iU_u3], -1, 1);
+    real_type t23  = ModelPars[iM_inertia] * ModelPars[iM_inertia];
+    result__[ 2   ] = t20 * t1 + 2 / t23 * t5;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 3, i_segment );
   }
 
 }

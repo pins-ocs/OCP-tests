@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_epsilon0 = 0.01;
-    real_type u_epsilon = u_epsilon0;
     real_type u_tolerance0 = 0.01;
+    real_type u_epsilon0 = 0.01;
     real_type u_tolerance = u_tolerance0;
+    real_type u_epsilon = u_epsilon0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -180,8 +180,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 TwoLinkRobotArm_data.Mesh["s0"] = 0;
-TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 400;
 TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
+TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

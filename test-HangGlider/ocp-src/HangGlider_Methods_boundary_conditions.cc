@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: HangGlider_Methods.cc                                          |
+ |  file: HangGlider_Methods_boundary_conditions.cc                      |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -170,7 +170,6 @@ namespace HangGliderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -240,7 +239,6 @@ namespace HangGliderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -273,7 +271,6 @@ namespace HangGliderDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -289,4 +286,4 @@ namespace HangGliderDefine {
 
 }
 
-// EOF: HangGlider_Methods.cc
+// EOF: HangGlider_Methods_boundary_conditions.cc

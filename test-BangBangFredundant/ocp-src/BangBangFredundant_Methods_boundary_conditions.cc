@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: BangBangFredundant_Methods.cc                                  |
+ |  file: BangBangFredundant_Methods_boundary_conditions.cc              |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -167,7 +167,6 @@ namespace BangBangFredundantDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -301,7 +300,6 @@ namespace BangBangFredundantDefine {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -317,4 +315,4 @@ namespace BangBangFredundantDefine {
 
 }
 
-// EOF: BangBangFredundant_Methods.cc
+// EOF: BangBangFredundant_Methods_boundary_conditions.cc

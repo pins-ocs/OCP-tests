@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularCalogeroModified_Data.rb                               #
 #                                                                       #
-#  version: 1.0   date 5/3/2021                                         #
+#  version: 1.0   date 9/3/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,13 +20,13 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsilon = 0.01
 C       = 0.25
+epsilon = 0.01
 
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = false
+  data.Debug = true
 
   # Enable doctor
   data.Doctor = false
@@ -55,9 +55,11 @@ mechatronix do |data|
 
   # setup solver for controls
   data.ControlSolver = {
+    # 'LM' = Levenberg-Marquard'
+    # 'YS' = Yixun Shi
+    # 'QN' = Quasi Newton
     # ==============================================================
     # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
-    # 'LM' = Levenberg-Marquardt, 'YS' = Yixun Shi, 'QN' = Quasi Newton
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
@@ -70,6 +72,11 @@ mechatronix do |data|
     :Tolerance => 1e-9,
     :Iterative => false,
     :InfoLevel => -1,     # suppress all messages
+    # ==============================================================
+    # 'LM', 'YS', 'QN'
+    :InitSolver    => 'QN',
+    :InitMaxIter   => 10,
+    :InitTolerance => 1e-4
   }
 
   # setup solver
@@ -83,8 +90,7 @@ mechatronix do |data|
     # Last Block selection:
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     # ==============================================
-    :last_factorization => 'LU',
-    #:last_factorization => 'PINV',
+    :last_factorization => 'LUPQ', # automatically use PINV if singular
     # ==============================================
 
     # choose solves: Hyness, NewtonDumped
@@ -122,6 +128,10 @@ mechatronix do |data|
     :initialize => 'zero',
     # possible value: default, none, warm, spline, table
     :guess_type => 'default',
+    # initilize or not lagrange multiplier with redundant linear system
+    :initialize_multipliers => false,
+    # 'use_guess', 'minimize', 'none'
+    :initialize_controls    => 'use_guess'
   }
 
   data.Parameters = {
@@ -171,8 +181,8 @@ mechatronix do |data|
     :s0       => -1,
     :segments => [
       {
-        :n      => 100,
         :length => 2,
+        :n      => 100,
       },
     ],
   };

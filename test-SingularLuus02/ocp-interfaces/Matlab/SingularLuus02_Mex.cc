@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus02_Mex.cc                                          |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -145,7 +145,7 @@ static char const help_msg[] =
   setScalarValue( args[4], this->MATNAME##_numCols() );                \
                                                                        \
   Mechatronix::Malloc<integer> mem("mex_" #MATNAME );                  \
-  mem.allocate( 2*nnz );                                               \
+  mem.allocate( 2*nnz, #MATNAME );                                     \
   integer * i_row = mem( nnz );                                        \
   integer * j_col = mem( nnz );                                        \
   this->MATNAME##_pattern( i_row, j_col );                             \
@@ -289,6 +289,7 @@ public:
     #define CMD MODEL_NAME "_Mex('setup',obj,struct_or_filename): "
     CHECK_IN(3);
     CHECK_OUT(0);
+    gc_data.clear(); // clear data for rewrite it
     if ( mxIsStruct(arg_in_2) ) { // read from file
       mxArray_to_GenericContainer( arg_in_2, gc_data );
     } else if ( mxIsChar(arg_in_2) ) {
@@ -320,6 +321,40 @@ public:
   }
 
   /*\
+   |  _ __  _____ __  _ __  ___ __| |_
+   | | '  \/ -_) \ / | '  \/ -_|_-< ' \
+   | |_|_|_\___/_\_\_|_|_|_\___/__/_||_|
+   |              |___|
+  \*/
+  void
+  do_remesh(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('remesh',obj,new_mesh): "
+    MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'remesh'" );
+    MEX_ASSERT2(
+      nrhs == 3,
+      CMD "Expected 2 or 3 input argument(s), nrhs = {}\n", nrhs
+    );
+    CHECK_OUT( 0 );
+
+    GenericContainer & gc_mesh = gc_data["Mesh"];
+    GenericContainer & ptrs    = gc_data["Pointers"];
+    MeshStd * pMesh = ptrs("pMesh").get_pointer<MeshStd*>();
+
+    gc_mesh.clear();
+    // sovrascrive guess nei dati del problema
+    mxArray_to_GenericContainer( arg_in_2, gc_mesh );
+
+    pMesh->setup( gc_mesh );
+
+    MODEL_CLASS::setup( gc_data );
+    this->doneSetup();
+    #undef CMD
+  }
+
+  /*\
    |  _ __  _____ __   __ _ _  _ ___ ______
    | | '  \/ -_) \ /  / _` | || / -_|_-<_-<
    | |_|_|_\___/_\_\__\__, |\_,_\___/__/__/
@@ -341,8 +376,10 @@ public:
     gc_guess.clear();
     if ( nrhs == 2 ) {
       // inizializza guess di default
-      gc_guess["initialize"] = "zero";
-      gc_guess["guess_type"] = "default";
+      gc_guess["initialize"]             = "zero";
+      gc_guess["guess_type"]             = "default";
+      gc_guess["initialize_multipliers"] = false;
+      gc_guess["initialize_controls"]    = "use_guess";
     } else {
       // sovrascrive guess nei dati del problema
       mxArray_to_GenericContainer( arg_in_2, gc_guess );
@@ -739,7 +776,7 @@ public:
     setScalarValue( args[4], numEquations() );
 
     Mechatronix::Malloc<integer> mem("mex_eval_JF");
-    mem.allocate( 2*nnz() );
+    mem.allocate( 2*nnz(), "eval_JF" );
     integer * i_row = mem( nnz() );
     integer * j_col = mem( nnz() );
     MODEL_CLASS::eval_JF_pattern( i_row, j_col, 1 );
@@ -784,7 +821,7 @@ public:
     setScalarValue( args[4], numEquations() );
 
     Mechatronix::Malloc<integer> mem("mex_eval_JF");
-    mem.allocate( 2*nnz() );
+    mem.allocate( 2*nnz(), "eval_JF_pattern" );
     integer * i_row = mem( nnz() );
     integer * j_col = mem( nnz() );
     MODEL_CLASS::eval_JF_pattern( i_row, j_col, 1 );
@@ -2379,6 +2416,20 @@ do_setup(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
+do_remesh(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('remesh',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_remesh( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
 do_set_guess(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
@@ -3220,6 +3271,7 @@ do_node_to_segment(
 static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"read",do_read},
   {"setup",do_setup},
+  {"remesh",do_remesh},
   {"set_guess",do_set_guess},
   {"get_guess",do_get_guess},
   {"get_solution_as_guess",do_get_solution_as_guess},

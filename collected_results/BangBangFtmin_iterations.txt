@@ -35,7 +35,10 @@ INFO CLASS = BangBangFtmin
   index start = omega = 624, p = 628
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -48,14 +51,14 @@ Failed check on cell=0 segment=0: 0 < T(zeta)
 [  4,  1] (0.00416  ,0.000662 ) [0.351    ,0.0345   ] 1.00       0: 1
 [  5,  1] (0.000662 ,6.48e-06 ) [0.0260   ,0.000262 ] 1.00       0: 0
 [  6,  1] (6.48e-06 ,1.23e-09 ) [0.000269 ,4.71e-08 ] 1.00       0: 0
-[  7,  1] (1.23e-09 ,4.80e-17 ) [4.71e-08 ,1.26e-15 ] 1.00       0: 0
+[  7,  1] (1.23e-09 ,4.79e-17 ) [4.71e-08 ,1.26e-15 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 4.05[ms]      timeout        = 0 [ms]
+Elapsed Time   = 4.07[ms]      timeout        = 0 [ms]
 iteration      = 7             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 628
 max acc. iter. = 800           N. System pars = 103
-Converged      = YES           Memory Used    = 72Kb (+40bytes)
+Converged      = YES           Memory Used    = 73Kb (+38bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -64,7 +67,7 @@ Few iterations = 8
 Function       = 11            Jacobian       = 7         
 Factorization  = 7             Inversion      = 17        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 5.1204e-15    last||d1||_inf = 1.5076e-07
+last ||d||_inf = 5.1249e-15    last||d1||_inf = 1.5076e-07
 last ||f||_inf = 5.0094e-09    last||f1||_1   = 1.2333e-09
 ------------------------------------------------------------
 

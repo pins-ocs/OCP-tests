@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods_controls.cc                          |
  |                                                                       |
- |  version: 1.0   date 6/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -276,6 +276,103 @@ namespace WorstCaseScenarioDefine {
     // Lvars
     L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
     this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
+  }
+
+  /*\
+  :|:   ___         _           _   ___    _   _            _
+  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
+  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
+  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
+  \*/
+
+  real_type
+  WorstCaseScenario::m_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, 0, 1);
+    real_type t9   = pow(V__[0] - t1 * (1 - 2 * Q__[iQ_zeta]), 2);
+    real_type result__ = t2 + t9;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  WorstCaseScenario::DmDu_numEqns() const
+  { return 1; }
+
+  void
+  WorstCaseScenario::DmDu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t1   = U__[iU_u];
+    real_type t2   = ALIAS_uControl_D_1(t1, 0, 1);
+    real_type t6   = 1 - 2 * Q__[iQ_zeta];
+    result__[ 0   ] = t2 - 2 * t6 * (-t1 * t6 + V__[0]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  WorstCaseScenario::DmDuu_numRows() const
+  { return 1; }
+
+  integer
+  WorstCaseScenario::DmDuu_numCols() const
+  { return 1; }
+
+  integer
+  WorstCaseScenario::DmDuu_nnz() const
+  { return 1; }
+
+  void
+  WorstCaseScenario::DmDuu_pattern(
+    integer iIndex[],
+    integer jIndex[]
+  ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  WorstCaseScenario::DmDuu_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 1);
+    real_type t6   = pow(-1 + 2 * Q__[iQ_zeta], 2);
+    result__[ 0   ] = t2 + 2 * t6;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }
 
 }

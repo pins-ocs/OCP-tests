@@ -32,7 +32,10 @@ INFO CLASS = HangingChain
   index start = omega = 1604, p = 1607
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -59,7 +62,7 @@ Hyness --- start iterations ---
 [ 14,  1] (0.000439 ,0.000373 ) [0.374    ,0.0559   ] 1.00       0: 0
 [ 15,  1] (0.000373 ,5.71e-06 ) [0.0471   ,0.000430 ] 1.00       0: 0
 [ 16,  1] (5.71e-06 ,9.13e-09 ) [0.000448 ,3.40e-07 ] 1.00       0: 0
-[ 17,  1] (9.13e-09 ,9.89e-14 ) [3.41e-07 ,2.74e-11 ] 1.00       0: 0
+[ 17,  1] (9.13e-09 ,9.88e-14 ) [3.41e-07 ,2.74e-11 ] 1.00       0: 0
 
 Continuation step N.1 s=0.50, ds=0.3000
 Hyness --- start iterations ---
@@ -84,7 +87,7 @@ Hyness --- start iterations ---
 [ 31,  1] (4.32e-05 ,1.62e-06 ) [0.00374  ,0.000116 ] 1.00       0: 0
 [ 32,  1] (1.62e-06 ,2.25e-09 ) [0.000123 ,1.20e-07 ] 1.00       0: 0
 [ 33,  1] (2.25e-09 ,5.84e-11 ) [1.20e-07 ,1.34e-09 ] 1.00       0: 0
-[ 34,  1] (5.84e-11 ,4.50e-15 ) [1.34e-09 ,3.06e-13 ] 1.00       0: 0
+[ 34,  1] (5.84e-11 ,4.51e-15 ) [1.34e-09 ,3.05e-13 ] 1.00       0: 0
 
 Continuation step N.1 s=1.0, ds=0.2000
 Hyness --- start iterations ---
@@ -96,11 +99,11 @@ Hyness --- start iterations ---
 [ 39,  1] (2.17e-10 ,1.45e-11 ) [9.57e-09 ,7.77e-10 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 93.2[ms]      timeout        = 0 [ms]
+Elapsed Time   = 108.0[ms]     timeout        = 0 [ms]
 iteration      = 39            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 1607
 max acc. iter. = 800           N. System pars = 400
-Converged      = YES           Memory Used    = 166Kb (+64bytes)
+Converged      = YES           Memory Used    = 168Kb (+10bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

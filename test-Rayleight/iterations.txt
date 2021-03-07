@@ -23,7 +23,10 @@ INFO CLASS = Rayleight
   index start = omega = 4004, p = 4006
   FD jacobian = NO
 END INFO
-Solver: CyclicReduction+LU and LastBlock LU, Solver Controls: Newton, N.threads: 7
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Initializer Controls: Quasi-Newton
+Used threads:         7
 
 
 Hyness --- start iterations ---
@@ -34,14 +37,14 @@ Hyness --- start iterations ---
 [  4,  1] (0.000653 ,3.75e-05 ) [0.103    ,0.0221   ] 1.00       0: 0
 [  5,  1] (3.75e-05 ,8.60e-07 ) [0.0179   ,6.73e-05 ] 1.00       0: 0
 [  6,  1] (8.60e-07 ,5.49e-11 ) [6.84e-05 ,5.36e-09 ] 1.00       0: 0
-[  7,  1] (5.49e-11 ,1.08e-16 ) [5.36e-09 ,8.85e-17 ] 1.00       0: 0
+[  7,  1] (5.49e-11 ,1.07e-16 ) [5.36e-09 ,8.88e-17 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 10.5[ms]      timeout        = 0 [ms]
+Elapsed Time   = 16.0[ms]      timeout        = 0 [ms]
 iteration      = 7             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 4006
 max acc. iter. = 800           N. System pars = 1000
-Converged      = YES           Memory Used    = 403Kb (+76bytes)
+Converged      = YES           Memory Used    = 405Kb (+12bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -50,7 +53,7 @@ Few iterations = 8
 Function       = 13            Jacobian       = 7         
 Factorization  = 7             Inversion      = 19        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 1.0715e-15    last||d1||_inf = 1.6391e-07
+last ||d||_inf = 1.0710e-15    last||d1||_inf = 1.6391e-07
 last ||f||_inf = 3.4156e-09    last||f1||_1   = 5.4917e-11
 ------------------------------------------------------------
 

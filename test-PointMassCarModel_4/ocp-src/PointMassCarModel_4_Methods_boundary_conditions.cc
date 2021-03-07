@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
- |  file: PointMassCarModel_4_Methods.cc                                 |
+ |  file: PointMassCarModel_4_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 5/3/2021                                         |
+ |  version: 1.0   date 9/3/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -280,7 +280,6 @@ namespace PointMassCarModel_4Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -360,7 +359,6 @@ namespace PointMassCarModel_4Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -393,7 +391,6 @@ namespace PointMassCarModel_4Define {
     integer iIndex[],
     integer jIndex[]
   ) const {
-
   }
 
   void
@@ -409,4 +406,4 @@ namespace PointMassCarModel_4Define {
 
 }
 
-// EOF: PointMassCarModel_4_Methods.cc
+// EOF: PointMassCarModel_4_Methods_boundary_conditions.cc
