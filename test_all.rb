@@ -6,12 +6,20 @@ FileUtils.mkdir "./collected_results/"
 def do_test(dir)
   name = dir.split("test-")[1];
   puts "\n\n"
-  system("cd #{dir}; rake clobber maple; cd .." );
+  FileUtils.cd dir
+  system("rake clobber maple" );
   puts "\n\n"
-  system("cd #{dir}; pins #{name}_pins_run.rb -f -b -main; cd .." );
+  system("pins #{name}_pins_run.rb -f -b -main" );
   puts "\n\n"
-  system("cd #{dir}; ./bin/main | tee iterations.txt; cd .." );
+  case RUBY_PLATFORM
+  when /(mingw|win)/
+    cmd = "bin\\main"
+  else
+    cmd = "./bin/main"
+  end
+  system("#{cmd} | perl -ne \"print \$_; print STDERR \$_;\" 2>  iterations.txt" );
   puts "\n\n"
+  FileUtils.cd ".."
   ff   = "#{dir}/iterations.txt";
   if File.exist? "#{dir}/data/#{name}_OCP_result.txt" then
     gg = "./collected_results/#{name}_iterations.txt";
