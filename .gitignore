@@ -5,6 +5,8 @@
 /*test*-*/bin/main
 /*test*-*/matlab_scripts
 /*test*-*/build
+/*test*-*/Makefile
+
 /*/*test*-*/lib
 /*/*test*-*/bin
 /*/*test*-*/data/*_result.txt
@@ -12,6 +14,7 @@
 /*/*test*-*/bin/main
 /*/*test*-*/matlab_scripts
 /*/*test*-*/build
+/*/*test*-*/Makefile
 *_run.m
 
 DerivedData
