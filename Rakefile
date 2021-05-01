@@ -41,7 +41,7 @@ when /linux/
   VS_ARCH    = ''
   V1         = Dir.glob("/usr/local/maple*/bin/maple").map { |d| d }
   V2         = Dir.glob("/opt/maple*/bin/maple").map { |d| d }
-  MAPLECMD   = V1.push(V2.flatten!).sort.last # da sistenare
+  MAPLECMD   = V1.push(V2).flatten.sort.last # da sistenare
 
 when /mingw|mswin/
 
@@ -83,6 +83,8 @@ when /mingw|mswin/
 else
   raise RuntimeError, "Unsupported OS: #{RUBY_PLATFORM}"
 end
+
+puts "MAPLE = #{MAPLECMD}".green
 
 
 begin # definitions
