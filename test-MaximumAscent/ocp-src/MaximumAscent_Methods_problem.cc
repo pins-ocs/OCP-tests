@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -464,19 +464,19 @@ namespace MaximumAscentDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MaximumAscent::DjumpDxlp_numRows() const
+  MaximumAscent::DjumpDxlxlp_numRows() const
   { return 8; }
 
   integer
-  MaximumAscent::DjumpDxlp_numCols() const
+  MaximumAscent::DjumpDxlxlp_numCols() const
   { return 16; }
 
   integer
-  MaximumAscent::DjumpDxlp_nnz() const
+  MaximumAscent::DjumpDxlxlp_nnz() const
   { return 16; }
 
   void
-  MaximumAscent::DjumpDxlp_pattern(
+  MaximumAscent::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -501,7 +501,7 @@ namespace MaximumAscentDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  MaximumAscent::DjumpDxlp_sparse(
+  MaximumAscent::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -534,7 +534,7 @@ namespace MaximumAscentDefine {
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,11 +75,11 @@ namespace CatalystDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[iU_u];
-    real_type t4   = X__[iX_x2];
-    real_type t7   = 10 * t4 - X__[iX_x1];
-    real_type t16  = uControl(t2, 0, 1);
-    real_type result__ = t7 * t2 * L__[iL_lambda1__xo] + (-t7 * t2 - t4 * (1 - t2)) * L__[iL_lambda2__xo] + t16;
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, 0, 1);
+    real_type t5   = X__[iX_x2];
+    real_type t8   = 10 * t5 - X__[iX_x1];
+    real_type result__ = t2 + t8 * t1 * L__[iL_lambda1__xo] + (-t8 * t1 - t5 * (1 - t1)) * L__[iL_lambda2__xo];
     return result__;
   }
 #else
@@ -94,11 +94,11 @@ namespace CatalystDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[iU_u];
-    real_type t4   = X__[iX_x2];
-    real_type t7   = 10 * t4 - X__[iX_x1];
-    real_type t16  = uControl(t2, 0, 1);
-    real_type result__ = t7 * t2 * L__[iL_lambda1__xo] + (-t7 * t2 - t4 * (1 - t2)) * L__[iL_lambda2__xo] + t16;
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, 0, 1);
+    real_type t5   = X__[iX_x2];
+    real_type t8   = 10 * t5 - X__[iX_x1];
+    real_type result__ = t2 + t8 * t1 * L__[iL_lambda1__xo] + (-t8 * t1 - t5 * (1 - t1)) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -434,19 +434,19 @@ namespace CatalystDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Catalyst::DjumpDxlp_numRows() const
+  Catalyst::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  Catalyst::DjumpDxlp_numCols() const
+  Catalyst::DjumpDxlxlp_numCols() const
   { return 8; }
 
   integer
-  Catalyst::DjumpDxlp_nnz() const
+  Catalyst::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  Catalyst::DjumpDxlp_pattern(
+  Catalyst::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -463,7 +463,7 @@ namespace CatalystDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Catalyst::DjumpDxlp_sparse(
+  Catalyst::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -488,7 +488,7 @@ namespace CatalystDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

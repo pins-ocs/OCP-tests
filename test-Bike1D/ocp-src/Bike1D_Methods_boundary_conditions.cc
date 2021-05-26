@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_boundary_conditions.cc                          |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -208,8 +208,8 @@ namespace Bike1DDefine {
     real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = XL__[iX_v] * LL__[iL_lambda1__xo] + OMEGA__[0];
-    result__[ 1   ] = -XR__[iX_v] * LR__[iL_lambda1__xo] + OMEGA__[1];
+    result__[ 0   ] = LL__[iL_lambda1__xo] * XL__[iX_v] + OMEGA__[0];
+    result__[ 1   ] = -LR__[iL_lambda1__xo] * XR__[iX_v] + OMEGA__[1];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 2, i_segment_left, i_segment_right );
   }

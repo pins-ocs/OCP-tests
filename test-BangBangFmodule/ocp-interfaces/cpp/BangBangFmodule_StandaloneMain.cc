@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type FpMax = 10;
     real_type FmMax = 10;
+    real_type FpMax = 10;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -148,8 +148,8 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-    // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_controlP = data_Controls["controlP"];
     data_controlP["type"]      = ;
@@ -170,8 +170,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFmodule_data.Mesh["s0"] = 0;
-BangBangFmodule_data.Mesh["segments"][0]["n"] = 100;
 BangBangFmodule_data.Mesh["segments"][0]["length"] = 1;
+BangBangFmodule_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

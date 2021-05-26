@@ -1,0 +1,6 @@
+/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeFiles/ICLOCS_StirredTank_static.dir
+/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeFiles/install.dir
+/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeFiles/main.dir
+/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeFiles/ICLOCS_StirredTank.dir
+/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeFiles/ALL_BUILD.dir
+/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeFiles/ZERO_CHECK.dir

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Pars.hh                                       |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,7 +20,7 @@
 
 #define numBc                    5
 #define numModelPars             7
-#define numConstraint1D          0
+#define numConstraint1D          1
 #define numConstraint2D          0
 #define numConstraintU           0
 #define numXvars                 3

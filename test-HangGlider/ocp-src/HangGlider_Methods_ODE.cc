@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,12 +87,12 @@ namespace HangGliderDefine {
     real_type t7   = X__[iX_x];
     real_type t8   = v(t7, t2, t3);
     real_type t9   = 1.0 / t8;
-    real_type t10  = U__[iU_cL];
-    real_type t11  = t10 * t10;
+    real_type t11  = U__[iU_cL];
+    real_type t12  = t11 * t11;
     real_type t16  = Dfun(t7, t2, t3);
-    real_type t17  = t16 * (ModelPars[iM_c1] * t11 + ModelPars[iM_c0]);
+    real_type t17  = t16 * (t12 * ModelPars[iM_c1] + ModelPars[iM_c0]);
     real_type t19  = Lfun(t7, t2, t3);
-    real_type t20  = t19 * t10;
+    real_type t20  = t19 * t11;
     real_type t21  = w(t7, t3);
     result__[ 2   ] = (-t2 * t17 - t21 * t20) * t9 * t6;
     result__[ 3   ] = (-t21 * t17 + t2 * t20) * t9 * t6 - ModelPars[iM_g] * t1;
@@ -230,17 +230,19 @@ namespace HangGliderDefine {
     result__[ 0   ] = X__[iX_vx];
     result__[ 1   ] = X__[iX_vy];
     real_type t3   = X__[iX_x];
-    real_type t4   = v(t3, result__[0], result__[1]);
+    real_type t1   = result__[0];
+    real_type t2   = result__[1];
+    real_type t4   = v(t3, t1, t2);
     real_type t6   = 1.0 / t4 / ModelPars[iM_m];
     real_type t8   = U__[iU_cL];
     real_type t9   = t8 * t8;
-    real_type t13  = Dfun(t3, result__[0], result__[1]);
+    real_type t13  = Dfun(t3, t1, t2);
     real_type t14  = t13 * (t9 * ModelPars[iM_c1] + ModelPars[iM_c0]);
-    real_type t16  = Lfun(t3, result__[0], result__[1]);
+    real_type t16  = Lfun(t3, t1, t2);
     real_type t17  = t16 * t8;
-    real_type t18  = w(t3, result__[1]);
-    result__[ 2   ] = (-result__[0] * t14 - t18 * t17) * t6;
-    result__[ 3   ] = (-t18 * t14 + result__[0] * t17) * t6 - ModelPars[iM_g];
+    real_type t18  = w(t3, t2);
+    result__[ 2   ] = t6 * (-t14 * t1 - t18 * t17);
+    result__[ 3   ] = t6 * (t17 * t1 - t18 * t14) - ModelPars[iM_g];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 4, i_segment );
   }

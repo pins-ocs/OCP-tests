@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods_ODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,7 +67,7 @@ namespace HyperSensitiveDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = X__[iX_y];
     real_type t2   = t1 * t1;
-    result__[ 0   ] = -t2 * t1 + U__[iU_u];
+    result__[ 0   ] = -t1 * t2 + U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 1, i_segment );
   }

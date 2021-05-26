@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_AdjointODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -187,7 +187,8 @@ namespace BrakeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda2__xo] * P__[iP_T];
+    real_type t2   = ALIAS_aControl_D_1(U__[iU_a], -1, 1);
+    result__[ 0   ] = L__[iL_lambda2__xo] * P__[iP_T] + t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }

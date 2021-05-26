@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_problem.cc                          |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -88,12 +88,12 @@ namespace BangBangFredundantDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t4   = X__[iX_F1] + X__[iX_F2];
     real_type t5   = Flim(t4);
-    real_type t19  = U__[iU_aF1];
-    real_type t22  = U__[iU_aF2];
-    real_type t24  = ModelPars[iM_maxAF];
-    real_type t25  = aF1Control(t19, -t24, t24);
-    real_type t26  = aF2Control(t22, -t24, t24);
-    real_type result__ = t19 * L__[iL_lambda5__xo] + t22 * L__[iL_lambda6__xo] + t4 * L__[iL_lambda2__xo] + t5 * ModelPars[iM_w_F] + L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda3__xo] * X__[iX_vF1] + L__[iL_lambda4__xo] * X__[iX_vF2] + t25 + t26;
+    real_type t7   = U__[iU_aF1];
+    real_type t8   = ModelPars[iM_maxAF];
+    real_type t9   = aF1Control(t7, -t8, t8);
+    real_type t10  = U__[iU_aF2];
+    real_type t11  = aF2Control(t10, -t8, t8);
+    real_type result__ = t10 * L__[iL_lambda6__xo] + t4 * L__[iL_lambda2__xo] + t5 * ModelPars[iM_w_F] + t7 * L__[iL_lambda5__xo] + L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda3__xo] * X__[iX_vF1] + L__[iL_lambda4__xo] * X__[iX_vF2] + t11 + t9;
     return result__;
   }
 #else
@@ -110,12 +110,12 @@ namespace BangBangFredundantDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t4   = X__[iX_F1] + X__[iX_F2];
     real_type t5   = Flim(t4);
-    real_type t19  = U__[iU_aF1];
-    real_type t22  = U__[iU_aF2];
-    real_type t24  = ModelPars[iM_maxAF];
-    real_type t25  = aF1Control(t19, -t24, t24);
-    real_type t26  = aF2Control(t22, -t24, t24);
-    real_type result__ = t19 * L__[iL_lambda5__xo] + t22 * L__[iL_lambda6__xo] + t4 * L__[iL_lambda2__xo] + t5 * ModelPars[iM_w_F] + L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda3__xo] * X__[iX_vF1] + L__[iL_lambda4__xo] * X__[iX_vF2] + t25 + t26;
+    real_type t7   = U__[iU_aF1];
+    real_type t8   = ModelPars[iM_maxAF];
+    real_type t9   = aF1Control(t7, -t8, t8);
+    real_type t10  = U__[iU_aF2];
+    real_type t11  = aF2Control(t10, -t8, t8);
+    real_type result__ = t10 * L__[iL_lambda6__xo] + t4 * L__[iL_lambda2__xo] + t5 * ModelPars[iM_w_F] + t7 * L__[iL_lambda5__xo] + L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda3__xo] * X__[iX_vF1] + L__[iL_lambda4__xo] * X__[iX_vF2] + t11 + t9;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -480,19 +480,19 @@ namespace BangBangFredundantDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFredundant::DjumpDxlp_numRows() const
+  BangBangFredundant::DjumpDxlxlp_numRows() const
   { return 12; }
 
   integer
-  BangBangFredundant::DjumpDxlp_numCols() const
+  BangBangFredundant::DjumpDxlxlp_numCols() const
   { return 24; }
 
   integer
-  BangBangFredundant::DjumpDxlp_nnz() const
+  BangBangFredundant::DjumpDxlxlp_nnz() const
   { return 24; }
 
   void
-  BangBangFredundant::DjumpDxlp_pattern(
+  BangBangFredundant::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -525,7 +525,7 @@ namespace BangBangFredundantDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFredundant::DjumpDxlp_sparse(
+  BangBangFredundant::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -566,7 +566,7 @@ namespace BangBangFredundantDefine {
     result__[ 22  ] = -1;
     result__[ 23  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 24, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 24, i_segment_left, i_segment_right );
   }
 
   /*\

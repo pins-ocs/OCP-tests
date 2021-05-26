@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods_problem.cc                              |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -420,19 +420,19 @@ namespace HyperSensitiveDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  HyperSensitive::DjumpDxlp_numRows() const
+  HyperSensitive::DjumpDxlxlp_numRows() const
   { return 2; }
 
   integer
-  HyperSensitive::DjumpDxlp_numCols() const
+  HyperSensitive::DjumpDxlxlp_numCols() const
   { return 4; }
 
   integer
-  HyperSensitive::DjumpDxlp_nnz() const
+  HyperSensitive::DjumpDxlxlp_nnz() const
   { return 4; }
 
   void
-  HyperSensitive::DjumpDxlp_pattern(
+  HyperSensitive::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -445,7 +445,7 @@ namespace HyperSensitiveDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  HyperSensitive::DjumpDxlp_sparse(
+  HyperSensitive::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -466,7 +466,7 @@ namespace HyperSensitiveDefine {
     result__[ 2   ] = -1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 4, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi0 = 0.1;
-    real_type epsi = epsi0;
     real_type tol0 = 0.1;
     real_type tol = tol0;
+    real_type epsi0 = 0.1;
+    real_type epsi = epsi0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -169,7 +169,7 @@ main() {
 
     // Constraint1D
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-    // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_Ybound = data_Constraints["Ybound"];
@@ -182,12 +182,12 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 AlpRider_data.Mesh["s0"] = 0;
-AlpRider_data.Mesh["segments"][0]["length"] = 1;
 AlpRider_data.Mesh["segments"][0]["n"] = 400;
-AlpRider_data.Mesh["segments"][1]["length"] = 18;
+AlpRider_data.Mesh["segments"][0]["length"] = 1;
 AlpRider_data.Mesh["segments"][1]["n"] = 400;
-AlpRider_data.Mesh["segments"][2]["length"] = 1;
+AlpRider_data.Mesh["segments"][1]["length"] = 18;
 AlpRider_data.Mesh["segments"][2]["n"] = 400;
+AlpRider_data.Mesh["segments"][2]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

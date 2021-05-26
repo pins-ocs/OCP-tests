@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,10 +75,10 @@ namespace BangBangFtminDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[iX_T];
-    real_type t8   = U__[iU_F];
-    real_type t10  = Fcontrol(t8, -1, 1);
-    real_type result__ = t8 * t2 * L__[iL_lambda2__xo] + X__[iX_v] * t2 * L__[iL_lambda1__xo] + t10 * t2;
+    real_type t1   = X__[iX_T];
+    real_type t2   = U__[iU_F];
+    real_type t3   = Fcontrol(t2, -1, 1);
+    real_type result__ = t2 * t1 * L__[iL_lambda2__xo] + X__[iX_v] * t1 * L__[iL_lambda1__xo] + t3 * t1;
     return result__;
   }
 #else
@@ -93,10 +93,10 @@ namespace BangBangFtminDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[iX_T];
-    real_type t8   = U__[iU_F];
-    real_type t10  = Fcontrol(t8, -1, 1);
-    real_type result__ = t8 * t2 * L__[iL_lambda2__xo] + X__[iX_v] * t2 * L__[iL_lambda1__xo] + t10 * t2;
+    real_type t1   = X__[iX_T];
+    real_type t2   = U__[iU_F];
+    real_type t3   = Fcontrol(t2, -1, 1);
+    real_type result__ = t2 * t1 * L__[iL_lambda2__xo] + X__[iX_v] * t1 * L__[iL_lambda1__xo] + t3 * t1;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -439,19 +439,19 @@ namespace BangBangFtminDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFtmin::DjumpDxlp_numRows() const
+  BangBangFtmin::DjumpDxlxlp_numRows() const
   { return 6; }
 
   integer
-  BangBangFtmin::DjumpDxlp_numCols() const
+  BangBangFtmin::DjumpDxlxlp_numCols() const
   { return 12; }
 
   integer
-  BangBangFtmin::DjumpDxlp_nnz() const
+  BangBangFtmin::DjumpDxlxlp_nnz() const
   { return 12; }
 
   void
-  BangBangFtmin::DjumpDxlp_pattern(
+  BangBangFtmin::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -472,7 +472,7 @@ namespace BangBangFtminDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFtmin::DjumpDxlp_sparse(
+  BangBangFtmin::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -501,7 +501,7 @@ namespace BangBangFtminDefine {
     result__[ 10  ] = -1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

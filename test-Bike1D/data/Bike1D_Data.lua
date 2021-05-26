@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
-muf_min = -1
 mur_min = -1
 mur_max = 1
+muf_min = -1
 
 content = {
 
@@ -157,13 +157,14 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithSinAtan
+    clipdelta2 = 0,
     clipdelta = 0,
     cliph = 0.01,
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-  -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     murControl = {
       type      = ,

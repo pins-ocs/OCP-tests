@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_AdjointODE.cc                  |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,8 +87,10 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 1   ] = t1 * t4;
     real_type t5   = L__[iL_lambda2__xo];
     result__[ 2   ] = t1 * t5;
-    real_type t13  = t2 * t2;
-    result__[ 3   ] = 2 * ModelPars[iM_theta] * t1 + X__[iX_y] * t4 + X__[iX_z] * t5 + L__[iL_lambda3__xo] * U__[iU_u] + t13;
+    real_type t6   = U__[iU_u];
+    real_type t7   = uControl(t6, -1, 1);
+    real_type t11  = t2 * t2;
+    result__[ 3   ] = 2 * t1 * ModelPars[iM_theta] + t4 * X__[iX_y] + t5 * X__[iX_z] + t6 * L__[iL_lambda3__xo] + t11 + t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -206,7 +208,9 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda3__xo] * X__[iX_T];
+    real_type t1   = X__[iX_T];
+    real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t3 * t1 + t1 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -247,7 +251,8 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda3__xo];
+    real_type t2   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t2 + L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }

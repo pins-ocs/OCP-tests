@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Methods_ODE.cc                                        |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,7 +80,7 @@ namespace CatalystDefine {
     real_type t2   = X__[iX_x2];
     real_type t5   = 10 * t2 - X__[iX_x1];
     result__[ 0   ] = t5 * t1;
-    result__[ 1   ] = -t5 * t1 - t2 * (1 - t1);
+    result__[ 1   ] = -result__[0] - t2 * (1 - t1);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
   }
@@ -127,7 +127,7 @@ namespace CatalystDefine {
     result__[ 0   ] = -t1;
     result__[ 1   ] = 10 * t1;
     result__[ 2   ] = t1;
-    result__[ 3   ] = -9 * result__[2] - 1;
+    result__[ 3   ] = -9 * t1 - 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 4, i_segment );
   }

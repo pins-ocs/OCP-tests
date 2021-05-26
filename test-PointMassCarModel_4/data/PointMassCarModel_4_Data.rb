@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_4_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 9/3/2021                                         #
+#  version: 1.0   date 3/6/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -22,13 +22,13 @@ include Mechatronix
 # Auxiliary values
 up_epsi0  = 0.1
 wT0       = 0.01
+road_tol0 = 0.01
 wT        = wT0
-p_epsi0   = 0.1
-p_tol0    = 0.1
-up_tol0   = 0.01
 m         = 700
 kD        = 0.2500000000/m
-road_tol0 = 0.01
+up_tol0   = 0.01
+p_epsi0   = 0.1
+p_tol0    = 0.1
 
 mechatronix do |data|
 
@@ -185,8 +185,8 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # Controls
-  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-  # Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:v__fxControl] = {
     :type      => 'COS_LOGARITHMIC',
@@ -204,7 +204,7 @@ mechatronix do |data|
   data.Constraints = {}
   # Constraint1D
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:AdherenceEllipse] = {
     :subType   => "PENALTY_REGULAR",
@@ -246,74 +246,74 @@ mechatronix do |data|
     :is_SAE   => false,
     :segments => [
       {
-        :rightWidth => 60,
         :leftWidth  => 15/2.0,
-        :gridSize   => 1,
         :length     => 190,
         :curvature  => 0,
+        :rightWidth => 60,
+        :gridSize   => 1,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 60,
-        :gridSize   => 1,
         :length     => 973.8937227,
         :curvature  => 0.003225806452,
+        :rightWidth => 30,
+        :gridSize   => 1,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
-        :gridSize   => 1,
         :length     => 180,
         :curvature  => 0,
+        :rightWidth => 30,
+        :gridSize   => 1,
       },
       {
-        :rightWidth => 15,
         :leftWidth  => 20,
-        :gridSize   => 1,
         :length     => 235.619449,
         :curvature  => 0.006666666667,
+        :rightWidth => 15,
+        :gridSize   => 1,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
-        :gridSize   => 1,
         :length     => 240,
         :curvature  => 0,
+        :rightWidth => 30,
+        :gridSize   => 1,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
-        :gridSize   => 1,
         :length     => 235.619449,
         :curvature  => -1/150.0,
+        :rightWidth => 30,
+        :gridSize   => 1,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
-        :gridSize   => 1,
         :length     => 200,
         :curvature  => 0,
+        :rightWidth => 30,
+        :gridSize   => 1,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
-        :gridSize   => 1,
         :length     => 125.6637062,
         :curvature  => 0.025,
+        :rightWidth => 30,
+        :gridSize   => 1,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
-        :gridSize   => 1,
         :length     => 480,
         :curvature  => 0,
+        :rightWidth => 30,
+        :gridSize   => 1,
       },
       {
-        :rightWidth => 30,
         :leftWidth  => 30,
-        :gridSize   => 0.1,
         :length     => 10,
         :curvature  => 0,
+        :rightWidth => 30,
+        :gridSize   => 0.1,
       },
     ],
   };

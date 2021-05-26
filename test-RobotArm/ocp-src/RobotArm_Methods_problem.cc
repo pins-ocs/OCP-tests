@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -117,14 +117,14 @@ namespace RobotArmDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t4   = U__[iU_u_rho];
-    real_type t8   = U__[iU_u_theta];
-    real_type t12  = U__[iU_u_phi];
-    real_type t26  = u_rhoControl(t4, -1, 1);
-    real_type t28  = u_thetaControl(t8, -1, 1);
-    real_type t30  = u_phiControl(t12, -1, 1);
-    real_type result__ = t12 * t2 * L__[iL_lambda3__xo] + t4 * t2 * L__[iL_lambda1__xo] + t8 * t2 * L__[iL_lambda2__xo] + X__[iX_rho1] * t2 * L__[iL_lambda4__xo] + X__[iX_theta1] * t2 * L__[iL_lambda5__xo] + X__[iX_phi1] * t2 * L__[iL_lambda6__xo] + t26 * t2 + t28 * t2 + t30 * t2;
+    real_type t1   = P__[iP_T];
+    real_type t2   = U__[iU_u_rho];
+    real_type t3   = u_rhoControl(t2, -1, 1);
+    real_type t5   = U__[iU_u_theta];
+    real_type t6   = u_thetaControl(t5, -1, 1);
+    real_type t8   = U__[iU_u_phi];
+    real_type t9   = u_phiControl(t8, -1, 1);
+    real_type result__ = t2 * t1 * L__[iL_lambda1__xo] + t5 * t1 * L__[iL_lambda2__xo] + t8 * t1 * L__[iL_lambda3__xo] + X__[iX_rho1] * t1 * L__[iL_lambda4__xo] + X__[iX_theta1] * t1 * L__[iL_lambda5__xo] + X__[iX_phi1] * t1 * L__[iL_lambda6__xo] + t3 * t1 + t6 * t1 + t9 * t1;
     return result__;
   }
 #else
@@ -139,14 +139,14 @@ namespace RobotArmDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t4   = U__[iU_u_rho];
-    real_type t8   = U__[iU_u_theta];
-    real_type t12  = U__[iU_u_phi];
-    real_type t26  = u_rhoControl(t4, -1, 1);
-    real_type t28  = u_thetaControl(t8, -1, 1);
-    real_type t30  = u_phiControl(t12, -1, 1);
-    real_type result__ = t12 * t2 * L__[iL_lambda3__xo] + t4 * t2 * L__[iL_lambda1__xo] + t8 * t2 * L__[iL_lambda2__xo] + X__[iX_rho1] * t2 * L__[iL_lambda4__xo] + X__[iX_theta1] * t2 * L__[iL_lambda5__xo] + X__[iX_phi1] * t2 * L__[iL_lambda6__xo] + t26 * t2 + t28 * t2 + t30 * t2;
+    real_type t1   = P__[iP_T];
+    real_type t2   = U__[iU_u_rho];
+    real_type t3   = u_rhoControl(t2, -1, 1);
+    real_type t5   = U__[iU_u_theta];
+    real_type t6   = u_thetaControl(t5, -1, 1);
+    real_type t8   = U__[iU_u_phi];
+    real_type t9   = u_phiControl(t8, -1, 1);
+    real_type result__ = t2 * t1 * L__[iL_lambda1__xo] + t5 * t1 * L__[iL_lambda2__xo] + t8 * t1 * L__[iL_lambda3__xo] + X__[iX_rho1] * t1 * L__[iL_lambda4__xo] + X__[iX_theta1] * t1 * L__[iL_lambda5__xo] + X__[iX_phi1] * t1 * L__[iL_lambda6__xo] + t3 * t1 + t6 * t1 + t9 * t1;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -248,9 +248,9 @@ namespace RobotArmDefine {
     real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    real_type t1   = P__[iP_T];
-    real_type t2   = ModelPars[iM_W];
-    real_type result__ = -(t1 * (t2 - 1) - t2) * t1;
+    real_type t1   = ModelPars[iM_W];
+    real_type t3   = P__[iP_T];
+    real_type result__ = -t3 * (t3 * (t1 - 1) - t1);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
     }
@@ -535,7 +535,7 @@ namespace RobotArmDefine {
     result__[ 10  ] = LR__[iL_lambda2__xo] * t24 - LL__[iL_lambda2__xo] * t27;
     real_type t30  = I_phi(t1);
     real_type t33  = I_phi(t2);
-    result__[ 11  ] = LR__[iL_lambda3__xo] * t30 - LL__[iL_lambda3__xo] * t33;
+    result__[ 11  ] = t30 * LR__[iL_lambda3__xo] - t33 * LL__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 12, i_segment_left, i_segment_right );
   }
@@ -543,19 +543,19 @@ namespace RobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  RobotArm::DjumpDxlp_numRows() const
+  RobotArm::DjumpDxlxlp_numRows() const
   { return 12; }
 
   integer
-  RobotArm::DjumpDxlp_numCols() const
+  RobotArm::DjumpDxlxlp_numCols() const
   { return 25; }
 
   integer
-  RobotArm::DjumpDxlp_nnz() const
+  RobotArm::DjumpDxlxlp_nnz() const
   { return 30; }
 
   void
-  RobotArm::DjumpDxlp_pattern(
+  RobotArm::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -594,7 +594,7 @@ namespace RobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  RobotArm::DjumpDxlp_sparse(
+  RobotArm::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -656,7 +656,7 @@ namespace RobotArmDefine {
     result__[ 28  ] = LR__[iL_lambda3__xo] * t19;
     result__[ 29  ] = I_phi(t10);
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 30, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 30, i_segment_left, i_segment_right );
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,8 +79,9 @@ namespace MaximumAscentDefine {
     real_type t24  = sin(t23);
     result__[ 1   ] = (t8 * t6 - 1.0 / t10) * t3 + t24 * t22;
     real_type t28  = cos(t23);
-    result__[ 2   ] = -t8 * t5 * result__[0] + t28 * t22;
-    result__[ 3   ] = t8 * t5 * t3;
+    real_type t26  = t5 * t8;
+    result__[ 2   ] = t28 * t22 - result__[0] * t26;
+    result__[ 3   ] = t3 * t26;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
@@ -134,17 +135,19 @@ namespace MaximumAscentDefine {
     real_type t5   = X__[iX_r];
     real_type t6   = t5 * t5;
     real_type t7   = 1.0 / t6;
-    result__[ 1   ] = (-t7 * t4 + 2 / t6 / t5) * result__[0];
-    real_type t13  = t3 * result__[0];
-    real_type t14  = 1.0 / t5;
+    real_type t9   = 1.0 / t5;
+    real_type t16  = result__[0];
+    result__[ 1   ] = t16 * (-t7 * t4 + 2 * t9 * t7);
+    real_type t13  = t16 * t3;
+    real_type t14  = t9;
     real_type t15  = t14 * t13;
     result__[ 2   ] = 2 * t15;
-    real_type t17  = X__[iX_u] * result__[0];
+    real_type t17  = t16 * X__[iX_u];
     result__[ 3   ] = t7 * t3 * t17;
     result__[ 4   ] = -t15;
     result__[ 5   ] = -t14 * t17;
     result__[ 6   ] = -t7 * t13;
-    result__[ 7   ] = t14 * result__[0];
+    result__[ 7   ] = t16 * t14;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 8, i_segment );
   }

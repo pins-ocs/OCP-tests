@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -92,8 +92,8 @@ namespace RobotArmDefine {
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     X__[ iX_rho    ] = 0.45e1;
-    X__[ iX_theta  ] = 2.0 / 3.0 * Q__[iQ_zeta] * 0.3141592654e1;
-    X__[ iX_phi    ] = 0.3141592654e1 / 4;
+    X__[ iX_theta  ] = 2.0 / 3.0 * Q__[iQ_zeta] * 0.314159265358979323846264338328e1;
+    X__[ iX_phi    ] = 0.314159265358979323846264338328e1 / 4;
 
     if ( m_debug )
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 6 );

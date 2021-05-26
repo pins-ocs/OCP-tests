@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -158,7 +158,7 @@ main() {
 
     // Constraint1D
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-    // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_ray_positive = data_Constraints["ray_positive"];
@@ -171,8 +171,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 gtocX_2burn_data.Mesh["s0"] = 0;
-gtocX_2burn_data.Mesh["segments"][0]["n"] = 50;
 gtocX_2burn_data.Mesh["segments"][0]["length"] = 1;
+gtocX_2burn_data.Mesh["segments"][0]["n"] = 50;
 
 
     // alias for user object classes passed as pointers

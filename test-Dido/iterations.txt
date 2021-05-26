@@ -39,11 +39,11 @@ Hyness --- start iterations ---
 [  5,  1] (6.60e-08 ,1.38e-14 ) [1.51e-06 ,1.97e-13 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 6.65[ms]      timeout        = 0 [ms]
+Elapsed Time   = 2.58[ms]      timeout        = 0 [ms]
 iteration      = 5             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 407
 max acc. iter. = 800           N. System pars = 100
-Converged      = YES           Memory Used    = 49Kb (+0bytes)
+Converged      = YES           Memory Used    = 53Kb (+0bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

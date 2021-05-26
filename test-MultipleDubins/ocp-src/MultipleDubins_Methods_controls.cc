@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,7 +70,7 @@ namespace MultipleDubinsDefine {
 
   void
   MultipleDubins::g_eval(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -110,7 +110,7 @@ namespace MultipleDubinsDefine {
 
   void
   MultipleDubins::DgDxlp_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -147,7 +147,7 @@ namespace MultipleDubinsDefine {
 
   void
   MultipleDubins::DgDu_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -170,25 +170,11 @@ namespace MultipleDubinsDefine {
    |  \_,_|_\___|\_/\__,_|_|
    |     |___|
   \*/
-  integer
-  MultipleDubins::u_numEqns() const
-  { return 0; }
 
   void
   MultipleDubins::u_eval_analytic(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
-  ) const {
-    // no controls to compute
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MultipleDubins::u_eval_analytic(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
@@ -196,31 +182,23 @@ namespace MultipleDubinsDefine {
   }
 
   /*\
-   |   ___       ___      _                       _      _   _
-   |  |   \ _  _|   \__ _| |_ __   __ _ _ _  __ _| |_  _| |_(_)__
-   |  | |) | || | |) \ \ / | '_ \ / _` | ' \/ _` | | || |  _| / _|
-   |  |___/ \_,_|___//_\_\_| .__/ \__,_|_||_\__,_|_|\_, |\__|_\__|
-   |                       |_|                      |__/
+   |  ____        ____       _      _                           _       _   _
+   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
+   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
+   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
+   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
+   |                                 |_|                          |___/
   \*/
-  void
-  MultipleDubins::DuDxlp_full_analytic(
-    NodeType2 const          & NODE__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
-  ) const {
-    // no controls, no jacobian to compute
-  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  MultipleDubins::DuDxlp_full_analytic(
-    NodeType2 const          & LEFT__,
-    NodeType2 const          & RIGHT__,
+  MultipleDubins::DuDxlxlp_full_analytic(
+    NodeType2 const &          LEFT__,
+    NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
     U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
+    MatrixWrapper<real_type> & DuDxlxlp
   ) const {
     // no controls to compute
   }
@@ -234,7 +212,7 @@ namespace MultipleDubinsDefine {
 
   real_type
   MultipleDubins::m_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -279,7 +257,7 @@ namespace MultipleDubinsDefine {
 
   void
   MultipleDubins::DmDu_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -319,7 +297,7 @@ namespace MultipleDubinsDefine {
 
   void
   MultipleDubins::DmDuu_sparse(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

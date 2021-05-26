@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -86,7 +86,7 @@ namespace RobotArmDefine {
 
   void
   RobotArm::g_eval(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -96,13 +96,13 @@ namespace RobotArmDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t5   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
-    result__[ 0   ] = t5 * t2 + t2 * L__[iL_lambda1__xo];
-    real_type t10  = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
-    result__[ 1   ] = t10 * t2 + t2 * L__[iL_lambda2__xo];
-    real_type t15  = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);
-    result__[ 2   ] = t15 * t2 + t2 * L__[iL_lambda3__xo];
+    real_type t1   = P__[iP_T];
+    real_type t3   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
+    result__[ 0   ] = t3 * t1 + t1 * L__[iL_lambda1__xo];
+    real_type t8   = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
+    result__[ 1   ] = t8 * t1 + t1 * L__[iL_lambda2__xo];
+    real_type t13  = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);
+    result__[ 2   ] = t13 * t1 + t1 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 3, i_segment );
   }
@@ -138,7 +138,7 @@ namespace RobotArmDefine {
 
   void
   RobotArm::DgDxlp_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -149,14 +149,14 @@ namespace RobotArmDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = P__[iP_T];
-    real_type t3   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
-    result__[ 1   ] = L__[iL_lambda1__xo] + t3;
+    real_type t2   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
+    result__[ 1   ] = t2 + L__[iL_lambda1__xo];
     result__[ 2   ] = result__[0];
-    real_type t6   = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
-    result__[ 3   ] = L__[iL_lambda2__xo] + t6;
+    real_type t5   = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
+    result__[ 3   ] = t5 + L__[iL_lambda2__xo];
     result__[ 4   ] = result__[2];
-    real_type t9   = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);
-    result__[ 5   ] = L__[iL_lambda3__xo] + t9;
+    real_type t8   = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);
+    result__[ 5   ] = t8 + L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 6, i_segment );
   }
@@ -189,7 +189,7 @@ namespace RobotArmDefine {
 
   void
   RobotArm::DgDu_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -225,160 +225,251 @@ namespace RobotArmDefine {
    |  \_,_|_\___|\_/\__,_|_|
    |     |___|
   \*/
-  integer
-  RobotArm::u_numEqns() const
-  { return 3; }
 
   void
   RobotArm::u_eval_analytic(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1];
+    real_type XM__[6];
+    real_type LM__[6];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    U__[ iU_u_rho   ] = u_rhoControl.solve(-L__[iL_lambda1__xo], -1, 1);
-    U__[ iU_u_theta ] = u_thetaControl.solve(-L__[iL_lambda2__xo], -1, 1);
-    U__[ iU_u_phi   ] = u_phiControl.solve(-L__[iL_lambda3__xo], -1, 1);
+    U__[ iU_u_rho   ] = u_rhoControl.solve(-LM__[0], -1, 1);
+    U__[ iU_u_theta ] = u_thetaControl.solve(-LM__[1], -1, 1);
+    U__[ iU_u_phi   ] = u_phiControl.solve(-LM__[2], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 3 );
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  RobotArm::u_eval_analytic(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
-  ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[6];
-    real_type L__[6];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
-    X__[5] = (LEFT__.x[5]+RIGHT__.x[5])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    L__[5] = (LEFT__.lambda[5]+RIGHT__.lambda[5])/2;
-    this->u_eval_analytic( NODE__, P__, U__ );
-  }
-
   /*\
-   |   ___       ___      _                       _      _   _
-   |  |   \ _  _|   \__ _| |_ __   __ _ _ _  __ _| |_  _| |_(_)__
-   |  | |) | || | |) \ \ / | '_ \ / _` | ' \/ _` | | || |  _| / _|
-   |  |___/ \_,_|___//_\_\_| .__/ \__,_|_||_\__,_|_|\_, |\__|_\__|
-   |                       |_|                      |__/
+   |  ____        ____       _      _                           _       _   _
+   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
+   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
+   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
+   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
+   |                                 |_|                          |___/
   \*/
-  void
-  RobotArm::DuDxlp_full_analytic(
-    NodeType2 const          & NODE__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
-  ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = 0;
-    DuDxlp(1, 0) = 0;
-    DuDxlp(2, 0) = 0;
-    DuDxlp(0, 1) = 0;
-    DuDxlp(1, 1) = 0;
-    DuDxlp(2, 1) = 0;
-    DuDxlp(0, 2) = 0;
-    DuDxlp(1, 2) = 0;
-    DuDxlp(2, 2) = 0;
-    DuDxlp(0, 3) = 0;
-    DuDxlp(1, 3) = 0;
-    DuDxlp(2, 3) = 0;
-    DuDxlp(0, 4) = 0;
-    DuDxlp(1, 4) = 0;
-    DuDxlp(2, 4) = 0;
-    DuDxlp(0, 5) = 0;
-    DuDxlp(1, 5) = 0;
-    DuDxlp(2, 5) = 0;
-    DuDxlp(0, 6) = -u_rhoControl.solve_rhs(-L__[iL_lambda1__xo], -1, 1);
-    DuDxlp(1, 6) = 0;
-    DuDxlp(2, 6) = 0;
-    DuDxlp(0, 7) = 0;
-    DuDxlp(1, 7) = -u_thetaControl.solve_rhs(-L__[iL_lambda2__xo], -1, 1);
-    DuDxlp(2, 7) = 0;
-    DuDxlp(0, 8) = 0;
-    DuDxlp(1, 8) = 0;
-    DuDxlp(2, 8) = -u_phiControl.solve_rhs(-L__[iL_lambda3__xo], -1, 1);
-    DuDxlp(0, 9) = 0;
-    DuDxlp(1, 9) = 0;
-    DuDxlp(2, 9) = 0;
-    DuDxlp(0, 10) = 0;
-    DuDxlp(1, 10) = 0;
-    DuDxlp(2, 10) = 0;
-    DuDxlp(0, 11) = 0;
-    DuDxlp(1, 11) = 0;
-    DuDxlp(2, 11) = 0;
-    DuDxlp(0, 12) = 0;
-    DuDxlp(1, 12) = 0;
-    DuDxlp(2, 12) = 0;
-    if ( m_debug )
-      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 3 );
-  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  RobotArm::DuDxlp_full_analytic(
-    NodeType2 const          & LEFT__,
-    NodeType2 const          & RIGHT__,
+  RobotArm::DuDxlxlp_full_analytic(
+    NodeType2 const &          LEFT__,
+    NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
     U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
+    MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[6];
-    real_type L__[6];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1];
+    real_type XM__[6];
+    real_type LM__[6];
     // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
-    X__[5] = (LEFT__.x[5]+RIGHT__.x[5])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
     // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    L__[5] = (LEFT__.lambda[5]+RIGHT__.lambda[5])/2;
-    this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    integer i_segment = LEFT__.i_segment;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type tmp_0_0 = 0.0e0;
+    real_type tmp_1_0 = 0.0e0;
+    real_type tmp_2_0 = 0.0e0;
+    real_type tmp_0_1 = 0.0e0;
+    real_type tmp_1_1 = 0.0e0;
+    real_type tmp_2_1 = 0.0e0;
+    real_type tmp_0_2 = 0.0e0;
+    real_type tmp_1_2 = 0.0e0;
+    real_type tmp_2_2 = 0.0e0;
+    real_type tmp_0_3 = 0.0e0;
+    real_type tmp_1_3 = 0.0e0;
+    real_type tmp_2_3 = 0.0e0;
+    real_type tmp_0_4 = 0.0e0;
+    real_type tmp_1_4 = 0.0e0;
+    real_type tmp_2_4 = 0.0e0;
+    real_type tmp_0_5 = 0.0e0;
+    real_type tmp_1_5 = 0.0e0;
+    real_type tmp_2_5 = 0.0e0;
+    real_type t2   = u_rhoControl.solve_rhs(-LM__[0], -1, 1);
+    real_type tmp_0_6 = -0.5e0 * t2;
+    real_type tmp_1_6 = 0.0e0;
+    real_type tmp_2_6 = 0.0e0;
+    real_type tmp_0_7 = 0.0e0;
+    real_type t5   = u_thetaControl.solve_rhs(-LM__[1], -1, 1);
+    real_type tmp_1_7 = -0.5e0 * t5;
+    real_type tmp_2_7 = 0.0e0;
+    real_type tmp_0_8 = 0.0e0;
+    real_type tmp_1_8 = 0.0e0;
+    real_type t8   = u_phiControl.solve_rhs(-LM__[2], -1, 1);
+    real_type tmp_2_8 = -0.5e0 * t8;
+    real_type tmp_0_9 = 0.0e0;
+    real_type tmp_1_9 = 0.0e0;
+    real_type tmp_2_9 = 0.0e0;
+    real_type tmp_0_10 = 0.0e0;
+    real_type tmp_1_10 = 0.0e0;
+    real_type tmp_2_10 = 0.0e0;
+    real_type tmp_0_11 = 0.0e0;
+    real_type tmp_1_11 = 0.0e0;
+    real_type tmp_2_11 = 0.0e0;
+    real_type tmp_0_12 = 0.0e0;
+    real_type tmp_1_12 = 0.0e0;
+    real_type tmp_2_12 = 0.0e0;
+    real_type tmp_0_13 = 0.0e0;
+    real_type tmp_1_13 = 0.0e0;
+    real_type tmp_2_13 = 0.0e0;
+    real_type tmp_0_14 = 0.0e0;
+    real_type tmp_1_14 = 0.0e0;
+    real_type tmp_2_14 = 0.0e0;
+    real_type tmp_0_15 = 0.0e0;
+    real_type tmp_1_15 = 0.0e0;
+    real_type tmp_2_15 = 0.0e0;
+    real_type tmp_0_16 = 0.0e0;
+    real_type tmp_1_16 = 0.0e0;
+    real_type tmp_2_16 = 0.0e0;
+    real_type tmp_0_17 = 0.0e0;
+    real_type tmp_1_17 = 0.0e0;
+    real_type tmp_2_17 = 0.0e0;
+    real_type tmp_0_18 = tmp_0_6;
+    real_type tmp_1_18 = 0.0e0;
+    real_type tmp_2_18 = 0.0e0;
+    real_type tmp_0_19 = 0.0e0;
+    real_type tmp_1_19 = tmp_1_7;
+    real_type tmp_2_19 = 0.0e0;
+    real_type tmp_0_20 = 0.0e0;
+    real_type tmp_1_20 = 0.0e0;
+    real_type tmp_2_20 = tmp_2_8;
+    real_type tmp_0_21 = 0.0e0;
+    real_type tmp_1_21 = 0.0e0;
+    real_type tmp_2_21 = 0.0e0;
+    real_type tmp_0_22 = 0.0e0;
+    real_type tmp_1_22 = 0.0e0;
+    real_type tmp_2_22 = 0.0e0;
+    real_type tmp_0_23 = 0.0e0;
+    real_type tmp_1_23 = 0.0e0;
+    real_type tmp_2_23 = 0.0e0;
+    real_type tmp_0_24 = 0.0e0;
+    real_type tmp_1_24 = 0.0e0;
+    real_type tmp_2_24 = 0.0e0;
+    DuDxlxlp(0, 0) = tmp_0_0;
+    DuDxlxlp(1, 0) = tmp_1_0;
+    DuDxlxlp(2, 0) = tmp_2_0;
+    DuDxlxlp(0, 1) = tmp_0_1;
+    DuDxlxlp(1, 1) = tmp_1_1;
+    DuDxlxlp(2, 1) = tmp_2_1;
+    DuDxlxlp(0, 2) = tmp_0_2;
+    DuDxlxlp(1, 2) = tmp_1_2;
+    DuDxlxlp(2, 2) = tmp_2_2;
+    DuDxlxlp(0, 3) = tmp_0_3;
+    DuDxlxlp(1, 3) = tmp_1_3;
+    DuDxlxlp(2, 3) = tmp_2_3;
+    DuDxlxlp(0, 4) = tmp_0_4;
+    DuDxlxlp(1, 4) = tmp_1_4;
+    DuDxlxlp(2, 4) = tmp_2_4;
+    DuDxlxlp(0, 5) = tmp_0_5;
+    DuDxlxlp(1, 5) = tmp_1_5;
+    DuDxlxlp(2, 5) = tmp_2_5;
+    DuDxlxlp(0, 6) = tmp_0_6;
+    DuDxlxlp(1, 6) = tmp_1_6;
+    DuDxlxlp(2, 6) = tmp_2_6;
+    DuDxlxlp(0, 7) = tmp_0_7;
+    DuDxlxlp(1, 7) = tmp_1_7;
+    DuDxlxlp(2, 7) = tmp_2_7;
+    DuDxlxlp(0, 8) = tmp_0_8;
+    DuDxlxlp(1, 8) = tmp_1_8;
+    DuDxlxlp(2, 8) = tmp_2_8;
+    DuDxlxlp(0, 9) = tmp_0_9;
+    DuDxlxlp(1, 9) = tmp_1_9;
+    DuDxlxlp(2, 9) = tmp_2_9;
+    DuDxlxlp(0, 10) = tmp_0_10;
+    DuDxlxlp(1, 10) = tmp_1_10;
+    DuDxlxlp(2, 10) = tmp_2_10;
+    DuDxlxlp(0, 11) = tmp_0_11;
+    DuDxlxlp(1, 11) = tmp_1_11;
+    DuDxlxlp(2, 11) = tmp_2_11;
+    DuDxlxlp(0, 12) = tmp_0_12;
+    DuDxlxlp(1, 12) = tmp_1_12;
+    DuDxlxlp(2, 12) = tmp_2_12;
+    DuDxlxlp(0, 13) = tmp_0_13;
+    DuDxlxlp(1, 13) = tmp_1_13;
+    DuDxlxlp(2, 13) = tmp_2_13;
+    DuDxlxlp(0, 14) = tmp_0_14;
+    DuDxlxlp(1, 14) = tmp_1_14;
+    DuDxlxlp(2, 14) = tmp_2_14;
+    DuDxlxlp(0, 15) = tmp_0_15;
+    DuDxlxlp(1, 15) = tmp_1_15;
+    DuDxlxlp(2, 15) = tmp_2_15;
+    DuDxlxlp(0, 16) = tmp_0_16;
+    DuDxlxlp(1, 16) = tmp_1_16;
+    DuDxlxlp(2, 16) = tmp_2_16;
+    DuDxlxlp(0, 17) = tmp_0_17;
+    DuDxlxlp(1, 17) = tmp_1_17;
+    DuDxlxlp(2, 17) = tmp_2_17;
+    DuDxlxlp(0, 18) = tmp_0_18;
+    DuDxlxlp(1, 18) = tmp_1_18;
+    DuDxlxlp(2, 18) = tmp_2_18;
+    DuDxlxlp(0, 19) = tmp_0_19;
+    DuDxlxlp(1, 19) = tmp_1_19;
+    DuDxlxlp(2, 19) = tmp_2_19;
+    DuDxlxlp(0, 20) = tmp_0_20;
+    DuDxlxlp(1, 20) = tmp_1_20;
+    DuDxlxlp(2, 20) = tmp_2_20;
+    DuDxlxlp(0, 21) = tmp_0_21;
+    DuDxlxlp(1, 21) = tmp_1_21;
+    DuDxlxlp(2, 21) = tmp_2_21;
+    DuDxlxlp(0, 22) = tmp_0_22;
+    DuDxlxlp(1, 22) = tmp_1_22;
+    DuDxlxlp(2, 22) = tmp_2_22;
+    DuDxlxlp(0, 23) = tmp_0_23;
+    DuDxlxlp(1, 23) = tmp_1_23;
+    DuDxlxlp(2, 23) = tmp_2_23;
+    DuDxlxlp(0, 24) = tmp_0_24;
+    DuDxlxlp(1, 24) = tmp_1_24;
+    DuDxlxlp(2, 24) = tmp_2_24;
+    if ( m_debug )
+      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 75 );
   }
 
   /*\
@@ -390,7 +481,7 @@ namespace RobotArmDefine {
 
   real_type
   RobotArm::m_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -430,7 +521,7 @@ namespace RobotArmDefine {
 
   void
   RobotArm::DmDu_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -485,7 +576,7 @@ namespace RobotArmDefine {
 
   void
   RobotArm::DmDuu_sparse(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

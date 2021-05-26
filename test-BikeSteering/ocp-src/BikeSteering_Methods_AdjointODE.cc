@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -90,7 +90,10 @@ namespace BikeSteeringDefine {
     real_type t8   = ModelPars[iM_h];
     result__[ 1   ] = t8 * t7 * t2 * t3;
     real_type t10  = ALIAS_minimumTimeSize_D(t2);
-    result__[ 2   ] = t10 + X__[iX_omega] * t1 + (X__[iX_phi] * t8 * t7 - U__[iU_Fy] * t8) * t3;
+    real_type t11  = U__[iU_Fy];
+    real_type t12  = ModelPars[iM_Fmax];
+    real_type t13  = FyControl(t11, -t12, t12);
+    result__[ 2   ] = t10 + t13 + X__[iX_omega] * t1 + (X__[iX_phi] * t8 * t7 - t11 * t8) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
@@ -202,7 +205,10 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = -L__[iL_lambda2__xo] * X__[iX_TimeSize] * ModelPars[iM_h];
+    real_type t1   = X__[iX_TimeSize];
+    real_type t3   = ModelPars[iM_Fmax];
+    real_type t4   = ALIAS_FyControl_D_1(U__[iU_Fy], -t3, t3);
+    result__[ 0   ] = -ModelPars[iM_h] * t1 * L__[iL_lambda2__xo] + t4 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -243,7 +249,9 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = -L__[iL_lambda2__xo] * ModelPars[iM_h];
+    real_type t2   = ModelPars[iM_Fmax];
+    real_type t3   = ALIAS_FyControl_D_1(U__[iU_Fy], -t2, t2);
+    result__[ 0   ] = -L__[iL_lambda2__xo] * ModelPars[iM_h] + t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
@@ -455,7 +463,7 @@ namespace BikeSteeringDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = V__[1];
-    result__[ 1   ] = V__[0] * ModelPars[iM_Ix];
+    result__[ 1   ] = ModelPars[iM_Ix] * V__[0];
     result__[ 2   ] = V__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );

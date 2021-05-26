@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_controls.cc                |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,7 +70,7 @@ namespace SingularConstrainedCalogeroDefine {
 
   void
   SingularConstrainedCalogero::g_eval(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -83,8 +83,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type t1   = U__[iU_u];
     real_type t3   = Q__[iQ_zeta];
     real_type t5   = ALIAS_uMaxBound_D(t1 - 1 - X__[iX_x] + t3);
-    real_type t7   = ALIAS_uControl_D_1(t1, 0, 2);
-    result__[ 0   ] = t5 + t3 - 4 + L__[iL_lambda1__xo] + t7;
+    real_type t6   = ALIAS_uControl_D_1(t1, 0, 2);
+    result__[ 0   ] = t5 + t6 + t3 - 4 + L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -116,7 +116,7 @@ namespace SingularConstrainedCalogeroDefine {
 
   void
   SingularConstrainedCalogero::DgDxlp_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -159,7 +159,7 @@ namespace SingularConstrainedCalogeroDefine {
 
   void
   SingularConstrainedCalogero::DgDu_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -192,101 +192,84 @@ namespace SingularConstrainedCalogeroDefine {
    |  \_,_|_\___|\_/\__,_|_|
    |     |___|
   \*/
-  integer
-  SingularConstrainedCalogero::u_numEqns() const
-  { return 1; }
 
   void
   SingularConstrainedCalogero::u_eval_analytic(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1];
+    real_type XM__[1];
+    real_type LM__[1];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_u ] = 0;
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  SingularConstrainedCalogero::u_eval_analytic(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
-  ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[1];
-    real_type L__[1];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    this->u_eval_analytic( NODE__, P__, U__ );
-  }
-
   /*\
-   |   ___       ___      _                       _      _   _
-   |  |   \ _  _|   \__ _| |_ __   __ _ _ _  __ _| |_  _| |_(_)__
-   |  | |) | || | |) \ \ / | '_ \ / _` | ' \/ _` | | || |  _| / _|
-   |  |___/ \_,_|___//_\_\_| .__/ \__,_|_||_\__,_|_|\_, |\__|_\__|
-   |                       |_|                      |__/
+   |  ____        ____       _      _                           _       _   _
+   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
+   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
+   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
+   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
+   |                                 |_|                          |___/
   \*/
-  void
-  SingularConstrainedCalogero::DuDxlp_full_analytic(
-    NodeType2 const          & NODE__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
-  ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = 0;
-    DuDxlp(0, 1) = 0;
-    if ( m_debug )
-      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 1 );
-  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularConstrainedCalogero::DuDxlp_full_analytic(
-    NodeType2 const          & LEFT__,
-    NodeType2 const          & RIGHT__,
+  SingularConstrainedCalogero::DuDxlxlp_full_analytic(
+    NodeType2 const &          LEFT__,
+    NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
     U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
+    MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[1];
-    real_type L__[1];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1];
+    real_type XM__[1];
+    real_type LM__[1];
     // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
     // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    integer i_segment = LEFT__.i_segment;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type tmp_0_0 = 0.0e0;
+    real_type tmp_0_1 = 0.0e0;
+    real_type tmp_0_2 = 0.0e0;
+    real_type tmp_0_3 = 0.0e0;
+    DuDxlxlp(0, 0) = tmp_0_0;
+    DuDxlxlp(0, 1) = tmp_0_1;
+    DuDxlxlp(0, 2) = tmp_0_2;
+    DuDxlxlp(0, 3) = tmp_0_3;
+    if ( m_debug )
+      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 4 );
   }
 
   /*\
@@ -298,7 +281,7 @@ namespace SingularConstrainedCalogeroDefine {
 
   real_type
   SingularConstrainedCalogero::m_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -326,7 +309,7 @@ namespace SingularConstrainedCalogeroDefine {
 
   void
   SingularConstrainedCalogero::DmDu_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -370,7 +353,7 @@ namespace SingularConstrainedCalogeroDefine {
 
   void
   SingularConstrainedCalogero::DmDuu_sparse(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

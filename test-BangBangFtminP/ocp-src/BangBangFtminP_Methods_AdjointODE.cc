@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtminP_Methods_AdjointODE.cc                           |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -185,7 +185,9 @@ namespace BangBangFtminPDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda2__xo] * P__[iP_T];
+    real_type t1   = P__[iP_T];
+    real_type t3   = ALIAS_Fcontrol_D_1(U__[iU_F], -1, 1);
+    result__[ 0   ] = t3 * t1 + t1 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -259,7 +261,8 @@ namespace BangBangFtminPDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda2__xo];
+    real_type t2   = ALIAS_Fcontrol_D_1(U__[iU_F], -1, 1);
+    result__[ 0   ] = t2 + L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
@@ -290,7 +293,9 @@ namespace BangBangFtminPDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda2__xo] * U__[iU_F];
+    real_type t1   = U__[iU_F];
+    real_type t2   = Fcontrol(t1, -1, 1);
+    result__[ 0   ] = t1 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }

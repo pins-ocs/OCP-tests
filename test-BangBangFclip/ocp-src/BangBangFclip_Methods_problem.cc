@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -97,11 +97,11 @@ namespace BangBangFclipDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t8   = clip(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    real_type t11  = U__[iU_vF];
-    real_type t13  = ModelPars[iM_vFmax];
-    real_type t14  = controlForce(t11, -t13, t13);
-    real_type result__ = t11 * L__[iL_lambda3__xo] + t8 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t14;
+    real_type t1   = U__[iU_vF];
+    real_type t2   = ModelPars[iM_vFmax];
+    real_type t3   = controlForce(t1, -t2, t2);
+    real_type t11  = clip(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    real_type result__ = t1 * L__[iL_lambda3__xo] + t11 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t3;
     return result__;
   }
 #else
@@ -116,11 +116,11 @@ namespace BangBangFclipDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t8   = clip(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    real_type t11  = U__[iU_vF];
-    real_type t13  = ModelPars[iM_vFmax];
-    real_type t14  = controlForce(t11, -t13, t13);
-    real_type result__ = t11 * L__[iL_lambda3__xo] + t8 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t14;
+    real_type t1   = U__[iU_vF];
+    real_type t2   = ModelPars[iM_vFmax];
+    real_type t3   = controlForce(t1, -t2, t2);
+    real_type t11  = clip(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    real_type result__ = t1 * L__[iL_lambda3__xo] + t11 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t3;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -463,19 +463,19 @@ namespace BangBangFclipDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFclip::DjumpDxlp_numRows() const
+  BangBangFclip::DjumpDxlxlp_numRows() const
   { return 6; }
 
   integer
-  BangBangFclip::DjumpDxlp_numCols() const
+  BangBangFclip::DjumpDxlxlp_numCols() const
   { return 12; }
 
   integer
-  BangBangFclip::DjumpDxlp_nnz() const
+  BangBangFclip::DjumpDxlxlp_nnz() const
   { return 12; }
 
   void
-  BangBangFclip::DjumpDxlp_pattern(
+  BangBangFclip::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -496,7 +496,7 @@ namespace BangBangFclipDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFclip::DjumpDxlp_sparse(
+  BangBangFclip::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -525,7 +525,7 @@ namespace BangBangFclipDefine {
     result__[ 10  ] = -1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

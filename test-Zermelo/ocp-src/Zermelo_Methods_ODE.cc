@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_ODE.cc                                         |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -142,10 +142,10 @@ namespace ZermeloDefine {
     real_type t7   = velX(t2, t3);
     result__[ 3   ] = X__[iX_vx] + t7;
     real_type t8   = velY_D_1(t2, t3);
-    result__[ 4   ] = t8 * result__[2];
+    result__[ 4   ] = t8 * t1;
     real_type t9   = velY_D_2(t2, t3);
-    result__[ 5   ] = t9 * result__[2];
-    result__[ 6   ] = result__[2];
+    result__[ 5   ] = t9 * t1;
+    result__[ 6   ] = t1;
     real_type t11  = velY(t2, t3);
     result__[ 7   ] = X__[iX_vy] + t11;
     real_type t12  = ModelPars[iM_S];

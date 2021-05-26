@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Data.lua                                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,12 +20,12 @@
 -- User Header
 
 -- Auxiliary values
-cL_max   = 1.4
-epsi_max = 0.01
-W0       = 1000
 cL_min   = 0
-W        = W0
+epsi_max = 0.01
 tol_max  = 0.01
+cL_max   = 1.4
+W0       = 1000
+W        = W0
 
 content = {
 
@@ -183,8 +183,8 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-  -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     cLControl = {
       type      = ,
@@ -196,7 +196,7 @@ content = {
   Constraints = {
   -- Constraint1D
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DGreaterThan
     TboundsubType   = "BARRIER_LOG",
     Tboundepsilon   = 0.1,

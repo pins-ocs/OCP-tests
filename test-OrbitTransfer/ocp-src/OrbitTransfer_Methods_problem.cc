@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -454,19 +454,19 @@ namespace OrbitTransferDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  OrbitTransfer::DjumpDxlp_numRows() const
+  OrbitTransfer::DjumpDxlxlp_numRows() const
   { return 10; }
 
   integer
-  OrbitTransfer::DjumpDxlp_numCols() const
+  OrbitTransfer::DjumpDxlxlp_numCols() const
   { return 20; }
 
   integer
-  OrbitTransfer::DjumpDxlp_nnz() const
+  OrbitTransfer::DjumpDxlxlp_nnz() const
   { return 20; }
 
   void
-  OrbitTransfer::DjumpDxlp_pattern(
+  OrbitTransfer::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -495,7 +495,7 @@ namespace OrbitTransferDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  OrbitTransfer::DjumpDxlp_sparse(
+  OrbitTransfer::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -532,7 +532,7 @@ namespace OrbitTransferDefine {
     result__[ 18  ] = -1;
     result__[ 19  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 20, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 20, i_segment_left, i_segment_right );
   }
 
   /*\

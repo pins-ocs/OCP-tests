@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Methods_problem.cc                              |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,9 +87,9 @@ namespace SingularLuus04Define {
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = X__[iX_x] * X__[iX_x];
-    real_type t10  = U__[iU_u];
-    real_type t14  = uControl(t10, -1, 1);
-    real_type result__ = t2 + L__[iL_lambda1__xo] * X__[iX_y] + L__[iL_lambda2__xo] * X__[iX_z] + t10 * L__[iL_lambda3__xo] + t14 * (t2 + ModelPars[iM_epsilon_X]);
+    real_type t5   = U__[iU_u];
+    real_type t6   = uControl(t5, -1, 1);
+    real_type result__ = t6 * (t2 + ModelPars[iM_epsilon_X]) + t2 + L__[iL_lambda1__xo] * X__[iX_y] + L__[iL_lambda2__xo] * X__[iX_z] + t5 * L__[iL_lambda3__xo];
     return result__;
   }
 #else
@@ -105,9 +105,9 @@ namespace SingularLuus04Define {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = X__[iX_x] * X__[iX_x];
-    real_type t10  = U__[iU_u];
-    real_type t14  = uControl(t10, -1, 1);
-    real_type result__ = t2 + L__[iL_lambda1__xo] * X__[iX_y] + L__[iL_lambda2__xo] * X__[iX_z] + t10 * L__[iL_lambda3__xo] + t14 * (t2 + ModelPars[iM_epsilon_X]);
+    real_type t5   = U__[iU_u];
+    real_type t6   = uControl(t5, -1, 1);
+    real_type result__ = t6 * (t2 + ModelPars[iM_epsilon_X]) + t2 + L__[iL_lambda1__xo] * X__[iX_y] + L__[iL_lambda2__xo] * X__[iX_z] + t5 * L__[iL_lambda3__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -453,19 +453,19 @@ namespace SingularLuus04Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularLuus04::DjumpDxlp_numRows() const
+  SingularLuus04::DjumpDxlxlp_numRows() const
   { return 6; }
 
   integer
-  SingularLuus04::DjumpDxlp_numCols() const
+  SingularLuus04::DjumpDxlxlp_numCols() const
   { return 12; }
 
   integer
-  SingularLuus04::DjumpDxlp_nnz() const
+  SingularLuus04::DjumpDxlxlp_nnz() const
   { return 12; }
 
   void
-  SingularLuus04::DjumpDxlp_pattern(
+  SingularLuus04::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -486,7 +486,7 @@ namespace SingularLuus04Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularLuus04::DjumpDxlp_sparse(
+  SingularLuus04::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -515,7 +515,7 @@ namespace SingularLuus04Define {
     result__[ 10  ] = -1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

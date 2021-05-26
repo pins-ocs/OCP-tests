@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -176,16 +176,16 @@ namespace UnderwaterDefine {
     result__[ 4   ] = -result__[2];
     result__[ 5   ] = result__[1];
     result__[ 6   ] = t1;
-    real_type t14  = X__[iX_Omega] * result__[6];
+    real_type t14  = X__[iX_Omega] * t1;
     real_type t15  = ModelPars[iM_m3];
     real_type t16  = ModelPars[iM_m1];
     real_type t18  = 1.0 / t16 * t15;
     result__[ 7   ] = -t18 * t14;
-    real_type t20  = t2 * result__[6];
+    real_type t20  = t2 * t1;
     result__[ 8   ] = -t18 * t20;
     real_type t23  = 1.0 / t15 * t16;
     result__[ 9   ] = t23 * t14;
-    real_type t24  = t6 * result__[6];
+    real_type t24  = t6 * t1;
     result__[ 10  ] = t23 * t24;
     real_type t28  = 1.0 / ModelPars[iM_inertia] * (t15 - t16);
     result__[ 11  ] = t28 * t20;
@@ -245,9 +245,10 @@ namespace UnderwaterDefine {
     real_type t11  = ModelPars[iM_m1];
     real_type t12  = 1.0 / t11;
     real_type t15  = ModelPars[iM_m3];
-    result__[ 3   ] = -t12 * t15 * result__[2] * t5 + t12 * U__[iU_u1];
+    real_type t13  = result__[2];
+    result__[ 3   ] = -t5 * t13 * t12 * t15 + t12 * U__[iU_u1];
     real_type t19  = 1.0 / t15;
-    result__[ 4   ] = t19 * t11 * result__[2] * t1 + t19 * U__[iU_u2];
+    result__[ 4   ] = t1 * t13 * t19 * t11 + t19 * U__[iU_u2];
     real_type t26  = 1.0 / ModelPars[iM_inertia];
     result__[ 5   ] = t26 * U__[iU_u3] + t26 * (t15 - t11) * t5 * t1;
     if ( m_debug )

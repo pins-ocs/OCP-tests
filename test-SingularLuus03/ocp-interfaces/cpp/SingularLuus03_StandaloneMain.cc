@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus03_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -147,8 +147,8 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-    // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
     data_uControl["type"]      = ;
@@ -163,8 +163,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularLuus03_data.Mesh["s0"] = 0;
-SingularLuus03_data.Mesh["segments"][0]["length"] = Tf;
 SingularLuus03_data.Mesh["segments"][0]["n"] = 5000;
+SingularLuus03_data.Mesh["segments"][0]["length"] = Tf;
 
 
     // alias for user object classes passed as pointers

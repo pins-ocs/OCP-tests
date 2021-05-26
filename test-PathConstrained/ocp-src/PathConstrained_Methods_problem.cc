@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -102,11 +102,11 @@ namespace PathConstrainedDefine {
     real_type t5   = X__[iX_x2];
     real_type t7   = x2bound(8 * t3 - 0.5e0 - t5);
     real_type t8   = U__[iU_u];
-    real_type t9   = t8 * t8;
-    real_type t12  = X__[iX_x1] * X__[iX_x1];
-    real_type t13  = t5 * t5;
-    real_type t19  = uControl(t8, -20, 20);
-    real_type result__ = t7 + 0.5e-2 * t9 + t12 + t13 + t5 * L__[iL_lambda1__xo] + (-t5 + t8) * L__[iL_lambda2__xo] + t19;
+    real_type t9   = uControl(t8, -20, 20);
+    real_type t10  = t8 * t8;
+    real_type t13  = X__[iX_x1] * X__[iX_x1];
+    real_type t14  = t5 * t5;
+    real_type result__ = t7 + t9 + 0.5e-2 * t10 + t13 + t14 + t5 * L__[iL_lambda1__xo] + (-t5 + t8) * L__[iL_lambda2__xo];
     return result__;
   }
 #else
@@ -125,11 +125,11 @@ namespace PathConstrainedDefine {
     real_type t5   = X__[iX_x2];
     real_type t7   = x2bound(8 * t3 - 0.5e0 - t5);
     real_type t8   = U__[iU_u];
-    real_type t9   = t8 * t8;
-    real_type t12  = X__[iX_x1] * X__[iX_x1];
-    real_type t13  = t5 * t5;
-    real_type t19  = uControl(t8, -20, 20);
-    real_type result__ = t7 + 0.5e-2 * t9 + t12 + t13 + t5 * L__[iL_lambda1__xo] + (-t5 + t8) * L__[iL_lambda2__xo] + t19;
+    real_type t9   = uControl(t8, -20, 20);
+    real_type t10  = t8 * t8;
+    real_type t13  = X__[iX_x1] * X__[iX_x1];
+    real_type t14  = t5 * t5;
+    real_type result__ = t7 + t9 + 0.5e-2 * t10 + t13 + t14 + t5 * L__[iL_lambda1__xo] + (-t5 + t8) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -471,19 +471,19 @@ namespace PathConstrainedDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  PathConstrained::DjumpDxlp_numRows() const
+  PathConstrained::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  PathConstrained::DjumpDxlp_numCols() const
+  PathConstrained::DjumpDxlxlp_numCols() const
   { return 8; }
 
   integer
-  PathConstrained::DjumpDxlp_nnz() const
+  PathConstrained::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  PathConstrained::DjumpDxlp_pattern(
+  PathConstrained::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -500,7 +500,7 @@ namespace PathConstrainedDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PathConstrained::DjumpDxlp_sparse(
+  PathConstrained::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -525,7 +525,7 @@ namespace PathConstrainedDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

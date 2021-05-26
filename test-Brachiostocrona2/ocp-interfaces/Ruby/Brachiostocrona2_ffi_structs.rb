@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: Brachiostocrona2_ffi_structs.rb                                   #
 #                                                                          #
-#  version: 1.0   date 9/3/2021                                            #
+#  version: 1.0   date 3/6/2021                                            #
 #                                                                          #
 #  Copyright (C) 2021                                                      #
 #                                                                          #
@@ -88,6 +88,9 @@ module Brachiostocrona2
   class Brachiostocrona2_constraints_params < FFI::Struct
     layout(
       # 1D constraints
+      :TimePositiveSubType,   :index_t,
+      :TimePositiveEpsilon,   :data_t,
+      :TimePositiveTolerance, :data_t,
 
       # 2D constraints
 

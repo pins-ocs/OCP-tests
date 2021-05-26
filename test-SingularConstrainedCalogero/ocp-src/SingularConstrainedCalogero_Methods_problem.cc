@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_problem.cc                 |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -93,8 +93,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type t1   = U__[iU_u];
     real_type t3   = Q__[iQ_zeta];
     real_type t5   = uMaxBound(t1 - 1 - X__[iX_x] + t3);
-    real_type t10  = uControl(t1, 0, 2);
-    real_type result__ = t5 + (t3 - 4) * t1 + t1 * L__[iL_lambda1__xo] + t10;
+    real_type t6   = uControl(t1, 0, 2);
+    real_type result__ = t5 + t6 + (t3 - 4) * t1 + t1 * L__[iL_lambda1__xo];
     return result__;
   }
 #else
@@ -112,8 +112,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type t1   = U__[iU_u];
     real_type t3   = Q__[iQ_zeta];
     real_type t5   = uMaxBound(t1 - 1 - X__[iX_x] + t3);
-    real_type t10  = uControl(t1, 0, 2);
-    real_type result__ = t5 + (t3 - 4) * t1 + t1 * L__[iL_lambda1__xo] + t10;
+    real_type t6   = uControl(t1, 0, 2);
+    real_type result__ = t5 + t6 + (t3 - 4) * t1 + t1 * L__[iL_lambda1__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -448,19 +448,19 @@ namespace SingularConstrainedCalogeroDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularConstrainedCalogero::DjumpDxlp_numRows() const
+  SingularConstrainedCalogero::DjumpDxlxlp_numRows() const
   { return 2; }
 
   integer
-  SingularConstrainedCalogero::DjumpDxlp_numCols() const
+  SingularConstrainedCalogero::DjumpDxlxlp_numCols() const
   { return 4; }
 
   integer
-  SingularConstrainedCalogero::DjumpDxlp_nnz() const
+  SingularConstrainedCalogero::DjumpDxlxlp_nnz() const
   { return 4; }
 
   void
-  SingularConstrainedCalogero::DjumpDxlp_pattern(
+  SingularConstrainedCalogero::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -473,7 +473,7 @@ namespace SingularConstrainedCalogeroDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularConstrainedCalogero::DjumpDxlp_sparse(
+  SingularConstrainedCalogero::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -494,7 +494,7 @@ namespace SingularConstrainedCalogeroDefine {
     result__[ 2   ] = -1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 4, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   /*\

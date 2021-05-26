@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -95,13 +95,13 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = X__[iX_v];
     real_type t2   = 1.0 / t1;
-    real_type t6   = U__[iU_mur];
-    real_type t7   = U__[iU_muf];
-    real_type t11  = Tmax_normalized(t1);
-    real_type t13  = clip(t11, 0, ModelPars[iM_mur_max]);
-    real_type t14  = murControl(t6, ModelPars[iM_mur_min], t13);
-    real_type t17  = mufControl(t7, ModelPars[iM_muf_min], 0);
-    real_type result__ = t2 + (t6 + t7) * ModelPars[iM_g] * L__[iL_lambda1__xo] + t14 * t2 + t17 * t2;
+    real_type t3   = U__[iU_mur];
+    real_type t5   = Tmax_normalized(t1);
+    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
+    real_type t8   = murControl(t3, ModelPars[iM_mur_min], t7);
+    real_type t10  = U__[iU_muf];
+    real_type t12  = mufControl(t10, ModelPars[iM_muf_min], 0);
+    real_type result__ = t8 * t2 + t12 * t2 + t2 + (t3 + t10) * ModelPars[iM_g] * L__[iL_lambda1__xo];
     return result__;
   }
 #else
@@ -118,13 +118,13 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = X__[iX_v];
     real_type t2   = 1.0 / t1;
-    real_type t6   = U__[iU_mur];
-    real_type t7   = U__[iU_muf];
-    real_type t11  = Tmax_normalized(t1);
-    real_type t13  = clip(t11, 0, ModelPars[iM_mur_max]);
-    real_type t14  = murControl(t6, ModelPars[iM_mur_min], t13);
-    real_type t17  = mufControl(t7, ModelPars[iM_muf_min], 0);
-    real_type result__ = t2 + (t6 + t7) * ModelPars[iM_g] * L__[iL_lambda1__xo] + t14 * t2 + t17 * t2;
+    real_type t3   = U__[iU_mur];
+    real_type t5   = Tmax_normalized(t1);
+    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
+    real_type t8   = murControl(t3, ModelPars[iM_mur_min], t7);
+    real_type t10  = U__[iU_muf];
+    real_type t12  = mufControl(t10, ModelPars[iM_muf_min], 0);
+    real_type result__ = t8 * t2 + t12 * t2 + t2 + (t3 + t10) * ModelPars[iM_g] * L__[iL_lambda1__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -483,19 +483,19 @@ namespace Bike1DDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Bike1D::DjumpDxlp_numRows() const
+  Bike1D::DjumpDxlxlp_numRows() const
   { return 2; }
 
   integer
-  Bike1D::DjumpDxlp_numCols() const
+  Bike1D::DjumpDxlxlp_numCols() const
   { return 4; }
 
   integer
-  Bike1D::DjumpDxlp_nnz() const
+  Bike1D::DjumpDxlxlp_nnz() const
   { return 6; }
 
   void
-  Bike1D::DjumpDxlp_pattern(
+  Bike1D::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -510,7 +510,7 @@ namespace Bike1DDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Bike1D::DjumpDxlp_sparse(
+  Bike1D::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -533,7 +533,7 @@ namespace Bike1DDefine {
     result__[ 4   ] = LR__[iL_lambda1__xo];
     result__[ 5   ] = XR__[iX_v];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 6, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 6, i_segment_left, i_segment_right );
   }
 
   /*\

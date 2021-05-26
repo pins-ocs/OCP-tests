@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -429,19 +429,19 @@ namespace RayleightDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Rayleight::DjumpDxlp_numRows() const
+  Rayleight::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  Rayleight::DjumpDxlp_numCols() const
+  Rayleight::DjumpDxlxlp_numCols() const
   { return 8; }
 
   integer
-  Rayleight::DjumpDxlp_nnz() const
+  Rayleight::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  Rayleight::DjumpDxlp_pattern(
+  Rayleight::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -458,7 +458,7 @@ namespace RayleightDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Rayleight::DjumpDxlp_sparse(
+  Rayleight::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -483,7 +483,7 @@ namespace RayleightDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

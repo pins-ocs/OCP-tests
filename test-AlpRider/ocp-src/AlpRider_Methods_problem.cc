@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -503,19 +503,19 @@ namespace AlpRiderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AlpRider::DjumpDxlp_numRows() const
+  AlpRider::DjumpDxlxlp_numRows() const
   { return 8; }
 
   integer
-  AlpRider::DjumpDxlp_numCols() const
+  AlpRider::DjumpDxlxlp_numCols() const
   { return 16; }
 
   integer
-  AlpRider::DjumpDxlp_nnz() const
+  AlpRider::DjumpDxlxlp_nnz() const
   { return 16; }
 
   void
-  AlpRider::DjumpDxlp_pattern(
+  AlpRider::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -540,7 +540,7 @@ namespace AlpRiderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  AlpRider::DjumpDxlp_sparse(
+  AlpRider::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -573,7 +573,7 @@ namespace AlpRiderDefine {
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
   /*\

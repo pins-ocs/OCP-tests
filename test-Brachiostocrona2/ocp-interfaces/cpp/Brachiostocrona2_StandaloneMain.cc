@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type g = 9.81;
-    real_type xf = 5;
     real_type yf = -2;
-    real_type Tf = (-2.0*yf/g)^(1/2.0);
+    real_type xf = 5;
+    real_type g = 9.81;
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
+    real_type Tf = (-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -158,14 +158,23 @@ main() {
 
     // Controls: No penalties or barriers constraint defined
 
-    // Constraint1D: none defined
+    // Constraint1D
+    // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    GenericContainer & data_Constraints = gc_data["Constraints"];
+    // PenaltyBarrier1DGreaterThan
+    GenericContainer & data_TimePositive = data_Constraints["TimePositive"];
+    data_TimePositive["subType"]   = "PENALTY_REGULAR";
+    data_TimePositive["epsilon"]   = 0.1;
+    data_TimePositive["tolerance"] = 0.01;
+    data_TimePositive["active"]    = true;
     // Constraint2D: none defined
 
     // User defined classes initialization
     // User defined classes: M E S H
 Brachiostocrona2_data.Mesh["s0"] = 0;
-Brachiostocrona2_data.Mesh["segments"][0]["n"] = 500;
 Brachiostocrona2_data.Mesh["segments"][0]["length"] = 1;
+Brachiostocrona2_data.Mesh["segments"][0]["n"] = 500;
 
 
     // alias for user object classes passed as pointers

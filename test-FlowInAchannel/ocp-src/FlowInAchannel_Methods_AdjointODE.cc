@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_AdjointODE.cc                           |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -119,7 +119,7 @@ namespace FlowInAchannelDefine {
     real_type t3   = L__[iL_lambda4__xo] * ModelPars[iM_R];
     result__[ 0   ] = -t3;
     result__[ 1   ] = t3;
-    result__[ 2   ] = result__[1];
+    result__[ 2   ] = t3;
     result__[ 3   ] = result__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 4, i_segment );

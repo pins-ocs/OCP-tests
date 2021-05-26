@@ -6,7 +6,6 @@
 # Authors: E. Bertolazzi, F. Biral
 # Date:
 # 
-# 
 restart:
 with(XOptima):
 XOptimaInfo();
@@ -14,8 +13,8 @@ XOptimaInfo();
 # M. S. Aronna, J. F. Bonnans, and P. Martinon, “A shooting algorithm for optimal control problems with singular arcs,
 # ” J. Optim. Theory Appl., vol. 158, no. 2, pp. 419–459, 2013. 
 # Available: https://doi.org/10.1007/s10957-012-0254-8
-EQ1    :=  diff(y1(t),t) - y2(t) :
-EQ2    :=  diff(y2(t),t) - u(t) :
+EQ1    := diff(y1(t),t) - y2(t):
+EQ2    := diff(y2(t),t) - u(t):
 EQNS_T := [ EQ||(1..2) ];
 qvars := [y1(t),y2(t)] ;
 cvars := [u(t)] ;
@@ -35,9 +34,9 @@ infoBoundaryConditions() ;
 # Constraints on control
 addControlBound(
   u,
-  controlType = "U_COS_LOGARITHMIC",
+  controlType = "U_LOGARITHMIC",
   maxabs      = 1,
-  epsilon     = 1e-10,
+  epsilon     = 1e-7,
   tolerance   = 1e-10,
   scale       = 1
 );

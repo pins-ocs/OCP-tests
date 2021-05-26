@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,12 +20,12 @@
 -- User Header
 
 -- Auxiliary values
+epsilon0 = 0.001
+epsilon  = epsilon0
 tol0     = 0.1
 tol      = tol0
 epsi0    = 0.1
 epsi     = epsi0
-epsilon0 = 0.001
-epsilon  = epsilon0
 
 content = {
 
@@ -163,8 +163,8 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-  -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     u1Control = {
       type      = ,
@@ -176,7 +176,7 @@ content = {
   Constraints = {
   -- Constraint1D
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DGreaterThan
     bound1subType   = "PENALTY_REGULAR",
     bound1epsilon   = epsi,

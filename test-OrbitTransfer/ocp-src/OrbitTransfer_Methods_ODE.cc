@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -131,7 +131,8 @@ namespace OrbitTransferDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = ModelPars[iM_tf];
-    real_type t2   = ModelPars[iM_T] * result__[0];
+    real_type t5   = result__[0];
+    real_type t2   = t5 * ModelPars[iM_T];
     real_type t3   = U__[iU_theta];
     real_type t4   = sin(t3);
     real_type t6   = X__[iX_m] * X__[iX_m];
@@ -142,9 +143,10 @@ namespace OrbitTransferDefine {
     real_type t12  = X__[iX_r];
     real_type t13  = t12 * t12;
     real_type t14  = 1.0 / t13;
-    result__[ 2   ] = (-t14 * t11 + 2 / t13 / t12 * ModelPars[iM_mu]) * result__[0];
-    real_type t22  = t10 * result__[0];
-    real_type t23  = 1.0 / t12;
+    real_type t17  = 1.0 / t12;
+    result__[ 2   ] = t5 * (2 * ModelPars[iM_mu] * t17 * t14 - t14 * t11);
+    real_type t22  = t5 * t10;
+    real_type t23  = t17;
     real_type t24  = t23 * t22;
     result__[ 3   ] = 2 * t24;
     real_type t25  = cos(t3);
@@ -152,9 +154,9 @@ namespace OrbitTransferDefine {
     real_type t28  = X__[iX_u];
     result__[ 5   ] = t14 * t28 * t22;
     result__[ 6   ] = -t24;
-    result__[ 7   ] = -t23 * t28 * result__[0];
+    result__[ 7   ] = -t5 * t28 * t23;
     result__[ 8   ] = -t14 * t22;
-    result__[ 9   ] = t23 * result__[0];
+    result__[ 9   ] = t5 * t23;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 10, i_segment );
   }

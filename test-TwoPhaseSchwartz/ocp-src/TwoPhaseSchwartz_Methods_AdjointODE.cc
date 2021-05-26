@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -231,7 +231,8 @@ namespace TwoPhaseSchwartzDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda2__xo];
+    real_type t2   = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
+    result__[ 0   ] = t2 + L__[iL_lambda2__xo];
     result__[ 1   ] = L__[iL_lambda4__xo] * ModelPars[iM_T2] + 2 * ModelPars[iM_epsilon] * U__[iU_u2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );

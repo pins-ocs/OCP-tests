@@ -26,7 +26,7 @@ Segment N.0: s0 = 0.000 length = 1.000 npts = 401 no data set
 END Mesh[mesh]
 
 User mapped functions
-User function ``clip'' mapped with: ClipIntervalWithErf, h=0.10000, delta=0.0000
+User function ``clip'' mapped with: ClipIntervalWithErf, h=0.10000, delta=0.0000, delta2=0.0000
 
 Model Parameters
 ......................................h0 = 0.1
@@ -62,22 +62,22 @@ Hyness --- start iterations ---
 
 Continuation step N.1
 
-Continuation step N.1 s=0.20, ds=0.2000
+Continuation step N.1 s=0.2000, ds=0.2000
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [  7,  1] (0.000341 ,4.74e-05 ) [0.00596  ,0.00219  ] 1.00       0: 0
 [  8,  1] (4.74e-05 ,3.25e-08 ) [0.00175  ,9.47e-06 ] 1.00       0: 0
 [  9,  1] (3.25e-08 ,1.42e-12 ) [9.60e-06 ,5.42e-10 ] 1.00       0: 0
 
-Continuation step N.1 s=0.50, ds=0.3000
+Continuation step N.1 s=0.5000, ds=0.3000
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 10,  2] (0.000560 ,0.000187 ) [0.00857  ,0.00133  ] 0.651      0: 0
 [ 11,  1] (0.000187 ,1.65e-06 ) [0.00163  ,6.31e-05 ] 1.00       0: 1
 [ 12,  1] (1.65e-06 ,8.15e-11 ) [6.05e-05 ,3.42e-08 ] 1.00       0: 0
-[ 13,  1] (8.15e-11 ,5.20e-17 ) [3.43e-08 ,2.64e-14 ] 1.00       0: 0
+[ 13,  1] (8.15e-11 ,5.21e-17 ) [3.43e-08 ,2.64e-14 ] 1.00       0: 0
 
-Continuation step N.1 s=0.95, ds=0.4500
+Continuation step N.1 s=0.9500, ds=0.4500
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 14,  2] (0.00162  ,0.00117  ) [0.0532   ,0.0388   ] 0.250      0: 0
@@ -90,9 +90,9 @@ Hyness --- start iterations ---
 [ 21,  1] (2.17e-05 ,1.29e-08 ) [0.000284 ,3.83e-05 ] 1.00       0: 1
 [ 22,  1] (1.29e-08 ,3.53e-10 ) [5.33e-05 ,1.77e-06 ] 1.00       0: 0
 [ 23,  1] (3.53e-10 ,3.97e-13 ) [1.90e-06 ,2.32e-09 ] 1.00       0: 0
-[ 24,  1] (3.97e-13 ,1.32e-17 ) [2.33e-09 ,3.46e-15 ] 1.00       0: 0
+[ 24,  1] (3.97e-13 ,1.33e-17 ) [2.33e-09 ,3.46e-15 ] 1.00       0: 0
 
-Continuation step N.1 s=1.0, ds=0.05000
+Continuation step N.1 s=1.000, ds=0.05000
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 25,  3] (0.00172  ,0.00102  ) [0.0365   ,0.0141   ] 0.160      0: 0
@@ -105,11 +105,11 @@ Hyness --- start iterations ---
 [ 32,  1] (6.04e-12 ,1.24e-14 ) [2.02e-06 ,4.45e-09 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 64.9[ms]      timeout        = 0 [ms]
+Elapsed Time   = 32.4[ms]      timeout        = 0 [ms]
 iteration      = 32            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 2411
 max acc. iter. = 800           N. System pars = 400
-Converged      = YES           Memory Used    = 243Kb (+16bytes)
+Converged      = YES           Memory Used    = 264Kb (+31bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

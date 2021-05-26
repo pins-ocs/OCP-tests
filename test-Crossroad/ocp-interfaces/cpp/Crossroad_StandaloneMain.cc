@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type jerk_max = 10;
+    real_type wJ = 1/jerk_max^2;
+    real_type jerk_min = -10;
     real_type v_max = 30;
     real_type L = 100;
     real_type s_f = L;
-    real_type jerk_min = -10;
-    real_type jerk_max = 10;
-    real_type wJ = 1/jerk_max^2;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -169,8 +169,8 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-    // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_jerkControl = data_Controls["jerkControl"];
     data_jerkControl["type"]      = ;
@@ -181,7 +181,7 @@ main() {
 
     // Constraint1D
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-    // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_Tpositive = data_Constraints["Tpositive"];
@@ -208,10 +208,10 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Crossroad_data.Mesh["s0"] = 0;
-Crossroad_data.Mesh["segments"][0]["length"] = 0.5;
 Crossroad_data.Mesh["segments"][0]["n"] = 100;
-Crossroad_data.Mesh["segments"][1]["length"] = 0.5;
+Crossroad_data.Mesh["segments"][0]["length"] = 0.5;
 Crossroad_data.Mesh["segments"][1]["n"] = 100;
+Crossroad_data.Mesh["segments"][1]["length"] = 0.5;
 
 
     // alias for user object classes passed as pointers

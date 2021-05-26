@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_problem.cc                                  |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -118,25 +118,25 @@ namespace UnderwaterDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t4   = X__[iX_vx];
-    real_type t5   = X__[iX_theta];
-    real_type t6   = cos(t5);
-    real_type t8   = X__[iX_vz];
-    real_type t9   = sin(t5);
-    real_type t21  = X__[iX_Omega];
-    real_type t25  = U__[iU_u1];
-    real_type t26  = ModelPars[iM_m1];
-    real_type t27  = 1.0 / t26;
-    real_type t30  = ModelPars[iM_m3];
-    real_type t37  = U__[iU_u2];
-    real_type t38  = 1.0 / t30;
-    real_type t47  = U__[iU_u3];
-    real_type t49  = 1.0 / ModelPars[iM_inertia];
-    real_type t57  = u1Control(t25, -1, 1);
-    real_type t59  = u2Control(t37, -1, 1);
-    real_type t61  = u3Control(t47, -1, 1);
-    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + (-t27 * t30 * t21 * t8 + t27 * t25) * t2 * L__[iL_lambda4__xo] + (t38 * t26 * t21 * t4 + t38 * t37) * t2 * L__[iL_lambda5__xo] + (t49 * t47 + t49 * (t30 - t26) * t8 * t4) * t2 * L__[iL_lambda6__xo] + t57 * t2 + t59 * t2 + t61 * t2;
+    real_type t1   = P__[iP_T];
+    real_type t2   = U__[iU_u1];
+    real_type t3   = u1Control(t2, -1, 1);
+    real_type t5   = U__[iU_u2];
+    real_type t6   = u2Control(t5, -1, 1);
+    real_type t8   = U__[iU_u3];
+    real_type t9   = u3Control(t8, -1, 1);
+    real_type t13  = X__[iX_vx];
+    real_type t14  = X__[iX_theta];
+    real_type t15  = cos(t14);
+    real_type t17  = X__[iX_vz];
+    real_type t18  = sin(t14);
+    real_type t30  = X__[iX_Omega];
+    real_type t34  = ModelPars[iM_m1];
+    real_type t35  = 1.0 / t34;
+    real_type t38  = ModelPars[iM_m3];
+    real_type t45  = 1.0 / t38;
+    real_type t55  = 1.0 / ModelPars[iM_inertia];
+    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1 + (t15 * t13 + t18 * t17) * t1 * L__[iL_lambda1__xo] + (-t18 * t13 + t15 * t17) * t1 * L__[iL_lambda2__xo] + t30 * t1 * L__[iL_lambda3__xo] + (-t35 * t38 * t30 * t17 + t35 * t2) * t1 * L__[iL_lambda4__xo] + (t45 * t34 * t30 * t13 + t45 * t5) * t1 * L__[iL_lambda5__xo] + (t55 * t8 + t55 * (t38 - t34) * t17 * t13) * t1 * L__[iL_lambda6__xo];
     return result__;
   }
 #else
@@ -151,25 +151,25 @@ namespace UnderwaterDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t4   = X__[iX_vx];
-    real_type t5   = X__[iX_theta];
-    real_type t6   = cos(t5);
-    real_type t8   = X__[iX_vz];
-    real_type t9   = sin(t5);
-    real_type t21  = X__[iX_Omega];
-    real_type t25  = U__[iU_u1];
-    real_type t26  = ModelPars[iM_m1];
-    real_type t27  = 1.0 / t26;
-    real_type t30  = ModelPars[iM_m3];
-    real_type t37  = U__[iU_u2];
-    real_type t38  = 1.0 / t30;
-    real_type t47  = U__[iU_u3];
-    real_type t49  = 1.0 / ModelPars[iM_inertia];
-    real_type t57  = u1Control(t25, -1, 1);
-    real_type t59  = u2Control(t37, -1, 1);
-    real_type t61  = u3Control(t47, -1, 1);
-    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + (-t27 * t30 * t21 * t8 + t27 * t25) * t2 * L__[iL_lambda4__xo] + (t38 * t26 * t21 * t4 + t38 * t37) * t2 * L__[iL_lambda5__xo] + (t49 * t47 + t49 * (t30 - t26) * t8 * t4) * t2 * L__[iL_lambda6__xo] + t57 * t2 + t59 * t2 + t61 * t2;
+    real_type t1   = P__[iP_T];
+    real_type t2   = U__[iU_u1];
+    real_type t3   = u1Control(t2, -1, 1);
+    real_type t5   = U__[iU_u2];
+    real_type t6   = u2Control(t5, -1, 1);
+    real_type t8   = U__[iU_u3];
+    real_type t9   = u3Control(t8, -1, 1);
+    real_type t13  = X__[iX_vx];
+    real_type t14  = X__[iX_theta];
+    real_type t15  = cos(t14);
+    real_type t17  = X__[iX_vz];
+    real_type t18  = sin(t14);
+    real_type t30  = X__[iX_Omega];
+    real_type t34  = ModelPars[iM_m1];
+    real_type t35  = 1.0 / t34;
+    real_type t38  = ModelPars[iM_m3];
+    real_type t45  = 1.0 / t38;
+    real_type t55  = 1.0 / ModelPars[iM_inertia];
+    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1 + (t15 * t13 + t18 * t17) * t1 * L__[iL_lambda1__xo] + (-t18 * t13 + t15 * t17) * t1 * L__[iL_lambda2__xo] + t30 * t1 * L__[iL_lambda3__xo] + (-t35 * t38 * t30 * t17 + t35 * t2) * t1 * L__[iL_lambda4__xo] + (t45 * t34 * t30 * t13 + t45 * t5) * t1 * L__[iL_lambda5__xo] + (t55 * t8 + t55 * (t38 - t34) * t17 * t13) * t1 * L__[iL_lambda6__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -554,19 +554,19 @@ namespace UnderwaterDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Underwater::DjumpDxlp_numRows() const
+  Underwater::DjumpDxlxlp_numRows() const
   { return 12; }
 
   integer
-  Underwater::DjumpDxlp_numCols() const
+  Underwater::DjumpDxlxlp_numCols() const
   { return 25; }
 
   integer
-  Underwater::DjumpDxlp_nnz() const
+  Underwater::DjumpDxlxlp_nnz() const
   { return 24; }
 
   void
-  Underwater::DjumpDxlp_pattern(
+  Underwater::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -599,7 +599,7 @@ namespace UnderwaterDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Underwater::DjumpDxlp_sparse(
+  Underwater::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -640,7 +640,7 @@ namespace UnderwaterDefine {
     result__[ 22  ] = -1;
     result__[ 23  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 24, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 24, i_segment_left, i_segment_right );
   }
 
   /*\

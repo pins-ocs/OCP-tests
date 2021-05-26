@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_Guess.cc                              |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -32,6 +32,10 @@
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
 #endif
+
+// map user defined functions and objects with macros
+#define ALIAS_TimePositive_DD(__t1) TimePositive.DD( __t1)
+#define ALIAS_TimePositive_D(__t1) TimePositive.D( __t1)
 
 
 using namespace std;

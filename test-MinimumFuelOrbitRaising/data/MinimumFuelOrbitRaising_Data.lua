@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Data.lua                               |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -167,8 +167,8 @@ content = {
     segments = {
       
       {
-        n      = 400,
         length = tf,
+        n      = 400,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -170,8 +170,9 @@ namespace PointMassCarModel_4Define {
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
     X__[ iX_s            ] = Q__[iQ_zeta];
     X__[ iX_V            ] = ModelPars[iM_Vguess];
-    X__[ iX_Omega        ] = 0.1000000000e-1 * X__[3];
-    X__[ iX_log_inv_Vseg ] = log(1.0 / X__[3]);
+    real_type t1   = X__[3];
+    X__[ iX_Omega        ] = 0.1000000000e-1 * t1;
+    X__[ iX_log_inv_Vseg ] = log(1.0 / t1);
 
     if ( m_debug )
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 7 );

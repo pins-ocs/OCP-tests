@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods_ODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -128,8 +128,9 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type t4   = X__[iX_x1];
     real_type t5   = t4 * t4;
     real_type t6   = 1.0 / t5;
-    result__[ 1   ] = -t6 * t2 * t1 + 2 / t5 / t4;
-    real_type t11  = 1.0 / t4;
+    real_type t8   = 1.0 / t4;
+    result__[ 1   ] = -t6 * t2 * t1 + 2 * t8 * t6;
+    real_type t11  = t8;
     result__[ 2   ] = 3 * t11 * t2;
     real_type t13  = X__[iX_x2];
     result__[ 3   ] = t6 * t1 * t13;

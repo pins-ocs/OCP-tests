@@ -1,5 +1,5 @@
-# Date:             12:33:40 2021-03-09
-# MX Version:       1.4.9-d067dirty-osx_10.15.7 hash: g450296e8
+# Date:             15:47:17 2021-06-03
+# MX Version:       1.4.9-d112dirty-osx_10.15.7 hash: 467aaab6 Thu Jun 3 15:26:27 2021
 # Computation type: Optimal control solution
 # Model name:       MultipleDubins
 #
@@ -14,17 +14,17 @@
 # max_accumulated_iter = 800
 # tolerance            = 9.999999999999999e-10
 # iterations           = 301
-# cpu_time             = 600.338 ms
+# cpu_time             = 254.219 ms
 # solver_type          = CyclicReduction+LU and LastBlock LUPQ
 # lapack version       = Accelerate
 #
 # Parameters:
-L1: 0.30975647495827674
-L2: 1.88308467150121105e-18
-L3: 0.300378630090952725
-kappa1: 5.30840960255901084
-kappa2: -0.0878837474867044666
-kappa3: -4.50128033499481273
+# L1: 0.30975647495827674
+# L2: 1.88308467150121105e-18
+# L3: 0.300378630090952725
+# kappa1: 5.30840960255901084
+# kappa2: -0.0878837474867044666
+# kappa3: -4.50128033499481273
 #
 # SOLUTION
 i_segment	zeta	lagrange_target	penalties	control_penalties	x1	y1	theta1	x2	y2	theta2	x3	y3	theta3	lambda1__xo	lambda2__xo	lambda3__xo	lambda4__xo	lambda5__xo	lambda6__xo	lambda7__xo	lambda8__xo	lambda9__xo	x1_D	y1_D	theta1_D	x2_D	y2_D	theta2_D	x3_D	y3_D	theta3_D	mu0_D	mu1_D	mu2_D	mu3_D	mu4_D	mu5_D	mu6_D	mu7_D	mu8_D

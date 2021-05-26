@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Methods_AdjointODE.cc                           |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -339,25 +339,25 @@ namespace MultipleDubinsDefine {
     real_type t10  = sin(t6);
     real_type t12  = L__[iL_lambda3__xo];
     real_type t13  = P__[iP_kappa1];
-    result__[ 0   ] = 2 * t2 * t1 + t10 * L__[iL_lambda2__xo] + t13 * t12 + t7 * L__[iL_lambda1__xo] + 1;
+    result__[ 0   ] = 2 * t1 * t2 + t10 * L__[iL_lambda2__xo] + t12 * t13 + t7 * L__[iL_lambda1__xo] + 1;
     real_type t15  = P__[iP_L2];
     real_type t19  = X__[iX_theta2];
     real_type t20  = cos(t19);
     real_type t23  = sin(t19);
     real_type t25  = L__[iL_lambda6__xo];
     real_type t26  = P__[iP_kappa2];
-    result__[ 1   ] = 2 * t15 * t1 + t20 * L__[iL_lambda4__xo] + t23 * L__[iL_lambda5__xo] + t26 * t25 + 1;
+    result__[ 1   ] = 2 * t1 * t15 + t20 * L__[iL_lambda4__xo] + t23 * L__[iL_lambda5__xo] + t25 * t26 + 1;
     real_type t28  = P__[iP_L3];
     real_type t32  = X__[iX_theta3];
     real_type t33  = cos(t32);
     real_type t36  = sin(t32);
     real_type t38  = L__[iL_lambda9__xo];
     real_type t39  = P__[iP_kappa3];
-    result__[ 2   ] = 2 * t28 * t1 + t33 * L__[iL_lambda7__xo] + t36 * L__[iL_lambda8__xo] + t39 * t38 + 1;
+    result__[ 2   ] = 2 * t1 * t28 + t33 * L__[iL_lambda7__xo] + t36 * L__[iL_lambda8__xo] + t38 * t39 + 1;
     real_type t42  = ModelPars[iM_epsilon_K];
-    result__[ 3   ] = t2 * t12 + 2 * t42 * t13;
-    result__[ 4   ] = t15 * t25 + 2 * t42 * t26;
-    result__[ 5   ] = t28 * t38 + 2 * t42 * t39;
+    result__[ 3   ] = t12 * t2 + 2 * t13 * t42;
+    result__[ 4   ] = t15 * t25 + 2 * t26 * t42;
+    result__[ 5   ] = t28 * t38 + 2 * t39 * t42;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 6, i_segment );
   }

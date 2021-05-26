@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -166,6 +166,7 @@ content = {
     diff2piN = 2*Math::PI,
   -- ClipIntervalWithErf
     cliph = 0.001,
+    clipdelta2 = 0,
     clipdelta = 0,
   },
 

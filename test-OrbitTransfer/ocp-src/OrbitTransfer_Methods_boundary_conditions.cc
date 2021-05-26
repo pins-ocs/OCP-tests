@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -263,12 +263,14 @@ namespace OrbitTransferDefine {
     real_type t1   = OMEGA__[6];
     real_type t2   = ModelPars[iM_mu];
     real_type t3   = XR__[iX_r];
-    real_type t5   = 1.0 / t3 * t2;
+    real_type t4   = 1.0 / t3;
+    real_type t5   = t2 * t4;
     real_type t6   = sqrt(t5);
     real_type t10  = t2 * t2;
     real_type t11  = t3 * t3;
     real_type t12  = t11 * t11;
-    result__[ 0   ] = 1.0 / t12 * t10 / t6 / t5 * t1 / 4 - 1.0 / t11 / t3 * t2 / t6 * t1;
+    real_type t9   = 1.0 / t6;
+    result__[ 0   ] = t1 / t5 * t9 / t12 * t10 / 4 - t1 * t9 * t2 * t4 / t11;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 1, i_segment_left, i_segment_right );
   }

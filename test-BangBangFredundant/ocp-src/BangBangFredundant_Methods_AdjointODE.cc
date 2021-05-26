@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -208,8 +208,11 @@ namespace BangBangFredundantDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda5__xo];
-    result__[ 1   ] = L__[iL_lambda6__xo];
+    real_type t2   = ModelPars[iM_maxAF];
+    real_type t3   = ALIAS_aF1Control_D_1(U__[iU_aF1], -t2, t2);
+    result__[ 0   ] = t3 + L__[iL_lambda5__xo];
+    real_type t6   = ALIAS_aF2Control_D_1(U__[iU_aF2], -t2, t2);
+    result__[ 1   ] = t6 + L__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }

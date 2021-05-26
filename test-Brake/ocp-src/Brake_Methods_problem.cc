@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_problem.cc                                       |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,9 +79,9 @@ namespace BrakeDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = Tpositive(t1);
-    real_type t9   = U__[iU_a];
-    real_type t11  = aControl(t9, -1, 1);
-    real_type result__ = t9 * t1 * L__[iL_lambda2__xo] + X__[iX_v] * t1 * L__[iL_lambda1__xo] + t11 + t2;
+    real_type t3   = U__[iU_a];
+    real_type t4   = aControl(t3, -1, 1);
+    real_type result__ = t3 * t1 * L__[iL_lambda2__xo] + X__[iX_v] * t1 * L__[iL_lambda1__xo] + t2 + t4;
     return result__;
   }
 #else
@@ -98,9 +98,9 @@ namespace BrakeDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = Tpositive(t1);
-    real_type t9   = U__[iU_a];
-    real_type t11  = aControl(t9, -1, 1);
-    real_type result__ = t9 * t1 * L__[iL_lambda2__xo] + X__[iX_v] * t1 * L__[iL_lambda1__xo] + t11 + t2;
+    real_type t3   = U__[iU_a];
+    real_type t4   = aControl(t3, -1, 1);
+    real_type result__ = t3 * t1 * L__[iL_lambda2__xo] + X__[iX_v] * t1 * L__[iL_lambda1__xo] + t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -452,19 +452,19 @@ namespace BrakeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Brake::DjumpDxlp_numRows() const
+  Brake::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  Brake::DjumpDxlp_numCols() const
+  Brake::DjumpDxlxlp_numCols() const
   { return 9; }
 
   integer
-  Brake::DjumpDxlp_nnz() const
+  Brake::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  Brake::DjumpDxlp_pattern(
+  Brake::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -481,7 +481,7 @@ namespace BrakeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Brake::DjumpDxlp_sparse(
+  Brake::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -506,7 +506,7 @@ namespace BrakeDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

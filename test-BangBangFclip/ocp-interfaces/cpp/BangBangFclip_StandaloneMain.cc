@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -157,12 +157,13 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta"] = 0;
     data_clip["h"] = h0;
+    data_clip["delta"] = 0;
+    data_clip["delta2"] = 0;
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-    // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_controlForce = data_Controls["controlForce"];
     data_controlForce["type"]      = ;
@@ -177,8 +178,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFclip_data.Mesh["s0"] = 0;
-BangBangFclip_data.Mesh["segments"][0]["n"] = 400;
 BangBangFclip_data.Mesh["segments"][0]["length"] = 1;
+BangBangFclip_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

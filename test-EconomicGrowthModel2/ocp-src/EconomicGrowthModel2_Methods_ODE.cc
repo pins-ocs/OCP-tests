@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_ODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,9 +82,10 @@ namespace EconomicGrowthModel2Define {
     result__[ 0   ] = t2 * X__[iX_y1];
     real_type t3   = U__[iU_u];
     real_type t6   = Q(X__[iX_x1], X__[iX_x2]);
-    result__[ 1   ] = t2 * t6 * t3;
+    real_type t7   = t6 * t2;
+    result__[ 1   ] = t3 * t7;
     result__[ 2   ] = t2 * X__[iX_y2];
-    result__[ 3   ] = t2 * t6 * (1 - t3);
+    result__[ 3   ] = (1 - t3) * t7;
     result__[ 4   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 5, i_segment );
@@ -140,16 +141,18 @@ namespace EconomicGrowthModel2Define {
     real_type t2   = X__[iX_x1];
     real_type t3   = X__[iX_x2];
     real_type t4   = Q_D_1(t2, t3);
-    result__[ 2   ] = result__[0] * t4 * t1;
+    real_type t5   = result__[0];
+    result__[ 2   ] = t1 * t4 * t5;
     real_type t6   = Q_D_2(t2, t3);
-    result__[ 3   ] = result__[0] * t6 * t1;
+    result__[ 3   ] = t1 * t6 * t5;
     real_type t8   = Q(t2, t3);
     result__[ 4   ] = t8 * t1;
-    result__[ 5   ] = result__[0];
+    result__[ 5   ] = t5;
     result__[ 6   ] = X__[iX_y2];
     real_type t9   = 1 - t1;
-    result__[ 7   ] = result__[5] * t4 * t9;
-    result__[ 8   ] = result__[5] * t6 * t9;
+    real_type t11  = result__[5];
+    result__[ 7   ] = t9 * t4 * t11;
+    result__[ 8   ] = t9 * t6 * t11;
     result__[ 9   ] = t9 * t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 10, i_segment );
@@ -225,7 +228,7 @@ namespace EconomicGrowthModel2Define {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = Q(X__[iX_x1], X__[iX_x2]);
-    result__[ 0   ] = t3 * X__[iX_T];
+    result__[ 0   ] = X__[iX_T] * t3;
     result__[ 1   ] = -result__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );

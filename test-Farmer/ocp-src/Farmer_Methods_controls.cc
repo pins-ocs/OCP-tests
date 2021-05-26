@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -97,7 +97,7 @@ namespace FarmerDefine {
 
   void
   Farmer::g_eval(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -107,18 +107,18 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = U__[iU_x1__o];
-    real_type t11  = ALIAS_x1__oControl_D_1(t3, -0.1e-2, 100);
-    result__[ 0   ] = 2 * (-X__[iX_x1] + t3) * ModelPars[iM_wJ1] + L__[iL_lambda1__xo] / ModelPars[iM_tau__1] + t11;
-    real_type t14  = U__[iU_x2__o];
-    real_type t22  = ALIAS_x2__oControl_D_1(t14, -0.1e-2, 100);
-    result__[ 1   ] = 2 * (-X__[iX_x2] + t14) * ModelPars[iM_wJ2] + L__[iL_lambda2__xo] / ModelPars[iM_tau__2] + t22;
-    real_type t25  = U__[iU_x3__o];
-    real_type t33  = ALIAS_x3__oControl_D_1(t25, -0.1e-2, 100);
-    result__[ 2   ] = 2 * (-X__[iX_x3] + t25) * ModelPars[iM_wJ3] + L__[iL_lambda3__xo] / ModelPars[iM_tau__3] + t33;
-    real_type t36  = U__[iU_x4__o];
-    real_type t44  = ALIAS_x4__oControl_D_1(t36, -0.1e-2, 100);
-    result__[ 3   ] = 2 * (-X__[iX_x4] + t36) * ModelPars[iM_wJ4] + L__[iL_lambda5__xo] / ModelPars[iM_tau__5] + t44;
+    real_type t1   = U__[iU_x1__o];
+    real_type t2   = ALIAS_x1__oControl_D_1(t1, -0.1e-2, 100);
+    result__[ 0   ] = t2 + 2 * (-X__[iX_x1] + t1) * ModelPars[iM_wJ1] + L__[iL_lambda1__xo] / ModelPars[iM_tau__1];
+    real_type t12  = U__[iU_x2__o];
+    real_type t13  = ALIAS_x2__oControl_D_1(t12, -0.1e-2, 100);
+    result__[ 1   ] = t13 + 2 * (-X__[iX_x2] + t12) * ModelPars[iM_wJ2] + L__[iL_lambda2__xo] / ModelPars[iM_tau__2];
+    real_type t23  = U__[iU_x3__o];
+    real_type t24  = ALIAS_x3__oControl_D_1(t23, -0.1e-2, 100);
+    result__[ 2   ] = t24 + 2 * (-X__[iX_x3] + t23) * ModelPars[iM_wJ3] + L__[iL_lambda3__xo] / ModelPars[iM_tau__3];
+    real_type t34  = U__[iU_x4__o];
+    real_type t35  = ALIAS_x4__oControl_D_1(t34, -0.1e-2, 100);
+    result__[ 3   ] = t35 + 2 * (-X__[iX_x4] + t34) * ModelPars[iM_wJ4] + L__[iL_lambda5__xo] / ModelPars[iM_tau__5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 4, i_segment );
   }
@@ -156,7 +156,7 @@ namespace FarmerDefine {
 
   void
   Farmer::DgDxlp_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -207,7 +207,7 @@ namespace FarmerDefine {
 
   void
   Farmer::DgDu_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -217,14 +217,14 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = ALIAS_x1__oControl_D_1_1(U__[iU_x1__o], -0.1e-2, 100);
-    result__[ 0   ] = 2 * ModelPars[iM_wJ1] + t4;
-    real_type t8   = ALIAS_x2__oControl_D_1_1(U__[iU_x2__o], -0.1e-2, 100);
-    result__[ 1   ] = 2 * ModelPars[iM_wJ2] + t8;
-    real_type t12  = ALIAS_x3__oControl_D_1_1(U__[iU_x3__o], -0.1e-2, 100);
-    result__[ 2   ] = 2 * ModelPars[iM_wJ3] + t12;
-    real_type t16  = ALIAS_x4__oControl_D_1_1(U__[iU_x4__o], -0.1e-2, 100);
-    result__[ 3   ] = 2 * ModelPars[iM_wJ4] + t16;
+    real_type t2   = ALIAS_x1__oControl_D_1_1(U__[iU_x1__o], -0.1e-2, 100);
+    result__[ 0   ] = t2 + 2 * ModelPars[iM_wJ1];
+    real_type t6   = ALIAS_x2__oControl_D_1_1(U__[iU_x2__o], -0.1e-2, 100);
+    result__[ 1   ] = t6 + 2 * ModelPars[iM_wJ2];
+    real_type t10  = ALIAS_x3__oControl_D_1_1(U__[iU_x3__o], -0.1e-2, 100);
+    result__[ 2   ] = t10 + 2 * ModelPars[iM_wJ3];
+    real_type t14  = ALIAS_x4__oControl_D_1_1(U__[iU_x4__o], -0.1e-2, 100);
+    result__[ 3   ] = t14 + 2 * ModelPars[iM_wJ4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 4, i_segment );
   }
@@ -244,20 +244,39 @@ namespace FarmerDefine {
    |  \_,_|_\___|\_/\__,_|_|
    |     |___|
   \*/
-  integer
-  Farmer::u_numEqns() const
-  { return 4; }
 
   void
   Farmer::u_eval_analytic(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1];
+    real_type XM__[5];
+    real_type LM__[5];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     U__[ iU_x1__o ] = 0;
     U__[ iU_x2__o ] = 0;
@@ -267,135 +286,213 @@ namespace FarmerDefine {
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 4 );
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Farmer::u_eval_analytic(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
-  ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[5];
-    real_type L__[5];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    this->u_eval_analytic( NODE__, P__, U__ );
-  }
-
   /*\
-   |   ___       ___      _                       _      _   _
-   |  |   \ _  _|   \__ _| |_ __   __ _ _ _  __ _| |_  _| |_(_)__
-   |  | |) | || | |) \ \ / | '_ \ / _` | ' \/ _` | | || |  _| / _|
-   |  |___/ \_,_|___//_\_\_| .__/ \__,_|_||_\__,_|_|\_, |\__|_\__|
-   |                       |_|                      |__/
+   |  ____        ____       _      _                           _       _   _
+   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
+   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
+   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
+   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
+   |                                 |_|                          |___/
   \*/
-  void
-  Farmer::DuDxlp_full_analytic(
-    NodeType2 const          & NODE__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
-  ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = 0;
-    DuDxlp(1, 0) = 0;
-    DuDxlp(2, 0) = 0;
-    DuDxlp(3, 0) = 0;
-    DuDxlp(0, 1) = 0;
-    DuDxlp(1, 1) = 0;
-    DuDxlp(2, 1) = 0;
-    DuDxlp(3, 1) = 0;
-    DuDxlp(0, 2) = 0;
-    DuDxlp(1, 2) = 0;
-    DuDxlp(2, 2) = 0;
-    DuDxlp(3, 2) = 0;
-    DuDxlp(0, 3) = 0;
-    DuDxlp(1, 3) = 0;
-    DuDxlp(2, 3) = 0;
-    DuDxlp(3, 3) = 0;
-    DuDxlp(0, 4) = 0;
-    DuDxlp(1, 4) = 0;
-    DuDxlp(2, 4) = 0;
-    DuDxlp(3, 4) = 0;
-    DuDxlp(0, 5) = 0;
-    DuDxlp(1, 5) = 0;
-    DuDxlp(2, 5) = 0;
-    DuDxlp(3, 5) = 0;
-    DuDxlp(0, 6) = 0;
-    DuDxlp(1, 6) = 0;
-    DuDxlp(2, 6) = 0;
-    DuDxlp(3, 6) = 0;
-    DuDxlp(0, 7) = 0;
-    DuDxlp(1, 7) = 0;
-    DuDxlp(2, 7) = 0;
-    DuDxlp(3, 7) = 0;
-    DuDxlp(0, 8) = 0;
-    DuDxlp(1, 8) = 0;
-    DuDxlp(2, 8) = 0;
-    DuDxlp(3, 8) = 0;
-    DuDxlp(0, 9) = 0;
-    DuDxlp(1, 9) = 0;
-    DuDxlp(2, 9) = 0;
-    DuDxlp(3, 9) = 0;
-    if ( m_debug )
-      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 4 );
-  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Farmer::DuDxlp_full_analytic(
-    NodeType2 const          & LEFT__,
-    NodeType2 const          & RIGHT__,
+  Farmer::DuDxlxlp_full_analytic(
+    NodeType2 const &          LEFT__,
+    NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
     U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
+    MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[5];
-    real_type L__[5];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1];
+    real_type XM__[5];
+    real_type LM__[5];
     // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
     // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    integer i_segment = LEFT__.i_segment;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    real_type tmp_0_0 = 0.0e0;
+    real_type tmp_1_0 = 0.0e0;
+    real_type tmp_2_0 = 0.0e0;
+    real_type tmp_3_0 = 0.0e0;
+    real_type tmp_0_1 = 0.0e0;
+    real_type tmp_1_1 = 0.0e0;
+    real_type tmp_2_1 = 0.0e0;
+    real_type tmp_3_1 = 0.0e0;
+    real_type tmp_0_2 = 0.0e0;
+    real_type tmp_1_2 = 0.0e0;
+    real_type tmp_2_2 = 0.0e0;
+    real_type tmp_3_2 = 0.0e0;
+    real_type tmp_0_3 = 0.0e0;
+    real_type tmp_1_3 = 0.0e0;
+    real_type tmp_2_3 = 0.0e0;
+    real_type tmp_3_3 = 0.0e0;
+    real_type tmp_0_4 = 0.0e0;
+    real_type tmp_1_4 = 0.0e0;
+    real_type tmp_2_4 = 0.0e0;
+    real_type tmp_3_4 = 0.0e0;
+    real_type tmp_0_5 = 0.0e0;
+    real_type tmp_1_5 = 0.0e0;
+    real_type tmp_2_5 = 0.0e0;
+    real_type tmp_3_5 = 0.0e0;
+    real_type tmp_0_6 = 0.0e0;
+    real_type tmp_1_6 = 0.0e0;
+    real_type tmp_2_6 = 0.0e0;
+    real_type tmp_3_6 = 0.0e0;
+    real_type tmp_0_7 = 0.0e0;
+    real_type tmp_1_7 = 0.0e0;
+    real_type tmp_2_7 = 0.0e0;
+    real_type tmp_3_7 = 0.0e0;
+    real_type tmp_0_8 = 0.0e0;
+    real_type tmp_1_8 = 0.0e0;
+    real_type tmp_2_8 = 0.0e0;
+    real_type tmp_3_8 = 0.0e0;
+    real_type tmp_0_9 = 0.0e0;
+    real_type tmp_1_9 = 0.0e0;
+    real_type tmp_2_9 = 0.0e0;
+    real_type tmp_3_9 = 0.0e0;
+    real_type tmp_0_10 = 0.0e0;
+    real_type tmp_1_10 = 0.0e0;
+    real_type tmp_2_10 = 0.0e0;
+    real_type tmp_3_10 = 0.0e0;
+    real_type tmp_0_11 = 0.0e0;
+    real_type tmp_1_11 = 0.0e0;
+    real_type tmp_2_11 = 0.0e0;
+    real_type tmp_3_11 = 0.0e0;
+    real_type tmp_0_12 = 0.0e0;
+    real_type tmp_1_12 = 0.0e0;
+    real_type tmp_2_12 = 0.0e0;
+    real_type tmp_3_12 = 0.0e0;
+    real_type tmp_0_13 = 0.0e0;
+    real_type tmp_1_13 = 0.0e0;
+    real_type tmp_2_13 = 0.0e0;
+    real_type tmp_3_13 = 0.0e0;
+    real_type tmp_0_14 = 0.0e0;
+    real_type tmp_1_14 = 0.0e0;
+    real_type tmp_2_14 = 0.0e0;
+    real_type tmp_3_14 = 0.0e0;
+    real_type tmp_0_15 = 0.0e0;
+    real_type tmp_1_15 = 0.0e0;
+    real_type tmp_2_15 = 0.0e0;
+    real_type tmp_3_15 = 0.0e0;
+    real_type tmp_0_16 = 0.0e0;
+    real_type tmp_1_16 = 0.0e0;
+    real_type tmp_2_16 = 0.0e0;
+    real_type tmp_3_16 = 0.0e0;
+    real_type tmp_0_17 = 0.0e0;
+    real_type tmp_1_17 = 0.0e0;
+    real_type tmp_2_17 = 0.0e0;
+    real_type tmp_3_17 = 0.0e0;
+    real_type tmp_0_18 = 0.0e0;
+    real_type tmp_1_18 = 0.0e0;
+    real_type tmp_2_18 = 0.0e0;
+    real_type tmp_3_18 = 0.0e0;
+    real_type tmp_0_19 = 0.0e0;
+    real_type tmp_1_19 = 0.0e0;
+    real_type tmp_2_19 = 0.0e0;
+    real_type tmp_3_19 = 0.0e0;
+    DuDxlxlp(0, 0) = tmp_0_0;
+    DuDxlxlp(1, 0) = tmp_1_0;
+    DuDxlxlp(2, 0) = tmp_2_0;
+    DuDxlxlp(3, 0) = tmp_3_0;
+    DuDxlxlp(0, 1) = tmp_0_1;
+    DuDxlxlp(1, 1) = tmp_1_1;
+    DuDxlxlp(2, 1) = tmp_2_1;
+    DuDxlxlp(3, 1) = tmp_3_1;
+    DuDxlxlp(0, 2) = tmp_0_2;
+    DuDxlxlp(1, 2) = tmp_1_2;
+    DuDxlxlp(2, 2) = tmp_2_2;
+    DuDxlxlp(3, 2) = tmp_3_2;
+    DuDxlxlp(0, 3) = tmp_0_3;
+    DuDxlxlp(1, 3) = tmp_1_3;
+    DuDxlxlp(2, 3) = tmp_2_3;
+    DuDxlxlp(3, 3) = tmp_3_3;
+    DuDxlxlp(0, 4) = tmp_0_4;
+    DuDxlxlp(1, 4) = tmp_1_4;
+    DuDxlxlp(2, 4) = tmp_2_4;
+    DuDxlxlp(3, 4) = tmp_3_4;
+    DuDxlxlp(0, 5) = tmp_0_5;
+    DuDxlxlp(1, 5) = tmp_1_5;
+    DuDxlxlp(2, 5) = tmp_2_5;
+    DuDxlxlp(3, 5) = tmp_3_5;
+    DuDxlxlp(0, 6) = tmp_0_6;
+    DuDxlxlp(1, 6) = tmp_1_6;
+    DuDxlxlp(2, 6) = tmp_2_6;
+    DuDxlxlp(3, 6) = tmp_3_6;
+    DuDxlxlp(0, 7) = tmp_0_7;
+    DuDxlxlp(1, 7) = tmp_1_7;
+    DuDxlxlp(2, 7) = tmp_2_7;
+    DuDxlxlp(3, 7) = tmp_3_7;
+    DuDxlxlp(0, 8) = tmp_0_8;
+    DuDxlxlp(1, 8) = tmp_1_8;
+    DuDxlxlp(2, 8) = tmp_2_8;
+    DuDxlxlp(3, 8) = tmp_3_8;
+    DuDxlxlp(0, 9) = tmp_0_9;
+    DuDxlxlp(1, 9) = tmp_1_9;
+    DuDxlxlp(2, 9) = tmp_2_9;
+    DuDxlxlp(3, 9) = tmp_3_9;
+    DuDxlxlp(0, 10) = tmp_0_10;
+    DuDxlxlp(1, 10) = tmp_1_10;
+    DuDxlxlp(2, 10) = tmp_2_10;
+    DuDxlxlp(3, 10) = tmp_3_10;
+    DuDxlxlp(0, 11) = tmp_0_11;
+    DuDxlxlp(1, 11) = tmp_1_11;
+    DuDxlxlp(2, 11) = tmp_2_11;
+    DuDxlxlp(3, 11) = tmp_3_11;
+    DuDxlxlp(0, 12) = tmp_0_12;
+    DuDxlxlp(1, 12) = tmp_1_12;
+    DuDxlxlp(2, 12) = tmp_2_12;
+    DuDxlxlp(3, 12) = tmp_3_12;
+    DuDxlxlp(0, 13) = tmp_0_13;
+    DuDxlxlp(1, 13) = tmp_1_13;
+    DuDxlxlp(2, 13) = tmp_2_13;
+    DuDxlxlp(3, 13) = tmp_3_13;
+    DuDxlxlp(0, 14) = tmp_0_14;
+    DuDxlxlp(1, 14) = tmp_1_14;
+    DuDxlxlp(2, 14) = tmp_2_14;
+    DuDxlxlp(3, 14) = tmp_3_14;
+    DuDxlxlp(0, 15) = tmp_0_15;
+    DuDxlxlp(1, 15) = tmp_1_15;
+    DuDxlxlp(2, 15) = tmp_2_15;
+    DuDxlxlp(3, 15) = tmp_3_15;
+    DuDxlxlp(0, 16) = tmp_0_16;
+    DuDxlxlp(1, 16) = tmp_1_16;
+    DuDxlxlp(2, 16) = tmp_2_16;
+    DuDxlxlp(3, 16) = tmp_3_16;
+    DuDxlxlp(0, 17) = tmp_0_17;
+    DuDxlxlp(1, 17) = tmp_1_17;
+    DuDxlxlp(2, 17) = tmp_2_17;
+    DuDxlxlp(3, 17) = tmp_3_17;
+    DuDxlxlp(0, 18) = tmp_0_18;
+    DuDxlxlp(1, 18) = tmp_1_18;
+    DuDxlxlp(2, 18) = tmp_2_18;
+    DuDxlxlp(3, 18) = tmp_3_18;
+    DuDxlxlp(0, 19) = tmp_0_19;
+    DuDxlxlp(1, 19) = tmp_1_19;
+    DuDxlxlp(2, 19) = tmp_2_19;
+    DuDxlxlp(3, 19) = tmp_3_19;
+    if ( m_debug )
+      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 80 );
   }
 
   /*\
@@ -407,7 +504,7 @@ namespace FarmerDefine {
 
   real_type
   Farmer::m_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -448,7 +545,7 @@ namespace FarmerDefine {
 
   void
   Farmer::DmDu_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -507,7 +604,7 @@ namespace FarmerDefine {
 
   void
   Farmer::DmDuu_sparse(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

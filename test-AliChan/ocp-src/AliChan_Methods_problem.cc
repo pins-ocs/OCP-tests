@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan_Methods_problem.cc                                     |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,12 +75,12 @@ namespace AliChanDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[iX_y2];
-    real_type t2   = t1 * t1;
-    real_type t4   = X__[iX_y1] * X__[iX_y1];
-    real_type t8   = U__[iU_u];
-    real_type t10  = uControl(t8, -1, 1);
-    real_type result__ = t1 * L__[iL_lambda1__xo] + t8 * L__[iL_lambda2__xo] + t10 + t2 - t4;
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, -1, 1);
+    real_type t3   = X__[iX_y2];
+    real_type t4   = t3 * t3;
+    real_type t6   = X__[iX_y1] * X__[iX_y1];
+    real_type result__ = t1 * L__[iL_lambda2__xo] + t3 * L__[iL_lambda1__xo] + t2 + t4 - t6;
     return result__;
   }
 #else
@@ -95,12 +95,12 @@ namespace AliChanDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[iX_y2];
-    real_type t2   = t1 * t1;
-    real_type t4   = X__[iX_y1] * X__[iX_y1];
-    real_type t8   = U__[iU_u];
-    real_type t10  = uControl(t8, -1, 1);
-    real_type result__ = t1 * L__[iL_lambda1__xo] + t8 * L__[iL_lambda2__xo] + t10 + t2 - t4;
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, -1, 1);
+    real_type t3   = X__[iX_y2];
+    real_type t4   = t3 * t3;
+    real_type t6   = X__[iX_y1] * X__[iX_y1];
+    real_type result__ = t1 * L__[iL_lambda2__xo] + t3 * L__[iL_lambda1__xo] + t2 + t4 - t6;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -438,19 +438,19 @@ namespace AliChanDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AliChan::DjumpDxlp_numRows() const
+  AliChan::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  AliChan::DjumpDxlp_numCols() const
+  AliChan::DjumpDxlxlp_numCols() const
   { return 8; }
 
   integer
-  AliChan::DjumpDxlp_nnz() const
+  AliChan::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  AliChan::DjumpDxlp_pattern(
+  AliChan::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -467,7 +467,7 @@ namespace AliChanDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  AliChan::DjumpDxlp_sparse(
+  AliChan::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -492,7 +492,7 @@ namespace AliChanDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

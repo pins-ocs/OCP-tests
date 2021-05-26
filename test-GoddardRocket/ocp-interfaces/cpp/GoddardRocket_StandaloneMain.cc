@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,23 +50,23 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type mc = 0.6;
-    real_type epsi_mass = 0.01;
-    real_type vc = 620;
-    real_type tol_mass = 0.01;
+    real_type epsi_v = 0.01;
     real_type tol_TS = 0.01;
+    real_type m_i = 1;
     real_type tol_T = 0.01;
     real_type h_i = 1;
-    real_type m_i = 1;
-    real_type m_f = mc*m_i;
-    real_type epsi_TS = 0.01;
-    real_type epsi_v = 0.01;
-    real_type tol_v = 0.01;
     real_type epsi_T = 0.01;
     real_type g0 = 1;
-    real_type c = 0.5*(g0*h_i)^(1/2.0);
     real_type Tmax = 3.5*g0*m_i;
+    real_type epsi_TS = 0.01;
+    real_type tol_v = 0.01;
+    real_type tol_mass = 0.01;
+    real_type mc = 0.6;
+    real_type m_f = mc*m_i;
+    real_type epsi_mass = 0.01;
+    real_type vc = 620;
     real_type Dc = 0.5*vc*m_i/g0;
+    real_type c = 0.5*(g0*h_i)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -178,8 +178,8 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-    // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_TControl = data_Controls["TControl"];
     data_TControl["type"]      = ;
@@ -190,7 +190,7 @@ main() {
 
     // Constraint1D
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-    // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_massPositive = data_Constraints["massPositive"];

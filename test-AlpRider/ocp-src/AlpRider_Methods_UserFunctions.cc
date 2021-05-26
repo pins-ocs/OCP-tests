@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -88,7 +88,7 @@ namespace AlpRiderDefine {
     real_type t2   = pow(-xo__t + xo__a, 2);
     real_type t3   = t2 * xo__b;
     real_type t6   = exp(-t3);
-    real_type result__ = 4 * t6 * xo__b * (-1.0 / 2.0 + t3);
+    real_type result__ = 4 * t6 * (-1.0 / 2.0 + t3) * xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -104,7 +104,7 @@ namespace AlpRiderDefine {
     real_type t2   = pow(-xo__t + xo__a, 2);
     real_type t3   = t2 * xo__b;
     real_type t6   = exp(-t3);
-    real_type result__ = -4 * t6 * xo__b * (-1.0 / 2.0 + t3);
+    real_type result__ = -4 * t6 * (-1.0 / 2.0 + t3) * xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -154,7 +154,7 @@ namespace AlpRiderDefine {
     real_type t2   = pow(-xo__t + xo__a, 2);
     real_type t3   = t2 * xo__b;
     real_type t6   = exp(-t3);
-    real_type result__ = 4 * t6 * xo__b * (-1.0 / 2.0 + t3);
+    real_type result__ = 4 * t6 * (-1.0 / 2.0 + t3) * xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

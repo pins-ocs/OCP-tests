@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -254,8 +254,9 @@ namespace MaximumAscentDefine {
     real_type t1   = OMEGA__[5];
     real_type t4   = XR__[iX_r];
     real_type t5   = sqrt(t4);
-    result__[ 0   ] = -1.0 / t5 / t4 * XR__[iX_v] * t1 / 4;
-    result__[ 1   ] = 1.0 / t5 * t1 / 2;
+    real_type t2   = 1.0 / t5;
+    result__[ 0   ] = -XR__[iX_v] * t1 / t4 * t2 / 4;
+    result__[ 1   ] = t1 * t2 / 2;
     result__[ 2   ] = result__[1];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 3, i_segment_left, i_segment_right );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_AdjointODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -86,8 +86,8 @@ namespace ZermeloDefine {
     real_type t12  = velX_D_2(t4, t5);
     real_type t14  = velY_D_2(t4, t5);
     result__[ 1   ] = t12 * t3 + t14 * t9;
-    result__[ 2   ] = t2 * t1;
-    result__[ 3   ] = t2 * t8;
+    result__[ 2   ] = t3;
+    result__[ 3   ] = t9;
     real_type t16  = ALIAS_Tpositive_D(t2);
     real_type t18  = velX(t4, t5);
     real_type t22  = velY(t4, t5);
@@ -174,8 +174,8 @@ namespace ZermeloDefine {
     result__[ 7   ] = t8;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[5];
-    result__[ 10  ] = result__[6];
-    result__[ 11  ] = result__[7];
+    result__[ 10  ] = t1;
+    result__[ 11  ] = t8;
     result__[ 12  ] = ALIAS_Tpositive_DD(t2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 13, i_segment );

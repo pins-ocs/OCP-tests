@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -548,19 +548,19 @@ namespace gtocX_2burn_parsDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  gtocX_2burn_pars::DjumpDxlp_numRows() const
+  gtocX_2burn_pars::DjumpDxlxlp_numRows() const
   { return 6; }
 
   integer
-  gtocX_2burn_pars::DjumpDxlp_numCols() const
+  gtocX_2burn_pars::DjumpDxlxlp_numCols() const
   { return 15; }
 
   integer
-  gtocX_2burn_pars::DjumpDxlp_nnz() const
+  gtocX_2burn_pars::DjumpDxlxlp_nnz() const
   { return 12; }
 
   void
-  gtocX_2burn_pars::DjumpDxlp_pattern(
+  gtocX_2burn_pars::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -581,7 +581,7 @@ namespace gtocX_2burn_parsDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  gtocX_2burn_pars::DjumpDxlp_sparse(
+  gtocX_2burn_pars::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -610,7 +610,7 @@ namespace gtocX_2burn_parsDefine {
     result__[ 10  ] = -1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -653,18 +653,19 @@ namespace gtocX_2burn_parsDefine {
     result__[ 5   ] = xVelocity(t7, t8, t9, t11, t12, t10, t13);
     result__[ 6   ] = yVelocity(t7, t8, t9, t11, t12, t10, t13);
     result__[ 7   ] = zVelocity(t7, t8, t9, t11, t12, t10, t13);
-    result__[ 8   ] = X_begin(result__[0]);
-    result__[ 9   ] = Y_begin(result__[0]);
-    result__[ 10  ] = Z_begin(result__[0]);
-    result__[ 11  ] = VX_begin(result__[0]);
-    result__[ 12  ] = VY_begin(result__[0]);
-    result__[ 13  ] = VZ_begin(result__[0]);
-    result__[ 14  ] = X_end(result__[0]);
-    result__[ 15  ] = Y_end(result__[0]);
-    result__[ 16  ] = Z_end(result__[0]);
-    result__[ 17  ] = VX_end(result__[0]);
-    result__[ 18  ] = VY_end(result__[0]);
-    result__[ 19  ] = VZ_end(result__[0]);
+    real_type t14  = result__[0];
+    result__[ 8   ] = X_begin(t14);
+    result__[ 9   ] = Y_begin(t14);
+    result__[ 10  ] = Z_begin(t14);
+    result__[ 11  ] = VX_begin(t14);
+    result__[ 12  ] = VY_begin(t14);
+    result__[ 13  ] = VZ_begin(t14);
+    result__[ 14  ] = X_end(t14);
+    result__[ 15  ] = Y_end(t14);
+    result__[ 16  ] = Z_end(t14);
+    result__[ 17  ] = VX_end(t14);
+    result__[ 18  ] = VY_end(t14);
+    result__[ 19  ] = VZ_end(t14);
     Mechatronix::check_in_segment( result__, "post_eval", 20, i_segment );
   }
 

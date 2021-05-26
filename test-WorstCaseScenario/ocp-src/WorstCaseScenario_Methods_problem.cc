@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods_problem.cc                           |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,9 +75,9 @@ namespace WorstCaseScenarioDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t6   = U__[iU_u];
-    real_type t8   = uControl(t6, 0, 1);
-    real_type result__ = t6 * (1 - 2 * Q__[iQ_zeta]) * L__[iL_lambda1__xo] + t8;
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, 0, 1);
+    real_type result__ = t2 + t1 * (1 - 2 * Q__[iQ_zeta]) * L__[iL_lambda1__xo];
     return result__;
   }
 #else
@@ -92,9 +92,9 @@ namespace WorstCaseScenarioDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t6   = U__[iU_u];
-    real_type t8   = uControl(t6, 0, 1);
-    real_type result__ = t6 * (1 - 2 * Q__[iQ_zeta]) * L__[iL_lambda1__xo] + t8;
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, 0, 1);
+    real_type result__ = t2 + t1 * (1 - 2 * Q__[iQ_zeta]) * L__[iL_lambda1__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -425,19 +425,19 @@ namespace WorstCaseScenarioDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  WorstCaseScenario::DjumpDxlp_numRows() const
+  WorstCaseScenario::DjumpDxlxlp_numRows() const
   { return 2; }
 
   integer
-  WorstCaseScenario::DjumpDxlp_numCols() const
+  WorstCaseScenario::DjumpDxlxlp_numCols() const
   { return 4; }
 
   integer
-  WorstCaseScenario::DjumpDxlp_nnz() const
+  WorstCaseScenario::DjumpDxlxlp_nnz() const
   { return 4; }
 
   void
-  WorstCaseScenario::DjumpDxlp_pattern(
+  WorstCaseScenario::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -450,7 +450,7 @@ namespace WorstCaseScenarioDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  WorstCaseScenario::DjumpDxlp_sparse(
+  WorstCaseScenario::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -471,7 +471,7 @@ namespace WorstCaseScenarioDefine {
     result__[ 2   ] = -1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 4, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   /*\

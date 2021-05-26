@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -253,7 +253,8 @@ namespace PointMassCarModel_4Define {
     real_type t7   = ALIAS_Kappa(t6);
     real_type t8   = zeta__dot_D_4(t3, t4, t5, t7);
     real_type t10  = ALIAS_Kappa_D(t6);
-    result__[ 0   ] = t10 * t8 * t2;
+    real_type t9   = t10 * t8;
+    result__[ 0   ] = t2 * t9;
     real_type t11  = zeta__dot_D_3(t3, t4, t5, t7);
     result__[ 1   ] = t11 * t2;
     real_type t12  = zeta__dot_D_2(t3, t4, t5, t7);
@@ -268,19 +269,19 @@ namespace PointMassCarModel_4Define {
     real_type t17  = sin(t4);
     result__[ 6   ] = t17 * t2;
     result__[ 7   ] = t17 * t15;
-    result__[ 8   ] = -t2 * (t10 * t8 * t7 + t14 * t10);
+    result__[ 8   ] = -(t14 * t10 + t7 * t9) * t2;
     result__[ 9   ] = -t2 * t11 * t7;
     result__[ 10  ] = -t2 * t12 * t7;
     result__[ 11  ] = -t2 * t13 * t7;
     result__[ 12  ] = t2;
-    result__[ 13  ] = -result__[12] * (t14 * t7 - X__[iX_Omega]);
+    result__[ 13  ] = -t2 * (t14 * t7 - X__[iX_Omega]);
     real_type t33  = ModelPars[iM_kD];
-    result__[ 14  ] = -2 * result__[12] * t3 * t33;
-    result__[ 15  ] = result__[12];
+    result__[ 14  ] = -2 * t2 * t3 * t33;
+    result__[ 15  ] = t2;
     real_type t37  = t3 * t3;
-    result__[ 16  ] = result__[15] * (-t33 * t37 + X__[iX_fx]);
-    result__[ 17  ] = ModelPars[iM_v__Omega__max] * U__[iU_v__Omega] * result__[15];
-    result__[ 18  ] = ModelPars[iM_v__fx__max] * U__[iU_v__fx] * result__[15];
+    result__[ 16  ] = t2 * (-t37 * t33 + X__[iX_fx]);
+    result__[ 17  ] = ModelPars[iM_v__Omega__max] * U__[iU_v__Omega] * t2;
+    result__[ 18  ] = ModelPars[iM_v__fx__max] * U__[iU_v__fx] * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 19, i_segment );
   }

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona2_run.rb                                        #
 #                                                                       #
-#  version: 1.0   date 9/3/2021                                         #
+#  version: 1.0   date 3/6/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -39,6 +39,9 @@ end
 require_relative 'GenericContainer_ffi.rb';
 require_relative 'Splines_ffi.rb';
 require 'pp'
+require 'etc'
+
+$MAX_THREAD_NUM = Etc.nprocessors; # get number of virtual core
 
 module Mechatronix
   SET  = true

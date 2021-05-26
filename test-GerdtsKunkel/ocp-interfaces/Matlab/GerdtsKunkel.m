@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: GerdtsKunkel.m                                                 %
 %                                                                       %
-%  version: 1.0   date 9/3/2021                                         %
+%  version: 1.0   date 3/6/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -41,8 +41,10 @@ classdef GerdtsKunkel < handle
     % INITIALIZATION
     % ---------------------------------------------------------------------
     function data = read( self, fname )
-      % read a file with problem description in Ruby o LUA
+      %
+      % Read a file with problem description in Ruby o LUA
       % and return a MATLAB structure with the readed data
+      %
       data = GerdtsKunkel_Mex( 'read', self.objectHandle, fname );
     end
     % ---------------------------------------------------------------------
@@ -52,7 +54,8 @@ classdef GerdtsKunkel < handle
     end
     % ---------------------------------------------------------------------
     function n = names( self )
-      % return a MATLAB structures collecting the names of the variable, states etc
+      %
+      % Return a MATLAB structures collecting the names of the variable, states etc
       % of the OCP problem:
       %
       % n.state_names                  = cell array of strings
@@ -63,11 +66,13 @@ classdef GerdtsKunkel < handle
       % n.bc_lagrange_multiplier_names = cell array of strings
       % n.post_processing_names        = cell array of strings, post processing variables name
       % n.model_names                  = cell array of strings, names of model parameters
+      %
       n = GerdtsKunkel_Mex( 'names', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = dims( self )
-      % return a MATLAB structures collecting the dimension of the OCP problem:
+      %
+      % Return a MATLAB structures collecting the dimension of the OCP problem:
       % res.dim_q     = number of mesh variables (variables computed ad mesh nodes)
       % res.dim_x     = number of states
       % res.dim_u     = number of controls
@@ -76,11 +81,13 @@ classdef GerdtsKunkel < handle
       % res.dim_bc    = number of BC
       % res.num_nodes = number of nodes of the discretization grid
       % res.neq       = number of equations
+      %
       res = GerdtsKunkel_Mex( 'dims', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = get_ocp_data( self )
-      % return a structure with data and solution (if computed) of the OCP problem
+      %
+      % Return a structure with data and solution (if computed) of the OCP problem
       % information level possible values: -1,0,1,2,3,4
       % res.InfoLevel
       %
@@ -132,6 +139,7 @@ classdef GerdtsKunkel < handle
       % res.Mesh
       % res.OutputSplines
       % res.Pointers
+      %
       res = GerdtsKunkel_Mex( 'get_ocp_data', self.objectHandle );
     end
 
@@ -141,7 +149,9 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function infoLevel( self, infoLvl )
-      % set information level
+      %
+      % Set information level
+      %
       GerdtsKunkel_Mex( 'infoLevel', self.objectHandle, infoLvl );
     end
 
@@ -151,7 +161,9 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function N_thread( self, nt )
-      % set information level
+      %
+      % Set information level.
+      %
       GerdtsKunkel_Mex( 'N_thread', self.objectHandle, nt );
     end
 
@@ -161,7 +173,9 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function remesh( self, new_mesh )
-      % use structure to initialize mesh
+      %
+      % Use structure to initialize mesh.
+      %
       GerdtsKunkel_Mex( 'remesh', self.objectHandle, new_mesh );
     end
 
@@ -171,16 +185,22 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function set_guess( self, varargin )
-      % with no argument use predefined guess, otherwise
-      % use structure to initialize guess
+      %
+      % With no argument use predefined guess, otherwise
+      % use structure to initialize guess.
+      %
       GerdtsKunkel_Mex( 'set_guess', self.objectHandle, varargin{:} );
     end
     function guess = get_guess( self )
-      % return a structure with the stored guess
+      %
+      % Return a structure with the stored guess.
+      %
       guess = GerdtsKunkel_Mex( 'get_guess', self.objectHandle );
     end
     function guess = get_solution_as_guess( self )
-      % return a structure with the solution formatted as a guess
+      %
+      % Return a structure with the solution formatted as a guess.
+      %
       guess = GerdtsKunkel_Mex( 'get_solution_as_guess', self.objectHandle );
     end
 
@@ -190,14 +210,19 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function ok = solve( self, varargin )
+      %
       % ok = false if computation failed
       % ok = true if computation is succesfull
-      % varargin{1} = timeout
+      % varargin{1} = timeout (if present)
+      %
       ok = GerdtsKunkel_Mex( 'solve', self.objectHandle, varargin{:} );
     end
     % ---------------------------------------------------------------------
     function updateContinuation( self, n, old_s, s )
-      % set parameter of the problem for continuation step `n` at fraction `s`
+      %
+      % Set parameter of the problem for continuation
+      % step `n` at fraction `s`
+      %
       GerdtsKunkel_Mex( ...
         'updateContinuation', self.objectHandle, n, old_s, s ...
       );
@@ -209,29 +234,39 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function sol = solution( self, varargin )
-      % return the whole solution or the column of name varargin{1}
+      %
+      % Return the whole solution or the column of name varargin{1}.
+      %
       sol = GerdtsKunkel_Mex( 'get_solution', self.objectHandle, varargin{:} );
     end
     % ---------------------------------------------------------------------
     function sol = solution2( self )
-      % return the whole solution
+      %
+      % Return the whole solution.
+      %
       sol = GerdtsKunkel_Mex( 'get_solution2', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function sol = solution3( self )
-      % return the whole solution
+      %
+      % Return the whole solution.
+      %
       sol = GerdtsKunkel_Mex( 'get_solution3', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function sol = pack( self, X, Lambda, Pars, Omega )
-      % combine the solution in the matrices `X`, `Lambda`, `Pars` and `Omega`
-      % in a single vector as stored in the solver PINS
+      %
+      % Combine the solution in the matrices `X`, `Lambda`, `Pars` and `Omega`
+      % in a single vector as stored in the solver PINS.
+      %
       sol = GerdtsKunkel_Mex( 'pack', self.objectHandle, X, Lambda, Pars, Omega );
     end
     % ---------------------------------------------------------------------
     function [X, Lambda, Pars, Omega] = unpack( self, sol )
-      % unpack a vector to the matrices `X`, `Lambda`, `Pars` and `Omega`
-      % the vector must contains the data as stored in the solver PINS
+      %
+      % Unpack a vector to the matrices `X`, `Lambda`, `Pars` and `Omega`
+      % the vector must contains the data as stored in the solver PINS.
+      %
       [X, Lambda, Pars, Omega] = GerdtsKunkel_Mex( 'unpack', self.objectHandle, sol );
     end
 
@@ -250,15 +285,21 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function res = x1( self )
-      % return the solution for the state: x1
+      %
+      % Return the solution for the state: x1
+      %
       res = GerdtsKunkel_Mex( 'get_solution', self.objectHandle, 'x1' );
     end
     function res = x2( self )
-      % return the solution for the state: x2
+      %
+      % Return the solution for the state: x2
+      %
       res = GerdtsKunkel_Mex( 'get_solution', self.objectHandle, 'x2' );
     end
     function res = x3( self )
-      % return the solution for the state: x3
+      %
+      % Return the solution for the state: x3
+      %
       res = GerdtsKunkel_Mex( 'get_solution', self.objectHandle, 'x3' );
     end
 
@@ -268,15 +309,21 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function res = lambda1( self )
-      % return the solution for the multiplier: lambda1
+      %
+      % Return the solution for the multiplier: lambda1
+      %
       res = GerdtsKunkel_Mex( 'get_solution', self.objectHandle, 'lambda1__xo' );
     end
     function res = lambda2( self )
-      % return the solution for the multiplier: lambda2
+      %
+      % Return the solution for the multiplier: lambda2
+      %
       res = GerdtsKunkel_Mex( 'get_solution', self.objectHandle, 'lambda2__xo' );
     end
     function res = lambda3( self )
-      % return the solution for the multiplier: lambda3
+      %
+      % Return the solution for the multiplier: lambda3
+      %
       res = GerdtsKunkel_Mex( 'get_solution', self.objectHandle, 'lambda3__xo' );
     end
 
@@ -286,7 +333,9 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function res = u( self )
-      % return the solution for the control: u
+      %
+      % Return the solution for the control: u
+      %
       res = GerdtsKunkel_Mex( 'get_solution', self.objectHandle, 'u' );
     end
 
@@ -302,38 +351,55 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function F = eval_F( self, x )
-      % return the nonlinear system of the indirect methods
+      %
+      % Return the nonlinear system of the indirect
+      % methods evaluated at `x`.
+      %
       F = GerdtsKunkel_Mex( 'eval_F', self.objectHandle, x );
     end
     % ---------------------------------------------------------------------
     function JF = eval_JF( self, x )
-      % return the jacobian of the nonlinear system of the indirect methods
+      %
+      % Return the jacobian of the nonlinear system 
+      % of the indirect methods evaluated ad `x`.
+      %
       JF = GerdtsKunkel_Mex( 'eval_JF', self.objectHandle, x );
     end
     % ---------------------------------------------------------------------
     function JF = eval_JF_pattern( self )
-      % return the pattern of the jacobian of the nonlinear system of the indirect methods
+      %
+      % Return the pattern of the jacobian of the nonlinear
+      % system of the indirect methods.
+      %
       JF = GerdtsKunkel_Mex( 'eval_JF_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function x = get_raw_solution( self )
-      % return the solution in a vector as stored in PINS
+      %
+      % Return the solution in a vector as stored in PINS.
+      %
       x = GerdtsKunkel_Mex( 'get_raw_solution', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function set_raw_solution( self, x )
-      % return set the solution in a vector as stored in PINS
+      %
+      % Return set the solution in a vector as stored in PINS.
+      %
       GerdtsKunkel_Mex( 'set_raw_solution', self.objectHandle, x );
     end
     % ---------------------------------------------------------------------
     function ok = check_raw_solution( self, x )
-      % check the solution in a vector as stored in PINS
+      %
+      % Check the solution in a vector as stored in PINS.
+      %
       ok = GerdtsKunkel_Mex( 'check_raw_solution', self.objectHandle, x );
     end
     % ---------------------------------------------------------------------
     function check_jacobian( self, x, epsi )
-      % check the analytic jacobian comparing with finite difference one.
-      % `epsi` is the admitted tolerance
+      %
+      % Check the analytic jacobian comparing with finite difference one.
+      % `epsi` is the admitted tolerance.
+      %
       GerdtsKunkel_Mex( 'check_jacobian', self.objectHandle, x, epsi );
     end
     % ---------------------------------------------------------------------
@@ -343,7 +409,10 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     function [a,c] = eval_ac( self, iseg_L, q_L, x_L, lambda_L, ...
                                     iseg_R, q_R, x_R, lambda_R, pars, U )
-      % compute the block of the nonlinear system given left and right stated
+      %
+      % Compute the block of the nonlinear system
+      % given left and right states.
+      %
       [a,c] = GerdtsKunkel_Mex( 'ac', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
@@ -351,7 +420,10 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     function [Ja,Jc] = eval_DacDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
                                            iseg_R, q_R, x_R, lambda_R, pars, U )
-      % compute the block of the nonlinear system given left and right stated
+      %
+      % Compute the block of the nonlinear system
+      % given left and right states.
+      %
       [Ja,Jc] = GerdtsKunkel_Mex( 'DacDxlp', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
@@ -359,7 +431,10 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     function [h,c] = eval_hc( self, iseg_L, q_L, x_L, lambda_L, ...
                                     iseg_R, q_R, x_R, lambda_R, pars )
-      % compute the block of the BC of the nonlinear system given left and right stated
+      %
+      % Compute the block of the BC of the nonlinear
+      % system given left and right states.
+      %
       [h,c] = GerdtsKunkel_Mex( 'hc', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
@@ -367,7 +442,10 @@ classdef GerdtsKunkel < handle
     % ---------------------------------------------------------------------
     function [Jh,Jc] = eval_DhcDxlop( self, iseg_L, q_L, x_L, lambda_L, ...
                                             iseg_R, q_R, x_R, lambda_R, pars )
-      % compute the block of the BC of the nonlinear system given left and right stated
+      %
+      % Compute the block of the BC of the nonlinear system
+      % given left and right states.
+      %
       [Jh,Jc] = GerdtsKunkel_Mex( 'DhcDxlop', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
@@ -377,45 +455,52 @@ classdef GerdtsKunkel < handle
     % CONTINUOUS PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function u = eval_u( self, varargin )
-      % compute the control give states and multiplyer
-      % res = self.eval_u( iseg, q, x, lambda, pars )
-      % the call
-      % res = self.eval_u( iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars )
-      % is the same as
-      % res = self.eval_u( iseg_L, (q_L+q_R)./2, (x_L+x_R)./2, (lambda_L+lambda_R)./2, pars )
-      u = GerdtsKunkel_Mex( 'u', self.objectHandle, varargin{:} );
+    function u = eval_u( self, iseg_L, q_L, x_L, lambda_L, ...
+                               iseg_R, q_R, x_R, lambda_R, ...
+                               pars )
+      %
+      % Compute the control given states and multiplyers.
+      %
+      u = GerdtsKunkel_Mex( 'u', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+      );
     end
     % ---------------------------------------------------------------------
-    function u = eval_DuDxlp( self, varargin )
-      % compute the control give states and multiplyer
-      % res = self.eval_DuDxlp( iseg, q, x, lambda, pars )
-      % the call
-      % res = self.eval_DuDxlp( iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars )
-      % is the same as
-      % res = self.eval_DuDxlp( iseg_L, (q_L+q_R)./2, (x_L+x_R)./2, (lambda_L+lambda_R)./2, pars )
+    function DuDxlxlp = eval_DuDxlxlp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                             iseg_R, q_R, x_R, lambda_R, ...
+                                             pars )
       %
-      u = GerdtsKunkel_Mex( 'DuDxlp', self.objectHandle, varargin{:} );
+      % Compute the jacobian of controls given states and multiplyers.
+      %
+      DuDxlxlp = GerdtsKunkel_Mex( 'DuDxlxlp', self.objectHandle, ...
+        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+      );
     end
     % ---------------------------------------------------------------------
     function rhs = eval_rhs_ode( self, iseg, q, x, u, pars )
-      % compute rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
-      rhs = GerdtsKunkel_Mex(...
-        'rhs_ode', self.objectHandle, iseg, q, x, u, pars...
+      %
+      % Compute rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`.
+      %
+      rhs = GerdtsKunkel_Mex( 'rhs_ode', self.objectHandle, ...
+        iseg, q, x, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
     function J = eval_Drhs_odeDx( self, iseg, q, x, u, pars )
-      % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
-      % respect to `x`
+      %
+      % Compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex(...
         'Drhs_odeDx', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
     function J = eval_Drhs_odeDu( self, iseg, q, x, u, pars )
-      % compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
-      % respect to `u`
+      %
+      % Compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % respect to `u`.
+      %
       J = GerdtsKunkel_Mex(...
         'Drhs_odeDu', self.objectHandle, iseg, q, x, u, pars...
       );
@@ -430,48 +515,62 @@ classdef GerdtsKunkel < handle
     end
     % ---------------------------------------------------------------------
     function A = eval_A( self, iseg, q, x, pars )
+      %
       % compute `A(q,x)` of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
-      % respect to `pars`
+      % respect to `pars`.
+      %
       A = GerdtsKunkel_Mex( 'A', self.objectHandle, iseg, q, x, pars );
     end
     % ---------------------------------------------------------------------
     function eta = eval_eta( self, iseg, q, x, lambda, pars )
-      % compute `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
+      %
+      % Compute `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`.
+      %
       eta = GerdtsKunkel_Mex(...
         'eta', self.objectHandle, iseg, q, x, lambda, pars...
       );
     end
     % ---------------------------------------------------------------------
     function J = eval_DetaDx( self, iseg, q, x, lambda, pars )
-      % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
-      % respect to `x`
+      %
+      % Compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex(...
         'DetaDx', self.objectHandle, iseg, q, x, lambda, pars...
       );
     end
     % ---------------------------------------------------------------------
     function J = eval_DetaDp( self, iseg, q, x, lambda, pars )
-      % compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
-      % respect to `x`
+      %
+      % Compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex(...
         'DetaDp', self.objectHandle, iseg, q, x, lambda, pars...
       );
     end
     % ---------------------------------------------------------------------
     function nu = eval_nu( self, iseg, q, x, V, pars )
-      % compute `nu(q,x,V,pars) = A(q,x,pars) V`
+      %
+      % Compute `nu(q,x,V,pars) = A(q,x,pars) V`.
+      %
       nu = GerdtsKunkel_Mex( 'nu', self.objectHandle, iseg, q, x, V, pars );
     end
     % ---------------------------------------------------------------------
     function J = eval_DnuDx( self, iseg, q, x, V, pars )
-      % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
-      % respect to `x`
+      %
+      % Compute the Jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex( 'DnuDx', self.objectHandle, iseg, q, x, V, pars );
     end
     % ---------------------------------------------------------------------
     function J = eval_DnuDp( self, iseg, q, x, V, pars )
-      % compute the jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
-      % respect to `x`
+      %
+      % Compute the Jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex( 'DnuDp', self.objectHandle, iseg, q, x, V, pars );
     end
     % ---------------------------------------------------------------------
@@ -482,16 +581,20 @@ classdef GerdtsKunkel < handle
     end
     % ---------------------------------------------------------------------
     function J = eval_DHxDx( self, iseg, q, x, lambda, V, u, pars )
-      % compute the jacobian of `Hx(q,x,lambda,V,pars)`
-      % respect to `x`
+      %
+      % Compute the jacobian of `Hx(q,x,lambda,V,pars)`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex(...
         'DHxDx', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
     function J = eval_DHxDp( self, iseg, q, x, lambda, V, u, pars )
-      % compute the jacobian of `Hx(q,x,lambda,V,u,pars)`
-      % respect to `x`
+      %
+      % Compute the jacobian of `Hx(q,x,lambda,V,u,pars)`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex(...
         'DHxDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
@@ -504,16 +607,20 @@ classdef GerdtsKunkel < handle
     end
     % ---------------------------------------------------------------------
     function J = eval_DHuDx( self, iseg, q, x, lambda, V, u, pars )
-      % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
-      % respect to `x`
+      %
+      % Compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex(...
         'DHuDx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
     % ---------------------------------------------------------------------
     function J = eval_DHuDp( self, iseg, q, x, lambda, V, u, pars )
-      % compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
-      % respect to `x`
+      %
+      % Compute the jacobian of `Hu(q,x,lambda,V,u,pars)`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex(...
         'DHuDp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
@@ -526,8 +633,10 @@ classdef GerdtsKunkel < handle
     end
     % ---------------------------------------------------------------------
     function J = eval_DHpDp( self, q, x, lambda, V, u, pars )
-      % compute the jacobian of `Hp(q,x,lambda,V,u,pars)`
-      % respect to `x`
+      %
+      % Compute the jacobian of `Hp(q,x,lambda,V,u,pars)`
+      % respect to `x`.
+      %
       J = GerdtsKunkel_Mex(...
         'DHpDp', self.objectHandle, q, x, lambda, V, u, pars...
       );
@@ -589,10 +698,10 @@ classdef GerdtsKunkel < handle
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DjumpDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
-                                       iseg_R, q_R, x_R, lambda_R, pars )
+    function J = eval_DjumpDxlxlp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                         iseg_R, q_R, x_R, lambda_R, pars )
       J = GerdtsKunkel_Mex( ...
-        'DjumpDxlp', self.objectHandle, ...
+        'DjumpDxlxlp', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end

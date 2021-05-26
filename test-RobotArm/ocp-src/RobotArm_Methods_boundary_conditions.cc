@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_boundary_conditions.cc                        |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -104,13 +104,13 @@ namespace RobotArmDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
     result__[ 0   ] = XL__[iX_rho] - 0.45e1;
     result__[ 1   ] = XL__[iX_theta];
-    real_type t3   = 0.3141592654e1 / 4;
+    real_type t3   = 0.314159265358979323846264338328e1 / 4;
     result__[ 2   ] = XL__[iX_phi] - t3;
     result__[ 3   ] = XL__[iX_rho1];
     result__[ 4   ] = XL__[iX_theta1];
     result__[ 5   ] = XL__[iX_phi1];
     result__[ 6   ] = XR__[iX_rho] - 0.45e1;
-    result__[ 7   ] = XR__[iX_theta] - 2.0 / 3.0 * 0.3141592654e1;
+    result__[ 7   ] = XR__[iX_theta] - 2.0 / 3.0 * 0.314159265358979323846264338328e1;
     result__[ 8   ] = XR__[iX_phi] - t3;
     result__[ 9   ] = XR__[iX_rho1];
     result__[ 10  ] = XR__[iX_theta1];

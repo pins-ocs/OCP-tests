@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods_ODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -157,9 +157,12 @@ namespace TwoLinkRobotArmDefine {
     real_type t8   = t3 * t3;
     real_type t10  = 0.31e2 / 0.36e2 + 9.0 / 4.0 * t8;
     real_type t11  = 1.0 / t10;
-    result__[ 0   ] = 9.0 / 2.0 * t11 * t6 * t5 * t4;
+    real_type t9   = t11 * t6;
+    real_type t12  = t5 * t4;
+    result__[ 0   ] = 9.0 / 2.0 * t12 * t9;
     real_type t14  = X__[iX_x2];
-    result__[ 1   ] = 4 * t11 * t14 * t4;
+    real_type t15  = t14 * t11;
+    result__[ 1   ] = 4 * t4 * t15;
     real_type t17  = t6 * t6;
     real_type t20  = t14 * t14;
     real_type t22  = 9.0 / 4.0 * t17 * t5 + 2 * t20;
@@ -168,14 +171,14 @@ namespace TwoLinkRobotArmDefine {
     real_type t40  = t10 * t10;
     real_type t43  = t5 * t3 / t40;
     result__[ 2   ] = t11 * (t22 * t5 - 9.0 / 4.0 * t17 * t8 + 3.0 / 2.0 * t26 * t3) * t1 - 9.0 / 2.0 * t43 * (t22 * t3 + 4.0 / 3.0 * t33 - 4.0 / 3.0 * t26 - 3.0 / 2.0 * t26 * t5) * t1;
-    result__[ 3   ] = -7 * t11 * t6 * t4;
-    result__[ 4   ] = -9.0 / 2.0 * t11 * t14 * t5 * t4;
+    result__[ 3   ] = -7 * t4 * t9;
+    result__[ 4   ] = -9.0 / 2.0 * t12 * t15;
     real_type t56  = 7.0 / 2.0 * t17 + 9.0 / 4.0 * t20 * t5;
     real_type t60  = t33 - t26;
     result__[ 5   ] = -t11 * (t56 * t5 - 9.0 / 4.0 * t20 * t8 - 3.0 / 2.0 * t60 * t3) * t1 + 9.0 / 2.0 * t43 * (t56 * t3 - 7.0 / 3.0 * t26 + 3.0 / 2.0 * t60 * t5) * t1;
     result__[ 6   ] = -t1;
     result__[ 7   ] = t1;
-    result__[ 8   ] = result__[7];
+    result__[ 8   ] = t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 9, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type m = 250;
     real_type g = 9.81;
     real_type mu = 1;
+    real_type m = 250;
     real_type Fmax = m*g*mu;
     integer InfoLevel = 4;
 
@@ -157,8 +157,8 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-    // Control Barrier type: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_FyControl = data_Controls["FyControl"];
     data_FyControl["type"]      = ;
@@ -169,7 +169,7 @@ main() {
 
     // Constraint1D
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-    // Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DGreaterThan
     GenericContainer & data_minimumTimeSize = data_Constraints["minimumTimeSize"];
@@ -182,14 +182,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BikeSteering_data.Mesh["s0"] = 0;
-BikeSteering_data.Mesh["segments"][0]["length"] = 0.1;
 BikeSteering_data.Mesh["segments"][0]["n"] = 10;
-BikeSteering_data.Mesh["segments"][1]["length"] = 0.4;
+BikeSteering_data.Mesh["segments"][0]["length"] = 0.1;
 BikeSteering_data.Mesh["segments"][1]["n"] = 40;
-BikeSteering_data.Mesh["segments"][2]["length"] = 0.4;
+BikeSteering_data.Mesh["segments"][1]["length"] = 0.4;
 BikeSteering_data.Mesh["segments"][2]["n"] = 40;
-BikeSteering_data.Mesh["segments"][3]["length"] = 0.1;
+BikeSteering_data.Mesh["segments"][2]["length"] = 0.4;
 BikeSteering_data.Mesh["segments"][3]["n"] = 10;
+BikeSteering_data.Mesh["segments"][3]["length"] = 0.1;
 
 
     // alias for user object classes passed as pointers

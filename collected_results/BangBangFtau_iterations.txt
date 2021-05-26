@@ -54,7 +54,7 @@ Segment N.3: s0 = 0.9000 length = 0.1000 npts = 11 no data set
 END Mesh[mesh]
 
 User mapped functions
-User function ``clip'' mapped with: ClipIntervalWithErf, h=0.10000, delta=0.0000
+User function ``clip'' mapped with: ClipIntervalWithErf, h=0.10000, delta=0.0000, delta2=0.0000
 
 Model Parameters
 ..................................epsiTB = 0.001
@@ -106,11 +106,11 @@ Hyness --- start iterations ---
 [ 23,  1] (1.69e-10 ,1.49e-11 ) [1.01e-10 ,1.72e-12 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 40.5[ms]      timeout        = 0 [ms]
+Elapsed Time   = 38.9[ms]      timeout        = 0 [ms]
 iteration      = 23            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 837
 max acc. iter. = 800           N. System pars = 206
-Converged      = YES           Memory Used    = 114Kb (+77bytes)
+Converged      = YES           Memory Used    = 129Kb (+40bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

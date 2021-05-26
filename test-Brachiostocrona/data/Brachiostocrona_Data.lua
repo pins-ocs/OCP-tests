@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -21,10 +21,10 @@
 
 -- Auxiliary values
 g  = 9.81
-xf = 5
 yf = -2
-Tf = (-2.0*yf/g)**(1/2.0)
+xf = 5
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+Tf = (-2.0*yf/g)**(1/2.0)
 
 content = {
 
@@ -161,8 +161,8 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-  -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     vthetaControl = {
       type      = ,
@@ -184,8 +184,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 500,
+        length = 1,
       },
     },
   },

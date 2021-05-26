@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-wT0       = 0.01
-wT        = wT0
+up_epsi0  = 0.1
+up_tol0   = 0.01
 road_tol0 = 0.01
 m         = 700
-p_epsi0   = 0.1
-kD        = 0.2500000000/m
-up_tol0   = 0.01
-up_epsi0  = 0.1
+wT0       = 0.01
 p_tol0    = 0.1
+wT        = wT0
+kD        = 0.2500000000/m
+p_epsi0   = 0.1
 
 content = {
 
@@ -179,8 +179,8 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-  -- Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     v__fxControl = {
       type      = ,
@@ -197,7 +197,7 @@ content = {
   Constraints = {
   -- Constraint1D
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DGreaterThan
     AdherenceEllipsesubType   = "PENALTY_REGULAR",
     AdherenceEllipseepsilon   = p_epsi0,
@@ -237,83 +237,83 @@ content = {
     segments = {
       
       {
-        leftWidth  = 15/2.0,
         length     = 190,
+        leftWidth  = 15/2.0,
+        gridSize   = 1,
+        curvature  = 0,
         rightWidth = 60,
-        curvature  = 0,
-        gridSize   = 1,
       },
       
       {
-        leftWidth  = 60,
         length     = 973.8937227,
-        rightWidth = 30,
+        leftWidth  = 60,
+        gridSize   = 1,
         curvature  = 0.003225806452,
-        gridSize   = 1,
+        rightWidth = 30,
       },
       
       {
-        leftWidth  = 30,
         length     = 180,
-        rightWidth = 30,
-        curvature  = 0,
+        leftWidth  = 30,
         gridSize   = 1,
+        curvature  = 0,
+        rightWidth = 30,
       },
       
       {
+        length     = 235.619449,
         leftWidth  = 20,
-        length     = 235.619449,
-        rightWidth = 15,
+        gridSize   = 1,
         curvature  = 0.006666666667,
-        gridSize   = 1,
+        rightWidth = 15,
       },
       
       {
-        leftWidth  = 30,
         length     = 240,
-        rightWidth = 30,
-        curvature  = 0,
+        leftWidth  = 30,
         gridSize   = 1,
+        curvature  = 0,
+        rightWidth = 30,
       },
       
       {
-        leftWidth  = 30,
         length     = 235.619449,
-        rightWidth = 30,
+        leftWidth  = 30,
+        gridSize   = 1,
         curvature  = -1/150.0,
-        gridSize   = 1,
+        rightWidth = 30,
       },
       
       {
-        leftWidth  = 30,
         length     = 200,
-        rightWidth = 30,
-        curvature  = 0,
+        leftWidth  = 30,
         gridSize   = 1,
+        curvature  = 0,
+        rightWidth = 30,
       },
       
       {
-        leftWidth  = 30,
         length     = 125.6637062,
-        rightWidth = 30,
+        leftWidth  = 30,
+        gridSize   = 1,
         curvature  = 0.025,
-        gridSize   = 1,
+        rightWidth = 30,
       },
       
       {
-        leftWidth  = 30,
         length     = 480,
-        rightWidth = 30,
-        curvature  = 0,
+        leftWidth  = 30,
         gridSize   = 1,
+        curvature  = 0,
+        rightWidth = 30,
       },
       
       {
-        leftWidth  = 30,
         length     = 10,
-        rightWidth = 30,
-        curvature  = 0,
+        leftWidth  = 30,
         gridSize   = 0.1,
+        curvature  = 0,
+        rightWidth = 30,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -242,11 +242,15 @@ namespace TwoStageCSTRDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = ModelPars[iM_W];
-    real_type t7   = -X__[iX_x2] - 0.25e0;
-    real_type t9   = L__[iL_lambda4__xo];
-    result__[ 0   ] = -t7 * ModelPars[iM_tau] * t9 + 2 * U__[iU_u1] * t1 + t7 * L__[iL_lambda2__xo];
-    result__[ 1   ] = 2 * U__[iU_u2] * t1 + (-X__[iX_x4] - 0.25e0) * t9;
+    real_type t1   = U__[iU_u1];
+    real_type t2   = ALIAS_u1Control_D_1(t1, -0.5e0, 0.5e0);
+    real_type t3   = ModelPars[iM_W];
+    real_type t8   = -X__[iX_x2] - 0.25e0;
+    real_type t10  = L__[iL_lambda4__xo];
+    result__[ 0   ] = -t10 * t8 * ModelPars[iM_tau] + 2 * t1 * t3 + t8 * L__[iL_lambda2__xo] + t2;
+    real_type t14  = U__[iU_u2];
+    real_type t15  = ALIAS_u2Control_D_1(t14, -0.5e0, 0.5e0);
+    result__[ 1   ] = t15 + 2 * t14 * t3 + (-X__[iX_x4] - 0.25e0) * t10;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }

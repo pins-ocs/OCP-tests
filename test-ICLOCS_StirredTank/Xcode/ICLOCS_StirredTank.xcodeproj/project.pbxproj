@@ -1,0 +1,1427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		A88286CD1E404158AE7AE68B /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 08155BDF5C28459F97C9E5BE /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				4F240D7D7668DC6DF57890E4 /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				7B45178287D541809EF090E7 /* PBXTargetDependency */,
+				7CE7D1775D044E34B7A19E9A /* PBXTargetDependency */,
+				8E4179D044514B39B927ABB7 /* PBXTargetDependency */,
+				9A8FF8AA3293442CAB3ED2C0 /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+		C184B93360C54E349F35B7BA /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4F878BDFCB7C4E6FBBE43F43 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				15CA101101BE1E739B951527 /* Generate CMakeFiles/ZERO_CHECK */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+		F1A858A7E10A413F9941FEE8 /* install */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = CC2C97C5677245758A5B51A2 /* Build configuration list for PBXAggregateTarget "install" */;
+			buildPhases = (
+				93426DA6A4AC2C2AC9CE883C /* CMake PostBuild Rules */,
+			);
+			dependencies = (
+				0D1587B404384CCB8ABB46B8 /* PBXTargetDependency */,
+			);
+			name = install;
+			productName = install;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		0706F420687149139B42C65C /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */ = {isa = PBXBuildFile; fileRef = BA7B0F5AF3ED4AB69BBA2DC4 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */; };
+		0FDD5F067F8E46178B2F8229 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */ = {isa = PBXBuildFile; fileRef = A933EAE016334B279CFD134B /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */; };
+		1072C9DC6761477B9A896B5B /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Pars.hh */ = {isa = PBXBuildFile; fileRef = 18ED62EC5EC94E62AE28D1CF /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Pars.hh */; };
+		2BFC52F05F13465D8362EA43 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */ = {isa = PBXBuildFile; fileRef = 176CAAC2363545D5B6ECAE8D /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */; };
+		302B1ECB006B42538996B120 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.hh */ = {isa = PBXBuildFile; fileRef = E4DCDB7D4F3C45DF92BA3531 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.hh */; };
+		34C7688594DE40DDA4335342 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */ = {isa = PBXBuildFile; fileRef = C22D586FF66547EEAA8E0588 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */; };
+		43438BE847364A30A807B294 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */ = {isa = PBXBuildFile; fileRef = 6C4CC2E49E6F40BCBE9C1A5D /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */; };
+		5E1DC8B8B8FA410085C285AD /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.hh */ = {isa = PBXBuildFile; fileRef = 1AA8EBCD443F4B8BAF4CB496 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.hh */; };
+		5F6A63BF9C734DDBBCFA3829 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */ = {isa = PBXBuildFile; fileRef = 5910F30CB2784CAFB6FC6C20 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */; };
+		5FDB7F9EE71540AA98306105 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.hh */ = {isa = PBXBuildFile; fileRef = B0CB9F05C0254AFEB35A2069 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.hh */; };
+		6F16C8DF21EE464E9F4BD56B /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */ = {isa = PBXBuildFile; fileRef = BA9BFFA543CC40CB94433495 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */; };
+		76CC312D24D742CA9825042D /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */ = {isa = PBXBuildFile; fileRef = B1F22214B63842199861C458 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */; };
+		7F29682F82374D6EADFC6ED8 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 6F570566459143D88CFD5D9A /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */; };
+		83510E92A66C46E3A89154C0 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 5CAAF4016FDC4D4E9EEA84BF /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */; };
+		87BC8F3851F1488D9ED24B28 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = DB1AB71445DE48B2A73FEF43 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */; };
+		96E86024CCCA4586A90ECBF0 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */ = {isa = PBXBuildFile; fileRef = 02E2F76617284CA8AED90178 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */; };
+		9930E1B6A13D4A8E8380EC16 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */ = {isa = PBXBuildFile; fileRef = E1D721FEABAF4DAB92524ED1 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */; };
+		9D470C0955F649D88A599214 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */ = {isa = PBXBuildFile; fileRef = 84EC0BC1206B44CCB40B49F9 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */; };
+		A20FCADE01A745D29899B81F /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-interfaces/cpp/ICLOCS_StirredTank_Main.cc */ = {isa = PBXBuildFile; fileRef = 4AC45B3223164D208C5F16B1 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-interfaces/cpp/ICLOCS_StirredTank_Main.cc */; };
+		A9750EC7728F482FB83A9FBD /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.hh */ = {isa = PBXBuildFile; fileRef = D637A665C86F431FAD003DE7 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.hh */; };
+		AC401501E4FC451C9E9BDF36 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */ = {isa = PBXBuildFile; fileRef = 6736CBD403ED4D019C686414 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */; };
+		B483A2802414412DBC516803 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */ = {isa = PBXBuildFile; fileRef = 4BF4D8C003D7488F9298C71C /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */; };
+		B56682BC4E9E47E1A3D4B926 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */ = {isa = PBXBuildFile; fileRef = 816398B5CC714668A7BC7F47 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */; };
+		BE1C719C926C4141B0134E2D /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Pars.hh */ = {isa = PBXBuildFile; fileRef = A5842CE064EE411ABED9D952 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Pars.hh */; };
+		C6C0602997B5442B87BA2DD3 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */ = {isa = PBXBuildFile; fileRef = 45EB84B9A922442581B9F501 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */; };
+		D92D9FF53B9C454CBBB662B0 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */ = {isa = PBXBuildFile; fileRef = A7D3574139814F20B6C22B32 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */; };
+		E4B5A39464D4476A86D84B17 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.hh */ = {isa = PBXBuildFile; fileRef = 6869DF162B6F4BC88E35A090 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.hh */; };
+		E62FCEEB3FF048829B5AC28A /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.hh */ = {isa = PBXBuildFile; fileRef = CFB49474ED4E4BC2B163F354 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.hh */; };
+		E6DD58BB106F4C349BA7FB67 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */ = {isa = PBXBuildFile; fileRef = E82E3A5F54CB46E194249DBF /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */; };
+		E8DCF0EF28404149A27768FC /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */ = {isa = PBXBuildFile; fileRef = 6871EE7CA0924B25BFE61EB9 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */; };
+		F59F8E88F32F4AD09FC8CA93 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */ = {isa = PBXBuildFile; fileRef = 9E332204BA4A48D69DD72545 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */; };
+		F79241CA250544CE87517533 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */ = {isa = PBXBuildFile; fileRef = B0F1BDF796DA451C849B549A /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildStyle section */
+		264936E9491A458390BD5F91 /* Debug */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		7545C98DEBDA40B3A7DE6A1B /* MinSizeRel */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = MinSizeRel;
+		};
+		892187804AEA4B929F528B95 /* Release */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Release;
+		};
+		F500E47A6E1647C5857B49F8 /* RelWithDebInfo */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = RelWithDebInfo;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXContainerItemProxy section */
+		0C373A149BC64BD7AE10BE8B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FEFE28E4B04E768F39EF3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B76EAFD1FB21479AA4E1D085;
+			remoteInfo = ICLOCS_StirredTank_static;
+		};
+		198ACF02779844FEBB0A13F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FEFE28E4B04E768F39EF3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2FC6B630CB6F4F0E87C01A26;
+			remoteInfo = ICLOCS_StirredTank;
+		};
+		6668D24348194092BA4A32C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FEFE28E4B04E768F39EF3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 613E28DCDEB24B45B2E24879;
+			remoteInfo = main;
+		};
+		733D24A0FD824A9386C2CEA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FEFE28E4B04E768F39EF3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C184B93360C54E349F35B7BA;
+			remoteInfo = ZERO_CHECK;
+		};
+		8B40C22530FA42FC9D6EBF3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FEFE28E4B04E768F39EF3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C184B93360C54E349F35B7BA;
+			remoteInfo = ZERO_CHECK;
+		};
+		AE2837ADDE174785B4460217 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FEFE28E4B04E768F39EF3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A88286CD1E404158AE7AE68B;
+			remoteInfo = ALL_BUILD;
+		};
+		C05795BB36454823876ADE0E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FEFE28E4B04E768F39EF3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C184B93360C54E349F35B7BA;
+			remoteInfo = ZERO_CHECK;
+		};
+		C1148EC195B54C049C2626FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FEFE28E4B04E768F39EF3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C184B93360C54E349F35B7BA;
+			remoteInfo = ZERO_CHECK;
+		};
+		ECC871B9E33D4EC497C98838 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FEFE28E4B04E768F39EF3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B76EAFD1FB21479AA4E1D085;
+			remoteInfo = ICLOCS_StirredTank_static;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02E2F76617284CA8AED90178 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_dll_ruby.cc; path = "ocp-src/ICLOCS_StirredTank_dll_ruby.cc"; sourceTree = SOURCE_ROOT; };
+		176CAAC2363545D5B6ECAE8D /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_controls.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_controls.cc"; sourceTree = SOURCE_ROOT; };
+		18ED62EC5EC94E62AE28D1CF /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Pars.hh */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ICLOCS_StirredTank_Pars.hh; path = "ocp-src/ICLOCS_StirredTank_Pars.hh"; sourceTree = SOURCE_ROOT; };
+		1AA8EBCD443F4B8BAF4CB496 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.hh */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ICLOCS_StirredTank_dll_pins.hh; path = "ocp-src/ICLOCS_StirredTank_dll_pins.hh"; sourceTree = SOURCE_ROOT; };
+		45EB84B9A922442581B9F501 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_ODE.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_ODE.cc"; sourceTree = SOURCE_ROOT; };
+		4AC45B3223164D208C5F16B1 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-interfaces/cpp/ICLOCS_StirredTank_Main.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Main.cc; path = "ocp-interfaces/cpp/ICLOCS_StirredTank_Main.cc"; sourceTree = SOURCE_ROOT; };
+		4BF4D8C003D7488F9298C71C /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_UserFunctions.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc"; sourceTree = SOURCE_ROOT; };
+		5910F30CB2784CAFB6FC6C20 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_ODE.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_ODE.cc"; sourceTree = SOURCE_ROOT; };
+		5B8BB43517234542AA4BFAF2 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		5CAAF4016FDC4D4E9EEA84BF /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		5E0D218D6AF3423AAD1D7581 /* main */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = main; sourceTree = BUILT_PRODUCTS_DIR; };
+		6736CBD403ED4D019C686414 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank.cc; path = "ocp-src/ICLOCS_StirredTank.cc"; sourceTree = SOURCE_ROOT; };
+		6869DF162B6F4BC88E35A090 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.hh */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ICLOCS_StirredTank.hh; path = "ocp-src/ICLOCS_StirredTank.hh"; sourceTree = SOURCE_ROOT; };
+		6871EE7CA0924B25BFE61EB9 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_problem.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_problem.cc"; sourceTree = SOURCE_ROOT; };
+		6C4CC2E49E6F40BCBE9C1A5D /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank.cc; path = "ocp-src/ICLOCS_StirredTank.cc"; sourceTree = SOURCE_ROOT; };
+		6F570566459143D88CFD5D9A /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		816398B5CC714668A7BC7F47 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_Guess.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_Guess.cc"; sourceTree = SOURCE_ROOT; };
+		84EC0BC1206B44CCB40B49F9 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_dll_pins.cc; path = "ocp-src/ICLOCS_StirredTank_dll_pins.cc"; sourceTree = SOURCE_ROOT; };
+		9E332204BA4A48D69DD72545 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_boundary_conditions.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc"; sourceTree = SOURCE_ROOT; };
+		A5842CE064EE411ABED9D952 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Pars.hh */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ICLOCS_StirredTank_Pars.hh; path = "ocp-src/ICLOCS_StirredTank_Pars.hh"; sourceTree = SOURCE_ROOT; };
+		A7D3574139814F20B6C22B32 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_Guess.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_Guess.cc"; sourceTree = SOURCE_ROOT; };
+		A933EAE016334B279CFD134B /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_UserFunctions.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc"; sourceTree = SOURCE_ROOT; };
+		B0CB9F05C0254AFEB35A2069 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.hh */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ICLOCS_StirredTank_dll_ruby.hh; path = "ocp-src/ICLOCS_StirredTank_dll_ruby.hh"; sourceTree = SOURCE_ROOT; };
+		B0F1BDF796DA451C849B549A /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_AdjointODE.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc"; sourceTree = SOURCE_ROOT; };
+		B1F22214B63842199861C458 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_controls.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_controls.cc"; sourceTree = SOURCE_ROOT; };
+		B7EE5843DA694A3592501668 /* ICLOCS_StirredTank_static */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libICLOCS_StirredTank_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA7B0F5AF3ED4AB69BBA2DC4 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_dll_ruby.cc; path = "ocp-src/ICLOCS_StirredTank_dll_ruby.cc"; sourceTree = SOURCE_ROOT; };
+		BA9BFFA543CC40CB94433495 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_problem.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_problem.cc"; sourceTree = SOURCE_ROOT; };
+		C22D586FF66547EEAA8E0588 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_AdjointODE.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc"; sourceTree = SOURCE_ROOT; };
+		CFB49474ED4E4BC2B163F354 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.hh */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ICLOCS_StirredTank.hh; path = "ocp-src/ICLOCS_StirredTank.hh"; sourceTree = SOURCE_ROOT; };
+		D637A665C86F431FAD003DE7 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.hh */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ICLOCS_StirredTank_dll_ruby.hh; path = "ocp-src/ICLOCS_StirredTank_dll_ruby.hh"; sourceTree = SOURCE_ROOT; };
+		DB1AB71445DE48B2A73FEF43 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		E1D721FEABAF4DAB92524ED1 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_Methods_boundary_conditions.cc; path = "ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc"; sourceTree = SOURCE_ROOT; };
+		E4DCDB7D4F3C45DF92BA3531 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.hh */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ICLOCS_StirredTank_dll_pins.hh; path = "ocp-src/ICLOCS_StirredTank_dll_pins.hh"; sourceTree = SOURCE_ROOT; };
+		E82E3A5F54CB46E194249DBF /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICLOCS_StirredTank_dll_pins.cc; path = "ocp-src/ICLOCS_StirredTank_dll_pins.cc"; sourceTree = SOURCE_ROOT; };
+		FCFB2291B7864A01812BB406 /* ICLOCS_StirredTank */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libICLOCS_StirredTank.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		170D47A277194C8193237A4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26BF7F96DA124C8980D19A6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45E1AE92263F440FAAF3609D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03A7740EFC9A49E38E53175A /* ICLOCS_StirredTank_static */ = {
+			isa = PBXGroup;
+			children = (
+				4CDC4AFF8A664E8BAE0E19DF /* Source Files */,
+				10B765E963584AB1B720CB9F /* Header Files */,
+				5CAAF4016FDC4D4E9EEA84BF /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */,
+			);
+			name = ICLOCS_StirredTank_static;
+			sourceTree = "<group>";
+		};
+		10B765E963584AB1B720CB9F /* Header Files */ = {
+			isa = PBXGroup;
+			children = (
+				CFB49474ED4E4BC2B163F354 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.hh */,
+				18ED62EC5EC94E62AE28D1CF /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Pars.hh */,
+				1AA8EBCD443F4B8BAF4CB496 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.hh */,
+				D637A665C86F431FAD003DE7 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.hh */,
+			);
+			name = "Header Files";
+			sourceTree = "<group>";
+		};
+		121A2B1E98A04671972515AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FCFB2291B7864A01812BB406 /* ICLOCS_StirredTank */,
+				B7EE5843DA694A3592501668 /* ICLOCS_StirredTank_static */,
+				5E0D218D6AF3423AAD1D7581 /* main */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		13DF9000BAF74BF1B5D6E265 /* ICLOCS_StirredTank */ = {
+			isa = PBXGroup;
+			children = (
+				E248AC2E5EA845F5A12F1B2E /* Source Files */,
+				AB4991B46F7B41FF99650738 /* Header Files */,
+				6F570566459143D88CFD5D9A /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */,
+			);
+			name = ICLOCS_StirredTank;
+			sourceTree = "<group>";
+		};
+		1D0793C283FA4E3391CF3E5D /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		330FEC3EA3C2483E8639346A /* main */ = {
+			isa = PBXGroup;
+			children = (
+				5DED86FC55DF4CF193A45AA3 /* Source Files */,
+				DB1AB71445DE48B2A73FEF43 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */,
+			);
+			name = main;
+			sourceTree = "<group>";
+		};
+		4CDC4AFF8A664E8BAE0E19DF /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				6736CBD403ED4D019C686414 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */,
+				C22D586FF66547EEAA8E0588 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */,
+				816398B5CC714668A7BC7F47 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */,
+				45EB84B9A922442581B9F501 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */,
+				A933EAE016334B279CFD134B /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */,
+				9E332204BA4A48D69DD72545 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */,
+				176CAAC2363545D5B6ECAE8D /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */,
+				BA9BFFA543CC40CB94433495 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */,
+				E82E3A5F54CB46E194249DBF /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */,
+				02E2F76617284CA8AED90178 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		4D73AEA8F5344D1BA15CBBE1 /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				1D0793C283FA4E3391CF3E5D /* CMake Rules */,
+				5B8BB43517234542AA4BFAF2 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		5DED86FC55DF4CF193A45AA3 /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				4AC45B3223164D208C5F16B1 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-interfaces/cpp/ICLOCS_StirredTank_Main.cc */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		7B3A70B04F4E4DB0A0BB5EDF = {
+			isa = PBXGroup;
+			children = (
+				03A7740EFC9A49E38E53175A /* ICLOCS_StirredTank_static */,
+				330FEC3EA3C2483E8639346A /* main */,
+				13DF9000BAF74BF1B5D6E265 /* ICLOCS_StirredTank */,
+				4D73AEA8F5344D1BA15CBBE1 /* ALL_BUILD */,
+				121A2B1E98A04671972515AE /* Products */,
+				871A63C635074337ACF57D95 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		871A63C635074337ACF57D95 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AB4991B46F7B41FF99650738 /* Header Files */ = {
+			isa = PBXGroup;
+			children = (
+				6869DF162B6F4BC88E35A090 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.hh */,
+				A5842CE064EE411ABED9D952 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Pars.hh */,
+				E4DCDB7D4F3C45DF92BA3531 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.hh */,
+				B0CB9F05C0254AFEB35A2069 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.hh */,
+			);
+			name = "Header Files";
+			sourceTree = "<group>";
+		};
+		E248AC2E5EA845F5A12F1B2E /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				6C4CC2E49E6F40BCBE9C1A5D /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */,
+				B0F1BDF796DA451C849B549A /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */,
+				A7D3574139814F20B6C22B32 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */,
+				5910F30CB2784CAFB6FC6C20 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */,
+				4BF4D8C003D7488F9298C71C /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */,
+				E1D721FEABAF4DAB92524ED1 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */,
+				B1F22214B63842199861C458 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */,
+				6871EE7CA0924B25BFE61EB9 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */,
+				84EC0BC1206B44CCB40B49F9 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */,
+				BA7B0F5AF3ED4AB69BBA2DC4 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2FC6B630CB6F4F0E87C01A26 /* ICLOCS_StirredTank */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A48C1BCBDDC946C5B9276BE5 /* Build configuration list for PBXNativeTarget "ICLOCS_StirredTank" */;
+			buildPhases = (
+				6CC3EF8D2199489ABA4489D4 /* Sources */,
+				45E1AE92263F440FAAF3609D /* Frameworks */,
+				38DFF96C9646471AC20755EC /* CMake PostBuild Rules */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B72E58F69FC14C6AB5F81172 /* PBXTargetDependency */,
+			);
+			name = ICLOCS_StirredTank;
+			productName = ICLOCS_StirredTank;
+			productReference = FCFB2291B7864A01812BB406 /* ICLOCS_StirredTank */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		613E28DCDEB24B45B2E24879 /* main */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A81348FA7E2749E78CB9B8BE /* Build configuration list for PBXNativeTarget "main" */;
+			buildPhases = (
+				A5FE8C68B9F34331AAB34D52 /* Sources */,
+				26BF7F96DA124C8980D19A6F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFE6C0A794264A778187532A /* PBXTargetDependency */,
+				7D2E5A17B05D408AAFECF137 /* PBXTargetDependency */,
+			);
+			name = main;
+			productName = main;
+			productReference = 5E0D218D6AF3423AAD1D7581 /* main */;
+			productType = "com.apple.product-type.tool";
+		};
+		B76EAFD1FB21479AA4E1D085 /* ICLOCS_StirredTank_static */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB84C74853684AE8B6117725 /* Build configuration list for PBXNativeTarget "ICLOCS_StirredTank_static" */;
+			buildPhases = (
+				FB10D8129F9F4783B56FA85A /* Sources */,
+				170D47A277194C8193237A4D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				64DA7C337E9E429FB93D3AA6 /* PBXTargetDependency */,
+			);
+			name = ICLOCS_StirredTank_static;
+			productName = ICLOCS_StirredTank_static;
+			productReference = B7EE5843DA694A3592501668 /* ICLOCS_StirredTank_static */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		59FEFE28E4B04E768F39EF3B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1240;
+			};
+			buildConfigurationList = BA129D149D2E47FD998C235C /* Build configuration list for PBXProject "ICLOCS_StirredTank" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				264936E9491A458390BD5F91 /* Debug */,
+				892187804AEA4B929F528B95 /* Release */,
+				7545C98DEBDA40B3A7DE6A1B /* MinSizeRel */,
+				F500E47A6E1647C5857B49F8 /* RelWithDebInfo */,
+			);
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 0;
+			mainGroup = 7B3A70B04F4E4DB0A0BB5EDF;
+			projectDirPath = ../;
+			projectRoot = "";
+			targets = (
+				A88286CD1E404158AE7AE68B /* ALL_BUILD */,
+				2FC6B630CB6F4F0E87C01A26 /* ICLOCS_StirredTank */,
+				B76EAFD1FB21479AA4E1D085 /* ICLOCS_StirredTank_static */,
+				C184B93360C54E349F35B7BA /* ZERO_CHECK */,
+				F1A858A7E10A413F9941FEE8 /* install */,
+				613E28DCDEB24B45B2E24879 /* main */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		15CA101101BE1E739B951527 /* Generate CMakeFiles/ZERO_CHECK */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ZERO_CHECK";
+			outputPaths = (
+"/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeFiles/ZERO_CHECK"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  make -f /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  make -f /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  make -f /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  make -f /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeScripts/ReRunCMake.make
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		38DFF96C9646471AC20755EC /* CMake PostBuild Rules */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "CMake PostBuild Rules";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  /usr/local/Cellar/cmake/3.20.3/bin/cmake -E cmake_symlink_library /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Debug/libICLOCS_StirredTank.dylib /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Debug/libICLOCS_StirredTank.dylib /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Debug/libICLOCS_StirredTank.dylib
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  /usr/local/Cellar/cmake/3.20.3/bin/cmake -E cmake_symlink_library /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Release/libICLOCS_StirredTank.dylib /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Release/libICLOCS_StirredTank.dylib /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Release/libICLOCS_StirredTank.dylib
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  /usr/local/Cellar/cmake/3.20.3/bin/cmake -E cmake_symlink_library /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/MinSizeRel/libICLOCS_StirredTank.dylib /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/MinSizeRel/libICLOCS_StirredTank.dylib /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/MinSizeRel/libICLOCS_StirredTank.dylib
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  /usr/local/Cellar/cmake/3.20.3/bin/cmake -E cmake_symlink_library /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/RelWithDebInfo/libICLOCS_StirredTank.dylib /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/RelWithDebInfo/libICLOCS_StirredTank.dylib /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/RelWithDebInfo/libICLOCS_StirredTank.dylib
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		3C0110FC8322DE7E50886E21 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		4F240D7D7668DC6DF57890E4 /* Generate CMakeFiles/ALL_BUILD */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ALL_BUILD";
+			outputPaths = (
+"/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/CMakeFiles/ALL_BUILD"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  echo Build\\ all\\ projects
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		87AF4882E018677E2624B544 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		93426DA6A4AC2C2AC9CE883C /* CMake PostBuild Rules */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "CMake PostBuild Rules";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  /usr/local/Cellar/cmake/3.20.3/bin/cmake -DBUILD_TYPE=$CONFIGURATION$EFFECTIVE_PLATFORM_NAME -P cmake_install.cmake
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  /usr/local/Cellar/cmake/3.20.3/bin/cmake -DBUILD_TYPE=$CONFIGURATION$EFFECTIVE_PLATFORM_NAME -P cmake_install.cmake
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  /usr/local/Cellar/cmake/3.20.3/bin/cmake -DBUILD_TYPE=$CONFIGURATION$EFFECTIVE_PLATFORM_NAME -P cmake_install.cmake
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode
+  /usr/local/Cellar/cmake/3.20.3/bin/cmake -DBUILD_TYPE=$CONFIGURATION$EFFECTIVE_PLATFORM_NAME -P cmake_install.cmake
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		9B50530E35CC49C82C2FACCF = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6CC3EF8D2199489ABA4489D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43438BE847364A30A807B294 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */,
+				F79241CA250544CE87517533 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */,
+				D92D9FF53B9C454CBBB662B0 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */,
+				5F6A63BF9C734DDBBCFA3829 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */,
+				B483A2802414412DBC516803 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */,
+				9930E1B6A13D4A8E8380EC16 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */,
+				76CC312D24D742CA9825042D /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */,
+				E8DCF0EF28404149A27768FC /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */,
+				9D470C0955F649D88A599214 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */,
+				0706F420687149139B42C65C /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5FE8C68B9F34331AAB34D52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20FCADE01A745D29899B81F /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-interfaces/cpp/ICLOCS_StirredTank_Main.cc */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB10D8129F9F4783B56FA85A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC401501E4FC451C9E9BDF36 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank.cc */,
+				34C7688594DE40DDA4335342 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_AdjointODE.cc */,
+				B56682BC4E9E47E1A3D4B926 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_Guess.cc */,
+				C6C0602997B5442B87BA2DD3 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_ODE.cc */,
+				0FDD5F067F8E46178B2F8229 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_UserFunctions.cc */,
+				F59F8E88F32F4AD09FC8CA93 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_boundary_conditions.cc */,
+				2BFC52F05F13465D8362EA43 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_controls.cc */,
+				6F16C8DF21EE464E9F4BD56B /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_Methods_problem.cc */,
+				E6DD58BB106F4C349BA7FB67 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_pins.cc */,
+				96E86024CCCA4586A90ECBF0 /* /Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src/ICLOCS_StirredTank_dll_ruby.cc */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0D1587B404384CCB8ABB46B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A88286CD1E404158AE7AE68B /* ALL_BUILD */;
+			targetProxy = AE2837ADDE174785B4460217 /* PBXContainerItemProxy */;
+		};
+		64DA7C337E9E429FB93D3AA6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C184B93360C54E349F35B7BA /* ZERO_CHECK */;
+			targetProxy = C1148EC195B54C049C2626FB /* PBXContainerItemProxy */;
+		};
+		7B45178287D541809EF090E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C184B93360C54E349F35B7BA /* ZERO_CHECK */;
+			targetProxy = 8B40C22530FA42FC9D6EBF3D /* PBXContainerItemProxy */;
+		};
+		7CE7D1775D044E34B7A19E9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B76EAFD1FB21479AA4E1D085 /* ICLOCS_StirredTank_static */;
+			targetProxy = 0C373A149BC64BD7AE10BE8B /* PBXContainerItemProxy */;
+		};
+		7D2E5A17B05D408AAFECF137 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B76EAFD1FB21479AA4E1D085 /* ICLOCS_StirredTank_static */;
+			targetProxy = ECC871B9E33D4EC497C98838 /* PBXContainerItemProxy */;
+		};
+		8E4179D044514B39B927ABB7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 613E28DCDEB24B45B2E24879 /* main */;
+			targetProxy = 6668D24348194092BA4A32C0 /* PBXContainerItemProxy */;
+		};
+		9A8FF8AA3293442CAB3ED2C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2FC6B630CB6F4F0E87C01A26 /* ICLOCS_StirredTank */;
+			targetProxy = 198ACF02779844FEBB0A13F7 /* PBXContainerItemProxy */;
+		};
+		AFE6C0A794264A778187532A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C184B93360C54E349F35B7BA /* ZERO_CHECK */;
+			targetProxy = 733D24A0FD824A9386C2CEA7 /* PBXContainerItemProxy */;
+		};
+		B72E58F69FC14C6AB5F81172 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C184B93360C54E349F35B7BA /* ZERO_CHECK */;
+			targetProxy = C05795BB36454823876ADE0E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		01E20F9E772F4CCFA54F2101 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics         -DNDEBUG ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ICLOCS_StirredTank_static;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		040D873531704C57AFB55BF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk;
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/build";
+			};
+			name = Release;
+		};
+		1C9FB45AB464411D8019A543 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		2F3D741EDA264F718D7919C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics      -DNDEBUG ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ICLOCS_StirredTank_static;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		3397B62791B645728702A481 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk;
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/build";
+			};
+			name = RelWithDebInfo;
+		};
+		39009A3ABA7742DBA9FC16D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics      -DNDEBUG ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -Wl,-search_paths_first -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Release/libICLOCS_StirredTank_static.a","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixAstro -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = main;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		3A7F52F7B84F43639978BB61 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		479931A6EEE844DEA898305A /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		4B2417843571480DBE409937 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk;
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/build";
+			};
+			name = MinSizeRel;
+		};
+		4C61BA57CFE04D989F4BD043 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		4F4C4696CA074863B9140342 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics  -std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics  ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ICLOCS_StirredTank_static;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		56AB376617AA4456A5A37922 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics  -std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics  ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -Wl,-search_paths_first -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Debug/libICLOCS_StirredTank_static.a","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixAstro -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = main;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		604AE84379A34674A4EAABE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		65681D6929634CFB89DB1C26 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .dylib;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",ICLOCS_StirredTank_EXPORTS);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/MinSizeRel";
+				LIBRARY_STYLE = DYNAMIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics      -DNDEBUG -fPIC ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -dynamiclib -Wl,-headerpad_max_install_names","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixAstro -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ICLOCS_StirredTank;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		6A824B71F1A845F99E43913A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .dylib;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",ICLOCS_StirredTank_EXPORTS);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Debug";
+				LIBRARY_STYLE = DYNAMIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics  -std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics  -fPIC ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -dynamiclib -Wl,-headerpad_max_install_names","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixAstro -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ICLOCS_StirredTank;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		992B8C220C52492DB3D25B3F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		AB1F3907E22F4255AD8E2D2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .dylib;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",ICLOCS_StirredTank_EXPORTS);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/Release";
+				LIBRARY_STYLE = DYNAMIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics      -DNDEBUG -fPIC ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -dynamiclib -Wl,-headerpad_max_install_names","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixAstro -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ICLOCS_StirredTank;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		B24A12FC180C4D84961692CE /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		BF79B8B7E64C423EAA7222BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		C3C5CCFC11994C308B29AD1A /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		C8D22AEDA99648139E8ECF9D /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics      -DNDEBUG ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ICLOCS_StirredTank_static;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		D0D9F510FB3E4265BD4D016B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk;
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/build";
+			};
+			name = Debug;
+		};
+		D7CE27C3843D4429A8D39FA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		E14ECDF293264C8A87019034 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics         -DNDEBUG ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -Wl,-search_paths_first -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/RelWithDebInfo/libICLOCS_StirredTank_static.a","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixAstro -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = main;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		F17E839D38B840178C0654DB /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		F6C60F1A1FC54138A8FE13E1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		F712A79D0071400696BFF9B9 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics      -DNDEBUG ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -Wl,-search_paths_first -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/MinSizeRel/libICLOCS_StirredTank_static.a","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixAstro -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = main;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		FB3926B42FD1477D87BF9A17 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .dylib;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",ICLOCS_StirredTank_EXPORTS);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/ocp-src","$(inherited)");
+				INSTALL_PATH = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode/RelWithDebInfo";
+				LIBRARY_STYLE = DYNAMIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics         -DNDEBUG -fPIC ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -dynamiclib -Wl,-headerpad_max_install_names","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixAstro -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ICLOCS_StirredTank;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/C++/pins-mechatronix/tests/OCP/test-ICLOCS_StirredTank/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		08155BDF5C28459F97C9E5BE /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C61BA57CFE04D989F4BD043 /* Debug */,
+				F6C60F1A1FC54138A8FE13E1 /* Release */,
+				479931A6EEE844DEA898305A /* MinSizeRel */,
+				C3C5CCFC11994C308B29AD1A /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4F878BDFCB7C4E6FBBE43F43 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				604AE84379A34674A4EAABE7 /* Debug */,
+				D7CE27C3843D4429A8D39FA8 /* Release */,
+				B24A12FC180C4D84961692CE /* MinSizeRel */,
+				3A7F52F7B84F43639978BB61 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A48C1BCBDDC946C5B9276BE5 /* Build configuration list for PBXNativeTarget "ICLOCS_StirredTank" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A824B71F1A845F99E43913A /* Debug */,
+				AB1F3907E22F4255AD8E2D2E /* Release */,
+				65681D6929634CFB89DB1C26 /* MinSizeRel */,
+				FB3926B42FD1477D87BF9A17 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A81348FA7E2749E78CB9B8BE /* Build configuration list for PBXNativeTarget "main" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56AB376617AA4456A5A37922 /* Debug */,
+				39009A3ABA7742DBA9FC16D4 /* Release */,
+				F712A79D0071400696BFF9B9 /* MinSizeRel */,
+				E14ECDF293264C8A87019034 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BA129D149D2E47FD998C235C /* Build configuration list for PBXProject "ICLOCS_StirredTank" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0D9F510FB3E4265BD4D016B /* Debug */,
+				040D873531704C57AFB55BF4 /* Release */,
+				4B2417843571480DBE409937 /* MinSizeRel */,
+				3397B62791B645728702A481 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CC2C97C5677245758A5B51A2 /* Build configuration list for PBXAggregateTarget "install" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF79B8B7E64C423EAA7222BF /* Debug */,
+				992B8C220C52492DB3D25B3F /* Release */,
+				1C9FB45AB464411D8019A543 /* MinSizeRel */,
+				F17E839D38B840178C0654DB /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EB84C74853684AE8B6117725 /* Build configuration list for PBXNativeTarget "ICLOCS_StirredTank_static" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F4C4696CA074863B9140342 /* Debug */,
+				2F3D741EDA264F718D7919C6 /* Release */,
+				C8D22AEDA99648139E8ECF9D /* MinSizeRel */,
+				01E20F9E772F4CCFA54F2101 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 59FEFE28E4B04E768F39EF3B /* Project object */;
+}

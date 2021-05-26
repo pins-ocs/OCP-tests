@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -105,12 +105,12 @@ namespace MinimumEnergyProblemDefine {
 
   real_type
   MinimumEnergyProblem::interpLog_D_1_2( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
-    real_type t1   = pow(xo__v1, xo__s);
-    real_type t2   = -1 + xo__s;
-    real_type t3   = log(xo__v0);
-    real_type t6   = log(xo__v1);
+    real_type t1   = -1 + xo__s;
+    real_type t2   = log(xo__v0);
+    real_type t5   = log(xo__v1);
+    real_type t8   = pow(xo__v1, xo__s);
     real_type t10  = pow(xo__v0, -xo__s);
-    real_type result__ = t10 * (t3 * t2 - t6 * t2 - 1) * t1;
+    real_type result__ = t10 * t8 * (t2 * t1 - t5 * t1 - 1);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

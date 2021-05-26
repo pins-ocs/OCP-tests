@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2.hh                                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -106,6 +106,7 @@ namespace Brachiostocrona2Define {
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DGreaterThan TimePositive;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -219,9 +220,6 @@ namespace Brachiostocrona2Define {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    BRACHIOSTOCRONA2_API_DLL real_type arctan2        ( real_type xo__y, real_type xo__x ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type arctan2_D_1    ( real_type xo__y, real_type xo__x ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type arctan2_D_2    ( real_type xo__y, real_type xo__x ) const;
     BRACHIOSTOCRONA2_API_DLL real_type theta_sol      ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
     BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_1  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
     BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_2  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;

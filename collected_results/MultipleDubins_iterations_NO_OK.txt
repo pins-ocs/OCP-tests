@@ -27,7 +27,7 @@ END Mesh[mesh]
 
 User mapped functions
 User function ``diff2pi'' mapped with: DiffModuleN, N = 6.283185307179586
-User function ``clip'' mapped with: ClipIntervalWithErf, h=0.0010000, delta=0.0000
+User function ``clip'' mapped with: ClipIntervalWithErf, h=0.0010000, delta=0.0000, delta2=0.0000
 
 Model Parameters
 .................................theta_f = -0.5235987755982988
@@ -1557,7 +1557,7 @@ Failed check on parameter: 0 < L2
 [300,  6] (0.00449  ,0.00449  ) [1.07     ,1.07     ] 3.64e-22   0:1177
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 279.0[ms]     timeout        = 0 [ms]
+Elapsed Time   = 254.0[ms]     timeout        = 0 [ms]
 iteration      = 301           tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 756
 max acc. iter. = 800           N. System pars = 0

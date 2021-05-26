@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -81,8 +81,9 @@ namespace EconomicGrowthModelDefine {
     real_type t1   = U__[iU_u];
     real_type t4   = Q(X__[iX_x1], X__[iX_x2]);
     real_type t6   = X__[iX_T];
-    result__[ 0   ] = t6 * t4 * t1;
-    result__[ 1   ] = t6 * t4 * (1 - t1);
+    real_type t5   = t4 * t6;
+    result__[ 0   ] = t1 * t5;
+    result__[ 1   ] = (1 - t1) * t5;
     result__[ 2   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
@@ -133,14 +134,16 @@ namespace EconomicGrowthModelDefine {
     real_type t3   = X__[iX_x2];
     real_type t4   = Q_D_1(t2, t3);
     real_type t6   = X__[iX_T];
-    result__[ 0   ] = t6 * t4 * t1;
+    real_type t5   = t4 * t6;
+    result__[ 0   ] = t5 * t1;
     real_type t7   = Q_D_2(t2, t3);
-    result__[ 1   ] = t6 * t7 * t1;
+    real_type t8   = t7 * t6;
+    result__[ 1   ] = t1 * t8;
     real_type t9   = Q(t2, t3);
     result__[ 2   ] = t9 * t1;
     real_type t10  = 1 - t1;
-    result__[ 3   ] = t6 * t4 * t10;
-    result__[ 4   ] = t6 * t7 * t10;
+    result__[ 3   ] = t10 * t5;
+    result__[ 4   ] = t8 * t10;
     result__[ 5   ] = t9 * t10;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 6, i_segment );
@@ -216,7 +219,7 @@ namespace EconomicGrowthModelDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t3   = Q(X__[iX_x1], X__[iX_x2]);
-    result__[ 0   ] = t3 * X__[iX_T];
+    result__[ 0   ] = X__[iX_T] * t3;
     result__[ 1   ] = -result__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );

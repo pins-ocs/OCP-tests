@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -167,6 +167,7 @@ main() {
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
     data_clip["h"] = 0.001;
+    data_clip["delta2"] = 0;
     data_clip["delta"] = 0;
 
     // Controls: No penalties or barriers constraint defined

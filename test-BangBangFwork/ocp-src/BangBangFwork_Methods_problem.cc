@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,10 +75,10 @@ namespace BangBangFworkDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t5   = U__[iU_F];
-    real_type t8   = fMax(Q__[iQ_zeta]);
-    real_type t9   = Fcontrol(t5, -t8, t8);
-    real_type result__ = t5 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t9;
+    real_type t1   = U__[iU_F];
+    real_type t3   = fMax(Q__[iQ_zeta]);
+    real_type t4   = Fcontrol(t1, -t3, t3);
+    real_type result__ = t1 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t4;
     return result__;
   }
 #else
@@ -93,10 +93,10 @@ namespace BangBangFworkDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t5   = U__[iU_F];
-    real_type t8   = fMax(Q__[iQ_zeta]);
-    real_type t9   = Fcontrol(t5, -t8, t8);
-    real_type result__ = t5 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t9;
+    real_type t1   = U__[iU_F];
+    real_type t3   = fMax(Q__[iQ_zeta]);
+    real_type t4   = Fcontrol(t1, -t3, t3);
+    real_type result__ = t1 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + t4;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -434,19 +434,19 @@ namespace BangBangFworkDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFwork::DjumpDxlp_numRows() const
+  BangBangFwork::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  BangBangFwork::DjumpDxlp_numCols() const
+  BangBangFwork::DjumpDxlxlp_numCols() const
   { return 8; }
 
   integer
-  BangBangFwork::DjumpDxlp_nnz() const
+  BangBangFwork::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  BangBangFwork::DjumpDxlp_pattern(
+  BangBangFwork::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -463,7 +463,7 @@ namespace BangBangFworkDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFwork::DjumpDxlp_sparse(
+  BangBangFwork::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -488,7 +488,7 @@ namespace BangBangFworkDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

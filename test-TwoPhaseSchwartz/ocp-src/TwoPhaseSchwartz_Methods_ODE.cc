@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -83,11 +83,11 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 0   ] = X__[iX_x2];
     real_type t3   = X__[iX_x1] * X__[iX_x1];
     result__[ 1   ] = U__[iU_u1] - 0.1e0 * result__[0] * (2 * t3 + 1);
-    real_type t8   = ModelPars[iM_T2];
-    real_type t9   = X__[iX_x4];
+    real_type t8   = X__[iX_x4];
+    real_type t9   = ModelPars[iM_T2];
     result__[ 2   ] = t9 * t8;
     real_type t12  = X__[iX_x3] * X__[iX_x3];
-    result__[ 3   ] = (U__[iU_u2] - 0.1e0 * t9 * (2 * t12 + 1)) * t8;
+    result__[ 3   ] = (U__[iU_u2] - 0.1e0 * t8 * (2 * t12 + 1)) * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
@@ -139,9 +139,10 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 2   ] = -0.1e0 - 0.2e0 * t5;
     result__[ 3   ] = ModelPars[iM_T2];
     real_type t7   = X__[iX_x3];
-    result__[ 4   ] = -0.4e0 * X__[iX_x4] * t7 * result__[3];
+    real_type t10  = result__[3];
+    result__[ 4   ] = -0.4e0 * t10 * t7 * X__[iX_x4];
     real_type t12  = t7 * t7;
-    result__[ 5   ] = (-0.1e0 - 0.2e0 * t12) * result__[3];
+    result__[ 5   ] = t10 * (-0.1e0 - 0.2e0 * t12);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 6, i_segment );
   }

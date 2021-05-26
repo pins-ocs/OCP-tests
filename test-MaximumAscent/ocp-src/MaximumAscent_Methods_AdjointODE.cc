@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,8 +80,10 @@ namespace MaximumAscentDefine {
     real_type t18  = t4 * L__[iL_lambda3__xo];
     real_type t19  = X__[iX_u];
     real_type t24  = t4 * L__[iL_lambda4__xo];
-    result__[ 0   ] = (-t10 * t7 + 2 / t9 / t8) * t5 + t10 * t6 * t19 * t18 - t10 * t6 * t24;
-    real_type t29  = 1.0 / t8;
+    real_type t14  = 1.0 / t8;
+    real_type t21  = t10 * t6;
+    result__[ 0   ] = t5 * (2 * t14 * t10 - t10 * t7) + t19 * t18 * t21 - t24 * t21;
+    real_type t29  = t14;
     real_type t30  = t29 * t6;
     result__[ 1   ] = -t30 * t18 + t4 * L__[iL_lambda1__xo];
     result__[ 2   ] = -t29 * t19 * t18 + t29 * t24 + 2 * t30 * t5;
@@ -139,18 +141,21 @@ namespace MaximumAscentDefine {
     real_type t7   = t6 * t6;
     real_type t8   = X__[iX_r];
     real_type t9   = t8 * t8;
-    real_type t11  = 1.0 / t9 / t8;
+    real_type t10  = 1.0 / t9;
+    real_type t12  = 1.0 / t8;
+    real_type t11  = t12 * t10;
     real_type t14  = t9 * t9;
     real_type t20  = t4 * L__[iL_lambda3__xo];
     real_type t21  = X__[iX_u];
     real_type t27  = t4 * L__[iL_lambda4__xo];
-    result__[ 0   ] = (2 * t11 * t7 - 6 / t14) * t5 - 2 * t11 * t6 * t21 * t20 + 2 * t11 * t6 * t27;
-    real_type t31  = 1.0 / t9;
+    real_type t24  = t11 * t6;
+    result__[ 0   ] = (2 * t11 * t7 - 6 / t14) * t5 - 2 * t21 * t20 * t24 + 2 * t27 * t24;
+    real_type t31  = t10;
     real_type t32  = t31 * t6;
     result__[ 1   ] = t32 * t20;
     result__[ 2   ] = t31 * t21 * t20 - t31 * t27 - 2 * t32 * t5;
     result__[ 3   ] = result__[1];
-    real_type t38  = 1.0 / t8;
+    real_type t38  = t12;
     result__[ 4   ] = -t38 * t20;
     result__[ 5   ] = result__[2];
     result__[ 6   ] = result__[4];

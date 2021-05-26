@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,14 +20,14 @@
 -- User Header
 
 -- Auxiliary values
-Isp    = 1500
 T      = 0.68
-g0     = 9.80665
-mdot   = T/g0/Isp
 days   = 1
-tf     = 86400*days
 mu     = 398600441800000
 days1  = 30
+g0     = 9.80665
+Isp    = 1500
+mdot   = T/g0/Isp
+tf     = 86400*days
 r0     = 6678140
 v0     = (mu/r0)**(1/2.0)
 u0     = 0

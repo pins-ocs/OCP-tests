@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -94,10 +94,10 @@ namespace CrossroadDefine {
     real_type t17  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
     real_type t21  = AccBound(1 - 1.0 / t6 * t4 - 1.0 / t17 * t14 * t11);
     real_type t22  = VelBound(t9);
-    real_type t24  = U__[iU_jerk];
-    real_type t25  = t24 * t24;
-    real_type t41  = jerkControl(t24, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
-    real_type result__ = t2 + t21 + t22 + t1 * (t25 * ModelPars[iM_wJ] + ModelPars[iM_wT]) + t9 * t1 * L__[iL_lambda1__xo] + t3 * t1 * L__[iL_lambda2__xo] + t24 * t1 * L__[iL_lambda3__xo] + t41;
+    real_type t23  = U__[iU_jerk];
+    real_type t26  = jerkControl(t23, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    real_type t27  = t23 * t23;
+    real_type result__ = t2 + t21 + t22 + t26 + t1 * (ModelPars[iM_wJ] * t27 + ModelPars[iM_wT]) + t9 * t1 * L__[iL_lambda1__xo] + t3 * t1 * L__[iL_lambda2__xo] + t23 * t1 * L__[iL_lambda3__xo];
     return result__;
   }
 #else
@@ -125,10 +125,10 @@ namespace CrossroadDefine {
     real_type t17  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
     real_type t21  = AccBound(1 - 1.0 / t6 * t4 - 1.0 / t17 * t14 * t11);
     real_type t22  = VelBound(t9);
-    real_type t24  = U__[iU_jerk];
-    real_type t25  = t24 * t24;
-    real_type t41  = jerkControl(t24, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
-    real_type result__ = t2 + t21 + t22 + t1 * (t25 * ModelPars[iM_wJ] + ModelPars[iM_wT]) + t9 * t1 * L__[iL_lambda1__xo] + t3 * t1 * L__[iL_lambda2__xo] + t24 * t1 * L__[iL_lambda3__xo] + t41;
+    real_type t23  = U__[iU_jerk];
+    real_type t26  = jerkControl(t23, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    real_type t27  = t23 * t23;
+    real_type result__ = t2 + t21 + t22 + t26 + t1 * (ModelPars[iM_wJ] * t27 + ModelPars[iM_wT]) + t9 * t1 * L__[iL_lambda1__xo] + t3 * t1 * L__[iL_lambda2__xo] + t23 * t1 * L__[iL_lambda3__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -330,11 +330,12 @@ namespace CrossroadDefine {
     real_type t12  = t11 * t11;
     real_type t15  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
     real_type t16  = 1.0 / t15;
-    real_type t19  = ALIAS_AccBound_D(-t16 * t12 * t9 - t5 * t2 + 1);
+    real_type t13  = t12 * t16;
+    real_type t19  = ALIAS_AccBound_D(-t9 * t13 - t5 * t2 + 1);
     real_type t22  = kappa_D(t10);
     result__[ 0   ] = -2 * t22 * t16 * t11 * t9 * t19;
     real_type t31  = ALIAS_VelBound_D(t7);
-    result__[ 1   ] = -4 * t16 * t12 * t8 * t7 * t19 + t31;
+    result__[ 1   ] = -4 * t8 * t7 * t19 * t13 + t31;
     result__[ 2   ] = -2 * t5 * t1 * t19;
     result__[ 3   ] = ALIAS_Tpositive_D(X__[iX_Ts]);
     if ( m_debug )
@@ -502,19 +503,19 @@ namespace CrossroadDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Crossroad::DjumpDxlp_numRows() const
+  Crossroad::DjumpDxlxlp_numRows() const
   { return 8; }
 
   integer
-  Crossroad::DjumpDxlp_numCols() const
+  Crossroad::DjumpDxlxlp_numCols() const
   { return 16; }
 
   integer
-  Crossroad::DjumpDxlp_nnz() const
+  Crossroad::DjumpDxlxlp_nnz() const
   { return 12; }
 
   void
-  Crossroad::DjumpDxlp_pattern(
+  Crossroad::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -535,7 +536,7 @@ namespace CrossroadDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Crossroad::DjumpDxlp_sparse(
+  Crossroad::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -564,7 +565,7 @@ namespace CrossroadDefine {
     result__[ 10  ] = 1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

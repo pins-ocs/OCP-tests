@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -40,6 +40,10 @@ using Mechatronix::MeshStd;
 #pragma warning( disable : 4101 )
 #endif
 
+// map user defined functions and objects with macros
+#define ALIAS_TimePositive_DD(__t1) TimePositive.DD( __t1)
+#define ALIAS_TimePositive_D(__t1) TimePositive.D( __t1)
+
 
 namespace Brachiostocrona2Define {
 
@@ -75,7 +79,7 @@ namespace Brachiostocrona2Define {
     real_type t4   = U__[iU_theta];
     real_type t5   = cos(t4);
     real_type t9   = sin(t4);
-    result__[ 2   ] = t5 * t2 * L__[iL_lambda1__xo] + t9 * t2 * L__[iL_lambda2__xo];
+    result__[ 2   ] = t2 * t5 * L__[iL_lambda1__xo] + t2 * t9 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
@@ -308,11 +312,12 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = X__[iX_v];
-    real_type t4   = U__[iU_theta];
-    real_type t5   = cos(t4);
-    real_type t9   = sin(t4);
-    result__[ 0   ] = t5 * t2 * L__[iL_lambda1__xo] + t9 * t2 * L__[iL_lambda2__xo] - t9 * ModelPars[iM_g] * L__[iL_lambda3__xo];
+    real_type t2   = ALIAS_TimePositive_D(P__[iP_T]);
+    real_type t4   = X__[iX_v];
+    real_type t6   = U__[iU_theta];
+    real_type t7   = cos(t6);
+    real_type t11  = sin(t6);
+    result__[ 0   ] = t11 * t4 * L__[iL_lambda2__xo] - t11 * ModelPars[iM_g] * L__[iL_lambda3__xo] + t7 * t4 * L__[iL_lambda1__xo] + t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
@@ -329,13 +334,14 @@ namespace Brachiostocrona2Define {
 
   integer
   Brachiostocrona2::DHpDp_nnz() const
-  { return 0; }
+  { return 1; }
 
   void
   Brachiostocrona2::DHpDp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -348,7 +354,14 @@ namespace Brachiostocrona2Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    result__[ 0   ] = ALIAS_TimePositive_DD(P__[iP_T]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,1, i_segment );
   }
 
   /*\

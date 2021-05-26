@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,11 +20,11 @@
 -- User Header
 
 -- Auxiliary values
-g  = 9.81
-xf = 5
 yf = -2
-Tf = (-2.0*yf/g)**(1/2.0)
+xf = 5
+g  = 9.81
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+Tf = (-2.0*yf/g)**(1/2.0)
 
 content = {
 
@@ -164,7 +164,15 @@ content = {
   -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
-  -- Constraint1D: none defined
+  -- Constraint1D
+  -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    -- PenaltyBarrier1DGreaterThan
+    TimePositivesubType   = "PENALTY_REGULAR",
+    TimePositiveepsilon   = 0.1,
+    TimePositivetolerance = 0.01,
+    TimePositiveactive    = true
+
   -- Constraint2D: none defined
   },
 
@@ -176,8 +184,8 @@ content = {
     segments = {
       
       {
-        n      = 500,
         length = 1,
+        n      = 500,
       },
     },
   },

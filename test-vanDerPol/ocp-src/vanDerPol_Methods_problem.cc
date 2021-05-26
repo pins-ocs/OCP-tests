@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -90,9 +90,9 @@ namespace vanDerPolDefine {
     real_type t2   = t1 * t1;
     real_type t3   = X__[iX_x2];
     real_type t4   = t3 * t3;
-    real_type t10  = U__[iU_u];
-    real_type t15  = uControl(t10, -1, 1);
-    real_type result__ = t2 + t4 + t3 * L__[iL_lambda1__xo] + (t3 * (-t2 + 1) - t1 + t10) * L__[iL_lambda2__xo] + t15 * (t2 + t4 + ModelPars[iM_epsilon]);
+    real_type t7   = U__[iU_u];
+    real_type t8   = uControl(t7, -1, 1);
+    real_type result__ = t8 * (t2 + t4 + ModelPars[iM_epsilon]) + t2 + t4 + t3 * L__[iL_lambda1__xo] + (t3 * (-t2 + 1) - t1 + t7) * L__[iL_lambda2__xo];
     return result__;
   }
 #else
@@ -111,9 +111,9 @@ namespace vanDerPolDefine {
     real_type t2   = t1 * t1;
     real_type t3   = X__[iX_x2];
     real_type t4   = t3 * t3;
-    real_type t10  = U__[iU_u];
-    real_type t15  = uControl(t10, -1, 1);
-    real_type result__ = t2 + t4 + t3 * L__[iL_lambda1__xo] + (t3 * (-t2 + 1) - t1 + t10) * L__[iL_lambda2__xo] + t15 * (t2 + t4 + ModelPars[iM_epsilon]);
+    real_type t7   = U__[iU_u];
+    real_type t8   = uControl(t7, -1, 1);
+    real_type result__ = t8 * (t2 + t4 + ModelPars[iM_epsilon]) + t2 + t4 + t3 * L__[iL_lambda1__xo] + (t3 * (-t2 + 1) - t1 + t7) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -458,19 +458,19 @@ namespace vanDerPolDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  vanDerPol::DjumpDxlp_numRows() const
+  vanDerPol::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  vanDerPol::DjumpDxlp_numCols() const
+  vanDerPol::DjumpDxlxlp_numCols() const
   { return 8; }
 
   integer
-  vanDerPol::DjumpDxlp_nnz() const
+  vanDerPol::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  vanDerPol::DjumpDxlp_pattern(
+  vanDerPol::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -487,7 +487,7 @@ namespace vanDerPolDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  vanDerPol::DjumpDxlp_sparse(
+  vanDerPol::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -512,7 +512,7 @@ namespace vanDerPolDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

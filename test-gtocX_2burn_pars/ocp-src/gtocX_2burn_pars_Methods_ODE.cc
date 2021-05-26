@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -149,17 +149,18 @@ namespace gtocX_2burn_parsDefine {
     real_type t17  = t16 * t11;
     real_type t18  = ray_D_2(t4, t12, t13, t14);
     real_type t19  = sin(t14);
-    result__[ 0   ] = t19 * t18 * t17 * t10;
+    real_type t21  = t17 * t10;
+    result__[ 0   ] = t21 * t19 * t18;
     real_type t22  = ray_D_3(t4, t12, t13, t14);
-    result__[ 1   ] = t19 * t22 * t17 * t10;
+    result__[ 1   ] = t21 * t19 * t22;
     real_type t25  = ray_D_4(t4, t12, t13, t14);
     real_type t29  = acceleration_r(t15, t7);
     real_type t30  = t29 * t11;
     real_type t31  = cos(t14);
-    result__[ 2   ] = t19 * t25 * t17 * t10 + t31 * t30 * t10;
-    result__[ 3   ] = -t31 * t18 * t17 * t10;
-    result__[ 4   ] = -t31 * t22 * t17 * t10;
-    result__[ 5   ] = -t31 * t25 * t17 * t10 + t19 * t30 * t10;
+    result__[ 2   ] = t31 * t30 * t10 + t21 * t19 * t25;
+    result__[ 3   ] = -t21 * t31 * t18;
+    result__[ 4   ] = -t21 * t31 * t22;
+    result__[ 5   ] = t19 * t30 * t10 - t21 * t31 * t25;
     real_type t48  = (t31 * t12 + t19 * t13 + 1) * t3;
     real_type t51  = t8 / t5 / t4;
     result__[ 6   ] = 2 * t31 * t51 * t48;
@@ -212,7 +213,8 @@ namespace gtocX_2burn_parsDefine {
     real_type t8   = ModelPars[iM_muS];
     real_type t9   = sqrt(t8);
     real_type t10  = 1.0 / t9;
-    real_type t11  = t10 / t5 * t3;
+    real_type t6   = 1.0 / t5;
+    real_type t11  = t3 * t6 * t10;
     real_type t12  = ModelPars[iM_w_nonlin];
     real_type t13  = X__[iX_f];
     real_type t14  = X__[iX_g];
@@ -225,12 +227,13 @@ namespace gtocX_2burn_parsDefine {
     real_type t25  = acceleration_r_D_1(t16, t8);
     real_type t26  = t25 * t12;
     real_type t27  = ray_D_1(t4, t13, t14, t15);
-    result__[ 0   ] = t19 * t18 * t11 / 2 + t19 * t27 * t26 * t24;
+    real_type t29  = t26 * t24;
+    result__[ 0   ] = t19 * t18 * t11 / 2 + t29 * t19 * t27;
     real_type t31  = cos(t15);
-    result__[ 1   ] = -t31 * t18 * t11 / 2 - t31 * t27 * t26 * t24;
+    result__[ 1   ] = -t31 * t18 * t11 / 2 - t29 * t31 * t27;
     real_type t41  = pow(t31 * t13 + t19 * t14 + 1, 2);
     real_type t43  = t4 * t4;
-    result__[ 2   ] = -3.0 / 2.0 * t9 / t5 / t43 * t41 * t3;
+    result__[ 2   ] = -3.0 / 2.0 / t43 * t41 * t3 * t6 * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 3, i_segment );
   }

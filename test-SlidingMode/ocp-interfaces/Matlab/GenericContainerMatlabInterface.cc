@@ -8,9 +8,11 @@
 #include <iostream>
 #include <cstdint>
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 using namespace std;
+#endif
 
-namespace GenericContainerNamespace {
+namespace GC_namespace {
 
   // ===========================================================================
   void

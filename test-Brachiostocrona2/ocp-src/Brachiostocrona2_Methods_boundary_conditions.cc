@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -39,6 +39,10 @@ using Mechatronix::MeshStd;
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
 #endif
+
+// map user defined functions and objects with macros
+#define ALIAS_TimePositive_DD(__t1) TimePositive.DD( __t1)
+#define ALIAS_TimePositive_D(__t1) TimePositive.D( __t1)
 
 
 namespace Brachiostocrona2Define {
@@ -194,7 +198,7 @@ namespace Brachiostocrona2Define {
     result__[ 2   ] = t6 * LL__[iL_lambda3__xo] + OMEGA__[2];
     result__[ 3   ] = OMEGA__[3] - LR__[iL_lambda1__xo];
     result__[ 4   ] = OMEGA__[4] - LR__[iL_lambda2__xo];
-    result__[ 5   ] = -LR__[iL_lambda3__xo] * t6;
+    result__[ 5   ] = -t6 * LR__[iL_lambda3__xo];
     result__[ 6   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 7, i_segment_left, i_segment_right );

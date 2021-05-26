@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Methods_problem.cc                                 |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -96,12 +96,12 @@ namespace SingularArcDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = tfbound(t1);
-    real_type t5   = U__[iU_u];
-    real_type t9   = X__[iX_x1];
-    real_type t10  = cos(t9);
-    real_type t14  = sin(t9);
-    real_type t16  = uControl(t5, -2, 2);
-    real_type result__ = t10 * t1 * L__[iL_lambda2__xo] + t14 * t1 * L__[iL_lambda3__xo] + t5 * t1 * L__[iL_lambda1__xo] + t16 + t2;
+    real_type t3   = U__[iU_u];
+    real_type t4   = uControl(t3, -2, 2);
+    real_type t10  = X__[iX_x1];
+    real_type t11  = cos(t10);
+    real_type t15  = sin(t10);
+    real_type result__ = t11 * t1 * L__[iL_lambda2__xo] + t15 * t1 * L__[iL_lambda3__xo] + t3 * t1 * L__[iL_lambda1__xo] + t2 + t4;
     return result__;
   }
 #else
@@ -118,12 +118,12 @@ namespace SingularArcDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = tfbound(t1);
-    real_type t5   = U__[iU_u];
-    real_type t9   = X__[iX_x1];
-    real_type t10  = cos(t9);
-    real_type t14  = sin(t9);
-    real_type t16  = uControl(t5, -2, 2);
-    real_type result__ = t10 * t1 * L__[iL_lambda2__xo] + t14 * t1 * L__[iL_lambda3__xo] + t5 * t1 * L__[iL_lambda1__xo] + t16 + t2;
+    real_type t3   = U__[iU_u];
+    real_type t4   = uControl(t3, -2, 2);
+    real_type t10  = X__[iX_x1];
+    real_type t11  = cos(t10);
+    real_type t15  = sin(t10);
+    real_type result__ = t11 * t1 * L__[iL_lambda2__xo] + t15 * t1 * L__[iL_lambda3__xo] + t3 * t1 * L__[iL_lambda1__xo] + t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -480,19 +480,19 @@ namespace SingularArcDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularArc::DjumpDxlp_numRows() const
+  SingularArc::DjumpDxlxlp_numRows() const
   { return 6; }
 
   integer
-  SingularArc::DjumpDxlp_numCols() const
+  SingularArc::DjumpDxlxlp_numCols() const
   { return 13; }
 
   integer
-  SingularArc::DjumpDxlp_nnz() const
+  SingularArc::DjumpDxlxlp_nnz() const
   { return 12; }
 
   void
-  SingularArc::DjumpDxlp_pattern(
+  SingularArc::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -513,7 +513,7 @@ namespace SingularArcDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularArc::DjumpDxlp_sparse(
+  SingularArc::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -542,7 +542,7 @@ namespace SingularArcDefine {
     result__[ 10  ] = -1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

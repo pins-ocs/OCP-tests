@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods_problem.cc                     |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -442,19 +442,19 @@ namespace MinimumFuelOrbitRaisingDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MinimumFuelOrbitRaising::DjumpDxlp_numRows() const
+  MinimumFuelOrbitRaising::DjumpDxlxlp_numRows() const
   { return 6; }
 
   integer
-  MinimumFuelOrbitRaising::DjumpDxlp_numCols() const
+  MinimumFuelOrbitRaising::DjumpDxlxlp_numCols() const
   { return 12; }
 
   integer
-  MinimumFuelOrbitRaising::DjumpDxlp_nnz() const
+  MinimumFuelOrbitRaising::DjumpDxlxlp_nnz() const
   { return 12; }
 
   void
-  MinimumFuelOrbitRaising::DjumpDxlp_pattern(
+  MinimumFuelOrbitRaising::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -475,7 +475,7 @@ namespace MinimumFuelOrbitRaisingDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  MinimumFuelOrbitRaising::DjumpDxlp_sparse(
+  MinimumFuelOrbitRaising::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -504,7 +504,7 @@ namespace MinimumFuelOrbitRaisingDefine {
     result__[ 10  ] = -1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

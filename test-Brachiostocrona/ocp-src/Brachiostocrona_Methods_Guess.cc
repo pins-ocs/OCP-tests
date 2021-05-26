@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,7 +77,7 @@ namespace BrachiostocronaDefine {
     X__[ iX_x     ] = ModelPars[iM_xf] * t1;
     X__[ iX_y     ] = ModelPars[iM_yf] * t1;
     X__[ iX_v     ] = ModelPars[iM_Vf] * t1;
-    X__[ iX_theta ] = -0.3141592654e1 / 2;
+    X__[ iX_theta ] = -0.314159265358979323846264338328e1 / 2;
 
     if ( m_debug )
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 4 );

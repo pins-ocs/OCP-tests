@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: PathConstrained_pins_run.rb                                    #
 #                                                                       #
-#  version: 1.0   date 9/3/2021                                         #
+#  version: 1.0   date 3/6/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -59,6 +59,9 @@ unless ocp.ocp_solution[:error] then
     puts "Mayer             = #{ocp.ocp_solution[:target][:mayer]}"
     puts "Penalties         = #{ocp.ocp_solution[:target][:penalties]}"
     puts "Control penalties = #{ocp.ocp_solution[:target][:control_penalties]}"
+    if ocp.ocp_solution[:parameters] then
+      puts "Optimization parameters: #{ocp.ocp_solution[:parameters]}"    
+    end
     puts "\nSaving solution file: data/#{problem_name}_OCP_result.txt"
     ocp.write_ocp_solution("data/#{problem_name}_OCP_result.txt")
   else

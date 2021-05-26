@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-a  = 1
 b  = 3
+a  = 1
 u0 = b-a
 L0 = (u0**2+1)**(1/2.0)
 L  = L0

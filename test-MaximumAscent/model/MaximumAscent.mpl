@@ -26,7 +26,11 @@ xvars := [r(zeta),u(zeta),v(zeta),theta(zeta)] ;
 # Controlli
 uvars := [alpha(zeta)] ;
 # BVP
-loadDynamicSystem(  equations = EQNS,  controls  = uvars,  states    = xvars);
+loadDynamicSystem(
+  equations = EQNS,
+  controls  = uvars,
+  states    = xvars
+);
 # Initial conditions
 # Launch from zero altitude with zero initial velocity
 # All Boundary Conditions are non-dimensional
@@ -36,13 +40,16 @@ addUserFunction(Tbar(tf)=T*tf/v0) ;
 addUserFunction(tf(days)=days*24*3600);
 
 #Describe(addBoundaryConditions) ;
-addBoundaryConditions(  initial = [r=r0_bar,u=u0_bar,v=v0_bar,theta=theta0],
+addBoundaryConditions(
+  initial = [r=r0_bar,u=u0_bar,v=v0_bar,theta=theta0],
   final   = [u=uf_bar],
-  generic = [[v(zeta_f)*sqrt(r(zeta_f))-1,"final_velocity"]]);
+  generic = [[v(zeta_f)*sqrt(r(zeta_f))-1,"final_velocity"]]
+);
 infoBoundaryConditions() ;
 setTarget( mayer = -r(zeta_f), lagrange = 0) ;
 # Control deduced minimizing Hamiltonian
-CONTROL := [alpha = arctan2(-lambda2__xo(zeta),-lambda3__xo(zeta))] ;
+# Use arctan2__xo, arctan version of PINS
+CONTROL := [alpha = arctan2__xo(-lambda2__xo(zeta),-lambda3__xo(zeta))] ;
 GUESS := [ r=r0_bar, u=u0_bar, v=v0_bar, theta=theta0, lambda2__xo = -1 ] ;
 # parameters
 model_params := [ T       = 0.68,

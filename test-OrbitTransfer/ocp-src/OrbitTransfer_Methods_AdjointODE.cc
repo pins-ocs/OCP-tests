@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,8 +87,9 @@ namespace OrbitTransferDefine {
     real_type t23  = 1.0 / t22;
     real_type t32  = X__[iX_u];
     real_type t37  = t2 * L__[iL_lambda5__xo];
-    result__[ 2   ] = (-t23 * t20 + 2 / t22 / t21 * ModelPars[iM_mu]) * t3 + t23 * t32 * t19 * t14 - t23 * t19 * t37;
-    real_type t42  = 1.0 / t21;
+    real_type t26  = 1.0 / t21;
+    result__[ 2   ] = t3 * (2 * ModelPars[iM_mu] * t26 * t23 - t23 * t20) + t23 * t32 * t19 * t14 - t23 * t19 * t37;
+    real_type t42  = t26;
     real_type t43  = t42 * t19;
     result__[ 3   ] = -t43 * t14 + t2 * L__[iL_lambda1__xo];
     result__[ 4   ] = -t42 * t32 * t14 + 2 * t43 * t3 + t42 * t37;
@@ -154,17 +155,19 @@ namespace OrbitTransferDefine {
     real_type t22  = t21 * t21;
     real_type t23  = X__[iX_r];
     real_type t24  = t23 * t23;
-    real_type t26  = 1.0 / t24 / t23;
+    real_type t27  = 1.0 / t24;
+    real_type t28  = 1.0 / t23;
+    real_type t26  = t28 * t27;
     real_type t30  = t24 * t24;
     real_type t36  = X__[iX_u];
     real_type t42  = t2 * L__[iL_lambda5__xo];
     result__[ 1   ] = (2 * t26 * t22 - 6 / t30 * ModelPars[iM_mu]) * t3 - 2 * t26 * t36 * t21 * t15 + 2 * t26 * t21 * t42;
-    real_type t46  = 1.0 / t24;
+    real_type t46  = t27;
     real_type t47  = t46 * t21;
     result__[ 2   ] = t47 * t15;
     result__[ 3   ] = t46 * t36 * t15 - 2 * t47 * t3 - t46 * t42;
     result__[ 4   ] = result__[2];
-    real_type t53  = 1.0 / t23;
+    real_type t53  = t28;
     result__[ 5   ] = -t53 * t15;
     result__[ 6   ] = result__[3];
     result__[ 7   ] = result__[5];
@@ -238,7 +241,7 @@ namespace OrbitTransferDefine {
     real_type t6   = cos(t5);
     real_type t9   = 1.0 / X__[iX_m];
     real_type t14  = sin(t5);
-    result__[ 0   ] = -t9 * t14 * t4 * t2 * L__[iL_lambda3__xo] + t9 * t6 * t4 * t2 * L__[iL_lambda2__xo];
+    result__[ 0   ] = -t14 * t2 * t4 * t9 * L__[iL_lambda3__xo] + t2 * t4 * t6 * t9 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -286,7 +289,8 @@ namespace OrbitTransferDefine {
     real_type t9   = X__[iX_m] * X__[iX_m];
     real_type t10  = 1.0 / t9;
     real_type t15  = sin(t5);
-    result__[ 0   ] = t10 * t15 * t4 * t2 * L__[iL_lambda3__xo] - t10 * t6 * t4 * t2 * L__[iL_lambda2__xo];
+    real_type t7   = t2 * t4;
+    result__[ 0   ] = L__[iL_lambda3__xo] * t7 * t10 * t15 - L__[iL_lambda2__xo] * t7 * t10 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }

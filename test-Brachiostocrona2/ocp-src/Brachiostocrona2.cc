@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2.cc                                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -107,6 +107,7 @@ namespace Brachiostocrona2Define {
   };
 
   char const *namesConstraint1D[numConstraint1D+1] = {
+    "TimePositive",
     nullptr
   };
 
@@ -134,13 +135,14 @@ namespace Brachiostocrona2Define {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   Brachiostocrona2::Brachiostocrona2(
-    string  const & name,
-    ThreadPool    * TP,
+    string const &  name,
+    ThreadPool *    TP,
     Console const * console
   )
   : Discretized_Indirect_OCP( name, TP, console )
   // Controls
   // Constraints 1D
+  , TimePositive("TimePositive")
   // Constraints 2D
   // User classes
   {
@@ -189,7 +191,7 @@ namespace Brachiostocrona2Define {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        "\nContinuation step N.{} s={:.4}, ds={:.4}\n",
         phase+1, s, s-old_s
       ),
       msg_level
@@ -243,6 +245,18 @@ namespace Brachiostocrona2Define {
   */
   void
   Brachiostocrona2::setupClasses( GenericContainer const & gc_data ) {
+    UTILS_ASSERT0(
+      gc_data.exists("Constraints"),
+      "Brachiostocrona2::setupClasses: Missing key `Parameters` in data\n"
+    );
+    GenericContainer const & gc = gc_data("Constraints");
+    // Initialize Constraints 1D
+    UTILS_ASSERT0(
+      gc.exists("TimePositive"),
+      "in Brachiostocrona2::setupClasses(gc) missing key: ``TimePositive''\n"
+    );
+    TimePositive.setup( gc("TimePositive") );
+
   }
 
   /* --------------------------------------------------------------------------
@@ -323,6 +337,11 @@ namespace Brachiostocrona2Define {
   Brachiostocrona2::infoClasses() const {
     int msg_level = 3;
     ostringstream mstr;
+
+    m_console->message("\nConstraints 1D\n",msg_level);
+    mstr.str("");
+    TimePositive.info(mstr);
+    m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     mstr.str("");

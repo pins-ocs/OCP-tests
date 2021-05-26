@@ -73,7 +73,7 @@ Hyness --- start iterations ---
 
 Continuation step N.1
 
-Continuation step N.1 s=0.20, ds=0.2000
+Continuation step N.1 s=0.2000, ds=0.2000
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [  5, 11] (0.120    ,0.104    ) [0.266    ,0.0136   ] 0.132      0: 0
@@ -84,7 +84,7 @@ Hyness --- start iterations ---
 [ 10,  1] (0.000183 ,1.07e-09 ) [0.000265 ,3.80e-07 ] 1.00       0: 0
 [ 11,  1] (1.07e-09 ,8.45e-14 ) [3.80e-07 ,8.87e-12 ] 1.00       0: 0
 
-Continuation step N.1 s=0.50, ds=0.3000
+Continuation step N.1 s=0.5000, ds=0.3000
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 12,  3] (0.631    ,0.136    ) [0.00222  ,0.00129  ] 0.784      0: 0
@@ -92,7 +92,7 @@ Hyness --- start iterations ---
 [ 14,  1] (6.58e-07 ,7.84e-07 ) [0.00702  ,1.47e-05 ] 1.00       0: 0
 [ 15,  1] (7.84e-07 ,3.24e-12 ) [1.47e-05 ,1.31e-10 ] 1.00       0: 0
 
-Continuation step N.1 s=0.95, ds=0.4500
+Continuation step N.1 s=0.9500, ds=0.4500
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 16,  4] (7.11     ,2.65     ) [0.0423   ,0.0164   ] 0.627      0: 0
@@ -101,19 +101,19 @@ Hyness --- start iterations ---
 [ 19,  1] (1.30e-06 ,2.54e-07 ) [0.00364  ,5.66e-06 ] 1.00       0: 0
 [ 20,  1] (2.54e-07 ,5.46e-13 ) [5.65e-06 ,2.08e-11 ] 1.00       0: 0
 
-Continuation step N.1 s=1.0, ds=0.05000
+Continuation step N.1 s=1.000, ds=0.05000
 Hyness --- start iterations ---
 [it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
 [ 21,  1] (0.00623  ,9.77e-07 ) [0.000846 ,0.000165 ] 1.00       0: 0
 [ 22,  1] (9.77e-07 ,4.49e-10 ) [0.000164 ,2.32e-08 ] 1.00       0: 0
-[ 23,  1] (4.49e-10 ,9.08e-16 ) [2.32e-08 ,1.56e-13 ] 1.00       0: 0
+[ 23,  1] (4.49e-10 ,9.09e-16 ) [2.32e-08 ,1.56e-13 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 47.4[ms]      timeout        = 0 [ms]
+Elapsed Time   = 29.0[ms]      timeout        = 0 [ms]
 iteration      = 23            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 812
 max acc. iter. = 4000          N. System pars = 200
-Converged      = YES           Memory Used    = 111Kb (+48bytes)
+Converged      = YES           Memory Used    = 125Kb (+96bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       

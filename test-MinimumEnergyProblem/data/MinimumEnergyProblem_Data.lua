@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Data.lua                                  |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -163,7 +163,7 @@ content = {
   Constraints = {
   -- Constraint1D
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  -- Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DGreaterThan
     x1LimitationsubType   = "PENALTY_REGULAR",
     x1Limitationepsilon   = maxEpsi,
@@ -181,8 +181,8 @@ content = {
     segments = {
       
       {
-        n      = 20000,
         length = 1,
+        n      = 20000,
       },
     },
   },

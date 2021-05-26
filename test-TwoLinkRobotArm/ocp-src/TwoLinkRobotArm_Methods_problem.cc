@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -116,21 +116,21 @@ namespace TwoLinkRobotArmDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t4   = X__[iX_x3];
-    real_type t5   = sin(t4);
-    real_type t6   = cos(t4);
-    real_type t7   = X__[iX_x1];
-    real_type t8   = t7 * t7;
-    real_type t11  = X__[iX_x2];
+    real_type t1   = U__[iU_u1];
+    real_type t2   = u1Control(t1, -1, 1);
+    real_type t3   = U__[iU_u2];
+    real_type t4   = u2Control(t3, -1, 1);
+    real_type t6   = P__[iP_T];
+    real_type t8   = X__[iX_x3];
+    real_type t9   = sin(t8);
+    real_type t10  = cos(t8);
+    real_type t11  = X__[iX_x1];
     real_type t12  = t11 * t11;
-    real_type t16  = U__[iU_u1];
-    real_type t18  = U__[iU_u2];
-    real_type t23  = t5 * t5;
-    real_type t26  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t23);
-    real_type t50  = u1Control(t16, -1, 1);
-    real_type t51  = u2Control(t18, -1, 1);
-    real_type result__ = t26 * ((9.0 / 4.0 * t8 * t6 + 2 * t12) * t5 + 4.0 / 3.0 * t16 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t6) * t2 * L__[iL_lambda1__xo] - t26 * ((7.0 / 2.0 * t8 + 9.0 / 4.0 * t12 * t6) * t5 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t16 - t18) * t6) * t2 * L__[iL_lambda2__xo] + (t11 - t7) * t2 * L__[iL_lambda3__xo] + t7 * t2 * L__[iL_lambda4__xo] + t50 + t51;
+    real_type t15  = X__[iX_x2];
+    real_type t16  = t15 * t15;
+    real_type t25  = t9 * t9;
+    real_type t28  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t25);
+    real_type result__ = t2 + t4 + t28 * ((9.0 / 4.0 * t12 * t10 + 2 * t16) * t9 + 4.0 / 3.0 * t1 - 4.0 / 3.0 * t3 - 3.0 / 2.0 * t3 * t10) * t6 * L__[iL_lambda1__xo] - t28 * ((7.0 / 2.0 * t12 + 9.0 / 4.0 * t16 * t10) * t9 - 7.0 / 3.0 * t3 + 3.0 / 2.0 * (t1 - t3) * t10) * t6 * L__[iL_lambda2__xo] + (t15 - t11) * t6 * L__[iL_lambda3__xo] + t11 * t6 * L__[iL_lambda4__xo];
     return result__;
   }
 #else
@@ -145,21 +145,21 @@ namespace TwoLinkRobotArmDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t4   = X__[iX_x3];
-    real_type t5   = sin(t4);
-    real_type t6   = cos(t4);
-    real_type t7   = X__[iX_x1];
-    real_type t8   = t7 * t7;
-    real_type t11  = X__[iX_x2];
+    real_type t1   = U__[iU_u1];
+    real_type t2   = u1Control(t1, -1, 1);
+    real_type t3   = U__[iU_u2];
+    real_type t4   = u2Control(t3, -1, 1);
+    real_type t6   = P__[iP_T];
+    real_type t8   = X__[iX_x3];
+    real_type t9   = sin(t8);
+    real_type t10  = cos(t8);
+    real_type t11  = X__[iX_x1];
     real_type t12  = t11 * t11;
-    real_type t16  = U__[iU_u1];
-    real_type t18  = U__[iU_u2];
-    real_type t23  = t5 * t5;
-    real_type t26  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t23);
-    real_type t50  = u1Control(t16, -1, 1);
-    real_type t51  = u2Control(t18, -1, 1);
-    real_type result__ = t26 * ((9.0 / 4.0 * t8 * t6 + 2 * t12) * t5 + 4.0 / 3.0 * t16 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t6) * t2 * L__[iL_lambda1__xo] - t26 * ((7.0 / 2.0 * t8 + 9.0 / 4.0 * t12 * t6) * t5 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t16 - t18) * t6) * t2 * L__[iL_lambda2__xo] + (t11 - t7) * t2 * L__[iL_lambda3__xo] + t7 * t2 * L__[iL_lambda4__xo] + t50 + t51;
+    real_type t15  = X__[iX_x2];
+    real_type t16  = t15 * t15;
+    real_type t25  = t9 * t9;
+    real_type t28  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t25);
+    real_type result__ = t2 + t4 + t28 * ((9.0 / 4.0 * t12 * t10 + 2 * t16) * t9 + 4.0 / 3.0 * t1 - 4.0 / 3.0 * t3 - 3.0 / 2.0 * t3 * t10) * t6 * L__[iL_lambda1__xo] - t28 * ((7.0 / 2.0 * t12 + 9.0 / 4.0 * t16 * t10) * t9 - 7.0 / 3.0 * t3 + 3.0 / 2.0 * (t1 - t3) * t10) * t6 * L__[iL_lambda2__xo] + (t15 - t11) * t6 * L__[iL_lambda3__xo] + t11 * t6 * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -529,19 +529,19 @@ namespace TwoLinkRobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoLinkRobotArm::DjumpDxlp_numRows() const
+  TwoLinkRobotArm::DjumpDxlxlp_numRows() const
   { return 8; }
 
   integer
-  TwoLinkRobotArm::DjumpDxlp_numCols() const
+  TwoLinkRobotArm::DjumpDxlxlp_numCols() const
   { return 17; }
 
   integer
-  TwoLinkRobotArm::DjumpDxlp_nnz() const
+  TwoLinkRobotArm::DjumpDxlxlp_nnz() const
   { return 16; }
 
   void
-  TwoLinkRobotArm::DjumpDxlp_pattern(
+  TwoLinkRobotArm::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -566,7 +566,7 @@ namespace TwoLinkRobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TwoLinkRobotArm::DjumpDxlp_sparse(
+  TwoLinkRobotArm::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -599,7 +599,7 @@ namespace TwoLinkRobotArmDefine {
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
   /*\

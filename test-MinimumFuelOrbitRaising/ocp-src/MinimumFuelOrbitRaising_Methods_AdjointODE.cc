@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods_AdjointODE.cc                  |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,8 +77,9 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type t7   = 1.0 / t6;
     real_type t14  = L__[iL_lambda3__xo];
     real_type t16  = X__[iX_x2] * t14;
-    result__[ 0   ] = (-t7 * t3 * t2 + 2 / t6 / t5) * t1 + t7 * t2 * t16;
-    real_type t21  = 1.0 / t5;
+    real_type t10  = 1.0 / t5;
+    result__[ 0   ] = t1 * (-t7 * t3 * t2 + 2 * t10 * t7) + t7 * t2 * t16;
+    real_type t21  = t10;
     result__[ 1   ] = -t21 * t2 * t14 + L__[iL_lambda1__xo] - 1;
     result__[ 2   ] = 3 * t21 * t3 * t1 - t21 * t16;
     if ( m_debug )
@@ -132,16 +133,18 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type t3   = t2 * t2;
     real_type t5   = X__[iX_x1];
     real_type t6   = t5 * t5;
-    real_type t8   = 1.0 / t6 / t5;
+    real_type t4   = 1.0 / t6;
+    real_type t7   = 1.0 / t5;
+    real_type t8   = t7 * t4;
     real_type t11  = t6 * t6;
     real_type t16  = L__[iL_lambda3__xo];
     real_type t18  = X__[iX_x2] * t16;
     result__[ 0   ] = (2 * t8 * t3 * t2 - 6 / t11) * t1 - 2 * t8 * t2 * t18;
-    real_type t23  = 1.0 / t6;
+    real_type t23  = t4;
     result__[ 1   ] = t23 * t2 * t16;
     result__[ 2   ] = -3 * t23 * t3 * t1 + t23 * t18;
     result__[ 3   ] = result__[1];
-    real_type t28  = 1.0 / t5;
+    real_type t28  = t7;
     result__[ 4   ] = -t28 * t16;
     result__[ 5   ] = result__[2];
     result__[ 6   ] = result__[4];

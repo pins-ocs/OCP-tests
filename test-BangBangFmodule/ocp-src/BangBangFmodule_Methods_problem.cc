@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -85,10 +85,10 @@ namespace BangBangFmoduleDefine {
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = U__[iU_Fp];
-    real_type t2   = U__[iU_Fm];
-    real_type t10  = controlP(t1, 0, ModelPars[iM_FpMax]);
-    real_type t12  = controlM(t2, 0, ModelPars[iM_FmMax]);
-    real_type result__ = t1 + t2 + L__[iL_lambda1__xo] * X__[iX_v] + (t1 - t2) * L__[iL_lambda2__xo] + t10 + t12;
+    real_type t3   = controlP(t1, 0, ModelPars[iM_FpMax]);
+    real_type t4   = U__[iU_Fm];
+    real_type t6   = controlM(t4, 0, ModelPars[iM_FmMax]);
+    real_type result__ = t3 + t6 + t1 + t4 + L__[iL_lambda1__xo] * X__[iX_v] + (t1 - t4) * L__[iL_lambda2__xo];
     return result__;
   }
 #else
@@ -104,10 +104,10 @@ namespace BangBangFmoduleDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = U__[iU_Fp];
-    real_type t2   = U__[iU_Fm];
-    real_type t10  = controlP(t1, 0, ModelPars[iM_FpMax]);
-    real_type t12  = controlM(t2, 0, ModelPars[iM_FmMax]);
-    real_type result__ = t1 + t2 + L__[iL_lambda1__xo] * X__[iX_v] + (t1 - t2) * L__[iL_lambda2__xo] + t10 + t12;
+    real_type t3   = controlP(t1, 0, ModelPars[iM_FpMax]);
+    real_type t4   = U__[iU_Fm];
+    real_type t6   = controlM(t4, 0, ModelPars[iM_FmMax]);
+    real_type result__ = t3 + t6 + t1 + t4 + L__[iL_lambda1__xo] * X__[iX_v] + (t1 - t4) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -446,19 +446,19 @@ namespace BangBangFmoduleDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFmodule::DjumpDxlp_numRows() const
+  BangBangFmodule::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  BangBangFmodule::DjumpDxlp_numCols() const
+  BangBangFmodule::DjumpDxlxlp_numCols() const
   { return 8; }
 
   integer
-  BangBangFmodule::DjumpDxlp_nnz() const
+  BangBangFmodule::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  BangBangFmodule::DjumpDxlp_pattern(
+  BangBangFmodule::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -475,7 +475,7 @@ namespace BangBangFmoduleDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFmodule::DjumpDxlp_sparse(
+  BangBangFmodule::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -500,7 +500,7 @@ namespace BangBangFmoduleDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

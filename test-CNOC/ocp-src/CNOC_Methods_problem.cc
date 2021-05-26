@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_problem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -179,17 +179,17 @@ namespace CNOCDefine {
     real_type t37  = sin(t34);
     real_type t43  = ax_limit(1.0 / ModelPars[iM_ax_max] * (t35 * t21 - t37 * t27));
     real_type t51  = ay_limit(1.0 / ModelPars[iM_ay_max] * (t37 * t21 + t35 * t27));
-    real_type t54  = pow(t8 - t9, 2);
-    real_type t57  = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
-    real_type t62  = ALIAS_kappa(t33);
-    real_type t65  = 1.0 / (-t62 * t15 + 1);
-    real_type t73  = t65 * t62;
-    real_type t85  = U__[iU_js];
-    real_type t92  = U__[iU_jn];
-    real_type t100 = jsControl(t85, ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    real_type t102 = ModelPars[iM_jn_max];
-    real_type t103 = jnControl(t92, -t102, t102);
-    real_type result__ = t2 + t13 * t1 + t19 * t1 + t25 * t1 + t31 * t1 + t43 * t1 + t51 * t1 + 1.0 / t57 * t54 * t1 + t1 * t65 * t3 * L__[iL_lambda1__xo] + t1 * t5 * L__[iL_lambda2__xo] - t1 * (-t73 * t5 * t3 - t21) * L__[iL_lambda3__xo] - t1 * (t65 * t62 * t4 - t27) * L__[iL_lambda4__xo] - t1 * (-t73 * t27 * t3 - t85) * L__[iL_lambda5__xo] - t1 * (t73 * t21 * t3 - t92) * L__[iL_lambda6__xo] + t100 * t1 + t103 * t1;
+    real_type t53  = U__[iU_js];
+    real_type t56  = jsControl(t53, ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t58  = U__[iU_jn];
+    real_type t59  = ModelPars[iM_jn_max];
+    real_type t60  = jnControl(t58, -t59, t59);
+    real_type t63  = pow(t8 - t9, 2);
+    real_type t66  = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
+    real_type t71  = ALIAS_kappa(t33);
+    real_type t74  = 1.0 / (-t71 * t15 + 1);
+    real_type t82  = t74 * t71;
+    real_type result__ = t2 + t13 * t1 + t19 * t1 + t25 * t1 + t31 * t1 + t43 * t1 + t51 * t1 + t56 * t1 + t60 * t1 + 1.0 / t66 * t63 * t1 + t1 * t74 * t3 * L__[iL_lambda1__xo] + t1 * t5 * L__[iL_lambda2__xo] - t1 * (-t82 * t5 * t3 - t21) * L__[iL_lambda3__xo] - t1 * (t74 * t71 * t4 - t27) * L__[iL_lambda4__xo] - t1 * (-t82 * t27 * t3 - t53) * L__[iL_lambda5__xo] - t1 * (t82 * t21 * t3 - t58) * L__[iL_lambda6__xo];
     return result__;
   }
 #else
@@ -225,17 +225,17 @@ namespace CNOCDefine {
     real_type t37  = sin(t34);
     real_type t43  = ax_limit(1.0 / ModelPars[iM_ax_max] * (t35 * t21 - t37 * t27));
     real_type t51  = ay_limit(1.0 / ModelPars[iM_ay_max] * (t37 * t21 + t35 * t27));
-    real_type t54  = pow(t8 - t9, 2);
-    real_type t57  = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
-    real_type t62  = ALIAS_kappa(t33);
-    real_type t65  = 1.0 / (-t62 * t15 + 1);
-    real_type t73  = t65 * t62;
-    real_type t85  = U__[iU_js];
-    real_type t92  = U__[iU_jn];
-    real_type t100 = jsControl(t85, ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    real_type t102 = ModelPars[iM_jn_max];
-    real_type t103 = jnControl(t92, -t102, t102);
-    real_type result__ = t2 + t13 * t1 + t19 * t1 + t25 * t1 + t31 * t1 + t43 * t1 + t51 * t1 + 1.0 / t57 * t54 * t1 + t1 * t65 * t3 * L__[iL_lambda1__xo] + t1 * t5 * L__[iL_lambda2__xo] - t1 * (-t73 * t5 * t3 - t21) * L__[iL_lambda3__xo] - t1 * (t65 * t62 * t4 - t27) * L__[iL_lambda4__xo] - t1 * (-t73 * t27 * t3 - t85) * L__[iL_lambda5__xo] - t1 * (t73 * t21 * t3 - t92) * L__[iL_lambda6__xo] + t100 * t1 + t103 * t1;
+    real_type t53  = U__[iU_js];
+    real_type t56  = jsControl(t53, ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t58  = U__[iU_jn];
+    real_type t59  = ModelPars[iM_jn_max];
+    real_type t60  = jnControl(t58, -t59, t59);
+    real_type t63  = pow(t8 - t9, 2);
+    real_type t66  = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
+    real_type t71  = ALIAS_kappa(t33);
+    real_type t74  = 1.0 / (-t71 * t15 + 1);
+    real_type t82  = t74 * t71;
+    real_type result__ = t2 + t13 * t1 + t19 * t1 + t25 * t1 + t31 * t1 + t43 * t1 + t51 * t1 + t56 * t1 + t60 * t1 + 1.0 / t66 * t63 * t1 + t1 * t74 * t3 * L__[iL_lambda1__xo] + t1 * t5 * L__[iL_lambda2__xo] - t1 * (-t82 * t5 * t3 - t21) * L__[iL_lambda3__xo] - t1 * (t74 * t71 * t4 - t27) * L__[iL_lambda4__xo] - t1 * (-t82 * t27 * t3 - t53) * L__[iL_lambda5__xo] - t1 * (t82 * t21 * t3 - t58) * L__[iL_lambda6__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -691,19 +691,19 @@ namespace CNOCDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  CNOC::DjumpDxlp_numRows() const
+  CNOC::DjumpDxlxlp_numRows() const
   { return 14; }
 
   integer
-  CNOC::DjumpDxlp_numCols() const
+  CNOC::DjumpDxlxlp_numCols() const
   { return 28; }
 
   integer
-  CNOC::DjumpDxlp_nnz() const
+  CNOC::DjumpDxlxlp_nnz() const
   { return 30; }
 
   void
-  CNOC::DjumpDxlp_pattern(
+  CNOC::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -742,7 +742,7 @@ namespace CNOCDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CNOC::DjumpDxlp_sparse(
+  CNOC::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -767,11 +767,12 @@ namespace CNOCDefine {
     result__[ 2   ] = -t6;
     result__[ 3   ] = sin(t5);
     result__[ 4   ] = 1;
-    result__[ 5   ] = -result__[3];
+    real_type t7   = result__[3];
+    result__[ 5   ] = -t7;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = 1;
     result__[ 8   ] = result__[6];
-    result__[ 9   ] = result__[3];
+    result__[ 9   ] = t7;
     result__[ 10  ] = 1;
     result__[ 11  ] = result__[5];
     result__[ 12  ] = result__[8];
@@ -793,7 +794,7 @@ namespace CNOCDefine {
     result__[ 28  ] = result__[24];
     result__[ 29  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 30, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 30, i_segment_left, i_segment_right );
   }
 
   /*\

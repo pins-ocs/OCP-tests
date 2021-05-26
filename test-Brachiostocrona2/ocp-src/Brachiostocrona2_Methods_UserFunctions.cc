@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_UserFunctions.cc                      |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -40,6 +40,10 @@ using Mechatronix::MeshStd;
 #pragma warning( disable : 4101 )
 #endif
 
+// map user defined functions and objects with macros
+#define ALIAS_TimePositive_DD(__t1) TimePositive.DD( __t1)
+#define ALIAS_TimePositive_D(__t1) TimePositive.D( __t1)
+
 
 namespace Brachiostocrona2Define {
   /*\
@@ -51,8 +55,8 @@ namespace Brachiostocrona2Define {
   // user defined functions which has a body defined in MAPLE
   real_type
   Brachiostocrona2::theta_sol( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const {
-    real_type t8   = arctan2(xo__l2 * xo__v - xo__l3 * ModelPars[iM_g], xo__v * xo__l1);
-    real_type result__ = ModelPars[iM_kappa] * 0.3141592654e1 + t8;
+    real_type t8   = arctan2__xo(xo__l2 * xo__v - xo__l3 * ModelPars[iM_g], xo__v * xo__l1);
+    real_type result__ = ModelPars[iM_kappa] * 0.314159265358979323846264338328e1 + t8;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -67,8 +71,8 @@ namespace Brachiostocrona2Define {
   Brachiostocrona2::theta_sol_D_1( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const {
     real_type t4   = xo__l2 * xo__v - xo__l3 * ModelPars[iM_g];
     real_type t5   = xo__v * xo__l1;
-    real_type t6   = arctan2_D_1(t4, t5);
-    real_type t8   = arctan2_D_2(t4, t5);
+    real_type t6   = arctan2__xo_D_1(t4, t5);
+    real_type t8   = arctan2__xo_D_2(t4, t5);
     real_type result__ = xo__l2 * t6 + xo__l1 * t8;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -82,7 +86,7 @@ namespace Brachiostocrona2Define {
 
   real_type
   Brachiostocrona2::theta_sol_D_2( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const {
-    real_type t6   = arctan2_D_2(xo__l2 * xo__v - xo__l3 * ModelPars[iM_g], xo__v * xo__l1);
+    real_type t6   = arctan2__xo_D_2(xo__l2 * xo__v - xo__l3 * ModelPars[iM_g], xo__v * xo__l1);
     real_type result__ = xo__v * t6;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -96,7 +100,7 @@ namespace Brachiostocrona2Define {
 
   real_type
   Brachiostocrona2::theta_sol_D_3( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const {
-    real_type t6   = arctan2_D_1(xo__l2 * xo__v - xo__l3 * ModelPars[iM_g], xo__v * xo__l1);
+    real_type t6   = arctan2__xo_D_1(xo__l2 * xo__v - xo__l3 * ModelPars[iM_g], xo__v * xo__l1);
     real_type result__ = xo__v * t6;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -111,7 +115,7 @@ namespace Brachiostocrona2Define {
   real_type
   Brachiostocrona2::theta_sol_D_4( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const {
     real_type t2   = ModelPars[iM_g];
-    real_type t6   = arctan2_D_1(-t2 * xo__l3 + xo__l2 * xo__v, xo__v * xo__l1);
+    real_type t6   = arctan2__xo_D_1(-t2 * xo__l3 + xo__l2 * xo__v, xo__v * xo__l1);
     real_type result__ = -t2 * t6;
     if ( m_debug ) {
       UTILS_ASSERT(

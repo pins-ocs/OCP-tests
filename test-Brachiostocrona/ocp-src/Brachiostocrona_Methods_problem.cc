@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,14 +75,14 @@ namespace BrachiostocronaDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t4   = X__[iX_v];
-    real_type t5   = X__[iX_theta];
-    real_type t6   = cos(t5);
-    real_type t11  = sin(t5);
-    real_type t20  = U__[iU_vtheta];
-    real_type t22  = vthetaControl(t20, -10, 10);
-    real_type result__ = t11 * t4 * t2 * L__[iL_lambda2__xo] - t11 * ModelPars[iM_g] * t2 * L__[iL_lambda3__xo] + t6 * t4 * t2 * L__[iL_lambda1__xo] + t22 * t2 + t20 * L__[iL_lambda4__xo];
+    real_type t1   = P__[iP_T];
+    real_type t2   = U__[iU_vtheta];
+    real_type t3   = vthetaControl(t2, -10, 10);
+    real_type t7   = X__[iX_v];
+    real_type t8   = X__[iX_theta];
+    real_type t9   = cos(t8);
+    real_type t14  = sin(t8);
+    real_type result__ = t14 * t7 * t1 * L__[iL_lambda2__xo] - t14 * ModelPars[iM_g] * t1 * L__[iL_lambda3__xo] + t9 * t7 * t1 * L__[iL_lambda1__xo] + t3 * t1 + t2 * L__[iL_lambda4__xo];
     return result__;
   }
 #else
@@ -97,14 +97,14 @@ namespace BrachiostocronaDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t4   = X__[iX_v];
-    real_type t5   = X__[iX_theta];
-    real_type t6   = cos(t5);
-    real_type t11  = sin(t5);
-    real_type t20  = U__[iU_vtheta];
-    real_type t22  = vthetaControl(t20, -10, 10);
-    real_type result__ = t11 * t4 * t2 * L__[iL_lambda2__xo] - t11 * ModelPars[iM_g] * t2 * L__[iL_lambda3__xo] + t6 * t4 * t2 * L__[iL_lambda1__xo] + t22 * t2 + t20 * L__[iL_lambda4__xo];
+    real_type t1   = P__[iP_T];
+    real_type t2   = U__[iU_vtheta];
+    real_type t3   = vthetaControl(t2, -10, 10);
+    real_type t7   = X__[iX_v];
+    real_type t8   = X__[iX_theta];
+    real_type t9   = cos(t8);
+    real_type t14  = sin(t8);
+    real_type result__ = t14 * t7 * t1 * L__[iL_lambda2__xo] - t14 * ModelPars[iM_g] * t1 * L__[iL_lambda3__xo] + t9 * t7 * t1 * L__[iL_lambda1__xo] + t3 * t1 + t2 * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -469,19 +469,19 @@ namespace BrachiostocronaDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Brachiostocrona::DjumpDxlp_numRows() const
+  Brachiostocrona::DjumpDxlxlp_numRows() const
   { return 8; }
 
   integer
-  Brachiostocrona::DjumpDxlp_numCols() const
+  Brachiostocrona::DjumpDxlxlp_numCols() const
   { return 17; }
 
   integer
-  Brachiostocrona::DjumpDxlp_nnz() const
+  Brachiostocrona::DjumpDxlxlp_nnz() const
   { return 16; }
 
   void
-  Brachiostocrona::DjumpDxlp_pattern(
+  Brachiostocrona::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -506,7 +506,7 @@ namespace BrachiostocronaDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Brachiostocrona::DjumpDxlp_sparse(
+  Brachiostocrona::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -540,7 +540,7 @@ namespace BrachiostocronaDefine {
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
   /*\

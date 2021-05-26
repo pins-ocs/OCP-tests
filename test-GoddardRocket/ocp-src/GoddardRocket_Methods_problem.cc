@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -105,12 +105,12 @@ namespace GoddardRocketDefine {
     real_type t4   = TSPositive(t3);
     real_type t5   = X__[iX_v];
     real_type t6   = vPositive(t5);
-    real_type t12  = U__[iU_T];
-    real_type t13  = X__[iX_h];
-    real_type t14  = DD(t13, t5);
-    real_type t18  = gg(t13);
-    real_type t28  = TControl(t12, 0, ModelPars[iM_Tmax]);
-    real_type result__ = t2 + t4 + t6 + t5 * t3 * L__[iL_lambda1__xo] + (1.0 / t1 * (t12 - t14) - t18) * t3 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t12 * t3 * L__[iL_lambda3__xo] + t28;
+    real_type t7   = U__[iU_T];
+    real_type t9   = TControl(t7, 0, ModelPars[iM_Tmax]);
+    real_type t15  = X__[iX_h];
+    real_type t16  = DD(t15, t5);
+    real_type t20  = gg(t15);
+    real_type result__ = t2 + t4 + t6 + t9 + t5 * t3 * L__[iL_lambda1__xo] + (1.0 / t1 * (t7 - t16) - t20) * t3 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t7 * t3 * L__[iL_lambda3__xo];
     return result__;
   }
 #else
@@ -131,12 +131,12 @@ namespace GoddardRocketDefine {
     real_type t4   = TSPositive(t3);
     real_type t5   = X__[iX_v];
     real_type t6   = vPositive(t5);
-    real_type t12  = U__[iU_T];
-    real_type t13  = X__[iX_h];
-    real_type t14  = DD(t13, t5);
-    real_type t18  = gg(t13);
-    real_type t28  = TControl(t12, 0, ModelPars[iM_Tmax]);
-    real_type result__ = t2 + t4 + t6 + t5 * t3 * L__[iL_lambda1__xo] + (1.0 / t1 * (t12 - t14) - t18) * t3 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t12 * t3 * L__[iL_lambda3__xo] + t28;
+    real_type t7   = U__[iU_T];
+    real_type t9   = TControl(t7, 0, ModelPars[iM_Tmax]);
+    real_type t15  = X__[iX_h];
+    real_type t16  = DD(t15, t5);
+    real_type t20  = gg(t15);
+    real_type result__ = t2 + t4 + t6 + t9 + t5 * t3 * L__[iL_lambda1__xo] + (1.0 / t1 * (t7 - t16) - t20) * t3 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t7 * t3 * L__[iL_lambda3__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -496,19 +496,19 @@ namespace GoddardRocketDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  GoddardRocket::DjumpDxlp_numRows() const
+  GoddardRocket::DjumpDxlxlp_numRows() const
   { return 6; }
 
   integer
-  GoddardRocket::DjumpDxlp_numCols() const
+  GoddardRocket::DjumpDxlxlp_numCols() const
   { return 13; }
 
   integer
-  GoddardRocket::DjumpDxlp_nnz() const
+  GoddardRocket::DjumpDxlxlp_nnz() const
   { return 12; }
 
   void
-  GoddardRocket::DjumpDxlp_pattern(
+  GoddardRocket::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -529,7 +529,7 @@ namespace GoddardRocketDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  GoddardRocket::DjumpDxlp_sparse(
+  GoddardRocket::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -558,7 +558,7 @@ namespace GoddardRocketDefine {
     result__[ 10  ] = -1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

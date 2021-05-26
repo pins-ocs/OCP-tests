@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -138,9 +138,10 @@ namespace BangBangFtauDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t7   = ALIAS_clip_D_1_1(X__[iX_sT] - X__[iX_sB], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
     result__[ 0   ] = t7 * L__[iL_lambda2__xo];
-    result__[ 1   ] = -result__[0];
+    real_type t8   = result__[0];
+    result__[ 1   ] = -t8;
     result__[ 2   ] = result__[1];
-    result__[ 3   ] = result__[0];
+    result__[ 3   ] = t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 4, i_segment );
   }

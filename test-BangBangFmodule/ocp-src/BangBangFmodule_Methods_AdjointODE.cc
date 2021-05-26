@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -186,9 +186,11 @@ namespace BangBangFmoduleDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
-    result__[ 0   ] = 1 + t1;
-    result__[ 1   ] = 1 - t1;
+    real_type t3   = ALIAS_controlP_D_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
+    real_type t4   = L__[iL_lambda2__xo];
+    result__[ 0   ] = t3 + 1 + t4;
+    real_type t7   = ALIAS_controlM_D_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
+    result__[ 1   ] = t7 + 1 - t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }

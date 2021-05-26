@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods_ODE.cc                                       |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -66,8 +66,9 @@ namespace RayleightDefine {
     real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     result__[ 0   ] = X__[iX_x2];
-    real_type t2   = result__[0] * result__[0];
-    result__[ 1   ] = -X__[iX_x1] + result__[0] * (0.14e1 - 0.14e0 * t2) + 4 * U__[iU_u];
+    real_type t1   = result__[0];
+    real_type t2   = t1 * t1;
+    result__[ 1   ] = -X__[iX_x1] + (0.14e1 - 0.14e0 * t2) * t1 + 4 * U__[iU_u];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
   }

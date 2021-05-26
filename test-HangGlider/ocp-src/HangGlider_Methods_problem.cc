@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_problem.cc                                  |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -107,22 +107,22 @@ namespace HangGliderDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = Tbound(t1);
-    real_type t4   = U__[iU_cL];
-    real_type t6   = pow(t4 - 0.7e0, 2);
-    real_type t10  = X__[iX_vx];
-    real_type t14  = X__[iX_vy];
-    real_type t19  = 1.0 / ModelPars[iM_m];
-    real_type t20  = X__[iX_x];
-    real_type t21  = v(t20, t10, t14);
-    real_type t22  = 1.0 / t21;
-    real_type t25  = t4 * t4;
-    real_type t29  = Dfun(t20, t10, t14);
-    real_type t30  = t29 * (t25 * ModelPars[iM_c1] + ModelPars[iM_c0]);
-    real_type t32  = Lfun(t20, t10, t14);
-    real_type t33  = t32 * t4;
-    real_type t34  = w(t20, t14);
-    real_type t52  = cLControl(t4, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
-    real_type result__ = t2 + t6 * ModelPars[iM_W] + t10 * t1 * L__[iL_lambda1__xo] + t14 * t1 * L__[iL_lambda2__xo] + (-t10 * t30 - t34 * t33) * t22 * t19 * t1 * L__[iL_lambda3__xo] + ((t10 * t33 - t34 * t30) * t22 * t19 * t1 - ModelPars[iM_g] * t1) * L__[iL_lambda4__xo] + t52;
+    real_type t3   = U__[iU_cL];
+    real_type t6   = cLControl(t3, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
+    real_type t9   = pow(t3 - 0.7e0, 2);
+    real_type t13  = X__[iX_vx];
+    real_type t17  = X__[iX_vy];
+    real_type t22  = 1.0 / ModelPars[iM_m];
+    real_type t23  = X__[iX_x];
+    real_type t24  = v(t23, t13, t17);
+    real_type t25  = 1.0 / t24;
+    real_type t28  = t3 * t3;
+    real_type t32  = Dfun(t23, t13, t17);
+    real_type t33  = t32 * (t28 * ModelPars[iM_c1] + ModelPars[iM_c0]);
+    real_type t35  = Lfun(t23, t13, t17);
+    real_type t36  = t35 * t3;
+    real_type t37  = w(t23, t17);
+    real_type result__ = t2 + t6 + t9 * ModelPars[iM_W] + t13 * t1 * L__[iL_lambda1__xo] + t17 * t1 * L__[iL_lambda2__xo] + (-t13 * t33 - t37 * t36) * t25 * t22 * t1 * L__[iL_lambda3__xo] + ((t13 * t36 - t37 * t33) * t25 * t22 * t1 - ModelPars[iM_g] * t1) * L__[iL_lambda4__xo];
     return result__;
   }
 #else
@@ -139,22 +139,22 @@ namespace HangGliderDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = Tbound(t1);
-    real_type t4   = U__[iU_cL];
-    real_type t6   = pow(t4 - 0.7e0, 2);
-    real_type t10  = X__[iX_vx];
-    real_type t14  = X__[iX_vy];
-    real_type t19  = 1.0 / ModelPars[iM_m];
-    real_type t20  = X__[iX_x];
-    real_type t21  = v(t20, t10, t14);
-    real_type t22  = 1.0 / t21;
-    real_type t25  = t4 * t4;
-    real_type t29  = Dfun(t20, t10, t14);
-    real_type t30  = t29 * (t25 * ModelPars[iM_c1] + ModelPars[iM_c0]);
-    real_type t32  = Lfun(t20, t10, t14);
-    real_type t33  = t32 * t4;
-    real_type t34  = w(t20, t14);
-    real_type t52  = cLControl(t4, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
-    real_type result__ = t2 + t6 * ModelPars[iM_W] + t10 * t1 * L__[iL_lambda1__xo] + t14 * t1 * L__[iL_lambda2__xo] + (-t10 * t30 - t34 * t33) * t22 * t19 * t1 * L__[iL_lambda3__xo] + ((t10 * t33 - t34 * t30) * t22 * t19 * t1 - ModelPars[iM_g] * t1) * L__[iL_lambda4__xo] + t52;
+    real_type t3   = U__[iU_cL];
+    real_type t6   = cLControl(t3, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
+    real_type t9   = pow(t3 - 0.7e0, 2);
+    real_type t13  = X__[iX_vx];
+    real_type t17  = X__[iX_vy];
+    real_type t22  = 1.0 / ModelPars[iM_m];
+    real_type t23  = X__[iX_x];
+    real_type t24  = v(t23, t13, t17);
+    real_type t25  = 1.0 / t24;
+    real_type t28  = t3 * t3;
+    real_type t32  = Dfun(t23, t13, t17);
+    real_type t33  = t32 * (t28 * ModelPars[iM_c1] + ModelPars[iM_c0]);
+    real_type t35  = Lfun(t23, t13, t17);
+    real_type t36  = t35 * t3;
+    real_type t37  = w(t23, t17);
+    real_type result__ = t2 + t6 + t9 * ModelPars[iM_W] + t13 * t1 * L__[iL_lambda1__xo] + t17 * t1 * L__[iL_lambda2__xo] + (-t13 * t33 - t37 * t36) * t25 * t22 * t1 * L__[iL_lambda3__xo] + ((t13 * t36 - t37 * t33) * t25 * t22 * t1 - ModelPars[iM_g] * t1) * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -517,19 +517,19 @@ namespace HangGliderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  HangGlider::DjumpDxlp_numRows() const
+  HangGlider::DjumpDxlxlp_numRows() const
   { return 8; }
 
   integer
-  HangGlider::DjumpDxlp_numCols() const
+  HangGlider::DjumpDxlxlp_numCols() const
   { return 17; }
 
   integer
-  HangGlider::DjumpDxlp_nnz() const
+  HangGlider::DjumpDxlxlp_nnz() const
   { return 16; }
 
   void
-  HangGlider::DjumpDxlp_pattern(
+  HangGlider::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -554,7 +554,7 @@ namespace HangGliderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  HangGlider::DjumpDxlp_sparse(
+  HangGlider::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -587,7 +587,7 @@ namespace HangGliderDefine {
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
   /*\

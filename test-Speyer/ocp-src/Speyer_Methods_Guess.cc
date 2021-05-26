@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Speyer_Methods_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -59,7 +59,7 @@ namespace SpeyerDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t3   = 2 * 0.3141592654e1 * Q__[iQ_zeta];
+    real_type t3   = 2 * 0.314159265358979323846264338328e1 * Q__[iQ_zeta];
     X__[ iX_x1 ] = sin(t3);
     X__[ iX_x2 ] = cos(t3);
 

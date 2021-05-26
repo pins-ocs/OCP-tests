@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,9 +77,9 @@ namespace SingularMarchalDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = X__[iX_x] * X__[iX_x];
     real_type t3   = t2 / 2;
-    real_type t8   = U__[iU_u];
-    real_type t12  = uControl(t8, -1, 1);
-    real_type result__ = t3 + L__[iL_lambda1__xo] * X__[iX_y] + t8 * L__[iL_lambda2__xo] + t12 * (t3 + ModelPars[iM_epsilon]);
+    real_type t6   = U__[iU_u];
+    real_type t7   = uControl(t6, -1, 1);
+    real_type result__ = t7 * (t3 + ModelPars[iM_epsilon]) + t3 + L__[iL_lambda1__xo] * X__[iX_y] + t6 * L__[iL_lambda2__xo];
     return result__;
   }
 #else
@@ -96,9 +96,9 @@ namespace SingularMarchalDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t2   = X__[iX_x] * X__[iX_x];
     real_type t3   = t2 / 2;
-    real_type t8   = U__[iU_u];
-    real_type t12  = uControl(t8, -1, 1);
-    real_type result__ = t3 + L__[iL_lambda1__xo] * X__[iX_y] + t8 * L__[iL_lambda2__xo] + t12 * (t3 + ModelPars[iM_epsilon]);
+    real_type t6   = U__[iU_u];
+    real_type t7   = uControl(t6, -1, 1);
+    real_type result__ = t7 * (t3 + ModelPars[iM_epsilon]) + t3 + L__[iL_lambda1__xo] * X__[iX_y] + t6 * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -440,19 +440,19 @@ namespace SingularMarchalDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularMarchal::DjumpDxlp_numRows() const
+  SingularMarchal::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  SingularMarchal::DjumpDxlp_numCols() const
+  SingularMarchal::DjumpDxlxlp_numCols() const
   { return 8; }
 
   integer
-  SingularMarchal::DjumpDxlp_nnz() const
+  SingularMarchal::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  SingularMarchal::DjumpDxlp_pattern(
+  SingularMarchal::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -469,7 +469,7 @@ namespace SingularMarchalDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularMarchal::DjumpDxlp_sparse(
+  SingularMarchal::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -494,7 +494,7 @@ namespace SingularMarchalDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

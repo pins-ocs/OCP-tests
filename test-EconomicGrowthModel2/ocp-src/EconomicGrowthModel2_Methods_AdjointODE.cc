@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_AdjointODE.cc                     |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -99,8 +99,9 @@ namespace EconomicGrowthModel2Define {
     real_type t19  = L__[iL_lambda3__xo];
     result__[ 3   ] = t7 * t19;
     real_type t20  = ALIAS_Tpositive_D(t7);
-    real_type t23  = Q(t4, t5);
-    result__[ 4   ] = t23 * t12 + X__[iX_y1] * t18 + X__[iX_y2] * t19 + t23 * t3 + t20;
+    real_type t21  = uControl(t2, 0, 1);
+    real_type t24  = Q(t4, t5);
+    result__[ 4   ] = t24 * t12 + X__[iX_y1] * t18 + X__[iX_y2] * t19 + t24 * t3 + t20 + t21;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }
@@ -242,9 +243,11 @@ namespace EconomicGrowthModel2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = Q(X__[iX_x1], X__[iX_x2]);
-    real_type t6   = X__[iX_T];
-    result__[ 0   ] = t6 * t4 * L__[iL_lambda2__xo] - t6 * t4 * L__[iL_lambda4__xo];
+    real_type t1   = X__[iX_T];
+    real_type t3   = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    real_type t8   = Q(X__[iX_x1], X__[iX_x2]);
+    real_type t6   = t8 * t1;
+    result__[ 0   ] = t3 * t1 + L__[iL_lambda2__xo] * t6 - L__[iL_lambda4__xo] * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -293,11 +296,14 @@ namespace EconomicGrowthModel2Define {
     real_type t4   = Q_D_1(t2, t3);
     real_type t6   = X__[iX_T];
     real_type t8   = L__[iL_lambda4__xo];
-    result__[ 0   ] = t6 * t4 * t1 - t6 * t4 * t8;
+    real_type t5   = t4 * t6;
+    result__[ 0   ] = t1 * t5 - t8 * t5;
     real_type t11  = Q_D_2(t2, t3);
-    result__[ 1   ] = t6 * t11 * t1 - t6 * t11 * t8;
-    real_type t16  = Q(t2, t3);
-    result__[ 2   ] = t16 * t1 - t16 * t8;
+    real_type t10  = t11 * t6;
+    result__[ 1   ] = t1 * t10 - t8 * t10;
+    real_type t17  = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    real_type t18  = Q(t2, t3);
+    result__[ 2   ] = t18 * t1 - t18 * t8 + t17;
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 3, i_segment );
   }

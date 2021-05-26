@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -173,7 +173,7 @@ namespace GoddardRocketDefine {
     result__[ 7   ] = result__[5];
     real_type t25  = ALIAS_massPositive_DD(t7);
     real_type t27  = DD(t4, t5);
-    result__[ 8   ] = t25 + 2 / t16 / t7 * (U__[iU_T] - t27) * t3;
+    result__[ 8   ] = t25 + 2 * (U__[iU_T] - t27) * t3 * t8 * t17;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
   }
@@ -259,8 +259,9 @@ namespace GoddardRocketDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_TimeSize];
-    result__[ 0   ] = 1.0 / X__[iX_m] * t2 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t2 * L__[iL_lambda3__xo];
+    real_type t3   = ALIAS_TControl_D_1(U__[iU_T], 0, ModelPars[iM_Tmax]);
+    real_type t5   = P__[iP_TimeSize];
+    result__[ 0   ] = t3 + 1.0 / X__[iX_m] * t5 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t5 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }

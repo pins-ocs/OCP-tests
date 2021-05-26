@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,26 +84,26 @@ namespace TwoStageCSTRDefine {
     real_type const * L__ = CELL__.lambdaM;
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[iX_x1];
-    real_type t2   = t1 * t1;
-    real_type t3   = X__[iX_x2];
-    real_type t4   = t3 * t3;
-    real_type t5   = X__[iX_x3];
+    real_type t1   = U__[iU_u1];
+    real_type t2   = u1Control(t1, -0.5e0, 0.5e0);
+    real_type t3   = U__[iU_u2];
+    real_type t4   = u2Control(t3, -0.5e0, 0.5e0);
+    real_type t5   = X__[iX_x1];
     real_type t6   = t5 * t5;
-    real_type t7   = X__[iX_x4];
+    real_type t7   = X__[iX_x2];
     real_type t8   = t7 * t7;
-    real_type t10  = U__[iU_u1];
-    real_type t11  = t10 * t10;
-    real_type t12  = U__[iU_u2];
-    real_type t13  = t12 * t12;
-    real_type t17  = R1(t1, t3);
-    real_type t18  = 0.5e0 - t1 - t17;
-    real_type t24  = t17 - (2 + t10) * (t3 + 0.25e0);
-    real_type t27  = ModelPars[iM_tau];
-    real_type t29  = R2(t5, t7);
-    real_type t39  = u1Control(t10, -0.5e0, 0.5e0);
-    real_type t40  = u2Control(t12, -0.5e0, 0.5e0);
-    real_type result__ = t2 + t4 + t6 + t8 + (t11 + t13) * ModelPars[iM_W] + t18 * L__[iL_lambda1__xo] + t24 * L__[iL_lambda2__xo] + (t1 - t5 - t18 * t27 - t29 + 0.25e0) * L__[iL_lambda3__xo] + (t3 - 2 * t7 - (t7 + 0.25e0) * t12 - t24 * t27 + t29 - 0.25e0) * L__[iL_lambda4__xo] + t39 + t40;
+    real_type t9   = X__[iX_x3];
+    real_type t10  = t9 * t9;
+    real_type t11  = X__[iX_x4];
+    real_type t12  = t11 * t11;
+    real_type t14  = t1 * t1;
+    real_type t15  = t3 * t3;
+    real_type t19  = R1(t5, t7);
+    real_type t20  = 0.5e0 - t5 - t19;
+    real_type t26  = t19 - (2 + t1) * (t7 + 0.25e0);
+    real_type t29  = ModelPars[iM_tau];
+    real_type t31  = R2(t9, t11);
+    real_type result__ = t2 + t4 + t6 + t8 + t10 + t12 + (t14 + t15) * ModelPars[iM_W] + t20 * L__[iL_lambda1__xo] + t26 * L__[iL_lambda2__xo] + (t5 - t9 - t20 * t29 - t31 + 0.25e0) * L__[iL_lambda3__xo] + (t7 - 2 * t11 - (t11 + 0.25e0) * t3 - t26 * t29 + t31 - 0.25e0) * L__[iL_lambda4__xo];
     return result__;
   }
 #else
@@ -118,26 +118,26 @@ namespace TwoStageCSTRDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[iX_x1];
-    real_type t2   = t1 * t1;
-    real_type t3   = X__[iX_x2];
-    real_type t4   = t3 * t3;
-    real_type t5   = X__[iX_x3];
+    real_type t1   = U__[iU_u1];
+    real_type t2   = u1Control(t1, -0.5e0, 0.5e0);
+    real_type t3   = U__[iU_u2];
+    real_type t4   = u2Control(t3, -0.5e0, 0.5e0);
+    real_type t5   = X__[iX_x1];
     real_type t6   = t5 * t5;
-    real_type t7   = X__[iX_x4];
+    real_type t7   = X__[iX_x2];
     real_type t8   = t7 * t7;
-    real_type t10  = U__[iU_u1];
-    real_type t11  = t10 * t10;
-    real_type t12  = U__[iU_u2];
-    real_type t13  = t12 * t12;
-    real_type t17  = R1(t1, t3);
-    real_type t18  = 0.5e0 - t1 - t17;
-    real_type t24  = t17 - (2 + t10) * (t3 + 0.25e0);
-    real_type t27  = ModelPars[iM_tau];
-    real_type t29  = R2(t5, t7);
-    real_type t39  = u1Control(t10, -0.5e0, 0.5e0);
-    real_type t40  = u2Control(t12, -0.5e0, 0.5e0);
-    real_type result__ = t2 + t4 + t6 + t8 + (t11 + t13) * ModelPars[iM_W] + t18 * L__[iL_lambda1__xo] + t24 * L__[iL_lambda2__xo] + (t1 - t5 - t18 * t27 - t29 + 0.25e0) * L__[iL_lambda3__xo] + (t3 - 2 * t7 - (t7 + 0.25e0) * t12 - t24 * t27 + t29 - 0.25e0) * L__[iL_lambda4__xo] + t39 + t40;
+    real_type t9   = X__[iX_x3];
+    real_type t10  = t9 * t9;
+    real_type t11  = X__[iX_x4];
+    real_type t12  = t11 * t11;
+    real_type t14  = t1 * t1;
+    real_type t15  = t3 * t3;
+    real_type t19  = R1(t5, t7);
+    real_type t20  = 0.5e0 - t5 - t19;
+    real_type t26  = t19 - (2 + t1) * (t7 + 0.25e0);
+    real_type t29  = ModelPars[iM_tau];
+    real_type t31  = R2(t9, t11);
+    real_type result__ = t2 + t4 + t6 + t8 + t10 + t12 + (t14 + t15) * ModelPars[iM_W] + t20 * L__[iL_lambda1__xo] + t26 * L__[iL_lambda2__xo] + (t5 - t9 - t20 * t29 - t31 + 0.25e0) * L__[iL_lambda3__xo] + (t7 - 2 * t11 - (t11 + 0.25e0) * t3 - t26 * t29 + t31 - 0.25e0) * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -492,19 +492,19 @@ namespace TwoStageCSTRDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoStageCSTR::DjumpDxlp_numRows() const
+  TwoStageCSTR::DjumpDxlxlp_numRows() const
   { return 8; }
 
   integer
-  TwoStageCSTR::DjumpDxlp_numCols() const
+  TwoStageCSTR::DjumpDxlxlp_numCols() const
   { return 16; }
 
   integer
-  TwoStageCSTR::DjumpDxlp_nnz() const
+  TwoStageCSTR::DjumpDxlxlp_nnz() const
   { return 16; }
 
   void
-  TwoStageCSTR::DjumpDxlp_pattern(
+  TwoStageCSTR::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -529,7 +529,7 @@ namespace TwoStageCSTRDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TwoStageCSTR::DjumpDxlp_sparse(
+  TwoStageCSTR::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -562,7 +562,7 @@ namespace TwoStageCSTRDefine {
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
   /*\

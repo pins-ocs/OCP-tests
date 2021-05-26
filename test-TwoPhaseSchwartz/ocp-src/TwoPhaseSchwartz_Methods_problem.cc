@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -107,15 +107,15 @@ namespace TwoPhaseSchwartzDefine {
     real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
     real_type t10  = bound1(-1 + 9 * t3 + t8);
     real_type t12  = bound2(0.8e0 + t5);
-    real_type t14  = U__[iU_u2];
-    real_type t15  = t14 * t14;
-    real_type t20  = U__[iU_u1];
-    real_type t21  = t1 * t1;
-    real_type t29  = ModelPars[iM_T2];
-    real_type t31  = X__[iX_x4];
-    real_type t36  = X__[iX_x3] * X__[iX_x3];
-    real_type t43  = u1Control(t20, -1, 1);
-    real_type result__ = t10 + t12 + t15 * ModelPars[iM_epsilon] + t5 * L__[iL_lambda1__xo] + (t20 - 0.1e0 * t5 * (2 * t21 + 1)) * L__[iL_lambda2__xo] + t31 * t29 * L__[iL_lambda3__xo] + (t14 - 0.1e0 * t31 * (2 * t36 + 1)) * t29 * L__[iL_lambda4__xo] + t43;
+    real_type t13  = U__[iU_u1];
+    real_type t14  = u1Control(t13, -1, 1);
+    real_type t16  = U__[iU_u2];
+    real_type t17  = t16 * t16;
+    real_type t22  = t1 * t1;
+    real_type t30  = ModelPars[iM_T2];
+    real_type t32  = X__[iX_x4];
+    real_type t37  = X__[iX_x3] * X__[iX_x3];
+    real_type result__ = t10 + t12 + t14 + t17 * ModelPars[iM_epsilon] + t5 * L__[iL_lambda1__xo] + (t13 - 0.1e0 * t5 * (2 * t22 + 1)) * L__[iL_lambda2__xo] + t32 * t30 * L__[iL_lambda3__xo] + (t16 - 0.1e0 * t32 * (2 * t37 + 1)) * t30 * L__[iL_lambda4__xo];
     return result__;
   }
 #else
@@ -136,15 +136,15 @@ namespace TwoPhaseSchwartzDefine {
     real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
     real_type t10  = bound1(-1 + 9 * t3 + t8);
     real_type t12  = bound2(0.8e0 + t5);
-    real_type t14  = U__[iU_u2];
-    real_type t15  = t14 * t14;
-    real_type t20  = U__[iU_u1];
-    real_type t21  = t1 * t1;
-    real_type t29  = ModelPars[iM_T2];
-    real_type t31  = X__[iX_x4];
-    real_type t36  = X__[iX_x3] * X__[iX_x3];
-    real_type t43  = u1Control(t20, -1, 1);
-    real_type result__ = t10 + t12 + t15 * ModelPars[iM_epsilon] + t5 * L__[iL_lambda1__xo] + (t20 - 0.1e0 * t5 * (2 * t21 + 1)) * L__[iL_lambda2__xo] + t31 * t29 * L__[iL_lambda3__xo] + (t14 - 0.1e0 * t31 * (2 * t36 + 1)) * t29 * L__[iL_lambda4__xo] + t43;
+    real_type t13  = U__[iU_u1];
+    real_type t14  = u1Control(t13, -1, 1);
+    real_type t16  = U__[iU_u2];
+    real_type t17  = t16 * t16;
+    real_type t22  = t1 * t1;
+    real_type t30  = ModelPars[iM_T2];
+    real_type t32  = X__[iX_x4];
+    real_type t37  = X__[iX_x3] * X__[iX_x3];
+    real_type result__ = t10 + t12 + t14 + t17 * ModelPars[iM_epsilon] + t5 * L__[iL_lambda1__xo] + (t13 - 0.1e0 * t5 * (2 * t22 + 1)) * L__[iL_lambda2__xo] + t32 * t30 * L__[iL_lambda3__xo] + (t16 - 0.1e0 * t32 * (2 * t37 + 1)) * t30 * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -505,19 +505,19 @@ namespace TwoPhaseSchwartzDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoPhaseSchwartz::DjumpDxlp_numRows() const
+  TwoPhaseSchwartz::DjumpDxlxlp_numRows() const
   { return 8; }
 
   integer
-  TwoPhaseSchwartz::DjumpDxlp_numCols() const
+  TwoPhaseSchwartz::DjumpDxlxlp_numCols() const
   { return 16; }
 
   integer
-  TwoPhaseSchwartz::DjumpDxlp_nnz() const
+  TwoPhaseSchwartz::DjumpDxlxlp_nnz() const
   { return 16; }
 
   void
-  TwoPhaseSchwartz::DjumpDxlp_pattern(
+  TwoPhaseSchwartz::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -542,7 +542,7 @@ namespace TwoPhaseSchwartzDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TwoPhaseSchwartz::DjumpDxlp_sparse(
+  TwoPhaseSchwartz::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -575,7 +575,7 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
   /*\

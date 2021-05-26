@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Methods_problem.cc                              |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -534,19 +534,19 @@ namespace MultipleDubinsDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MultipleDubins::DjumpDxlp_numRows() const
+  MultipleDubins::DjumpDxlxlp_numRows() const
   { return 18; }
 
   integer
-  MultipleDubins::DjumpDxlp_numCols() const
+  MultipleDubins::DjumpDxlxlp_numCols() const
   { return 42; }
 
   integer
-  MultipleDubins::DjumpDxlp_nnz() const
+  MultipleDubins::DjumpDxlxlp_nnz() const
   { return 36; }
 
   void
-  MultipleDubins::DjumpDxlp_pattern(
+  MultipleDubins::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -591,7 +591,7 @@ namespace MultipleDubinsDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  MultipleDubins::DjumpDxlp_sparse(
+  MultipleDubins::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -644,7 +644,7 @@ namespace MultipleDubinsDefine {
     result__[ 34  ] = -1;
     result__[ 35  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 36, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 36, i_segment_left, i_segment_right );
   }
 
   /*\

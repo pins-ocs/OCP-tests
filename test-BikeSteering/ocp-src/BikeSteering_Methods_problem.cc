@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,11 +79,11 @@ namespace BikeSteeringDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = X__[iX_TimeSize];
     real_type t2   = minimumTimeSize(t1);
-    real_type t11  = ModelPars[iM_h];
-    real_type t17  = U__[iU_Fy];
-    real_type t21  = ModelPars[iM_Fmax];
-    real_type t22  = FyControl(t17, -t21, t21);
-    real_type result__ = t2 + X__[iX_omega] * t1 * L__[iL_lambda1__xo] + (X__[iX_phi] * t11 * ModelPars[iM_g] * ModelPars[iM_m] * t1 - t17 * t11 * t1) * L__[iL_lambda2__xo] + t22 * t1;
+    real_type t3   = U__[iU_Fy];
+    real_type t4   = ModelPars[iM_Fmax];
+    real_type t5   = FyControl(t3, -t4, t4);
+    real_type t15  = ModelPars[iM_h];
+    real_type result__ = t2 + t5 * t1 + X__[iX_omega] * t1 * L__[iL_lambda1__xo] + (X__[iX_phi] * t15 * ModelPars[iM_g] * ModelPars[iM_m] * t1 - t3 * t15 * t1) * L__[iL_lambda2__xo];
     return result__;
   }
 #else
@@ -100,11 +100,11 @@ namespace BikeSteeringDefine {
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = X__[iX_TimeSize];
     real_type t2   = minimumTimeSize(t1);
-    real_type t11  = ModelPars[iM_h];
-    real_type t17  = U__[iU_Fy];
-    real_type t21  = ModelPars[iM_Fmax];
-    real_type t22  = FyControl(t17, -t21, t21);
-    real_type result__ = t2 + X__[iX_omega] * t1 * L__[iL_lambda1__xo] + (X__[iX_phi] * t11 * ModelPars[iM_g] * ModelPars[iM_m] * t1 - t17 * t11 * t1) * L__[iL_lambda2__xo] + t22 * t1;
+    real_type t3   = U__[iU_Fy];
+    real_type t4   = ModelPars[iM_Fmax];
+    real_type t5   = FyControl(t3, -t4, t4);
+    real_type t15  = ModelPars[iM_h];
+    real_type result__ = t2 + t5 * t1 + X__[iX_omega] * t1 * L__[iL_lambda1__xo] + (X__[iX_phi] * t15 * ModelPars[iM_g] * ModelPars[iM_m] * t1 - t3 * t15 * t1) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -453,19 +453,19 @@ namespace BikeSteeringDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BikeSteering::DjumpDxlp_numRows() const
+  BikeSteering::DjumpDxlxlp_numRows() const
   { return 6; }
 
   integer
-  BikeSteering::DjumpDxlp_numCols() const
+  BikeSteering::DjumpDxlxlp_numCols() const
   { return 12; }
 
   integer
-  BikeSteering::DjumpDxlp_nnz() const
+  BikeSteering::DjumpDxlxlp_nnz() const
   { return 12; }
 
   void
-  BikeSteering::DjumpDxlp_pattern(
+  BikeSteering::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -486,7 +486,7 @@ namespace BikeSteeringDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BikeSteering::DjumpDxlp_sparse(
+  BikeSteering::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -516,7 +516,7 @@ namespace BikeSteeringDefine {
     result__[ 10  ] = -1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   /*\

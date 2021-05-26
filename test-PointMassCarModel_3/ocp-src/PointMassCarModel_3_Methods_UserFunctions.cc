@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_UserFunctions.cc                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -305,7 +305,7 @@ namespace PointMassCarModel_3Define {
   PointMassCarModel_3::zeta__dot_D_3( real_type xo__V, real_type xo__alpha, real_type xo__n, real_type xo__Kappa ) const {
     real_type t1   = cos(xo__alpha);
     real_type t5   = pow(xo__n * xo__Kappa - 1, 2);
-    real_type result__ = xo__Kappa / t5 * t1 * xo__V;
+    real_type result__ = 1.0 / t5 * xo__Kappa * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

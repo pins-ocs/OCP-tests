@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_problem.cc                        |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -441,19 +441,19 @@ namespace MinimumEnergyProblemDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MinimumEnergyProblem::DjumpDxlp_numRows() const
+  MinimumEnergyProblem::DjumpDxlxlp_numRows() const
   { return 4; }
 
   integer
-  MinimumEnergyProblem::DjumpDxlp_numCols() const
+  MinimumEnergyProblem::DjumpDxlxlp_numCols() const
   { return 8; }
 
   integer
-  MinimumEnergyProblem::DjumpDxlp_nnz() const
+  MinimumEnergyProblem::DjumpDxlxlp_nnz() const
   { return 8; }
 
   void
-  MinimumEnergyProblem::DjumpDxlp_pattern(
+  MinimumEnergyProblem::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -470,7 +470,7 @@ namespace MinimumEnergyProblemDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  MinimumEnergyProblem::DjumpDxlp_sparse(
+  MinimumEnergyProblem::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -495,7 +495,7 @@ namespace MinimumEnergyProblemDefine {
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\

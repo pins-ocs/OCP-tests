@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Mex.cc                                     |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,6 +84,9 @@ static char const help_msg[] =
 
 #define CHECK_OUT(N) \
   MEX_ASSERT2( nlhs == N, CMD "Expected {} argument(s), nlhs = {}\n", N, nlhs )
+
+#define MEX_CHECK_DIMS(A,B,C,D) \
+  MEX_ASSERT( A == C && B == D, CMD "Argument dimensions must be the same\n" )
 
 #define GET_ARG_P(ARG)                                              \
   mwSize nP;                                                        \
@@ -343,8 +346,16 @@ public:
     GenericContainer & ptrs    = gc_data["Pointers"];
     Road2D * pRoad = ptrs("pRoad").get_pointer<Road2D*>();
 
-    gc_mesh.clear();
-    // sovrascrive guess nei dati del problema
+    // Erase old guess
+    gc_mesh.erase("initialize"); 
+    gc_mesh.erase("guess_type");
+    gc_mesh.erase("spline_set");
+    gc_mesh.erase("omega");
+    gc_mesh.erase("pars");
+    gc_mesh.erase("initialize_controls");
+    gc_mesh.erase("initialize_multipliers");
+    
+    // overwrite guess
     mxArray_to_GenericContainer( arg_in_2, gc_mesh );
 
     pRoad->setup( gc_mesh );
@@ -1085,7 +1096,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DacDxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U, DuDxlp ): "
+    "_Mex('DacDxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U, DuDxlxlp ): "
 
     CHECK_IN( 13 );
     CHECK_OUT( 2 );
@@ -1096,14 +1107,14 @@ public:
     GET_ARG_U( arg_in_11 );
 
     mwSize nXLP;
-    real_type const * DuDxlp_ptr = getMatrixPointer( arg_in_12, nU, nXLP,
-      fmt::format( "{} argument DuDxlp", CMD )
+    real_type const * DuDxlxlp_ptr = getMatrixPointer( arg_in_12, nU, nXLP,
+      fmt::format( "{} argument DuDxlxlp", CMD )
     );
     UTILS_ASSERT(
-      nU == this->dim_U() && nXLP == 2*this->dim_X()+this->dim_Pars(),
-      "{} size(DuDxlp) = {} x {} expected to be {} x {}\n",
+      nU == this->dim_U() && nXLP == 4*this->dim_X()+this->dim_Pars(),
+      "{} size(DuDxlxlp) = {} x {} expected to be {} x {}\n",
       CMD, nU, nXLP,
-      this->dim_U(), 2*this->dim_X()+this->dim_Pars()
+      this->dim_U(), 4*this->dim_X()+this->dim_Pars()
     );
 
     integer n_thread = 0;
@@ -1112,11 +1123,11 @@ public:
     real_type * a = createMatrixValue( arg_out_0, nR, nCOL );
     real_type * c = createMatrixValue( arg_out_1, this->dim_Pars(), nCOL );
 
-    MatrixWrapper<real_type> DuDxlp( const_cast<real_type*>(DuDxlp_ptr), nU, nXLP, nU );
-    MatrixWrapper<real_type> DaDxlp( a, nR, nCOL, nR );
-    MatrixWrapper<real_type> DcDxlp( c, this->dim_Pars(), nCOL, this->dim_Pars() );
+    MatrixWrapper<real_type> DuDxlxlp( const_cast<real_type*>(DuDxlxlp_ptr), nU, nXLP, nU );
+    MatrixWrapper<real_type> DaDxlxlp( a, nR, nCOL, nR );
+    MatrixWrapper<real_type> DcDxlxlp( c, this->dim_Pars(), nCOL, this->dim_Pars() );
 
-    this->DacDxlp_eval( n_thread, L, R, P, U, DuDxlp, DaDxlp, DcDxlp );
+    this->DacDxlp_eval( n_thread, L, R, P, U, DuDxlxlp, DaDxlxlp, DcDxlxlp );
 
     #undef CMD
   }
@@ -1240,19 +1251,20 @@ public:
     #undef CMD
   }
   /*\
-   |   ___       ___      _
-   |  |   \ _  _|   \__ _| |_ __
-   |  | |) | || | |) \ \ / | '_ \
-   |  |___/ \_,_|___//_\_\_| .__/
-   |                       |_|
+   |   ____        ____       _      _
+   |  |  _ \ _   _|  _ \__  _| |_  _| |_ __
+   |  | | | | | | | | | \ \/ / \ \/ / | '_ \
+   |  | |_| | |_| | |_| |>  <| |>  <| | |_) |
+   |  |____/ \__,_|____//_/\_\_/_/\_\_| .__/
+   |                                  |_|
   \*/
   void
-  do_DuDxlp(
+  do_DuDxlxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DuDxlp', obj, iseg_L, q_L, x_L, lambda_L[, iseg_R, q_R, x_R, lambda_R], pars, U ): "
+    "_Mex('DuDxlxlp', obj, iseg_L, q_L, x_L, lambda_L[, iseg_R, q_R, x_R, lambda_R], pars, U ): "
 
     //CHECK_IN( 12 );
     CHECK_OUT( 1 );
@@ -1267,31 +1279,32 @@ public:
       GET_ARG_U( arg_in_11 );
 
       nCOL = 4*this->dim_X() + this->dim_Pars();
-      real_type * DuDxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
+      real_type * DuDxlxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
 
-      MatrixWrapper<real_type> DuDxlp( DuDxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
+      MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
 
       if ( m_U_solve_iterative ) {
-        US.u_eval_DuDxlp( L, R, P, U, DuDxlp );
+        US.u_eval_DuDxlxlp( L, R, P, U, DuDxlxlp );
       } else {
-        this->DuDxlp_full_analytic( L, R, P, U, DuDxlp );
+        this->DuDxlxlp_full_analytic( L, R, P, U, DuDxlxlp );
       }
 
     } else if ( nrhs == 8 ) {
+
       NodeType2 N;
       get_N( CMD, nrhs, prhs, N );
       GET_ARG_P( arg_in_6 );
       GET_ARG_U( arg_in_7 );
 
-      nCOL = 2*this->dim_X() + this->dim_Pars();
-      real_type * DuDxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
+      nCOL = 4*this->dim_X() + this->dim_Pars();
+      real_type * DuDxlxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
 
-      MatrixWrapper<real_type> DuDxlp( DuDxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
+      MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
 
       if ( m_U_solve_iterative ) {
-        US.u_eval_DuDxlp( N, P, U, DuDxlp );
+        US.u_eval_DuDxlxlp( N, P, U, DuDxlxlp );
       } else {
-        this->DuDxlp_full_analytic( N, P, U, DuDxlp );
+        this->DuDxlxlp_full_analytic( N, P, U, DuDxlxlp );
       }
 
     } else {
@@ -2066,12 +2079,12 @@ public:
    |     |__/           |_|             |_|
   \*/
   void
-  do_DjumpDxlp(
+  do_DjumpDxlxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DjumpDxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
+    "_Mex('DjumpDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
 
     CHECK_IN( 11 );
     CHECK_OUT( 1 );
@@ -2080,7 +2093,7 @@ public:
     get_LR2( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_10 );
 
-    RETURN_SPARSE( DjumpDxlp, L, R, P );
+    RETURN_SPARSE( DjumpDxlxlp, L, R, P );
 
     #undef CMD
   }
@@ -2266,15 +2279,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2283,15 +2305,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_1(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_1(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2300,15 +2331,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_2', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_2', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_2(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_2(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2317,15 +2357,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_3', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_3', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_3(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_3(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2334,15 +2383,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_4', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_4', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_4(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_4(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2351,15 +2409,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1_1', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1_1', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_1_1(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_1_1(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2368,15 +2435,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1_2', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1_2', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_1_2(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_1_2(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2385,15 +2461,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1_3', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1_3', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_1_3(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_1_3(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2402,15 +2487,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1_4', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_1_4', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_1_4(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_1_4(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2419,15 +2513,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_2_2', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_2_2', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_2_2(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_2_2(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2436,15 +2539,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_2_3', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_2_3', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_2_3(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_2_3(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2453,15 +2565,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_2_4', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_2_4', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_2_4(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_2_4(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2470,15 +2591,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_3_3', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_3_3', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_3_3(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_3_3(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2487,15 +2617,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_3_4', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_3_4', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_3_4(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_3_4(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2504,15 +2643,24 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_4_4', obj, ... args ... ): "
+    #define CMD MODEL_NAME "_Mex('inv_zeta__dot_D_4_4', obj, xo__V, xo__alpha, xo__n, xo__Kappa ): "
     CHECK_IN( 6 );
     CHECK_OUT( 1 );
-    real_type arg0 = getScalarValue( arg_in_0, CMD " arg0" );
-    real_type arg1 = getScalarValue( arg_in_1, CMD " arg1" );
-    real_type arg2 = getScalarValue( arg_in_2, CMD " arg2" );
-    real_type arg3 = getScalarValue( arg_in_3, CMD " arg3" );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__V" );
+    mwSize N1, M1;
+    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__alpha" );
+    MEX_CHECK_DIMS(N1,M1,N0,M0);
+    mwSize N2, M2;
+    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__n" );
+    MEX_CHECK_DIMS(N2,M2,N0,M0);
+    mwSize N3, M3;
+    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__Kappa" );
+    MEX_CHECK_DIMS(N3,M3,N0,M0);
 
-    setScalarValue( arg_out_0, this->inv_zeta__dot_D_4_4(arg0,arg1,arg2,arg3) );
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->inv_zeta__dot_D_4_4(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -3042,15 +3190,15 @@ do_u(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DuDxlp(
+do_DuDxlxlp(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DuDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DuDxlxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DuDxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DuDxlxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3420,15 +3568,15 @@ do_jump(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DjumpDxlp(
+do_DjumpDxlxlp(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DjumpDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DjumpDxlxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DjumpDxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DjumpDxlxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3769,7 +3917,7 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"hc",do_hc},
   {"DhcDxlop",do_DhcDxlop},
   {"u",do_u},
-  {"DuDxlp",do_DuDxlp},
+  {"DuDxlxlp",do_DuDxlxlp},
   {"rhs_ode",do_rhs_ode},
   {"Drhs_odeDx",do_Drhs_odeDx},
   {"Drhs_odeDu",do_Drhs_odeDu},
@@ -3796,7 +3944,7 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"DadjointBCDx",do_DadjointBCDx},
   {"DadjointBCDp",do_DadjointBCDp},
   {"jump",do_jump},
-  {"DjumpDxlp",do_DjumpDxlp},
+  {"DjumpDxlxlp",do_DjumpDxlxlp},
   {"penalties",do_penalties},
   {"control_penalties",do_control_penalties},
   {"lagrange_target",do_lagrange_target},

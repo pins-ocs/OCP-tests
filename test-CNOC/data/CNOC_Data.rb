@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 9/3/2021                                         #
+#  version: 1.0   date 3/6/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,14 +20,14 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+path_following_tolerance = 1.0e-05
+pf_error                 = path_following_tolerance
 jn_max                   = 65
+v_nom                    = 0.173
+js_min                   = -50
 mesh_segments            = 100
 js_max                   = 30
-path_following_tolerance = 1.0e-05
-js_min                   = -50
-v_nom                    = 0.173
 deltaFeed                = v_nom
-pf_error                 = path_following_tolerance
 
 mechatronix do |data|
 
@@ -191,8 +191,8 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # Controls
-  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-  # Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:jsControl] = {
     :type      => 'LOGARITHMIC',
@@ -210,7 +210,7 @@ mechatronix do |data|
   data.Constraints = {}
   # Constraint1D
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  # Barrier subtype: BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:timePositive] = {
     :subType   => "BARRIER_LOG",

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_AdjointODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -280,10 +280,18 @@ namespace FarmerDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 2 * ModelPars[iM_wJ1] * (-X__[iX_x1] + U__[iU_x1__o]) + L__[iL_lambda1__xo] / ModelPars[iM_tau__1];
-    result__[ 1   ] = 2 * ModelPars[iM_wJ2] * (-X__[iX_x2] + U__[iU_x2__o]) + L__[iL_lambda2__xo] / ModelPars[iM_tau__2];
-    result__[ 2   ] = 2 * ModelPars[iM_wJ3] * (-X__[iX_x3] + U__[iU_x3__o]) + L__[iL_lambda3__xo] / ModelPars[iM_tau__3];
-    result__[ 3   ] = 2 * ModelPars[iM_wJ4] * (-X__[iX_x4] + U__[iU_x4__o]) + L__[iL_lambda5__xo] / ModelPars[iM_tau__5];
+    real_type t1   = U__[iU_x1__o];
+    real_type t2   = ALIAS_x1__oControl_D_1(t1, -0.1e-2, 100);
+    result__[ 0   ] = t2 + 2 * (-X__[iX_x1] + t1) * ModelPars[iM_wJ1] + L__[iL_lambda1__xo] / ModelPars[iM_tau__1];
+    real_type t12  = U__[iU_x2__o];
+    real_type t13  = ALIAS_x2__oControl_D_1(t12, -0.1e-2, 100);
+    result__[ 1   ] = t13 + 2 * (-X__[iX_x2] + t12) * ModelPars[iM_wJ2] + L__[iL_lambda2__xo] / ModelPars[iM_tau__2];
+    real_type t23  = U__[iU_x3__o];
+    real_type t24  = ALIAS_x3__oControl_D_1(t23, -0.1e-2, 100);
+    result__[ 2   ] = t24 + 2 * (-X__[iX_x3] + t23) * ModelPars[iM_wJ3] + L__[iL_lambda3__xo] / ModelPars[iM_tau__3];
+    real_type t34  = U__[iU_x4__o];
+    real_type t35  = ALIAS_x4__oControl_D_1(t34, -0.1e-2, 100);
+    result__[ 3   ] = t35 + 2 * (-X__[iX_x4] + t34) * ModelPars[iM_wJ4] + L__[iL_lambda5__xo] / ModelPars[iM_tau__5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 4, i_segment );
   }

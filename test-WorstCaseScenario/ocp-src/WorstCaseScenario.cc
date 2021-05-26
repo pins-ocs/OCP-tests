@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario.cc                                           |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -116,8 +116,8 @@ namespace WorstCaseScenarioDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   WorstCaseScenario::WorstCaseScenario(
-    string  const & name,
-    ThreadPool    * TP,
+    string const &  name,
+    ThreadPool *    TP,
     Console const * console
   )
   : Discretized_Indirect_OCP( name, TP, console )
@@ -172,7 +172,7 @@ namespace WorstCaseScenarioDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        "\nContinuation step N.{} s={:.4}, ds={:.4}\n",
         phase+1, s, s-old_s
       ),
       msg_level

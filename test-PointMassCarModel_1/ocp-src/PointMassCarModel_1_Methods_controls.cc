@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -159,7 +159,7 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::g_eval(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -169,11 +169,11 @@ namespace PointMassCarModel_1Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t8   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
-    real_type t11  = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
-    result__[ 0   ] = t8 * ModelPars[iM_v__fx__max] * L__[iL_lambda5__xo] + t11 * t8;
-    real_type t18  = ALIAS_v__OmegaControl_D_1(U__[iU_v__Omega], -1, 1);
-    result__[ 1   ] = t8 * ModelPars[iM_v__Omega__max] * L__[iL_lambda4__xo] + t18 * t8;
+    real_type t5   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
+    real_type t7   = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
+    result__[ 0   ] = t5 * ModelPars[iM_v__fx__max] * L__[iL_lambda5__xo] + t7 * t5;
+    real_type t14  = ALIAS_v__OmegaControl_D_1(U__[iU_v__Omega], -1, 1);
+    result__[ 1   ] = t5 * ModelPars[iM_v__Omega__max] * L__[iL_lambda4__xo] + t14 * t5;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -211,7 +211,7 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::DgDxlp_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -221,28 +221,28 @@ namespace PointMassCarModel_1Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t2   = ModelPars[iM_v__fx__max];
-    real_type t3   = t2 * L__[iL_lambda5__xo];
-    real_type t4   = X__[iX_V];
-    real_type t5   = X__[iX_alpha];
-    real_type t6   = X__[iX_n];
-    real_type t7   = Q__[iQ_Kappa];
-    real_type t8   = inv_zeta__dot_D_3(t4, t5, t6, t7);
-    real_type t11  = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
-    result__[ 0   ] = t11 * t8 + t8 * t3;
-    real_type t13  = inv_zeta__dot_D_2(t4, t5, t6, t7);
-    result__[ 1   ] = t11 * t13 + t13 * t3;
-    real_type t16  = inv_zeta__dot_D_1(t4, t5, t6, t7);
-    result__[ 2   ] = t11 * t16 + t16 * t3;
-    real_type t19  = inv_zeta__dot(t4, t5, t6, t7);
-    result__[ 3   ] = t19 * t2;
-    real_type t21  = ModelPars[iM_v__Omega__max];
-    real_type t22  = t21 * L__[iL_lambda4__xo];
-    real_type t25  = ALIAS_v__OmegaControl_D_1(U__[iU_v__Omega], -1, 1);
-    result__[ 4   ] = t8 * t22 + t25 * t8;
-    result__[ 5   ] = t13 * t22 + t25 * t13;
-    result__[ 6   ] = t16 * t22 + t25 * t16;
-    result__[ 7   ] = t19 * t21;
+    real_type t1   = X__[iX_V];
+    real_type t2   = X__[iX_alpha];
+    real_type t3   = X__[iX_n];
+    real_type t4   = Q__[iQ_Kappa];
+    real_type t5   = inv_zeta__dot_D_3(t1, t2, t3, t4);
+    real_type t7   = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
+    real_type t10  = ModelPars[iM_v__fx__max];
+    real_type t11  = t10 * L__[iL_lambda5__xo];
+    result__[ 0   ] = t5 * t11 + t7 * t5;
+    real_type t13  = inv_zeta__dot_D_2(t1, t2, t3, t4);
+    result__[ 1   ] = t13 * t11 + t7 * t13;
+    real_type t16  = inv_zeta__dot_D_1(t1, t2, t3, t4);
+    result__[ 2   ] = t16 * t11 + t7 * t16;
+    real_type t19  = inv_zeta__dot(t1, t2, t3, t4);
+    result__[ 3   ] = t19 * t10;
+    real_type t21  = ALIAS_v__OmegaControl_D_1(U__[iU_v__Omega], -1, 1);
+    real_type t24  = ModelPars[iM_v__Omega__max];
+    real_type t25  = t24 * L__[iL_lambda4__xo];
+    result__[ 4   ] = t21 * t5 + t5 * t25;
+    result__[ 5   ] = t21 * t13 + t13 * t25;
+    result__[ 6   ] = t21 * t16 + t16 * t25;
+    result__[ 7   ] = t19 * t24;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 8, i_segment );
   }
@@ -274,7 +274,7 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::DgDu_sparse(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -308,156 +308,197 @@ namespace PointMassCarModel_1Define {
    |  \_,_|_\___|\_/\__,_|_|
    |     |___|
   \*/
-  integer
-  PointMassCarModel_1::u_numEqns() const
-  { return 2; }
 
   void
   PointMassCarModel_1::u_eval_analytic(
-    NodeType2 const    & NODE__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[11];
+    real_type XM__[5];
+    real_type LM__[5];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    QM__[1] = (QL__[1]+QR__[1])/2;
+    QM__[2] = (QL__[2]+QR__[2])/2;
+    QM__[3] = (QL__[3]+QR__[3])/2;
+    QM__[4] = (QL__[4]+QR__[4])/2;
+    QM__[5] = (QL__[5]+QR__[5])/2;
+    QM__[6] = (QL__[6]+QR__[6])/2;
+    QM__[7] = (QL__[7]+QR__[7])/2;
+    QM__[8] = (QL__[8]+QR__[8])/2;
+    QM__[9] = (QL__[9]+QR__[9])/2;
+    QM__[10] = (QL__[10]+QR__[10])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    integer i_segment = LEFT__.i_segment;
     Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    U__[ iU_v__fx    ] = v__fxControl.solve(-L__[iL_lambda5__xo] * ModelPars[iM_v__fx__max], -1, 1);
-    U__[ iU_v__Omega ] = v__OmegaControl.solve(-L__[iL_lambda4__xo] * ModelPars[iM_v__Omega__max], -1, 1);
+    U__[ iU_v__fx    ] = v__fxControl.solve(-LM__[4] * ModelPars[iM_v__fx__max], -1, 1);
+    U__[ iU_v__Omega ] = v__OmegaControl.solve(-LM__[3] * ModelPars[iM_v__Omega__max], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  PointMassCarModel_1::u_eval_analytic(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
-  ) const {
-    NodeType2 NODE__;
-    real_type Q__[11];
-    real_type X__[5];
-    real_type L__[5];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    Q__[1] = (LEFT__.q[1]+RIGHT__.q[1])/2;
-    Q__[2] = (LEFT__.q[2]+RIGHT__.q[2])/2;
-    Q__[3] = (LEFT__.q[3]+RIGHT__.q[3])/2;
-    Q__[4] = (LEFT__.q[4]+RIGHT__.q[4])/2;
-    Q__[5] = (LEFT__.q[5]+RIGHT__.q[5])/2;
-    Q__[6] = (LEFT__.q[6]+RIGHT__.q[6])/2;
-    Q__[7] = (LEFT__.q[7]+RIGHT__.q[7])/2;
-    Q__[8] = (LEFT__.q[8]+RIGHT__.q[8])/2;
-    Q__[9] = (LEFT__.q[9]+RIGHT__.q[9])/2;
-    Q__[10] = (LEFT__.q[10]+RIGHT__.q[10])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    this->u_eval_analytic( NODE__, P__, U__ );
-  }
-
   /*\
-   |   ___       ___      _                       _      _   _
-   |  |   \ _  _|   \__ _| |_ __   __ _ _ _  __ _| |_  _| |_(_)__
-   |  | |) | || | |) \ \ / | '_ \ / _` | ' \/ _` | | || |  _| / _|
-   |  |___/ \_,_|___//_\_\_| .__/ \__,_|_||_\__,_|_|\_, |\__|_\__|
-   |                       |_|                      |__/
+   |  ____        ____       _      _                           _       _   _
+   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
+   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
+   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
+   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
+   |                                 |_|                          |___/
   \*/
-  void
-  PointMassCarModel_1::DuDxlp_full_analytic(
-    NodeType2 const          & NODE__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
-  ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    DuDxlp(0, 0) = 0;
-    DuDxlp(1, 0) = 0;
-    DuDxlp(0, 1) = 0;
-    DuDxlp(1, 1) = 0;
-    DuDxlp(0, 2) = 0;
-    DuDxlp(1, 2) = 0;
-    DuDxlp(0, 3) = 0;
-    DuDxlp(1, 3) = 0;
-    DuDxlp(0, 4) = 0;
-    DuDxlp(1, 4) = 0;
-    DuDxlp(0, 5) = 0;
-    DuDxlp(1, 5) = 0;
-    DuDxlp(0, 6) = 0;
-    DuDxlp(1, 6) = 0;
-    DuDxlp(0, 7) = 0;
-    DuDxlp(1, 7) = 0;
-    DuDxlp(0, 8) = 0;
-    DuDxlp(1, 8) = -v__OmegaControl.solve_rhs(-L__[iL_lambda4__xo] * ModelPars[iM_v__Omega__max], -1, 1) * ModelPars[iM_v__Omega__max];
-    DuDxlp(0, 9) = -v__fxControl.solve_rhs(-L__[iL_lambda5__xo] * ModelPars[iM_v__fx__max], -1, 1) * ModelPars[iM_v__fx__max];
-    DuDxlp(1, 9) = 0;
-    if ( m_debug )
-      Mechatronix::check( DuDxlp.data(), "DuDxlp_full_analytic", 2 );
-  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PointMassCarModel_1::DuDxlp_full_analytic(
-    NodeType2 const          & LEFT__,
-    NodeType2 const          & RIGHT__,
+  PointMassCarModel_1::DuDxlxlp_full_analytic(
+    NodeType2 const &          LEFT__,
+    NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
     U_const_pointer_type       U__,
-    MatrixWrapper<real_type> & DuDxlp
+    MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[11];
-    real_type X__[5];
-    real_type L__[5];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[11];
+    real_type XM__[5];
+    real_type LM__[5];
     // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    Q__[1] = (LEFT__.q[1]+RIGHT__.q[1])/2;
-    Q__[2] = (LEFT__.q[2]+RIGHT__.q[2])/2;
-    Q__[3] = (LEFT__.q[3]+RIGHT__.q[3])/2;
-    Q__[4] = (LEFT__.q[4]+RIGHT__.q[4])/2;
-    Q__[5] = (LEFT__.q[5]+RIGHT__.q[5])/2;
-    Q__[6] = (LEFT__.q[6]+RIGHT__.q[6])/2;
-    Q__[7] = (LEFT__.q[7]+RIGHT__.q[7])/2;
-    Q__[8] = (LEFT__.q[8]+RIGHT__.q[8])/2;
-    Q__[9] = (LEFT__.q[9]+RIGHT__.q[9])/2;
-    Q__[10] = (LEFT__.q[10]+RIGHT__.q[10])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    QM__[1] = (QL__[1]+QR__[1])/2;
+    QM__[2] = (QL__[2]+QR__[2])/2;
+    QM__[3] = (QL__[3]+QR__[3])/2;
+    QM__[4] = (QL__[4]+QR__[4])/2;
+    QM__[5] = (QL__[5]+QR__[5])/2;
+    QM__[6] = (QL__[6]+QR__[6])/2;
+    QM__[7] = (QL__[7]+QR__[7])/2;
+    QM__[8] = (QL__[8]+QR__[8])/2;
+    QM__[9] = (QL__[9]+QR__[9])/2;
+    QM__[10] = (QL__[10]+QR__[10])/2;
     // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
     // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    this->DuDxlp_full_analytic( NODE__, P__, U__, DuDxlp );
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    integer i_segment = LEFT__.i_segment;
+    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    real_type tmp_0_0 = 0.0e0;
+    real_type tmp_1_0 = 0.0e0;
+    real_type tmp_0_1 = 0.0e0;
+    real_type tmp_1_1 = 0.0e0;
+    real_type tmp_0_2 = 0.0e0;
+    real_type tmp_1_2 = 0.0e0;
+    real_type tmp_0_3 = 0.0e0;
+    real_type tmp_1_3 = 0.0e0;
+    real_type tmp_0_4 = 0.0e0;
+    real_type tmp_1_4 = 0.0e0;
+    real_type tmp_0_5 = 0.0e0;
+    real_type tmp_1_5 = 0.0e0;
+    real_type tmp_0_6 = 0.0e0;
+    real_type tmp_1_6 = 0.0e0;
+    real_type tmp_0_7 = 0.0e0;
+    real_type tmp_1_7 = 0.0e0;
+    real_type tmp_0_8 = 0.0e0;
+    real_type t2   = ModelPars[iM_v__Omega__max];
+    real_type t4   = v__OmegaControl.solve_rhs(-t2 * LM__[3], -1, 1);
+    real_type tmp_1_8 = -0.5e0 * t2 * t4;
+    real_type t8   = ModelPars[iM_v__fx__max];
+    real_type t10  = v__fxControl.solve_rhs(-t8 * LM__[4], -1, 1);
+    real_type tmp_0_9 = -0.5e0 * t8 * t10;
+    real_type tmp_1_9 = 0.0e0;
+    real_type tmp_0_10 = 0.0e0;
+    real_type tmp_1_10 = 0.0e0;
+    real_type tmp_0_11 = 0.0e0;
+    real_type tmp_1_11 = 0.0e0;
+    real_type tmp_0_12 = 0.0e0;
+    real_type tmp_1_12 = 0.0e0;
+    real_type tmp_0_13 = 0.0e0;
+    real_type tmp_1_13 = 0.0e0;
+    real_type tmp_0_14 = 0.0e0;
+    real_type tmp_1_14 = 0.0e0;
+    real_type tmp_0_15 = 0.0e0;
+    real_type tmp_1_15 = 0.0e0;
+    real_type tmp_0_16 = 0.0e0;
+    real_type tmp_1_16 = 0.0e0;
+    real_type tmp_0_17 = 0.0e0;
+    real_type tmp_1_17 = 0.0e0;
+    real_type tmp_0_18 = 0.0e0;
+    real_type tmp_1_18 = tmp_1_8;
+    real_type tmp_0_19 = tmp_0_9;
+    real_type tmp_1_19 = 0.0e0;
+    DuDxlxlp(0, 0) = tmp_0_0;
+    DuDxlxlp(1, 0) = tmp_1_0;
+    DuDxlxlp(0, 1) = tmp_0_1;
+    DuDxlxlp(1, 1) = tmp_1_1;
+    DuDxlxlp(0, 2) = tmp_0_2;
+    DuDxlxlp(1, 2) = tmp_1_2;
+    DuDxlxlp(0, 3) = tmp_0_3;
+    DuDxlxlp(1, 3) = tmp_1_3;
+    DuDxlxlp(0, 4) = tmp_0_4;
+    DuDxlxlp(1, 4) = tmp_1_4;
+    DuDxlxlp(0, 5) = tmp_0_5;
+    DuDxlxlp(1, 5) = tmp_1_5;
+    DuDxlxlp(0, 6) = tmp_0_6;
+    DuDxlxlp(1, 6) = tmp_1_6;
+    DuDxlxlp(0, 7) = tmp_0_7;
+    DuDxlxlp(1, 7) = tmp_1_7;
+    DuDxlxlp(0, 8) = tmp_0_8;
+    DuDxlxlp(1, 8) = tmp_1_8;
+    DuDxlxlp(0, 9) = tmp_0_9;
+    DuDxlxlp(1, 9) = tmp_1_9;
+    DuDxlxlp(0, 10) = tmp_0_10;
+    DuDxlxlp(1, 10) = tmp_1_10;
+    DuDxlxlp(0, 11) = tmp_0_11;
+    DuDxlxlp(1, 11) = tmp_1_11;
+    DuDxlxlp(0, 12) = tmp_0_12;
+    DuDxlxlp(1, 12) = tmp_1_12;
+    DuDxlxlp(0, 13) = tmp_0_13;
+    DuDxlxlp(1, 13) = tmp_1_13;
+    DuDxlxlp(0, 14) = tmp_0_14;
+    DuDxlxlp(1, 14) = tmp_1_14;
+    DuDxlxlp(0, 15) = tmp_0_15;
+    DuDxlxlp(1, 15) = tmp_1_15;
+    DuDxlxlp(0, 16) = tmp_0_16;
+    DuDxlxlp(1, 16) = tmp_1_16;
+    DuDxlxlp(0, 17) = tmp_0_17;
+    DuDxlxlp(1, 17) = tmp_1_17;
+    DuDxlxlp(0, 18) = tmp_0_18;
+    DuDxlxlp(1, 18) = tmp_1_18;
+    DuDxlxlp(0, 19) = tmp_0_19;
+    DuDxlxlp(1, 19) = tmp_1_19;
+    if ( m_debug )
+      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 40 );
   }
 
   /*\
@@ -469,7 +510,7 @@ namespace PointMassCarModel_1Define {
 
   real_type
   PointMassCarModel_1::m_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -504,7 +545,7 @@ namespace PointMassCarModel_1Define {
     real_type t54  = sin(t2);
     real_type t58  = pow(-t5 * t54 * t1 + V__[0], 2);
     real_type t62  = pow(-t5 * t16 + t4 + V__[1], 2);
-    real_type t69  = pow(V__[2] - (-t18 * ModelPars[iM_kD] + t6) * t5, 2);
+    real_type t69  = pow(V__[2] + (t18 * ModelPars[iM_kD] - t6) * t5, 2);
     real_type t75  = pow(-t5 * ModelPars[iM_v__Omega__max] * t50 + V__[3], 2);
     real_type t81  = pow(-t5 * ModelPars[iM_v__fx__max] * t47 + V__[4], 2);
     real_type result__ = t26 * t5 + t30 * t5 + t34 * t5 + t43 * t5 + t45 * t5 + t48 * t5 + t51 * t5 + t58 + t62 + t69 + t75 + t81;
@@ -522,7 +563,7 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::DmDu_eval(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -536,11 +577,13 @@ namespace PointMassCarModel_1Define {
     real_type t6   = U__[iU_v__fx];
     real_type t7   = ALIAS_v__fxControl_D_1(t6, -1, 1);
     real_type t10  = ModelPars[iM_v__fx__max];
-    result__[ 0   ] = t7 * t5 - 2 * t5 * t10 * (-t5 * t10 * t6 + V__[4]);
+    real_type t9   = t10 * t5;
+    result__[ 0   ] = t7 * t5 - 2 * (-t6 * t9 + V__[4]) * t9;
     real_type t17  = U__[iU_v__Omega];
     real_type t18  = ALIAS_v__OmegaControl_D_1(t17, -1, 1);
     real_type t21  = ModelPars[iM_v__Omega__max];
-    result__[ 1   ] = t18 * t5 - 2 * t5 * t21 * (-t5 * t21 * t17 + V__[3]);
+    real_type t19  = t21 * t5;
+    result__[ 1   ] = t18 * t5 - 2 * (-t17 * t19 + V__[3]) * t19;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
   }
@@ -572,7 +615,7 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::DmDuu_sparse(
-    NodeType const     & NODE__,
+    NodeType const &     NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

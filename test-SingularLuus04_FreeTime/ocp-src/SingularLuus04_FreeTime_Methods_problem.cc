@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_problem.cc                     |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -89,10 +89,10 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = X__[iX_T];
-    real_type t3   = X__[iX_x] * X__[iX_x];
-    real_type t18  = U__[iU_u];
-    real_type t20  = uControl(t18, -1, 1);
-    real_type result__ = (ModelPars[iM_theta] * t1 + t3) * t1 + X__[iX_y] * t1 * L__[iL_lambda1__xo] + X__[iX_z] * t1 * L__[iL_lambda2__xo] + t18 * t1 * L__[iL_lambda3__xo] + t20 * t1;
+    real_type t2   = U__[iU_u];
+    real_type t3   = uControl(t2, -1, 1);
+    real_type t6   = X__[iX_x] * X__[iX_x];
+    real_type result__ = t3 * t1 + (ModelPars[iM_theta] * t1 + t6) * t1 + X__[iX_y] * t1 * L__[iL_lambda1__xo] + X__[iX_z] * t1 * L__[iL_lambda2__xo] + t2 * t1 * L__[iL_lambda3__xo];
     return result__;
   }
 #else
@@ -108,10 +108,10 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
     real_type t1   = X__[iX_T];
-    real_type t3   = X__[iX_x] * X__[iX_x];
-    real_type t18  = U__[iU_u];
-    real_type t20  = uControl(t18, -1, 1);
-    real_type result__ = (ModelPars[iM_theta] * t1 + t3) * t1 + X__[iX_y] * t1 * L__[iL_lambda1__xo] + X__[iX_z] * t1 * L__[iL_lambda2__xo] + t18 * t1 * L__[iL_lambda3__xo] + t20 * t1;
+    real_type t2   = U__[iU_u];
+    real_type t3   = uControl(t2, -1, 1);
+    real_type t6   = X__[iX_x] * X__[iX_x];
+    real_type result__ = t3 * t1 + (ModelPars[iM_theta] * t1 + t6) * t1 + X__[iX_y] * t1 * L__[iL_lambda1__xo] + X__[iX_z] * t1 * L__[iL_lambda2__xo] + t2 * t1 * L__[iL_lambda3__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -461,19 +461,19 @@ namespace SingularLuus04_FreeTimeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularLuus04_FreeTime::DjumpDxlp_numRows() const
+  SingularLuus04_FreeTime::DjumpDxlxlp_numRows() const
   { return 8; }
 
   integer
-  SingularLuus04_FreeTime::DjumpDxlp_numCols() const
+  SingularLuus04_FreeTime::DjumpDxlxlp_numCols() const
   { return 16; }
 
   integer
-  SingularLuus04_FreeTime::DjumpDxlp_nnz() const
+  SingularLuus04_FreeTime::DjumpDxlxlp_nnz() const
   { return 16; }
 
   void
-  SingularLuus04_FreeTime::DjumpDxlp_pattern(
+  SingularLuus04_FreeTime::DjumpDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -498,7 +498,7 @@ namespace SingularLuus04_FreeTimeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularLuus04_FreeTime::DjumpDxlp_sparse(
+  SingularLuus04_FreeTime::DjumpDxlxlp_sparse(
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
@@ -531,7 +531,7 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 14  ] = -1;
     result__[ 15  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlp_sparse", 16, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 16, i_segment_left, i_segment_right );
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_ODE.cc                                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -250,44 +250,50 @@ namespace CNOCDefine {
     real_type t9   = t8 * t1;
     real_type t10  = X__[iX_coV];
     real_type t12  = ALIAS_kappa_D(t3);
-    result__[ 0   ] = t12 * t2 * t10 * t9;
+    real_type t11  = t12 * t2;
+    result__[ 0   ] = t10 * t9 * t11;
     result__[ 1   ] = t4 * t10 * t9;
     real_type t15  = 1.0 / t6;
     result__[ 2   ] = t10 * t15;
     result__[ 3   ] = t15 * t1;
     result__[ 4   ] = t10;
     result__[ 5   ] = X__[iX_vn];
-    real_type t16  = result__[5] * t1;
+    real_type t18  = result__[5];
+    real_type t16  = t1 * t18;
     real_type t17  = t15 * t12;
-    real_type t21  = t12 * t2 * t8;
-    result__[ 6   ] = -result__[4] * (-t21 * t4 * t16 - t17 * t16);
+    real_type t21  = t8 * t11;
+    real_type t19  = t4 * t21;
+    result__[ 6   ] = -(-t17 * t16 - t16 * t19) * t10;
     real_type t25  = t4 * t4;
-    real_type t27  = result__[4] * t8 * t25;
+    real_type t26  = t8 * t10;
+    real_type t27  = t25 * t26;
     result__[ 7   ] = t27 * t16;
-    result__[ 8   ] = result__[2] * t4 * result__[5];
-    result__[ 9   ] = result__[2] * t4 * t1;
-    result__[ 10  ] = result__[4];
+    real_type t29  = t4 * result__[2];
+    result__[ 8   ] = t18 * t29;
+    result__[ 9   ] = t1 * t29;
+    result__[ 10  ] = t10;
     real_type t30  = X__[iX_as];
     real_type t31  = t15 * t4;
     result__[ 11  ] = t31 * t16 + t30;
     real_type t33  = t1 * t1;
     real_type t36  = t4 * t33;
-    result__[ 12  ] = -result__[10] * (t15 * t12 * t33 + t21 * t36);
-    result__[ 13  ] = -result__[10] * t8 * t25 * t33;
-    result__[ 14  ] = -2 * result__[9];
-    result__[ 15  ] = result__[10];
+    result__[ 12  ] = -t10 * (t15 * t12 * t33 + t21 * t36);
+    result__[ 13  ] = -t25 * t33 * t26;
+    real_type t42  = result__[9];
+    result__[ 14  ] = -2 * t42;
+    result__[ 15  ] = t10;
     real_type t44  = X__[iX_an];
     result__[ 16  ] = -t15 * t36 + t44;
     real_type t46  = t44 * t1;
-    result__[ 17  ] = -result__[15] * (-t21 * t4 * t46 - t17 * t46);
+    result__[ 17  ] = -(-t17 * t46 - t46 * t19) * t10;
     result__[ 18  ] = t27 * t46;
-    result__[ 19  ] = result__[2] * t4 * t44;
-    result__[ 20  ] = result__[9];
+    result__[ 19  ] = t44 * t29;
+    result__[ 20  ] = t42;
     result__[ 21  ] = t31 * t46 + U__[iU_js];
     real_type t55  = t30 * t1;
-    result__[ 22  ] = -result__[15] * (t21 * t4 * t55 + t17 * t55);
+    result__[ 22  ] = -(t17 * t55 + t55 * t19) * t10;
     result__[ 23  ] = -t27 * t55;
-    result__[ 24  ] = -result__[2] * t4 * t30;
+    result__[ 24  ] = -t30 * t29;
     result__[ 25  ] = -result__[20];
     result__[ 26  ] = -t31 * t55 + U__[iU_jn];
     if ( m_debug )

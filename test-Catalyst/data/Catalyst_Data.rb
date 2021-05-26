@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Catalyst_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 9/3/2021                                         #
+#  version: 1.0   date 3/6/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -157,8 +157,8 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # Controls
-  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC
-  # Barrier subtype: LOGARITHMIC, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:uControl] = {
     :type      => 'COS_LOGARITHMIC',
@@ -178,8 +178,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 400,
+        :length => 1,
       },
     ],
   };

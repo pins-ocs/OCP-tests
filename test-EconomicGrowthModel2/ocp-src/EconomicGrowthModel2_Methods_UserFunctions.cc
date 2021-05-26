@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -203,12 +203,12 @@ namespace EconomicGrowthModel2Define {
 
   real_type
   EconomicGrowthModel2::explog_D_1_3( real_type xo__a, real_type xo__b, real_type xo__s ) const {
-    real_type t1   = pow(xo__a, -xo__s);
-    real_type t2   = -1 + xo__s;
-    real_type t3   = log(xo__a);
-    real_type t6   = log(xo__b);
-    real_type t10  = pow(xo__b, xo__s);
-    real_type result__ = t10 * (t3 * t2 - t6 * t2 - 1) * t1;
+    real_type t1   = pow(xo__b, xo__s);
+    real_type t2   = pow(xo__a, -xo__s);
+    real_type t4   = -1 + xo__s;
+    real_type t5   = log(xo__a);
+    real_type t8   = log(xo__b);
+    real_type result__ = (t5 * t4 - t8 * t4 - 1) * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

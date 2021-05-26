@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 9/3/2021                                         |
+ |  version: 1.0   date 3/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -83,7 +83,9 @@ namespace BangBangFtminDefine {
     result__[ 0   ] = 0;
     real_type t1   = L__[iL_lambda1__xo];
     result__[ 1   ] = X__[iX_T] * t1;
-    result__[ 2   ] = X__[iX_v] * t1 + L__[iL_lambda2__xo] * U__[iU_F];
+    real_type t3   = U__[iU_F];
+    real_type t4   = Fcontrol(t3, -1, 1);
+    result__[ 2   ] = X__[iX_v] * t1 + t3 * L__[iL_lambda2__xo] + t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
@@ -189,7 +191,9 @@ namespace BangBangFtminDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda2__xo] * X__[iX_T];
+    real_type t1   = X__[iX_T];
+    real_type t3   = ALIAS_Fcontrol_D_1(U__[iU_F], -1, 1);
+    result__[ 0   ] = t3 * t1 + t1 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -230,7 +234,8 @@ namespace BangBangFtminDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = L__[iL_lambda2__xo];
+    real_type t2   = ALIAS_Fcontrol_D_1(U__[iU_F], -1, 1);
+    result__[ 0   ] = t2 + L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }

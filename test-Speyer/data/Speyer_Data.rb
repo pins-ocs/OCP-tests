@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Speyer_Data.rb                                                 #
 #                                                                       #
-#  version: 1.0   date 9/3/2021                                         #
+#  version: 1.0   date 3/6/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -171,8 +171,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 1000,
+        :length => 1,
       },
     ],
   };

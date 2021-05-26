@@ -56,16 +56,16 @@ Hyness --- start iterations ---
 [  6,  2] (0.00271  ,0.00172  ) [0.696    ,0.514    ] 0.286      0: 0
 [  7,  2] (0.00172  ,0.000886 ) [0.529    ,0.302    ] 0.437      0: 1
 [  8,  1] (0.000886 ,0.000136 ) [0.307    ,0.0157   ] 1.00       0: 1
-[  9,  1] (0.000136 ,3.28e-06 ) [0.0122   ,0.00117  ] 1.00       0: 0
-[ 10,  1] (3.28e-06 ,2.86e-09 ) [0.00124  ,9.24e-07 ] 1.00       0: 0
-[ 11,  1] (2.86e-09 ,9.92e-16 ) [9.25e-07 ,4.26e-13 ] 1.00       0: 0
+[  9,  1] (0.000136 ,3.27e-06 ) [0.0122   ,0.00117  ] 1.00       0: 0
+[ 10,  1] (3.27e-06 ,2.86e-09 ) [0.00124  ,9.22e-07 ] 1.00       0: 0
+[ 11,  1] (2.86e-09 ,9.86e-16 ) [9.23e-07 ,4.25e-13 ] 1.00       0: 0
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 53.2[ms]      timeout        = 0 [ms]
+Elapsed Time   = 42.4[ms]      timeout        = 0 [ms]
 iteration      = 11            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 10017
 max acc. iter. = 800           N. System pars = 1000
-Converged      = YES           Memory Used    = 952Kb (+7bytes)
+Converged      = YES           Memory Used    = 1Mb (+1Kb)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -74,8 +74,8 @@ Few iterations = 8
 Function       = 22            Jacobian       = 11        
 Factorization  = 11            Inversion      = 32        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 3.3503e-12    last||d1||_inf = 8.2640e-06
-last ||f||_inf = 4.0117e-08    last||f1||_1   = 2.8603e-09
+last ||d||_inf = 3.3424e-12    last||d1||_inf = 8.2536e-06
+last ||f||_inf = 4.0078e-08    last||f1||_1   = 2.8569e-09
 ------------------------------------------------------------
 
               __   __             ___  __   __   ___  __              
@@ -83,5 +83,5 @@ last ||f||_inf = 4.0117e-08    last||f1||_1   = 2.8603e-09
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 target [Lagrange,Mayer]       = [ 0.000, 0.9032 ]
-[Penalties/Barriers,Controls] = [ 0.000, 0.000 ]
+[Penalties/Barriers,Controls] = [ 1.106e-06, 0.000 ]
 All Done Folks!
