@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona2_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 3/6/2021                                         #
+#  version: 1.0   date 9/6/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,11 +20,14 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-yf = -2
-xf = 5
-g  = 9.81
-Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
-Tf = (-2.0*yf/g)**(1/2.0)
+epsi0  = 1
+epsi   = epsi0
+yf     = -2
+xf     = 5
+theta0 = Math::atan2(yf,xf)
+g      = 9.81
+Tf     = (-2.0*yf/g)**(1/2.0)
+Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 
 mechatronix do |data|
 
@@ -45,10 +48,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = false
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = false
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "Brachiostocrona2_dump"
@@ -73,7 +78,7 @@ mechatronix do |data|
     # ==============================================================
     :MaxIter   => 50,
     :Tolerance => 1e-9,
-    :Iterative => false,
+    :Iterative => true,
     :InfoLevel => -1,     # suppress all messages
     # ==============================================================
     # 'LM', 'YS', 'QN'
@@ -109,7 +114,7 @@ mechatronix do |data|
 
     # continuation parameters
     :ns_continuation_begin => 0,
-    :ns_continuation_end   => 0,
+    :ns_continuation_end   => 1,
     :continuation => {
       :initial_step   => 0.2,   # initial step for continuation
       :min_step       => 0.001, # minimum accepted step for continuation
@@ -143,8 +148,10 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
-    :g    => g,
-    :mass => 1,
+    :epsi   => epsi,
+    :g      => g,
+    :mass   => 1,
+    :theta0 => theta0,
 
     # Guess Parameters
     :Tf => Tf,
@@ -157,9 +164,10 @@ mechatronix do |data|
     # Post Processing Parameters
 
     # User Function Parameters
-    :kappa => 1,
 
     # Continuation Parameters
+    :epsi0 => epsi0,
+    :epsi1 => 0,
 
     # Constraints Parameters
   }

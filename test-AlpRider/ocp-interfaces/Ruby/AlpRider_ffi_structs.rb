@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: AlpRider_ffi_structs.rb                                           #
 #                                                                          #
-#  version: 1.0   date 3/6/2021                                            #
+#  version: 1.0   date 5/6/2021                                            #
 #                                                                          #
 #  Copyright (C) 2021                                                      #
 #                                                                          #
@@ -41,6 +41,8 @@ module AlpRider
     layout(
 
       :W,     :data_t,
+
+      :W0,    :data_t,
 
       :W1,    :data_t,
 

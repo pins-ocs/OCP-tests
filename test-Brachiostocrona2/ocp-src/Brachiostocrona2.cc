@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2.cc                                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 9/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -98,9 +98,12 @@ namespace Brachiostocrona2Define {
   char const *namesModelPars[numModelPars+1] = {
     "Tf",
     "Vf",
+    "epsi",
+    "epsi0",
+    "epsi1",
     "g",
-    "kappa",
     "mass",
+    "theta0",
     "xf",
     "yf",
     nullptr
@@ -146,8 +149,11 @@ namespace Brachiostocrona2Define {
   // Constraints 2D
   // User classes
   {
-    m_U_solve_iterative = false;
+    m_U_solve_iterative = true;
 
+    // continuation
+    this->ns_continuation_begin = 0;
+    this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
@@ -196,6 +202,21 @@ namespace Brachiostocrona2Define {
       ),
       msg_level
     );
+    UTILS_ASSERT(
+      0 <= old_s && old_s < s && s <= 1,
+      "Brachiostocrona2::updateContinuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
+    );
+    switch ( phase ) {
+      case 0: continuationStep0( s ); break;
+      default:
+        UTILS_ERROR(
+          "Brachiostocrona2::updateContinuation( phase number={}, old_s={}, s={} )"
+          " phase N.{} is not defined\n",
+          phase, old_s, s, phase
+        );
+    }
   }
 
   /* --------------------------------------------------------------------------

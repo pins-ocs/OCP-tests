@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: AlpRider_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 3/6/2021                                         #
+#  version: 1.0   date 5/6/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,9 +21,11 @@ include Mechatronix
 
 # Auxiliary values
 tol0  = 0.1
-tol   = tol0
 epsi0 = 0.1
+tol   = tol0
 epsi  = epsi0
+W0    = 0
+W     = W0
 
 mechatronix do |data|
 
@@ -44,10 +46,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = false
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = false
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "AlpRider_dump"
@@ -97,18 +101,18 @@ mechatronix do |data|
 
     # choose solves: Hyness, NewtonDumped
     # ===================================
-    :solver => "Hyness",
+    :solver => "NewtonDumped",
     # ===================================
 
     # solver parameters
     :max_iter             => 300,
-    :max_step_iter        => 40,
-    :max_accumulated_iter => 4000,
+    :max_step_iter        => 150,
+    :max_accumulated_iter => 50000,
     :tolerance            => 9.999999999999999e-10,
 
     # continuation parameters
     :ns_continuation_begin => 0,
-    :ns_continuation_end   => 2,
+    :ns_continuation_end   => 1,
     :continuation => {
       :initial_step   => 0.2,   # initial step for continuation
       :min_step       => 0.001, # minimum accepted step for continuation
@@ -145,7 +149,7 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
-    :W => 0,
+    :W => W,
 
     # Guess Parameters
 
@@ -164,11 +168,12 @@ mechatronix do |data|
     # User Function Parameters
 
     # Continuation Parameters
+    :W0    => W0,
     :W1    => 100,
     :epsi0 => epsi0,
-    :epsi1 => 0.001,
+    :epsi1 => 0.0001,
     :tol0  => tol0,
-    :tol1  => 0.001,
+    :tol1  => 0.0001,
 
     # Constraints Parameters
   }
@@ -199,16 +204,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 400,
-        :length => 1,
-      },
-      {
-        :n      => 400,
-        :length => 18,
-      },
-      {
-        :n      => 400,
-        :length => 1,
+        :n      => 4000,
+        :length => 20,
       },
     ],
   };

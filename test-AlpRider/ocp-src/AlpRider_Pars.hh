@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Pars.hh                                               |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define ALPRIDERPARS_DOT_HH
 
 #define numBc                    8
-#define numModelPars             14
+#define numModelPars             15
 #define numConstraint1D          1
 #define numConstraint2D          0
 #define numConstraintU           0
@@ -31,7 +31,7 @@
 #define numPvars                 0
 #define numPostProcess           2
 #define numIntegratedPostProcess 0
-#define numContinuationSteps     2
+#define numContinuationSteps     1
 
 // Xvars
 #define iX_y1          0
@@ -56,19 +56,20 @@
 
 // ModelPars Maps
 #define iM_W           0
-#define iM_W1          1
-#define iM_epsi0       2
-#define iM_epsi1       3
-#define iM_tol0        4
-#define iM_tol1        5
-#define iM_y1_f        6
-#define iM_y1_i        7
-#define iM_y2_f        8
-#define iM_y2_i        9
-#define iM_y3_f        10
-#define iM_y3_i        11
-#define iM_y4_f        12
-#define iM_y4_i        13
+#define iM_W0          1
+#define iM_W1          2
+#define iM_epsi0       3
+#define iM_epsi1       4
+#define iM_tol0        5
+#define iM_tol1        6
+#define iM_y1_f        7
+#define iM_y1_i        8
+#define iM_y2_f        9
+#define iM_y2_i        10
+#define iM_y3_f        11
+#define iM_y3_i        12
+#define iM_y4_f        13
+#define iM_y4_i        14
 
 #endif
 

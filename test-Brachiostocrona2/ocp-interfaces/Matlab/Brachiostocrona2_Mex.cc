@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Mex.cc                                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 9/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -1030,21 +1030,21 @@ public:
     );
 
     // -------------------
-    N.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q_L", msg ) );
+    N.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q_M", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
       "|q_L| = {} expected to be {}\n", msg, nQ, this->dim_Q()
     );
 
     // -------------------
-    N.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x_L", msg ) );
+    N.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x_M", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
       "|x_L| = {} expected to be {}\n", msg, nX, this->dim_X()
     );
 
     // -------------------
-    N.lambda = getVectorPointer( arg_in_5, nL, fmt::format( "{} argument lambda_L", msg ) );
+    N.lambda = getVectorPointer( arg_in_5, nL, fmt::format( "{} argument lambda_M", msg ) );
     UTILS_ASSERT(
       nL == this->dim_X(),
       "|lambda_L| = {} expected to be {}\n", msg, nL, this->dim_X()
@@ -1091,12 +1091,12 @@ public:
    |               |___|__/                            |___|
   \*/
   void
-  do_DacDxlp(
+  do_DacDxlxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DacDxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U, DuDxlxlp ): "
+    "_Mex('DacDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U, DuDxlxlp ): "
 
     CHECK_IN( 13 );
     CHECK_OUT( 2 );
@@ -1127,7 +1127,7 @@ public:
     MatrixWrapper<real_type> DaDxlxlp( a, nR, nCOL, nR );
     MatrixWrapper<real_type> DcDxlxlp( c, this->dim_Pars(), nCOL, this->dim_Pars() );
 
-    this->DacDxlp_eval( n_thread, L, R, P, U, DuDxlxlp, DaDxlxlp, DcDxlxlp );
+    this->DacDxlxlp_eval( n_thread, L, R, P, U, DuDxlxlp, DaDxlxlp, DcDxlxlp );
 
     #undef CMD
   }
@@ -1171,12 +1171,12 @@ public:
    |               |___|__/                            |___|
   \*/
   void
-  do_DhcDxlop(
+  do_DhcDxlxlop(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DhcDxlop', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
+    "_Mex('DhcDxlxlop', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
 
     CHECK_IN( 12 );
     CHECK_OUT( 2 );
@@ -1194,7 +1194,7 @@ public:
     MatrixWrapper<real_type> DhDxlop( h, nR, nCOL, nR );
     MatrixWrapper<real_type> DcDxlop( c, this->dim_Pars(), nCOL, this->dim_Pars() );
 
-    this->DhcDxlop_eval( L, R, Omega, P, DhDxlop, DcDxlop );
+    this->DhcDxlxlop_eval( L, R, Omega, P, DhDxlop, DcDxlop );
 
     #undef CMD
   }
@@ -1211,42 +1211,24 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('u', obj, iseg_L, q_L, x_L, lambda_L[, iseg_R, q_R, x_R, lambda_R], pars ): "
+    "_Mex('u', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
 
-    //CHECK_IN( 12 );
+    CHECK_IN( 11 );
     CHECK_OUT( 1 );
 
-    mwSize nP, nU, nCOL;
+    mwSize nCOL;
     Mechatronix::U_solver & US = this->m_U_control_solver[0];
 
-    if ( nrhs == 11 ) {
-      NodeType2 L, R;
-      get_LR2( CMD, nrhs, prhs, L, R );
-      GET_ARG_P( arg_in_10 );
+    NodeType2 L, R;
+    get_LR2( CMD, nrhs, prhs, L, R );
+    GET_ARG_P( arg_in_10 );
 
-      U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
-      if ( m_U_solve_iterative ) {
-        this->u_guess_eval( L, R, P, U );
-        US.eval( L, R, P, U, U );
-      } else {
-        this->u_eval_analytic( L, R, P, U );
-      }
-
-    } else if ( nrhs == 7 ) {
-      NodeType2 N;
-      get_N( CMD, nrhs, prhs, N );
-      GET_ARG_P( arg_in_6 );
-
-      U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
-      if ( m_U_solve_iterative ) {
-        this->u_guess_eval( N, P, U );
-        m_U_control_solver[0].eval( N, P, U, U );
-      } else {
-        this->u_eval_analytic( N, P, U );
-      }
-
+    U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
+    if ( m_U_solve_iterative ) {
+      this->u_guess_eval( L, R, P, U );
+      US.eval( L, R, P, U, U );
     } else {
-      MEX_ASSERT( false, CMD "argument must be 12 or 8" );
+      this->u_eval_analytic( L, R, P, U );
     }
     #undef CMD
   }
@@ -1264,52 +1246,30 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DuDxlxlp', obj, iseg_L, q_L, x_L, lambda_L[, iseg_R, q_R, x_R, lambda_R], pars, U ): "
+    "_Mex('DuDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
 
-    //CHECK_IN( 12 );
+    CHECK_IN( 11 );
     CHECK_OUT( 1 );
 
-    mwSize nP, nU, nCOL;
+    mwSize nCOL;
     Mechatronix::U_solver & US = this->m_U_control_solver[0];
 
-    if ( nrhs == 12 ) {
-      NodeType2 L, R;
-      get_LR2( CMD, nrhs, prhs, L, R );
-      GET_ARG_P( arg_in_10 );
-      GET_ARG_U( arg_in_11 );
+    NodeType2 L, R;
+    get_LR2( CMD, nrhs, prhs, L, R );
+    GET_ARG_P( arg_in_10 );
+    GET_ARG_U( arg_in_11 );
 
-      nCOL = 4*this->dim_X() + this->dim_Pars();
-      real_type * DuDxlxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
+    nCOL = 4*this->dim_X() + this->dim_Pars();
+    real_type * DuDxlxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
 
-      MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
+    MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
 
-      if ( m_U_solve_iterative ) {
-        US.u_eval_DuDxlxlp( L, R, P, U, DuDxlxlp );
-      } else {
-        this->DuDxlxlp_full_analytic( L, R, P, U, DuDxlxlp );
-      }
-
-    } else if ( nrhs == 8 ) {
-
-      NodeType2 N;
-      get_N( CMD, nrhs, prhs, N );
-      GET_ARG_P( arg_in_6 );
-      GET_ARG_U( arg_in_7 );
-
-      nCOL = 4*this->dim_X() + this->dim_Pars();
-      real_type * DuDxlxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
-
-      MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
-
-      if ( m_U_solve_iterative ) {
-        US.u_eval_DuDxlxlp( N, P, U, DuDxlxlp );
-      } else {
-        this->DuDxlxlp_full_analytic( N, P, U, DuDxlxlp );
-      }
-
+    if ( m_U_solve_iterative ) {
+      US.u_eval_DuDxlxlp( L, R, P, U, DuDxlxlp );
     } else {
-      MEX_ASSERT( false, CMD "argument must be 12 or 8" );
+      this->DuDxlxlp_full_analytic( L, R, P, U, DuDxlxlp );
     }
+
     #undef CMD
   }
 
@@ -1919,11 +1879,11 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  do_DboundaryConditionsDx(
+  do_DboundaryConditionsDxxp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('DboundaryConditionsDx', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+    #define CMD MODEL_NAME "_Mex('DboundaryConditionsDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
     CHECK_IN( 9 );
     CHECK_OUT( 1 );
@@ -1932,28 +1892,7 @@ public:
     get_LR( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_8 );
 
-    RETURN_SPARSE( DboundaryConditionsDx, L, R, P );
-
-    #undef CMD
-  }
-
-  // --------------------------------------------------------------------------
-
-  void
-  do_DboundaryConditionsDp(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('DboundaryConditionsDp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
-
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
-
-    NodeType L, R;
-    get_LR( CMD, nrhs, prhs, L, R );
-    GET_ARG_P( arg_in_8 );
-
-    RETURN_SPARSE( DboundaryConditionsDp, L, R, P );
+    RETURN_SPARSE( DboundaryConditionsDxxp, L, R, P );
 
     #undef CMD
   }
@@ -1988,19 +1927,20 @@ public:
   }
 
   /*\
-   |   ___          _  _     _     _   ___  ___ ___
-   |  |   \ __ _ __| |(_)___(_)_ _| |_| _ )/ __|   \__ __
-   |  | |) / _` / _` || / _ \ | ' \  _| _ \ (__| |) \ \ /
-   |  |___/\__,_\__,_|/ \___/_|_||_\__|___/\___|___//_\_\
-   |                |__/
+   |   ____            _  _       _       _   ____   ____ ____
+   |  |  _ \  __ _  __| |(_) ___ (_)_ __ | |_| __ ) / ___|  _ \__  ____  ___ __
+   |  | | | |/ _` |/ _` || |/ _ \| | '_ \| __|  _ \| |   | | | \ \/ /\ \/ / '_ \
+   |  | |_| | (_| | (_| || | (_) | | | | | |_| |_) | |___| |_| |>  <  >  <| |_) |
+   |  |____/ \__,_|\__,_|/ |\___/|_|_| |_|\__|____/ \____|____//_/\_\/_/\_\ .__/
+   |                   |__/                                               |_|
   \*/
   void
-  do_DadjointBCDx(
+  do_DadjointBCDxxp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DadjointBCDx', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ): "
+    "_Mex('DadjointBCDxxp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ): "
 
     CHECK_IN( 12 );
     CHECK_OUT( 1 );
@@ -2010,35 +1950,7 @@ public:
     GET_ARG_P( arg_in_10 );
     GET_ARG_OMEGA_FULL( arg_in_11 );
 
-    RETURN_SPARSE( DadjointBCDx, L, R, P, Omega );
-
-    #undef CMD
-  }
-
-  /*\
-   |   ___          _  _     _     _   ___  ___ ___
-   |  |   \ __ _ __| |(_)___(_)_ _| |_| _ )/ __|   \ _ __
-   |  | |) / _` / _` || / _ \ | ' \  _| _ \ (__| |) | '_ \
-   |  |___/\__,_\__,_|/ \___/_|_||_\__|___/\___|___/| .__/
-   |                |__/                            |_|
-  \*/
-  void
-  do_DadjointBCDp(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME \
-    "_Mex('DadjointBCDp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ): "
-
-    CHECK_IN( 12 );
-    CHECK_OUT( 1 );
-
-    NodeType2 L, R;
-    get_LR2( CMD, nrhs, prhs, L, R );
-    GET_ARG_P( arg_in_10 );
-    GET_ARG_OMEGA_FULL( arg_in_11 );
-
-    RETURN_SPARSE( DadjointBCDp, L, R, P, Omega );
+    RETURN_SPARSE( DadjointBCDxxp, L, R, P, Omega );
 
     #undef CMD
   }
@@ -2264,143 +2176,6 @@ public:
     for ( integer i = 0; i < n; ++i )
       node_to_segment[i] = m_mesh_base->nodeToSegment( i );
 
-    #undef CMD
-  }
-
-  /*\
-   |  _   _               ___             _   _
-   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-  \*/
-  // user defined functions which has a body defined in MAPLE
-  void
-  do_theta_sol(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('theta_sol', obj, xo__v, xo__l1, xo__l2, xo__l3 ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
-    mwSize N0, M0;
-    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__v" );
-    mwSize N1, M1;
-    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__l1" );
-    MEX_CHECK_DIMS(N1,M1,N0,M0);
-    mwSize N2, M2;
-    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__l2" );
-    MEX_CHECK_DIMS(N2,M2,N0,M0);
-    mwSize N3, M3;
-    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__l3" );
-    MEX_CHECK_DIMS(N3,M3,N0,M0);
-
-    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
-    for ( mwSize ii = 0; ii < N0*M0; ++ii )
-      res[ii] = this->theta_sol(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
-    #undef CMD
-  }
-
-  void
-  do_theta_sol_D_1(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('theta_sol_D_1', obj, xo__v, xo__l1, xo__l2, xo__l3 ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
-    mwSize N0, M0;
-    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__v" );
-    mwSize N1, M1;
-    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__l1" );
-    MEX_CHECK_DIMS(N1,M1,N0,M0);
-    mwSize N2, M2;
-    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__l2" );
-    MEX_CHECK_DIMS(N2,M2,N0,M0);
-    mwSize N3, M3;
-    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__l3" );
-    MEX_CHECK_DIMS(N3,M3,N0,M0);
-
-    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
-    for ( mwSize ii = 0; ii < N0*M0; ++ii )
-      res[ii] = this->theta_sol_D_1(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
-    #undef CMD
-  }
-
-  void
-  do_theta_sol_D_2(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('theta_sol_D_2', obj, xo__v, xo__l1, xo__l2, xo__l3 ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
-    mwSize N0, M0;
-    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__v" );
-    mwSize N1, M1;
-    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__l1" );
-    MEX_CHECK_DIMS(N1,M1,N0,M0);
-    mwSize N2, M2;
-    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__l2" );
-    MEX_CHECK_DIMS(N2,M2,N0,M0);
-    mwSize N3, M3;
-    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__l3" );
-    MEX_CHECK_DIMS(N3,M3,N0,M0);
-
-    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
-    for ( mwSize ii = 0; ii < N0*M0; ++ii )
-      res[ii] = this->theta_sol_D_2(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
-    #undef CMD
-  }
-
-  void
-  do_theta_sol_D_3(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('theta_sol_D_3', obj, xo__v, xo__l1, xo__l2, xo__l3 ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
-    mwSize N0, M0;
-    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__v" );
-    mwSize N1, M1;
-    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__l1" );
-    MEX_CHECK_DIMS(N1,M1,N0,M0);
-    mwSize N2, M2;
-    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__l2" );
-    MEX_CHECK_DIMS(N2,M2,N0,M0);
-    mwSize N3, M3;
-    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__l3" );
-    MEX_CHECK_DIMS(N3,M3,N0,M0);
-
-    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
-    for ( mwSize ii = 0; ii < N0*M0; ++ii )
-      res[ii] = this->theta_sol_D_3(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
-    #undef CMD
-  }
-
-  void
-  do_theta_sol_D_4(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('theta_sol_D_4', obj, xo__v, xo__l1, xo__l2, xo__l3 ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
-    mwSize N0, M0;
-    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__v" );
-    mwSize N1, M1;
-    real_type const * arg1 = getMatrixPointer( arg_in_3, N1, M1, CMD " xo__l1" );
-    MEX_CHECK_DIMS(N1,M1,N0,M0);
-    mwSize N2, M2;
-    real_type const * arg2 = getMatrixPointer( arg_in_4, N2, M2, CMD " xo__l2" );
-    MEX_CHECK_DIMS(N2,M2,N0,M0);
-    mwSize N3, M3;
-    real_type const * arg3 = getMatrixPointer( arg_in_5, N3, M3, CMD " xo__l3" );
-    MEX_CHECK_DIMS(N3,M3,N0,M0);
-
-    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
-    for ( mwSize ii = 0; ii < N0*M0; ++ii )
-      res[ii] = this->theta_sol_D_4(arg0[ii],arg1[ii],arg2[ii],arg3[ii]);
     #undef CMD
   }
 
@@ -2874,15 +2649,15 @@ do_ac(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DacDxlp(
+do_DacDxlxlp(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DacDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DacDxlxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DacDxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DacDxlxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2902,15 +2677,15 @@ do_hc(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DhcDxlop(
+do_DhcDxlxlop(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DhcDxlop',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DhcDxlxlop',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DhcDxlop( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DhcDxlxlop( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3224,29 +2999,15 @@ do_boundaryConditions(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DboundaryConditionsDx(
+do_DboundaryConditionsDxxp(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DboundaryConditionsDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DboundaryConditionsDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDx( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_DboundaryConditionsDp(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('DboundaryConditionsDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDxxp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3266,29 +3027,15 @@ do_adjointBC(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DadjointBCDx(
+do_DadjointBCDxxp(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DadjointBCDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DadjointBCDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDx( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_DadjointBCDp(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('DadjointBCDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDxxp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3418,76 +3165,6 @@ do_node_to_segment(
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_theta_sol(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('theta_sol',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_theta_sol( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_theta_sol_D_1(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('theta_sol_D_1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_theta_sol_D_1( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_theta_sol_D_2(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('theta_sol_D_2',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_theta_sol_D_2( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_theta_sol_D_3(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('theta_sol_D_3',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_theta_sol_D_3( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_theta_sol_D_4(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('theta_sol_D_4',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_theta_sol_D_4( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"read",do_read},
   {"setup",do_setup},
@@ -3513,9 +3190,9 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"pack",do_pack},
   {"unpack",do_unpack},
   {"ac",do_ac},
-  {"DacDxlp",do_DacDxlp},
+  {"DacDxlxlp",do_DacDxlxlp},
   {"hc",do_hc},
-  {"DhcDxlop",do_DhcDxlop},
+  {"DhcDxlxlop",do_DhcDxlxlop},
   {"u",do_u},
   {"DuDxlxlp",do_DuDxlxlp},
   {"rhs_ode",do_rhs_ode},
@@ -3538,11 +3215,9 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"Hp",do_Hp},
   {"DHpDp",do_DHpDp},
   {"boundaryConditions",do_boundaryConditions},
-  {"DboundaryConditionsDx",do_DboundaryConditionsDx},
-  {"DboundaryConditionsDp",do_DboundaryConditionsDp},
+  {"DboundaryConditionsDxxp",do_DboundaryConditionsDxxp},
   {"adjointBC",do_adjointBC},
-  {"DadjointBCDx",do_DadjointBCDx},
-  {"DadjointBCDp",do_DadjointBCDp},
+  {"DadjointBCDxxp",do_DadjointBCDxxp},
   {"jump",do_jump},
   {"DjumpDxlxlp",do_DjumpDxlxlp},
   {"penalties",do_penalties},
@@ -3552,11 +3227,6 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"q",do_q},
   {"nodes",do_nodes},
   {"node_to_segment",do_node_to_segment},
-  {"theta_sol",do_theta_sol},
-  {"theta_sol_D_1",do_theta_sol_D_1},
-  {"theta_sol_D_2",do_theta_sol_D_2},
-  {"theta_sol_D_3",do_theta_sol_D_3},
-  {"theta_sol_D_4",do_theta_sol_D_4},
   {"new",do_new},
   {"infoLevel",do_infoLevel},
   {"N_threads",do_N_threads},

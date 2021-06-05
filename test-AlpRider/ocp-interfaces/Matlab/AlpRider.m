@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: AlpRider.m                                                     %
 %                                                                       %
-%  version: 1.0   date 3/6/2021                                         %
+%  version: 1.0   date 5/6/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -448,13 +448,13 @@ classdef AlpRider < handle
       );
     end
     % ---------------------------------------------------------------------
-    function [Ja,Jc] = eval_DacDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
-                                           iseg_R, q_R, x_R, lambda_R, pars, U )
+    function [Ja,Jc] = eval_DacDxlxlp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                             iseg_R, q_R, x_R, lambda_R, pars, U )
       %
       % Compute the block of the nonlinear system
       % given left and right states.
       %
-      [Ja,Jc] = AlpRider_Mex( 'DacDxlp', self.objectHandle, ...
+      [Ja,Jc] = AlpRider_Mex( 'DacDxlxlp', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
@@ -470,13 +470,13 @@ classdef AlpRider < handle
       );
     end
     % ---------------------------------------------------------------------
-    function [Jh,Jc] = eval_DhcDxlop( self, iseg_L, q_L, x_L, lambda_L, ...
-                                            iseg_R, q_R, x_R, lambda_R, pars )
+    function [Jh,Jc] = eval_DhcDxlxlop( self, iseg_L, q_L, x_L, lambda_L, ...
+                                              iseg_R, q_R, x_R, lambda_R, pars )
       %
       % Compute the block of the BC of the nonlinear system
       % given left and right states.
       %
-      [Jh,Jc] = AlpRider_Mex( 'DhcDxlop', self.objectHandle, ...
+      [Jh,Jc] = AlpRider_Mex( 'DhcDxlxlop', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
@@ -679,16 +679,9 @@ classdef AlpRider < handle
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DbcDx( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+    function J = eval_DbcDxxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       J = AlpRider_Mex( ...
-        'DboundaryConditionsDx', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DbcDp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
-      J = AlpRider_Mex( ...
-        'DboundaryConditionsDp', self.objectHandle, ...
+        'DboundaryConditionsDxxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end

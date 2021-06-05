@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Brachiostocrona2.m                                             %
 %                                                                       %
-%  version: 1.0   date 3/6/2021                                         %
+%  version: 1.0   date 9/6/2021                                         %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -418,13 +418,13 @@ classdef Brachiostocrona2 < handle
       );
     end
     % ---------------------------------------------------------------------
-    function [Ja,Jc] = eval_DacDxlp( self, iseg_L, q_L, x_L, lambda_L, ...
-                                           iseg_R, q_R, x_R, lambda_R, pars, U )
+    function [Ja,Jc] = eval_DacDxlxlp( self, iseg_L, q_L, x_L, lambda_L, ...
+                                             iseg_R, q_R, x_R, lambda_R, pars, U )
       %
       % Compute the block of the nonlinear system
       % given left and right states.
       %
-      [Ja,Jc] = Brachiostocrona2_Mex( 'DacDxlp', self.objectHandle, ...
+      [Ja,Jc] = Brachiostocrona2_Mex( 'DacDxlxlp', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
@@ -440,13 +440,13 @@ classdef Brachiostocrona2 < handle
       );
     end
     % ---------------------------------------------------------------------
-    function [Jh,Jc] = eval_DhcDxlop( self, iseg_L, q_L, x_L, lambda_L, ...
-                                            iseg_R, q_R, x_R, lambda_R, pars )
+    function [Jh,Jc] = eval_DhcDxlxlop( self, iseg_L, q_L, x_L, lambda_L, ...
+                                              iseg_R, q_R, x_R, lambda_R, pars )
       %
       % Compute the block of the BC of the nonlinear system
       % given left and right states.
       %
-      [Jh,Jc] = Brachiostocrona2_Mex( 'DhcDxlop', self.objectHandle, ...
+      [Jh,Jc] = Brachiostocrona2_Mex( 'DhcDxlxlop', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
@@ -649,16 +649,9 @@ classdef Brachiostocrona2 < handle
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DbcDx( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+    function J = eval_DbcDxxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       J = Brachiostocrona2_Mex( ...
-        'DboundaryConditionsDx', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DbcDp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
-      J = Brachiostocrona2_Mex( ...
-        'DboundaryConditionsDp', self.objectHandle, ...
+        'DboundaryConditionsDxxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
@@ -743,31 +736,6 @@ classdef Brachiostocrona2 < handle
     % ---------------------------------------------------------------------
     function node_to_segment = get_node_to_segment( self )
       node_to_segment = Brachiostocrona2_Mex( 'node_to_segment', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    %  _   _               ___             _   _
-    % | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-    % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-    %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-    % ---------------------------------------------------------------------
-    function res = theta_sol( self, xo__v, xo__l1, xo__l2, xo__l3 )
-      res = Brachiostocrona2_Mex('theta_sol', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
-    end
-    % ---------------------------------------------------------------------
-    function res = theta_sol_D_1( self, xo__v, xo__l1, xo__l2, xo__l3 )
-      res = Brachiostocrona2_Mex('theta_sol_D_1', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
-    end
-    % ---------------------------------------------------------------------
-    function res = theta_sol_D_2( self, xo__v, xo__l1, xo__l2, xo__l3 )
-      res = Brachiostocrona2_Mex('theta_sol_D_2', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
-    end
-    % ---------------------------------------------------------------------
-    function res = theta_sol_D_3( self, xo__v, xo__l1, xo__l2, xo__l3 )
-      res = Brachiostocrona2_Mex('theta_sol_D_3', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
-    end
-    % ---------------------------------------------------------------------
-    function res = theta_sol_D_4( self, xo__v, xo__l1, xo__l2, xo__l3 )
-      res = Brachiostocrona2_Mex('theta_sol_D_4', self.objectHandle, xo__v, xo__l1, xo__l2, xo__l3 );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

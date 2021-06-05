@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 9/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ namespace Brachiostocrona2Define {
     real_type t4   = U__[iU_theta];
     real_type t5   = cos(t4);
     real_type t9   = sin(t4);
-    result__[ 2   ] = t2 * t5 * L__[iL_lambda1__xo] + t2 * t9 * L__[iL_lambda2__xo];
+    result__[ 2   ] = t5 * t2 * L__[iL_lambda1__xo] + t9 * t2 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
@@ -186,12 +186,12 @@ namespace Brachiostocrona2Define {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t4   = X__[iX_v];
-    real_type t5   = U__[iU_theta];
-    real_type t6   = sin(t5);
-    real_type t11  = cos(t5);
-    result__[ 0   ] = t11 * t4 * t2 * L__[iL_lambda2__xo] - t11 * ModelPars[iM_g] * t2 * L__[iL_lambda3__xo] - t6 * t4 * t2 * L__[iL_lambda1__xo];
+    real_type t2   = U__[iU_theta];
+    real_type t8   = P__[iP_T];
+    real_type t10  = X__[iX_v];
+    real_type t11  = sin(t2);
+    real_type t16  = cos(t2);
+    result__[ 0   ] = 2 * (t2 - ModelPars[iM_theta0]) * ModelPars[iM_epsi] - t11 * t10 * t8 * L__[iL_lambda1__xo] + t16 * t10 * t8 * L__[iL_lambda2__xo] - t16 * ModelPars[iM_g] * t8 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }

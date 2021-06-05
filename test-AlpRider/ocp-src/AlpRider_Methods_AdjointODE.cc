@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,14 +82,17 @@ namespace AlpRiderDefine {
     real_type t7   = X__[iX_y4];
     real_type t8   = t7 * t7;
     real_type t10  = q(Q__[iQ_zeta]);
-    real_type t12  = ALIAS_Ybound_D(t2 + t4 + t6 + t8 - t10);
-    real_type t15  = ModelPars[iM_W];
-    result__[ 0   ] = 2 * t1 * t12 + 2 * t1 * t15 - 10 * L__[iL_lambda1__xo];
-    result__[ 1   ] = 2 * t3 * t12 + 2 * t3 * t15 - 2 * L__[iL_lambda2__xo];
-    real_type t28  = L__[iL_lambda3__xo];
-    real_type t30  = L__[iL_lambda4__xo];
-    result__[ 2   ] = 2 * t5 * t12 + 2 * t5 * t15 - 3 * t28 + 5 * t30;
-    result__[ 3   ] = 2 * t7 * t12 + 2 * t7 * t15 + 5 * t28 - 3 * t30;
+    real_type t11  = t2 + t4 + t6 + t8 - t10;
+    real_type t12  = Ybound(t11);
+    real_type t16  = ALIAS_Ybound_D(t11);
+    real_type t17  = t16 * (t2 + t4 + t6 + t8 + 1);
+    real_type t20  = ModelPars[iM_W];
+    result__[ 0   ] = 2 * t12 * t1 + 2 * t1 * t17 + 2 * t1 * t20 - 10 * L__[iL_lambda1__xo];
+    result__[ 1   ] = 2 * t12 * t3 + 2 * t3 * t17 + 2 * t3 * t20 - 2 * L__[iL_lambda2__xo];
+    real_type t36  = L__[iL_lambda3__xo];
+    real_type t38  = L__[iL_lambda4__xo];
+    result__[ 2   ] = 2 * t12 * t5 + 2 * t5 * t17 + 2 * t5 * t20 - 3 * t36 + 5 * t38;
+    result__[ 3   ] = 2 * t12 * t7 + 2 * t7 * t17 + 2 * t7 * t20 + 5 * t36 - 3 * t38;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -154,28 +157,32 @@ namespace AlpRiderDefine {
     real_type t8   = t7 * t7;
     real_type t10  = q(Q__[iQ_zeta]);
     real_type t11  = t2 + t4 + t6 + t8 - t10;
-    real_type t12  = ALIAS_Ybound_DD(t11);
-    real_type t15  = ALIAS_Ybound_D(t11);
-    real_type t16  = 2 * t15;
-    real_type t18  = 2 * ModelPars[iM_W];
-    result__[ 0   ] = 4 * t2 * t12 + t16 + t18;
-    result__[ 1   ] = 4 * t1 * t3 * t12;
-    real_type t21  = t5 * t12;
-    result__[ 2   ] = 4 * t1 * t21;
-    real_type t23  = t7 * t12;
-    result__[ 3   ] = 4 * t1 * t23;
+    real_type t12  = Ybound(t11);
+    real_type t13  = 2 * t12;
+    real_type t14  = ALIAS_Ybound_D(t11);
+    real_type t17  = t2 + t4 + t6 + t8 + 1;
+    real_type t18  = ALIAS_Ybound_DD(t11);
+    real_type t19  = t18 * t17;
+    real_type t23  = 2 * t14 * t17;
+    real_type t25  = 2 * ModelPars[iM_W];
+    result__[ 0   ] = 8 * t14 * t2 + 4 * t2 * t19 + t13 + t23 + t25;
+    real_type t26  = t14 * t1;
+    result__[ 1   ] = 4 * t1 * t3 * t19 + 8 * t3 * t26;
+    result__[ 2   ] = 4 * t1 * t5 * t19 + 8 * t5 * t26;
+    result__[ 3   ] = 4 * t1 * t7 * t19 + 8 * t7 * t26;
     result__[ 4   ] = result__[1];
-    result__[ 5   ] = 4 * t4 * t12 + t16 + t18;
-    result__[ 6   ] = 4 * t3 * t21;
-    result__[ 7   ] = 4 * t3 * t23;
+    result__[ 5   ] = 8 * t14 * t4 + 4 * t4 * t19 + t13 + t23 + t25;
+    real_type t46  = t14 * t3;
+    result__[ 6   ] = 4 * t3 * t5 * t19 + 8 * t5 * t46;
+    result__[ 7   ] = 4 * t3 * t7 * t19 + 8 * t7 * t46;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
-    result__[ 10  ] = 4 * t6 * t12 + t16 + t18;
-    result__[ 11  ] = 4 * t5 * t23;
+    result__[ 10  ] = 8 * t14 * t6 + 4 * t6 * t19 + t13 + t23 + t25;
+    result__[ 11  ] = 8 * t7 * t14 * t5 + 4 * t5 * t7 * t19;
     result__[ 12  ] = result__[3];
     result__[ 13  ] = result__[7];
     result__[ 14  ] = result__[11];
-    result__[ 15  ] = 4 * t8 * t12 + t16 + t18;
+    result__[ 15  ] = 8 * t14 * t8 + 4 * t8 * t19 + t13 + t23 + t25;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 16, i_segment );
   }
@@ -243,8 +250,8 @@ namespace AlpRiderDefine {
     real_type t4   = L__[iL_lambda2__xo];
     real_type t5   = L__[iL_lambda3__xo];
     real_type t6   = L__[iL_lambda4__xo];
-    result__[ 0   ] = 0.2e-1 * U__[iU_u1] + t3 + t4 + t5 + t6;
-    result__[ 1   ] = 0.2e-1 * U__[iU_u2] + t3 + 2 * t4 - t5 + 3 * t6;
+    result__[ 0   ] = U__[iU_u1] / 50 + t3 + t4 + t5 + t6;
+    result__[ 1   ] = U__[iU_u2] / 50 + t3 + 2 * t4 - t5 + 3 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }

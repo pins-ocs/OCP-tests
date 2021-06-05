@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 9/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,11 +20,14 @@
 -- User Header
 
 -- Auxiliary values
-yf = -2
-xf = 5
-g  = 9.81
-Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
-Tf = (-2.0*yf/g)**(1/2.0)
+epsi0  = 1
+epsi   = epsi0
+yf     = -2
+xf     = 5
+theta0 = arctan(yf,xf)
+g      = 9.81
+Tf     = (-2.0*yf/g)**(1/2.0)
+Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 
 content = {
 
@@ -45,10 +48,12 @@ content = {
   LU_threaded = true,
 
   -- Enable check jacobian
-  JacobianCheck            = false,
-  JacobianCheckFull        = false,
-  JacobianCheck_epsilon    = 1e-4,
-  FiniteDifferenceJacobian = false,
+  JacobianCheck         = false,
+  JacobianCheckFull     = false,
+  JacobianCheck_epsilon = 1e-4,
+
+  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  JacobianDiscretization = 'ANALYTIC,
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "Brachiostocrona2_dump",
@@ -72,7 +77,7 @@ content = {
     -- ==============================================================
     MaxIter   = 50,
     Tolerance = 1e-9,
-    Iterative = false,
+    Iterative = true,
     InfoLevel = -1 -- suppress all messages
     -- ==============================================================
     -- "LM", "YS", "QN"
@@ -102,7 +107,7 @@ content = {
 
     -- continuation parameters
     ns_continuation_begin = 0,
-    ns_continuation_end   = 0,
+    ns_continuation_end   = 1,
     continuation = {
       initial_step   = 0.2,   -- initial step for continuation
       min_step       = 0.001, -- minimum accepted step for continuation
@@ -136,8 +141,10 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    g    = g,
-    mass = 1,
+    epsi   = epsi,
+    g      = g,
+    mass   = 1,
+    theta0 = theta0,
 
     -- Guess Parameters
     Tf = Tf,
@@ -150,9 +157,10 @@ content = {
     -- Post Processing Parameters
 
     -- User Function Parameters
-    kappa = 1,
 
     -- Continuation Parameters
+    epsi0 = epsi0,
+    epsi1 = 0,
 
     -- Constraints Parameters
   },

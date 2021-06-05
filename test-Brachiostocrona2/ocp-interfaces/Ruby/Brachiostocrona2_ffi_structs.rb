@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: Brachiostocrona2_ffi_structs.rb                                   #
 #                                                                          #
-#  version: 1.0   date 3/6/2021                                            #
+#  version: 1.0   date 9/6/2021                                            #
 #                                                                          #
 #  Copyright (C) 2021                                                      #
 #                                                                          #
@@ -40,19 +40,25 @@ module Brachiostocrona2
   class Brachiostocrona2_model_params < FFI::Struct
     layout(
 
-      :Tf,    :data_t,
+      :Tf,     :data_t,
 
-      :Vf,    :data_t,
+      :Vf,     :data_t,
 
-      :g,     :data_t,
+      :epsi,   :data_t,
 
-      :kappa, :data_t,
+      :epsi0,  :data_t,
 
-      :mass,  :data_t,
+      :epsi1,  :data_t,
 
-      :xf,    :data_t,
+      :g,      :data_t,
 
-      :yf,    :data_t,
+      :mass,   :data_t,
+
+      :theta0, :data_t,
+
+      :xf,     :data_t,
+
+      :yf,     :data_t,
 
     )
 

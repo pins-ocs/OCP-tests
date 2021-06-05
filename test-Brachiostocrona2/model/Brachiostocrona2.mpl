@@ -1,14 +1,13 @@
 
 # 
 # XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
 # Optimal Control Problem: Brachiostocrona
 # Authors: E. Bertolazzi, F. Biral
 # Date: December 18, 2018
-# 
 # Load Packages
 # Load maple packages
-restart:with(plots):
+restart:
+with(plots):
 with(XOptima):
 # Equations of motion
 EQ1    :=      diff(x(zeta),zeta) = T*v(zeta)*cos(theta(zeta)):
@@ -29,45 +28,42 @@ addBoundaryConditions(
   final   = [x=xf,y=yf]
 );
 infoBoundaryConditions();
-addUnilateralConstraint(  T > 0,
+addUnilateralConstraint(
+  T > 0,
   TimePositive,
   scale     = 1,
   epsilon   = 0.1,
-  tolerance = 0.01);
+  tolerance = 0.01
+);
 # Generazione del problema di controllo ottimo
-setTarget( mayer = T );
+setTarget( mayer = T, lagrange = epsi*(theta(zeta)-theta0)^2 );
 
 LEN  := evalf(sqrt(xf^2+yf^2));
 TIME := evalf(sqrt(-2*yf/g));
 VF   := evalf(LEN/TIME);
 PARS := [
-  mass  = 1,
-  xf    = 5,
-  yf    = -2,
-  Vf    = VF,
-  Tf    = TIME,
-  g     = 9.81,
-  kappa = 1
-];
+  mass   = 1,
+  xf     = 5,
+  yf     = -2,
+  Vf     = VF,
+  Tf     = TIME,
+  g      = 9.81,
+  epsi0  = 1,
+  epsi1  = 0,  epsi   = epsi0,  theta0 = arctan(yf,xf)];
 GUESS := [
   x = zeta*xf,
   y = zeta*yf,
-  v = zeta*Vf,
-  lambda1__xo = 1e-6
+  v = zeta*Vf
 ];
-# Use arctan2__xo, arctan version of PINS
-addUserFunction( theta_sol( v, l1, l2, l3) = kappa*Pi+arctan2__xo(v*l2-l3*g,v*l1),derivatives=1);
-USOL := [ theta = theta_sol( v(zeta),
-                             lambda1__xo(zeta),
-                             lambda2__xo(zeta),
-                             lambda3__xo(zeta) )];
+CONT := [  [ epsi = epsi0*(1-s)+s*epsi1 ]];
 generateOCProblem(
   "Brachiostocrona2",
    admissible_region       = [T>0],
    parameters              = PARS,
    mesh                    = [length=1,n=500],
    optimization_parameters = [T=Tf],
-   controls_user_defined   = USOL, 
-   states_guess            = GUESS
-) ;
+   controls_iterative      = true, 
+   controls_guess          = [theta=theta0], 
+   states_guess            = GUESS,
+   continuation            = CONT) ;
 

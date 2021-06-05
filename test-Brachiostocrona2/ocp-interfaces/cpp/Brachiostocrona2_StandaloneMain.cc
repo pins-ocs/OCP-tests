@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 9/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,11 +50,14 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type epsi0 = 1;
+    real_type epsi = epsi0;
     real_type yf = -2;
     real_type xf = 5;
+    real_type theta0 = atan2(yf,xf);
     real_type g = 9.81;
-    real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
     real_type Tf = (-2.0*yf/g)^(1/2.0);
+    real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -65,7 +68,7 @@ main() {
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
     data_ControlSolver["MaxIter"]   = 50;
     data_ControlSolver["Tolerance"] = 1e-9;
-    data_ControlSolver["Iterative"] = false;
+    data_ControlSolver["Iterative"] = true;
     data_ControlSolver["InfoLevel"] = 1;
 
     // Enable doctor
@@ -109,7 +112,7 @@ main() {
     data_Solver["tolerance"]             = 9.999999999999999e-10;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
-    data_Solver["ns_continuation_end"]   = 0;
+    data_Solver["ns_continuation_end"]   = 1;
     GenericContainer & data_Continuation = data_Solver["continuation"];
     data_Continuation["initial_step"]   = 0.2;   // initial step for continuation
     data_Continuation["min_step"]       = 0.001; // minimum accepted step for continuation
@@ -134,8 +137,10 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
+    data_Parameters["epsi"] = epsi;
     data_Parameters["g"] = g;
     data_Parameters["mass"] = 1;
+    data_Parameters["theta0"] = theta0;
 
     // Guess Parameters
     data_Parameters["Tf"] = Tf;
@@ -148,9 +153,10 @@ main() {
     // Post Processing Parameters
 
     // User Function Parameters
-    data_Parameters["kappa"] = 1;
 
     // Continuation Parameters
+    data_Parameters["epsi0"] = epsi0;
+    data_Parameters["epsi1"] = 0;
 
     // Constraints Parameters
 

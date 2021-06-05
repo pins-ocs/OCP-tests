@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -21,9 +21,11 @@
 
 -- Auxiliary values
 tol0  = 0.1
-tol   = tol0
 epsi0 = 0.1
+tol   = tol0
 epsi  = epsi0
+W0    = 0
+W     = W0
 
 content = {
 
@@ -44,10 +46,12 @@ content = {
   LU_threaded = true,
 
   -- Enable check jacobian
-  JacobianCheck            = false,
-  JacobianCheckFull        = false,
-  JacobianCheck_epsilon    = 1e-4,
-  FiniteDifferenceJacobian = false,
+  JacobianCheck         = false,
+  JacobianCheckFull     = false,
+  JacobianCheck_epsilon = 1e-4,
+
+  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  JacobianDiscretization = 'ANALYTIC,
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "AlpRider_dump",
@@ -101,7 +105,7 @@ content = {
 
     -- continuation parameters
     ns_continuation_begin = 0,
-    ns_continuation_end   = 2,
+    ns_continuation_end   = 1,
     continuation = {
       initial_step   = 0.2,   -- initial step for continuation
       min_step       = 0.001, -- minimum accepted step for continuation
@@ -138,7 +142,7 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    W = 0,
+    W = W,
 
     -- Guess Parameters
 
@@ -157,6 +161,7 @@ content = {
     -- User Function Parameters
 
     -- Continuation Parameters
+    W0    = W0,
     W1    = 100,
     epsi0 = epsi0,
     epsi1 = 0.001,
@@ -193,18 +198,8 @@ content = {
     segments = {
       
       {
-        n      = 400,
-        length = 1,
-      },
-      
-      {
-        n      = 400,
-        length = 18,
-      },
-      
-      {
-        n      = 400,
-        length = 1,
+        n      = 4000,
+        length = 20,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Pars.hh                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 9/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define BRACHIOSTOCRONA2PARS_DOT_HH
 
 #define numBc                    5
-#define numModelPars             7
+#define numModelPars             10
 #define numConstraint1D          1
 #define numConstraint2D          0
 #define numConstraintU           0
@@ -31,7 +31,7 @@
 #define numPvars                 1
 #define numPostProcess           0
 #define numIntegratedPostProcess 0
-#define numContinuationSteps     0
+#define numContinuationSteps     1
 
 // Xvars
 #define iX_x           0
@@ -55,11 +55,14 @@
 // ModelPars Maps
 #define iM_Tf          0
 #define iM_Vf          1
-#define iM_g           2
-#define iM_kappa       3
-#define iM_mass        4
-#define iM_xf          5
-#define iM_yf          6
+#define iM_epsi        2
+#define iM_epsi0       3
+#define iM_epsi1       4
+#define iM_g           5
+#define iM_mass        6
+#define iM_theta0      7
+#define iM_xf          8
+#define iM_yf          9
 
 #endif
 

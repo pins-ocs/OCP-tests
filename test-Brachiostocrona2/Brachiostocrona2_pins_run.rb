@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona2_pins_run.rb                                   #
 #                                                                       #
-#  version: 1.0   date 3/6/2021                                         #
+#  version: 1.0   date 9/6/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #

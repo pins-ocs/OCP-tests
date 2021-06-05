@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider.cc                                                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -104,6 +104,7 @@ namespace AlpRiderDefine {
 
   char const *namesModelPars[numModelPars+1] = {
     "W",
+    "W0",
     "W1",
     "epsi0",
     "epsi1",
@@ -167,7 +168,7 @@ namespace AlpRiderDefine {
 
     // continuation
     this->ns_continuation_begin = 0;
-    this->ns_continuation_end   = 2;
+    this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
@@ -224,7 +225,6 @@ namespace AlpRiderDefine {
     );
     switch ( phase ) {
       case 0: continuationStep0( s ); break;
-      case 1: continuationStep1( s ); break;
       default:
         UTILS_ERROR(
           "AlpRider::updateContinuation( phase number={}, old_s={}, s={} )"

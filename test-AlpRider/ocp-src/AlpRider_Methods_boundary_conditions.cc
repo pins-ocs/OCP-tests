@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_boundary_conditions.cc                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -92,19 +92,19 @@ namespace AlpRiderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AlpRider::DboundaryConditionsDx_numRows() const
+  AlpRider::DboundaryConditionsDxxp_numRows() const
   { return 8; }
 
   integer
-  AlpRider::DboundaryConditionsDx_numCols() const
+  AlpRider::DboundaryConditionsDxxp_numCols() const
   { return 8; }
 
   integer
-  AlpRider::DboundaryConditionsDx_nnz() const
+  AlpRider::DboundaryConditionsDxxp_nnz() const
   { return 8; }
 
   void
-  AlpRider::DboundaryConditionsDx_pattern(
+  AlpRider::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -119,7 +119,7 @@ namespace AlpRiderDefine {
   }
 
   void
-  AlpRider::DboundaryConditionsDx_sparse(
+  AlpRider::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -142,39 +142,7 @@ namespace AlpRiderDefine {
     result__[ 6   ] = 1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 8, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AlpRider::DboundaryConditionsDp_numRows() const
-  { return 8; }
-
-  integer
-  AlpRider::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  AlpRider::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  AlpRider::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  AlpRider::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -216,26 +184,26 @@ namespace AlpRiderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AlpRider::DadjointBCDx_numRows() const
+  AlpRider::DadjointBCDxxp_numRows() const
   { return 8; }
 
   integer
-  AlpRider::DadjointBCDx_numCols() const
+  AlpRider::DadjointBCDxxp_numCols() const
   { return 8; }
 
   integer
-  AlpRider::DadjointBCDx_nnz() const
+  AlpRider::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  AlpRider::DadjointBCDx_pattern(
+  AlpRider::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  AlpRider::DadjointBCDx_sparse(
+  AlpRider::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -244,39 +212,6 @@ namespace AlpRiderDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AlpRider::DadjointBCDp_numRows() const
-  { return 8; }
-
-  integer
-  AlpRider::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  AlpRider::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  AlpRider::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  AlpRider::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: AlpRider_Methods_boundary_conditions.cc

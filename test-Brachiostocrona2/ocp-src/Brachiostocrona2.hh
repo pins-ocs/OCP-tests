@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2.hh                                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 9/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -101,7 +101,7 @@ namespace Brachiostocrona2Define {
   class Brachiostocrona2 : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[7];
+    real_type ModelPars[10];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -122,6 +122,7 @@ namespace Brachiostocrona2Define {
     Brachiostocrona2 const & operator = ( Brachiostocrona2 const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
+    void continuationStep0( real_type s );
 
   public:
 
@@ -220,11 +221,6 @@ namespace Brachiostocrona2Define {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol      ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_1  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_2  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_3  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
-    BRACHIOSTOCRONA2_API_DLL real_type theta_sol_D_4  ( real_type xo__v, real_type xo__l1, real_type xo__l2, real_type xo__l3 ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

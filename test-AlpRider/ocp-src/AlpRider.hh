@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider.hh                                                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/6/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -101,7 +101,7 @@ namespace AlpRiderDefine {
   class AlpRider : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[14];
+    real_type ModelPars[15];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -123,7 +123,6 @@ namespace AlpRiderDefine {
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
     void continuationStep0( real_type s );
-    void continuationStep1( real_type s );
 
   public:
 

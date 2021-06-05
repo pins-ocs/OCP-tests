@@ -1,11 +1,8 @@
 
 # 
 
-# 
 # GTOCX model 2 burn fixed time
 # Authors: E. Bertolazzi
-# Date:
-# 
 # Load Packages
 # Load maple packages
 restart:
