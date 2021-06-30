@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Methods_boundary_conditions.cc                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,8 +84,8 @@ namespace PathConstrainedDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1];
     result__[ 1   ] = XL__[iX_x2] + 1;
     if ( m_debug )
@@ -95,19 +95,19 @@ namespace PathConstrainedDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  PathConstrained::DboundaryConditionsDx_numRows() const
+  PathConstrained::DboundaryConditionsDxxp_numRows() const
   { return 2; }
 
   integer
-  PathConstrained::DboundaryConditionsDx_numCols() const
+  PathConstrained::DboundaryConditionsDxxp_numCols() const
   { return 4; }
 
   integer
-  PathConstrained::DboundaryConditionsDx_nnz() const
+  PathConstrained::DboundaryConditionsDxxp_nnz() const
   { return 2; }
 
   void
-  PathConstrained::DboundaryConditionsDx_pattern(
+  PathConstrained::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -116,7 +116,7 @@ namespace PathConstrainedDefine {
   }
 
   void
-  PathConstrained::DboundaryConditionsDx_sparse(
+  PathConstrained::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -128,44 +128,12 @@ namespace PathConstrainedDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 2, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PathConstrained::DboundaryConditionsDp_numRows() const
-  { return 2; }
-
-  integer
-  PathConstrained::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  PathConstrained::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  PathConstrained::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  PathConstrained::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -190,8 +158,8 @@ namespace PathConstrainedDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = -LR__[iL_lambda1__xo];
@@ -203,26 +171,26 @@ namespace PathConstrainedDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  PathConstrained::DadjointBCDx_numRows() const
+  PathConstrained::DadjointBCDxxp_numRows() const
   { return 4; }
 
   integer
-  PathConstrained::DadjointBCDx_numCols() const
+  PathConstrained::DadjointBCDxxp_numCols() const
   { return 4; }
 
   integer
-  PathConstrained::DadjointBCDx_nnz() const
+  PathConstrained::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  PathConstrained::DadjointBCDx_pattern(
+  PathConstrained::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  PathConstrained::DadjointBCDx_sparse(
+  PathConstrained::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -231,39 +199,6 @@ namespace PathConstrainedDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PathConstrained::DadjointBCDp_numRows() const
-  { return 4; }
-
-  integer
-  PathConstrained::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  PathConstrained::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  PathConstrained::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  PathConstrained::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: PathConstrained_Methods_boundary_conditions.cc

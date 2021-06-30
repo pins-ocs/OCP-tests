@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods_AdjointODE.cc                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ namespace WorstCaseScenarioDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 1, i_segment );
@@ -175,7 +175,7 @@ namespace WorstCaseScenarioDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
     result__[ 0   ] = t2 + L__[iL_lambda1__xo] * (1 - 2 * Q__[iQ_zeta]);
     if ( m_debug )
@@ -327,7 +327,7 @@ namespace WorstCaseScenarioDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",1, i_segment );
@@ -418,7 +418,7 @@ namespace WorstCaseScenarioDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "nu_eval", 1, i_segment );

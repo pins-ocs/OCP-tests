@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus03_Methods_ODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,7 +75,7 @@ namespace SingularLuus03Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_x2];
     result__[ 1   ] = U__[iU_u];
     real_type t2   = X__[iX_x1] * X__[iX_x1];
@@ -121,7 +121,7 @@ namespace SingularLuus03Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 2 * X__[iX_x1];
     result__[ 2   ] = 2 * X__[iX_x2];
@@ -196,7 +196,7 @@ namespace SingularLuus03Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 1, i_segment );
@@ -242,7 +242,7 @@ namespace SingularLuus03Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;

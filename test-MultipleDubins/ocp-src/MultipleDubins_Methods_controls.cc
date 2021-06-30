@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,16 +70,44 @@ namespace MultipleDubinsDefine {
 
   void
   MultipleDubins::g_eval(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[9], LM__[9];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    XM__[6] = (XL__[6]+XR__[6])/2;
+    XM__[7] = (XL__[7]+XR__[7])/2;
+    XM__[8] = (XL__[8]+XR__[8])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    LM__[6] = (LL__[6]+LR__[6])/2;
+    LM__[7] = (LL__[7]+LR__[7])/2;
+    LM__[8] = (LL__[8]+LR__[8])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
 
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 0, i_segment );
@@ -88,19 +116,19 @@ namespace MultipleDubinsDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MultipleDubins::DgDxlp_numRows() const
+  MultipleDubins::DgDxlxlp_numRows() const
   { return 0; }
 
   integer
-  MultipleDubins::DgDxlp_numCols() const
-  { return 24; }
+  MultipleDubins::DgDxlxlp_numCols() const
+  { return 42; }
 
   integer
-  MultipleDubins::DgDxlp_nnz() const
+  MultipleDubins::DgDxlxlp_nnz() const
   { return 0; }
 
   void
-  MultipleDubins::DgDxlp_pattern(
+  MultipleDubins::DgDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -109,16 +137,13 @@ namespace MultipleDubinsDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  MultipleDubins::DgDxlp_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+  MultipleDubins::DgDxlxlp_sparse(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
    // EMPTY!
   }
 
@@ -147,8 +172,9 @@ namespace MultipleDubinsDefine {
 
   void
   MultipleDubins::DgDu_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
@@ -197,7 +223,7 @@ namespace MultipleDubinsDefine {
     NodeType2 const &          LEFT__,
     NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
+    U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
     // no controls to compute
@@ -220,7 +246,7 @@ namespace MultipleDubinsDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_L1];
     real_type t3   = X__[iX_theta1];
     real_type t4   = cos(t3);
@@ -266,7 +292,7 @@ namespace MultipleDubinsDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
 
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 0, i_segment );

@@ -72,85 +72,85 @@ namespace gtocX_2burn_parsDefine {
   real_type
   CLASS::p_guess( real_type ) const {
     guess_setup();
-    return Guess.pOrbital();
+    return Guess.p_orbital();
   }
 
   real_type
   CLASS::f_guess( real_type ) const {
     guess_setup();
-    return Guess.fOrbital();
+    return Guess.f_orbital();
   }
 
   real_type
   CLASS::g_guess( real_type ) const {
     guess_setup();
-    return Guess.gOrbital();
+    return Guess.g_orbital();
   }
 
   real_type
   CLASS::h_guess( real_type ) const {
     guess_setup();
-    return Guess.hOrbital();
+    return Guess.h_orbital();
   }
 
   real_type
   CLASS::k_guess( real_type ) const {
     guess_setup();
-    return Guess.kOrbital();
+    return Guess.k_orbital();
   }
 
   real_type
   CLASS::L_guess( real_type t, real_type t0 ) const {
     guess_setup();
-    return Guess.Lorbital( t0, t );
+    return Guess.L_orbital( t0, t );
   }
 
-  real_type CLASS::X_begin   ( real_type t ) const { return From->xPosition( t ); }
-  real_type CLASS::X_begin_D ( real_type t ) const { return From->xVelocity( t ); }
-  real_type CLASS::X_begin_DD( real_type t ) const { return From->xAcceleration( t ); }
+  real_type CLASS::X_begin   ( real_type t ) const { return From->x_position( t ); }
+  real_type CLASS::X_begin_D ( real_type t ) const { return From->x_velocity( t ); }
+  real_type CLASS::X_begin_DD( real_type t ) const { return From->x_acceleration( t ); }
 
-  real_type CLASS::Y_begin   ( real_type t ) const { return From->yPosition( t ); }
-  real_type CLASS::Y_begin_D ( real_type t ) const { return From->yVelocity( t ); }
-  real_type CLASS::Y_begin_DD( real_type t ) const { return From->yAcceleration( t ); }
+  real_type CLASS::Y_begin   ( real_type t ) const { return From->y_position( t ); }
+  real_type CLASS::Y_begin_D ( real_type t ) const { return From->y_velocity( t ); }
+  real_type CLASS::Y_begin_DD( real_type t ) const { return From->y_acceleration( t ); }
 
-  real_type CLASS::Z_begin   ( real_type t ) const { return From->zPosition( t ); }
-  real_type CLASS::Z_begin_D ( real_type t ) const { return From->zVelocity( t ); }
-  real_type CLASS::Z_begin_DD( real_type t ) const { return From->zAcceleration( t ); }
+  real_type CLASS::Z_begin   ( real_type t ) const { return From->z_position( t ); }
+  real_type CLASS::Z_begin_D ( real_type t ) const { return From->z_velocity( t ); }
+  real_type CLASS::Z_begin_DD( real_type t ) const { return From->z_acceleration( t ); }
 
-  real_type CLASS::VX_begin   ( real_type t ) const { return From->xVelocity( t ); }
-  real_type CLASS::VX_begin_D ( real_type t ) const { return From->xAcceleration( t ); }
-  real_type CLASS::VX_begin_DD( real_type t ) const { return From->xJerk( t ); }
+  real_type CLASS::VX_begin   ( real_type t ) const { return From->x_velocity( t ); }
+  real_type CLASS::VX_begin_D ( real_type t ) const { return From->x_acceleration( t ); }
+  real_type CLASS::VX_begin_DD( real_type t ) const { return From->x_jerk( t ); }
 
-  real_type CLASS::VY_begin   ( real_type t ) const { return From->yVelocity( t ); }
-  real_type CLASS::VY_begin_D ( real_type t ) const { return From->yAcceleration( t ); }
-  real_type CLASS::VY_begin_DD( real_type t ) const { return From->yJerk( t ); }
+  real_type CLASS::VY_begin   ( real_type t ) const { return From->y_velocity( t ); }
+  real_type CLASS::VY_begin_D ( real_type t ) const { return From->y_acceleration( t ); }
+  real_type CLASS::VY_begin_DD( real_type t ) const { return From->y_jerk( t ); }
 
-  real_type CLASS::VZ_begin   ( real_type t ) const { return From->zVelocity( t ); }
-  real_type CLASS::VZ_begin_D ( real_type t ) const { return From->zAcceleration( t ); }
-  real_type CLASS::VZ_begin_DD( real_type t ) const { return From->zJerk( t ); }
+  real_type CLASS::VZ_begin   ( real_type t ) const { return From->z_velocity( t ); }
+  real_type CLASS::VZ_begin_D ( real_type t ) const { return From->z_acceleration( t ); }
+  real_type CLASS::VZ_begin_DD( real_type t ) const { return From->z_jerk( t ); }
 
-  real_type CLASS::X_end   ( real_type t ) const { return To->xPosition( t ); }
-  real_type CLASS::X_end_D ( real_type t ) const { return To->xVelocity( t ); }
-  real_type CLASS::X_end_DD( real_type t ) const { return To->xAcceleration( t ); }
+  real_type CLASS::X_end   ( real_type t ) const { return To->x_position( t ); }
+  real_type CLASS::X_end_D ( real_type t ) const { return To->x_velocity( t ); }
+  real_type CLASS::X_end_DD( real_type t ) const { return To->x_acceleration( t ); }
 
-  real_type CLASS::Y_end   ( real_type t ) const { return To->yPosition( t ); }
-  real_type CLASS::Y_end_D ( real_type t ) const { return To->yVelocity( t ); }
-  real_type CLASS::Y_end_DD( real_type t ) const { return To->yAcceleration( t ); }
+  real_type CLASS::Y_end   ( real_type t ) const { return To->y_position( t ); }
+  real_type CLASS::Y_end_D ( real_type t ) const { return To->y_velocity( t ); }
+  real_type CLASS::Y_end_DD( real_type t ) const { return To->y_acceleration( t ); }
 
-  real_type CLASS::Z_end   ( real_type t ) const { return To->zPosition( t ); }
-  real_type CLASS::Z_end_D ( real_type t ) const { return To->zVelocity( t ); }
-  real_type CLASS::Z_end_DD( real_type t ) const { return To->zAcceleration( t ); }
+  real_type CLASS::Z_end   ( real_type t ) const { return To->z_position( t ); }
+  real_type CLASS::Z_end_D ( real_type t ) const { return To->z_velocity( t ); }
+  real_type CLASS::Z_end_DD( real_type t ) const { return To->z_acceleration( t ); }
 
-  real_type CLASS::VX_end   ( real_type t ) const { return To->xVelocity( t ); }
-  real_type CLASS::VX_end_D ( real_type t ) const { return To->xAcceleration( t ); }
-  real_type CLASS::VX_end_DD( real_type t ) const { return To->xJerk( t ); }
+  real_type CLASS::VX_end   ( real_type t ) const { return To->x_velocity( t ); }
+  real_type CLASS::VX_end_D ( real_type t ) const { return To->x_acceleration( t ); }
+  real_type CLASS::VX_end_DD( real_type t ) const { return To->x_jerk( t ); }
 
-  real_type CLASS::VY_end   ( real_type t ) const { return To->yVelocity( t ); }
-  real_type CLASS::VY_end_D ( real_type t ) const { return To->yAcceleration( t ); }
-  real_type CLASS::VY_end_DD( real_type t ) const { return To->yJerk( t ); }
+  real_type CLASS::VY_end   ( real_type t ) const { return To->y_velocity( t ); }
+  real_type CLASS::VY_end_D ( real_type t ) const { return To->y_acceleration( t ); }
+  real_type CLASS::VY_end_DD( real_type t ) const { return To->y_jerk( t ); }
 
-  real_type CLASS::VZ_end   ( real_type t ) const { return To->zVelocity( t ); }
-  real_type CLASS::VZ_end_D ( real_type t ) const { return To->zAcceleration( t ); }
-  real_type CLASS::VZ_end_DD( real_type t ) const { return To->zJerk( t ); }
+  real_type CLASS::VZ_end   ( real_type t ) const { return To->z_velocity( t ); }
+  real_type CLASS::VZ_end_D ( real_type t ) const { return To->z_acceleration( t ); }
+  real_type CLASS::VZ_end_DD( real_type t ) const { return To->z_jerk( t ); }
 
 }

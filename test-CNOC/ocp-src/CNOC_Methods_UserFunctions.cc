@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_UserFunctions.cc                                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -41,9 +41,9 @@ using Mechatronix::ToolPath2D;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_nominalFeed_R(___dummy___) segmentRight.feedReferenceRate()
-#define ALIAS_nominalFeed_L(___dummy___) segmentLeft.feedReferenceRate()
-#define ALIAS_nominalFeed(___dummy___) segment.feedReferenceRate()
+#define ALIAS_nominalFeed_R(___dummy___) segmentRight.feed_reference_rate()
+#define ALIAS_nominalFeed_L(___dummy___) segmentLeft.feed_reference_rate()
+#define ALIAS_nominalFeed(___dummy___) segment.feed_reference_rate()
 #define ALIAS_yLimitRight_R(__t1, __t2) segmentRight.y_ISO( __t1, __t2)
 #define ALIAS_yLimitRight_L(__t1, __t2) segmentLeft.y_ISO( __t1, __t2)
 #define ALIAS_yLimitRight(__t1, __t2) segment.y_ISO( __t1, __t2)
@@ -98,9 +98,9 @@ using Mechatronix::ToolPath2D;
 #define ALIAS_kappa_DD(__t1) segment.curvature_DD( __t1)
 #define ALIAS_kappa_D(__t1) segment.curvature_D( __t1)
 #define ALIAS_kappa(__t1) segment.curvature( __t1)
-#define ALIAS_lenSeg_R(___dummy___) segmentRight.ssLength()
-#define ALIAS_lenSeg_L(___dummy___) segmentLeft.ssLength()
-#define ALIAS_lenSeg(___dummy___) segment.ssLength()
+#define ALIAS_lenSeg_R(___dummy___) segmentRight.ss_length()
+#define ALIAS_lenSeg_L(___dummy___) segmentLeft.ss_length()
+#define ALIAS_lenSeg(___dummy___) segment.ss_length()
 #define ALIAS_ay_limit_DD(__t1) ay_limit.DD( __t1)
 #define ALIAS_ay_limit_D(__t1) ay_limit.D( __t1)
 #define ALIAS_ax_limit_DD(__t1) ax_limit.DD( __t1)

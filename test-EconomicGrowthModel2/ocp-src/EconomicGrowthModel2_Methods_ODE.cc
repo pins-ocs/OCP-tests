@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_ODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,7 +77,7 @@ namespace EconomicGrowthModel2Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_T];
     result__[ 0   ] = t2 * X__[iX_y1];
     real_type t3   = U__[iU_u];
@@ -134,7 +134,7 @@ namespace EconomicGrowthModel2Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_T];
     result__[ 1   ] = X__[iX_y1];
     real_type t1   = U__[iU_u];
@@ -153,7 +153,7 @@ namespace EconomicGrowthModel2Define {
     real_type t11  = result__[5];
     result__[ 7   ] = t9 * t4 * t11;
     result__[ 8   ] = t9 * t6 * t11;
-    result__[ 9   ] = t9 * t8;
+    result__[ 9   ] = t8 * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 10, i_segment );
   }
@@ -226,7 +226,7 @@ namespace EconomicGrowthModel2Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q(X__[iX_x1], X__[iX_x2]);
     result__[ 0   ] = X__[iX_T] * t3;
     result__[ 1   ] = -result__[0];
@@ -276,7 +276,7 @@ namespace EconomicGrowthModel2Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;

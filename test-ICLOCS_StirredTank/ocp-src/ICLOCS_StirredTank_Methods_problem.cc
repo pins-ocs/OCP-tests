@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_problem.cc                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,34 +79,6 @@ namespace ICLOCS_StirredTankDefine {
    |
   \*/
 
-#if 0
-  real_type
-  ICLOCS_StirredTank::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer        i_cell = CELL__.i_cell;
-    real_type const * Q__ = CELL__.qM;
-    real_type const * X__ = CELL__.xM;
-    real_type const * L__ = CELL__.lambdaM;
-    real_type const * U__ = CELL__.uM;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = tfbound(t1);
-    real_type t3   = X__[iX_x1];
-    real_type t4   = x1bound(t3);
-    real_type t5   = X__[iX_x2];
-    real_type t6   = x2bound(t5);
-    real_type t7   = U__[iU_u];
-    real_type t8   = uControl(t7, 0, 2);
-    real_type t15  = 1.0 / ModelPars[iM_theta];
-    real_type t22  = exp(-1.0 / t5 * ModelPars[iM_En]);
-    real_type t23  = t22 * t3 * ModelPars[iM_k];
-    real_type result__ = t2 + t4 + t6 + t8 + t1 * ModelPars[iM_wT] + (t15 * (1 - t3) - t23) * t1 * L__[iL_lambda1__xo] + (t15 * (ModelPars[iM_Tf] - t5) + t23 - (t5 - ModelPars[iM_Tc]) * t7 * ModelPars[iM_a]) * t1 * L__[iL_lambda2__xo];
-    return result__;
-  }
-#else
   real_type
   ICLOCS_StirredTank::H_eval(
     NodeType2 const    & NODE__,
@@ -117,7 +89,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = tfbound(t1);
     real_type t3   = X__[iX_x1];
@@ -135,7 +107,6 @@ namespace ICLOCS_StirredTankDefine {
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -153,7 +124,7 @@ namespace ICLOCS_StirredTankDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = tfbound(P__[iP_T]);
     real_type t4   = x1bound(X__[iX_x1]);
     real_type t6   = x2bound(X__[iX_x2]);
@@ -175,7 +146,7 @@ namespace ICLOCS_StirredTankDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = uControl(U__[iU_u], 0, 2);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
@@ -200,7 +171,7 @@ namespace ICLOCS_StirredTankDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = ModelPars[iM_wT] * P__[iP_T];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
@@ -228,8 +199,8 @@ namespace ICLOCS_StirredTankDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = ModelPars[iM_w];
     real_type t5   = pow(XL__[iX_x1] - ModelPars[iM_x1_i], 2);
     real_type t10  = pow(XL__[iX_x2] - ModelPars[iM_x2_i], 2);
@@ -245,11 +216,11 @@ namespace ICLOCS_StirredTankDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  ICLOCS_StirredTank::DmayerDx_numEqns() const
-  { return 4; }
+  ICLOCS_StirredTank::DmayerDxxp_numEqns() const
+  { return 5; }
 
   void
-  ICLOCS_StirredTank::DmayerDx_eval(
+  ICLOCS_StirredTank::DmayerDxxp_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -261,41 +232,16 @@ namespace ICLOCS_StirredTankDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = ModelPars[iM_w];
     result__[ 0   ] = 2 * (XL__[iX_x1] - ModelPars[iM_x1_i]) * t1;
     result__[ 1   ] = 2 * (XL__[iX_x2] - ModelPars[iM_x2_i]) * t1;
     result__[ 2   ] = 2 * (XR__[iX_x1] - ModelPars[iM_x1_f]) * t1;
     result__[ 3   ] = 2 * (XR__[iX_x2] - ModelPars[iM_x2_f]) * t1;
+    result__[ 4   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_StirredTank::DmayerDp_numEqns() const
-  { return 1; }
-
-  void
-  ICLOCS_StirredTank::DmayerDp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDp_eval", 1, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 5, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -321,7 +267,7 @@ namespace ICLOCS_StirredTankDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_x1bound_D(X__[iX_x1]);
     result__[ 1   ] = ALIAS_x2bound_D(X__[iX_x2]);
     if ( m_debug )
@@ -344,7 +290,7 @@ namespace ICLOCS_StirredTankDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_tfbound_D(P__[iP_T]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJDp_eval", 1, i_segment );
@@ -366,7 +312,7 @@ namespace ICLOCS_StirredTankDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
@@ -389,7 +335,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type      s,
     Q_pointer_type result__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -477,8 +423,8 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
     result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
     result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
@@ -533,8 +479,8 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;

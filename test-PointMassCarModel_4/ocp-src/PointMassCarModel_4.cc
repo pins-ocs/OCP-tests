@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4.cc                                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -217,7 +217,7 @@ namespace PointMassCarModel_4Define {
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
-    setupNames(
+    setup_names(
       numPvars,                 namesPvars,
       numXvars,                 namesXvars,
       numLvars,                 namesLvars,
@@ -248,7 +248,7 @@ namespace PointMassCarModel_4Define {
   //       |_|
   */
   void
-  PointMassCarModel_4::updateContinuation(
+  PointMassCarModel_4::update_continuation(
     integer   phase,
     real_type old_s,
     real_type s
@@ -263,7 +263,7 @@ namespace PointMassCarModel_4Define {
     );
     UTILS_ASSERT(
       0 <= old_s && old_s < s && s <= 1,
-      "PointMassCarModel_4::updateContinuation( phase number={}, old_s={}, s={} ) "
+      "PointMassCarModel_4::update_continuation( phase number={}, old_s={}, s={} ) "
       "must be 0 <= old_s < s <= 1\n",
       phase, old_s, s
     );
@@ -272,7 +272,7 @@ namespace PointMassCarModel_4Define {
       case 1: continuationStep1( s ); break;
       default:
         UTILS_ERROR(
-          "PointMassCarModel_4::updateContinuation( phase number={}, old_s={}, s={} )"
+          "PointMassCarModel_4::update_continuation( phase number={}, old_s={}, s={} )"
           " phase N.{} is not defined\n",
           phase, old_s, s, phase
         );
@@ -404,7 +404,7 @@ namespace PointMassCarModel_4Define {
     v__fxControl.setup( gc("v__fxControl") );
     v__OmegaControl.setup( gc("v__OmegaControl") );
     // setup iterative solver
-    this->setupControlSolver( gc_data );
+    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -495,12 +495,12 @@ namespace PointMassCarModel_4Define {
     this->setupUserMappedFunctions( gc );
     this->setupUserClasses( gc );
     this->setupPointers( gc );
-    this->setupBC( gc );
+    this->setup_BC( gc );
     this->setupControls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pRoad, gc );
-    this->infoBC();
+    this->info_BC();
     this->infoClasses();
     this->info();
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 9/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -72,7 +72,7 @@ namespace Brachiostocrona2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     real_type t2   = P__[iP_T];
@@ -152,7 +152,7 @@ namespace Brachiostocrona2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_theta];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
@@ -185,7 +185,7 @@ namespace Brachiostocrona2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_theta];
     real_type t8   = P__[iP_T];
     real_type t10  = X__[iX_v];
@@ -231,7 +231,7 @@ namespace Brachiostocrona2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
     real_type t4   = U__[iU_theta];
     real_type t5   = sin(t4);
@@ -276,7 +276,7 @@ namespace Brachiostocrona2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t4   = U__[iU_theta];
     real_type t5   = sin(t4);
@@ -311,7 +311,7 @@ namespace Brachiostocrona2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_TimePositive_D(P__[iP_T]);
     real_type t4   = X__[iX_v];
     real_type t6   = U__[iU_theta];
@@ -358,7 +358,7 @@ namespace Brachiostocrona2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_TimePositive_DD(P__[iP_T]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,1, i_segment );
@@ -385,7 +385,7 @@ namespace Brachiostocrona2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
     result__[ 2   ] = ModelPars[iM_mass] * L__[iL_lambda3__xo];
@@ -478,7 +478,7 @@ namespace Brachiostocrona2Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
     result__[ 2   ] = ModelPars[iM_mass] * V__[2];

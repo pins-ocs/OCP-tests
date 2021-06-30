@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,8 +84,8 @@ namespace EconomicGrowthModelDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1] - ModelPars[iM_x1_i];
     result__[ 1   ] = XL__[iX_x2] - ModelPars[iM_x2_i];
     real_type t7   = Q(XR__[iX_x1], XR__[iX_x2]);
@@ -97,19 +97,19 @@ namespace EconomicGrowthModelDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  EconomicGrowthModel::DboundaryConditionsDx_numRows() const
+  EconomicGrowthModel::DboundaryConditionsDxxp_numRows() const
   { return 3; }
 
   integer
-  EconomicGrowthModel::DboundaryConditionsDx_numCols() const
+  EconomicGrowthModel::DboundaryConditionsDxxp_numCols() const
   { return 6; }
 
   integer
-  EconomicGrowthModel::DboundaryConditionsDx_nnz() const
+  EconomicGrowthModel::DboundaryConditionsDxxp_nnz() const
   { return 4; }
 
   void
-  EconomicGrowthModel::DboundaryConditionsDx_pattern(
+  EconomicGrowthModel::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -120,7 +120,7 @@ namespace EconomicGrowthModelDefine {
   }
 
   void
-  EconomicGrowthModel::DboundaryConditionsDx_sparse(
+  EconomicGrowthModel::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -132,8 +132,8 @@ namespace EconomicGrowthModelDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     real_type t1   = XR__[iX_x1];
@@ -141,39 +141,7 @@ namespace EconomicGrowthModelDefine {
     result__[ 2   ] = Q_D_1(t1, t2);
     result__[ 3   ] = Q_D_2(t1, t2);
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel::DboundaryConditionsDp_numRows() const
-  { return 3; }
-
-  integer
-  EconomicGrowthModel::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  EconomicGrowthModel::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  EconomicGrowthModel::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  EconomicGrowthModel::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -198,8 +166,8 @@ namespace EconomicGrowthModelDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = LL__[iL_lambda3__xo];
@@ -218,19 +186,19 @@ namespace EconomicGrowthModelDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  EconomicGrowthModel::DadjointBCDx_numRows() const
+  EconomicGrowthModel::DadjointBCDxxp_numRows() const
   { return 6; }
 
   integer
-  EconomicGrowthModel::DadjointBCDx_numCols() const
+  EconomicGrowthModel::DadjointBCDxxp_numCols() const
   { return 6; }
 
   integer
-  EconomicGrowthModel::DadjointBCDx_nnz() const
+  EconomicGrowthModel::DadjointBCDxxp_nnz() const
   { return 4; }
 
   void
-  EconomicGrowthModel::DadjointBCDx_pattern(
+  EconomicGrowthModel::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -241,7 +209,7 @@ namespace EconomicGrowthModelDefine {
   }
 
   void
-  EconomicGrowthModel::DadjointBCDx_sparse(
+  EconomicGrowthModel::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -256,8 +224,8 @@ namespace EconomicGrowthModelDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[2];
     real_type t2   = XR__[iX_x1];
     real_type t3   = XR__[iX_x2];
@@ -269,41 +237,8 @@ namespace EconomicGrowthModelDefine {
     real_type t6   = Q_D_2_2(t2, t3);
     result__[ 3   ] = t6 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 4, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel::DadjointBCDp_numRows() const
-  { return 6; }
-
-  integer
-  EconomicGrowthModel::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  EconomicGrowthModel::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  EconomicGrowthModel::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  EconomicGrowthModel::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: EconomicGrowthModel_Methods_boundary_conditions.cc

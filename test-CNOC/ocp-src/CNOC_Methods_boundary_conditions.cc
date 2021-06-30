@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_boundary_conditions.cc                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -41,9 +41,9 @@ using Mechatronix::ToolPath2D;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_nominalFeed_R(___dummy___) segmentRight.feedReferenceRate()
-#define ALIAS_nominalFeed_L(___dummy___) segmentLeft.feedReferenceRate()
-#define ALIAS_nominalFeed(___dummy___) segment.feedReferenceRate()
+#define ALIAS_nominalFeed_R(___dummy___) segmentRight.feed_reference_rate()
+#define ALIAS_nominalFeed_L(___dummy___) segmentLeft.feed_reference_rate()
+#define ALIAS_nominalFeed(___dummy___) segment.feed_reference_rate()
 #define ALIAS_yLimitRight_R(__t1, __t2) segmentRight.y_ISO( __t1, __t2)
 #define ALIAS_yLimitRight_L(__t1, __t2) segmentLeft.y_ISO( __t1, __t2)
 #define ALIAS_yLimitRight(__t1, __t2) segment.y_ISO( __t1, __t2)
@@ -98,9 +98,9 @@ using Mechatronix::ToolPath2D;
 #define ALIAS_kappa_DD(__t1) segment.curvature_DD( __t1)
 #define ALIAS_kappa_D(__t1) segment.curvature_D( __t1)
 #define ALIAS_kappa(__t1) segment.curvature( __t1)
-#define ALIAS_lenSeg_R(___dummy___) segmentRight.ssLength()
-#define ALIAS_lenSeg_L(___dummy___) segmentLeft.ssLength()
-#define ALIAS_lenSeg(___dummy___) segment.ssLength()
+#define ALIAS_lenSeg_R(___dummy___) segmentRight.ss_length()
+#define ALIAS_lenSeg_L(___dummy___) segmentLeft.ss_length()
+#define ALIAS_lenSeg(___dummy___) segment.ss_length()
 #define ALIAS_ay_limit_DD(__t1) ay_limit.DD( __t1)
 #define ALIAS_ay_limit_D(__t1) ay_limit.D( __t1)
 #define ALIAS_ax_limit_DD(__t1) ax_limit.DD( __t1)
@@ -165,8 +165,8 @@ namespace CNOCDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->getSegmentByIndex(i_segment_left);
-    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->getSegmentByIndex(i_segment_right);
+    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
+    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_n] - ModelPars[iM_n_i];
     result__[ 1   ] = XL__[iX_vs] - ModelPars[iM_vs_i];
     result__[ 2   ] = XL__[iX_vn] - ModelPars[iM_vn_i];
@@ -186,19 +186,19 @@ namespace CNOCDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  CNOC::DboundaryConditionsDx_numRows() const
+  CNOC::DboundaryConditionsDxxp_numRows() const
   { return 12; }
 
   integer
-  CNOC::DboundaryConditionsDx_numCols() const
+  CNOC::DboundaryConditionsDxxp_numCols() const
   { return 14; }
 
   integer
-  CNOC::DboundaryConditionsDx_nnz() const
+  CNOC::DboundaryConditionsDxxp_nnz() const
   { return 12; }
 
   void
-  CNOC::DboundaryConditionsDx_pattern(
+  CNOC::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -217,7 +217,7 @@ namespace CNOCDefine {
   }
 
   void
-  CNOC::DboundaryConditionsDx_sparse(
+  CNOC::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -229,8 +229,8 @@ namespace CNOCDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->getSegmentByIndex(i_segment_left);
-    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->getSegmentByIndex(i_segment_right);
+    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
+    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -244,39 +244,7 @@ namespace CNOCDefine {
     result__[ 10  ] = 1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 12, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::DboundaryConditionsDp_numRows() const
-  { return 12; }
-
-  integer
-  CNOC::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  CNOC::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  CNOC::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  CNOC::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -301,8 +269,8 @@ namespace CNOCDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->getSegmentByIndex(i_segment_left);
-    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->getSegmentByIndex(i_segment_right);
+    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
+    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[10] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[0] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[1] + LL__[iL_lambda3__xo];
@@ -324,26 +292,26 @@ namespace CNOCDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  CNOC::DadjointBCDx_numRows() const
+  CNOC::DadjointBCDxxp_numRows() const
   { return 14; }
 
   integer
-  CNOC::DadjointBCDx_numCols() const
+  CNOC::DadjointBCDxxp_numCols() const
   { return 14; }
 
   integer
-  CNOC::DadjointBCDx_nnz() const
+  CNOC::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  CNOC::DadjointBCDx_pattern(
+  CNOC::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  CNOC::DadjointBCDx_sparse(
+  CNOC::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -352,39 +320,6 @@ namespace CNOCDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::DadjointBCDp_numRows() const
-  { return 14; }
-
-  integer
-  CNOC::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  CNOC::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  CNOC::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  CNOC::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: CNOC_Methods_boundary_conditions.cc

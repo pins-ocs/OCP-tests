@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_boundary_conditions.cc                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,8 @@ namespace vanDerPolDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1];
     result__[ 1   ] = XL__[iX_x2] - 1;
     if ( m_debug )
@@ -93,19 +93,19 @@ namespace vanDerPolDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  vanDerPol::DboundaryConditionsDx_numRows() const
+  vanDerPol::DboundaryConditionsDxxp_numRows() const
   { return 2; }
 
   integer
-  vanDerPol::DboundaryConditionsDx_numCols() const
+  vanDerPol::DboundaryConditionsDxxp_numCols() const
   { return 4; }
 
   integer
-  vanDerPol::DboundaryConditionsDx_nnz() const
+  vanDerPol::DboundaryConditionsDxxp_nnz() const
   { return 2; }
 
   void
-  vanDerPol::DboundaryConditionsDx_pattern(
+  vanDerPol::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -114,7 +114,7 @@ namespace vanDerPolDefine {
   }
 
   void
-  vanDerPol::DboundaryConditionsDx_sparse(
+  vanDerPol::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -126,44 +126,12 @@ namespace vanDerPolDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 2, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  vanDerPol::DboundaryConditionsDp_numRows() const
-  { return 2; }
-
-  integer
-  vanDerPol::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  vanDerPol::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  vanDerPol::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  vanDerPol::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -188,8 +156,8 @@ namespace vanDerPolDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = -LR__[iL_lambda1__xo];
@@ -201,26 +169,26 @@ namespace vanDerPolDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  vanDerPol::DadjointBCDx_numRows() const
+  vanDerPol::DadjointBCDxxp_numRows() const
   { return 4; }
 
   integer
-  vanDerPol::DadjointBCDx_numCols() const
+  vanDerPol::DadjointBCDxxp_numCols() const
   { return 4; }
 
   integer
-  vanDerPol::DadjointBCDx_nnz() const
+  vanDerPol::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  vanDerPol::DadjointBCDx_pattern(
+  vanDerPol::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  vanDerPol::DadjointBCDx_sparse(
+  vanDerPol::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -229,39 +197,6 @@ namespace vanDerPolDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  vanDerPol::DadjointBCDp_numRows() const
-  { return 4; }
-
-  integer
-  vanDerPol::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  vanDerPol::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  vanDerPol::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  vanDerPol::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: vanDerPol_Methods_boundary_conditions.cc

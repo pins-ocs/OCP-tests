@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumFuelOrbitRaising_Methods_boundary_conditions.cc         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,8 +71,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1] - 1;
     result__[ 1   ] = XL__[iX_x2];
     result__[ 2   ] = XL__[iX_x3] - 1;
@@ -86,19 +86,19 @@ namespace MinimumFuelOrbitRaisingDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MinimumFuelOrbitRaising::DboundaryConditionsDx_numRows() const
+  MinimumFuelOrbitRaising::DboundaryConditionsDxxp_numRows() const
   { return 5; }
 
   integer
-  MinimumFuelOrbitRaising::DboundaryConditionsDx_numCols() const
+  MinimumFuelOrbitRaising::DboundaryConditionsDxxp_numCols() const
   { return 6; }
 
   integer
-  MinimumFuelOrbitRaising::DboundaryConditionsDx_nnz() const
+  MinimumFuelOrbitRaising::DboundaryConditionsDxxp_nnz() const
   { return 6; }
 
   void
-  MinimumFuelOrbitRaising::DboundaryConditionsDx_pattern(
+  MinimumFuelOrbitRaising::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -111,7 +111,7 @@ namespace MinimumFuelOrbitRaisingDefine {
   }
 
   void
-  MinimumFuelOrbitRaising::DboundaryConditionsDx_sparse(
+  MinimumFuelOrbitRaising::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -123,8 +123,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -133,39 +133,7 @@ namespace MinimumFuelOrbitRaisingDefine {
     result__[ 4   ] = t1 * t1;
     result__[ 5   ] = 2 * t1 * XR__[iX_x1];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 6, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MinimumFuelOrbitRaising::DboundaryConditionsDp_numRows() const
-  { return 5; }
-
-  integer
-  MinimumFuelOrbitRaising::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  MinimumFuelOrbitRaising::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  MinimumFuelOrbitRaising::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  MinimumFuelOrbitRaising::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -190,8 +158,8 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
@@ -208,19 +176,19 @@ namespace MinimumFuelOrbitRaisingDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MinimumFuelOrbitRaising::DadjointBCDx_numRows() const
+  MinimumFuelOrbitRaising::DadjointBCDxxp_numRows() const
   { return 6; }
 
   integer
-  MinimumFuelOrbitRaising::DadjointBCDx_numCols() const
+  MinimumFuelOrbitRaising::DadjointBCDxxp_numCols() const
   { return 6; }
 
   integer
-  MinimumFuelOrbitRaising::DadjointBCDx_nnz() const
+  MinimumFuelOrbitRaising::DadjointBCDxxp_nnz() const
   { return 3; }
 
   void
-  MinimumFuelOrbitRaising::DadjointBCDx_pattern(
+  MinimumFuelOrbitRaising::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -230,7 +198,7 @@ namespace MinimumFuelOrbitRaisingDefine {
   }
 
   void
-  MinimumFuelOrbitRaising::DadjointBCDx_sparse(
+  MinimumFuelOrbitRaising::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -245,48 +213,15 @@ namespace MinimumFuelOrbitRaisingDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[4];
     result__[ 0   ] = 2 * XR__[iX_x3] * t1;
     result__[ 1   ] = result__[0];
     result__[ 2   ] = 2 * t1 * XR__[iX_x1];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 3, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 3, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MinimumFuelOrbitRaising::DadjointBCDp_numRows() const
-  { return 6; }
-
-  integer
-  MinimumFuelOrbitRaising::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  MinimumFuelOrbitRaising::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  MinimumFuelOrbitRaising::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  MinimumFuelOrbitRaising::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: MinimumFuelOrbitRaising_Methods_boundary_conditions.cc

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: TwoPhaseSchwartz_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 3/6/2021                                         #
+#  version: 1.0   date 5/7/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsilon0 = 0.001
-epsilon  = epsilon0
 tol0     = 0.1
 tol      = tol0
+epsilon0 = 0.001
+epsilon  = epsilon0
 epsi0    = 0.1
 epsi     = epsi0
 
@@ -46,10 +46,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = false
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = false
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "TwoPhaseSchwartz_dump"
@@ -99,7 +101,7 @@ mechatronix do |data|
 
     # choose solves: Hyness, NewtonDumped
     # ===================================
-    :solver => "Hyness",
+    :solver => "NewtonDumped",
     # ===================================
 
     # solver parameters

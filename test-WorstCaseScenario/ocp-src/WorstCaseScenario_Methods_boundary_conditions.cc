@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods_boundary_conditions.cc               |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,8 @@ namespace WorstCaseScenarioDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x] - ModelPars[iM_x_i];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 1, i_segment_left, i_segment_right );
@@ -92,19 +92,19 @@ namespace WorstCaseScenarioDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  WorstCaseScenario::DboundaryConditionsDx_numRows() const
+  WorstCaseScenario::DboundaryConditionsDxxp_numRows() const
   { return 1; }
 
   integer
-  WorstCaseScenario::DboundaryConditionsDx_numCols() const
+  WorstCaseScenario::DboundaryConditionsDxxp_numCols() const
   { return 2; }
 
   integer
-  WorstCaseScenario::DboundaryConditionsDx_nnz() const
+  WorstCaseScenario::DboundaryConditionsDxxp_nnz() const
   { return 1; }
 
   void
-  WorstCaseScenario::DboundaryConditionsDx_pattern(
+  WorstCaseScenario::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -112,7 +112,7 @@ namespace WorstCaseScenarioDefine {
   }
 
   void
-  WorstCaseScenario::DboundaryConditionsDx_sparse(
+  WorstCaseScenario::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -124,43 +124,11 @@ namespace WorstCaseScenarioDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 1, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DboundaryConditionsDp_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  WorstCaseScenario::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  WorstCaseScenario::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 1, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -185,8 +153,8 @@ namespace WorstCaseScenarioDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = 1 - LR__[iL_lambda1__xo];
     if ( m_debug )
@@ -196,26 +164,26 @@ namespace WorstCaseScenarioDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  WorstCaseScenario::DadjointBCDx_numRows() const
+  WorstCaseScenario::DadjointBCDxxp_numRows() const
   { return 2; }
 
   integer
-  WorstCaseScenario::DadjointBCDx_numCols() const
+  WorstCaseScenario::DadjointBCDxxp_numCols() const
   { return 2; }
 
   integer
-  WorstCaseScenario::DadjointBCDx_nnz() const
+  WorstCaseScenario::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  WorstCaseScenario::DadjointBCDx_pattern(
+  WorstCaseScenario::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  WorstCaseScenario::DadjointBCDx_sparse(
+  WorstCaseScenario::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -224,39 +192,6 @@ namespace WorstCaseScenarioDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DadjointBCDp_numRows() const
-  { return 2; }
-
-  integer
-  WorstCaseScenario::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  WorstCaseScenario::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  WorstCaseScenario::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: WorstCaseScenario_Methods_boundary_conditions.cc

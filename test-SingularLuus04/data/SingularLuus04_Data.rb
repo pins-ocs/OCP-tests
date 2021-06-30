@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus04_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 3/6/2021                                         #
+#  version: 1.0   date 5/7/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-Tf        = 6
 epsilon_X = 1e-07
-u_tol     = 0.01
+Tf        = 6
 u_epsi    = 0.01
+u_tol     = 0.01
 
 mechatronix do |data|
 
@@ -44,10 +44,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = false
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = false
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "SingularLuus04_dump"
@@ -97,7 +99,7 @@ mechatronix do |data|
 
     # choose solves: Hyness, NewtonDumped
     # ===================================
-    :solver => "Hyness",
+    :solver => "NewtonDumped",
     # ===================================
 
     # solver parameters

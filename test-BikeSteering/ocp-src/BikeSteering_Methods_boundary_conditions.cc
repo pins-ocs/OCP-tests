@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_boundary_conditions.cc                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,8 +84,8 @@ namespace BikeSteeringDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_omega] - ModelPars[iM_omega_i];
     result__[ 1   ] = XL__[iX_phi] - ModelPars[iM_phi_i];
     result__[ 2   ] = XR__[iX_omega] - ModelPars[iM_omega_f];
@@ -97,19 +97,19 @@ namespace BikeSteeringDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BikeSteering::DboundaryConditionsDx_numRows() const
+  BikeSteering::DboundaryConditionsDxxp_numRows() const
   { return 4; }
 
   integer
-  BikeSteering::DboundaryConditionsDx_numCols() const
+  BikeSteering::DboundaryConditionsDxxp_numCols() const
   { return 6; }
 
   integer
-  BikeSteering::DboundaryConditionsDx_nnz() const
+  BikeSteering::DboundaryConditionsDxxp_nnz() const
   { return 4; }
 
   void
-  BikeSteering::DboundaryConditionsDx_pattern(
+  BikeSteering::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -120,7 +120,7 @@ namespace BikeSteeringDefine {
   }
 
   void
-  BikeSteering::DboundaryConditionsDx_sparse(
+  BikeSteering::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -132,46 +132,14 @@ namespace BikeSteeringDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BikeSteering::DboundaryConditionsDp_numRows() const
-  { return 4; }
-
-  integer
-  BikeSteering::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  BikeSteering::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  BikeSteering::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BikeSteering::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -196,8 +164,8 @@ namespace BikeSteeringDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t2   = ModelPars[iM_Ix];
     result__[ 0   ] = t2 * LL__[iL_lambda2__xo] + OMEGA__[0];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda1__xo];
@@ -212,26 +180,26 @@ namespace BikeSteeringDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BikeSteering::DadjointBCDx_numRows() const
+  BikeSteering::DadjointBCDxxp_numRows() const
   { return 6; }
 
   integer
-  BikeSteering::DadjointBCDx_numCols() const
+  BikeSteering::DadjointBCDxxp_numCols() const
   { return 6; }
 
   integer
-  BikeSteering::DadjointBCDx_nnz() const
+  BikeSteering::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  BikeSteering::DadjointBCDx_pattern(
+  BikeSteering::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  BikeSteering::DadjointBCDx_sparse(
+  BikeSteering::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -240,39 +208,6 @@ namespace BikeSteeringDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BikeSteering::DadjointBCDp_numRows() const
-  { return 6; }
-
-  integer
-  BikeSteering::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  BikeSteering::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  BikeSteering::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BikeSteering::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: BikeSteering_Methods_boundary_conditions.cc

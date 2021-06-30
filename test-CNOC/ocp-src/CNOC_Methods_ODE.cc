@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_ODE.cc                                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -41,9 +41,9 @@ using Mechatronix::ToolPath2D;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_nominalFeed_R(___dummy___) segmentRight.feedReferenceRate()
-#define ALIAS_nominalFeed_L(___dummy___) segmentLeft.feedReferenceRate()
-#define ALIAS_nominalFeed(___dummy___) segment.feedReferenceRate()
+#define ALIAS_nominalFeed_R(___dummy___) segmentRight.feed_reference_rate()
+#define ALIAS_nominalFeed_L(___dummy___) segmentLeft.feed_reference_rate()
+#define ALIAS_nominalFeed(___dummy___) segment.feed_reference_rate()
 #define ALIAS_yLimitRight_R(__t1, __t2) segmentRight.y_ISO( __t1, __t2)
 #define ALIAS_yLimitRight_L(__t1, __t2) segmentLeft.y_ISO( __t1, __t2)
 #define ALIAS_yLimitRight(__t1, __t2) segment.y_ISO( __t1, __t2)
@@ -98,9 +98,9 @@ using Mechatronix::ToolPath2D;
 #define ALIAS_kappa_DD(__t1) segment.curvature_DD( __t1)
 #define ALIAS_kappa_D(__t1) segment.curvature_D( __t1)
 #define ALIAS_kappa(__t1) segment.curvature( __t1)
-#define ALIAS_lenSeg_R(___dummy___) segmentRight.ssLength()
-#define ALIAS_lenSeg_L(___dummy___) segmentLeft.ssLength()
-#define ALIAS_lenSeg(___dummy___) segment.ssLength()
+#define ALIAS_lenSeg_R(___dummy___) segmentRight.ss_length()
+#define ALIAS_lenSeg_L(___dummy___) segmentLeft.ss_length()
+#define ALIAS_lenSeg(___dummy___) segment.ss_length()
 #define ALIAS_ay_limit_DD(__t1) ay_limit.DD( __t1)
 #define ALIAS_ay_limit_D(__t1) ay_limit.D( __t1)
 #define ALIAS_ax_limit_DD(__t1) ax_limit.DD( __t1)
@@ -158,7 +158,7 @@ namespace CNOCDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_vs];
     real_type t4   = ALIAS_kappa(X__[iX_s]);
     real_type t7   = 1.0 / (-t4 * X__[iX_n] + 1);
@@ -239,7 +239,7 @@ namespace CNOCDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_vs];
     real_type t2   = X__[iX_n];
     real_type t3   = X__[iX_s];
@@ -368,7 +368,7 @@ namespace CNOCDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_coV];
     result__[ 1   ] = result__[0];
     if ( m_debug )
@@ -419,7 +419,7 @@ namespace CNOCDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;

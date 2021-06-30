@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -74,7 +74,7 @@ namespace HangGliderDefine {
     X_pointer_type       X__,
     L_pointer_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_Tguess] * Q__[iQ_zeta];
     real_type t4   = ModelPars[iM_vx_i];
     X__[ iX_x  ] = t4 * t3 + ModelPars[iM_x_i];
@@ -97,43 +97,115 @@ namespace HangGliderDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
-  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
-  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
-  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
-  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__node__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        ipos,i_segment,MSG,a-b                                        \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__node__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        ipos,i_segment,MSG,a-b                                        \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__cell__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        icell,i_segment,MSG,a-b                                       \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__cell__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        icell,i_segment,MSG,a-b                                       \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__pars__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__pars__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__params__lt(A,B,MSG)                         \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__params__le(A,B,MSG)                         \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
 
 
 
 
 
-  // pars_check_strings
-  #define Xoptima__message_pars_check_0 "0 < T"
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   HangGlider::p_check( P_const_pointer_type P__ ) const {
-    Xoptima__check__pars__lt(0, P__[iP_T], Xoptima__message_pars_check_0);
-    return true;
-  }
-
-  bool
-  HangGlider::xlambda_check_node(
-    integer              ipos,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
-  ) const {
     return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  HangGlider::xlambda_check_cell(
-    integer              icell,
+  HangGlider::xlambda_check_node(
+    integer              ipos,
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
@@ -174,7 +246,7 @@ namespace HangGliderDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-      MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+      MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_cL ] = 0.7e0;
     if ( m_debug )
@@ -232,7 +304,7 @@ namespace HangGliderDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     cLControl.check_range(U__[iU_cL], ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
     return ok;
   }

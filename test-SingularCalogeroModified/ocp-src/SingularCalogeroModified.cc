@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified.cc                                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -144,7 +144,7 @@ namespace SingularCalogeroModifiedDefine {
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
-    setupNames(
+    setup_names(
       numPvars,                 namesPvars,
       numXvars,                 namesXvars,
       numLvars,                 namesLvars,
@@ -175,7 +175,7 @@ namespace SingularCalogeroModifiedDefine {
   //       |_|
   */
   void
-  SingularCalogeroModified::updateContinuation(
+  SingularCalogeroModified::update_continuation(
     integer   phase,
     real_type old_s,
     real_type s
@@ -190,7 +190,7 @@ namespace SingularCalogeroModifiedDefine {
     );
     UTILS_ASSERT(
       0 <= old_s && old_s < s && s <= 1,
-      "SingularCalogeroModified::updateContinuation( phase number={}, old_s={}, s={} ) "
+      "SingularCalogeroModified::update_continuation( phase number={}, old_s={}, s={} ) "
       "must be 0 <= old_s < s <= 1\n",
       phase, old_s, s
     );
@@ -198,7 +198,7 @@ namespace SingularCalogeroModifiedDefine {
       case 0: continuationStep0( s ); break;
       default:
         UTILS_ERROR(
-          "SingularCalogeroModified::updateContinuation( phase number={}, old_s={}, s={} )"
+          "SingularCalogeroModified::update_continuation( phase number={}, old_s={}, s={} )"
           " phase N.{} is not defined\n",
           phase, old_s, s, phase
         );
@@ -299,7 +299,7 @@ namespace SingularCalogeroModifiedDefine {
     GenericContainer const & gc = gc_data("Controls");
     uControl.setup( gc("uControl") );
     // setup iterative solver
-    this->setupControlSolver( gc_data );
+    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -381,12 +381,12 @@ namespace SingularCalogeroModifiedDefine {
     this->setupUserMappedFunctions( gc );
     this->setupUserClasses( gc );
     this->setupPointers( gc );
-    this->setupBC( gc );
+    this->setup_BC( gc );
     this->setupControls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
-    this->infoBC();
+    this->info_BC();
     this->infoClasses();
     this->info();
   }

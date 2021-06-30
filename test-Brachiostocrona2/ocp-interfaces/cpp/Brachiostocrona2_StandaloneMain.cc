@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 9/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -52,10 +52,10 @@ main() {
     // Auxiliary values
     real_type epsi0 = 1;
     real_type epsi = epsi0;
-    real_type yf = -2;
     real_type xf = 5;
-    real_type theta0 = atan2(yf,xf);
     real_type g = 9.81;
+    real_type yf = -2;
+    real_type theta0 = atan2(yf,xf);
     real_type Tf = (-2.0*yf/g)^(1/2.0);
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
@@ -109,7 +109,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
@@ -216,7 +216,7 @@ Brachiostocrona2_data.Mesh["segments"][0]["n"] = 500;
       file.open( "data/Brachiostocrona2_OCP_not_converged.txt" );
     }
     file.precision(18);
-    Mechatronix::saveOCPsolutionToStream(gc_solution,file);
+    Mechatronix::save_OCP_solution_to_stream(gc_solution,file);
     file.close();
     cout.precision(18);
     GenericContainer const & target = gc_solution("target");

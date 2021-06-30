@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider.cc                                                    |
  |                                                                       |
- |  version: 1.0   date 5/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -173,7 +173,7 @@ namespace AlpRiderDefine {
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
-    setupNames(
+    setup_names(
       numPvars,                 namesPvars,
       numXvars,                 namesXvars,
       numLvars,                 namesLvars,
@@ -204,7 +204,7 @@ namespace AlpRiderDefine {
   //       |_|
   */
   void
-  AlpRider::updateContinuation(
+  AlpRider::update_continuation(
     integer   phase,
     real_type old_s,
     real_type s
@@ -219,7 +219,7 @@ namespace AlpRiderDefine {
     );
     UTILS_ASSERT(
       0 <= old_s && old_s < s && s <= 1,
-      "AlpRider::updateContinuation( phase number={}, old_s={}, s={} ) "
+      "AlpRider::update_continuation( phase number={}, old_s={}, s={} ) "
       "must be 0 <= old_s < s <= 1\n",
       phase, old_s, s
     );
@@ -227,7 +227,7 @@ namespace AlpRiderDefine {
       case 0: continuationStep0( s ); break;
       default:
         UTILS_ERROR(
-          "AlpRider::updateContinuation( phase number={}, old_s={}, s={} )"
+          "AlpRider::update_continuation( phase number={}, old_s={}, s={} )"
           " phase N.{} is not defined\n",
           phase, old_s, s, phase
         );
@@ -333,7 +333,7 @@ namespace AlpRiderDefine {
   void
   AlpRider::setupControls( GenericContainer const & gc_data ) {
     // no Control penalties, setup only iterative solver
-    this->setupControlSolver( gc_data );
+    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -415,12 +415,12 @@ namespace AlpRiderDefine {
     this->setupUserMappedFunctions( gc );
     this->setupUserClasses( gc );
     this->setupPointers( gc );
-    this->setupBC( gc );
+    this->setup_BC( gc );
     this->setupControls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
-    this->infoBC();
+    this->info_BC();
     this->infoClasses();
     this->info();
   }

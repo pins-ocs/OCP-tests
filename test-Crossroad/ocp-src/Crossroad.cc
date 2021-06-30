@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -174,7 +174,7 @@ namespace CrossroadDefine {
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
-    setupNames(
+    setup_names(
       numPvars,                 namesPvars,
       numXvars,                 namesXvars,
       numLvars,                 namesLvars,
@@ -205,7 +205,7 @@ namespace CrossroadDefine {
   //       |_|
   */
   void
-  Crossroad::updateContinuation(
+  Crossroad::update_continuation(
     integer   phase,
     real_type old_s,
     real_type s
@@ -338,7 +338,7 @@ namespace CrossroadDefine {
     GenericContainer const & gc = gc_data("Controls");
     jerkControl.setup( gc("jerkControl") );
     // setup iterative solver
-    this->setupControlSolver( gc_data );
+    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -427,12 +427,12 @@ namespace CrossroadDefine {
     this->setupUserMappedFunctions( gc );
     this->setupUserClasses( gc );
     this->setupPointers( gc );
-    this->setupBC( gc );
+    this->setup_BC( gc );
     this->setupControls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
-    this->infoBC();
+    this->info_BC();
     this->infoClasses();
     this->info();
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type Tf = 6;
     real_type epsilon_X = 1e-07;
-    real_type u_tol = 0.01;
+    real_type Tf = 6;
     real_type u_epsi = 0.01;
+    real_type u_tol = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -105,7 +105,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
@@ -206,7 +206,7 @@ SingularLuus04_data.Mesh["segments"][0]["length"] = Tf;
       file.open( "data/SingularLuus04_OCP_not_converged.txt" );
     }
     file.precision(18);
-    Mechatronix::saveOCPsolutionToStream(gc_solution,file);
+    Mechatronix::save_OCP_solution_to_stream(gc_solution,file);
     file.close();
     cout.precision(18);
     GenericContainer const & target = gc_solution("target");

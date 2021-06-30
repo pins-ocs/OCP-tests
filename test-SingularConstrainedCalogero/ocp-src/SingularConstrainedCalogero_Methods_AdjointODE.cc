@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_AdjointODE.cc              |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -81,7 +81,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = ALIAS_uMaxBound_D(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
     result__[ 0   ] = -t5;
     if ( m_debug )
@@ -122,7 +122,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_uMaxBound_DD(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
@@ -186,7 +186,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u];
     real_type t3   = Q__[iQ_zeta];
     real_type t5   = ALIAS_uMaxBound_D(t1 - 1 - X__[iX_x] + t3);
@@ -231,7 +231,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = ALIAS_uMaxBound_DD(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
     result__[ 0   ] = -t5;
     if ( m_debug )
@@ -350,7 +350,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"eta_eval",1, i_segment );
@@ -441,7 +441,7 @@ namespace SingularConstrainedCalogeroDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "nu_eval", 1, i_segment );

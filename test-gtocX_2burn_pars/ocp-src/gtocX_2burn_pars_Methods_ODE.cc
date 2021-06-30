@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -68,7 +68,7 @@ namespace gtocX_2burn_parsDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_time_f] - ModelPars[iM_time_i];
     real_type t4   = P__[iP_p];
     real_type t5   = sqrt(t4);
@@ -133,7 +133,7 @@ namespace gtocX_2burn_parsDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_time_f] - ModelPars[iM_time_i];
     real_type t4   = P__[iP_p];
     real_type t5   = sqrt(t4);
@@ -157,15 +157,15 @@ namespace gtocX_2burn_parsDefine {
     real_type t29  = acceleration_r(t15, t7);
     real_type t30  = t29 * t11;
     real_type t31  = cos(t14);
-    result__[ 2   ] = t31 * t30 * t10 + t21 * t19 * t25;
+    result__[ 2   ] = t10 * t30 * t31 + t19 * t25 * t21;
     result__[ 3   ] = -t21 * t31 * t18;
     result__[ 4   ] = -t21 * t31 * t22;
-    result__[ 5   ] = t19 * t30 * t10 - t21 * t31 * t25;
-    real_type t48  = (t31 * t12 + t19 * t13 + 1) * t3;
+    result__[ 5   ] = t10 * t19 * t30 - t25 * t31 * t21;
+    real_type t48  = (t12 * t31 + t13 * t19 + 1) * t3;
     real_type t51  = t8 / t5 / t4;
     result__[ 6   ] = 2 * t31 * t51 * t48;
     result__[ 7   ] = 2 * t19 * t51 * t48;
-    result__[ 8   ] = 2 * (-t19 * t12 + t31 * t13) * t51 * t48;
+    result__[ 8   ] = 2 * (-t12 * t19 + t13 * t31) * t51 * t48;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 9, i_segment );
   }
@@ -206,7 +206,7 @@ namespace gtocX_2burn_parsDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_time_f] - ModelPars[iM_time_i];
     real_type t4   = P__[iP_p];
     real_type t5   = sqrt(t4);
@@ -231,7 +231,7 @@ namespace gtocX_2burn_parsDefine {
     result__[ 0   ] = t19 * t18 * t11 / 2 + t29 * t19 * t27;
     real_type t31  = cos(t15);
     result__[ 1   ] = -t31 * t18 * t11 / 2 - t29 * t31 * t27;
-    real_type t41  = pow(t31 * t13 + t19 * t14 + 1, 2);
+    real_type t41  = pow(t13 * t31 + t19 * t14 + 1, 2);
     real_type t43  = t4 * t4;
     result__[ 2   ] = -3.0 / 2.0 / t43 * t41 * t3 * t6 * t9;
     if ( m_debug )
@@ -311,7 +311,7 @@ namespace gtocX_2burn_parsDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;

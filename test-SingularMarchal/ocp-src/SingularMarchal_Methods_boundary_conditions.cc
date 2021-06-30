@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Methods_boundary_conditions.cc                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,8 @@ namespace SingularMarchalDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x] - ModelPars[iM_x_i];
     result__[ 1   ] = XL__[iX_y] - ModelPars[iM_y_i];
     result__[ 2   ] = XR__[iX_x] - ModelPars[iM_x_f];
@@ -95,19 +95,19 @@ namespace SingularMarchalDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularMarchal::DboundaryConditionsDx_numRows() const
+  SingularMarchal::DboundaryConditionsDxxp_numRows() const
   { return 4; }
 
   integer
-  SingularMarchal::DboundaryConditionsDx_numCols() const
+  SingularMarchal::DboundaryConditionsDxxp_numCols() const
   { return 4; }
 
   integer
-  SingularMarchal::DboundaryConditionsDx_nnz() const
+  SingularMarchal::DboundaryConditionsDxxp_nnz() const
   { return 4; }
 
   void
-  SingularMarchal::DboundaryConditionsDx_pattern(
+  SingularMarchal::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -118,7 +118,7 @@ namespace SingularMarchalDefine {
   }
 
   void
-  SingularMarchal::DboundaryConditionsDx_sparse(
+  SingularMarchal::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -130,46 +130,14 @@ namespace SingularMarchalDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularMarchal::DboundaryConditionsDp_numRows() const
-  { return 4; }
-
-  integer
-  SingularMarchal::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularMarchal::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  SingularMarchal::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  SingularMarchal::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -194,8 +162,8 @@ namespace SingularMarchalDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] - LR__[iL_lambda1__xo];
@@ -207,26 +175,26 @@ namespace SingularMarchalDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularMarchal::DadjointBCDx_numRows() const
+  SingularMarchal::DadjointBCDxxp_numRows() const
   { return 4; }
 
   integer
-  SingularMarchal::DadjointBCDx_numCols() const
+  SingularMarchal::DadjointBCDxxp_numCols() const
   { return 4; }
 
   integer
-  SingularMarchal::DadjointBCDx_nnz() const
+  SingularMarchal::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  SingularMarchal::DadjointBCDx_pattern(
+  SingularMarchal::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  SingularMarchal::DadjointBCDx_sparse(
+  SingularMarchal::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -235,39 +203,6 @@ namespace SingularMarchalDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularMarchal::DadjointBCDp_numRows() const
-  { return 4; }
-
-  integer
-  SingularMarchal::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularMarchal::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  SingularMarchal::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  SingularMarchal::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: SingularMarchal_Methods_boundary_conditions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,8 @@ namespace GunnAndThomasDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1] - ModelPars[iM_x1_i];
     result__[ 1   ] = XL__[iX_x2] - ModelPars[iM_x2_i];
     if ( m_debug )
@@ -93,19 +93,19 @@ namespace GunnAndThomasDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  GunnAndThomas::DboundaryConditionsDx_numRows() const
+  GunnAndThomas::DboundaryConditionsDxxp_numRows() const
   { return 2; }
 
   integer
-  GunnAndThomas::DboundaryConditionsDx_numCols() const
+  GunnAndThomas::DboundaryConditionsDxxp_numCols() const
   { return 4; }
 
   integer
-  GunnAndThomas::DboundaryConditionsDx_nnz() const
+  GunnAndThomas::DboundaryConditionsDxxp_nnz() const
   { return 2; }
 
   void
-  GunnAndThomas::DboundaryConditionsDx_pattern(
+  GunnAndThomas::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -114,7 +114,7 @@ namespace GunnAndThomasDefine {
   }
 
   void
-  GunnAndThomas::DboundaryConditionsDx_sparse(
+  GunnAndThomas::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -126,44 +126,12 @@ namespace GunnAndThomasDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 2, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DboundaryConditionsDp_numRows() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  GunnAndThomas::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  GunnAndThomas::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  GunnAndThomas::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -188,8 +156,8 @@ namespace GunnAndThomasDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = 1 - LR__[iL_lambda1__xo];
@@ -201,26 +169,26 @@ namespace GunnAndThomasDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  GunnAndThomas::DadjointBCDx_numRows() const
+  GunnAndThomas::DadjointBCDxxp_numRows() const
   { return 4; }
 
   integer
-  GunnAndThomas::DadjointBCDx_numCols() const
+  GunnAndThomas::DadjointBCDxxp_numCols() const
   { return 4; }
 
   integer
-  GunnAndThomas::DadjointBCDx_nnz() const
+  GunnAndThomas::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  GunnAndThomas::DadjointBCDx_pattern(
+  GunnAndThomas::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  GunnAndThomas::DadjointBCDx_sparse(
+  GunnAndThomas::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -229,39 +197,6 @@ namespace GunnAndThomasDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DadjointBCDp_numRows() const
-  { return 4; }
-
-  integer
-  GunnAndThomas::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  GunnAndThomas::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  GunnAndThomas::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  GunnAndThomas::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: GunnAndThomas_Methods_boundary_conditions.cc

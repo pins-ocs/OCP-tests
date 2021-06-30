@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_boundary_conditions.cc                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -91,8 +91,8 @@ namespace TwoStageCSTRDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1] - ModelPars[iM_x1_i];
     result__[ 1   ] = XL__[iX_x2] - ModelPars[iM_x2_i];
     result__[ 2   ] = XL__[iX_x3] - ModelPars[iM_x3_i];
@@ -104,19 +104,19 @@ namespace TwoStageCSTRDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoStageCSTR::DboundaryConditionsDx_numRows() const
+  TwoStageCSTR::DboundaryConditionsDxxp_numRows() const
   { return 4; }
 
   integer
-  TwoStageCSTR::DboundaryConditionsDx_numCols() const
+  TwoStageCSTR::DboundaryConditionsDxxp_numCols() const
   { return 8; }
 
   integer
-  TwoStageCSTR::DboundaryConditionsDx_nnz() const
+  TwoStageCSTR::DboundaryConditionsDxxp_nnz() const
   { return 4; }
 
   void
-  TwoStageCSTR::DboundaryConditionsDx_pattern(
+  TwoStageCSTR::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -127,7 +127,7 @@ namespace TwoStageCSTRDefine {
   }
 
   void
-  TwoStageCSTR::DboundaryConditionsDx_sparse(
+  TwoStageCSTR::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -139,46 +139,14 @@ namespace TwoStageCSTRDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DboundaryConditionsDp_numRows() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoStageCSTR::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  TwoStageCSTR::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  TwoStageCSTR::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -203,8 +171,8 @@ namespace TwoStageCSTRDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
@@ -220,26 +188,26 @@ namespace TwoStageCSTRDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoStageCSTR::DadjointBCDx_numRows() const
+  TwoStageCSTR::DadjointBCDxxp_numRows() const
   { return 8; }
 
   integer
-  TwoStageCSTR::DadjointBCDx_numCols() const
+  TwoStageCSTR::DadjointBCDxxp_numCols() const
   { return 8; }
 
   integer
-  TwoStageCSTR::DadjointBCDx_nnz() const
+  TwoStageCSTR::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  TwoStageCSTR::DadjointBCDx_pattern(
+  TwoStageCSTR::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  TwoStageCSTR::DadjointBCDx_sparse(
+  TwoStageCSTR::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -248,39 +216,6 @@ namespace TwoStageCSTRDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DadjointBCDp_numRows() const
-  { return 8; }
-
-  integer
-  TwoStageCSTR::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoStageCSTR::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  TwoStageCSTR::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  TwoStageCSTR::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: TwoStageCSTR_Methods_boundary_conditions.cc

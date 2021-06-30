@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,8 +71,8 @@ namespace MaximumAscentDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_r] - ModelPars[iM_r0_bar];
     result__[ 1   ] = XL__[iX_u] - ModelPars[iM_u0_bar];
     result__[ 2   ] = XL__[iX_v] - ModelPars[iM_v0_bar];
@@ -87,19 +87,19 @@ namespace MaximumAscentDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MaximumAscent::DboundaryConditionsDx_numRows() const
+  MaximumAscent::DboundaryConditionsDxxp_numRows() const
   { return 6; }
 
   integer
-  MaximumAscent::DboundaryConditionsDx_numCols() const
+  MaximumAscent::DboundaryConditionsDxxp_numCols() const
   { return 8; }
 
   integer
-  MaximumAscent::DboundaryConditionsDx_nnz() const
+  MaximumAscent::DboundaryConditionsDxxp_nnz() const
   { return 7; }
 
   void
-  MaximumAscent::DboundaryConditionsDx_pattern(
+  MaximumAscent::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -113,7 +113,7 @@ namespace MaximumAscentDefine {
   }
 
   void
-  MaximumAscent::DboundaryConditionsDx_sparse(
+  MaximumAscent::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -125,8 +125,8 @@ namespace MaximumAscentDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -136,39 +136,7 @@ namespace MaximumAscentDefine {
     result__[ 5   ] = 1.0 / t3 * XR__[iX_v] / 2;
     result__[ 6   ] = t3;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 7, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DboundaryConditionsDp_numRows() const
-  { return 6; }
-
-  integer
-  MaximumAscent::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  MaximumAscent::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  MaximumAscent::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 7, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -193,8 +161,8 @@ namespace MaximumAscentDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
@@ -212,19 +180,19 @@ namespace MaximumAscentDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MaximumAscent::DadjointBCDx_numRows() const
+  MaximumAscent::DadjointBCDxxp_numRows() const
   { return 8; }
 
   integer
-  MaximumAscent::DadjointBCDx_numCols() const
+  MaximumAscent::DadjointBCDxxp_numCols() const
   { return 8; }
 
   integer
-  MaximumAscent::DadjointBCDx_nnz() const
+  MaximumAscent::DadjointBCDxxp_nnz() const
   { return 3; }
 
   void
-  MaximumAscent::DadjointBCDx_pattern(
+  MaximumAscent::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -234,7 +202,7 @@ namespace MaximumAscentDefine {
   }
 
   void
-  MaximumAscent::DadjointBCDx_sparse(
+  MaximumAscent::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -249,8 +217,8 @@ namespace MaximumAscentDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[5];
     real_type t4   = XR__[iX_r];
     real_type t5   = sqrt(t4);
@@ -259,41 +227,8 @@ namespace MaximumAscentDefine {
     result__[ 1   ] = t1 * t2 / 2;
     result__[ 2   ] = result__[1];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 3, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 3, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DadjointBCDp_numRows() const
-  { return 8; }
-
-  integer
-  MaximumAscent::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  MaximumAscent::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  MaximumAscent::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: MaximumAscent_Methods_boundary_conditions.cc

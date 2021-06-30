@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,21 +79,43 @@ namespace BangBangFredundantDefine {
 
   void
   BangBangFredundant::g_eval(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[6], LM__[6];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_maxAF];
-    real_type t3   = ALIAS_aF1Control_D_1(U__[iU_aF1], -t2, t2);
-    result__[ 0   ] = t3 + L__[iL_lambda5__xo];
-    real_type t6   = ALIAS_aF2Control_D_1(U__[iU_aF2], -t2, t2);
-    result__[ 1   ] = t6 + L__[iL_lambda6__xo];
+    real_type t3   = ALIAS_aF1Control_D_1(UM__[0], -t2, t2);
+    result__[ 0   ] = t3 + LM__[4];
+    real_type t6   = ALIAS_aF2Control_D_1(UM__[1], -t2, t2);
+    result__[ 1   ] = t6 + LM__[5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -101,44 +123,70 @@ namespace BangBangFredundantDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFredundant::DgDxlp_numRows() const
+  BangBangFredundant::DgDxlxlp_numRows() const
   { return 2; }
 
   integer
-  BangBangFredundant::DgDxlp_numCols() const
-  { return 12; }
+  BangBangFredundant::DgDxlxlp_numCols() const
+  { return 24; }
 
   integer
-  BangBangFredundant::DgDxlp_nnz() const
-  { return 2; }
+  BangBangFredundant::DgDxlxlp_nnz() const
+  { return 4; }
 
   void
-  BangBangFredundant::DgDxlp_pattern(
+  BangBangFredundant::DgDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 10  ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 11  ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 22  ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 11  ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 23  ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFredundant::DgDxlp_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+  BangBangFredundant::DgDxlxlp_sparse(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    result__[ 0   ] = 1;
-    result__[ 1   ] = 1;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[6], LM__[6];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0.500000000000000000e0;
+    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 2   ] = 0.500000000000000000e0;
+    result__[ 3   ] = 0.500000000000000000e0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -168,19 +216,41 @@ namespace BangBangFredundantDefine {
 
   void
   BangBangFredundant::DgDu_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[6], LM__[6];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_maxAF];
-    result__[ 0   ] = ALIAS_aF1Control_D_1_1(U__[iU_aF1], -t2, t2);
-    result__[ 1   ] = ALIAS_aF2Control_D_1_1(U__[iU_aF2], -t2, t2);
+    result__[ 0   ] = ALIAS_aF1Control_D_1_1(UM__[0], -t2, t2);
+    result__[ 1   ] = ALIAS_aF2Control_D_1_1(UM__[1], -t2, t2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -215,9 +285,7 @@ namespace BangBangFredundantDefine {
     real_type const * XR__ = RIGHT__.x;
     real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type QM__[1];
-    real_type XM__[6];
-    real_type LM__[6];
+    real_type QM__[1], XM__[6], LM__[6];
     // Qvars
     QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
@@ -235,7 +303,7 @@ namespace BangBangFredundantDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_maxAF];
     U__[ iU_aF1 ] = aF1Control.solve(-LM__[4], -t2, t2);
     U__[ iU_aF2 ] = aF2Control.solve(-LM__[5], -t2, t2);
@@ -259,7 +327,7 @@ namespace BangBangFredundantDefine {
     NodeType2 const &          LEFT__,
     NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
+    U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
     real_type const * QL__ = LEFT__.q;
@@ -269,9 +337,8 @@ namespace BangBangFredundantDefine {
     real_type const * XR__ = RIGHT__.x;
     real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type QM__[1];
-    real_type XM__[6];
-    real_type LM__[6];
+    // midpoint
+    real_type QM__[1], XM__[6], LM__[6];
     // Qvars
     QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
@@ -289,7 +356,7 @@ namespace BangBangFredundantDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type tmp_0_0 = 0.0e0;
     real_type tmp_1_0 = 0.0e0;
     real_type tmp_0_1 = 0.0e0;
@@ -410,7 +477,7 @@ namespace BangBangFredundantDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_F1];
     real_type t3   = X__[iX_F2];
     real_type t5   = Flim(t2 + t3);
@@ -449,7 +516,7 @@ namespace BangBangFredundantDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_aF1];
     real_type t2   = ModelPars[iM_maxAF];
     real_type t3   = ALIAS_aF1Control_D_1(t1, -t2, t2);
@@ -497,7 +564,7 @@ namespace BangBangFredundantDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_maxAF];
     real_type t3   = ALIAS_aF1Control_D_1_1(U__[iU_aF1], -t2, t2);
     result__[ 0   ] = t3 + 2;

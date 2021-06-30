@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 3/6/2021                                         #
+#  version: 1.0   date 5/7/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,23 +20,23 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_v    = 0.01
-tol_TS    = 0.01
-m_i       = 1
-tol_T     = 0.01
-h_i       = 1
-epsi_T    = 0.01
-g0        = 1
-Tmax      = 3.5*g0*m_i
-epsi_TS   = 0.01
 tol_v     = 0.01
-tol_mass  = 0.01
+g0        = 1
+epsi_TS   = 0.01
+m_i       = 1
+Tmax      = 3.5*g0*m_i
 mc        = 0.6
 m_f       = mc*m_i
+tol_mass  = 0.01
+h_i       = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
 epsi_mass = 0.01
 vc        = 620
+tol_TS    = 0.01
+epsi_v    = 0.01
+epsi_T    = 0.01
 Dc        = 0.5*vc*m_i/g0
-c         = 0.5*(g0*h_i)**(1/2.0)
+tol_T     = 0.01
 
 mechatronix do |data|
 
@@ -57,10 +57,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = false
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = false
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "GoddardRocket_dump"
@@ -110,7 +112,7 @@ mechatronix do |data|
 
     # choose solves: Hyness, NewtonDumped
     # ===================================
-    :solver => "Hyness",
+    :solver => "NewtonDumped",
     # ===================================
 
     # solver parameters
@@ -233,8 +235,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 1000,
+        :length => 1,
       },
     ],
   };

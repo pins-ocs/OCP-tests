@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_boundary_conditions.cc                           |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,8 +84,8 @@ namespace BrakeDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x] - ModelPars[iM_x_i];
     result__[ 1   ] = XL__[iX_v] - ModelPars[iM_v_i];
     result__[ 2   ] = XR__[iX_v] - ModelPars[iM_v_f];
@@ -96,19 +96,19 @@ namespace BrakeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Brake::DboundaryConditionsDx_numRows() const
+  Brake::DboundaryConditionsDxxp_numRows() const
   { return 3; }
 
   integer
-  Brake::DboundaryConditionsDx_numCols() const
-  { return 4; }
+  Brake::DboundaryConditionsDxxp_numCols() const
+  { return 5; }
 
   integer
-  Brake::DboundaryConditionsDx_nnz() const
+  Brake::DboundaryConditionsDxxp_nnz() const
   { return 3; }
 
   void
-  Brake::DboundaryConditionsDx_pattern(
+  Brake::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -118,7 +118,7 @@ namespace BrakeDefine {
   }
 
   void
-  Brake::DboundaryConditionsDx_sparse(
+  Brake::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -130,45 +130,13 @@ namespace BrakeDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 3, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brake::DboundaryConditionsDp_numRows() const
-  { return 3; }
-
-  integer
-  Brake::DboundaryConditionsDp_numCols() const
-  { return 1; }
-
-  integer
-  Brake::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  Brake::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Brake::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 3, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -193,8 +161,8 @@ namespace BrakeDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = 1 - LR__[iL_lambda1__xo];
@@ -207,26 +175,26 @@ namespace BrakeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Brake::DadjointBCDx_numRows() const
+  Brake::DadjointBCDxxp_numRows() const
   { return 5; }
 
   integer
-  Brake::DadjointBCDx_numCols() const
-  { return 4; }
+  Brake::DadjointBCDxxp_numCols() const
+  { return 5; }
 
   integer
-  Brake::DadjointBCDx_nnz() const
+  Brake::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  Brake::DadjointBCDx_pattern(
+  Brake::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  Brake::DadjointBCDx_sparse(
+  Brake::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -235,39 +203,6 @@ namespace BrakeDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brake::DadjointBCDp_numRows() const
-  { return 5; }
-
-  integer
-  Brake::DadjointBCDp_numCols() const
-  { return 1; }
-
-  integer
-  Brake::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  Brake::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Brake::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: Brake_Methods_boundary_conditions.cc

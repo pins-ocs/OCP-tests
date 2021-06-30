@@ -33,7 +33,7 @@ INFO CLASS = BangBangFtmin
   OMEGA       = Inital = 2, Final = 2, Cyclic = 0
   total       = nZ = 628, UC = 103, Q = 104
   index start = omega = 624, p = 628
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
 Solver Controls:      Newton
@@ -41,36 +41,41 @@ Initializer Controls: Quasi-Newton
 Used threads:         7
 
 
-Hyness --- start iterations ---
-Failed check on cell=0 segment=0: 0 < T(zeta)
-Failed check on cell=0 segment=0: 0 < T(zeta)
-[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[  1,  6] (0.00637  ,0.00704  ) [13.9     ,13.7     ] 0.00707    0: 0
-[  2,  1] (0.00704  ,0.00929  ) [0.719    ,0.557    ] 0.168      0: 3
-[  3,  1] (0.00929  ,0.00419  ) [0.605    ,0.215    ] 0.820      0: 1
-[  4,  1] (0.00419  ,0.000668 ) [0.353    ,0.0350   ] 1.00       0: 1
-[  5,  1] (0.000668 ,6.63e-06 ) [0.0263   ,0.000268 ] 1.00       0: 0
-[  6,  1] (6.63e-06 ,1.29e-09 ) [0.000275 ,4.95e-08 ] 1.00       0: 0
-[  7,  1] (1.29e-09 ,4.94e-17 ) [4.95e-08 ,6.59e-13 ] 1.00       0: 0
+NewtonDumped --- start iterations ---
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=38.579216662500066
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=18.789608331250033
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=1.4737010414062541
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=0.23685052070312707
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 6] ( 0.00637  , 0.00950  ) [   13.9   ,   13.2   ] 0.0156     [solverNewtonDumped]
+[  2, 1] ( 0.00950  , 0.00754  ) [  0.654   ,  0.502   ] 0.250      [solverNewtonDumped]
+[  3, 1] ( 0.00754  , 0.00385  ) [  0.593   ,  0.224   ] 1.00       [solverNewtonDumped]
+[  4, 1] ( 0.00385  , 0.000721 ) [  0.322   ,  0.0968  ] 1.00       [solverNewtonDumped]
+[  5, 1] ( 0.000721 , 4.86e-05 ) [  0.0555  , 0.00253  ] 1.00       [solverNewtonDumped]
+[  6, 1] ( 4.86e-05 , 1.30e-07 ) [ 0.00277  , 5.57e-06 ] 1.00       [solverNewtonDumped]
+[  7, 1] ( 1.30e-07 , 4.38e-13 ) [ 5.59e-06 , 1.66e-11 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 4.37[ms]      timeout        = 0 [ms]
+Elapsed Time   = 4.18[ms]      timeout        = 0 [ms]
 iteration      = 7             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 628
 max acc. iter. = 800           N. System pars = 103
-Converged      = YES           Memory Used    = 78Kb (+87bytes)
------------------------ CONTINUATION -----------------------
+Converged      = YES           Memory Used    = 67Kb (+88bytes)
+----------------- CONTINUATION PARAMETERS ------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
 Few iterations = 8         
 ----------------------- EVALUATIONS ------------------------
-Function       = 11            Jacobian       = 7         
-Factorization  = 7             Inversion      = 17        
------------------------- USER INFO -------------------------
-last ||d||_inf = 3.1356e-12    last||d1||_inf = 1.5771e-07
-last ||f||_inf = 5.2469e-09    last||f1||_1   = 1.2933e-09
+Function       = 9             Jacobian       = 7         
+Factorization  = 7             Inversion      = 15        
+------------------- NEWTON DUMPED SOLVER -------------------
+last ||d||_inf = 7.5534e-11    last||d1||_inf = 2.1621e-05
+last ||f||_inf = 2.0276e-12    last||f||_1    = 4.3846e-13
 ------------------------------------------------------------
-
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,17 +50,17 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type T = 0.68;
+    real_type days1 = 30;
     real_type days = 1;
     real_type mu = 398600441800000;
-    real_type days1 = 30;
+    real_type T = 0.68;
+    real_type tf = 86400*days;
     real_type g0 = 9.80665;
     real_type Isp = 1500;
     real_type mdot = T/g0/Isp;
-    real_type tf = 86400*days;
+    real_type u0 = 0;
     real_type r0 = 6678140;
     real_type v0 = (mu/r0)^(1/2.0);
-    real_type u0 = 0;
     real_type u0_bar = u0/v0;
     integer InfoLevel = 4;
 
@@ -113,7 +113,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
@@ -215,7 +215,7 @@ MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
       file.open( "data/MaximumAscent_OCP_not_converged.txt" );
     }
     file.precision(18);
-    Mechatronix::saveOCPsolutionToStream(gc_solution,file);
+    Mechatronix::save_OCP_solution_to_stream(gc_solution,file);
     file.close();
     cout.precision(18);
     GenericContainer const & target = gc_solution("target");

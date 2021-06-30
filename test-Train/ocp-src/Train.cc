@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train.cc                                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -162,7 +162,7 @@ namespace TrainDefine {
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
-    setupNames(
+    setup_names(
       numPvars,                 namesPvars,
       numXvars,                 namesXvars,
       numLvars,                 namesLvars,
@@ -193,7 +193,7 @@ namespace TrainDefine {
   //       |_|
   */
   void
-  Train::updateContinuation(
+  Train::update_continuation(
     integer   phase,
     real_type old_s,
     real_type s
@@ -208,7 +208,7 @@ namespace TrainDefine {
     );
     UTILS_ASSERT(
       0 <= old_s && old_s < s && s <= 1,
-      "Train::updateContinuation( phase number={}, old_s={}, s={} ) "
+      "Train::update_continuation( phase number={}, old_s={}, s={} ) "
       "must be 0 <= old_s < s <= 1\n",
       phase, old_s, s
     );
@@ -216,7 +216,7 @@ namespace TrainDefine {
       case 0: continuationStep0( s ); break;
       default:
         UTILS_ERROR(
-          "Train::updateContinuation( phase number={}, old_s={}, s={} )"
+          "Train::update_continuation( phase number={}, old_s={}, s={} )"
           " phase N.{} is not defined\n",
           phase, old_s, s, phase
         );
@@ -318,7 +318,7 @@ namespace TrainDefine {
     uaControl.setup( gc("uaControl") );
     ubControl.setup( gc("ubControl") );
     // setup iterative solver
-    this->setupControlSolver( gc_data );
+    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -401,12 +401,12 @@ namespace TrainDefine {
     this->setupUserMappedFunctions( gc );
     this->setupUserClasses( gc );
     this->setupPointers( gc );
-    this->setupBC( gc );
+    this->setup_BC( gc );
     this->setupControls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
-    this->infoBC();
+    this->info_BC();
     this->infoClasses();
     this->info();
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -57,20 +57,34 @@ namespace DidoDefine {
 
   void
   Dido::g_eval(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[iU_theta];
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = UM__[0];
     real_type t3   = sin(t2);
     real_type t8   = cos(t2);
-    result__[ 0   ] = -t3 * L__[iL_lambda1__xo] + t3 * X__[iX_y] + t8 * L__[iL_lambda2__xo];
+    result__[ 0   ] = -t3 * LM__[0] + t3 * XM__[1] + t8 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -78,47 +92,70 @@ namespace DidoDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Dido::DgDxlp_numRows() const
+  Dido::DgDxlxlp_numRows() const
   { return 1; }
 
   integer
-  Dido::DgDxlp_numCols() const
-  { return 4; }
+  Dido::DgDxlxlp_numCols() const
+  { return 8; }
 
   integer
-  Dido::DgDxlp_nnz() const
-  { return 3; }
+  Dido::DgDxlxlp_nnz() const
+  { return 6; }
 
   void
-  Dido::DgDxlp_pattern(
+  Dido::DgDxlxlp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 5   ;
+    iIndex[4 ] = 0   ; jIndex[4 ] = 6   ;
+    iIndex[5 ] = 0   ; jIndex[5 ] = 7   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Dido::DgDxlp_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+  Dido::DgDxlxlp_sparse(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[iU_theta];
-    result__[ 0   ] = sin(t1);
-    result__[ 1   ] = -result__[0];
-    result__[ 2   ] = cos(t1);
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = UM__[0];
+    real_type t2   = sin(t1);
+    result__[ 0   ] = 0.5e0 * t2;
+    real_type t4   = result__[0];
+    result__[ 1   ] = -t4;
+    real_type t3   = cos(t1);
+    result__[ 2   ] = 0.5e0 * t3;
+    result__[ 3   ] = t4;
+    result__[ 4   ] = result__[1];
+    result__[ 5   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -147,20 +184,34 @@ namespace DidoDefine {
 
   void
   Dido::DgDu_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t2   = U__[iU_theta];
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = UM__[0];
     real_type t3   = cos(t2);
     real_type t8   = sin(t2);
-    result__[ 0   ] = -t3 * L__[iL_lambda1__xo] + t3 * X__[iX_y] - t8 * L__[iL_lambda2__xo];
+    result__[ 0   ] = -t3 * LM__[0] + t3 * XM__[1] - t8 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -195,9 +246,7 @@ namespace DidoDefine {
     real_type const * XR__ = RIGHT__.x;
     real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type QM__[1];
-    real_type XM__[2];
-    real_type LM__[2];
+    real_type QM__[1], XM__[2], LM__[2];
     // Qvars
     QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
@@ -207,7 +256,7 @@ namespace DidoDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t7   = atan(LM__[1] / (XM__[1] - LM__[0]));
     U__[ iU_theta ] = -t7;
     if ( m_debug )
@@ -230,7 +279,7 @@ namespace DidoDefine {
     NodeType2 const &          LEFT__,
     NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
+    U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
     real_type const * QL__ = LEFT__.q;
@@ -240,9 +289,8 @@ namespace DidoDefine {
     real_type const * XR__ = RIGHT__.x;
     real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type QM__[1];
-    real_type XM__[2];
-    real_type LM__[2];
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
     // Qvars
     QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
@@ -252,7 +300,7 @@ namespace DidoDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type tmp_0_0 = 0.0e0;
     real_type t1   = LM__[1];
     real_type t4   = XM__[1] - LM__[0];
@@ -296,7 +344,7 @@ namespace DidoDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_theta];
     real_type t3   = cos(t2);
     real_type t5   = pow(V__[0] - t3, 2);
@@ -326,7 +374,7 @@ namespace DidoDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_theta];
     real_type t3   = cos(t2);
     real_type t5   = sin(t2);
@@ -370,7 +418,7 @@ namespace DidoDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_theta];
     real_type t2   = sin(t1);
     real_type t3   = t2 * t2;

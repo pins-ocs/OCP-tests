@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -68,7 +68,7 @@ namespace OrbitTransferDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_tf];
     real_type t3   = t2 * L__[iL_lambda2__xo];
     real_type t4   = ModelPars[iM_T];
@@ -78,7 +78,7 @@ namespace OrbitTransferDefine {
     real_type t10  = 1.0 / t9;
     real_type t14  = t2 * L__[iL_lambda3__xo];
     real_type t15  = cos(t5);
-    result__[ 0   ] = -t10 * t15 * t4 * t14 - t10 * t6 * t4 * t3;
+    result__[ 0   ] = -t10 * t14 * t15 * t4 - t10 * t3 * t4 * t6;
     result__[ 1   ] = 0;
     real_type t19  = X__[iX_v];
     real_type t20  = t19 * t19;
@@ -91,8 +91,8 @@ namespace OrbitTransferDefine {
     result__[ 2   ] = t3 * (2 * ModelPars[iM_mu] * t26 * t23 - t23 * t20) + t23 * t32 * t19 * t14 - t23 * t19 * t37;
     real_type t42  = t26;
     real_type t43  = t42 * t19;
-    result__[ 3   ] = -t43 * t14 + t2 * L__[iL_lambda1__xo];
-    result__[ 4   ] = -t42 * t32 * t14 + 2 * t43 * t3 + t42 * t37;
+    result__[ 3   ] = -t14 * t43 + t2 * L__[iL_lambda1__xo];
+    result__[ 4   ] = -t14 * t32 * t42 + 2 * t3 * t43 + t37 * t42;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }
@@ -139,7 +139,7 @@ namespace OrbitTransferDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_tf];
     real_type t3   = t2 * L__[iL_lambda2__xo];
     real_type t4   = ModelPars[iM_T];
@@ -234,14 +234,15 @@ namespace OrbitTransferDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_tf];
     real_type t4   = ModelPars[iM_T];
     real_type t5   = U__[iU_theta];
     real_type t6   = cos(t5);
     real_type t9   = 1.0 / X__[iX_m];
     real_type t14  = sin(t5);
-    result__[ 0   ] = -t14 * t2 * t4 * t9 * L__[iL_lambda3__xo] + t2 * t4 * t6 * t9 * L__[iL_lambda2__xo];
+    real_type t7   = t2 * t4;
+    result__[ 0   ] = -L__[iL_lambda3__xo] * t7 * t9 * t14 + L__[iL_lambda2__xo] * t7 * t9 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -281,7 +282,7 @@ namespace OrbitTransferDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_tf];
     real_type t4   = ModelPars[iM_T];
     real_type t5   = U__[iU_theta];
@@ -289,7 +290,7 @@ namespace OrbitTransferDefine {
     real_type t9   = X__[iX_m] * X__[iX_m];
     real_type t10  = 1.0 / t9;
     real_type t15  = sin(t5);
-    real_type t7   = t2 * t4;
+    real_type t7   = t4 * t2;
     result__[ 0   ] = L__[iL_lambda3__xo] * t7 * t10 * t15 - L__[iL_lambda2__xo] * t7 * t10 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
@@ -407,7 +408,7 @@ namespace OrbitTransferDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda4__xo];
     result__[ 1   ] = L__[iL_lambda5__xo];
     result__[ 2   ] = L__[iL_lambda1__xo];
@@ -502,7 +503,7 @@ namespace OrbitTransferDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[2];
     result__[ 1   ] = V__[3];
     result__[ 2   ] = V__[4];

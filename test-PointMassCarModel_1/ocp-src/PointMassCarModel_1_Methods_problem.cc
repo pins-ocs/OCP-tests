@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -41,78 +41,78 @@ using Mechatronix::Road2D;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_yV_R(__t1, __t2) segmentRight.isoY( __t1, __t2)
-#define ALIAS_yV_L(__t1, __t2) segmentLeft.isoY( __t1, __t2)
-#define ALIAS_yV(__t1, __t2) segment.isoY( __t1, __t2)
-#define ALIAS_xV_R(__t1, __t2) segmentRight.isoX( __t1, __t2)
-#define ALIAS_xV_L(__t1, __t2) segmentLeft.isoX( __t1, __t2)
-#define ALIAS_xV(__t1, __t2) segment.isoX( __t1, __t2)
-#define ALIAS_yR_R(__t1) segmentRight.isoRightY( __t1)
-#define ALIAS_yR_L(__t1) segmentLeft.isoRightY( __t1)
-#define ALIAS_yR(__t1) segment.isoRightY( __t1)
-#define ALIAS_xR_R(__t1) segmentRight.isoRightX( __t1)
-#define ALIAS_xR_L(__t1) segmentLeft.isoRightX( __t1)
-#define ALIAS_xR(__t1) segment.isoRightX( __t1)
-#define ALIAS_yL_R(__t1) segmentRight.isoLeftY( __t1)
-#define ALIAS_yL_L(__t1) segmentLeft.isoLeftY( __t1)
-#define ALIAS_yL(__t1) segment.isoLeftY( __t1)
-#define ALIAS_xL_R(__t1) segmentRight.isoLeftX( __t1)
-#define ALIAS_xL_L(__t1) segmentLeft.isoLeftX( __t1)
-#define ALIAS_xL(__t1) segment.isoLeftX( __t1)
-#define ALIAS_theta_R_DD(__t1) segmentRight.isoAngle_DD( __t1)
-#define ALIAS_theta_R_D(__t1) segmentRight.isoAngle_D( __t1)
-#define ALIAS_theta_R(__t1) segmentRight.isoAngle( __t1)
-#define ALIAS_theta_L_DD(__t1) segmentLeft.isoAngle_DD( __t1)
-#define ALIAS_theta_L_D(__t1) segmentLeft.isoAngle_D( __t1)
-#define ALIAS_theta_L(__t1) segmentLeft.isoAngle( __t1)
-#define ALIAS_theta_DD(__t1) segment.isoAngle_DD( __t1)
-#define ALIAS_theta_D(__t1) segment.isoAngle_D( __t1)
-#define ALIAS_theta(__t1) segment.isoAngle( __t1)
-#define ALIAS_yLane_R_DD(__t1) segmentRight.isoY_DD( __t1)
-#define ALIAS_yLane_R_D(__t1) segmentRight.isoY_D( __t1)
-#define ALIAS_yLane_R(__t1) segmentRight.isoY( __t1)
-#define ALIAS_yLane_L_DD(__t1) segmentLeft.isoY_DD( __t1)
-#define ALIAS_yLane_L_D(__t1) segmentLeft.isoY_D( __t1)
-#define ALIAS_yLane_L(__t1) segmentLeft.isoY( __t1)
-#define ALIAS_yLane_DD(__t1) segment.isoY_DD( __t1)
-#define ALIAS_yLane_D(__t1) segment.isoY_D( __t1)
-#define ALIAS_yLane(__t1) segment.isoY( __t1)
-#define ALIAS_xLane_R_DD(__t1) segmentRight.isoX_DD( __t1)
-#define ALIAS_xLane_R_D(__t1) segmentRight.isoX_D( __t1)
-#define ALIAS_xLane_R(__t1) segmentRight.isoX( __t1)
-#define ALIAS_xLane_L_DD(__t1) segmentLeft.isoX_DD( __t1)
-#define ALIAS_xLane_L_D(__t1) segmentLeft.isoX_D( __t1)
-#define ALIAS_xLane_L(__t1) segmentLeft.isoX( __t1)
-#define ALIAS_xLane_DD(__t1) segment.isoX_DD( __t1)
-#define ALIAS_xLane_D(__t1) segment.isoX_D( __t1)
-#define ALIAS_xLane(__t1) segment.isoX( __t1)
-#define ALIAS_rightWidth_R_DD(__t1) segmentRight.rightWidth_DD( __t1)
-#define ALIAS_rightWidth_R_D(__t1) segmentRight.rightWidth_D( __t1)
-#define ALIAS_rightWidth_R(__t1) segmentRight.rightWidth( __t1)
-#define ALIAS_rightWidth_L_DD(__t1) segmentLeft.rightWidth_DD( __t1)
-#define ALIAS_rightWidth_L_D(__t1) segmentLeft.rightWidth_D( __t1)
-#define ALIAS_rightWidth_L(__t1) segmentLeft.rightWidth( __t1)
-#define ALIAS_rightWidth_DD(__t1) segment.rightWidth_DD( __t1)
-#define ALIAS_rightWidth_D(__t1) segment.rightWidth_D( __t1)
-#define ALIAS_rightWidth(__t1) segment.rightWidth( __t1)
-#define ALIAS_leftWidth_R_DD(__t1) segmentRight.leftWidth_DD( __t1)
-#define ALIAS_leftWidth_R_D(__t1) segmentRight.leftWidth_D( __t1)
-#define ALIAS_leftWidth_R(__t1) segmentRight.leftWidth( __t1)
-#define ALIAS_leftWidth_L_DD(__t1) segmentLeft.leftWidth_DD( __t1)
-#define ALIAS_leftWidth_L_D(__t1) segmentLeft.leftWidth_D( __t1)
-#define ALIAS_leftWidth_L(__t1) segmentLeft.leftWidth( __t1)
-#define ALIAS_leftWidth_DD(__t1) segment.leftWidth_DD( __t1)
-#define ALIAS_leftWidth_D(__t1) segment.leftWidth_D( __t1)
-#define ALIAS_leftWidth(__t1) segment.leftWidth( __t1)
-#define ALIAS_Kappa_R_DD(__t1) segmentRight.isoCurvature_DD( __t1)
-#define ALIAS_Kappa_R_D(__t1) segmentRight.isoCurvature_D( __t1)
-#define ALIAS_Kappa_R(__t1) segmentRight.isoCurvature( __t1)
-#define ALIAS_Kappa_L_DD(__t1) segmentLeft.isoCurvature_DD( __t1)
-#define ALIAS_Kappa_L_D(__t1) segmentLeft.isoCurvature_D( __t1)
-#define ALIAS_Kappa_L(__t1) segmentLeft.isoCurvature( __t1)
-#define ALIAS_Kappa_DD(__t1) segment.isoCurvature_DD( __t1)
-#define ALIAS_Kappa_D(__t1) segment.isoCurvature_D( __t1)
-#define ALIAS_Kappa(__t1) segment.isoCurvature( __t1)
+#define ALIAS_yV_R(__t1, __t2) segmentRight.iso_y( __t1, __t2)
+#define ALIAS_yV_L(__t1, __t2) segmentLeft.iso_y( __t1, __t2)
+#define ALIAS_yV(__t1, __t2) segment.iso_y( __t1, __t2)
+#define ALIAS_xV_R(__t1, __t2) segmentRight.iso_x( __t1, __t2)
+#define ALIAS_xV_L(__t1, __t2) segmentLeft.iso_x( __t1, __t2)
+#define ALIAS_xV(__t1, __t2) segment.iso_x( __t1, __t2)
+#define ALIAS_yR_R(__t1) segmentRight.iso_right_y( __t1)
+#define ALIAS_yR_L(__t1) segmentLeft.iso_right_y( __t1)
+#define ALIAS_yR(__t1) segment.iso_right_y( __t1)
+#define ALIAS_xR_R(__t1) segmentRight.iso_right_x( __t1)
+#define ALIAS_xR_L(__t1) segmentLeft.iso_right_x( __t1)
+#define ALIAS_xR(__t1) segment.iso_right_x( __t1)
+#define ALIAS_yL_R(__t1) segmentRight.iso_left_y( __t1)
+#define ALIAS_yL_L(__t1) segmentLeft.iso_left_y( __t1)
+#define ALIAS_yL(__t1) segment.iso_left_y( __t1)
+#define ALIAS_xL_R(__t1) segmentRight.iso_left_x( __t1)
+#define ALIAS_xL_L(__t1) segmentLeft.iso_left_x( __t1)
+#define ALIAS_xL(__t1) segment.iso_left_x( __t1)
+#define ALIAS_theta_R_DD(__t1) segmentRight.iso_angle_DD( __t1)
+#define ALIAS_theta_R_D(__t1) segmentRight.iso_angle_D( __t1)
+#define ALIAS_theta_R(__t1) segmentRight.iso_angle( __t1)
+#define ALIAS_theta_L_DD(__t1) segmentLeft.iso_angle_DD( __t1)
+#define ALIAS_theta_L_D(__t1) segmentLeft.iso_angle_D( __t1)
+#define ALIAS_theta_L(__t1) segmentLeft.iso_angle( __t1)
+#define ALIAS_theta_DD(__t1) segment.iso_angle_DD( __t1)
+#define ALIAS_theta_D(__t1) segment.iso_angle_D( __t1)
+#define ALIAS_theta(__t1) segment.iso_angle( __t1)
+#define ALIAS_yLane_R_DD(__t1) segmentRight.iso_y_DD( __t1)
+#define ALIAS_yLane_R_D(__t1) segmentRight.iso_y_D( __t1)
+#define ALIAS_yLane_R(__t1) segmentRight.iso_y( __t1)
+#define ALIAS_yLane_L_DD(__t1) segmentLeft.iso_y_DD( __t1)
+#define ALIAS_yLane_L_D(__t1) segmentLeft.iso_y_D( __t1)
+#define ALIAS_yLane_L(__t1) segmentLeft.iso_y( __t1)
+#define ALIAS_yLane_DD(__t1) segment.iso_y_DD( __t1)
+#define ALIAS_yLane_D(__t1) segment.iso_y_D( __t1)
+#define ALIAS_yLane(__t1) segment.iso_y( __t1)
+#define ALIAS_xLane_R_DD(__t1) segmentRight.iso_x_DD( __t1)
+#define ALIAS_xLane_R_D(__t1) segmentRight.iso_x_D( __t1)
+#define ALIAS_xLane_R(__t1) segmentRight.iso_x( __t1)
+#define ALIAS_xLane_L_DD(__t1) segmentLeft.iso_x_DD( __t1)
+#define ALIAS_xLane_L_D(__t1) segmentLeft.iso_x_D( __t1)
+#define ALIAS_xLane_L(__t1) segmentLeft.iso_x( __t1)
+#define ALIAS_xLane_DD(__t1) segment.iso_x_DD( __t1)
+#define ALIAS_xLane_D(__t1) segment.iso_x_D( __t1)
+#define ALIAS_xLane(__t1) segment.iso_x( __t1)
+#define ALIAS_rightWidth_R_DD(__t1) segmentRight.right_width_DD( __t1)
+#define ALIAS_rightWidth_R_D(__t1) segmentRight.right_width_D( __t1)
+#define ALIAS_rightWidth_R(__t1) segmentRight.right_width( __t1)
+#define ALIAS_rightWidth_L_DD(__t1) segmentLeft.right_width_DD( __t1)
+#define ALIAS_rightWidth_L_D(__t1) segmentLeft.right_width_D( __t1)
+#define ALIAS_rightWidth_L(__t1) segmentLeft.right_width( __t1)
+#define ALIAS_rightWidth_DD(__t1) segment.right_width_DD( __t1)
+#define ALIAS_rightWidth_D(__t1) segment.right_width_D( __t1)
+#define ALIAS_rightWidth(__t1) segment.right_width( __t1)
+#define ALIAS_leftWidth_R_DD(__t1) segmentRight.left_width_DD( __t1)
+#define ALIAS_leftWidth_R_D(__t1) segmentRight.left_width_D( __t1)
+#define ALIAS_leftWidth_R(__t1) segmentRight.left_width( __t1)
+#define ALIAS_leftWidth_L_DD(__t1) segmentLeft.left_width_DD( __t1)
+#define ALIAS_leftWidth_L_D(__t1) segmentLeft.left_width_D( __t1)
+#define ALIAS_leftWidth_L(__t1) segmentLeft.left_width( __t1)
+#define ALIAS_leftWidth_DD(__t1) segment.left_width_DD( __t1)
+#define ALIAS_leftWidth_D(__t1) segment.left_width_D( __t1)
+#define ALIAS_leftWidth(__t1) segment.left_width( __t1)
+#define ALIAS_Kappa_R_DD(__t1) segmentRight.iso_curvature_DD( __t1)
+#define ALIAS_Kappa_R_D(__t1) segmentRight.iso_curvature_D( __t1)
+#define ALIAS_Kappa_R(__t1) segmentRight.iso_curvature( __t1)
+#define ALIAS_Kappa_L_DD(__t1) segmentLeft.iso_curvature_DD( __t1)
+#define ALIAS_Kappa_L_D(__t1) segmentLeft.iso_curvature_D( __t1)
+#define ALIAS_Kappa_L(__t1) segmentLeft.iso_curvature( __t1)
+#define ALIAS_Kappa_DD(__t1) segment.iso_curvature_DD( __t1)
+#define ALIAS_Kappa_D(__t1) segment.iso_curvature_D( __t1)
+#define ALIAS_Kappa(__t1) segment.iso_curvature( __t1)
 #define ALIAS_LimitMinSpeed_DD(__t1) LimitMinSpeed.DD( __t1)
 #define ALIAS_LimitMinSpeed_D(__t1) LimitMinSpeed.D( __t1)
 #define ALIAS_PowerLimit_DD(__t1) PowerLimit.DD( __t1)
@@ -185,47 +185,6 @@ namespace PointMassCarModel_1Define {
    |
   \*/
 
-#if 0
-  real_type
-  PointMassCarModel_1::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer        i_cell = CELL__.i_cell;
-    real_type const * Q__ = CELL__.qM;
-    real_type const * X__ = CELL__.xM;
-    real_type const * L__ = CELL__.lambdaM;
-    real_type const * U__ = CELL__.uM;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
-    real_type t1   = X__[iX_V];
-    real_type t2   = X__[iX_alpha];
-    real_type t3   = X__[iX_n];
-    real_type t4   = Q__[iQ_Kappa];
-    real_type t5   = inv_zeta__dot(t1, t2, t3, t4);
-    real_type t6   = X__[iX_fx];
-    real_type t7   = t6 * t6;
-    real_type t9   = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
-    real_type t13  = ModelPars[iM_g] * ModelPars[iM_g];
-    real_type t14  = 1.0 / t13;
-    real_type t16  = X__[iX_Omega];
-    real_type t17  = t16 * t16;
-    real_type t18  = t1 * t1;
-    real_type t21  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
-    real_type t26  = AdherenceEllipse(1 - t14 / t9 * t7 - t14 / t21 * t18 * t17);
-    real_type t30  = RoadLeftBorder(Q__[iQ_leftWidth] - t3);
-    real_type t34  = RoadRightBorder(Q__[iQ_rightWidth] + t3);
-    real_type t43  = PowerLimit(1 - ModelPars[iM_m] / ModelPars[iM_Pmax] * t6 * t1);
-    real_type t45  = LimitMinSpeed(t1);
-    real_type t47  = U__[iU_v__fx];
-    real_type t48  = v__fxControl(t47, -1, 1);
-    real_type t50  = U__[iU_v__Omega];
-    real_type t51  = v__OmegaControl(t50, -1, 1);
-    real_type t57  = sin(t2);
-    real_type result__ = t26 * t5 + t30 * t5 + t34 * t5 + t43 * t5 + t45 * t5 + t48 * t5 + t51 * t5 + t5 * ModelPars[iM_wT] + t5 * t57 * t1 * L__[iL_lambda1__xo] + (t5 * t16 - t4) * L__[iL_lambda2__xo] - (t18 * ModelPars[iM_kD] - t6) * t5 * L__[iL_lambda3__xo] + t5 * ModelPars[iM_v__Omega__max] * t50 * L__[iL_lambda4__xo] + t5 * ModelPars[iM_v__fx__max] * t47 * L__[iL_lambda5__xo];
-    return result__;
-  }
-#else
   real_type
   PointMassCarModel_1::H_eval(
     NodeType2 const    & NODE__,
@@ -236,7 +195,7 @@ namespace PointMassCarModel_1Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_V];
     real_type t2   = X__[iX_alpha];
     real_type t3   = X__[iX_n];
@@ -261,13 +220,12 @@ namespace PointMassCarModel_1Define {
     real_type t50  = U__[iU_v__Omega];
     real_type t51  = v__OmegaControl(t50, -1, 1);
     real_type t57  = sin(t2);
-    real_type result__ = t26 * t5 + t30 * t5 + t34 * t5 + t43 * t5 + t45 * t5 + t48 * t5 + t51 * t5 + t5 * ModelPars[iM_wT] + t5 * t57 * t1 * L__[iL_lambda1__xo] + (t5 * t16 - t4) * L__[iL_lambda2__xo] - (t18 * ModelPars[iM_kD] - t6) * t5 * L__[iL_lambda3__xo] + t5 * ModelPars[iM_v__Omega__max] * t50 * L__[iL_lambda4__xo] + t5 * ModelPars[iM_v__fx__max] * t47 * L__[iL_lambda5__xo];
+    real_type result__ = t26 * t5 + t30 * t5 + t34 * t5 + t43 * t5 + t45 * t5 + t48 * t5 + t51 * t5 + t5 * ModelPars[iM_wT] + t5 * t57 * t1 * L__[iL_lambda1__xo] + (t5 * t16 - t4) * L__[iL_lambda2__xo] + (-t18 * ModelPars[iM_kD] + t6) * t5 * L__[iL_lambda3__xo] + t5 * ModelPars[iM_v__Omega__max] * t50 * L__[iL_lambda4__xo] + t5 * ModelPars[iM_v__fx__max] * t47 * L__[iL_lambda5__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -285,7 +243,7 @@ namespace PointMassCarModel_1Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_V];
     real_type t3   = X__[iX_n];
     real_type t5   = inv_zeta__dot(t1, X__[iX_alpha], t3, Q__[iQ_Kappa]);
@@ -320,7 +278,7 @@ namespace PointMassCarModel_1Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t5   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     real_type t7   = v__fxControl(U__[iU_v__fx], -1, 1);
     real_type t10  = v__OmegaControl(U__[iU_v__Omega], -1, 1);
@@ -348,7 +306,7 @@ namespace PointMassCarModel_1Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t6   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     real_type result__ = t6 * ModelPars[iM_wT];
     if ( m_debug ) {
@@ -377,8 +335,8 @@ namespace PointMassCarModel_1Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
@@ -389,11 +347,11 @@ namespace PointMassCarModel_1Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  PointMassCarModel_1::DmayerDx_numEqns() const
+  PointMassCarModel_1::DmayerDxxp_numEqns() const
   { return 10; }
 
   void
-  PointMassCarModel_1::DmayerDx_eval(
+  PointMassCarModel_1::DmayerDxxp_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -405,8 +363,8 @@ namespace PointMassCarModel_1Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -418,23 +376,7 @@ namespace PointMassCarModel_1Define {
     result__[ 8   ] = 0;
     result__[ 9   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 10, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_1::DmayerDp_numEqns() const
-  { return 0; }
-
-  void
-  PointMassCarModel_1::DmayerDp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 10, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -460,7 +402,7 @@ namespace PointMassCarModel_1Define {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_V];
     real_type t2   = X__[iX_alpha];
     real_type t3   = X__[iX_n];
@@ -477,8 +419,9 @@ namespace PointMassCarModel_1Define {
     real_type t18  = t1 * t1;
     real_type t21  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
     real_type t22  = 1.0 / t21;
-    real_type t23  = t14 * t10;
-    real_type t25  = -t14 * t17 * t18 * t22 - t7 * t23 + 1;
+    real_type t15  = t14 * t22;
+    real_type t23  = t10 * t14;
+    real_type t25  = -t18 * t17 * t15 - t7 * t23 + 1;
     real_type t26  = AdherenceEllipse(t25);
     real_type t29  = Q__[iQ_leftWidth] - t3;
     real_type t30  = RoadLeftBorder(t29);
@@ -489,13 +432,13 @@ namespace PointMassCarModel_1Define {
     real_type t39  = ALIAS_RoadRightBorder_D(t36);
     real_type t42  = ModelPars[iM_m];
     real_type t44  = 1.0 / ModelPars[iM_Pmax];
-    real_type t34  = t1 * t42;
-    real_type t47  = -t44 * t6 * t34 + 1;
+    real_type t34  = t44 * t42;
+    real_type t47  = -t6 * t1 * t34 + 1;
     real_type t48  = PowerLimit(t47);
     real_type t50  = LimitMinSpeed(t1);
     real_type t53  = v__fxControl(U__[iU_v__fx], -1, 1);
     real_type t56  = v__OmegaControl(U__[iU_v__Omega], -1, 1);
-    result__[ 0   ] = t26 * t5 + t30 * t5 - t32 * t33 + t32 * t39 + t37 * t5 + t48 * t5 + t5 * t50 + t5 * t53 + t5 * t56;
+    result__[ 0   ] = t26 * t5 + t30 * t5 - t33 * t32 + t39 * t32 + t37 * t5 + t48 * t5 + t50 * t5 + t53 * t5 + t56 * t5;
     real_type t58  = inv_zeta__dot_D_2(t1, t2, t3, t4);
     result__[ 1   ] = t26 * t58 + t30 * t58 + t37 * t58 + t48 * t58 + t50 * t58 + t53 * t58 + t56 * t58;
     real_type t66  = inv_zeta__dot_D_1(t1, t2, t3, t4);
@@ -504,9 +447,9 @@ namespace PointMassCarModel_1Define {
     real_type t78  = ALIAS_PowerLimit_D(t47);
     real_type t79  = t78 * t32;
     real_type t84  = ALIAS_LimitMinSpeed_D(t1);
-    result__[ 2   ] = -2 * t1 * t14 * t17 * t22 * t69 - t42 * t44 * t6 * t79 + t26 * t66 + t30 * t66 + t32 * t84 + t37 * t66 + t48 * t66 + t50 * t66 + t53 * t66 + t56 * t66;
-    result__[ 3   ] = -2 * t14 * t22 * t18 * t16 * t69;
-    result__[ 4   ] = -2 * t6 * t69 * t23 - t44 * t79 * t34;
+    result__[ 2   ] = -2 * t1 * t17 * t69 * t15 - t6 * t79 * t34 + t26 * t66 + t30 * t66 + t84 * t32 + t37 * t66 + t48 * t66 + t50 * t66 + t53 * t66 + t56 * t66;
+    result__[ 3   ] = -2 * t18 * t16 * t69 * t15;
+    result__[ 4   ] = -t1 * t79 * t34 - 2 * t6 * t69 * t23;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJDx_eval", 5, i_segment );
   }
@@ -543,7 +486,7 @@ namespace PointMassCarModel_1Define {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t5   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     real_type t7   = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
     result__[ 0   ] = t7 * t5;
@@ -570,7 +513,7 @@ namespace PointMassCarModel_1Define {
     real_type      s,
     Q_pointer_type result__
   ) const {
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
     result__[ 1   ] = ALIAS_Kappa(s);
     result__[ 2   ] = ALIAS_leftWidth(s);
@@ -668,8 +611,8 @@ namespace PointMassCarModel_1Define {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_n] - XL__[iX_n];
     result__[ 1   ] = XR__[iX_alpha] - XL__[iX_alpha];
     result__[ 2   ] = XR__[iX_V] - XL__[iX_V];
@@ -742,8 +685,8 @@ namespace PointMassCarModel_1Define {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -791,7 +734,7 @@ namespace PointMassCarModel_1Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = v__fxControl(U__[iU_v__fx], -1, 1);
     result__[ 1   ] = v__OmegaControl(U__[iU_v__Omega], -1, 1);
     real_type t3   = X__[iX_fx];
@@ -842,7 +785,7 @@ namespace PointMassCarModel_1Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->getSegmentByIndex(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }

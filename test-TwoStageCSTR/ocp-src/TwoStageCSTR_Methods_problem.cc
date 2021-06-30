@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,42 +71,6 @@ namespace TwoStageCSTRDefine {
    |
   \*/
 
-#if 0
-  real_type
-  TwoStageCSTR::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer        i_cell = CELL__.i_cell;
-    real_type const * Q__ = CELL__.qM;
-    real_type const * X__ = CELL__.xM;
-    real_type const * L__ = CELL__.lambdaM;
-    real_type const * U__ = CELL__.uM;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = U__[iU_u1];
-    real_type t2   = u1Control(t1, -0.5e0, 0.5e0);
-    real_type t3   = U__[iU_u2];
-    real_type t4   = u2Control(t3, -0.5e0, 0.5e0);
-    real_type t5   = X__[iX_x1];
-    real_type t6   = t5 * t5;
-    real_type t7   = X__[iX_x2];
-    real_type t8   = t7 * t7;
-    real_type t9   = X__[iX_x3];
-    real_type t10  = t9 * t9;
-    real_type t11  = X__[iX_x4];
-    real_type t12  = t11 * t11;
-    real_type t14  = t1 * t1;
-    real_type t15  = t3 * t3;
-    real_type t19  = R1(t5, t7);
-    real_type t20  = 0.5e0 - t5 - t19;
-    real_type t26  = t19 - (2 + t1) * (t7 + 0.25e0);
-    real_type t29  = ModelPars[iM_tau];
-    real_type t31  = R2(t9, t11);
-    real_type result__ = t2 + t4 + t6 + t8 + t10 + t12 + (t14 + t15) * ModelPars[iM_W] + t20 * L__[iL_lambda1__xo] + t26 * L__[iL_lambda2__xo] + (t5 - t9 - t20 * t29 - t31 + 0.25e0) * L__[iL_lambda3__xo] + (t7 - 2 * t11 - (t11 + 0.25e0) * t3 - t26 * t29 + t31 - 0.25e0) * L__[iL_lambda4__xo];
-    return result__;
-  }
-#else
   real_type
   TwoStageCSTR::H_eval(
     NodeType2 const    & NODE__,
@@ -117,7 +81,7 @@ namespace TwoStageCSTRDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u1];
     real_type t2   = u1Control(t1, -0.5e0, 0.5e0);
     real_type t3   = U__[iU_u2];
@@ -143,7 +107,6 @@ namespace TwoStageCSTRDefine {
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -161,7 +124,7 @@ namespace TwoStageCSTRDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
@@ -180,7 +143,7 @@ namespace TwoStageCSTRDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = u1Control(U__[iU_u1], -0.5e0, 0.5e0);
     real_type t4   = u2Control(U__[iU_u2], -0.5e0, 0.5e0);
     real_type result__ = t2 + t4;
@@ -207,7 +170,7 @@ namespace TwoStageCSTRDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_x1] * X__[iX_x1];
     real_type t4   = X__[iX_x2] * X__[iX_x2];
     real_type t6   = X__[iX_x3] * X__[iX_x3];
@@ -241,8 +204,8 @@ namespace TwoStageCSTRDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
@@ -253,11 +216,11 @@ namespace TwoStageCSTRDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoStageCSTR::DmayerDx_numEqns() const
+  TwoStageCSTR::DmayerDxxp_numEqns() const
   { return 8; }
 
   void
-  TwoStageCSTR::DmayerDx_eval(
+  TwoStageCSTR::DmayerDxxp_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -269,8 +232,8 @@ namespace TwoStageCSTRDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -280,23 +243,7 @@ namespace TwoStageCSTRDefine {
     result__[ 6   ] = 0;
     result__[ 7   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 8, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DmayerDp_numEqns() const
-  { return 0; }
-
-  void
-  TwoStageCSTR::DmayerDp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 8, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -322,7 +269,7 @@ namespace TwoStageCSTRDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -363,7 +310,7 @@ namespace TwoStageCSTRDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_u1Control_D_1(U__[iU_u1], -0.5e0, 0.5e0);
     result__[ 1   ] = ALIAS_u2Control_D_1(U__[iU_u2], -0.5e0, 0.5e0);
     if ( m_debug )
@@ -387,7 +334,7 @@ namespace TwoStageCSTRDefine {
     real_type      s,
     Q_pointer_type result__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -475,8 +422,8 @@ namespace TwoStageCSTRDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
     result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
     result__[ 2   ] = XR__[iX_x3] - XL__[iX_x3];
@@ -543,8 +490,8 @@ namespace TwoStageCSTRDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_boundary_conditions.cc         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,8 @@ namespace SingularLuus04_FreeTimeDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x] - ModelPars[iM_x_i];
     result__[ 1   ] = XL__[iX_y] - ModelPars[iM_y_i];
     result__[ 2   ] = XL__[iX_z] - ModelPars[iM_z_i];
@@ -97,19 +97,19 @@ namespace SingularLuus04_FreeTimeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularLuus04_FreeTime::DboundaryConditionsDx_numRows() const
+  SingularLuus04_FreeTime::DboundaryConditionsDxxp_numRows() const
   { return 6; }
 
   integer
-  SingularLuus04_FreeTime::DboundaryConditionsDx_numCols() const
+  SingularLuus04_FreeTime::DboundaryConditionsDxxp_numCols() const
   { return 8; }
 
   integer
-  SingularLuus04_FreeTime::DboundaryConditionsDx_nnz() const
+  SingularLuus04_FreeTime::DboundaryConditionsDxxp_nnz() const
   { return 6; }
 
   void
-  SingularLuus04_FreeTime::DboundaryConditionsDx_pattern(
+  SingularLuus04_FreeTime::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -122,7 +122,7 @@ namespace SingularLuus04_FreeTimeDefine {
   }
 
   void
-  SingularLuus04_FreeTime::DboundaryConditionsDx_sparse(
+  SingularLuus04_FreeTime::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -134,8 +134,8 @@ namespace SingularLuus04_FreeTimeDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -143,39 +143,7 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 4   ] = 1;
     result__[ 5   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 6, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DboundaryConditionsDp_numRows() const
-  { return 6; }
-
-  integer
-  SingularLuus04_FreeTime::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularLuus04_FreeTime::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  SingularLuus04_FreeTime::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  SingularLuus04_FreeTime::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -200,8 +168,8 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
@@ -217,26 +185,26 @@ namespace SingularLuus04_FreeTimeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularLuus04_FreeTime::DadjointBCDx_numRows() const
+  SingularLuus04_FreeTime::DadjointBCDxxp_numRows() const
   { return 8; }
 
   integer
-  SingularLuus04_FreeTime::DadjointBCDx_numCols() const
+  SingularLuus04_FreeTime::DadjointBCDxxp_numCols() const
   { return 8; }
 
   integer
-  SingularLuus04_FreeTime::DadjointBCDx_nnz() const
+  SingularLuus04_FreeTime::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  SingularLuus04_FreeTime::DadjointBCDx_pattern(
+  SingularLuus04_FreeTime::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  SingularLuus04_FreeTime::DadjointBCDx_sparse(
+  SingularLuus04_FreeTime::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -245,39 +213,6 @@ namespace SingularLuus04_FreeTimeDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DadjointBCDp_numRows() const
-  { return 8; }
-
-  integer
-  SingularLuus04_FreeTime::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularLuus04_FreeTime::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  SingularLuus04_FreeTime::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  SingularLuus04_FreeTime::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: SingularLuus04_FreeTime_Methods_boundary_conditions.cc

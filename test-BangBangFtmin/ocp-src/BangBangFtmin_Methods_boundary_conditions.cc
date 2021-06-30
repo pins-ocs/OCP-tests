@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,8 @@ namespace BangBangFtminDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x];
     result__[ 1   ] = XL__[iX_v];
     result__[ 2   ] = XR__[iX_x] - 2;
@@ -95,19 +95,19 @@ namespace BangBangFtminDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFtmin::DboundaryConditionsDx_numRows() const
+  BangBangFtmin::DboundaryConditionsDxxp_numRows() const
   { return 4; }
 
   integer
-  BangBangFtmin::DboundaryConditionsDx_numCols() const
+  BangBangFtmin::DboundaryConditionsDxxp_numCols() const
   { return 6; }
 
   integer
-  BangBangFtmin::DboundaryConditionsDx_nnz() const
+  BangBangFtmin::DboundaryConditionsDxxp_nnz() const
   { return 4; }
 
   void
-  BangBangFtmin::DboundaryConditionsDx_pattern(
+  BangBangFtmin::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -118,7 +118,7 @@ namespace BangBangFtminDefine {
   }
 
   void
-  BangBangFtmin::DboundaryConditionsDx_sparse(
+  BangBangFtmin::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -130,46 +130,14 @@ namespace BangBangFtminDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtmin::DboundaryConditionsDp_numRows() const
-  { return 4; }
-
-  integer
-  BangBangFtmin::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFtmin::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  BangBangFtmin::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BangBangFtmin::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -194,8 +162,8 @@ namespace BangBangFtminDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = LL__[iL_lambda3__xo];
@@ -209,26 +177,26 @@ namespace BangBangFtminDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFtmin::DadjointBCDx_numRows() const
+  BangBangFtmin::DadjointBCDxxp_numRows() const
   { return 6; }
 
   integer
-  BangBangFtmin::DadjointBCDx_numCols() const
+  BangBangFtmin::DadjointBCDxxp_numCols() const
   { return 6; }
 
   integer
-  BangBangFtmin::DadjointBCDx_nnz() const
+  BangBangFtmin::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  BangBangFtmin::DadjointBCDx_pattern(
+  BangBangFtmin::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  BangBangFtmin::DadjointBCDx_sparse(
+  BangBangFtmin::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -237,39 +205,6 @@ namespace BangBangFtminDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtmin::DadjointBCDp_numRows() const
-  { return 6; }
-
-  integer
-  BangBangFtmin::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFtmin::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  BangBangFtmin::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BangBangFtmin::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: BangBangFtmin_Methods_boundary_conditions.cc

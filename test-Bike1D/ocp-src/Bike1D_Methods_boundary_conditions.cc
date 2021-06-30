@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_boundary_conditions.cc                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -100,8 +100,8 @@ namespace Bike1DDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_v] - ModelPars[iM_v_i];
     result__[ 1   ] = XR__[iX_v] - ModelPars[iM_v_f];
     if ( m_debug )
@@ -111,19 +111,19 @@ namespace Bike1DDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Bike1D::DboundaryConditionsDx_numRows() const
+  Bike1D::DboundaryConditionsDxxp_numRows() const
   { return 2; }
 
   integer
-  Bike1D::DboundaryConditionsDx_numCols() const
+  Bike1D::DboundaryConditionsDxxp_numCols() const
   { return 2; }
 
   integer
-  Bike1D::DboundaryConditionsDx_nnz() const
+  Bike1D::DboundaryConditionsDxxp_nnz() const
   { return 2; }
 
   void
-  Bike1D::DboundaryConditionsDx_pattern(
+  Bike1D::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -132,7 +132,7 @@ namespace Bike1DDefine {
   }
 
   void
-  Bike1D::DboundaryConditionsDx_sparse(
+  Bike1D::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -144,44 +144,12 @@ namespace Bike1DDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 2, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Bike1D::DboundaryConditionsDp_numRows() const
-  { return 2; }
-
-  integer
-  Bike1D::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  Bike1D::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  Bike1D::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Bike1D::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -206,10 +174,10 @@ namespace Bike1DDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
-    result__[ 0   ] = LL__[iL_lambda1__xo] * XL__[iX_v] + OMEGA__[0];
-    result__[ 1   ] = -LR__[iL_lambda1__xo] * XR__[iX_v] + OMEGA__[1];
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = XL__[iX_v] * LL__[iL_lambda1__xo] + OMEGA__[0];
+    result__[ 1   ] = -XR__[iX_v] * LR__[iL_lambda1__xo] + OMEGA__[1];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 2, i_segment_left, i_segment_right );
   }
@@ -217,19 +185,19 @@ namespace Bike1DDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Bike1D::DadjointBCDx_numRows() const
+  Bike1D::DadjointBCDxxp_numRows() const
   { return 2; }
 
   integer
-  Bike1D::DadjointBCDx_numCols() const
+  Bike1D::DadjointBCDxxp_numCols() const
   { return 2; }
 
   integer
-  Bike1D::DadjointBCDx_nnz() const
+  Bike1D::DadjointBCDxxp_nnz() const
   { return 2; }
 
   void
-  Bike1D::DadjointBCDx_pattern(
+  Bike1D::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -238,7 +206,7 @@ namespace Bike1DDefine {
   }
 
   void
-  Bike1D::DadjointBCDx_sparse(
+  Bike1D::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -253,46 +221,13 @@ namespace Bike1DDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = LL__[iL_lambda1__xo];
     result__[ 1   ] = -LR__[iL_lambda1__xo];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 2, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 2, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Bike1D::DadjointBCDp_numRows() const
-  { return 2; }
-
-  integer
-  Bike1D::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  Bike1D::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  Bike1D::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Bike1D::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: Bike1D_Methods_boundary_conditions.cc

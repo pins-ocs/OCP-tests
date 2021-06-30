@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MultipleDubins_Methods_boundary_conditions.cc                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,8 +84,8 @@ namespace MultipleDubinsDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1] - ModelPars[iM_x_i];
     result__[ 1   ] = XL__[iX_y1] - ModelPars[iM_y_i];
     result__[ 2   ] = XL__[iX_theta1] - ModelPars[iM_theta_i];
@@ -105,19 +105,19 @@ namespace MultipleDubinsDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MultipleDubins::DboundaryConditionsDx_numRows() const
+  MultipleDubins::DboundaryConditionsDxxp_numRows() const
   { return 12; }
 
   integer
-  MultipleDubins::DboundaryConditionsDx_numCols() const
-  { return 18; }
+  MultipleDubins::DboundaryConditionsDxxp_numCols() const
+  { return 24; }
 
   integer
-  MultipleDubins::DboundaryConditionsDx_nnz() const
+  MultipleDubins::DboundaryConditionsDxxp_nnz() const
   { return 18; }
 
   void
-  MultipleDubins::DboundaryConditionsDx_pattern(
+  MultipleDubins::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -142,7 +142,7 @@ namespace MultipleDubinsDefine {
   }
 
   void
-  MultipleDubins::DboundaryConditionsDx_sparse(
+  MultipleDubins::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -154,8 +154,8 @@ namespace MultipleDubinsDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -175,39 +175,7 @@ namespace MultipleDubinsDefine {
     result__[ 16  ] = -1;
     result__[ 17  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 18, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MultipleDubins::DboundaryConditionsDp_numRows() const
-  { return 12; }
-
-  integer
-  MultipleDubins::DboundaryConditionsDp_numCols() const
-  { return 6; }
-
-  integer
-  MultipleDubins::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  MultipleDubins::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  MultipleDubins::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 18, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -232,8 +200,8 @@ namespace MultipleDubinsDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
@@ -272,19 +240,19 @@ namespace MultipleDubinsDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  MultipleDubins::DadjointBCDx_numRows() const
+  MultipleDubins::DadjointBCDxxp_numRows() const
   { return 24; }
 
   integer
-  MultipleDubins::DadjointBCDx_numCols() const
-  { return 18; }
+  MultipleDubins::DadjointBCDxxp_numCols() const
+  { return 24; }
 
   integer
-  MultipleDubins::DadjointBCDx_nnz() const
+  MultipleDubins::DadjointBCDxxp_nnz() const
   { return 1; }
 
   void
-  MultipleDubins::DadjointBCDx_pattern(
+  MultipleDubins::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -292,7 +260,7 @@ namespace MultipleDubinsDefine {
   }
 
   void
-  MultipleDubins::DadjointBCDx_sparse(
+  MultipleDubins::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -307,46 +275,13 @@ namespace MultipleDubinsDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t5   = ALIAS_diff2pi_DD(XR__[iX_theta3] - ModelPars[iM_theta_f]);
     result__[ 0   ] = t5 * OMEGA__[5];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 1, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 1, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MultipleDubins::DadjointBCDp_numRows() const
-  { return 24; }
-
-  integer
-  MultipleDubins::DadjointBCDp_numCols() const
-  { return 6; }
-
-  integer
-  MultipleDubins::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  MultipleDubins::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  MultipleDubins::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: MultipleDubins_Methods_boundary_conditions.cc

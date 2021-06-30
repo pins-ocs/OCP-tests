@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -97,7 +97,7 @@ namespace RobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda2__xo];
     real_type t2   = X__[iX_rho];
     real_type t3   = X__[iX_phi];
@@ -153,7 +153,7 @@ namespace RobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda2__xo];
     real_type t2   = X__[iX_rho];
     real_type t3   = X__[iX_phi];
@@ -208,7 +208,7 @@ namespace RobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda4__xo];
     result__[ 1   ] = L__[iL_lambda5__xo];
     result__[ 2   ] = L__[iL_lambda6__xo];
@@ -240,14 +240,14 @@ namespace RobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
-    result__[ 0   ] = t1 * t3 + t1 * L__[iL_lambda1__xo];
+    result__[ 0   ] = t3 * t1 + t1 * L__[iL_lambda1__xo];
     real_type t8   = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
-    result__[ 1   ] = t1 * t8 + t1 * L__[iL_lambda2__xo];
+    result__[ 1   ] = t8 * t1 + t1 * L__[iL_lambda2__xo];
     real_type t13  = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);
-    result__[ 2   ] = t1 * t13 + t1 * L__[iL_lambda3__xo];
+    result__[ 2   ] = t13 * t1 + t1 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 3, i_segment );
   }
@@ -322,7 +322,7 @@ namespace RobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
     result__[ 0   ] = t2 + L__[iL_lambda1__xo];
     real_type t5   = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
@@ -358,7 +358,7 @@ namespace RobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u_rho];
     real_type t2   = u_rhoControl(t1, -1, 1);
     real_type t3   = U__[iU_u_theta];
@@ -425,7 +425,7 @@ namespace RobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda4__xo];
     result__[ 1   ] = L__[iL_lambda5__xo];
     result__[ 2   ] = L__[iL_lambda6__xo];
@@ -475,14 +475,14 @@ namespace RobotArmDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_rho];
     real_type t2   = X__[iX_phi];
     real_type t3   = I_theta_D_1(t1, t2);
     real_type t4   = L__[iL_lambda2__xo];
     result__[ 0   ] = t4 * t3;
     real_type t5   = I_theta_D_2(t1, t2);
-    result__[ 1   ] = t4 * t5;
+    result__[ 1   ] = t5 * t4;
     real_type t6   = I_phi_D(t1);
     result__[ 2   ] = L__[iL_lambda3__xo] * t6;
     if ( m_debug )
@@ -542,7 +542,7 @@ namespace RobotArmDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ModelPars[iM_L] * V__[3];
     real_type t3   = X__[iX_rho];
     real_type t5   = I_theta(t3, X__[iX_phi]);
@@ -592,14 +592,14 @@ namespace RobotArmDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_rho];
     real_type t2   = X__[iX_phi];
     real_type t3   = I_theta_D_1(t1, t2);
     real_type t4   = V__[4];
     result__[ 0   ] = t4 * t3;
     real_type t5   = I_theta_D_2(t1, t2);
-    result__[ 1   ] = t4 * t5;
+    result__[ 1   ] = t5 * t4;
     real_type t6   = I_phi_D(t1);
     result__[ 2   ] = V__[5] * t6;
     if ( m_debug )

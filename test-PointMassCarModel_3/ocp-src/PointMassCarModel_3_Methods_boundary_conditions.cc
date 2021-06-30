@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -41,84 +41,84 @@ using Mechatronix::Road2D;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_yR_R(__t1) segmentRight.isoRightY( __t1)
-#define ALIAS_yR_L(__t1) segmentLeft.isoRightY( __t1)
-#define ALIAS_yR(__t1) segment.isoRightY( __t1)
-#define ALIAS_xR_R(__t1) segmentRight.isoRightX( __t1)
-#define ALIAS_xR_L(__t1) segmentLeft.isoRightX( __t1)
-#define ALIAS_xR(__t1) segment.isoRightX( __t1)
-#define ALIAS_yL_R(__t1) segmentRight.isoLeftY( __t1)
-#define ALIAS_yL_L(__t1) segmentLeft.isoLeftY( __t1)
-#define ALIAS_yL(__t1) segment.isoLeftY( __t1)
-#define ALIAS_xL_R(__t1) segmentRight.isoLeftX( __t1)
-#define ALIAS_xL_L(__t1) segmentLeft.isoLeftX( __t1)
-#define ALIAS_xL(__t1) segment.isoLeftX( __t1)
-#define ALIAS_theta_R_DD(__t1) segmentRight.isoAngle_DD( __t1)
-#define ALIAS_theta_R_D(__t1) segmentRight.isoAngle_D( __t1)
-#define ALIAS_theta_R(__t1) segmentRight.isoAngle( __t1)
-#define ALIAS_theta_L_DD(__t1) segmentLeft.isoAngle_DD( __t1)
-#define ALIAS_theta_L_D(__t1) segmentLeft.isoAngle_D( __t1)
-#define ALIAS_theta_L(__t1) segmentLeft.isoAngle( __t1)
-#define ALIAS_theta_DD(__t1) segment.isoAngle_DD( __t1)
-#define ALIAS_theta_D(__t1) segment.isoAngle_D( __t1)
-#define ALIAS_theta(__t1) segment.isoAngle( __t1)
-#define ALIAS_yLane_R_DD(__t1) segmentRight.isoY_DD( __t1)
-#define ALIAS_yLane_R_D(__t1) segmentRight.isoY_D( __t1)
-#define ALIAS_yLane_R(__t1) segmentRight.isoY( __t1)
-#define ALIAS_yLane_L_DD(__t1) segmentLeft.isoY_DD( __t1)
-#define ALIAS_yLane_L_D(__t1) segmentLeft.isoY_D( __t1)
-#define ALIAS_yLane_L(__t1) segmentLeft.isoY( __t1)
-#define ALIAS_yLane_DD(__t1) segment.isoY_DD( __t1)
-#define ALIAS_yLane_D(__t1) segment.isoY_D( __t1)
-#define ALIAS_yLane(__t1) segment.isoY( __t1)
-#define ALIAS_xLane_R_DD(__t1) segmentRight.isoX_DD( __t1)
-#define ALIAS_xLane_R_D(__t1) segmentRight.isoX_D( __t1)
-#define ALIAS_xLane_R(__t1) segmentRight.isoX( __t1)
-#define ALIAS_xLane_L_DD(__t1) segmentLeft.isoX_DD( __t1)
-#define ALIAS_xLane_L_D(__t1) segmentLeft.isoX_D( __t1)
-#define ALIAS_xLane_L(__t1) segmentLeft.isoX( __t1)
-#define ALIAS_xLane_DD(__t1) segment.isoX_DD( __t1)
-#define ALIAS_xLane_D(__t1) segment.isoX_D( __t1)
-#define ALIAS_xLane(__t1) segment.isoX( __t1)
-#define ALIAS_rightWidth_R_DD(__t1) segmentRight.rightWidth_DD( __t1)
-#define ALIAS_rightWidth_R_D(__t1) segmentRight.rightWidth_D( __t1)
-#define ALIAS_rightWidth_R(__t1) segmentRight.rightWidth( __t1)
-#define ALIAS_rightWidth_L_DD(__t1) segmentLeft.rightWidth_DD( __t1)
-#define ALIAS_rightWidth_L_D(__t1) segmentLeft.rightWidth_D( __t1)
-#define ALIAS_rightWidth_L(__t1) segmentLeft.rightWidth( __t1)
-#define ALIAS_rightWidth_DD(__t1) segment.rightWidth_DD( __t1)
-#define ALIAS_rightWidth_D(__t1) segment.rightWidth_D( __t1)
-#define ALIAS_rightWidth(__t1) segment.rightWidth( __t1)
-#define ALIAS_leftWidth_R_DD(__t1) segmentRight.leftWidth_DD( __t1)
-#define ALIAS_leftWidth_R_D(__t1) segmentRight.leftWidth_D( __t1)
-#define ALIAS_leftWidth_R(__t1) segmentRight.leftWidth( __t1)
-#define ALIAS_leftWidth_L_DD(__t1) segmentLeft.leftWidth_DD( __t1)
-#define ALIAS_leftWidth_L_D(__t1) segmentLeft.leftWidth_D( __t1)
-#define ALIAS_leftWidth_L(__t1) segmentLeft.leftWidth( __t1)
-#define ALIAS_leftWidth_DD(__t1) segment.leftWidth_DD( __t1)
-#define ALIAS_leftWidth_D(__t1) segment.leftWidth_D( __t1)
-#define ALIAS_leftWidth(__t1) segment.leftWidth( __t1)
-#define ALIAS_yV_R(__t1, __t2) segmentRight.isoY( __t1, __t2)
-#define ALIAS_yV_L(__t1, __t2) segmentLeft.isoY( __t1, __t2)
-#define ALIAS_yV(__t1, __t2) segment.isoY( __t1, __t2)
-#define ALIAS_xV_R(__t1, __t2) segmentRight.isoX( __t1, __t2)
-#define ALIAS_xV_L(__t1, __t2) segmentLeft.isoX( __t1, __t2)
-#define ALIAS_xV(__t1, __t2) segment.isoX( __t1, __t2)
-#define ALIAS_Kappa_R_DD(__t1) segmentRight.isoCurvature_DD( __t1)
-#define ALIAS_Kappa_R_D(__t1) segmentRight.isoCurvature_D( __t1)
-#define ALIAS_Kappa_R(__t1) segmentRight.isoCurvature( __t1)
-#define ALIAS_Kappa_L_DD(__t1) segmentLeft.isoCurvature_DD( __t1)
-#define ALIAS_Kappa_L_D(__t1) segmentLeft.isoCurvature_D( __t1)
-#define ALIAS_Kappa_L(__t1) segmentLeft.isoCurvature( __t1)
-#define ALIAS_Kappa_DD(__t1) segment.isoCurvature_DD( __t1)
-#define ALIAS_Kappa_D(__t1) segment.isoCurvature_D( __t1)
-#define ALIAS_Kappa(__t1) segment.isoCurvature( __t1)
-#define ALIAS_ssSegmentMax_R(___dummy___) segmentRight.ssSegmentMax()
-#define ALIAS_ssSegmentMax_L(___dummy___) segmentLeft.ssSegmentMax()
-#define ALIAS_ssSegmentMax(___dummy___) segment.ssSegmentMax()
-#define ALIAS_ssSegmentMin_R(___dummy___) segmentRight.ssSegmentMin()
-#define ALIAS_ssSegmentMin_L(___dummy___) segmentLeft.ssSegmentMin()
-#define ALIAS_ssSegmentMin(___dummy___) segment.ssSegmentMin()
+#define ALIAS_yR_R(__t1) segmentRight.iso_right_y( __t1)
+#define ALIAS_yR_L(__t1) segmentLeft.iso_right_y( __t1)
+#define ALIAS_yR(__t1) segment.iso_right_y( __t1)
+#define ALIAS_xR_R(__t1) segmentRight.iso_right_x( __t1)
+#define ALIAS_xR_L(__t1) segmentLeft.iso_right_x( __t1)
+#define ALIAS_xR(__t1) segment.iso_right_x( __t1)
+#define ALIAS_yL_R(__t1) segmentRight.iso_left_y( __t1)
+#define ALIAS_yL_L(__t1) segmentLeft.iso_left_y( __t1)
+#define ALIAS_yL(__t1) segment.iso_left_y( __t1)
+#define ALIAS_xL_R(__t1) segmentRight.iso_left_x( __t1)
+#define ALIAS_xL_L(__t1) segmentLeft.iso_left_x( __t1)
+#define ALIAS_xL(__t1) segment.iso_left_x( __t1)
+#define ALIAS_theta_R_DD(__t1) segmentRight.iso_angle_DD( __t1)
+#define ALIAS_theta_R_D(__t1) segmentRight.iso_angle_D( __t1)
+#define ALIAS_theta_R(__t1) segmentRight.iso_angle( __t1)
+#define ALIAS_theta_L_DD(__t1) segmentLeft.iso_angle_DD( __t1)
+#define ALIAS_theta_L_D(__t1) segmentLeft.iso_angle_D( __t1)
+#define ALIAS_theta_L(__t1) segmentLeft.iso_angle( __t1)
+#define ALIAS_theta_DD(__t1) segment.iso_angle_DD( __t1)
+#define ALIAS_theta_D(__t1) segment.iso_angle_D( __t1)
+#define ALIAS_theta(__t1) segment.iso_angle( __t1)
+#define ALIAS_yLane_R_DD(__t1) segmentRight.iso_y_DD( __t1)
+#define ALIAS_yLane_R_D(__t1) segmentRight.iso_y_D( __t1)
+#define ALIAS_yLane_R(__t1) segmentRight.iso_y( __t1)
+#define ALIAS_yLane_L_DD(__t1) segmentLeft.iso_y_DD( __t1)
+#define ALIAS_yLane_L_D(__t1) segmentLeft.iso_y_D( __t1)
+#define ALIAS_yLane_L(__t1) segmentLeft.iso_y( __t1)
+#define ALIAS_yLane_DD(__t1) segment.iso_y_DD( __t1)
+#define ALIAS_yLane_D(__t1) segment.iso_y_D( __t1)
+#define ALIAS_yLane(__t1) segment.iso_y( __t1)
+#define ALIAS_xLane_R_DD(__t1) segmentRight.iso_x_DD( __t1)
+#define ALIAS_xLane_R_D(__t1) segmentRight.iso_x_D( __t1)
+#define ALIAS_xLane_R(__t1) segmentRight.iso_x( __t1)
+#define ALIAS_xLane_L_DD(__t1) segmentLeft.iso_x_DD( __t1)
+#define ALIAS_xLane_L_D(__t1) segmentLeft.iso_x_D( __t1)
+#define ALIAS_xLane_L(__t1) segmentLeft.iso_x( __t1)
+#define ALIAS_xLane_DD(__t1) segment.iso_x_DD( __t1)
+#define ALIAS_xLane_D(__t1) segment.iso_x_D( __t1)
+#define ALIAS_xLane(__t1) segment.iso_x( __t1)
+#define ALIAS_rightWidth_R_DD(__t1) segmentRight.right_width_DD( __t1)
+#define ALIAS_rightWidth_R_D(__t1) segmentRight.right_width_D( __t1)
+#define ALIAS_rightWidth_R(__t1) segmentRight.right_width( __t1)
+#define ALIAS_rightWidth_L_DD(__t1) segmentLeft.right_width_DD( __t1)
+#define ALIAS_rightWidth_L_D(__t1) segmentLeft.right_width_D( __t1)
+#define ALIAS_rightWidth_L(__t1) segmentLeft.right_width( __t1)
+#define ALIAS_rightWidth_DD(__t1) segment.right_width_DD( __t1)
+#define ALIAS_rightWidth_D(__t1) segment.right_width_D( __t1)
+#define ALIAS_rightWidth(__t1) segment.right_width( __t1)
+#define ALIAS_leftWidth_R_DD(__t1) segmentRight.left_width_DD( __t1)
+#define ALIAS_leftWidth_R_D(__t1) segmentRight.left_width_D( __t1)
+#define ALIAS_leftWidth_R(__t1) segmentRight.left_width( __t1)
+#define ALIAS_leftWidth_L_DD(__t1) segmentLeft.left_width_DD( __t1)
+#define ALIAS_leftWidth_L_D(__t1) segmentLeft.left_width_D( __t1)
+#define ALIAS_leftWidth_L(__t1) segmentLeft.left_width( __t1)
+#define ALIAS_leftWidth_DD(__t1) segment.left_width_DD( __t1)
+#define ALIAS_leftWidth_D(__t1) segment.left_width_D( __t1)
+#define ALIAS_leftWidth(__t1) segment.left_width( __t1)
+#define ALIAS_yV_R(__t1, __t2) segmentRight.iso_y( __t1, __t2)
+#define ALIAS_yV_L(__t1, __t2) segmentLeft.iso_y( __t1, __t2)
+#define ALIAS_yV(__t1, __t2) segment.iso_y( __t1, __t2)
+#define ALIAS_xV_R(__t1, __t2) segmentRight.iso_x( __t1, __t2)
+#define ALIAS_xV_L(__t1, __t2) segmentLeft.iso_x( __t1, __t2)
+#define ALIAS_xV(__t1, __t2) segment.iso_x( __t1, __t2)
+#define ALIAS_Kappa_R_DD(__t1) segmentRight.iso_curvature_DD( __t1)
+#define ALIAS_Kappa_R_D(__t1) segmentRight.iso_curvature_D( __t1)
+#define ALIAS_Kappa_R(__t1) segmentRight.iso_curvature( __t1)
+#define ALIAS_Kappa_L_DD(__t1) segmentLeft.iso_curvature_DD( __t1)
+#define ALIAS_Kappa_L_D(__t1) segmentLeft.iso_curvature_D( __t1)
+#define ALIAS_Kappa_L(__t1) segmentLeft.iso_curvature( __t1)
+#define ALIAS_Kappa_DD(__t1) segment.iso_curvature_DD( __t1)
+#define ALIAS_Kappa_D(__t1) segment.iso_curvature_D( __t1)
+#define ALIAS_Kappa(__t1) segment.iso_curvature( __t1)
+#define ALIAS_ssSegmentMax_R(___dummy___) segmentRight.ss_segment_max()
+#define ALIAS_ssSegmentMax_L(___dummy___) segmentLeft.ss_segment_max()
+#define ALIAS_ssSegmentMax(___dummy___) segment.ss_segment_max()
+#define ALIAS_ssSegmentMin_R(___dummy___) segmentRight.ss_segment_min()
+#define ALIAS_ssSegmentMin_L(___dummy___) segmentLeft.ss_segment_min()
+#define ALIAS_ssSegmentMin(___dummy___) segment.ss_segment_min()
 #define ALIAS_L_R(___dummy___) segmentRight.length()
 #define ALIAS_L_L(___dummy___) segmentLeft.length()
 #define ALIAS_L(___dummy___) segment.length()
@@ -180,8 +180,8 @@ namespace PointMassCarModel_3Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     real_type t1   = XL__[iX_V];
     result__[ 0   ] = t1 - ModelPars[iM_V0];
     result__[ 1   ] = XL__[iX_s] - QL__[iQ_zeta];
@@ -198,19 +198,19 @@ namespace PointMassCarModel_3Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  PointMassCarModel_3::DboundaryConditionsDx_numRows() const
+  PointMassCarModel_3::DboundaryConditionsDxxp_numRows() const
   { return 8; }
 
   integer
-  PointMassCarModel_3::DboundaryConditionsDx_numCols() const
+  PointMassCarModel_3::DboundaryConditionsDxxp_numCols() const
   { return 14; }
 
   integer
-  PointMassCarModel_3::DboundaryConditionsDx_nnz() const
+  PointMassCarModel_3::DboundaryConditionsDxxp_nnz() const
   { return 13; }
 
   void
-  PointMassCarModel_3::DboundaryConditionsDx_pattern(
+  PointMassCarModel_3::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -230,7 +230,7 @@ namespace PointMassCarModel_3Define {
   }
 
   void
-  PointMassCarModel_3::DboundaryConditionsDx_sparse(
+  PointMassCarModel_3::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -242,8 +242,8 @@ namespace PointMassCarModel_3Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -258,39 +258,7 @@ namespace PointMassCarModel_3Define {
     result__[ 11  ] = -1;
     result__[ 12  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 13, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_3::DboundaryConditionsDp_numRows() const
-  { return 8; }
-
-  integer
-  PointMassCarModel_3::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  PointMassCarModel_3::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  PointMassCarModel_3::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  PointMassCarModel_3::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 13, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -315,8 +283,8 @@ namespace PointMassCarModel_3Define {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->getSegmentByIndex(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->getSegmentByIndex(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[1] + LL__[iL_lambda1__xo];
     real_type t3   = OMEGA__[3];
     result__[ 1   ] = -t3 + LL__[iL_lambda2__xo];
@@ -343,26 +311,26 @@ namespace PointMassCarModel_3Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  PointMassCarModel_3::DadjointBCDx_numRows() const
+  PointMassCarModel_3::DadjointBCDxxp_numRows() const
   { return 14; }
 
   integer
-  PointMassCarModel_3::DadjointBCDx_numCols() const
+  PointMassCarModel_3::DadjointBCDxxp_numCols() const
   { return 14; }
 
   integer
-  PointMassCarModel_3::DadjointBCDx_nnz() const
+  PointMassCarModel_3::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  PointMassCarModel_3::DadjointBCDx_pattern(
+  PointMassCarModel_3::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  PointMassCarModel_3::DadjointBCDx_sparse(
+  PointMassCarModel_3::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -371,39 +339,6 @@ namespace PointMassCarModel_3Define {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_3::DadjointBCDp_numRows() const
-  { return 14; }
-
-  integer
-  PointMassCarModel_3::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  PointMassCarModel_3::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  PointMassCarModel_3::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  PointMassCarModel_3::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: PointMassCarModel_3_Methods_boundary_conditions.cc

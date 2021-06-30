@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan.cc                                                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -135,7 +135,7 @@ namespace AliChanDefine {
     // Initialize to NaN all the ModelPars
 
     // Initialize string of names
-    setupNames(
+    setup_names(
       numPvars,                 namesPvars,
       numXvars,                 namesXvars,
       numLvars,                 namesLvars,
@@ -166,7 +166,7 @@ namespace AliChanDefine {
   //       |_|
   */
   void
-  AliChan::updateContinuation(
+  AliChan::update_continuation(
     integer   phase,
     real_type old_s,
     real_type s
@@ -255,7 +255,7 @@ namespace AliChanDefine {
     GenericContainer const & gc = gc_data("Controls");
     uControl.setup( gc("uControl") );
     // setup iterative solver
-    this->setupControlSolver( gc_data );
+    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -328,12 +328,12 @@ namespace AliChanDefine {
     this->setupUserMappedFunctions( gc );
     this->setupUserClasses( gc );
     this->setupPointers( gc );
-    this->setupBC( gc );
+    this->setup_BC( gc );
     this->setupControls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
-    this->infoBC();
+    this->info_BC();
     this->infoClasses();
     this->info();
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -88,7 +88,7 @@ namespace TwoStageCSTRDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x1];
     real_type t3   = L__[iL_lambda1__xo];
     real_type t4   = X__[iX_x2];
@@ -153,7 +153,7 @@ namespace TwoStageCSTRDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda1__xo];
     real_type t2   = X__[iX_x1];
     real_type t3   = X__[iX_x2];
@@ -241,13 +241,13 @@ namespace TwoStageCSTRDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u1];
     real_type t2   = ALIAS_u1Control_D_1(t1, -0.5e0, 0.5e0);
     real_type t3   = ModelPars[iM_W];
     real_type t8   = -X__[iX_x2] - 0.25e0;
     real_type t10  = L__[iL_lambda4__xo];
-    result__[ 0   ] = -t10 * t8 * ModelPars[iM_tau] + 2 * t1 * t3 + t8 * L__[iL_lambda2__xo] + t2;
+    result__[ 0   ] = -t8 * ModelPars[iM_tau] * t10 + 2 * t1 * t3 + t8 * L__[iL_lambda2__xo] + t2;
     real_type t14  = U__[iU_u2];
     real_type t15  = ALIAS_u2Control_D_1(t14, -0.5e0, 0.5e0);
     result__[ 1   ] = t15 + 2 * t14 * t3 + (-X__[iX_x4] - 0.25e0) * t10;
@@ -291,7 +291,7 @@ namespace TwoStageCSTRDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda4__xo];
     result__[ 0   ] = ModelPars[iM_tau] * t1 - L__[iL_lambda2__xo];
     result__[ 1   ] = -t1;
@@ -411,7 +411,7 @@ namespace TwoStageCSTRDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
     result__[ 2   ] = L__[iL_lambda3__xo];
@@ -505,7 +505,7 @@ namespace TwoStageCSTRDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];

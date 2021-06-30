@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_boundary_conditions.cc              |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -88,64 +88,32 @@ namespace ICLOCS_StirredTankDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  ICLOCS_StirredTank::DboundaryConditionsDx_numRows() const
+  ICLOCS_StirredTank::DboundaryConditionsDxxp_numRows() const
   { return 0; }
 
   integer
-  ICLOCS_StirredTank::DboundaryConditionsDx_numCols() const
-  { return 4; }
+  ICLOCS_StirredTank::DboundaryConditionsDxxp_numCols() const
+  { return 5; }
 
   integer
-  ICLOCS_StirredTank::DboundaryConditionsDx_nnz() const
+  ICLOCS_StirredTank::DboundaryConditionsDxxp_nnz() const
   { return 0; }
 
   void
-  ICLOCS_StirredTank::DboundaryConditionsDx_pattern(
+  ICLOCS_StirredTank::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  ICLOCS_StirredTank::DboundaryConditionsDx_sparse(
+  ICLOCS_StirredTank::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
     // EMPTY
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_StirredTank::DboundaryConditionsDp_numRows() const
-  { return 0; }
-
-  integer
-  ICLOCS_StirredTank::DboundaryConditionsDp_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_StirredTank::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  ICLOCS_StirredTank::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  ICLOCS_StirredTank::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -170,8 +138,8 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = ModelPars[iM_w];
     result__[ 0   ] = 2 * (XL__[iX_x1] - ModelPars[iM_x1_i]) * t1 + LL__[iL_lambda1__xo];
     result__[ 1   ] = 2 * (XL__[iX_x2] - ModelPars[iM_x2_i]) * t1 + LL__[iL_lambda2__xo];
@@ -185,19 +153,19 @@ namespace ICLOCS_StirredTankDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  ICLOCS_StirredTank::DadjointBCDx_numRows() const
+  ICLOCS_StirredTank::DadjointBCDxxp_numRows() const
   { return 5; }
 
   integer
-  ICLOCS_StirredTank::DadjointBCDx_numCols() const
-  { return 4; }
+  ICLOCS_StirredTank::DadjointBCDxxp_numCols() const
+  { return 5; }
 
   integer
-  ICLOCS_StirredTank::DadjointBCDx_nnz() const
+  ICLOCS_StirredTank::DadjointBCDxxp_nnz() const
   { return 4; }
 
   void
-  ICLOCS_StirredTank::DadjointBCDx_pattern(
+  ICLOCS_StirredTank::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -208,7 +176,7 @@ namespace ICLOCS_StirredTankDefine {
   }
 
   void
-  ICLOCS_StirredTank::DadjointBCDx_sparse(
+  ICLOCS_StirredTank::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -223,48 +191,15 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 2 * ModelPars[iM_w];
     result__[ 1   ] = result__[0];
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 4, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_StirredTank::DadjointBCDp_numRows() const
-  { return 5; }
-
-  integer
-  ICLOCS_StirredTank::DadjointBCDp_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_StirredTank::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  ICLOCS_StirredTank::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  ICLOCS_StirredTank::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: ICLOCS_StirredTank_Methods_boundary_conditions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_boundary_conditions.cc                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,8 +71,8 @@ namespace FlowInAchannelDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_u];
     result__[ 1   ] = XL__[iX_u1];
     result__[ 2   ] = XR__[iX_u] - 1;
@@ -84,19 +84,19 @@ namespace FlowInAchannelDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  FlowInAchannel::DboundaryConditionsDx_numRows() const
+  FlowInAchannel::DboundaryConditionsDxxp_numRows() const
   { return 4; }
 
   integer
-  FlowInAchannel::DboundaryConditionsDx_numCols() const
+  FlowInAchannel::DboundaryConditionsDxxp_numCols() const
   { return 8; }
 
   integer
-  FlowInAchannel::DboundaryConditionsDx_nnz() const
+  FlowInAchannel::DboundaryConditionsDxxp_nnz() const
   { return 4; }
 
   void
-  FlowInAchannel::DboundaryConditionsDx_pattern(
+  FlowInAchannel::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -107,7 +107,7 @@ namespace FlowInAchannelDefine {
   }
 
   void
-  FlowInAchannel::DboundaryConditionsDx_sparse(
+  FlowInAchannel::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -119,46 +119,14 @@ namespace FlowInAchannelDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  FlowInAchannel::DboundaryConditionsDp_numRows() const
-  { return 4; }
-
-  integer
-  FlowInAchannel::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  FlowInAchannel::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  FlowInAchannel::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  FlowInAchannel::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -183,8 +151,8 @@ namespace FlowInAchannelDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = LL__[iL_lambda3__xo];
@@ -200,26 +168,26 @@ namespace FlowInAchannelDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  FlowInAchannel::DadjointBCDx_numRows() const
+  FlowInAchannel::DadjointBCDxxp_numRows() const
   { return 8; }
 
   integer
-  FlowInAchannel::DadjointBCDx_numCols() const
+  FlowInAchannel::DadjointBCDxxp_numCols() const
   { return 8; }
 
   integer
-  FlowInAchannel::DadjointBCDx_nnz() const
+  FlowInAchannel::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  FlowInAchannel::DadjointBCDx_pattern(
+  FlowInAchannel::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  FlowInAchannel::DadjointBCDx_sparse(
+  FlowInAchannel::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -228,39 +196,6 @@ namespace FlowInAchannelDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  FlowInAchannel::DadjointBCDp_numRows() const
-  { return 8; }
-
-  integer
-  FlowInAchannel::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  FlowInAchannel::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  FlowInAchannel::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  FlowInAchannel::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: FlowInAchannel_Methods_boundary_conditions.cc

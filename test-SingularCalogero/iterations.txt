@@ -26,7 +26,7 @@ INFO CLASS = SingularCalogero
   OMEGA       = Inital = 0, Final = 0, Cyclic = 0
   total       = nZ = 202, UC = 100, Q = 101
   index start = omega = 202, p = 202
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
 Solver Controls:      Newton
@@ -34,37 +34,36 @@ Initializer Controls: Quasi-Newton
 Used threads:         7
 
 
-Hyness --- start iterations ---
-[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[  1,  1] (0.0132   ,0.00411  ) [0.330    ,0.000302 ] 1.00       0: 0
-[  2,  1] (0.00411  ,0.00254  ) [0.00205  ,0.00138  ] 1.00       0: 0
-[  3,  1] (0.00254  ,0.00133  ) [0.0106   ,0.00449  ] 1.00       0: 0
-[  4,  1] (0.00133  ,0.000520 ) [0.0146   ,0.00245  ] 1.00       0: 0
-[  5,  1] (0.000520 ,0.000230 ) [0.00557  ,0.000772 ] 1.00       0: 0
-[  6,  1] (0.000230 ,8.18e-05 ) [0.00162  ,0.000221 ] 1.00       0: 0
-[  7,  1] (8.18e-05 ,1.48e-05 ) [0.000387 ,3.48e-05 ] 1.00       0: 0
-[  8,  1] (1.48e-05 ,5.61e-07 ) [4.64e-05 ,1.12e-06 ] 1.00       0: 0
-[  9,  1] (5.61e-07 ,7.69e-10 ) [1.20e-06 ,1.26e-09 ] 1.00       0: 0
-[ 10,  1] (7.69e-10 ,1.34e-15 ) [1.27e-09 ,1.88e-15 ] 1.00       0: 0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 1] (  0.0132  , 0.00411  ) [  0.330   , 0.000302 ] 1.00       [solverNewtonDumped]
+[  2, 1] ( 0.00411  , 0.00254  ) [ 0.00205  , 0.00138  ] 1.00       [solverNewtonDumped]
+[  3, 1] ( 0.00254  , 0.00133  ) [  0.0106  , 0.00449  ] 1.00       [solverNewtonDumped]
+[  4, 1] ( 0.00133  , 0.000520 ) [  0.0146  , 0.00245  ] 1.00       [solverNewtonDumped]
+[  5, 1] ( 0.000520 , 0.000230 ) [ 0.00557  , 0.000772 ] 1.00       [solverNewtonDumped]
+[  6, 1] ( 0.000230 , 8.18e-05 ) [ 0.00162  , 0.000221 ] 1.00       [solverNewtonDumped]
+[  7, 1] ( 8.18e-05 , 1.48e-05 ) [ 0.000387 , 3.48e-05 ] 1.00       [solverNewtonDumped]
+[  8, 1] ( 1.48e-05 , 5.61e-07 ) [ 4.64e-05 , 1.12e-06 ] 1.00       [solverNewtonDumped]
+[  9, 1] ( 5.61e-07 , 7.69e-10 ) [ 1.20e-06 , 1.26e-09 ] 1.00       [solverNewtonDumped]
+[ 10, 1] ( 7.69e-10 , 1.34e-15 ) [ 1.27e-09 , 1.88e-15 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 3.46[ms]      timeout        = 0 [ms]
+Elapsed Time   = 4.25[ms]      timeout        = 0 [ms]
 iteration      = 10            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 202
 max acc. iter. = 800           N. System pars = 100
-Converged      = YES           Memory Used    = 29Kb (+78bytes)
------------------------ CONTINUATION -----------------------
+Converged      = YES           Memory Used    = 25Kb (+65bytes)
+----------------- CONTINUATION PARAMETERS ------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
 Few iterations = 8         
 ----------------------- EVALUATIONS ------------------------
 Function       = 11            Jacobian       = 10        
 Factorization  = 10            Inversion      = 20        
------------------------- USER INFO -------------------------
+------------------- NEWTON DUMPED SOLVER -------------------
 last ||d||_inf = 2.5414e-14    last||d1||_inf = 1.8662e-08
-last ||f||_inf = 3.3162e-08    last||f1||_1   = 7.6892e-10
+last ||f||_inf = 5.5571e-14    last||f||_1    = 1.3422e-15
 ------------------------------------------------------------
-
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             

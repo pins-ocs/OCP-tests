@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona2_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 9/6/2021                                         #
+#  version: 1.0   date 5/7/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -22,10 +22,10 @@ include Mechatronix
 # Auxiliary values
 epsi0  = 1
 epsi   = epsi0
-yf     = -2
 xf     = 5
-theta0 = Math::atan2(yf,xf)
 g      = 9.81
+yf     = -2
+theta0 = Math::atan2(yf,xf)
 Tf     = (-2.0*yf/g)**(1/2.0)
 Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 
@@ -103,7 +103,7 @@ mechatronix do |data|
 
     # choose solves: Hyness, NewtonDumped
     # ===================================
-    :solver => "Hyness",
+    :solver => "NewtonDumped",
     # ===================================
 
     # solver parameters

@@ -80,7 +80,7 @@ INFO CLASS = Farmer
   OMEGA       = Inital = 5, Final = 0, Cyclic = 0
   total       = nZ = 4015, UC = 1600, Q = 401
   index start = omega = 4010, p = 4015
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
 Solver Controls:      Newton
@@ -88,30 +88,29 @@ Initializer Controls: Quasi-Newton
 Used threads:         7
 
 
-Hyness --- start iterations ---
-[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[  1,  1] (0.000372 ,4.19e-06 ) [0.165    ,0.00370  ] 1.00       0: 0
-[  2,  1] (4.19e-06 ,7.42e-10 ) [0.00357  ,5.38e-07 ] 1.00       0: 0
-[  3,  1] (7.42e-10 ,1.50e-15 ) [5.39e-07 ,7.39e-13 ] 1.00       0: 0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 1] ( 0.000372 , 4.19e-06 ) [  0.165   , 0.00370  ] 1.00       [solverNewtonDumped]
+[  2, 1] ( 4.19e-06 , 7.42e-10 ) [ 0.00357  , 5.38e-07 ] 1.00       [solverNewtonDumped]
+[  3, 1] ( 7.42e-10 , 1.50e-15 ) [ 5.39e-07 , 7.39e-13 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 11.2[ms]      timeout        = 0 [ms]
+Elapsed Time   = 6.76[ms]      timeout        = 0 [ms]
 iteration      = 3             tolerance      = 1.000e-09 
 max iterations = 120           N. Equations   = 4015
 max acc. iter. = 800           N. System pars = 1600
-Converged      = YES           Memory Used    = 707Kb (+21bytes)
------------------------ CONTINUATION -----------------------
+Converged      = YES           Memory Used    = 626Kb (+62bytes)
+----------------- CONTINUATION PARAMETERS ------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
 Few iterations = 8         
 ----------------------- EVALUATIONS ------------------------
 Function       = 4             Jacobian       = 3         
 Factorization  = 3             Inversion      = 6         
------------------------- USER INFO -------------------------
+------------------- NEWTON DUMPED SOLVER -------------------
 last ||d||_inf = 7.0843e-12    last||d1||_inf = 6.0664e-06
-last ||f||_inf = 8.3930e-09    last||f1||_1   = 7.4243e-10
+last ||f||_inf = 8.4931e-14    last||f||_1    = 1.4953e-15
 ------------------------------------------------------------
-
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -72,7 +72,7 @@ namespace gtocX_2burn_parsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_f];
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
@@ -163,7 +163,7 @@ namespace gtocX_2burn_parsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_f];
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
@@ -279,7 +279,7 @@ namespace gtocX_2burn_parsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t4   = ModelPars[iM_time_f] - ModelPars[iM_time_i];
     real_type t5   = t4 * L__[iL_lambda1__xo];
     real_type t6   = P__[iP_p];
@@ -448,7 +448,7 @@ namespace gtocX_2burn_parsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = 1 - ModelPars[iM_w_guess];
     real_type t3   = P__[iP_p];
     real_type t4   = p_guess(0);
@@ -478,7 +478,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t60  = t3 * t3;
     real_type t35  = t17 * t23;
     real_type t44  = t34 * t37;
-    result__[ 0   ] = 2 * t5 * (t3 * t5 - 1) * t2 + t15 * t35 * t29 * t28 / 2 + t15 * t44 * t29 * t38 - t43 * t35 * t45 * t28 / 2 - t43 * t44 * t45 * t38 - 3.0 / 2.0 * t59 * t14 * L__[iL_lambda3__xo] / t60 * t17 * t20;
+    result__[ 0   ] = 2 * t5 * (t5 * t3 - 1) * t2 + t15 * t35 * t29 * t28 / 2 + t15 * t44 * t29 * t38 - t43 * t35 * t45 * t28 / 2 - t43 * t44 * t45 * t38 - 3.0 / 2.0 * t59 * t14 * L__[iL_lambda3__xo] / t60 * t17 * t20;
     real_type t68  = h_guess(0);
     result__[ 1   ] = (2 * P__[iP_h] - 2 * t68) * t2;
     real_type t72  = k_guess(0);
@@ -525,7 +525,7 @@ namespace gtocX_2burn_parsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = 1 - ModelPars[iM_w_guess];
     real_type t3   = p_guess(0);
     real_type t4   = t3 * t3;
@@ -562,7 +562,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t66  = t42 * t55;
     real_type t78  = pow(t57 * t23 + t28 * t24 + 1, 2);
     real_type t79  = t13 * t13;
-    real_type t35  = t16 * t22;
+    real_type t35  = t22 * t16;
     real_type t48  = t34 * t37;
     result__[ 0   ] = 2 / t4 * t2 - t12 * t35 * t28 * t27 / 4 + t12 * t48 * t28 * t38 + t28 * t46 * t45 * t43 + t28 * t50 * t37 * t43 + t55 * t35 * t57 * t27 / 4 - t55 * t48 * t57 * t38 - t57 * t46 * t45 * t66 - t57 * t50 * t37 * t66 + 0.15e2 / 4.0 * t11 * L__[iL_lambda3__xo] * t78 * t9 / t79 * t8 * t19;
     result__[ 1   ] = 2 * t2;
@@ -592,7 +592,7 @@ namespace gtocX_2burn_parsDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
     result__[ 2   ] = L__[iL_lambda3__xo];
@@ -685,7 +685,7 @@ namespace gtocX_2burn_parsDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];

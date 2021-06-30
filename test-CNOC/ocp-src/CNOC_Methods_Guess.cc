@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_Guess.cc                                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -34,9 +34,9 @@
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_nominalFeed_R(___dummy___) segmentRight.feedReferenceRate()
-#define ALIAS_nominalFeed_L(___dummy___) segmentLeft.feedReferenceRate()
-#define ALIAS_nominalFeed(___dummy___) segment.feedReferenceRate()
+#define ALIAS_nominalFeed_R(___dummy___) segmentRight.feed_reference_rate()
+#define ALIAS_nominalFeed_L(___dummy___) segmentLeft.feed_reference_rate()
+#define ALIAS_nominalFeed(___dummy___) segment.feed_reference_rate()
 #define ALIAS_yLimitRight_R(__t1, __t2) segmentRight.y_ISO( __t1, __t2)
 #define ALIAS_yLimitRight_L(__t1, __t2) segmentLeft.y_ISO( __t1, __t2)
 #define ALIAS_yLimitRight(__t1, __t2) segment.y_ISO( __t1, __t2)
@@ -91,9 +91,9 @@
 #define ALIAS_kappa_DD(__t1) segment.curvature_DD( __t1)
 #define ALIAS_kappa_D(__t1) segment.curvature_D( __t1)
 #define ALIAS_kappa(__t1) segment.curvature( __t1)
-#define ALIAS_lenSeg_R(___dummy___) segmentRight.ssLength()
-#define ALIAS_lenSeg_L(___dummy___) segmentLeft.ssLength()
-#define ALIAS_lenSeg(___dummy___) segment.ssLength()
+#define ALIAS_lenSeg_R(___dummy___) segmentRight.ss_length()
+#define ALIAS_lenSeg_L(___dummy___) segmentLeft.ss_length()
+#define ALIAS_lenSeg(___dummy___) segment.ss_length()
 #define ALIAS_ay_limit_DD(__t1) ay_limit.DD( __t1)
 #define ALIAS_ay_limit_D(__t1) ay_limit.D( __t1)
 #define ALIAS_ax_limit_DD(__t1) ax_limit.DD( __t1)
@@ -152,7 +152,7 @@ namespace CNOCDefine {
     X_pointer_type       X__,
     L_pointer_type       L__
   ) const {
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     X__[ iX_s   ] = Q__[iQ_zeta];
     X__[ iX_n   ] = 0;
     X__[ iX_vs  ] = ALIAS_nominalFeed();
@@ -175,30 +175,111 @@ namespace CNOCDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
-  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
-  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
-  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
-  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__node__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        ipos,i_segment,MSG,a-b                                        \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__node__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        ipos,i_segment,MSG,a-b                                        \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__cell__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        icell,i_segment,MSG,a-b                                       \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__cell__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        icell,i_segment,MSG,a-b                                       \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__pars__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__pars__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__params__lt(A,B,MSG)                         \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__params__le(A,B,MSG)                         \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
 
 
 
-  // node_check_strings
-  #define Xoptima__message_node_check_0 "0 < coV(zeta)"
 
 
-  // cell_check_strings
-  #define Xoptima__message_cell_check_0 "0 < coV(zeta)"
 
-
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   CNOC::p_check( P_const_pointer_type P__ ) const {
     return true;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   CNOC::xlambda_check_node(
@@ -206,29 +287,6 @@ namespace CNOCDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
-    Xoptima__check__node__lt(0, X__[iX_coV], Xoptima__message_node_check_0);
-    return true;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
-  CNOC::xlambda_check_cell(
-    integer              icell,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
-  ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
-    Xoptima__check__cell__lt(0, X__[iX_coV], Xoptima__message_cell_check_0);
     return true;
   }
 
@@ -241,33 +299,7 @@ namespace CNOCDefine {
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[7];
-    real_type L__[7];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
-    X__[5] = (LEFT__.x[5]+RIGHT__.x[5])/2;
-    X__[6] = (LEFT__.x[6]+RIGHT__.x[6])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    L__[5] = (LEFT__.lambda[5]+RIGHT__.lambda[5])/2;
-    L__[6] = (LEFT__.lambda[6]+RIGHT__.lambda[6])/2;
-    return xlambda_check_cell( icell, NODE__, P__ );
+    return true;
   }
 
   /*\
@@ -292,7 +324,7 @@ namespace CNOCDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-      ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
+      ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 2, 0 );
     UGUESS__[ iU_js ] = 0;
     UGUESS__[ iU_jn ] = 0;
@@ -357,7 +389,7 @@ namespace CNOCDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->getSegmentByIndex(i_segment);
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_jn_max];
     jnControl.check_range(U__[iU_jn], -t2, t2);
     jsControl.check_range(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GunnAndThomas_run.rb                                           #
 #                                                                       #
-#  version: 1.0   date 3/6/2021                                         #
+#  version: 1.0   date 5/7/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -281,51 +281,51 @@ module Mechatronix
   class Road < Container
     def initialize()
       super("road")
-      self.MeshGridSize = 1
-      self.RoadWidth    = 6
-      self.Segments     = []
-      self.Theta0       = 0  # initial orientation in x-y plane\n"
-      self.S0           = 0  # initial curvilinear abscissa\n"
-      self.X0           = 0  # initial x position of road middle line\n"
-      self.Y0           = 0  # initial y position of road middle line\n"
-      self.Z0           = 0  # initial z position of road middle line\n"
-      self.Banking0     = 0  # initial y position of road middle line\n"
-      self.IsSAE        = false
-    end
+      self.mesh_grid_size = 1
+      self.road_width     = 6
+      self.segments       = []
+      self.theta0         = 0  # initial orientation in x-y plane\n"
+      self.s0             = 0  # initial curvilinear abscissa\n"
+      self.x0             = 0  # initial x position of road middle line\n"
+      self.y0             = 0  # initial y position of road middle line\n"
+      self.z0             = 0  # initial z position of road middle line\n"
+      self.banking0       = 0  # initial y position of road middle line\n"
+      self.is_SAE         = false
+    end  
 
     def << hsh
       raise ArgumentError, "Need a kind of Hash" unless hsh.respond_to? :to_hash
       hsh = hsh.to_hash
-      if hsh[:Radius] then
+      if hsh[:radius] then
         curvature = 1.0/hsh[:radius]
-        if hsh[:Angle] then
-          length = (hsh[:Angle] / hsh[:Curvature] ).abs
-        elsif hsh[:AngleDeg] then
-          length = ((Math::PI*hsh[:AngleDeg]/180.0) / hsh[:Curvature] ).abs
+        if hsh[:angle] then
+          length = (hsh[:angle] / hsh[:curvature] ).abs
+        elsif hsh[:angle_degree] then
+          length = ((Math::PI*hsh[:angle_degree]/180.0) / hsh[:curvature] ).abs
         else
-          raise RuntimeError, "Missing Angle field in Road segment #{self.Segments.length}"
+          raise RuntimeError, "Missing Angle field in Road segment #{self.segments.length}"
         end
-        initialCurvature = finalCurvature = curvature
+        initial_curvature = final_curvature = curvature
       else
-        initialCurvature = hsh[:InitialCurvature] || hsh[:Curvature] || 0;
-        finalCurvature   = hsh[:FinalCurvature]   || hsh[:Curvature] || 0;
-        raise RuntimeError, "Missing Length field in Road segment #{self.Segments.length}" unless hsh[:Length]
-        length           = hsh[:Length]
+        initial_curvature = hsh[:initial_curvature] || hsh[:curvature] || 0;
+        final_curvature   = hsh[:final_curvature]   || hsh[:curvature] || 0;
+        raise RuntimeError, "Missing length field in Road segment #{self.segments.length}" unless hsh[:length]
+        length           = hsh[:length]
       end
-      self.Segments << {
-        Length:            length,
-        GridSize:          hsh[:GridSize]                || self.MeshGridSize,
-        Width:             hsh[:Width]                   || self.RoadWidth,
-        InitialCurvature:  initialCurvature,
-        FinalCurvature:    finalCurvature,
-        InitialLeftWidth:  hsh[:InitialLeftWidth]        || hsh[:LeftWidth]  || self.RoadWidth / 2.0,
-        FinalLeftWidth:    hsh[:FinalLeftWidth]          || hsh[:LeftWidth]  || self.RoadWidth / 2.0,
-        InitialRightWidth: hsh[:InitialRightWidth]       || hsh[:RightWidth] || self.RoadWidth / 2.0,
-        FinalRightWidth:   hsh[:FinalRightWidth]         || hsh[:RightWidth] || self.RoadWidth / 2.0,
-        SpeedLimit:        hsh[:SpeedLimit]              || 300,
-        Adherence:         hsh[:FrictionReductionFactor] || hsh[:adherence]  || 1,
-        FinalZ:            hsh[:End_z]                   || hsh[:z]          || 0,
-        FinalBanking:      hsh[:End_banking]             || hsh[:banking]    || 0
+      self.segments << {
+        length:              length,
+        grid_size:           hsh[:grid_size] || hsh[:GridSize] || self.mesh_grid_size,
+        width:               hsh[:width]     || hsh[:Width]    || self.road_width,
+        initial_curvature:   initial_curvature,
+        final_curvature:     final_curvature,
+        initial_left_width:  hsh[:initial_left_width]  || hsh[:left_width]  || self.road_width / 2.0,
+        final_left_width:    hsh[:final_left_width]    || hsh[:left_width]  || self.road_width / 2.0,
+        initial_right_width: hsh[:initial_right_width] || hsh[:right_width] || self.road_width / 2.0,
+        final_right_width:   hsh[:final_right_width]   || hsh[:right_width] || self.road_width / 2.0,
+        speed_limit:         hsh[:speed_limit]         || 300,
+        qdherence:           hsh[:friction_reduction_factor] || hsh[:adherence]  || 1,
+        final_z:             hsh[:end_z]       || hsh[:z]       || 0,
+        final_banking:       hsh[:end_banking] || hsh[:banking] || 0
       }
   end
   def consistent?
@@ -342,31 +342,31 @@ module Mechatronix
 
     def init(pars = {})
       @toolPath2D = {:segments => [] }
-      @defaultFeedRate     = pars[:defaultFeedRate]     || 0.1
-      @defaultSpindleRate  = pars[:defaultSpindleRate]  || 500
-      @defaultCrossSection = pars[:defaultCrossSection] || 0.01
-      @defaultN            = pars[:defaultN]            || 10
+      @default_feed_rate     = pars[:default_feed_rate]     || 0.1
+      @default_spindle_rate  = pars[:default_spindle_rate]  || 500
+      @default_cross_section = pars[:default_cross_section] || 0.01
+      @default_N             = pars[:default_N]             || 10
     end
 
     def <<(pars)
-      x0           = pars[:x0]
-      y0           = pars[:y0]
-      x1           = pars[:x1]
-      y1           = pars[:y1]
-      n            = pars[:n]            || @defaultN
-      feedRate     = pars[:feedRate]     || @defaultFeedRate
-      spindleRate  = pars[:spindleRate]  || @defaultSpindleRate
-      crossSection = pars[:crossSection] || @defaultCrossSection
+      x0            = pars[:x0]
+      y0            = pars[:y0]
+      x1            = pars[:x1]
+      y1            = pars[:y1]
+      n             = pars[:n]             || @default_N
+      feed_rate     = pars[:feed_rate]     || @default_feed_rate
+      spindle_rate  = pars[:spindle_rate]  || @default_spindle_rate
+      cross_section = pars[:cross_section] || @default_cross_section
 
       tmp = {
-        :x0           => x0,
-        :y0           => y0,
-        :x1           => x1,
-        :y1           => y1,
-        :feedRate     => feedRate,
-        :spindleRate  => spindleRate,
-        :crossSection => crossSection,
-        :n            => n
+        :x0            => x0,
+        :y0            => y0,
+        :x1            => x1,
+        :y1            => y1,
+        :feed_rate     => feed_rate,
+        :spindle_rate  => spindle_rate,
+        :cross_section => cross_section,
+        :n             => n
       }
 
       tmp[:angle0] = pars[:angle0] if pars.key? :angle0

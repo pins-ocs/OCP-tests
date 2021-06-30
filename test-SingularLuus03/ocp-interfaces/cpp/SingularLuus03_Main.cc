@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus03_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -91,7 +91,7 @@ main() {
       file.open( "data/SingularLuus03_OCP_not_converged.txt" );
     }
     file.precision(18);
-    Mechatronix::saveOCPsolutionToStream(gc_solution,file);
+    Mechatronix::save_OCP_solution_to_stream(gc_solution,file);
     file.close();
     cout.precision(18);
     GenericContainer const & target = gc_solution("target");

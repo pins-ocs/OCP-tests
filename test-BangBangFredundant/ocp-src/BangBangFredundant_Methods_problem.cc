@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_problem.cc                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,30 +73,6 @@ namespace BangBangFredundantDefine {
    |
   \*/
 
-#if 0
-  real_type
-  BangBangFredundant::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer        i_cell = CELL__.i_cell;
-    real_type const * Q__ = CELL__.qM;
-    real_type const * X__ = CELL__.xM;
-    real_type const * L__ = CELL__.lambdaM;
-    real_type const * U__ = CELL__.uM;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t4   = X__[iX_F1] + X__[iX_F2];
-    real_type t5   = Flim(t4);
-    real_type t7   = U__[iU_aF1];
-    real_type t8   = ModelPars[iM_maxAF];
-    real_type t9   = aF1Control(t7, -t8, t8);
-    real_type t10  = U__[iU_aF2];
-    real_type t11  = aF2Control(t10, -t8, t8);
-    real_type result__ = t10 * L__[iL_lambda6__xo] + t4 * L__[iL_lambda2__xo] + t5 * ModelPars[iM_w_F] + t7 * L__[iL_lambda5__xo] + L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda3__xo] * X__[iX_vF1] + L__[iL_lambda4__xo] * X__[iX_vF2] + t11 + t9;
-    return result__;
-  }
-#else
   real_type
   BangBangFredundant::H_eval(
     NodeType2 const    & NODE__,
@@ -107,7 +83,7 @@ namespace BangBangFredundantDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t4   = X__[iX_F1] + X__[iX_F2];
     real_type t5   = Flim(t4);
     real_type t7   = U__[iU_aF1];
@@ -121,7 +97,6 @@ namespace BangBangFredundantDefine {
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -139,7 +114,7 @@ namespace BangBangFredundantDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = Flim(X__[iX_F1] + X__[iX_F2]);
     real_type result__ = t5 * ModelPars[iM_w_F];
     if ( m_debug ) {
@@ -159,7 +134,7 @@ namespace BangBangFredundantDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_maxAF];
     real_type t3   = aF1Control(U__[iU_aF1], -t2, t2);
     real_type t5   = aF2Control(U__[iU_aF2], -t2, t2);
@@ -187,7 +162,7 @@ namespace BangBangFredundantDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
@@ -215,8 +190,8 @@ namespace BangBangFredundantDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t5   = Flim(XL__[iX_F1] + XL__[iX_F2]);
     real_type t9   = Flim(XR__[iX_F1] + XR__[iX_F2]);
     real_type result__ = -XR__[iX_x] + t5 + t9;
@@ -229,11 +204,11 @@ namespace BangBangFredundantDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFredundant::DmayerDx_numEqns() const
+  BangBangFredundant::DmayerDxxp_numEqns() const
   { return 12; }
 
   void
-  BangBangFredundant::DmayerDx_eval(
+  BangBangFredundant::DmayerDxxp_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -245,8 +220,8 @@ namespace BangBangFredundantDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = ALIAS_Flim_D(XL__[iX_F1] + XL__[iX_F2]);
@@ -260,23 +235,7 @@ namespace BangBangFredundantDefine {
     result__[ 10  ] = 0;
     result__[ 11  ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 12, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DmayerDp_numEqns() const
-  { return 0; }
-
-  void
-  BangBangFredundant::DmayerDp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 12, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -302,7 +261,7 @@ namespace BangBangFredundantDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     real_type t5   = ALIAS_Flim_D(X__[iX_F1] + X__[iX_F2]);
@@ -346,7 +305,7 @@ namespace BangBangFredundantDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_maxAF];
     result__[ 0   ] = ALIAS_aF1Control_D_1(U__[iU_aF1], -t2, t2);
     result__[ 1   ] = ALIAS_aF2Control_D_1(U__[iU_aF2], -t2, t2);
@@ -371,7 +330,7 @@ namespace BangBangFredundantDefine {
     real_type      s,
     Q_pointer_type result__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -459,8 +418,8 @@ namespace BangBangFredundantDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
     result__[ 1   ] = XR__[iX_v] - XL__[iX_v];
     result__[ 2   ] = XR__[iX_F1] - XL__[iX_F1];
@@ -539,8 +498,8 @@ namespace BangBangFredundantDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -592,7 +551,7 @@ namespace BangBangFredundantDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_maxAF];
     result__[ 0   ] = aF1Control(U__[iU_aF1], -t2, t2);
     result__[ 1   ] = aF2Control(U__[iU_aF2], -t2, t2);

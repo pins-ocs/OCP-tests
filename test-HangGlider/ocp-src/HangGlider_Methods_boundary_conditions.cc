@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_boundary_conditions.cc                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,8 +84,8 @@ namespace HangGliderDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x] - ModelPars[iM_x_i];
     result__[ 1   ] = XL__[iX_y] - ModelPars[iM_y_i];
     result__[ 2   ] = XL__[iX_vx] - ModelPars[iM_vx_i];
@@ -100,19 +100,19 @@ namespace HangGliderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  HangGlider::DboundaryConditionsDx_numRows() const
+  HangGlider::DboundaryConditionsDxxp_numRows() const
   { return 7; }
 
   integer
-  HangGlider::DboundaryConditionsDx_numCols() const
-  { return 8; }
+  HangGlider::DboundaryConditionsDxxp_numCols() const
+  { return 9; }
 
   integer
-  HangGlider::DboundaryConditionsDx_nnz() const
+  HangGlider::DboundaryConditionsDxxp_nnz() const
   { return 7; }
 
   void
-  HangGlider::DboundaryConditionsDx_pattern(
+  HangGlider::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -126,7 +126,7 @@ namespace HangGliderDefine {
   }
 
   void
-  HangGlider::DboundaryConditionsDx_sparse(
+  HangGlider::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -138,8 +138,8 @@ namespace HangGliderDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -148,39 +148,7 @@ namespace HangGliderDefine {
     result__[ 5   ] = 1;
     result__[ 6   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 7, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HangGlider::DboundaryConditionsDp_numRows() const
-  { return 7; }
-
-  integer
-  HangGlider::DboundaryConditionsDp_numCols() const
-  { return 1; }
-
-  integer
-  HangGlider::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  HangGlider::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  HangGlider::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 7, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -205,8 +173,8 @@ namespace HangGliderDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
@@ -223,26 +191,26 @@ namespace HangGliderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  HangGlider::DadjointBCDx_numRows() const
+  HangGlider::DadjointBCDxxp_numRows() const
   { return 9; }
 
   integer
-  HangGlider::DadjointBCDx_numCols() const
-  { return 8; }
+  HangGlider::DadjointBCDxxp_numCols() const
+  { return 9; }
 
   integer
-  HangGlider::DadjointBCDx_nnz() const
+  HangGlider::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  HangGlider::DadjointBCDx_pattern(
+  HangGlider::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  HangGlider::DadjointBCDx_sparse(
+  HangGlider::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -251,39 +219,6 @@ namespace HangGliderDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HangGlider::DadjointBCDp_numRows() const
-  { return 9; }
-
-  integer
-  HangGlider::DadjointBCDp_numCols() const
-  { return 1; }
-
-  integer
-  HangGlider::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  HangGlider::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  HangGlider::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: HangGlider_Methods_boundary_conditions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Methods_boundary_conditions.cc                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,8 +75,8 @@ namespace BrysonDenhamDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x];
     result__[ 1   ] = XL__[iX_v] - 1;
     result__[ 2   ] = XR__[iX_x];
@@ -88,19 +88,19 @@ namespace BrysonDenhamDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BrysonDenham::DboundaryConditionsDx_numRows() const
+  BrysonDenham::DboundaryConditionsDxxp_numRows() const
   { return 4; }
 
   integer
-  BrysonDenham::DboundaryConditionsDx_numCols() const
+  BrysonDenham::DboundaryConditionsDxxp_numCols() const
   { return 4; }
 
   integer
-  BrysonDenham::DboundaryConditionsDx_nnz() const
+  BrysonDenham::DboundaryConditionsDxxp_nnz() const
   { return 4; }
 
   void
-  BrysonDenham::DboundaryConditionsDx_pattern(
+  BrysonDenham::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -111,7 +111,7 @@ namespace BrysonDenhamDefine {
   }
 
   void
-  BrysonDenham::DboundaryConditionsDx_sparse(
+  BrysonDenham::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -123,46 +123,14 @@ namespace BrysonDenhamDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DboundaryConditionsDp_numRows() const
-  { return 4; }
-
-  integer
-  BrysonDenham::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  BrysonDenham::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BrysonDenham::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -187,8 +155,8 @@ namespace BrysonDenhamDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] - LR__[iL_lambda1__xo];
@@ -200,26 +168,26 @@ namespace BrysonDenhamDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BrysonDenham::DadjointBCDx_numRows() const
+  BrysonDenham::DadjointBCDxxp_numRows() const
   { return 4; }
 
   integer
-  BrysonDenham::DadjointBCDx_numCols() const
+  BrysonDenham::DadjointBCDxxp_numCols() const
   { return 4; }
 
   integer
-  BrysonDenham::DadjointBCDx_nnz() const
+  BrysonDenham::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  BrysonDenham::DadjointBCDx_pattern(
+  BrysonDenham::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  BrysonDenham::DadjointBCDx_sparse(
+  BrysonDenham::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -228,39 +196,6 @@ namespace BrysonDenhamDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DadjointBCDp_numRows() const
-  { return 4; }
-
-  integer
-  BrysonDenham::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  BrysonDenham::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BrysonDenham::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: BrysonDenham_Methods_boundary_conditions.cc

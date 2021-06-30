@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -91,8 +91,8 @@ namespace BangBangFclipDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x];
     result__[ 1   ] = XL__[iX_v];
     result__[ 2   ] = XL__[iX_F];
@@ -105,19 +105,19 @@ namespace BangBangFclipDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFclip::DboundaryConditionsDx_numRows() const
+  BangBangFclip::DboundaryConditionsDxxp_numRows() const
   { return 5; }
 
   integer
-  BangBangFclip::DboundaryConditionsDx_numCols() const
+  BangBangFclip::DboundaryConditionsDxxp_numCols() const
   { return 6; }
 
   integer
-  BangBangFclip::DboundaryConditionsDx_nnz() const
+  BangBangFclip::DboundaryConditionsDxxp_nnz() const
   { return 5; }
 
   void
-  BangBangFclip::DboundaryConditionsDx_pattern(
+  BangBangFclip::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -129,7 +129,7 @@ namespace BangBangFclipDefine {
   }
 
   void
-  BangBangFclip::DboundaryConditionsDx_sparse(
+  BangBangFclip::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -141,47 +141,15 @@ namespace BangBangFclipDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 5, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFclip::DboundaryConditionsDp_numRows() const
-  { return 5; }
-
-  integer
-  BangBangFclip::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFclip::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  BangBangFclip::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BangBangFclip::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 5, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -206,8 +174,8 @@ namespace BangBangFclipDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
@@ -221,26 +189,26 @@ namespace BangBangFclipDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFclip::DadjointBCDx_numRows() const
+  BangBangFclip::DadjointBCDxxp_numRows() const
   { return 6; }
 
   integer
-  BangBangFclip::DadjointBCDx_numCols() const
+  BangBangFclip::DadjointBCDxxp_numCols() const
   { return 6; }
 
   integer
-  BangBangFclip::DadjointBCDx_nnz() const
+  BangBangFclip::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  BangBangFclip::DadjointBCDx_pattern(
+  BangBangFclip::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  BangBangFclip::DadjointBCDx_sparse(
+  BangBangFclip::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -249,39 +217,6 @@ namespace BangBangFclipDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFclip::DadjointBCDp_numRows() const
-  { return 6; }
-
-  integer
-  BangBangFclip::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFclip::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  BangBangFclip::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BangBangFclip::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: BangBangFclip_Methods_boundary_conditions.cc

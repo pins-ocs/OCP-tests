@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,23 +50,23 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_v = 0.01;
-    real_type tol_TS = 0.01;
-    real_type m_i = 1;
-    real_type tol_T = 0.01;
-    real_type h_i = 1;
-    real_type epsi_T = 0.01;
-    real_type g0 = 1;
-    real_type Tmax = 3.5*g0*m_i;
-    real_type epsi_TS = 0.01;
     real_type tol_v = 0.01;
-    real_type tol_mass = 0.01;
+    real_type g0 = 1;
+    real_type epsi_TS = 0.01;
+    real_type m_i = 1;
+    real_type Tmax = 3.5*g0*m_i;
     real_type mc = 0.6;
     real_type m_f = mc*m_i;
+    real_type tol_mass = 0.01;
+    real_type h_i = 1;
+    real_type c = 0.5*(g0*h_i)^(1/2.0);
     real_type epsi_mass = 0.01;
     real_type vc = 620;
+    real_type tol_TS = 0.01;
+    real_type epsi_v = 0.01;
+    real_type epsi_T = 0.01;
     real_type Dc = 0.5*vc*m_i/g0;
-    real_type c = 0.5*(g0*h_i)^(1/2.0);
+    real_type tol_T = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -118,7 +118,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
@@ -215,8 +215,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 GoddardRocket_data.Mesh["s0"] = 0;
-GoddardRocket_data.Mesh["segments"][0]["length"] = 1;
 GoddardRocket_data.Mesh["segments"][0]["n"] = 1000;
+GoddardRocket_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -252,7 +252,7 @@ GoddardRocket_data.Mesh["segments"][0]["n"] = 1000;
       file.open( "data/GoddardRocket_OCP_not_converged.txt" );
     }
     file.precision(18);
-    Mechatronix::saveOCPsolutionToStream(gc_solution,file);
+    Mechatronix::save_OCP_solution_to_stream(gc_solution,file);
     file.close();
     cout.precision(18);
     GenericContainer const & target = gc_solution("target");

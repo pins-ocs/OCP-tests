@@ -30,7 +30,7 @@ INFO CLASS = WorstCaseScenario
   OMEGA       = Inital = 1, Final = 0, Cyclic = 0
   total       = nZ = 803, UC = 400, Q = 401
   index start = omega = 802, p = 803
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
 Solver Controls:      Newton
@@ -38,30 +38,29 @@ Initializer Controls: Quasi-Newton
 Used threads:         7
 
 
-Hyness --- start iterations ---
-[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[  1,  3] (0.00156  ,1.68     ) [739.0    ,65.9     ] 0.456      0: 0
-[  2,  1] (1.68     ,2.03e-08 ) [337.0    ,4.07e-06 ] 1.00       0: 1
-[  3,  1] (2.03e-08 ,1.09e-18 ) [4.07e-06 ,8.65e-19 ] 1.00       0: 0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 2] ( 0.00156  ,   1.84   ) [  739.0   ,  0.265   ] 0.500      [solverNewtonDumped]
+[  2, 1] (   1.84   , 1.42e-08 ) [  370.0   , 2.85e-06 ] 1.00       [solverNewtonDumped]
+[  3, 1] ( 1.42e-08 , 1.09e-18 ) [ 2.85e-06 , 8.65e-19 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 3.17[ms]      timeout        = 0 [ms]
+Elapsed Time   = 2.40[ms]      timeout        = 0 [ms]
 iteration      = 3             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 803
 max acc. iter. = 800           N. System pars = 400
-Converged      = YES           Memory Used    = 101Kb (+8bytes)
------------------------ CONTINUATION -----------------------
+Converged      = YES           Memory Used    = 83Kb (+76bytes)
+----------------- CONTINUATION PARAMETERS ------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
 Few iterations = 8         
 ----------------------- EVALUATIONS ------------------------
-Function       = 6             Jacobian       = 3         
-Factorization  = 3             Inversion      = 8         
------------------------- USER INFO -------------------------
-last ||d||_inf = 1.3729e-17    last||d1||_inf = 1.6297e-05
-last ||f||_inf = 4.0744e-08    last||f1||_1   = 2.0296e-08
+Function       = 5             Jacobian       = 3         
+Factorization  = 3             Inversion      = 7         
+------------------- NEWTON DUMPED SOLVER -------------------
+last ||d||_inf = 1.3732e-17    last||d1||_inf = 1.1415e-05
+last ||f||_inf = 2.5369e-17    last||f||_1    = 1.0873e-18
 ------------------------------------------------------------
-
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             

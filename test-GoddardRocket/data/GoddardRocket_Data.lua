@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,23 +20,23 @@
 -- User Header
 
 -- Auxiliary values
-epsi_v    = 0.01
-tol_TS    = 0.01
-m_i       = 1
-tol_T     = 0.01
-h_i       = 1
-epsi_T    = 0.01
-g0        = 1
-Tmax      = 3.5*g0*m_i
-epsi_TS   = 0.01
 tol_v     = 0.01
-tol_mass  = 0.01
+g0        = 1
+epsi_TS   = 0.01
+m_i       = 1
+Tmax      = 3.5*g0*m_i
 mc        = 0.6
 m_f       = mc*m_i
+tol_mass  = 0.01
+h_i       = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
 epsi_mass = 0.01
 vc        = 620
+tol_TS    = 0.01
+epsi_v    = 0.01
+epsi_T    = 0.01
 Dc        = 0.5*vc*m_i/g0
-c         = 0.5*(g0*h_i)**(1/2.0)
+tol_T     = 0.01
 
 content = {
 
@@ -57,10 +57,12 @@ content = {
   LU_threaded = true,
 
   -- Enable check jacobian
-  JacobianCheck            = false,
-  JacobianCheckFull        = false,
-  JacobianCheck_epsilon    = 1e-4,
-  FiniteDifferenceJacobian = false,
+  JacobianCheck         = false,
+  JacobianCheckFull     = false,
+  JacobianCheck_epsilon = 1e-4,
+
+  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  JacobianDiscretization = 'ANALYTIC,
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "GoddardRocket_dump",
@@ -110,7 +112,7 @@ content = {
     max_iter             = 300,
     max_step_iter        = 40,
     max_accumulated_iter = 800,
-    tolerance            = 9.999999999999999e-10,
+    tolerance            = 1e-09,
 
     -- continuation parameters
     ns_continuation_begin = 0,
@@ -226,8 +228,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 1000,
+        length = 1,
       },
     },
   },

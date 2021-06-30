@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_AdjointODE.cc                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t2   = X__[iX_x];
     result__[ 0   ] = 2 * t2 * t1;
@@ -90,7 +90,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t6   = U__[iU_u];
     real_type t7   = uControl(t6, -1, 1);
     real_type t11  = t2 * t2;
-    result__[ 3   ] = 2 * t1 * ModelPars[iM_theta] + t4 * X__[iX_y] + t5 * X__[iX_z] + t6 * L__[iL_lambda3__xo] + t11 + t7;
+    result__[ 3   ] = 2 * ModelPars[iM_theta] * t1 + X__[iX_y] * t4 + X__[iX_z] * t5 + t6 * L__[iL_lambda3__xo] + t11 + t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -136,7 +136,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 2 * X__[iX_T];
     result__[ 1   ] = 2 * X__[iX_x];
     result__[ 2   ] = L__[iL_lambda1__xo];
@@ -207,7 +207,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
     result__[ 0   ] = t3 * t1 + t1 * L__[iL_lambda3__xo];
@@ -250,7 +250,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
     result__[ 0   ] = t2 + L__[iL_lambda3__xo];
     if ( m_debug )
@@ -369,7 +369,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
     result__[ 2   ] = L__[iL_lambda3__xo];
@@ -463,7 +463,7 @@ namespace SingularLuus04_FreeTimeDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
     result__[ 2   ] = V__[2];

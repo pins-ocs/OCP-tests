@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_dll_pins.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -284,7 +284,7 @@ namespace gtocX_2burn_parsDefine {
       pConsole->error( "gtocX_2burn_pars_ocp_write_to_file, no solution found!\n" );
     } else {
       ofstream file( mrb_str_to_cstr( mrb, a_string ) );
-      Mechatronix::saveOCPsolutionToStream( it->second->getSolution(), file );
+      Mechatronix::save_OCP_solution_to_stream( it->second->getSolution(), file );
       file.close();
     }
 

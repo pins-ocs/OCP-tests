@@ -46,7 +46,7 @@ INFO CLASS = SingularLuus04_FreeTime
   OMEGA       = Inital = 3, Final = 3, Cyclic = 0
   total       = nZ = 40014, UC = 5000, Q = 5001
   index start = omega = 40008, p = 40014
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
 Solver Controls:      Newton
@@ -54,73 +54,77 @@ Initializer Controls: Quasi-Newton
 Used threads:         7
 
 
-Hyness --- start iterations ---
-Failed check on cell=0 segment=0: 0 < T(zeta)
-[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[  1,  2] (0.00505  ,0.00455  ) [6.33     ,5.70     ] 0.100      0: 0
-[  2,  1] (0.00455  ,0.00184  ) [5.70     ,2.11     ] 0.632      0: 1
-Failed check on cell=0 segment=0: 0 < T(zeta)
-[  3,  2] (0.00184  ,0.00167  ) [2.16     ,1.95     ] 0.100      0: 1
-[  4,  1] (0.00167  ,0.000770 ) [1.96     ,0.776    ] 0.632      0: 1
-Failed check on cell=0 segment=0: 0 < T(zeta)
-[  5,  2] (0.000770 ,0.000702 ) [0.931    ,0.839    ] 0.100      0: 1
-[  6,  1] (0.000702 ,0.000423 ) [0.877    ,0.493    ] 0.632      0: 1
-[  7,  2] (0.000423 ,0.000381 ) [1.30     ,1.03     ] 0.393      0: 1
-[  8,  1] (0.000381 ,0.000297 ) [1.16     ,0.389    ] 1.00       0: 1
-[  9,  1] (0.000297 ,0.000115 ) [0.916    ,0.162    ] 1.00       0: 0
-[ 10,  1] (0.000115 ,2.78e-05 ) [0.290    ,0.0293   ] 1.00       0: 0
-[ 11,  1] (2.78e-05 ,2.43e-06 ) [0.0365   ,0.000704 ] 1.00       0: 0
-[ 12,  1] (2.43e-06 ,6.18e-09 ) [0.000735 ,6.45e-07 ] 1.00       0: 0
-[ 13,  1] (6.18e-09 ,4.91e-15 ) [6.43e-07 ,2.10e-12 ] 1.00       0: 0
+NewtonDumped --- start iterations ---
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=0.49442302382175995
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 3] ( 0.00505  , 0.00263  ) [   6.33   ,   3.17   ] 0.500      [solverNewtonDumped]
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=0.47114287333614513
+[  2, 3] ( 0.00263  , 0.00141  ) [   3.20   ,   1.62   ] 0.500      [solverNewtonDumped]
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=0.4039372055422916
+[  3, 3] ( 0.00141  , 0.000815 ) [   1.69   ,  0.886   ] 0.500      [solverNewtonDumped]
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=0.21902107215456823
+[  4, 3] ( 0.000815 , 0.000527 ) [   1.03   ,  0.589   ] 0.500      [solverNewtonDumped]
+[  5, 2] ( 0.000527 , 0.000364 ) [  0.769   ,  0.487   ] 0.433      [solverNewtonDumped]
+[  6, 2] ( 0.000364 , 0.000344 ) [   1.26   ,  0.835   ] 0.442      [solverNewtonDumped]
+[  7, 1] ( 0.000344 , 0.000227 ) [   1.01   ,  0.448   ] 1.00       [solverNewtonDumped]
+[  8, 1] ( 0.000227 , 0.000135 ) [   1.03   ,  0.168   ] 1.00       [solverNewtonDumped]
+[  9, 1] ( 0.000135 , 2.23e-05 ) [  0.247   ,  0.0347  ] 1.00       [solverNewtonDumped]
+[ 10, 1] ( 2.23e-05 , 3.38e-06 ) [  0.0461  , 0.000934 ] 1.00       [solverNewtonDumped]
+[ 11, 1] ( 3.38e-06 , 1.00e-08 ) [ 0.000980 , 2.14e-06 ] 1.00       [solverNewtonDumped]
+[ 12, 1] ( 1.00e-08 , 8.41e-14 ) [ 2.14e-06 , 3.74e-11 ] 1.00       [solverNewtonDumped]
+[ 13, 1] ( 8.41e-14 , 1.09e-16 ) [ 3.75e-11 , 1.03e-16 ] 1.00       [solverNewtonDumped]
 
 Continuation step N.1
 
 Continuation step N.1 s=0.2000, ds=0.2000
-Hyness --- start iterations ---
-[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[ 14,  1] (3.16e-05 ,1.30e-08 ) [0.352    ,3.47e-05 ] 1.00       0: 0
-[ 15,  1] (1.30e-08 ,4.98e-12 ) [3.12e-05 ,9.57e-10 ] 1.00       0: 0
-[ 16,  1] (4.98e-12 ,9.03e-17 ) [9.56e-10 ,1.98e-16 ] 1.00       0: 0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 14, 1] ( 3.16e-05 , 1.30e-08 ) [  0.352   , 3.47e-05 ] 1.00       [solverNewtonDumped]
+[ 15, 1] ( 1.30e-08 , 4.98e-12 ) [ 3.12e-05 , 9.57e-10 ] 1.00       [solverNewtonDumped]
+[ 16, 1] ( 4.98e-12 , 9.07e-17 ) [ 9.56e-10 , 1.96e-16 ] 1.00       [solverNewtonDumped]
 
 Continuation step N.1 s=0.5000, ds=0.3000
-Hyness --- start iterations ---
-[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[ 17,  1] (4.74e-05 ,4.91e-08 ) [0.528    ,0.000103 ] 1.00       0: 0
-[ 18,  1] (4.91e-08 ,8.97e-11 ) [8.36e-05 ,1.26e-08 ] 1.00       0: 0
-[ 19,  1] (8.97e-11 ,6.96e-17 ) [1.26e-08 ,8.88e-16 ] 1.00       0: 0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 17, 1] ( 4.74e-05 , 4.91e-08 ) [  0.528   , 0.000103 ] 1.00       [solverNewtonDumped]
+[ 18, 1] ( 4.91e-08 , 8.97e-11 ) [ 8.36e-05 , 1.26e-08 ] 1.00       [solverNewtonDumped]
+[ 19, 1] ( 8.97e-11 , 6.96e-17 ) [ 1.26e-08 , 8.87e-16 ] 1.00       [solverNewtonDumped]
 
 Continuation step N.1 s=0.9500, ds=0.4500
-Hyness --- start iterations ---
-[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[ 20,  1] (7.11e-05 ,4.14e-07 ) [0.792    ,0.000668 ] 1.00       0: 0
-[ 21,  1] (4.14e-07 ,1.73e-08 ) [0.000399 ,4.20e-07 ] 1.00       0: 0
-[ 22,  1] (1.73e-08 ,4.18e-14 ) [4.21e-07 ,1.12e-12 ] 1.00       0: 0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 20, 1] ( 7.11e-05 , 4.14e-07 ) [  0.792   , 0.000668 ] 1.00       [solverNewtonDumped]
+[ 21, 1] ( 4.14e-07 , 1.73e-08 ) [ 0.000399 , 4.20e-07 ] 1.00       [solverNewtonDumped]
+[ 22, 1] ( 1.73e-08 , 4.18e-14 ) [ 4.21e-07 , 1.12e-12 ] 1.00       [solverNewtonDumped]
 
 Continuation step N.1 s=1.000, ds=0.05000
-Hyness --- start iterations ---
-[it./dmp] (  |f0|_1  ,  |f1|_1  ) [  |d0|_1  ,  |d1|_1  ] lambda
-[ 23,  1] (8.01e-06 ,2.52e-07 ) [0.0881   ,0.000441 ] 1.00       0: 0
-[ 24,  1] (2.52e-07 ,8.75e-09 ) [0.000406 ,4.70e-07 ] 1.00       0: 0
-[ 25,  1] (8.75e-09 ,2.43e-14 ) [4.71e-07 ,1.16e-12 ] 1.00       0: 0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 23, 1] ( 8.01e-06 , 2.52e-07 ) [  0.0881  , 0.000441 ] 1.00       [solverNewtonDumped]
+[ 24, 1] ( 2.52e-07 , 8.75e-09 ) [ 0.000406 , 4.70e-07 ] 1.00       [solverNewtonDumped]
+[ 25, 1] ( 8.75e-09 , 2.43e-14 ) [ 4.71e-07 , 1.16e-12 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 300.0[ms]     timeout        = 0 [ms]
+Elapsed Time   = 228.0[ms]     timeout        = 0 [ms]
 iteration      = 25            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 40014
 max acc. iter. = 800           N. System pars = 5000
-Converged      = YES           Memory Used    = 4Mb (+1Kb)
------------------------ CONTINUATION -----------------------
+Converged      = YES           Memory Used    = 3Mb (+28Kb)
+----------------- CONTINUATION PARAMETERS ------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
 Few iterations = 8         
 ----------------------- EVALUATIONS ------------------------
-Function       = 31            Jacobian       = 25        
-Factorization  = 25            Inversion      = 51        
------------------------- USER INFO -------------------------
+Function       = 36            Jacobian       = 25        
+Factorization  = 25            Inversion      = 56        
+------------------- NEWTON DUMPED SOLVER -------------------
 last ||d||_inf = 4.7916e-10    last||d1||_inf = 9.2635e-05
-last ||f||_inf = 5.5067e-05    last||f1||_1   = 8.7477e-09
+last ||f||_inf = 2.6965e-10    last||f||_1    = 2.4292e-14
 ------------------------------------------------------------
-
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus02_Methods_boundary_conditions.cc                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,8 @@ namespace SingularLuus02Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x] - ModelPars[iM_x_i];
     result__[ 1   ] = XL__[iX_y] - ModelPars[iM_y_i];
     if ( m_debug )
@@ -93,19 +93,19 @@ namespace SingularLuus02Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularLuus02::DboundaryConditionsDx_numRows() const
+  SingularLuus02::DboundaryConditionsDxxp_numRows() const
   { return 2; }
 
   integer
-  SingularLuus02::DboundaryConditionsDx_numCols() const
+  SingularLuus02::DboundaryConditionsDxxp_numCols() const
   { return 4; }
 
   integer
-  SingularLuus02::DboundaryConditionsDx_nnz() const
+  SingularLuus02::DboundaryConditionsDxxp_nnz() const
   { return 2; }
 
   void
-  SingularLuus02::DboundaryConditionsDx_pattern(
+  SingularLuus02::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -114,7 +114,7 @@ namespace SingularLuus02Define {
   }
 
   void
-  SingularLuus02::DboundaryConditionsDx_sparse(
+  SingularLuus02::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -126,44 +126,12 @@ namespace SingularLuus02Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 2, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus02::DboundaryConditionsDp_numRows() const
-  { return 2; }
-
-  integer
-  SingularLuus02::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularLuus02::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  SingularLuus02::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  SingularLuus02::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -188,8 +156,8 @@ namespace SingularLuus02Define {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = -LR__[iL_lambda1__xo];
@@ -201,26 +169,26 @@ namespace SingularLuus02Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularLuus02::DadjointBCDx_numRows() const
+  SingularLuus02::DadjointBCDxxp_numRows() const
   { return 4; }
 
   integer
-  SingularLuus02::DadjointBCDx_numCols() const
+  SingularLuus02::DadjointBCDxxp_numCols() const
   { return 4; }
 
   integer
-  SingularLuus02::DadjointBCDx_nnz() const
+  SingularLuus02::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  SingularLuus02::DadjointBCDx_pattern(
+  SingularLuus02::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  SingularLuus02::DadjointBCDx_sparse(
+  SingularLuus02::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -229,39 +197,6 @@ namespace SingularLuus02Define {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus02::DadjointBCDp_numRows() const
-  { return 4; }
-
-  integer
-  SingularLuus02::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularLuus02::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  SingularLuus02::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  SingularLuus02::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: SingularLuus02_Methods_boundary_conditions.cc

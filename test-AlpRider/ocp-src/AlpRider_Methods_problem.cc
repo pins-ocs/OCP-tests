@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 5/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,37 +69,6 @@ namespace AlpRiderDefine {
    |
   \*/
 
-#if 0
-  real_type
-  AlpRider::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer        i_cell = CELL__.i_cell;
-    real_type const * Q__ = CELL__.qM;
-    real_type const * X__ = CELL__.xM;
-    real_type const * L__ = CELL__.lambdaM;
-    real_type const * U__ = CELL__.uM;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[iX_y1];
-    real_type t2   = t1 * t1;
-    real_type t3   = X__[iX_y2];
-    real_type t4   = t3 * t3;
-    real_type t5   = X__[iX_y3];
-    real_type t6   = t5 * t5;
-    real_type t7   = X__[iX_y4];
-    real_type t8   = t7 * t7;
-    real_type t11  = q(Q__[iQ_zeta]);
-    real_type t13  = Ybound(t2 + t4 + t6 + t8 - t11);
-    real_type t18  = U__[iU_u1];
-    real_type t19  = t18 * t18;
-    real_type t21  = U__[iU_u2];
-    real_type t22  = t21 * t21;
-    real_type result__ = t13 * (t2 + t4 + t6 + t8 + 1) + (t2 + t4 + t6 + t8) * ModelPars[iM_W] + t19 / 100 + t22 / 100 + (-10 * t1 + t18 + t21) * L__[iL_lambda1__xo] + (-2 * t3 + t18 + 2 * t21) * L__[iL_lambda2__xo] + (-3 * t5 + 5 * t7 + t18 - t21) * L__[iL_lambda3__xo] + (5 * t5 - 3 * t7 + t18 + 3 * t21) * L__[iL_lambda4__xo];
-    return result__;
-  }
-#else
   real_type
   AlpRider::H_eval(
     NodeType2 const    & NODE__,
@@ -110,7 +79,7 @@ namespace AlpRiderDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_y1];
     real_type t2   = t1 * t1;
     real_type t3   = X__[iX_y2];
@@ -131,7 +100,6 @@ namespace AlpRiderDefine {
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -149,7 +117,7 @@ namespace AlpRiderDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_y1] * X__[iX_y1];
     real_type t4   = X__[iX_y2] * X__[iX_y2];
     real_type t6   = X__[iX_y3] * X__[iX_y3];
@@ -174,7 +142,7 @@ namespace AlpRiderDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
@@ -199,7 +167,7 @@ namespace AlpRiderDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = X__[iX_y1] * X__[iX_y1];
     real_type t5   = X__[iX_y2] * X__[iX_y2];
     real_type t7   = X__[iX_y3] * X__[iX_y3];
@@ -233,8 +201,8 @@ namespace AlpRiderDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
@@ -261,8 +229,8 @@ namespace AlpRiderDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -298,7 +266,7 @@ namespace AlpRiderDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_y1];
     real_type t2   = t1 * t1;
     real_type t3   = X__[iX_y2];
@@ -352,7 +320,7 @@ namespace AlpRiderDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     if ( m_debug )
@@ -376,7 +344,7 @@ namespace AlpRiderDefine {
     real_type      s,
     Q_pointer_type result__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -464,8 +432,8 @@ namespace AlpRiderDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_y1] - XL__[iX_y1];
     result__[ 1   ] = XR__[iX_y2] - XL__[iX_y2];
     result__[ 2   ] = XR__[iX_y3] - XL__[iX_y3];
@@ -532,8 +500,8 @@ namespace AlpRiderDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -577,7 +545,7 @@ namespace AlpRiderDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_y1] * X__[iX_y1];
     real_type t4   = X__[iX_y2] * X__[iX_y2];
     real_type t6   = X__[iX_y3] * X__[iX_y3];

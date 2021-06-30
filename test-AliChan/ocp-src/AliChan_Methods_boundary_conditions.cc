@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan_Methods_boundary_conditions.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,8 @@ namespace AliChanDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_y1];
     result__[ 1   ] = XL__[iX_y2] - 1;
     if ( m_debug )
@@ -93,19 +93,19 @@ namespace AliChanDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AliChan::DboundaryConditionsDx_numRows() const
+  AliChan::DboundaryConditionsDxxp_numRows() const
   { return 2; }
 
   integer
-  AliChan::DboundaryConditionsDx_numCols() const
+  AliChan::DboundaryConditionsDxxp_numCols() const
   { return 4; }
 
   integer
-  AliChan::DboundaryConditionsDx_nnz() const
+  AliChan::DboundaryConditionsDxxp_nnz() const
   { return 2; }
 
   void
-  AliChan::DboundaryConditionsDx_pattern(
+  AliChan::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -114,7 +114,7 @@ namespace AliChanDefine {
   }
 
   void
-  AliChan::DboundaryConditionsDx_sparse(
+  AliChan::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -126,44 +126,12 @@ namespace AliChanDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 2, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AliChan::DboundaryConditionsDp_numRows() const
-  { return 2; }
-
-  integer
-  AliChan::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  AliChan::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  AliChan::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  AliChan::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -188,8 +156,8 @@ namespace AliChanDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = -LR__[iL_lambda1__xo];
@@ -201,26 +169,26 @@ namespace AliChanDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AliChan::DadjointBCDx_numRows() const
+  AliChan::DadjointBCDxxp_numRows() const
   { return 4; }
 
   integer
-  AliChan::DadjointBCDx_numCols() const
+  AliChan::DadjointBCDxxp_numCols() const
   { return 4; }
 
   integer
-  AliChan::DadjointBCDx_nnz() const
+  AliChan::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  AliChan::DadjointBCDx_pattern(
+  AliChan::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  AliChan::DadjointBCDx_sparse(
+  AliChan::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -229,39 +197,6 @@ namespace AliChanDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AliChan::DadjointBCDp_numRows() const
-  { return 4; }
-
-  integer
-  AliChan::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  AliChan::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  AliChan::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  AliChan::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: AliChan_Methods_boundary_conditions.cc

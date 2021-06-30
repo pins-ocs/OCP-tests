@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_problem.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,55 +77,6 @@ namespace gtocX_2burnDefine {
    |
   \*/
 
-#if 0
-  real_type
-  gtocX_2burn::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer        i_cell = CELL__.i_cell;
-    real_type const * Q__ = CELL__.qM;
-    real_type const * X__ = CELL__.xM;
-    real_type const * L__ = CELL__.lambdaM;
-    real_type const * U__ = CELL__.uM;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
-    real_type t1   = X__[iX_f];
-    real_type t2   = X__[iX_L];
-    real_type t3   = cos(t2);
-    real_type t5   = X__[iX_g];
-    real_type t6   = sin(t2);
-    real_type t8   = t3 * t1 + t6 * t5 + 1;
-    real_type t9   = ray_positive(t8);
-    real_type t12  = X__[iX_p];
-    real_type t13  = Q__[iQ_zeta];
-    real_type t15  = ModelPars[iM_time_i];
-    real_type t17  = ModelPars[iM_time_f];
-    real_type t19  = t15 * (1 - t13) + t17 * t13;
-    real_type t20  = p_guess(t19);
-    real_type t24  = pow(1.0 / t20 * t12 - 1, 2);
-    real_type t25  = f_guess(t19);
-    real_type t27  = pow(t1 - t25, 2);
-    real_type t28  = g_guess(t19);
-    real_type t30  = pow(t5 - t28, 2);
-    real_type t32  = h_guess(t19);
-    real_type t34  = pow(X__[iX_h] - t32, 2);
-    real_type t36  = k_guess(t19);
-    real_type t38  = pow(X__[iX_k] - t36, 2);
-    real_type t39  = L_guess(t19, t15);
-    real_type t41  = pow(t2 - t39, 2);
-    real_type t45  = t17 - t15;
-    real_type t47  = sqrt(t12);
-    real_type t49  = ModelPars[iM_muS];
-    real_type t50  = sqrt(t49);
-    real_type t53  = ModelPars[iM_w_nonlin] / t50;
-    real_type t54  = ray(t12, t1, t5, t2);
-    real_type t55  = acceleration_r(t54, t49);
-    real_type t67  = t8 * t8;
-    real_type result__ = t9 + (t24 + t27 + t30 + t34 + t38 + t41) * (1 - ModelPars[iM_w_guess]) + t6 * t55 * t53 * t47 * t45 * L__[iL_lambda2__xo] - t3 * t55 * t53 * t47 * t45 * L__[iL_lambda3__xo] + t50 / t47 / t12 * t67 * t45 * L__[iL_lambda6__xo];
-    return result__;
-  }
-#else
   real_type
   gtocX_2burn::H_eval(
     NodeType2 const    & NODE__,
@@ -136,7 +87,7 @@ namespace gtocX_2burnDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_f];
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
@@ -175,7 +126,6 @@ namespace gtocX_2burnDefine {
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -193,7 +143,7 @@ namespace gtocX_2burnDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
@@ -215,7 +165,7 @@ namespace gtocX_2burnDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
@@ -240,7 +190,7 @@ namespace gtocX_2burnDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t4   = Q__[iQ_zeta];
     real_type t6   = ModelPars[iM_time_i];
     real_type t10  = t6 * (1 - t4) + ModelPars[iM_time_f] * t4;
@@ -283,8 +233,8 @@ namespace gtocX_2burnDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
@@ -295,11 +245,11 @@ namespace gtocX_2burnDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  gtocX_2burn::DmayerDx_numEqns() const
+  gtocX_2burn::DmayerDxxp_numEqns() const
   { return 12; }
 
   void
-  gtocX_2burn::DmayerDx_eval(
+  gtocX_2burn::DmayerDxxp_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -311,8 +261,8 @@ namespace gtocX_2burnDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -326,23 +276,7 @@ namespace gtocX_2burnDefine {
     result__[ 10  ] = 0;
     result__[ 11  ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 12, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  gtocX_2burn::DmayerDp_numEqns() const
-  { return 0; }
-
-  void
-  gtocX_2burn::DmayerDp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 12, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -368,14 +302,14 @@ namespace gtocX_2burnDefine {
     integer i_segment     = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     real_type t1   = X__[iX_f];
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t5   = X__[iX_g];
     real_type t6   = sin(t2);
-    real_type t9   = ALIAS_ray_positive_D(t3 * t1 + t6 * t5 + 1);
+    real_type t9   = ALIAS_ray_positive_D(t1 * t3 + t5 * t6 + 1);
     result__[ 1   ] = t3 * t9;
     result__[ 2   ] = t6 * t9;
     result__[ 3   ] = 0;
@@ -434,7 +368,7 @@ namespace gtocX_2burnDefine {
     real_type      s,
     Q_pointer_type result__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -522,8 +456,8 @@ namespace gtocX_2burnDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_p] - XL__[iX_p];
     result__[ 1   ] = XR__[iX_f] - XL__[iX_f];
     result__[ 2   ] = XR__[iX_g] - XL__[iX_g];
@@ -602,8 +536,8 @@ namespace gtocX_2burnDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -655,7 +589,7 @@ namespace gtocX_2burnDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = Q__[iQ_zeta];
     result__[ 0   ] = ModelPars[iM_time_i] * (1 - t1) + ModelPars[iM_time_f] * t1;
     real_type t7   = X__[iX_p];
@@ -666,12 +600,12 @@ namespace gtocX_2burnDefine {
     real_type t11  = X__[iX_h];
     real_type t12  = X__[iX_k];
     real_type t13  = ModelPars[iM_retrograde];
-    result__[ 2   ] = xPosition(t7, t8, t9, t11, t12, t10, t13);
-    result__[ 3   ] = yPosition(t7, t8, t9, t11, t12, t10, t13);
-    result__[ 4   ] = zPosition(t7, t8, t9, t11, t12, t10, t13);
-    result__[ 5   ] = xVelocity(t7, t8, t9, t11, t12, t10, t13);
-    result__[ 6   ] = yVelocity(t7, t8, t9, t11, t12, t10, t13);
-    result__[ 7   ] = zVelocity(t7, t8, t9, t11, t12, t10, t13);
+    result__[ 2   ] = x_position(t7, t8, t9, t11, t12, t10, t13);
+    result__[ 3   ] = y_position(t7, t8, t9, t11, t12, t10, t13);
+    result__[ 4   ] = z_position(t7, t8, t9, t11, t12, t10, t13);
+    result__[ 5   ] = x_velocity(t7, t8, t9, t11, t12, t10, t13);
+    result__[ 6   ] = y_velocity(t7, t8, t9, t11, t12, t10, t13);
+    result__[ 7   ] = z_velocity(t7, t8, t9, t11, t12, t10, t13);
     real_type t14  = result__[0];
     result__[ 8   ] = X_begin(t14);
     result__[ 9   ] = Y_begin(t14);

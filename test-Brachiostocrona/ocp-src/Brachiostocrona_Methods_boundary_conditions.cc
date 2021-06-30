@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_boundary_conditions.cc                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,8 @@ namespace BrachiostocronaDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x];
     result__[ 1   ] = XL__[iX_y];
     result__[ 2   ] = XL__[iX_v];
@@ -96,19 +96,19 @@ namespace BrachiostocronaDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Brachiostocrona::DboundaryConditionsDx_numRows() const
+  Brachiostocrona::DboundaryConditionsDxxp_numRows() const
   { return 5; }
 
   integer
-  Brachiostocrona::DboundaryConditionsDx_numCols() const
-  { return 8; }
+  Brachiostocrona::DboundaryConditionsDxxp_numCols() const
+  { return 9; }
 
   integer
-  Brachiostocrona::DboundaryConditionsDx_nnz() const
+  Brachiostocrona::DboundaryConditionsDxxp_nnz() const
   { return 5; }
 
   void
-  Brachiostocrona::DboundaryConditionsDx_pattern(
+  Brachiostocrona::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -120,7 +120,7 @@ namespace BrachiostocronaDefine {
   }
 
   void
-  Brachiostocrona::DboundaryConditionsDx_sparse(
+  Brachiostocrona::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -132,47 +132,15 @@ namespace BrachiostocronaDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 5, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona::DboundaryConditionsDp_numRows() const
-  { return 5; }
-
-  integer
-  Brachiostocrona::DboundaryConditionsDp_numCols() const
-  { return 1; }
-
-  integer
-  Brachiostocrona::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  Brachiostocrona::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Brachiostocrona::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 5, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -197,8 +165,8 @@ namespace BrachiostocronaDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     real_type t6   = ModelPars[iM_mass];
@@ -206,7 +174,7 @@ namespace BrachiostocronaDefine {
     result__[ 3   ] = LL__[iL_lambda4__xo];
     result__[ 4   ] = OMEGA__[3] - LR__[iL_lambda1__xo];
     result__[ 5   ] = OMEGA__[4] - LR__[iL_lambda2__xo];
-    result__[ 6   ] = -LR__[iL_lambda3__xo] * t6;
+    result__[ 6   ] = -t6 * LR__[iL_lambda3__xo];
     result__[ 7   ] = -LR__[iL_lambda4__xo];
     result__[ 8   ] = 1;
     if ( m_debug )
@@ -216,26 +184,26 @@ namespace BrachiostocronaDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Brachiostocrona::DadjointBCDx_numRows() const
+  Brachiostocrona::DadjointBCDxxp_numRows() const
   { return 9; }
 
   integer
-  Brachiostocrona::DadjointBCDx_numCols() const
-  { return 8; }
+  Brachiostocrona::DadjointBCDxxp_numCols() const
+  { return 9; }
 
   integer
-  Brachiostocrona::DadjointBCDx_nnz() const
+  Brachiostocrona::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  Brachiostocrona::DadjointBCDx_pattern(
+  Brachiostocrona::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  Brachiostocrona::DadjointBCDx_sparse(
+  Brachiostocrona::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -244,39 +212,6 @@ namespace BrachiostocronaDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona::DadjointBCDp_numRows() const
-  { return 9; }
-
-  integer
-  Brachiostocrona::DadjointBCDp_numCols() const
-  { return 1; }
-
-  integer
-  Brachiostocrona::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  Brachiostocrona::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Brachiostocrona::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: Brachiostocrona_Methods_boundary_conditions.cc

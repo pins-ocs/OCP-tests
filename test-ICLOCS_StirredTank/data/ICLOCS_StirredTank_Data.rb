@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_StirredTank_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 3/6/2021                                         #
+#  version: 1.0   date 5/7/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,13 +21,13 @@ include Mechatronix
 
 # Auxiliary values
 w_exp_min = 0
-w         = Math::exp(w_exp_min)
-x_epsi    = 0.1
 epsi_ctrl = 0.001
-x_tol     = 0.01
-tol_ctrl  = 0.001
 tol_T     = 1
 epsi_T    = 0.001
+x_epsi    = 0.1
+x_tol     = 0.01
+tol_ctrl  = 0.001
+w         = Math::exp(w_exp_min)
 
 mechatronix do |data|
 
@@ -48,10 +48,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = false
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = false
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "ICLOCS_StirredTank_dump"
@@ -101,7 +103,7 @@ mechatronix do |data|
 
     # choose solves: Hyness, NewtonDumped
     # ===================================
-    :solver => "Hyness",
+    :solver => "NewtonDumped",
     # ===================================
 
     # solver parameters

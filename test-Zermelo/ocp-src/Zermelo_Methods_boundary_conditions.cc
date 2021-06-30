@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_boundary_conditions.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,8 +75,8 @@ namespace ZermeloDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x];
     result__[ 1   ] = XL__[iX_y];
     result__[ 2   ] = XL__[iX_vx];
@@ -91,19 +91,19 @@ namespace ZermeloDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Zermelo::DboundaryConditionsDx_numRows() const
+  Zermelo::DboundaryConditionsDxxp_numRows() const
   { return 7; }
 
   integer
-  Zermelo::DboundaryConditionsDx_numCols() const
+  Zermelo::DboundaryConditionsDxxp_numCols() const
   { return 10; }
 
   integer
-  Zermelo::DboundaryConditionsDx_nnz() const
+  Zermelo::DboundaryConditionsDxxp_nnz() const
   { return 7; }
 
   void
-  Zermelo::DboundaryConditionsDx_pattern(
+  Zermelo::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -117,7 +117,7 @@ namespace ZermeloDefine {
   }
 
   void
-  Zermelo::DboundaryConditionsDx_sparse(
+  Zermelo::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -129,8 +129,8 @@ namespace ZermeloDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -139,39 +139,7 @@ namespace ZermeloDefine {
     result__[ 5   ] = 1;
     result__[ 6   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 7, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DboundaryConditionsDp_numRows() const
-  { return 7; }
-
-  integer
-  Zermelo::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  Zermelo::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  Zermelo::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Zermelo::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 7, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -196,8 +164,8 @@ namespace ZermeloDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
@@ -215,26 +183,26 @@ namespace ZermeloDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Zermelo::DadjointBCDx_numRows() const
+  Zermelo::DadjointBCDxxp_numRows() const
   { return 10; }
 
   integer
-  Zermelo::DadjointBCDx_numCols() const
+  Zermelo::DadjointBCDxxp_numCols() const
   { return 10; }
 
   integer
-  Zermelo::DadjointBCDx_nnz() const
+  Zermelo::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  Zermelo::DadjointBCDx_pattern(
+  Zermelo::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  Zermelo::DadjointBCDx_sparse(
+  Zermelo::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -243,39 +211,6 @@ namespace ZermeloDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DadjointBCDp_numRows() const
-  { return 10; }
-
-  integer
-  Zermelo::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  Zermelo::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  Zermelo::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Zermelo::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: Zermelo_Methods_boundary_conditions.cc

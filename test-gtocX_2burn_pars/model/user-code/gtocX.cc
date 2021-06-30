@@ -99,7 +99,7 @@ namespace gtocX {
     To.position( t1, P1 );
     integer ok = Lambert( P0, P1, t1-t0, m, muS, V0, V1 );
     UTILS_ASSERT0( ok >= 0, "guess_setup, Lambert failed" );
-    guess.setupUsingPointAndVelocity( P0, V0, muS, t0 );
+    guess.setup_using_point_and_velocity( P0, V0, muS, t0 );
     return true;
   }
 
@@ -117,7 +117,7 @@ namespace gtocX {
     To.position( t1, P1 );
     integer ok = Lambert( P0, P1, t1-t0, m, muS, V0, V1 );
     UTILS_ASSERT0( ok >= 0, "guess_setup, Lambert failed" );
-    guess.setupUsingPointAndVelocity( P0, V0, muS, t0 );
+    guess.setup_using_point_and_velocity( P0, V0, muS, t0 );
     return true;
   }
 
@@ -195,15 +195,15 @@ namespace gtocX {
       K0.a     = R;
       K0.e     = 0;
       //K0.omega = phi;
-      K0.Omega = degreesToRadiants(Omega);
-      K0.omega = degreesToRadiants(phi);
-      K0.i     = degreesToRadiants(i);
+      K0.Omega = degrees_to_radiants(Omega);
+      K0.omega = degrees_to_radiants(phi);
+      K0.i     = degrees_to_radiants(i);
 
       S.setup( ostr.str(), t0, K0, M0, mu );
-      S.checkForConsistency();
+      S.check_for_consistency();
 
       stars.push_back( S );
-      star_thetaf.push_back( degreesToRadiants(th_f) );
+      star_thetaf.push_back( degrees_to_radiants(th_f) );
       star_ray.push_back(R);
     }
     file.close();

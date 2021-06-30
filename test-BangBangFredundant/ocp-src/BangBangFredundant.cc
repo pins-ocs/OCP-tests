@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant.cc                                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -157,7 +157,7 @@ namespace BangBangFredundantDefine {
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
-    setupNames(
+    setup_names(
       numPvars,                 namesPvars,
       numXvars,                 namesXvars,
       numLvars,                 namesLvars,
@@ -188,7 +188,7 @@ namespace BangBangFredundantDefine {
   //       |_|
   */
   void
-  BangBangFredundant::updateContinuation(
+  BangBangFredundant::update_continuation(
     integer   phase,
     real_type old_s,
     real_type s
@@ -310,7 +310,7 @@ namespace BangBangFredundantDefine {
     aF1Control.setup( gc("aF1Control") );
     aF2Control.setup( gc("aF2Control") );
     // setup iterative solver
-    this->setupControlSolver( gc_data );
+    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -398,12 +398,12 @@ namespace BangBangFredundantDefine {
     this->setupUserMappedFunctions( gc );
     this->setupUserClasses( gc );
     this->setupPointers( gc );
-    this->setupBC( gc );
+    this->setup_BC( gc );
     this->setupControls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
-    this->infoBC();
+    this->info_BC();
     this->infoClasses();
     this->info();
   }

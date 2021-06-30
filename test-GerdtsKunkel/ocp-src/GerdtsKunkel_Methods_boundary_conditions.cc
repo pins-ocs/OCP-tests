@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods_boundary_conditions.cc                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,8 +75,8 @@ namespace GerdtsKunkelDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1] - ModelPars[iM_x1_i];
     result__[ 1   ] = XL__[iX_x2] - ModelPars[iM_x2_i];
     result__[ 2   ] = XL__[iX_x3] - ModelPars[iM_x3_i];
@@ -89,19 +89,19 @@ namespace GerdtsKunkelDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  GerdtsKunkel::DboundaryConditionsDx_numRows() const
+  GerdtsKunkel::DboundaryConditionsDxxp_numRows() const
   { return 5; }
 
   integer
-  GerdtsKunkel::DboundaryConditionsDx_numCols() const
+  GerdtsKunkel::DboundaryConditionsDxxp_numCols() const
   { return 6; }
 
   integer
-  GerdtsKunkel::DboundaryConditionsDx_nnz() const
+  GerdtsKunkel::DboundaryConditionsDxxp_nnz() const
   { return 5; }
 
   void
-  GerdtsKunkel::DboundaryConditionsDx_pattern(
+  GerdtsKunkel::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -113,7 +113,7 @@ namespace GerdtsKunkelDefine {
   }
 
   void
-  GerdtsKunkel::DboundaryConditionsDx_sparse(
+  GerdtsKunkel::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -125,47 +125,15 @@ namespace GerdtsKunkelDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 5, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GerdtsKunkel::DboundaryConditionsDp_numRows() const
-  { return 5; }
-
-  integer
-  GerdtsKunkel::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  GerdtsKunkel::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  GerdtsKunkel::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  GerdtsKunkel::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 5, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -190,8 +158,8 @@ namespace GerdtsKunkelDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
@@ -205,26 +173,26 @@ namespace GerdtsKunkelDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  GerdtsKunkel::DadjointBCDx_numRows() const
+  GerdtsKunkel::DadjointBCDxxp_numRows() const
   { return 6; }
 
   integer
-  GerdtsKunkel::DadjointBCDx_numCols() const
+  GerdtsKunkel::DadjointBCDxxp_numCols() const
   { return 6; }
 
   integer
-  GerdtsKunkel::DadjointBCDx_nnz() const
+  GerdtsKunkel::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  GerdtsKunkel::DadjointBCDx_pattern(
+  GerdtsKunkel::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  GerdtsKunkel::DadjointBCDx_sparse(
+  GerdtsKunkel::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -233,39 +201,6 @@ namespace GerdtsKunkelDefine {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GerdtsKunkel::DadjointBCDp_numRows() const
-  { return 6; }
-
-  integer
-  GerdtsKunkel::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  GerdtsKunkel::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  GerdtsKunkel::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  GerdtsKunkel::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: GerdtsKunkel_Methods_boundary_conditions.cc

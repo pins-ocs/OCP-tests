@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: AlpRider_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 5/6/2021                                         #
+#  version: 1.0   date 5/7/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol0  = 0.1
 epsi0 = 0.1
-tol   = tol0
+tol0  = 0.1
 epsi  = epsi0
+tol   = tol0
 W0    = 0
 W     = W0
 
@@ -106,8 +106,8 @@ mechatronix do |data|
 
     # solver parameters
     :max_iter             => 300,
-    :max_step_iter        => 150,
-    :max_accumulated_iter => 50000,
+    :max_step_iter        => 40,
+    :max_accumulated_iter => 4000,
     :tolerance            => 9.999999999999999e-10,
 
     # continuation parameters
@@ -171,9 +171,9 @@ mechatronix do |data|
     :W0    => W0,
     :W1    => 100,
     :epsi0 => epsi0,
-    :epsi1 => 0.0001,
+    :epsi1 => 0.001,
     :tol0  => tol0,
-    :tol1  => 0.0001,
+    :tol1  => 0.001,
 
     # Constraints Parameters
   }

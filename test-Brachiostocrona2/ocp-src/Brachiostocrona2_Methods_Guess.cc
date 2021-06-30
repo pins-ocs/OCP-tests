@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_Guess.cc                              |
  |                                                                       |
- |  version: 1.0   date 9/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,7 +65,7 @@ namespace Brachiostocrona2Define {
     X_pointer_type       X__,
     L_pointer_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = Q__[iQ_zeta];
     X__[ iX_x ] = ModelPars[iM_xf] * t1;
     X__[ iX_y ] = ModelPars[iM_yf] * t1;
@@ -238,7 +238,7 @@ namespace Brachiostocrona2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-      MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+      MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_theta ] = ModelPars[iM_theta0];
     if ( m_debug )

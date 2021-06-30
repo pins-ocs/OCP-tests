@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 3/6/2021                                         #
+#  version: 1.0   date 5/7/2021                                         #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,8 +21,8 @@ include Mechatronix
 
 # Auxiliary values
 g  = 9.81
-yf = -2
 xf = 5
+yf = -2
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 Tf = (-2.0*yf/g)**(1/2.0)
 
@@ -45,10 +45,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = false
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = false
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "Brachiostocrona_dump"
@@ -98,7 +100,7 @@ mechatronix do |data|
 
     # choose solves: Hyness, NewtonDumped
     # ===================================
-    :solver => "Hyness",
+    :solver => "NewtonDumped",
     # ===================================
 
     # solver parameters
@@ -188,8 +190,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 500,
         :length => 1,
+        :n      => 500,
       },
     ],
   };

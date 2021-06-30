@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -85,7 +85,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x1];
     real_type t2   = ALIAS_x1bound_D(t1);
     real_type t4   = P__[iP_T];
@@ -144,7 +144,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x1];
     result__[ 0   ] = ALIAS_x1bound_DD(t1);
     real_type t3   = P__[iP_T];
@@ -210,7 +210,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda1__xo];
     real_type t3   = 1.0 / ModelPars[iM_theta];
     real_type t4   = ModelPars[iM_k];
@@ -253,7 +253,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_uControl_D_1(U__[iU_u], 0, 2);
     result__[ 0   ] = t2 - L__[iL_lambda2__xo] * P__[iP_T] * ModelPars[iM_a] * (X__[iX_x2] - ModelPars[iM_Tc]);
     if ( m_debug )
@@ -295,7 +295,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -L__[iL_lambda2__xo] * P__[iP_T] * ModelPars[iM_a];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
@@ -336,7 +336,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -L__[iL_lambda2__xo] * ModelPars[iM_a] * (X__[iX_x2] - ModelPars[iM_Tc]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
@@ -367,7 +367,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_tfbound_D(P__[iP_T]);
     real_type t5   = X__[iX_x1];
     real_type t8   = 1.0 / ModelPars[iM_theta];
@@ -415,7 +415,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_tfbound_DD(P__[iP_T]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHpDp_sparse" ,1, i_segment );
@@ -442,7 +442,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
     if ( m_debug )
@@ -534,7 +534,7 @@ namespace ICLOCS_StirredTankDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
     if ( m_debug )

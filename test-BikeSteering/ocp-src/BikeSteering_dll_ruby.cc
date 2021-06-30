@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_dll_ruby.cc                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -147,7 +147,7 @@ namespace BikeSteeringDefine {
       pConsole->error("BikeSteering_write_ocp_solution, no solution found!\n" );
     } else {
       ofstream file( fname );
-      Mechatronix::saveOCPsolutionToStream( it->second->getSolution(), file );
+      Mechatronix::save_OCP_solution_to_stream( it->second->getSolution(), file );
       file.close();
     }
   }

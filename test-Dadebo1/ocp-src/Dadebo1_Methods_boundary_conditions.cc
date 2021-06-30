@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Methods_boundary_conditions.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,8 +71,8 @@ namespace Dadebo1Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x] - 1;
     result__[ 1   ] = XL__[iX_y];
     result__[ 2   ] = XR__[iX_x] - 1;
@@ -83,19 +83,19 @@ namespace Dadebo1Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Dadebo1::DboundaryConditionsDx_numRows() const
+  Dadebo1::DboundaryConditionsDxxp_numRows() const
   { return 3; }
 
   integer
-  Dadebo1::DboundaryConditionsDx_numCols() const
+  Dadebo1::DboundaryConditionsDxxp_numCols() const
   { return 4; }
 
   integer
-  Dadebo1::DboundaryConditionsDx_nnz() const
+  Dadebo1::DboundaryConditionsDxxp_nnz() const
   { return 3; }
 
   void
-  Dadebo1::DboundaryConditionsDx_pattern(
+  Dadebo1::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -105,7 +105,7 @@ namespace Dadebo1Define {
   }
 
   void
-  Dadebo1::DboundaryConditionsDx_sparse(
+  Dadebo1::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -117,45 +117,13 @@ namespace Dadebo1Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 3, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dadebo1::DboundaryConditionsDp_numRows() const
-  { return 3; }
-
-  integer
-  Dadebo1::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  Dadebo1::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  Dadebo1::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Dadebo1::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 3, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -180,8 +148,8 @@ namespace Dadebo1Define {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[2] - LR__[iL_lambda1__xo];
@@ -193,26 +161,26 @@ namespace Dadebo1Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Dadebo1::DadjointBCDx_numRows() const
+  Dadebo1::DadjointBCDxxp_numRows() const
   { return 4; }
 
   integer
-  Dadebo1::DadjointBCDx_numCols() const
+  Dadebo1::DadjointBCDxxp_numCols() const
   { return 4; }
 
   integer
-  Dadebo1::DadjointBCDx_nnz() const
+  Dadebo1::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  Dadebo1::DadjointBCDx_pattern(
+  Dadebo1::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
   }
 
   void
-  Dadebo1::DadjointBCDx_sparse(
+  Dadebo1::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -221,39 +189,6 @@ namespace Dadebo1Define {
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dadebo1::DadjointBCDp_numRows() const
-  { return 4; }
-
-  integer
-  Dadebo1::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  Dadebo1::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  Dadebo1::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  Dadebo1::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: Dadebo1_Methods_boundary_conditions.cc

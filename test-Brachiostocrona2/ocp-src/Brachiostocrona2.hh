@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2.hh                                            |
  |                                                                       |
- |  version: 1.0   date 9/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -129,11 +129,11 @@ namespace Brachiostocrona2Define {
     using Mechatronix::Discretized_Indirect_OCP::setup;
     using Mechatronix::Discretized_Indirect_OCP::guess;
 
-    using Mechatronix::Discretized_Indirect_OCP::numOMEGA;
+    using Mechatronix::Discretized_Indirect_OCP::num_OMEGA;
 
-    using Mechatronix::Discretized_Indirect_OCP::bcInvMap;
-    using Mechatronix::Discretized_Indirect_OCP::bcMap;
-    using Mechatronix::Discretized_Indirect_OCP::numBC;
+    using Mechatronix::Discretized_Indirect_OCP::bc_inv_map;
+    using Mechatronix::Discretized_Indirect_OCP::bc_map;
+    using Mechatronix::Discretized_Indirect_OCP::num_BC;
 
     using Mechatronix::Discretized_Indirect_OCP::dim_Q;
     using Mechatronix::Discretized_Indirect_OCP::dim_X;
@@ -141,9 +141,10 @@ namespace Brachiostocrona2Define {
     using Mechatronix::Discretized_Indirect_OCP::dim_Pars;
     using Mechatronix::Discretized_Indirect_OCP::dim_Omega;
     using Mechatronix::Discretized_Indirect_OCP::dim_BC;
-    using Mechatronix::Discretized_Indirect_OCP::nNodes;
+    using Mechatronix::Discretized_Indirect_OCP::num_nodes;
 
-    using Mechatronix::Discretized_Indirect_OCP::numEquations;
+    using Mechatronix::Discretized_Indirect_OCP::num_equations;
+    using Mechatronix::Discretized_Indirect_OCP::num_parameters;
     using Mechatronix::Discretized_Indirect_OCP::eval_F;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_nnz;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_pattern;
@@ -154,7 +155,7 @@ namespace Brachiostocrona2Define {
     using Mechatronix::Discretized_Indirect_OCP::get_solution_as_spline;
     using Mechatronix::Discretized_Indirect_OCP::get_solution_as_guess;
 
-    using Mechatronix::Indirect_OCP::setupBC;
+    using Mechatronix::Indirect_OCP::setup_BC;
 
     BRACHIOSTOCRONA2_API_DLL
     explicit
@@ -239,7 +240,7 @@ namespace Brachiostocrona2Define {
     // Continuation phase update
     BRACHIOSTOCRONA2_API_DLL
     void
-    updateContinuation(
+    update_continuation(
       integer   phase,
       real_type old_s,
       real_type s

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SecondOrderSingularRegulator_Main.cc                           |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -102,7 +102,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 0;
@@ -159,8 +159,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SecondOrderSingularRegulator_data.Mesh["s0"] = 0;
-SecondOrderSingularRegulator_data.Mesh["segments"][0]["n"] = 500;
 SecondOrderSingularRegulator_data.Mesh["segments"][0]["length"] = L;
+SecondOrderSingularRegulator_data.Mesh["segments"][0]["n"] = 500;
 
 
     // alias for user object classes passed as pointers
@@ -196,7 +196,7 @@ SecondOrderSingularRegulator_data.Mesh["segments"][0]["length"] = L;
       file.open( "data/SecondOrderSingularRegulator_OCP_not_converged.txt" );
     }
     file.precision(18);
-    Mechatronix::saveOCPsolutionToStream(gc_solution,file);
+    Mechatronix::save_OCP_solution_to_stream(gc_solution,file);
     file.close();
     cout.precision(18);
     GenericContainer const & target = gc_solution("target");

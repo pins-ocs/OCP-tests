@@ -86,13 +86,13 @@ addUserFunction(cont(s,eps0,eps1)=exp((1-s)*log(eps0)+s*log(eps1)),derivatives=0
 
 # proiezione r/|r|^3 lungo Dr= 1/|r|^2
 
-addUserFunction(xPosition(p,f,g,h,k,L,retrograde)=xP,derivatives=2,simplify_assume=[p>0]);
-addUserFunction(yPosition(p,f,g,h,k,L,retrograde)=yP,derivatives=2,simplify_assume=[p>0]);
-addUserFunction(zPosition(p,f,g,h,k,L,retrograde)=zP,derivatives=2,simplify_assume=[p>0]);
+addUserFunction(x_position(p,f,g,h,k,L,retrograde)=xP,derivatives=2,simplify_assume=[p>0]);
+addUserFunction(y_position(p,f,g,h,k,L,retrograde)=yP,derivatives=2,simplify_assume=[p>0]);
+addUserFunction(z_position(p,f,g,h,k,L,retrograde)=zP,derivatives=2,simplify_assume=[p>0]);
 
-addUserFunction(xVelocity(p,f,g,h,k,L,retrograde)=xV,derivatives=2,simplify_assume=[p>0]);
-addUserFunction(yVelocity(p,f,g,h,k,L,retrograde)=yV,derivatives=2,simplify_assume=[p>0]);
-addUserFunction(zVelocity(p,f,g,h,k,L,retrograde)=zV,derivatives=2,simplify_assume=[p>0]);
+addUserFunction(x_velocity(p,f,g,h,k,L,retrograde)=xV,derivatives=2,simplify_assume=[p>0]);
+addUserFunction(y_velocity(p,f,g,h,k,L,retrograde)=yV,derivatives=2,simplify_assume=[p>0]);
+addUserFunction(z_velocity(p,f,g,h,k,L,retrograde)=zV,derivatives=2,simplify_assume=[p>0]);
 
 addUserFunction(norm_reg(x,y,z)=sqrt(x^2+y^2+z^2+epsi_norm^2),derivatives=2);
 addUserFunction(ray(p,f,g,L)=raggio,derivatives=2,simplify_assume=[p>0]);
@@ -116,12 +116,12 @@ addUserFunction(VY_end(t),derivatives=2);
 addUserFunction(VZ_end(t),derivatives=2);
 
 #Describe(addBoundaryConditions) ;
-XPOS := xPosition(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
-YPOS := yPosition(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
-ZPOS := zPosition(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
-XVEL := xVelocity(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
-YVEL := yVelocity(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
-ZVEL := zVelocity(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
+XPOS := x_position(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
+YPOS := y_position(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
+ZPOS := z_position(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
+XVEL := x_velocity(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
+YVEL := y_velocity(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
+ZVEL := z_velocity(p,f(zeta),g(zeta),h,k,L(zeta),retrograde):
 
 X0  := X_begin(time_i):
 Y0  := Y_begin(time_i):

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_boundary_conditions.cc              |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -93,8 +93,8 @@ namespace BangBangFredundantDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x];
     result__[ 1   ] = XL__[iX_v];
     result__[ 2   ] = XR__[iX_v];
@@ -105,19 +105,19 @@ namespace BangBangFredundantDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFredundant::DboundaryConditionsDx_numRows() const
+  BangBangFredundant::DboundaryConditionsDxxp_numRows() const
   { return 3; }
 
   integer
-  BangBangFredundant::DboundaryConditionsDx_numCols() const
+  BangBangFredundant::DboundaryConditionsDxxp_numCols() const
   { return 12; }
 
   integer
-  BangBangFredundant::DboundaryConditionsDx_nnz() const
+  BangBangFredundant::DboundaryConditionsDxxp_nnz() const
   { return 3; }
 
   void
-  BangBangFredundant::DboundaryConditionsDx_pattern(
+  BangBangFredundant::DboundaryConditionsDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -127,7 +127,7 @@ namespace BangBangFredundantDefine {
   }
 
   void
-  BangBangFredundant::DboundaryConditionsDx_sparse(
+  BangBangFredundant::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -139,45 +139,13 @@ namespace BangBangFredundantDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 3, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DboundaryConditionsDp_numRows() const
-  { return 3; }
-
-  integer
-  BangBangFredundant::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFredundant::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  BangBangFredundant::DboundaryConditionsDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BangBangFredundant::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 3, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -202,8 +170,8 @@ namespace BangBangFredundantDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     real_type t8   = ALIAS_Flim_D(XL__[iX_F1] + XL__[iX_F2]);
@@ -225,19 +193,19 @@ namespace BangBangFredundantDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  BangBangFredundant::DadjointBCDx_numRows() const
+  BangBangFredundant::DadjointBCDxxp_numRows() const
   { return 12; }
 
   integer
-  BangBangFredundant::DadjointBCDx_numCols() const
+  BangBangFredundant::DadjointBCDxxp_numCols() const
   { return 12; }
 
   integer
-  BangBangFredundant::DadjointBCDx_nnz() const
+  BangBangFredundant::DadjointBCDxxp_nnz() const
   { return 8; }
 
   void
-  BangBangFredundant::DadjointBCDx_pattern(
+  BangBangFredundant::DadjointBCDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -252,7 +220,7 @@ namespace BangBangFredundantDefine {
   }
 
   void
-  BangBangFredundant::DadjointBCDx_sparse(
+  BangBangFredundant::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
@@ -267,8 +235,8 @@ namespace BangBangFredundantDefine {
     real_type const * QR__  = RIGHT__.q;
     real_type const * XR__  = RIGHT__.x;
     real_type const * LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->getSegmentByIndex(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->getSegmentByIndex(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = ALIAS_Flim_DD(XL__[iX_F1] + XL__[iX_F2]);
     result__[ 1   ] = result__[0];
     result__[ 2   ] = result__[1];
@@ -278,41 +246,8 @@ namespace BangBangFredundantDefine {
     result__[ 6   ] = result__[5];
     result__[ 7   ] = result__[6];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 8, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DadjointBCDp_numRows() const
-  { return 12; }
-
-  integer
-  BangBangFredundant::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFredundant::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  BangBangFredundant::DadjointBCDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  void
-  BangBangFredundant::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: BangBangFredundant_Methods_boundary_conditions.cc

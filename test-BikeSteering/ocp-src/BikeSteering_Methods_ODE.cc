@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_ODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,11 +77,12 @@ namespace BikeSteeringDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_TimeSize];
     result__[ 0   ] = X__[iX_omega] * t1;
     real_type t6   = ModelPars[iM_h];
-    result__[ 1   ] = X__[iX_phi] * t6 * ModelPars[iM_g] * ModelPars[iM_m] * t1 - U__[iU_Fy] * t6 * t1;
+    real_type t3   = t1 * t6;
+    result__[ 1   ] = X__[iX_phi] * ModelPars[iM_g] * ModelPars[iM_m] * t3 - U__[iU_Fy] * t3;
     result__[ 2   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
@@ -124,7 +125,7 @@ namespace BikeSteeringDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_TimeSize];
     result__[ 1   ] = X__[iX_omega];
     real_type t1   = ModelPars[iM_m];
@@ -203,7 +204,7 @@ namespace BikeSteeringDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -X__[iX_TimeSize] * ModelPars[iM_h];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 1, i_segment );
@@ -249,7 +250,7 @@ namespace BikeSteeringDefine {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = ModelPars[iM_Ix];
     result__[ 2   ] = 1;

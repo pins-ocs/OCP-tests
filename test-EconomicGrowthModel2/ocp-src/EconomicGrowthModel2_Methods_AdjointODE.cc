@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_AdjointODE.cc                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2021                                         |
+ |  version: 1.0   date 5/7/2021                                         |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -81,7 +81,7 @@ namespace EconomicGrowthModel2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_u];
     real_type t3   = t2 * L__[iL_lambda2__xo];
     real_type t4   = X__[iX_x1];
@@ -152,7 +152,7 @@ namespace EconomicGrowthModel2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_u];
     real_type t3   = t2 * L__[iL_lambda2__xo];
     real_type t4   = X__[iX_x1];
@@ -242,7 +242,7 @@ namespace EconomicGrowthModel2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t3   = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
     real_type t8   = Q(X__[iX_x1], X__[iX_x2]);
@@ -289,21 +289,19 @@ namespace EconomicGrowthModel2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda2__xo];
     real_type t2   = X__[iX_x1];
     real_type t3   = X__[iX_x2];
     real_type t4   = Q_D_1(t2, t3);
     real_type t6   = X__[iX_T];
     real_type t8   = L__[iL_lambda4__xo];
-    real_type t5   = t4 * t6;
-    result__[ 0   ] = t1 * t5 - t8 * t5;
+    result__[ 0   ] = t1 * t4 * t6 - t4 * t6 * t8;
     real_type t11  = Q_D_2(t2, t3);
-    real_type t10  = t11 * t6;
-    result__[ 1   ] = t1 * t10 - t8 * t10;
+    result__[ 1   ] = t1 * t11 * t6 - t11 * t6 * t8;
     real_type t17  = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
     real_type t18  = Q(t2, t3);
-    result__[ 2   ] = t18 * t1 - t18 * t8 + t17;
+    result__[ 2   ] = t1 * t18 - t18 * t8 + t17;
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 3, i_segment );
   }
@@ -420,7 +418,7 @@ namespace EconomicGrowthModel2Define {
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda3__xo];
     result__[ 2   ] = L__[iL_lambda2__xo];
@@ -515,7 +513,7 @@ namespace EconomicGrowthModel2Define {
     integer     i_segment = NODE__.i_segment;
     real_type const * Q__ = NODE__.q;
     real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->getSegmentByIndex(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[2];
     result__[ 2   ] = V__[1];
