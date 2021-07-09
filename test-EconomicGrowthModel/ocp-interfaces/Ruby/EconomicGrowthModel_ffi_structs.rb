@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: EconomicGrowthModel_ffi_structs.rb                                #
 #                                                                          #
-#  version: 1.0   date 5/7/2021                                            #
+#  version: 1.0   date 14/7/2021                                           #
 #                                                                          #
 #  Copyright (C) 2021                                                      #
 #                                                                          #
@@ -40,11 +40,25 @@ module EconomicGrowthModel
   class EconomicGrowthModel_model_params < FFI::Struct
     layout(
 
-      :Qc,   :data_t,
+      :Qc,      :data_t,
 
-      :x1_i, :data_t,
+      :l1_i,    :data_t,
 
-      :x2_i, :data_t,
+      :l2_i,    :data_t,
+
+      :t0,      :data_t,
+
+      :u_epsi0, :data_t,
+
+      :u_epsi1, :data_t,
+
+      :u_tol0,  :data_t,
+
+      :u_tol1,  :data_t,
+
+      :x1_i,    :data_t,
+
+      :x2_i,    :data_t,
 
     )
 

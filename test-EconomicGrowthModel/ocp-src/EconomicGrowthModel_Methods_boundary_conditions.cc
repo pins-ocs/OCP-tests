@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 14/7/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -232,7 +232,7 @@ namespace EconomicGrowthModelDefine {
     real_type t4   = Q_D_1_1(t2, t3);
     result__[ 0   ] = t4 * t1;
     real_type t5   = Q_D_1_2(t2, t3);
-    result__[ 1   ] = t5 * t1;
+    result__[ 1   ] = t1 * t5;
     result__[ 2   ] = result__[1];
     real_type t6   = Q_D_2_2(t2, t3);
     result__[ 3   ] = t6 * t1;

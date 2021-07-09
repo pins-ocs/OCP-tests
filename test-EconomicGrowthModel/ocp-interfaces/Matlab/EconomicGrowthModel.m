@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: EconomicGrowthModel.m                                          %
 %                                                                       %
-%  version: 1.0   date 5/7/2021                                         %
+%  version: 1.0   date 14/7/2021                                        %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -427,11 +427,35 @@ classdef EconomicGrowthModel < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function res = post_processing_switching( self )
+    function res = post_processing_X1_minus_exact( self )
       %
-      % Return the solution for the post processing variable: switching
+      % Return the solution for the post processing variable: X1_minus_exact
       %
-      res = EconomicGrowthModel_Mex( 'get_solution', self.objectHandle, 'switching' );
+      res = EconomicGrowthModel_Mex( 'get_solution', self.objectHandle, 'X1-exact' );
+    end
+    function res = post_processing_X2_minus_exact( self )
+      %
+      % Return the solution for the post processing variable: X2_minus_exact
+      %
+      res = EconomicGrowthModel_Mex( 'get_solution', self.objectHandle, 'X2-exact' );
+    end
+    function res = post_processing_L1_minus_exact( self )
+      %
+      % Return the solution for the post processing variable: L1_minus_exact
+      %
+      res = EconomicGrowthModel_Mex( 'get_solution', self.objectHandle, 'L1-exact' );
+    end
+    function res = post_processing_L2_minus_exact( self )
+      %
+      % Return the solution for the post processing variable: L2_minus_exact
+      %
+      res = EconomicGrowthModel_Mex( 'get_solution', self.objectHandle, 'L2-exact' );
+    end
+    function res = post_processing_U_minus_exact( self )
+      %
+      % Return the solution for the post processing variable: U_minus_exact
+      %
+      res = EconomicGrowthModel_Mex( 'get_solution', self.objectHandle, 'U-exact' );
     end
 
     % ---------------------------------------------------------------------
@@ -453,20 +477,20 @@ classdef EconomicGrowthModel < handle
       U = EconomicGrowthModel_Mex( 'eval_U', self.objectHandle, x, u_guess );
     end
     % ---------------------------------------------------------------------
-    function F = eval_F( self, x, u )
+    function [F,ok] = eval_F( self, x, u )
       %
       % Return the nonlinear system of the indirect
       % methods evaluated at `x` and `u`.
       %
-      F = EconomicGrowthModel_Mex( 'eval_F', self.objectHandle, x, u );
+      [F,ok] = EconomicGrowthModel_Mex( 'eval_F', self.objectHandle, x, u );
     end
     % ---------------------------------------------------------------------
-    function JF = eval_JF( self, x, u )
+    function [JF,ok] = eval_JF( self, x, u )
       %
       % Return the jacobian of the nonlinear system 
       % of the indirect methods evaluated ad `x` and `u`.
       %
-      JF = EconomicGrowthModel_Mex( 'eval_JF', self.objectHandle, x, u );
+      [JF,ok] = EconomicGrowthModel_Mex( 'eval_JF', self.objectHandle, x, u );
     end
     % ---------------------------------------------------------------------
     function JF = eval_JF_pattern( self )
@@ -891,6 +915,102 @@ classdef EconomicGrowthModel < handle
     % ---------------------------------------------------------------------
     function res = Q_D_2_2( self, xo__x, xo__y )
       res = EconomicGrowthModel_Mex('Q_D_2_2', self.objectHandle, xo__x, xo__y );
+    end
+    % ---------------------------------------------------------------------
+    function res = x1L( self, xo__t )
+      res = EconomicGrowthModel_Mex('x1L', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x1L_D( self, xo__t )
+      res = EconomicGrowthModel_Mex('x1L_D', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x1L_DD( self, xo__t )
+      res = EconomicGrowthModel_Mex('x1L_DD', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x2L( self, xo__t )
+      res = EconomicGrowthModel_Mex('x2L', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x2L_D( self, xo__t )
+      res = EconomicGrowthModel_Mex('x2L_D', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x2L_DD( self, xo__t )
+      res = EconomicGrowthModel_Mex('x2L_DD', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l1L( self, xo__t )
+      res = EconomicGrowthModel_Mex('l1L', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l1L_D( self, xo__t )
+      res = EconomicGrowthModel_Mex('l1L_D', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l1L_DD( self, xo__t )
+      res = EconomicGrowthModel_Mex('l1L_DD', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l2L( self, xo__t )
+      res = EconomicGrowthModel_Mex('l2L', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l2L_D( self, xo__t )
+      res = EconomicGrowthModel_Mex('l2L_D', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l2L_DD( self, xo__t )
+      res = EconomicGrowthModel_Mex('l2L_DD', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x1R( self, xo__t )
+      res = EconomicGrowthModel_Mex('x1R', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x1R_D( self, xo__t )
+      res = EconomicGrowthModel_Mex('x1R_D', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x1R_DD( self, xo__t )
+      res = EconomicGrowthModel_Mex('x1R_DD', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x2R( self, xo__t )
+      res = EconomicGrowthModel_Mex('x2R', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x2R_D( self, xo__t )
+      res = EconomicGrowthModel_Mex('x2R_D', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = x2R_DD( self, xo__t )
+      res = EconomicGrowthModel_Mex('x2R_DD', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l1R( self, xo__t )
+      res = EconomicGrowthModel_Mex('l1R', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l1R_D( self, xo__t )
+      res = EconomicGrowthModel_Mex('l1R_D', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l1R_DD( self, xo__t )
+      res = EconomicGrowthModel_Mex('l1R_DD', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l2R( self, xo__t )
+      res = EconomicGrowthModel_Mex('l2R', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l2R_D( self, xo__t )
+      res = EconomicGrowthModel_Mex('l2R_D', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = l2R_DD( self, xo__t )
+      res = EconomicGrowthModel_Mex('l2R_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

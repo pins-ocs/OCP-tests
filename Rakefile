@@ -29,7 +29,8 @@ when /darwin/
   PREFIX     = ''
   VS_VERSION = ''
   VS_ARCH    = ''
-  MAPLECMD   = `ls -1 /Applications/Maple*/maple | tail -1`.gsub(' ','\ ').chomp
+  #MAPLECMD   = `ls -1 /Applications/Maple*/maple | tail -1`.gsub(' ','\ ').chomp
+  MAPLECMD   = "/Library/Frameworks/Maple.framework/Versions/Current/bin/maple"
 
 when /linux/
 

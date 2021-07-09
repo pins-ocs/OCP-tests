@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel.cc                                         |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 14/7/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -85,7 +85,11 @@ namespace EconomicGrowthModelDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
-    "switching",
+    "X1-exact",
+    "X2-exact",
+    "L1-exact",
+    "L2-exact",
+    "U-exact",
     nullptr
   };
 
@@ -95,6 +99,13 @@ namespace EconomicGrowthModelDefine {
 
   char const *namesModelPars[numModelPars+1] = {
     "Qc",
+    "l1_i",
+    "l2_i",
+    "t0",
+    "u_epsi0",
+    "u_epsi1",
+    "u_tol0",
+    "u_tol1",
     "x1_i",
     "x2_i",
     nullptr
@@ -142,6 +153,9 @@ namespace EconomicGrowthModelDefine {
   {
     m_U_solve_iterative = false;
 
+    // continuation
+    this->ns_continuation_begin = 0;
+    this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
@@ -190,6 +204,21 @@ namespace EconomicGrowthModelDefine {
       ),
       msg_level
     );
+    UTILS_ASSERT(
+      0 <= old_s && old_s < s && s <= 1,
+      "EconomicGrowthModel::update_continuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
+    );
+    switch ( phase ) {
+      case 0: continuationStep0( s ); break;
+      default:
+        UTILS_ERROR(
+          "EconomicGrowthModel::update_continuation( phase number={}, old_s={}, s={} )"
+          " phase N.{} is not defined\n",
+          phase, old_s, s, phase
+        );
+    }
   }
 
   /* --------------------------------------------------------------------------

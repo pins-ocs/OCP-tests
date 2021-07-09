@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: EconomicGrowthModel_fsolve_main.m                              %
 %                                                                       %
-%  version: 1.0   date 5/7/2021                                         %
+%  version: 1.0   date 14/7/2021                                        %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -23,49 +23,33 @@ addpath('../../../../nlsys_solver');
 % -------------------------------------------------------------------------
 clc;
 clear all;
-close all
+close all;
 figsize=[0,0,400,800];
 
 % create object
-infolevel  = 4;
+infolevel       = 4;
+do_minimization = false;
 ocp = EconomicGrowthModel( 'EconomicGrowthModel' );
-
-nlsys = @(x) nlsys_local(ocp,x);
-
 %ocp.help(); % print usage
 
 % -----------------------------------------------------------------------------
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
-% READ PROBLEM DATA-------------------------------------------------------------
-% model data from 'model' structure defined in the following m.file
-%ocp.setup(EconomicGrowthModel_data);
-%ocp.setup('../../data/EconomicGrowthModel_Data.lua');
 ocp.setup('../../data/EconomicGrowthModel_Data.rb');
 ocp.infoLevel(infolevel);
 ocp.set_guess(); % use default guess
+%ocp.update_continuation(0,0,1);
 
+[xinit,uimit] = ocp.get_raw_solution();
+nwt   = NewtonSolver( 2 );
+fun   = @(x) ocp.eval_F(x,ocp.eval_U(x,ocp.init_U(x,do_minimization)));
+jac   = @(x) ocp.eval_JF(x,ocp.eval_U(x,ocp.init_U(x,do_minimization)));
+check = @(x) ocp.check_raw_solution(x);
 
-algo = {'trust-region-dogleg', 'trust-region','levenberg-marquardt'};
+[x,ierr] = nwt.solve( xinit, fun, jac, check );
 
-options = optimoptions(...
-  @fsolve,...
-  'Display','iter',...
-  'Algorithm',algo{1}, ...
-  'SpecifyObjectiveGradient',true, ...
-  'FunctionTolerance',1e-10, ...
-  'MaxIterations',1000,...
-  'OptimalityTolerance',1e-10, ...
-  'CheckGradients',false,...
-  'JacobPattern',ocp.eval_JF_pattern(), ...
-  'FiniteDifferenceType','central', ...
-  'FiniteDifferenceStepSize',eps^(1/3.5) ...
-);
+ierr
 
-[x0,u0] = ocp.get_raw_solution();
-x       = fsolve( nlsys, x0, options );
-
-do_minimization = false;
 u = ocp.eval_U(x,ocp.init_U(x,do_minimization));
 ocp.set_raw_solution(x,u);
 
@@ -81,17 +65,3 @@ ocp.plot_multipliers();
 
 subplot(3,1,3);
 ocp.plot_controls();
-
-%%clear mex
-%[Z,U] = EconomicGrowthModel_Mex('get_raw_solution',obj);
-%J     = EconomicGrowthModel_Mex('eval_JF',obj,Z,U);
-%f     = EconomicGrowthModel_Mex('eval_F',obj,Z,U);
-
-
-function [F,JF] = nlsys_local( ocp, x )
-  do_minimization = false;
-  u_guess = ocp.init_U(x,do_minimization);
-  u       = ocp.eval_U(x,u_guess);
-  F       = ocp.eval_F(x,u);
-  JF      = ocp.eval_JF(x,u);
-end

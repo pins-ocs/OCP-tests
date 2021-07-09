@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 14/7/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -135,7 +135,7 @@ namespace EconomicGrowthModelDefine {
     real_type t4   = Q_D_1(t2, t3);
     real_type t6   = X__[iX_T];
     real_type t5   = t4 * t6;
-    result__[ 0   ] = t5 * t1;
+    result__[ 0   ] = t1 * t5;
     real_type t7   = Q_D_2(t2, t3);
     real_type t8   = t7 * t6;
     result__[ 1   ] = t1 * t8;

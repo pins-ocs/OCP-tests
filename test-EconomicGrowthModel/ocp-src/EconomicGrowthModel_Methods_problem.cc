@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 14/7/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -55,6 +55,19 @@ using Mechatronix::MeshStd;
 
 
 namespace EconomicGrowthModelDefine {
+  /*\
+   |   ___         _   _               _   _
+   |  / __|___ _ _| |_(_)_ _ _  _ __ _| |_(_)___ _ _
+   | | (__/ _ \ ' \  _| | ' \ || / _` |  _| / _ \ ' \
+   |  \___\___/_||_\__|_|_||_\_,_\__,_|\__|_\___/_||_|
+  \*/
+
+  void
+  EconomicGrowthModel::continuationStep0( real_type s ) {
+    real_type t2   = 1 - s;
+    uControl.update_epsilon(ModelPars[iM_u_epsi1] * s + t2 * ModelPars[iM_u_epsi0]);
+    uControl.update_tolerance(ModelPars[iM_u_tol1] * s + t2 * ModelPars[iM_u_tol0]);
+  }
 
   /*\
    |  _  _            _ _ _            _
@@ -77,11 +90,10 @@ namespace EconomicGrowthModelDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t2   = Tpositive(t1);
-    real_type t3   = U__[iU_u];
-    real_type t4   = uControl(t3, 0, 1);
-    real_type t10  = Q(X__[iX_x1], X__[iX_x2]);
-    real_type t11  = t1 * t10;
-    real_type result__ = t2 + t4 * t1 + t11 * t3 * L__[iL_lambda1__xo] + t11 * (1 - t3) * L__[iL_lambda2__xo];
+    real_type t4   = U__[iU_u];
+    real_type t8   = Q(X__[iX_x1], X__[iX_x2]);
+    real_type t9   = t1 * t8;
+    real_type result__ = t2 + t9 * t4 * L__[iL_lambda1__xo] + t9 * (1 - t4) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -484,7 +496,7 @@ namespace EconomicGrowthModelDefine {
 
   integer
   EconomicGrowthModel::post_numEqns() const
-  { return 1; }
+  { return 5; }
 
   void
   EconomicGrowthModel::post_eval(
@@ -498,8 +510,12 @@ namespace EconomicGrowthModelDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo] - L__[iL_lambda2__xo];
-    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
+    result__[ 0   ] = (Q__[iQ_zeta] * X__[iX_T] < ModelPars[iM_t0] ? x1L(Q__[iQ_zeta] * X__[iX_T]) : x1R(Q__[iQ_zeta] * X__[iX_T]));
+    result__[ 1   ] = (Q__[iQ_zeta] * X__[iX_T] < ModelPars[iM_t0] ? x2L(Q__[iQ_zeta] * X__[iX_T]) : x2R(Q__[iQ_zeta] * X__[iX_T]));
+    result__[ 2   ] = (Q__[iQ_zeta] * X__[iX_T] < ModelPars[iM_t0] ? l1L(Q__[iQ_zeta] * X__[iX_T]) : l1R(Q__[iQ_zeta] * X__[iX_T]));
+    result__[ 3   ] = (Q__[iQ_zeta] * X__[iX_T] < ModelPars[iM_t0] ? l2L(Q__[iQ_zeta] * X__[iX_T]) : l2R(Q__[iQ_zeta] * X__[iX_T]));
+    result__[ 4   ] = (Q__[iQ_zeta] * X__[iX_T] < ModelPars[iM_t0] ? 1 : 0.5e0);
+    Mechatronix::check_in_segment( result__, "post_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

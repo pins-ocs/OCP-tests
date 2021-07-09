@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 14/7/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -96,11 +96,11 @@ namespace EconomicGrowthModelDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[2];
-    real_type t3   = ALIAS_uControl_D_1(UM__[0], 0, 1);
-    real_type t8   = Q(XM__[0], XM__[1]);
-    real_type t6   = t8 * t1;
-    result__[ 0   ] = t3 * t1 + LM__[0] * t6 - LM__[1] * t6;
+    real_type t4   = Q(XM__[0], XM__[1]);
+    real_type t6   = XM__[2];
+    real_type t12  = ALIAS_uControl_D_1(UM__[0], 0, 1);
+    real_type t5   = t4 * t6;
+    result__[ 0   ] = t12 * t6 + LM__[0] * t5 - LM__[1] * t5;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -177,10 +177,10 @@ namespace EconomicGrowthModelDefine {
     real_type t13  = Q_D_2(t2, t3);
     real_type t12  = t13 * t6;
     result__[ 1   ] = 0.5e0 * t1 * t12 - 0.5e0 * t9 * t12;
-    real_type t21  = ALIAS_uControl_D_1(UM__[0], 0, 1);
-    real_type t23  = Q(t2, t3);
-    result__[ 2   ] = 0.5e0 * t21 + 0.5e0 * t23 * t1 - 0.5e0 * t9 * t23;
-    result__[ 3   ] = 0.5e0 * t6 * t23;
+    real_type t20  = Q(t2, t3);
+    real_type t26  = ALIAS_uControl_D_1(UM__[0], 0, 1);
+    result__[ 2   ] = 0.5e0 * t20 * t1 - 0.5e0 * t9 * t20 + 0.5e0 * t26;
+    result__[ 3   ] = 0.5e0 * t6 * t20;
     real_type t27  = result__[3];
     result__[ 4   ] = -t27;
     result__[ 5   ] = result__[0];
@@ -430,7 +430,7 @@ namespace EconomicGrowthModelDefine {
     real_type t2   = U__[iU_u];
     real_type t3   = ALIAS_uControl_D_1(t2, 0, 1);
     real_type t8   = Q(X__[iX_x1], X__[iX_x2]);
-    real_type t7   = t8 * t1;
+    real_type t7   = t1 * t8;
     result__[ 0   ] = t3 * t1 - 2 * (-t2 * t7 + V__[0]) * t7 + 2 * (V__[1] - (1 - t2) * t7) * t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
@@ -477,7 +477,7 @@ namespace EconomicGrowthModelDefine {
     real_type t7   = Q(X__[iX_x1], X__[iX_x2]);
     real_type t8   = t7 * t7;
     real_type t9   = t1 * t1;
-    result__[ 0   ] = t1 * t3 + 4 * t8 * t9;
+    result__[ 0   ] = t3 * t1 + 4 * t9 * t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

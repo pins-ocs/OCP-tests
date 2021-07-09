@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: EconomicGrowthModel_fsolve_main.m                              %
 %                                                                       %
-%  version: 1.0   date 5/7/2021                                         %
+%  version: 1.0   date 14/7/2021                                        %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -41,12 +41,12 @@ ocp.set_guess(); % use default guess
 %ocp.update_continuation(0,0,1);
 
 [xinit,uimit] = ocp.get_raw_solution();
-nwt   = NewtonSolver( 2 );
+lm    = LevenbergMarquardt();
 fun   = @(x) ocp.eval_F(x,ocp.eval_U(x,ocp.init_U(x,do_minimization)));
 jac   = @(x) ocp.eval_JF(x,ocp.eval_U(x,ocp.init_U(x,do_minimization)));
 check = @(x) ocp.check_raw_solution(x);
 
-[x,ierr] = nwt.solve( xinit, fun, jac, check );
+[x,ierr] = lm.solve( xinit, fun, jac, check );
 
 ierr
 

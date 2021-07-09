@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Mex.cc                                     |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 14/7/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -761,7 +761,7 @@ public:
     mwSize neq = this->num_equations();
     MEX_ASSERT2(
       dimx == neq,
-      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      CMD " size(x) = {} must be equal to neq = {}\n",
       dimx, neq
     );
     bool do_minimize = getBool( arg_in_3, CMD );
@@ -792,14 +792,14 @@ public:
     mwSize neq = this->num_equations();
     MEX_ASSERT2(
       dimx == neq,
-      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      CMD " size(x) = {} must be equal to neq = {}\n",
       dimx, neq
     );
     real_type const * u_guess = getVectorPointer( arg_in_3, dimu, CMD );
     mwSize nu = this->num_parameters();
     MEX_ASSERT2(
       dimu == nu,
-      CMD " size(u) = {} must be equal to neq+npars = {}\n",
+      CMD " size(u) = {} must be equal to npars = {}\n",
       dimu, nu
     );
     real_type * u = createMatrixValue( arg_out_0, this->num_parameters(), 1 );
@@ -822,7 +822,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('eval_F',obj,x,u): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'eval_F'" );
-    CHECK_IN( 4 ); CHECK_OUT( 1 );
+    CHECK_IN( 4 ); CHECK_OUT( 2 );
     mwSize dimx, dimu;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
     real_type const * u = getVectorPointer( arg_in_3, dimu, CMD );
@@ -830,16 +830,26 @@ public:
     mwSize npar = this->num_parameters();
     MEX_ASSERT2(
       dimx == neq,
-      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      CMD " size(x) = {} must be equal to neq = {}\n",
       dimx, neq
     );
     MEX_ASSERT2(
       dimu == npar,
-      CMD " size(u) = {} must be equal to neq+npars = {}\n",
+      CMD " size(u) = {} must be equal to npars = {}\n",
       dimu, npar
     );
     real_type * f = createMatrixValue( arg_out_0, this->num_equations(), 1 );
-    MODEL_CLASS::eval_F( x, u, f );
+    bool ok = true;
+    try {
+      MODEL_CLASS::eval_F( x, u, f );
+    } catch ( std::exception const & exc ) {
+      mexWarnMsgTxt( fmt::format( "EconomicGrowthModel_Mex('eval_F',...) error: {}", exc.what() ).c_str() );
+      ok = false;
+    } catch ( ... ) {
+      mexWarnMsgTxt( "EconomicGrowthModel_Mex('eval_F',...) unkown error\n" );
+      ok = false;
+    }
+    setScalarBool( arg_out_1, ok );
     #undef CMD
   }
 
@@ -857,7 +867,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('eval_JF',obj,x,u): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'eval_JF'" );
-    CHECK_IN( 4 ); CHECK_OUT( 1 );
+    CHECK_IN( 4 ); CHECK_OUT( 2 );
     mwSize dimx, dimu;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
     real_type const * u = getVectorPointer( arg_in_3, dimu, CMD );
@@ -865,12 +875,12 @@ public:
     mwSize npar = this->num_parameters();
     MEX_ASSERT2(
       dimx == neq,
-      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      CMD " size(x) = {} must be equal to neq = {}\n",
       dimx, neq
     );
     MEX_ASSERT2(
       dimu == npar,
-      CMD " size(u) = {} must be equal to neq+npars = {}\n",
+      CMD " size(u) = {} must be equal to npars = {}\n",
       dimu, npar
     );
 
@@ -897,9 +907,19 @@ public:
       );
     }
 
-    MODEL_CLASS::eval_JF_values( x, u, V );
+    bool ok_value = true;
+    try {
+      MODEL_CLASS::eval_JF_values( x, u, V );
+    } catch ( std::exception const & exc ) {
+      mexWarnMsgTxt( fmt::format( "EconomicGrowthModel_Mex('eval_JF',...) error: {}", exc.what() ).c_str() );
+      ok_value = false;
+    } catch ( ... ) {
+      mexWarnMsgTxt( "EconomicGrowthModel_Mex('eval_JF',...) unkown error\n" );
+      ok_value = false;
+    }
     int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
     MEX_ASSERT( ok == 0, CMD "failed the call sparse(...)" );
+    setScalarBool( arg_out_1, ok_value );
     #undef CMD
   }
 
@@ -2394,6 +2414,406 @@ public:
     #undef CMD
   }
 
+  void
+  do_x1L(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x1L', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x1L(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_x1L_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x1L_D', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x1L_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_x1L_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x1L_DD', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x1L_DD(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_x2L(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x2L', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x2L(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_x2L_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x2L_D', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x2L_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_x2L_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x2L_DD', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x2L_DD(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_l1L(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l1L', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l1L(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_l1L_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l1L_D', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l1L_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_l1L_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l1L_DD', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l1L_DD(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_l2L(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l2L', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l2L(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_l2L_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l2L_D', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l2L_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_l2L_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l2L_DD', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l2L_DD(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_x1R(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x1R', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x1R(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_x1R_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x1R_D', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x1R_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_x1R_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x1R_DD', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x1R_DD(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_x2R(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x2R', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x2R(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_x2R_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x2R_D', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x2R_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_x2R_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('x2R_DD', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->x2R_DD(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_l1R(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l1R', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l1R(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_l1R_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l1R_D', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l1R_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_l1R_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l1R_DD', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l1R_DD(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_l2R(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l2R', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l2R(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_l2R_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l2R_D', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l2R_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_l2R_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('l2R_DD', obj, xo__t ): "
+    CHECK_IN( 3 );
+    CHECK_OUT( 1 );
+    mwSize N0, M0;
+    real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_type * res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->l2R_DD(arg0[ii]);
+    #undef CMD
+  }
+
 
 };
 
@@ -3492,6 +3912,342 @@ do_Q_D_2_2(
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x1L(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x1L',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x1L( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x1L_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x1L_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x1L_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x1L_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x1L_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x1L_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x2L(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x2L',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x2L( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x2L_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x2L_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x2L_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x2L_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x2L_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x2L_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l1L(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l1L',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l1L( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l1L_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l1L_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l1L_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l1L_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l1L_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l1L_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l2L(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l2L',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l2L( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l2L_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l2L_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l2L_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l2L_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l2L_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l2L_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x1R(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x1R',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x1R( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x1R_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x1R_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x1R_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x1R_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x1R_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x1R_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x2R(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x2R',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x2R( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x2R_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x2R_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x2R_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_x2R_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('x2R_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_x2R_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l1R(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l1R',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l1R( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l1R_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l1R_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l1R_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l1R_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l1R_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l1R_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l2R(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l2R',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l2R( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l2R_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l2R_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l2R_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_l2R_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('l2R_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_l2R_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"read",do_read},
   {"setup",do_setup},
@@ -3562,6 +4318,30 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"Q_D_1_1",do_Q_D_1_1},
   {"Q_D_1_2",do_Q_D_1_2},
   {"Q_D_2_2",do_Q_D_2_2},
+  {"x1L",do_x1L},
+  {"x1L_D",do_x1L_D},
+  {"x1L_DD",do_x1L_DD},
+  {"x2L",do_x2L},
+  {"x2L_D",do_x2L_D},
+  {"x2L_DD",do_x2L_DD},
+  {"l1L",do_l1L},
+  {"l1L_D",do_l1L_D},
+  {"l1L_DD",do_l1L_DD},
+  {"l2L",do_l2L},
+  {"l2L_D",do_l2L_D},
+  {"l2L_DD",do_l2L_DD},
+  {"x1R",do_x1R},
+  {"x1R_D",do_x1R_D},
+  {"x1R_DD",do_x1R_DD},
+  {"x2R",do_x2R},
+  {"x2R_D",do_x2R_D},
+  {"x2R_DD",do_x2R_DD},
+  {"l1R",do_l1R},
+  {"l1R_D",do_l1R_D},
+  {"l1R_DD",do_l1R_DD},
+  {"l2R",do_l2R},
+  {"l2R_D",do_l2R_D},
+  {"l2R_DD",do_l2R_DD},
   {"new",do_new},
   {"infoLevel",do_infoLevel},
   {"set_max_threads",do_set_max_threads},

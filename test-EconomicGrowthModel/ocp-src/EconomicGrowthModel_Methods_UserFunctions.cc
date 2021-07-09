@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_UserFunctions.cc                   |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 14/7/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -135,6 +135,346 @@ namespace EconomicGrowthModelDefine {
         isRegular(result__),
         "UserFunctions_Q_D_2_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x1L( real_type xo__t ) const {
+    real_type t4   = exp(ModelPars[iM_x2_i] * xo__t);
+    real_type result__ = t4 * ModelPars[iM_x1_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x1L( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x1L_D( real_type xo__t ) const {
+    real_type t2   = ModelPars[iM_x2_i];
+    real_type t5   = exp(xo__t * t2);
+    real_type result__ = t5 * t2 * ModelPars[iM_x1_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x1L_D( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x1L_DD( real_type xo__t ) const {
+    real_type t2   = ModelPars[iM_x2_i];
+    real_type t3   = t2 * t2;
+    real_type t6   = exp(xo__t * t2);
+    real_type result__ = t6 * t3 * ModelPars[iM_x1_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x1L_DD( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x2L( real_type xo__t ) const {
+    real_type result__ = ModelPars[iM_x2_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x2L( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x2L_D( real_type xo__t ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x2L_D( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x2L_DD( real_type xo__t ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x2L_DD( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l1L( real_type xo__t ) const {
+    real_type t4   = exp(-ModelPars[iM_x2_i] * xo__t);
+    real_type result__ = t4 * ModelPars[iM_l1_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l1L( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l1L_D( real_type xo__t ) const {
+    real_type t2   = ModelPars[iM_x2_i];
+    real_type t5   = exp(-xo__t * t2);
+    real_type result__ = -t5 * t2 * ModelPars[iM_l1_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l1L_D( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l1L_DD( real_type xo__t ) const {
+    real_type t2   = ModelPars[iM_x2_i];
+    real_type t3   = t2 * t2;
+    real_type t6   = exp(-xo__t * t2);
+    real_type result__ = t6 * t3 * ModelPars[iM_l1_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l1L_DD( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l2L( real_type xo__t ) const {
+    real_type result__ = -xo__t * ModelPars[iM_l1_i] * ModelPars[iM_x1_i] + ModelPars[iM_l2_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l2L( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l2L_D( real_type xo__t ) const {
+    real_type result__ = -ModelPars[iM_l1_i] * ModelPars[iM_x1_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l2L_D( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l2L_DD( real_type xo__t ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l2L_DD( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x1R( real_type xo__t ) const {
+    real_type t1   = ModelPars[iM_x2_i];
+    real_type result__ = 1.0 / (1 + (ModelPars[iM_t0] - xo__t) * t1 / 2) * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x1R( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x1R_D( real_type xo__t ) const {
+    real_type t1   = ModelPars[iM_x2_i];
+    real_type t2   = t1 * t1;
+    real_type t7   = pow(2 + (ModelPars[iM_t0] - xo__t) * t1, 2);
+    real_type result__ = 2 / t7 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x1R_D( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x1R_DD( real_type xo__t ) const {
+    real_type t1   = ModelPars[iM_x2_i];
+    real_type t2   = t1 * t1;
+    real_type t7   = 2 + (ModelPars[iM_t0] - xo__t) * t1;
+    real_type t8   = t7 * t7;
+    real_type result__ = 4 / t8 / t7 * t2 * t1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x1R_DD( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x2R( real_type xo__t ) const {
+    real_type result__ = x1R(xo__t);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x2R( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x2R_D( real_type xo__t ) const {
+    real_type result__ = x1R_D(xo__t);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x2R_D( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::x2R_DD( real_type xo__t ) const {
+    real_type result__ = x1R_DD(xo__t);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_x2R_DD( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l1R( real_type xo__t ) const {
+    real_type t1   = ModelPars[iM_t0];
+    real_type t2   = l1L(t1);
+    real_type t8   = pow((xo__t - t1) * ModelPars[iM_x2_i] / 2 - 1, 2);
+    real_type result__ = t8 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l1R( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l1R_D( real_type xo__t ) const {
+    real_type t1   = ModelPars[iM_x2_i];
+    real_type t2   = ModelPars[iM_t0];
+    real_type t3   = l1L(t2);
+    real_type result__ = -(2 + (t2 - xo__t) * t1) * t3 * t1 / 2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l1R_D( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l1R_DD( real_type xo__t ) const {
+    real_type t2   = ModelPars[iM_x2_i] * ModelPars[iM_x2_i];
+    real_type t4   = l1L(ModelPars[iM_t0]);
+    real_type result__ = t4 * t2 / 2;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l1R_DD( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l2R( real_type xo__t ) const {
+    real_type result__ = l1R(xo__t);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l2R( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l2R_D( real_type xo__t ) const {
+    real_type result__ = l1R_D(xo__t);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l2R_D( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  EconomicGrowthModel::l2R_DD( real_type xo__t ) const {
+    real_type result__ = l1R_DD(xo__t);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_l2R_DD( t={} ) return {}\n",
+        xo__t, result__
       );
     }
     return result__;

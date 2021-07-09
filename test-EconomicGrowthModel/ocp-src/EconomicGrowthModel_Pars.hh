@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Pars.hh                                    |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 14/7/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define ECONOMICGROWTHMODELPARS_DOT_HH
 
 #define numBc                    3
-#define numModelPars             3
+#define numModelPars             10
 #define numConstraint1D          1
 #define numConstraint2D          0
 #define numConstraintU           1
@@ -29,9 +29,9 @@
 #define numOMEGAvars             3
 #define numQvars                 1
 #define numPvars                 0
-#define numPostProcess           1
+#define numPostProcess           5
 #define numIntegratedPostProcess 0
-#define numContinuationSteps     0
+#define numContinuationSteps     1
 
 // Xvars
 #define iX_x1          0
@@ -53,8 +53,15 @@
 
 // ModelPars Maps
 #define iM_Qc          0
-#define iM_x1_i        1
-#define iM_x2_i        2
+#define iM_l1_i        1
+#define iM_l2_i        2
+#define iM_t0          3
+#define iM_u_epsi0     4
+#define iM_u_epsi1     5
+#define iM_u_tol0      6
+#define iM_u_tol1      7
+#define iM_x1_i        8
+#define iM_x2_i        9
 
 #endif
 

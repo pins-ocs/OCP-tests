@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: EconomicGrowthModel_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 5/7/2021                                         #
+#  version: 1.0   date 14/7/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,6 +20,15 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+u_tol0  = 0.01
+u_tol   = u_tol0
+x2_i    = 2
+u_epsi0 = 0.001
+u_epsi  = u_epsi0
+x1_i    = 1
+t0      = -Math::Math::log(x1_i/x2_i)/x2_i
+l1_i    = -1/x1_i/x2_i
+l2_i    = l1_i*(x1_i*t0+Math::exp(-x2_i*t0))
 
 mechatronix do |data|
 
@@ -106,7 +115,7 @@ mechatronix do |data|
 
     # continuation parameters
     :ns_continuation_begin => 0,
-    :ns_continuation_end   => 0,
+    :ns_continuation_end   => 1,
     :continuation => {
       :initial_step   => 0.2,   # initial step for continuation
       :min_step       => 0.001, # minimum accepted step for continuation
@@ -143,14 +152,21 @@ mechatronix do |data|
 
     # Boundary Conditions
     :Qc   => 10,
-    :x1_i => 1,
-    :x2_i => 2,
+    :x1_i => x1_i,
+    :x2_i => x2_i,
 
     # Post Processing Parameters
 
     # User Function Parameters
+    :l1_i => l1_i,
+    :l2_i => l2_i,
+    :t0   => t0,
 
     # Continuation Parameters
+    :u_epsi0 => u_epsi0,
+    :u_epsi1 => 1e-08,
+    :u_tol0  => u_tol0,
+    :u_tol1  => 0.001,
 
     # Constraints Parameters
   }
@@ -164,8 +180,8 @@ mechatronix do |data|
   data.Controls = {}
   data.Controls[:uControl] = {
     :type      => 'COS_LOGARITHMIC',
-    :epsilon   => 1e-06,
-    :tolerance => 0.01
+    :epsilon   => u_epsi,
+    :tolerance => u_tol
   }
 
 
