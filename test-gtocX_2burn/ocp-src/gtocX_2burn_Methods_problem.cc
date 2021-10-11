@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_problem.cc                                 |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -287,6 +287,42 @@ namespace gtocX_2burnDefine {
    |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
    |              |___/                 |___/
   \*/
+
+  integer
+  gtocX_2burn::DlagrangeDxup_numEqns() const
+  { return 6; }
+
+  void
+  gtocX_2burn::DlagrangeDxup_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = 1 - ModelPars[iM_w_guess];
+    real_type t4   = Q__[iQ_zeta];
+    real_type t6   = ModelPars[iM_time_i];
+    real_type t10  = t6 * (1 - t4) + ModelPars[iM_time_f] * t4;
+    real_type t11  = p_guess(t10);
+    real_type t12  = 1.0 / t11;
+    result__[ 0   ] = 2 * t12 * (t12 * X__[iX_p] - 1) * t2;
+    real_type t18  = f_guess(t10);
+    result__[ 1   ] = (2 * X__[iX_f] - 2 * t18) * t2;
+    real_type t22  = g_guess(t10);
+    result__[ 2   ] = (2 * X__[iX_g] - 2 * t22) * t2;
+    real_type t26  = h_guess(t10);
+    result__[ 3   ] = (2 * X__[iX_h] - 2 * t26) * t2;
+    real_type t30  = k_guess(t10);
+    result__[ 4   ] = (2 * X__[iX_k] - 2 * t30) * t2;
+    real_type t34  = L_guess(t10, t6);
+    result__[ 5   ] = (2 * X__[iX_L] - 2 * t34) * t2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 6, i_segment );
+  }
 
   integer
   gtocX_2burn::DJDx_numEqns() const
@@ -606,19 +642,18 @@ namespace gtocX_2burnDefine {
     result__[ 5   ] = x_velocity(t7, t8, t9, t11, t12, t10, t13);
     result__[ 6   ] = y_velocity(t7, t8, t9, t11, t12, t10, t13);
     result__[ 7   ] = z_velocity(t7, t8, t9, t11, t12, t10, t13);
-    real_type t14  = result__[0];
-    result__[ 8   ] = X_begin(t14);
-    result__[ 9   ] = Y_begin(t14);
-    result__[ 10  ] = Z_begin(t14);
-    result__[ 11  ] = VX_begin(t14);
-    result__[ 12  ] = VY_begin(t14);
-    result__[ 13  ] = VZ_begin(t14);
-    result__[ 14  ] = X_end(t14);
-    result__[ 15  ] = Y_end(t14);
-    result__[ 16  ] = Z_end(t14);
-    result__[ 17  ] = VX_end(t14);
-    result__[ 18  ] = VY_end(t14);
-    result__[ 19  ] = VZ_end(t14);
+    result__[ 8   ] = X_begin(result__[0]);
+    result__[ 9   ] = Y_begin(result__[0]);
+    result__[ 10  ] = Z_begin(result__[0]);
+    result__[ 11  ] = VX_begin(result__[0]);
+    result__[ 12  ] = VY_begin(result__[0]);
+    result__[ 13  ] = VZ_begin(result__[0]);
+    result__[ 14  ] = X_end(result__[0]);
+    result__[ 15  ] = Y_end(result__[0]);
+    result__[ 16  ] = Z_end(result__[0]);
+    result__[ 17  ] = VX_end(result__[0]);
+    result__[ 18  ] = VY_end(result__[0]);
+    result__[ 19  ] = VZ_end(result__[0]);
     Mechatronix::check_in_segment( result__, "post_eval", 20, i_segment );
   }
 

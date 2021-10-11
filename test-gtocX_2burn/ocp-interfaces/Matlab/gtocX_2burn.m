@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: gtocX_2burn.m                                                  %
 %                                                                       %
-%  version: 1.0   date 5/7/2021                                         %
+%  version: 1.0   date 12/10/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -597,20 +597,20 @@ classdef gtocX_2burn < handle
       U = gtocX_2burn_Mex( 'eval_U', self.objectHandle, x, u_guess );
     end
     % ---------------------------------------------------------------------
-    function F = eval_F( self, x, u )
+    function [F,ok] = eval_F( self, x, u )
       %
       % Return the nonlinear system of the indirect
       % methods evaluated at `x` and `u`.
       %
-      F = gtocX_2burn_Mex( 'eval_F', self.objectHandle, x, u );
+      [F,ok] = gtocX_2burn_Mex( 'eval_F', self.objectHandle, x, u );
     end
     % ---------------------------------------------------------------------
-    function JF = eval_JF( self, x, u )
+    function [JF,ok] = eval_JF( self, x, u )
       %
       % Return the jacobian of the nonlinear system 
       % of the indirect methods evaluated ad `x` and `u`.
       %
-      JF = gtocX_2burn_Mex( 'eval_JF', self.objectHandle, x, u );
+      [JF,ok] = gtocX_2burn_Mex( 'eval_JF', self.objectHandle, x, u );
     end
     % ---------------------------------------------------------------------
     function JF = eval_JF_pattern( self )
@@ -969,15 +969,15 @@ classdef gtocX_2burn < handle
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_penalties( self, iseg, q, x, lambda, u, pars )
+    function J = eval_penalties( self, iseg, q, x, u, pars )
       J = gtocX_2burn_Mex( ...
-        'penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
+        'penalties', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_control_penalties( self, iseg, q, x, lambda, u, pars )
+    function J = eval_control_penalties( self, iseg, q, x, u, pars )
       J = gtocX_2burn_Mex( ...
-        'control_penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
+        'control_penalties', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
@@ -987,12 +987,27 @@ classdef gtocX_2burn < handle
       );
     end
     % ---------------------------------------------------------------------
+    function DlagrangeDxup = eval_DlagrangeDxup( self, iseg, q, x, u, pars )
+      DlagrangeDxup = gtocX_2burn_Mex( ...
+        'DlagrangeDxup', self.objectHandle, iseg, q, x, u, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
     function target = eval_mayer_target( self, iseg_L, q_L, x_L, ...
                                                iseg_R, q_R, x_R, ...
-                                               u, pars )
+                                               pars )
       target = gtocX_2burn_Mex( ...
         'mayer_target', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, u, pars ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function DmayerDxxp = eval_DmayerDxxp( self, iseg_L, q_L, x_L, ...
+                                                 iseg_R, q_R, x_R, ...
+                                                 pars )
+      DmayerDxxp = gtocX_2burn_Mex( ...
+        'DmayerDxxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
     % ---------------------------------------------------------------------

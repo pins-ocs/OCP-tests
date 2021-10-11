@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_dll_ruby.hh                                   |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,7 +82,7 @@ namespace gtocX_2burn_parsDefine {
 
   #include <sstream>
 
-  #ifndef MECHATRONIX_OS_WINDOWS
+  #if !defined(MECHATRONIX_OS_WINDOWS) && !defined(MECHATRONIX_OS_MINGW)
     #include <signal.h>
     #include <execinfo.h>
   #endif

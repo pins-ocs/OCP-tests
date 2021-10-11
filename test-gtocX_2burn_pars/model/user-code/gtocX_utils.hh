@@ -11,7 +11,6 @@
 #define GTOCX_UTILS_HH
 
 #include "gtocX.hh"
-#include "gtocX_utils.hh"
 
 namespace gtocX {
 

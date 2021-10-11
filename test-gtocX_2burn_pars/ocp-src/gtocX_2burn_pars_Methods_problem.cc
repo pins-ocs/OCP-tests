@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -286,6 +286,42 @@ namespace gtocX_2burn_parsDefine {
   \*/
 
   integer
+  gtocX_2burn_pars::DlagrangeDxup_numEqns() const
+  { return 6; }
+
+  void
+  gtocX_2burn_pars::DlagrangeDxup_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = 1 - ModelPars[iM_w_guess];
+    real_type t4   = Q__[iQ_zeta];
+    real_type t6   = ModelPars[iM_time_i];
+    real_type t10  = t6 * (1 - t4) + ModelPars[iM_time_f] * t4;
+    real_type t11  = f_guess(t10);
+    result__[ 0   ] = (2 * X__[iX_f] - 2 * t11) * t2;
+    real_type t15  = g_guess(t10);
+    result__[ 1   ] = (2 * X__[iX_g] - 2 * t15) * t2;
+    real_type t19  = L_guess(t10, t6);
+    result__[ 2   ] = (2 * X__[iX_L] - 2 * t19) * t2;
+    real_type t23  = p_guess(0);
+    real_type t24  = 1.0 / t23;
+    result__[ 3   ] = 2 * t24 * (t24 * P__[iP_p] - 1) * t2;
+    real_type t30  = h_guess(0);
+    result__[ 4   ] = (2 * P__[iP_h] - 2 * t30) * t2;
+    real_type t34  = k_guess(0);
+    result__[ 5   ] = (2 * P__[iP_k] - 2 * t34) * t2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 6, i_segment );
+  }
+
+  integer
   gtocX_2burn_pars::DJDx_numEqns() const
   { return 3; }
 
@@ -305,10 +341,10 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = cos(t2);
     real_type t5   = X__[iX_g];
     real_type t6   = sin(t2);
-    real_type t9   = ALIAS_ray_positive_D(t3 * t1 + t6 * t5 + 1);
+    real_type t9   = ALIAS_ray_positive_D(t1 * t3 + t5 * t6 + 1);
     result__[ 0   ] = t3 * t9;
     result__[ 1   ] = t6 * t9;
-    result__[ 2   ] = (-t6 * t1 + t3 * t5) * t9;
+    result__[ 2   ] = (-t1 * t6 + t3 * t5) * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJDx_eval", 3, i_segment );
   }
@@ -578,19 +614,18 @@ namespace gtocX_2burn_parsDefine {
     result__[ 5   ] = x_velocity(t7, t8, t9, t11, t12, t10, t13);
     result__[ 6   ] = y_velocity(t7, t8, t9, t11, t12, t10, t13);
     result__[ 7   ] = z_velocity(t7, t8, t9, t11, t12, t10, t13);
-    real_type t14  = result__[0];
-    result__[ 8   ] = X_begin(t14);
-    result__[ 9   ] = Y_begin(t14);
-    result__[ 10  ] = Z_begin(t14);
-    result__[ 11  ] = VX_begin(t14);
-    result__[ 12  ] = VY_begin(t14);
-    result__[ 13  ] = VZ_begin(t14);
-    result__[ 14  ] = X_end(t14);
-    result__[ 15  ] = Y_end(t14);
-    result__[ 16  ] = Z_end(t14);
-    result__[ 17  ] = VX_end(t14);
-    result__[ 18  ] = VY_end(t14);
-    result__[ 19  ] = VZ_end(t14);
+    result__[ 8   ] = X_begin(result__[0]);
+    result__[ 9   ] = Y_begin(result__[0]);
+    result__[ 10  ] = Z_begin(result__[0]);
+    result__[ 11  ] = VX_begin(result__[0]);
+    result__[ 12  ] = VY_begin(result__[0]);
+    result__[ 13  ] = VZ_begin(result__[0]);
+    result__[ 14  ] = X_end(result__[0]);
+    result__[ 15  ] = Y_end(result__[0]);
+    result__[ 16  ] = Z_end(result__[0]);
+    result__[ 17  ] = VX_end(result__[0]);
+    result__[ 18  ] = VY_end(result__[0]);
+    result__[ 19  ] = VZ_end(result__[0]);
     Mechatronix::check_in_segment( result__, "post_eval", 20, i_segment );
   }
 

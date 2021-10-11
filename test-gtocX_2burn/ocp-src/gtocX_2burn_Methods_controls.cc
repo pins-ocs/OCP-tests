@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -237,7 +237,7 @@ namespace gtocX_2burnDefine {
     real_type t3   = cos(t2);
     real_type t5   = X__[iX_g];
     real_type t6   = sin(t2);
-    real_type t8   = t3 * t1 + t6 * t5 + 1;
+    real_type t8   = t1 * t3 + t5 * t6 + 1;
     real_type t9   = ray_positive(t8);
     real_type t11  = V__[0] * V__[0];
     real_type t15  = ModelPars[iM_time_f] - ModelPars[iM_time_i];
@@ -249,8 +249,8 @@ namespace gtocX_2burnDefine {
     real_type t24  = ray(t16, t1, t5, t2);
     real_type t25  = acceleration_r(t24, t19);
     real_type t26  = t25 * ModelPars[iM_w_nonlin];
-    real_type t30  = pow(-t6 * t26 * t22 + V__[1], 2);
-    real_type t35  = pow(t3 * t26 * t22 + V__[2], 2);
+    real_type t30  = pow(-t22 * t26 * t6 + V__[1], 2);
+    real_type t35  = pow(t22 * t26 * t3 + V__[2], 2);
     real_type t37  = V__[3] * V__[3];
     real_type t39  = V__[4] * V__[4];
     real_type t41  = t8 * t8;

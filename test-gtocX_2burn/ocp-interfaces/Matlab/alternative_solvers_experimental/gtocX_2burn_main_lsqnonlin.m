@@ -27,7 +27,7 @@ close all
 figsize=[0,0,400,800];
 
 % create object
-infolevel  = 4;
+infolevel = 4;
 ocp = gtocX_2burn( 'gtocX_2burn' );
 
 nlsys = @(x) nlsys_local(ocp,x);
@@ -45,10 +45,11 @@ ocp.setup('../../data/gtocX_2burn_Data.rb');
 ocp.infoLevel(infolevel);
 ocp.set_guess(); % use default guess
 
-algo = { 'trust-region-dogleg', 'trust-region', 'levenberg-marquardt' };
+
+algo = {'trust-region-reflective', 'levenberg-marquardt'};
 
 options = optimoptions(...
-  @fsolve,...
+  @lsqnonlin,...
   'Display','iter',...
   'Algorithm',algo{1}, ...
   'SpecifyObjectiveGradient',true, ...
@@ -62,7 +63,10 @@ options = optimoptions(...
 );
 
 [x0,u0] = ocp.get_raw_solution();
-x       = fsolve( nlsys, x0, options );
+LB = -Inf*ones(size(x0));
+UB = Inf*ones(size(x0));
+
+x = lsqnonlin( nlsys, x0, LB, UB, options );
 
 do_minimization = false;
 u = ocp.eval_U(x,ocp.init_U(x,do_minimization));
@@ -80,6 +84,11 @@ ocp.plot_multipliers();
 
 subplot(3,1,3);
 ocp.plot_controls();
+
+
+[F,JF] = nlsys_local( ocp, x );
+
+fprintf('||F|| = %g, || grad F^2 || = %g\n', norm(F,inf), norm( JF.'*F, inf ));
 
 %%clear mex
 %[Z,U] = gtocX_2burn_Mex('get_raw_solution',obj);

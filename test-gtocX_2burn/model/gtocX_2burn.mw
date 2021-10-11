@@ -456,7 +456,7 @@ PGUESS := [
   continuation            = CONTINUATION,
   admissible_region       = [ p(zeta) &gt; 0 ], 
   mesh                    = [length=1, n=50],
-  external_frameworks     = [&quot;MechatronixAstro&quot;],
+  external_frameworks     = [],
   clean                   = false
 );</Text-field>
 </Input>

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: gtocX_2burn_pars_fsolve_main.m                                 %
 %                                                                       %
-%  version: 1.0   date 5/7/2021                                         %
+%  version: 1.0   date 12/10/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -45,8 +45,7 @@ ocp.setup('../../data/gtocX_2burn_pars_Data.rb');
 ocp.infoLevel(infolevel);
 ocp.set_guess(); % use default guess
 
-
-algo = {'trust-region-dogleg', 'trust-region','levenberg-marquardt'};
+algo = { 'trust-region-dogleg', 'trust-region', 'levenberg-marquardt' };
 
 options = optimoptions(...
   @fsolve,...
@@ -87,11 +86,13 @@ ocp.plot_controls();
 %J     = gtocX_2burn_pars_Mex('eval_JF',obj,Z,U);
 %f     = gtocX_2burn_pars_Mex('eval_F',obj,Z,U);
 
-
 function [F,JF] = nlsys_local( ocp, x )
   do_minimization = false;
-  u_guess = ocp.init_U(x,do_minimization);
-  u       = ocp.eval_U(x,u_guess);
-  F       = ocp.eval_F(x,u);
-  JF      = ocp.eval_JF(x,u);
+  u_guess  = ocp.init_U(x,do_minimization);
+  u        = ocp.eval_U(x,u_guess);
+  [F,ok1]  = ocp.eval_F(x,u);
+  [JF,ok2] = ocp.eval_JF(x,u);
+  if ~(ok1&&ok2)
+    F = NaN*ones(size(F));
+  end
 end

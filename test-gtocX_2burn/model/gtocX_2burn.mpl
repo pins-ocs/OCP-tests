@@ -116,7 +116,7 @@ generateOCProblem(
   continuation            = CONTINUATION,
   admissible_region       = [ p(zeta) > 0 ], 
   mesh                    = [length=1, n=50],
-  external_frameworks     = ["MechatronixAstro"],
+  external_frameworks     = [],
   clean                   = false
 );
 NULL;

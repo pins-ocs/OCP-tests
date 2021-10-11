@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_boundary_conditions.cc                     |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -309,27 +309,27 @@ namespace gtocX_2burnDefine {
     real_type t63  = y_position_D_1(t54, t55, t56, t57, t58, t59, t8);
     real_type t65  = OMEGA__[5];
     real_type t66  = z_position_D_1(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 6   ] = t60 * t53 + t63 * t62 + t66 * t65 - LR__[iL_lambda1__xo];
+    result__[ 6   ] = t53 * t60 + t62 * t63 + t65 * t66 - LR__[iL_lambda1__xo];
     real_type t69  = x_position_D_2(t54, t55, t56, t57, t58, t59, t8);
     real_type t71  = y_position_D_2(t54, t55, t56, t57, t58, t59, t8);
     real_type t73  = z_position_D_2(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 7   ] = t69 * t53 + t71 * t62 + t73 * t65 - LR__[iL_lambda2__xo];
+    result__[ 7   ] = t53 * t69 + t62 * t71 + t65 * t73 - LR__[iL_lambda2__xo];
     real_type t76  = x_position_D_3(t54, t55, t56, t57, t58, t59, t8);
     real_type t78  = y_position_D_3(t54, t55, t56, t57, t58, t59, t8);
     real_type t80  = z_position_D_3(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 8   ] = t76 * t53 + t78 * t62 + t80 * t65 - LR__[iL_lambda3__xo];
+    result__[ 8   ] = t53 * t76 + t62 * t78 + t65 * t80 - LR__[iL_lambda3__xo];
     real_type t83  = x_position_D_4(t54, t55, t56, t57, t58, t59, t8);
     real_type t85  = y_position_D_4(t54, t55, t56, t57, t58, t59, t8);
     real_type t87  = z_position_D_4(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 9   ] = t83 * t53 + t85 * t62 + t87 * t65 - LR__[iL_lambda4__xo];
+    result__[ 9   ] = t53 * t83 + t62 * t85 + t65 * t87 - LR__[iL_lambda4__xo];
     real_type t90  = x_position_D_5(t54, t55, t56, t57, t58, t59, t8);
     real_type t92  = y_position_D_5(t54, t55, t56, t57, t58, t59, t8);
     real_type t94  = z_position_D_5(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 10  ] = t90 * t53 + t92 * t62 + t94 * t65 - LR__[iL_lambda5__xo];
+    result__[ 10  ] = t53 * t90 + t62 * t92 + t65 * t94 - LR__[iL_lambda5__xo];
     real_type t97  = x_position_D_6(t54, t55, t56, t57, t58, t59, t8);
     real_type t99  = y_position_D_6(t54, t55, t56, t57, t58, t59, t8);
     real_type t101 = z_position_D_6(t54, t55, t56, t57, t58, t59, t8);
-    result__[ 11  ] = t101 * t65 + t97 * t53 + t99 * t62 - LR__[iL_lambda6__xo];
+    result__[ 11  ] = t101 * t65 + t53 * t97 + t62 * t99 - LR__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 12, i_segment_left, i_segment_right );
   }
@@ -661,7 +661,7 @@ namespace gtocX_2burnDefine {
     real_type t266 = x_position_D_6_6(t138, t139, t140, t141, t142, t143, t8);
     real_type t268 = y_position_D_6_6(t138, t139, t140, t141, t142, t143, t8);
     real_type t270 = z_position_D_6_6(t138, t139, t140, t141, t142, t143, t8);
-    result__[ 71  ] = t137 * t266 + t146 * t268 + t149 * t270;
+    result__[ 71  ] = t137 * t266 + t146 * t268 + t270 * t149;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 72, i_segment_left, i_segment_right );
   }

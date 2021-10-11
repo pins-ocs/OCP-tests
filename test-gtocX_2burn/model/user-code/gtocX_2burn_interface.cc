@@ -28,6 +28,7 @@ namespace gtocX_2burnDefine {
 
   using namespace std;
   using namespace MechatronixLoad;
+  using namespace AstroLib;
 
   static Astro const * From;
   static Astro const * To;

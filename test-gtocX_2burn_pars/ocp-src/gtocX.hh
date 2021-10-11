@@ -2,7 +2,6 @@
 #define GTOCX_HH
 
 #include <MechatronixCore/MechatronixCore.hh>
-#include <MechatronixAstro/MechatronixAstro.hh>
 #include <iostream>
 #include <sstream>
 #include <chrono>
@@ -12,6 +11,7 @@
 namespace gtocX {
 
   using namespace MechatronixLoad;
+  using namespace AstroLib;
 
   static integer const nstars = 100000;
 

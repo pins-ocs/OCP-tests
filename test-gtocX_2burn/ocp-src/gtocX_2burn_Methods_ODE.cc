@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_ODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -146,8 +146,7 @@ namespace gtocX_2burnDefine {
     real_type t8   = ModelPars[iM_muS];
     real_type t9   = sqrt(t8);
     real_type t10  = 1.0 / t9;
-    real_type t6   = 1.0 / t5;
-    real_type t11  = t3 * t6 * t10;
+    real_type t11  = t10 / t5 * t3;
     real_type t12  = ModelPars[iM_w_nonlin];
     real_type t13  = X__[iX_f];
     real_type t14  = X__[iX_g];
@@ -161,30 +160,28 @@ namespace gtocX_2burnDefine {
     real_type t25  = acceleration_r_D_1(t16, t8);
     real_type t26  = t25 * t12;
     real_type t27  = ray_D_1(t4, t13, t14, t15);
-    real_type t29  = t26 * t24;
-    result__[ 0   ] = t20 * t11 / 2 + t29 * t19 * t27;
+    result__[ 0   ] = t20 * t11 / 2 + t19 * t27 * t26 * t24;
     real_type t31  = ray_D_2(t4, t13, t14, t15);
-    result__[ 1   ] = t29 * t19 * t31;
+    result__[ 1   ] = t19 * t31 * t26 * t24;
     real_type t34  = ray_D_3(t4, t13, t14, t15);
-    result__[ 2   ] = t29 * t19 * t34;
+    result__[ 2   ] = t19 * t34 * t26 * t24;
     real_type t37  = ray_D_4(t4, t13, t14, t15);
     real_type t41  = cos(t15);
     real_type t42  = t41 * t18;
-    result__[ 3   ] = t29 * t19 * t37 + t42 * t24;
-    result__[ 4   ] = -t42 * t11 / 2 - t29 * t41 * t27;
-    result__[ 5   ] = -t29 * t41 * t31;
-    result__[ 6   ] = -t29 * t41 * t34;
-    result__[ 7   ] = -t29 * t41 * t37 + t20 * t24;
-    real_type t61  = t41 * t13 + t19 * t14 + 1;
+    result__[ 3   ] = t19 * t24 * t26 * t37 + t24 * t42;
+    result__[ 4   ] = -t42 * t11 / 2 - t41 * t27 * t26 * t24;
+    result__[ 5   ] = -t41 * t31 * t26 * t24;
+    result__[ 6   ] = -t41 * t34 * t26 * t24;
+    result__[ 7   ] = -t24 * t26 * t37 * t41 + t20 * t24;
+    real_type t61  = t13 * t41 + t14 * t19 + 1;
     real_type t62  = t61 * t61;
     real_type t64  = t4 * t4;
-    real_type t54  = t6 * t9;
-    result__[ 8   ] = -3.0 / 2.0 / t64 * t62 * t3 * t54;
+    result__[ 8   ] = -3.0 / 2.0 * t9 / t5 / t64 * t62 * t3;
     real_type t70  = t61 * t3;
-    real_type t73  = 1.0 / t4 * t54;
+    real_type t73  = t9 / t5 / t4;
     result__[ 9   ] = 2 * t41 * t73 * t70;
     result__[ 10  ] = 2 * t19 * t73 * t70;
-    result__[ 11  ] = 2 * (-t19 * t13 + t41 * t14) * t73 * t70;
+    result__[ 11  ] = 2 * (-t13 * t19 + t14 * t41) * t73 * t70;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 12, i_segment );
   }

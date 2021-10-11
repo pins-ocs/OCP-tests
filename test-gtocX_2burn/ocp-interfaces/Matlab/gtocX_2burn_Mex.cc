@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Mex.cc                                             |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -85,6 +85,8 @@ static char const help_msg[] =
 #define CHECK_OUT(N) \
   MEX_ASSERT2( nlhs == N, CMD "Expected {} argument(s), nlhs = {}\n", N, nlhs )
 
+#define CHECK_IN_OUT(N,M) CHECK_IN(N); CHECK_OUT(M)
+
 #define MEX_CHECK_DIMS(A,B,C,D) \
   MEX_ASSERT( A == C && B == D, CMD "Argument dimensions must be the same\n" )
 
@@ -118,14 +120,14 @@ static char const help_msg[] =
     "{} |Omega| = {} expected to be {}\n", CMD, nO, this->dim_Omega()  \
   );
 
-#define GET_ARG_OMEGA_FULL(ARG)                                        \
-  mwSize nO;                                                           \
-  OMEGA_full_const_pointer_type Omega(getVectorPointer( ARG, nO,       \
-    fmt::format( "{} argument pars", CMD )                             \
-  ) );                                                                 \
-  UTILS_ASSERT(                                                        \
-    nO == this->dim_BC(),                                              \
-    "{} |Omega| = {} expected to be {}\n", CMD, nO, this->dim_BC()     \
+#define GET_ARG_OMEGA_FULL(ARG)                                         \
+  mwSize nO;                                                            \
+  OMEGA_full_const_pointer_type Omega(getVectorPointer( ARG, nO,        \
+    fmt::format( "{} argument pars", CMD )                              \
+  ) );                                                                  \
+  UTILS_ASSERT(                                                         \
+    nO == this->dim_full_BC(),                                          \
+    "{} |Omega| = {} expected to be {}\n", CMD, nO, this->dim_full_BC() \
   );
 
 #define GET_ARG_V(ARG)                                              \
@@ -205,7 +207,7 @@ public:
   ~ProblemStorage() {}
 
   void
-  doneSetup() {
+  done_setup() {
     setup_ok     = true;
     guess_ok     = false;
     solve_ok     = false;
@@ -215,7 +217,7 @@ public:
   }
 
   void
-  doneGuess() {
+  done_guess() {
     setup_ok     = true;
     guess_ok     = true;
     solve_ok     = false;
@@ -225,7 +227,7 @@ public:
   }
 
   void
-  doneSolve() {
+  done_solve() {
     setup_ok     = true;
     guess_ok     = true;
     solve_ok     = true;
@@ -264,8 +266,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('read',obj,filename): "
-    CHECK_IN(3);
-    CHECK_OUT(1);
+    CHECK_IN_OUT(3,1);
     MEX_ASSERT2(
       mxIsChar(arg_in_2),
       CMD "filename must be a string, found ``{}''\n", mxGetClassName( arg_in_2 )
@@ -290,8 +291,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('setup',obj,struct_or_filename): "
-    CHECK_IN(3);
-    CHECK_OUT(0);
+    CHECK_IN_OUT(3,0);
     gc_data.clear(); // clear data for rewrite it
     if ( mxIsStruct(arg_in_2) ) { // read from file
       mxArray_to_GenericContainer( arg_in_2, gc_data );
@@ -318,12 +318,13 @@ public:
     // setup model
     MODEL_CLASS::setup( gc_data );
 
-    this->doneSetup();
+    this->done_setup();
 
     #undef CMD
   }
 
   /*\
+   |                               _
    |  _ __  _____ __  _ __  ___ __| |_
    | | '  \/ -_) \ / | '  \/ -_|_-< ' \
    | |_|_|_\___/_\_\_|_|_|_\___/__/_||_|
@@ -338,7 +339,7 @@ public:
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'remesh'" );
     MEX_ASSERT2(
       nrhs == 3,
-      CMD "Expected 2 or 3 input argument(s), nrhs = {}\n", nrhs
+      CMD " Expected 2 or 3 input argument(s), nrhs = {}\n", nrhs
     );
     CHECK_OUT( 0 );
 
@@ -361,7 +362,7 @@ public:
     pMesh->setup( gc_mesh );
 
     MODEL_CLASS::setup( gc_data );
-    this->doneSetup();
+    this->done_setup();
     #undef CMD
   }
 
@@ -396,7 +397,7 @@ public:
       mxArray_to_GenericContainer( arg_in_2, gc_guess );
     }
     MODEL_CLASS::guess( gc_guess );
-    this->doneGuess();
+    this->done_guess();
     #undef CMD
   }
 
@@ -407,7 +408,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('get_guess',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'guess'" );
-    CHECK_IN( 2 ); CHECK_OUT( 1 );
+    CHECK_IN_OUT(2,1);
     GenericContainer_to_mxArray( gc_data("Guess"), arg_out_0 );
     #undef CMD
   }
@@ -418,8 +419,11 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_solution_as_guess',obj): "
-    MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'get_solution_as_guess'" );
-    CHECK_IN( 2 ); CHECK_OUT( 1 );
+    MEX_ASSERT(
+      setup_ok,
+      CMD "use 'setup' before to use 'get_solution_as_guess'"
+    );
+    CHECK_IN_OUT( 2, 1 );
     GenericContainer gc;
     this->get_solution_as_guess( gc );
     GenericContainer_to_mxArray( gc, arg_out_0 );
@@ -439,7 +443,10 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('solve',obj[,timeout]): "
-    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'solve'" );
+    MEX_ASSERT(
+      guess_ok,
+      CMD "use 'set_guess' before to use 'solve'"
+    );
     MEX_ASSERT2(
       nrhs == 2 || nrhs == 3,
       CMD "Expected 2 or 3 argument(s), nrhs = {}", nrhs
@@ -451,7 +458,7 @@ public:
     }
     solve_ok = MODEL_CLASS::solve();
     setScalarBool( arg_out_0, solve_ok );
-    this->doneSolve();
+    this->done_solve();
     #undef CMD
   }
 
@@ -469,17 +476,17 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('dims',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'dims'" );
-    CHECK_IN( 2 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 2, 1 );
     GenericContainer gc;
-    gc["dim_q"]     = MODEL_CLASS::dim_Q();
-    gc["dim_x"]     = MODEL_CLASS::dim_X();
-    gc["dim_u"]     = MODEL_CLASS::dim_U();
-    gc["dim_pars"]  = MODEL_CLASS::dim_Pars();
-    gc["dim_omega"] = MODEL_CLASS::dim_Omega();
-    gc["dim_bc"]    = MODEL_CLASS::dim_BC();
-    gc["num_nodes"] = MODEL_CLASS::num_nodes();
-    gc["neq"]       = MODEL_CLASS::num_equations();
+    gc["dim_q"]       = MODEL_CLASS::dim_Q();
+    gc["dim_x"]       = MODEL_CLASS::dim_X();
+    gc["dim_u"]       = MODEL_CLASS::dim_U();
+    gc["dim_pars"]    = MODEL_CLASS::dim_Pars();
+    gc["dim_omega"]   = MODEL_CLASS::dim_Omega();
+    gc["dim_bc"]      = MODEL_CLASS::dim_BC();
+    gc["dim_full_bc"] = MODEL_CLASS::dim_full_BC();
+    gc["num_nodes"]   = MODEL_CLASS::num_nodes();
+    gc["neq"]         = MODEL_CLASS::num_equations();
     GenericContainer_to_mxArray( gc, arg_out_0 );
     #undef CMD
   }
@@ -497,7 +504,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('names',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'names'" );
-    CHECK_IN( 2 ); CHECK_OUT( 1 );
+    CHECK_IN_OUT( 2, 1 );
     GenericContainer gc;
     this->get_names( gc );
     GenericContainer_to_mxArray( gc, arg_out_0 );
@@ -517,8 +524,11 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('update_continuation',obj,nphase,old_s,s): "
-    MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'update_continuation'" );
-    CHECK_IN( 5 ); CHECK_OUT( 0 );
+    MEX_ASSERT(
+      setup_ok,
+      CMD "use 'setup' before to use 'update_continuation'"
+    );
+    CHECK_IN_OUT( 5, 0 );
     int64_t nphase  = getInt( arg_in_2, CMD " nphase number" );
     real_type old_s = getScalarValue( arg_in_3, CMD " old_s" );
     real_type s     = getScalarValue( arg_in_4, CMD " s" );
@@ -539,8 +549,11 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_raw_solution',obj): "
-    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_raw_solution'" );
-    CHECK_IN( 2 ); CHECK_OUT( 2 );
+    MEX_ASSERT(
+      guess_ok,
+      CMD "use 'set_guess' before to use 'get_raw_solution'"
+    );
+    CHECK_IN_OUT( 2, 2 );
     real_type * x = createMatrixValue( arg_out_0, this->num_equations(), 1 );
     real_type * u = createMatrixValue( arg_out_1, this->num_parameters(), 1 );
     this->get_raw_solution( x, u );
@@ -560,8 +573,11 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('set_raw_solution',obj,x,u): "
-    MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'set_raw_solution'" );
-    CHECK_IN( 4 ); CHECK_OUT( 0 );
+    MEX_ASSERT(
+      setup_ok,
+      CMD "use 'setup' before to use 'set_raw_solution'"
+    );
+    CHECK_IN_OUT( 4, 0 );
     mwSize dimx,dimu;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x");
     real_type const * u = getVectorPointer( arg_in_3, dimu, CMD "argument u");
@@ -578,7 +594,7 @@ public:
       dimu, npar
     );
     this->set_raw_solution( x, u );
-    this->doneGuess(); // is equivalent to set guess
+    this->done_guess(); // is equivalent to set guess
     #undef CMD
   }
 
@@ -595,8 +611,11 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('check_raw_solution',obj,x): "
-    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'check_raw_solution'" );
-    CHECK_IN( 3 ); CHECK_OUT( 1 );
+    MEX_ASSERT(
+      guess_ok,
+      CMD "use 'set_guess' before to use 'check_raw_solution'"
+    );
+    CHECK_IN_OUT( 3, 1 );
     mwSize dimx, dimp;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
     mwSize neq = this->num_equations();
@@ -622,8 +641,11 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('check_jacobian',obj,x,u,epsi): "
-    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'check_jacobian'" );
-    CHECK_IN( 5 ); CHECK_OUT( 0 );
+    MEX_ASSERT(
+      guess_ok,
+      CMD "use 'set_guess' before to use 'check_jacobian'"
+    );
+    CHECK_IN_OUT( 5, 0 );
     mwSize dimx,dimu;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
     real_type const * u = getVectorPointer( arg_in_3, dimx, CMD "argument u" );
@@ -657,7 +679,10 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_solution',obj[,column_name]): "
-    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_solution'" );
+    MEX_ASSERT(
+      guess_ok,
+      CMD "use 'set_guess' before to use 'get_solution'"
+    );
     CHECK_OUT( 1 );
     if ( !solution1_ok ) {
       MODEL_CLASS::get_solution( gc_solution1 );
@@ -667,7 +692,10 @@ public:
     if ( nrhs == 2 ) {
       GenericContainer_to_mxArray( gc_solution1, arg_out_0 );
     } else if ( nrhs == 3 ) {
-      MEX_ASSERT( mxIsChar(arg_in_2), CMD " Third argument must be a string" );
+      MEX_ASSERT(
+        mxIsChar(arg_in_2),
+        CMD " Third argument must be a string"
+      );
       string const & cname = mxArrayToString(arg_in_2);
       GenericContainer const & idx = gc_solution1("idx");
       MEX_ASSERT2(
@@ -690,9 +718,11 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_solution2',obj): "
-    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_solution2'" );
-    CHECK_IN( 2 );
-    CHECK_OUT( 1 );
+    MEX_ASSERT(
+      guess_ok,
+      CMD "use 'set_guess' before to use 'get_solution2'"
+    );
+    CHECK_IN_OUT( 2, 1 );
     if ( !solution2_ok ) {
       MODEL_CLASS::get_solution2( gc_solution2 );
       MODEL_CLASS::diagnostic( gc_data, gc_solution2 );
@@ -708,9 +738,11 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_solution3',obj): "
-    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_solution3'" );
-    CHECK_IN( 2 );
-    CHECK_OUT( 1 );
+    MEX_ASSERT(
+      guess_ok,
+      CMD "use 'set_guess' before to use 'get_solution3'"
+    );
+    CHECK_IN_OUT( 2, 1 );
     if ( !solution3_ok ) {
       MODEL_CLASS::get_solution3( gc_solution3 );
       MODEL_CLASS::diagnostic( gc_data, gc_solution3 );
@@ -734,7 +766,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('get_ocp_data',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'get_ocp_data'" );
-    CHECK_IN( 2 ); CHECK_OUT( 1 );
+    CHECK_IN_OUT( 2, 1 );
     GenericContainer_to_mxArray( gc_data, arg_out_0 );
     #undef CMD
   }
@@ -755,13 +787,13 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('init_U',obj,x,do_minimize): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'init_U'" );
-    CHECK_IN( 4 ); CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
     mwSize dimx;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
     mwSize neq = this->num_equations();
     MEX_ASSERT2(
       dimx == neq,
-      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      CMD " size(x) = {} must be equal to neq = {}\n",
       dimx, neq
     );
     bool do_minimize = getBool( arg_in_3, CMD );
@@ -786,20 +818,20 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('eval_U',obj,x,u_guess): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'eval_U'" );
-    CHECK_IN( 4 ); CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
     mwSize dimx, dimu;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
     mwSize neq = this->num_equations();
     MEX_ASSERT2(
       dimx == neq,
-      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      CMD " size(x) = {} must be equal to neq = {}\n",
       dimx, neq
     );
     real_type const * u_guess = getVectorPointer( arg_in_3, dimu, CMD );
     mwSize nu = this->num_parameters();
     MEX_ASSERT2(
       dimu == nu,
-      CMD " size(u) = {} must be equal to neq+npars = {}\n",
+      CMD " size(u) = {} must be equal to npars = {}\n",
       dimu, nu
     );
     real_type * u = createMatrixValue( arg_out_0, this->num_parameters(), 1 );
@@ -822,7 +854,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('eval_F',obj,x,u): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'eval_F'" );
-    CHECK_IN( 4 ); CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 2 );
     mwSize dimx, dimu;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
     real_type const * u = getVectorPointer( arg_in_3, dimu, CMD );
@@ -830,16 +862,26 @@ public:
     mwSize npar = this->num_parameters();
     MEX_ASSERT2(
       dimx == neq,
-      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      CMD " size(x) = {} must be equal to neq = {}\n",
       dimx, neq
     );
     MEX_ASSERT2(
       dimu == npar,
-      CMD " size(u) = {} must be equal to neq+npars = {}\n",
+      CMD " size(u) = {} must be equal to npars = {}\n",
       dimu, npar
     );
     real_type * f = createMatrixValue( arg_out_0, this->num_equations(), 1 );
-    MODEL_CLASS::eval_F( x, u, f );
+    bool ok = true;
+    try {
+      MODEL_CLASS::eval_F( x, u, f );
+    } catch ( std::exception const & exc ) {
+      mexWarnMsgTxt( fmt::format( "gtocX_2burn_Mex('eval_F',...) error: {}", exc.what() ).c_str() );
+      ok = false;
+    } catch ( ... ) {
+      mexWarnMsgTxt( "gtocX_2burn_Mex('eval_F',...) unkown error\n" );
+      ok = false;
+    }
+    setScalarBool( arg_out_1, ok );
     #undef CMD
   }
 
@@ -857,7 +899,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('eval_JF',obj,x,u): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'eval_JF'" );
-    CHECK_IN( 4 ); CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 2 );
     mwSize dimx, dimu;
     real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
     real_type const * u = getVectorPointer( arg_in_3, dimu, CMD );
@@ -865,12 +907,12 @@ public:
     mwSize npar = this->num_parameters();
     MEX_ASSERT2(
       dimx == neq,
-      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      CMD " size(x) = {} must be equal to neq = {}\n",
       dimx, neq
     );
     MEX_ASSERT2(
       dimu == npar,
-      CMD " size(u) = {} must be equal to neq+npars = {}\n",
+      CMD " size(u) = {} must be equal to npars = {}\n",
       dimu, npar
     );
 
@@ -897,9 +939,19 @@ public:
       );
     }
 
-    MODEL_CLASS::eval_JF_values( x, u, V );
+    bool ok_value = true;
+    try {
+      MODEL_CLASS::eval_JF_values( x, u, V );
+    } catch ( std::exception const & exc ) {
+      mexWarnMsgTxt( fmt::format( "gtocX_2burn_Mex('eval_JF',...) error: {}", exc.what() ).c_str() );
+      ok_value = false;
+    } catch ( ... ) {
+      mexWarnMsgTxt( "gtocX_2burn_Mex('eval_JF',...) unkown error\n" );
+      ok_value = false;
+    }
     int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
     MEX_ASSERT( ok == 0, CMD "failed the call sparse(...)" );
+    setScalarBool( arg_out_1, ok_value );
     #undef CMD
   }
 
@@ -917,7 +969,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('eval_JF_pattern',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'eval_JF_pattern'" );
-    CHECK_IN( 2 ); CHECK_OUT( 1 );
+    CHECK_IN_OUT( 2, 1 );
 
     mxArray *args[5];
     real_type * I = createMatrixValue( args[0], 1, nnz() );
@@ -961,7 +1013,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('pack',obj,x,lambda,pars,omega): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'pack'" );
-    CHECK_IN( 6 ); CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
 
     mwSize nrX, ncX, nrL, ncL, nP, nO;
     X_const_pointer_type     X(getMatrixPointer( arg_in_2, nrX, ncX, CMD "argument x" ));
@@ -1008,7 +1060,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('unpack',obj,Z): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'unpack'" );
-    CHECK_IN( 3 ); CHECK_OUT( 4 );
+    CHECK_IN_OUT( 3, 4 );
 
     integer nn = this->num_nodes();
     mwSize nZ;
@@ -1045,56 +1097,64 @@ public:
     L.i_segment = integer( getInt( arg_in_2, fmt::format( "{} L_segment", msg ) ) );
     UTILS_ASSERT(
       L.i_segment >= 0 && L.i_segment < this->num_segments(),
-      "iseg_L = {} expected to be in [0,{})\n", msg, L.i_segment, this->num_segments()
+      "{} iseg_L = {} expected to be in [0,{})\n",
+      msg, L.i_segment, this->num_segments()
     );
 
     // -------------------
     L.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q_L", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "|q_L| = {} expected to be {}\n", msg, nQ, this->dim_Q()
+      "{} |q_L| = {} expected to be {}\n[try to call eval_q]\n",
+      msg, nQ, this->dim_Q()
     );
 
     // -------------------
     L.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x_L", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "|x_L| = {} expected to be {}\n", msg, nX, this->dim_X()
+      "{} |x_L| = {} expected to be {}\n",
+      msg, nX, this->dim_X()
     );
 
     // -------------------
     L.lambda = getVectorPointer( arg_in_5, nL, fmt::format( "{} argument lambda_L", msg ) );
     UTILS_ASSERT(
       nL == this->dim_X(),
-      "|lambda_L| = {} expected to be {}\n", msg, nL, this->dim_X()
+      "{} |lambda_L| = {} expected to be {}\n",
+      msg, nL, this->dim_X()
     );
 
     // -------------------
     R.i_segment = integer( getInt( arg_in_6, fmt::format( "{} R_segment", msg ) ) );
     UTILS_ASSERT(
       R.i_segment >= 0 && R.i_segment < this->num_segments(),
-      "iseg_R = {} expected to be in [0,{})\n", msg, R.i_segment, this->num_segments()
+      "{} iseg_R = {} expected to be in [0,{})\n",
+      msg, R.i_segment, this->num_segments()
     );
 
     // -------------------
     R.q = getVectorPointer( arg_in_7, nQ, fmt::format( "{} argument q_R", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "|q_R| = {} expected to be {}\n", msg, nQ, this->dim_Q()
+      "{} |q_R| = {} expected to be {}\n",
+      msg, nQ, this->dim_Q()
     );
 
     // -------------------
     R.x = getVectorPointer( arg_in_8, nX, fmt::format( "{} argument x_R", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "|x_R| = {} expected to be {}\n", msg, nX, this->dim_X()
+      "{} |x_R| = {} expected to be {}\n",
+      msg, nX, this->dim_X()
     );
 
     // -------------------
     R.lambda = getVectorPointer( arg_in_9, nL, fmt::format( "{} argument lambda_R", msg ) );
     UTILS_ASSERT(
       nL == this->dim_X(),
-      "|lambda_R| = {} expected to be {}\n", msg, nL, this->dim_X()
+      "{} |lambda_R| = {} expected to be {}\n",
+      msg, nL, this->dim_X()
     );
   }
 
@@ -1114,28 +1174,32 @@ public:
     N.i_segment = integer( getInt( arg_in_2, fmt::format( "{} i_segment", msg ) ) );
     UTILS_ASSERT(
       N.i_segment >= 0 && N.i_segment < this->num_segments(),
-      "iseg_L = {} expected to be in [0,{})\n", msg, N.i_segment, this->num_segments()
+      "{} iseg_L = {} expected to be in [0,{})\n",
+      msg, N.i_segment, this->num_segments()
     );
 
     // -------------------
     N.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q_M", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "|q_L| = {} expected to be {}\n", msg, nQ, this->dim_Q()
+      "{} |q_L| = {} expected to be {}\n[try to call eval_q]\n",
+      msg, nQ, this->dim_Q()
     );
 
     // -------------------
     N.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x_M", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "|x_L| = {} expected to be {}\n", msg, nX, this->dim_X()
+      "{} |x_L| = {} expected to be {}\n",
+      msg, nX, this->dim_X()
     );
 
     // -------------------
     N.lambda = getVectorPointer( arg_in_5, nL, fmt::format( "{} argument lambda_M", msg ) );
     UTILS_ASSERT(
       nL == this->dim_X(),
-      "|lambda_L| = {} expected to be {}\n", msg, nL, this->dim_X()
+      "{} |lambda_L| = {} expected to be {}\n",
+      msg, nL, this->dim_X()
     );
   }
 
@@ -1153,8 +1217,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('ac', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
 
-    CHECK_IN( 12 );
-    CHECK_OUT( 2 );
+    CHECK_IN_OUT( 12, 2 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -1186,8 +1249,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('DacDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U, DuDxlxlp ): "
 
-    CHECK_IN( 13 );
-    CHECK_OUT( 2 );
+    CHECK_IN_OUT( 13, 2 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -1235,8 +1297,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('hc', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
 
-    CHECK_IN( 12 );
-    CHECK_OUT( 2 );
+    CHECK_IN_OUT( 12, 2 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -1266,8 +1327,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('DhcDxlxlop', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
 
-    CHECK_IN( 12 );
-    CHECK_OUT( 2 );
+    CHECK_IN_OUT( 12, 2 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -1301,8 +1361,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('u', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
 
-    CHECK_IN( 11 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 11, 1 );
 
     mwSize nCOL;
     Mechatronix::U_solver & US = this->m_U_control_solver[0];
@@ -1336,8 +1395,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('DuDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
 
-    CHECK_IN( 11 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 11, 1 );
 
     mwSize nCOL;
     Mechatronix::U_solver & US = this->m_U_control_solver[0];
@@ -1377,21 +1435,24 @@ public:
     N.i_segment = integer( getInt( arg_in_2, fmt::format( "{} i_segment", msg ) ) );
     UTILS_ASSERT(
       N.i_segment >= 0 && N.i_segment < this->num_segments(),
-      "iseg_L = {} expected to be in [0,{})\n", msg, N.i_segment, this->num_segments()
+      "{} iseg_L = {} expected to be in [0,{})\n",
+      msg, N.i_segment, this->num_segments()
     );
 
     // -------------------
     N.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "|q_L| = {} expected to be {}\n", msg, nQ, this->dim_Q()
+      "{} |q_L| = {} expected to be {}\n",
+      msg, nQ, this->dim_Q()
     );
 
     // -------------------
     N.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "|x_L| = {} expected to be {}\n", msg, nX, this->dim_X()
+      "{} |x_L| = {} expected to be {}\n",
+      msg, nX, this->dim_X()
     );
   }
 
@@ -1408,8 +1469,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('rhs_ode', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1432,8 +1492,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Drhs_odeDx', i_seg, obj, q, x, u, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1454,8 +1513,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Drhs_odeDu', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1477,8 +1535,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Drhs_odeDp', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1505,8 +1562,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('A', obj, i_seg, q, x, pars ): "
 
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1532,8 +1588,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('eta', obj, i_seg, q, x, lambda, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1555,8 +1610,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DetaDx', obj, i_seg, q, x, lambda, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1577,8 +1631,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DetaDp', obj, i_seg, q, lambda, x, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1603,8 +1656,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('nu', obj, i_seg, q, x, V, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1627,8 +1679,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DnuDx', obj, i_seg, q, x, V, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1650,8 +1701,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DnuDp', obj, i_seg, q, x, V, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1684,8 +1734,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Hx', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1709,8 +1758,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHxDx', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1733,8 +1781,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHxDp', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
 
     NodeType2 N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1761,8 +1808,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Hu', obj, i_seg, q, x, lambda, u, pars ): "
 
-    CHECK_IN( 8 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 8, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1785,8 +1831,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHuDx', obj, i_seg, q, x, lambda, u, pars ): "
 
-    CHECK_IN( 8 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 8, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1808,8 +1853,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHuDp', obj, i_seg, q, x, lambda, u, pars ): "
 
-    CHECK_IN( 8 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 8, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1836,8 +1880,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Hp', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1861,8 +1904,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHpDp', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1901,42 +1943,48 @@ public:
     L.i_segment = integer( getInt( arg_in_2, fmt::format( "{} L_segment", msg ) ) );
     UTILS_ASSERT(
       L.i_segment >= 0 && L.i_segment < this->num_segments(),
-      "iseg_L = {} expected to be in [0,{})\n", msg, L.i_segment, this->num_segments()
+      "{} iseg_L = {} expected to be in [0,{})\n",
+      msg, L.i_segment, this->num_segments()
     );
 
     // -------------------
     L.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q_L", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "|q_L| = {} expected to be {}\n", msg, nQ, this->dim_Q()
+      "{} |q_L| = {} expected to be {}\n",
+      msg, nQ, this->dim_Q()
     );
 
     // -------------------
     L.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x_L", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "|x_L| = {} expected to be {}\n", msg, nX, this->dim_X()
+      "{} |x_L| = {} expected to be {}\n",
+      msg, nX, this->dim_X()
     );
 
     // -------------------
     R.i_segment = integer( getInt( arg_in_5, fmt::format( "{} R_segment", msg ) ) );
     UTILS_ASSERT(
       R.i_segment >= 0 && R.i_segment < this->num_segments(),
-      "iseg_R = {} expected to be in [0,{})\n", msg, R.i_segment, this->num_segments()
+      "{} iseg_R = {} expected to be in [0,{})\n",
+      msg, R.i_segment, this->num_segments()
     );
 
     // -------------------
     R.q = getVectorPointer( arg_in_6, nQ, fmt::format( "{} argument q_R", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "|q_R| = {} expected to be {}\n", msg, nQ, this->dim_Q()
+      "{} |q_R| = {} expected to be {}\n",
+      msg, nQ, this->dim_Q()
     );
 
     // -------------------
     R.x = getVectorPointer( arg_in_7, nX, fmt::format( "{} argument x_R", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "|x_R| = {} expected to be {}\n", msg, nX, this->dim_X()
+      "{} |x_R| = {} expected to be {}\n",
+      msg, nX, this->dim_X()
     );
   }
 
@@ -1950,14 +1998,13 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('boundaryConditions', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
 
     NodeType L, R;
     get_LR( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_8 );
 
-    real_type * bc = createMatrixValue( arg_out_0, 2*this->dim_X(), 1 );
+    real_type * bc = createMatrixValue( arg_out_0, this->dim_BC(), 1 );
 
     this->boundaryConditions_eval( L, R, P, bc );
 
@@ -1973,8 +2020,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DboundaryConditionsDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
 
     NodeType L, R;
     get_LR( CMD, nrhs, prhs, L, R );
@@ -2000,8 +2046,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('adjointBC', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ): "
 
-    CHECK_IN( 12 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 12, 1 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -2030,8 +2075,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('DadjointBCDxxp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ): "
 
-    CHECK_IN( 12 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 12, 1 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -2058,8 +2102,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('jump', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
 
-    CHECK_IN( 11 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 11, 1 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -2086,8 +2129,7 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('DjumpDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
 
-    CHECK_IN( 11 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 11, 1 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -2112,8 +2154,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('penalties', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -2135,8 +2176,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('control_penalties', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -2164,8 +2204,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('lagrange_target', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -2181,14 +2220,37 @@ public:
   // --------------------------------------------------------------------------
 
   void
+  do_DlagrangeDxup(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('DlagrangeDxup', obj, iseg, q, x, u, pars ): "
+
+    CHECK_IN_OUT( 7, 1 );
+
+    NodeType N;
+    get_qx( CMD, nrhs, prhs, N );
+
+    GET_ARG_U( arg_in_5 );
+    GET_ARG_P( arg_in_6 );
+
+    // Gradient is a row vector
+    real_type * res = createMatrixValue( arg_out_0, 1, this->DlagrangeDxup_numEqns() );
+    this->DlagrangeDxup_eval( N, U, P , res );
+
+    #undef CMD
+  }
+
+  // --------------------------------------------------------------------------
+
+  void
   do_mayer_target(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('mayer_target', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
 
     NodeType L, R;
     get_LR( CMD, nrhs, prhs, L, R );
@@ -2202,20 +2264,42 @@ public:
   // --------------------------------------------------------------------------
 
   void
+  do_DmayerDxxp(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('DmayerDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+
+    CHECK_IN_OUT( 9, 1 );
+
+    NodeType L, R;
+    get_LR( CMD, nrhs, prhs, L, R );
+    GET_ARG_P( arg_in_8 );
+
+    // Gradient is a row vector
+    real_type * res = createMatrixValue( arg_out_0, 1, this->DmayerDxxp_numEqns() );
+    this->DmayerDxxp_eval( L, R, P , res );
+
+    #undef CMD
+  }
+
+  // --------------------------------------------------------------------------
+
+  void
   do_q(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('q', obj, i_segment, s ): "
 
-    CHECK_IN( 4 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
 
     // -------------------
     integer i_segment = integer( getInt( arg_in_2, fmt::format( "{} i_segment", CMD ) ) );
     UTILS_ASSERT(
       i_segment >= 0 && i_segment < this->num_segments(),
-      "i_segment = {} expected to be in [0,{})\n", CMD, i_segment, this->num_segments()
+      CMD "i_segment = {} expected to be in [0,{})\n",
+      i_segment, this->num_segments()
     );
 
     // -------------------
@@ -2235,8 +2319,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('nodes', obj ): "
 
-    CHECK_IN( 2 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 2, 1 );
 
     integer n = m_mesh_base->num_nodes();
     real_type * nodes = createMatrixValue( arg_out_0, n, 1 );
@@ -2255,8 +2338,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('node_to_segment', obj ): "
 
-    CHECK_IN( 2 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 2, 1 );
 
     integer n = m_mesh_base->num_nodes();
     int32_t * node_to_segment = createMatrixInt32( arg_out_0, n, 1 );
@@ -2280,8 +2362,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('cont', obj, xo__s, xo__eps0, xo__eps1 ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__s" );
     mwSize N1, M1;
@@ -2303,8 +2384,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2338,8 +2418,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2373,8 +2452,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2408,8 +2486,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2443,8 +2520,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2478,8 +2554,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2513,8 +2588,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2548,8 +2622,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2583,8 +2656,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_1_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2618,8 +2690,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_1_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2653,8 +2724,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_1_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2688,8 +2758,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_1_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2723,8 +2792,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_1_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2758,8 +2826,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_1_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2793,8 +2860,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_1_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2828,8 +2894,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_2_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2863,8 +2928,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_2_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2898,8 +2962,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_2_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2933,8 +2996,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_2_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -2968,8 +3030,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_2_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3003,8 +3064,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_2_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3038,8 +3098,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_3_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3073,8 +3132,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_3_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3108,8 +3166,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_3_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3143,8 +3200,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_3_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3178,8 +3234,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_3_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3213,8 +3268,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_4_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3248,8 +3302,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_4_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3283,8 +3336,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_4_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3318,8 +3370,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_4_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3353,8 +3404,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_5_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3388,8 +3438,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_5_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3423,8 +3472,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_5_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3458,8 +3506,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_6_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3493,8 +3540,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_6_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3528,8 +3574,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_position_D_7_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3563,8 +3608,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3598,8 +3642,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3633,8 +3676,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3668,8 +3710,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3703,8 +3744,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3738,8 +3778,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3773,8 +3812,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3808,8 +3846,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3843,8 +3880,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_1_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3878,8 +3914,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_1_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3913,8 +3948,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_1_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3948,8 +3982,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_1_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -3983,8 +4016,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_1_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4018,8 +4050,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_1_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4053,8 +4084,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_1_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4088,8 +4118,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_2_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4123,8 +4152,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_2_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4158,8 +4186,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_2_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4193,8 +4220,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_2_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4228,8 +4254,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_2_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4263,8 +4288,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_2_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4298,8 +4322,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_3_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4333,8 +4356,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_3_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4368,8 +4390,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_3_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4403,8 +4424,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_3_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4438,8 +4458,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_3_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4473,8 +4492,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_4_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4508,8 +4526,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_4_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4543,8 +4560,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_4_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4578,8 +4594,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_4_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4613,8 +4628,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_5_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4648,8 +4662,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_5_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4683,8 +4696,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_5_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4718,8 +4730,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_6_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4753,8 +4764,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_6_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4788,8 +4798,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_position_D_7_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4823,8 +4832,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4858,8 +4866,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4893,8 +4900,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4928,8 +4934,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4963,8 +4968,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -4998,8 +5002,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5033,8 +5036,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5068,8 +5070,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5103,8 +5104,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_1_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5138,8 +5138,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_1_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5173,8 +5172,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_1_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5208,8 +5206,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_1_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5243,8 +5240,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_1_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5278,8 +5274,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_1_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5313,8 +5308,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_1_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5348,8 +5342,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_2_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5383,8 +5376,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_2_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5418,8 +5410,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_2_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5453,8 +5444,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_2_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5488,8 +5478,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_2_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5523,8 +5512,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_2_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5558,8 +5546,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_3_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5593,8 +5580,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_3_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5628,8 +5614,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_3_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5663,8 +5648,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_3_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5698,8 +5682,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_3_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5733,8 +5716,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_4_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5768,8 +5750,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_4_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5803,8 +5784,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_4_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5838,8 +5818,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_4_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5873,8 +5852,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_5_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5908,8 +5886,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_5_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5943,8 +5920,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_5_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -5978,8 +5954,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_6_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6013,8 +5988,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_6_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6048,8 +6022,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_position_D_7_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6083,8 +6056,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6118,8 +6090,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6153,8 +6124,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6188,8 +6158,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6223,8 +6192,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6258,8 +6226,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6293,8 +6260,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6328,8 +6294,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6363,8 +6328,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_1_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6398,8 +6362,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_1_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6433,8 +6396,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_1_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6468,8 +6430,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_1_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6503,8 +6464,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_1_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6538,8 +6498,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_1_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6573,8 +6532,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_1_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6608,8 +6566,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_2_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6643,8 +6600,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_2_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6678,8 +6634,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_2_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6713,8 +6668,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_2_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6748,8 +6702,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_2_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6783,8 +6736,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_2_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6818,8 +6770,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_3_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6853,8 +6804,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_3_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6888,8 +6838,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_3_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6923,8 +6872,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_3_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6958,8 +6906,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_3_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -6993,8 +6940,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_4_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7028,8 +6974,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_4_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7063,8 +7008,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_4_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7098,8 +7042,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_4_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7133,8 +7076,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_5_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7168,8 +7110,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_5_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7203,8 +7144,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_5_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7238,8 +7178,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_6_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7273,8 +7212,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_6_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7308,8 +7246,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('x_velocity_D_7_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7343,8 +7280,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7378,8 +7314,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7413,8 +7348,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7448,8 +7382,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7483,8 +7416,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7518,8 +7450,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7553,8 +7484,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7588,8 +7518,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7623,8 +7552,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_1_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7658,8 +7586,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_1_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7693,8 +7620,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_1_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7728,8 +7654,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_1_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7763,8 +7688,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_1_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7798,8 +7722,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_1_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7833,8 +7756,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_1_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7868,8 +7790,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_2_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7903,8 +7824,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_2_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7938,8 +7858,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_2_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -7973,8 +7892,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_2_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8008,8 +7926,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_2_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8043,8 +7960,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_2_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8078,8 +7994,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_3_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8113,8 +8028,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_3_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8148,8 +8062,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_3_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8183,8 +8096,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_3_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8218,8 +8130,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_3_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8253,8 +8164,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_4_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8288,8 +8198,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_4_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8323,8 +8232,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_4_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8358,8 +8266,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_4_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8393,8 +8300,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_5_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8428,8 +8334,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_5_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8463,8 +8368,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_5_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8498,8 +8402,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_6_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8533,8 +8436,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_6_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8568,8 +8470,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('y_velocity_D_7_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8603,8 +8504,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8638,8 +8538,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8673,8 +8572,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8708,8 +8606,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8743,8 +8640,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8778,8 +8674,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8813,8 +8708,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8848,8 +8742,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8883,8 +8776,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_1_1', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8918,8 +8810,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_1_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8953,8 +8844,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_1_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -8988,8 +8878,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_1_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9023,8 +8912,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_1_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9058,8 +8946,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_1_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9093,8 +8980,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_1_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9128,8 +9014,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_2_2', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9163,8 +9048,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_2_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9198,8 +9082,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_2_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9233,8 +9116,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_2_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9268,8 +9150,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_2_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9303,8 +9184,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_2_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9338,8 +9218,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_3_3', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9373,8 +9252,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_3_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9408,8 +9286,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_3_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9443,8 +9320,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_3_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9478,8 +9354,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_3_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9513,8 +9388,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_4_4', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9548,8 +9422,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_4_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9583,8 +9456,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_4_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9618,8 +9490,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_4_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9653,8 +9524,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_5_5', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9688,8 +9558,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_5_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9723,8 +9592,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_5_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9758,8 +9626,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_6_6', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9793,8 +9660,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_6_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9828,8 +9694,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('z_velocity_D_7_7', obj, xo__p, xo__f, xo__g, xo__h, xo__k, xo__L, xo__retrograde ): "
-    CHECK_IN( 9 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 9, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -9863,8 +9728,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -9886,8 +9750,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg_D_1', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -9909,8 +9772,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg_D_2', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -9932,8 +9794,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg_D_3', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -9955,8 +9816,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg_D_1_1', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -9978,8 +9838,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg_D_1_2', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -10001,8 +9860,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg_D_1_3', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -10024,8 +9882,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg_D_2_2', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -10047,8 +9904,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg_D_2_3', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -10070,8 +9926,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('norm_reg_D_3_3', obj, xo__x, xo__y, xo__z ): "
-    CHECK_IN( 5 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 5, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
     mwSize N1, M1;
@@ -10093,8 +9948,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10119,8 +9973,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_1', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10145,8 +9998,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_2', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10171,8 +10023,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_3', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10197,8 +10048,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_4', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10223,8 +10073,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_1_1', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10249,8 +10098,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_1_2', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10275,8 +10123,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_1_3', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10301,8 +10148,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_1_4', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10327,8 +10173,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_2_2', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10353,8 +10198,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_2_3', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10379,8 +10223,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_2_4', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10405,8 +10248,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_3_3', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10431,8 +10273,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_3_4', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10457,8 +10298,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('ray_D_4_4', obj, xo__p, xo__f, xo__g, xo__L ): "
-    CHECK_IN( 6 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 6, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10483,8 +10323,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10512,8 +10351,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_1', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10541,8 +10379,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_2', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10570,8 +10407,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_3', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10599,8 +10435,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_4', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10628,8 +10463,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_5', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10657,8 +10491,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_1_1', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10686,8 +10519,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_1_2', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10715,8 +10547,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_1_3', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10744,8 +10575,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_1_4', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10773,8 +10603,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_1_5', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10802,8 +10631,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_2_2', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10831,8 +10659,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_2_3', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10860,8 +10687,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_2_4', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10889,8 +10715,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_2_5', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10918,8 +10743,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_3_3', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10947,8 +10771,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_3_4', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -10976,8 +10799,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_3_5', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -11005,8 +10827,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_4_4', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -11034,8 +10855,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_4_5', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -11063,8 +10883,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vel_D_5_5', obj, xo__p, xo__f, xo__g, xo__L, xo__muS ): "
-    CHECK_IN( 7 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 7, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__p" );
     mwSize N1, M1;
@@ -11092,8 +10911,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vc', obj, xo__r ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__r" );
 
@@ -11109,8 +10927,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vc_D', obj, xo__r ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__r" );
 
@@ -11125,8 +10942,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('vc_DD', obj, xo__r ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__r" );
 
@@ -11142,8 +10958,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('acceleration_r', obj, xo__r, xo__muS ): "
-    CHECK_IN( 4 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__r" );
     mwSize N1, M1;
@@ -11162,8 +10977,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('acceleration_r_D_1', obj, xo__r, xo__muS ): "
-    CHECK_IN( 4 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__r" );
     mwSize N1, M1;
@@ -11182,8 +10996,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('acceleration_r_D_2', obj, xo__r, xo__muS ): "
-    CHECK_IN( 4 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__r" );
     mwSize N1, M1;
@@ -11202,8 +11015,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('acceleration_r_D_1_1', obj, xo__r, xo__muS ): "
-    CHECK_IN( 4 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__r" );
     mwSize N1, M1;
@@ -11222,8 +11034,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('acceleration_r_D_1_2', obj, xo__r, xo__muS ): "
-    CHECK_IN( 4 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__r" );
     mwSize N1, M1;
@@ -11242,8 +11053,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('acceleration_r_D_2_2', obj, xo__r, xo__muS ): "
-    CHECK_IN( 4 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__r" );
     mwSize N1, M1;
@@ -11262,8 +11072,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('X_begin', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11279,8 +11088,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('X_begin_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11295,8 +11103,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('X_begin_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11312,8 +11119,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Y_begin', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11329,8 +11135,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Y_begin_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11345,8 +11150,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Y_begin_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11362,8 +11166,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Z_begin', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11379,8 +11182,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Z_begin_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11395,8 +11197,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Z_begin_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11412,8 +11213,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VX_begin', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11429,8 +11229,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VX_begin_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11445,8 +11244,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VX_begin_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11462,8 +11260,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VY_begin', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11479,8 +11276,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VY_begin_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11495,8 +11291,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VY_begin_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11512,8 +11307,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VZ_begin', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11529,8 +11323,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VZ_begin_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11545,8 +11338,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VZ_begin_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11562,8 +11354,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('X_end', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11579,8 +11370,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('X_end_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11595,8 +11385,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('X_end_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11612,8 +11401,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Y_end', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11629,8 +11417,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Y_end_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11645,8 +11432,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Y_end_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11662,8 +11448,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Z_end', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11679,8 +11464,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Z_end_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11695,8 +11479,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('Z_end_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11712,8 +11495,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VX_end', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11729,8 +11511,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VX_end_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11745,8 +11526,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VX_end_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11762,8 +11542,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VY_end', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11779,8 +11558,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VY_end_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11795,8 +11573,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VY_end_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11812,8 +11589,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VZ_end', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11829,8 +11605,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VZ_end_D', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11845,8 +11620,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('VZ_end_DD', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11862,8 +11636,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('p_guess', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11879,8 +11652,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('f_guess', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11896,8 +11668,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('g_guess', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11913,8 +11684,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('h_guess', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11930,8 +11700,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('k_guess', obj, xo__t ): "
-    CHECK_IN( 3 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 3, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
 
@@ -11947,8 +11716,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('L_guess', obj, xo__t, xo__t0 ): "
-    CHECK_IN( 4 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 4, 1 );
     mwSize N0, M0;
     real_type const * arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
     mwSize N1, M1;
@@ -11967,8 +11735,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('guess_setup', obj,  ): "
-    CHECK_IN( 2 );
-    CHECK_OUT( 1 );
+    CHECK_IN_OUT( 2, 1 );
 
     real_type * res = createMatrixValue( arg_out_0, N0, M0 );
     for ( mwSize ii = 0; ii < N0*M0; ++ii )
@@ -12004,8 +11771,7 @@ do_new(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD MODEL_NAME "_Mex('new',name): "
-  CHECK_IN(2);
-  CHECK_OUT(1);
+  CHECK_IN_OUT( 2, 1 );
   MEX_ASSERT( mxIsChar(arg_in_1), CMD "second argument must be a string" );
   ProblemStorage * ptr = new ProblemStorage( mxArrayToString(arg_in_1), pTP, pConsole );
   arg_out_0 = convertPtr2Mat<ProblemStorage>(ptr);
@@ -12027,8 +11793,7 @@ do_help(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD MODEL_NAME "_Mex('help'): "
-  CHECK_IN(1);
-  CHECK_OUT(0);
+  CHECK_IN_OUT( 1, 0 );
   mexPrintf( "%s", help_msg );
   #undef CMD
 }
@@ -12046,8 +11811,7 @@ do_infoLevel(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD MODEL_NAME "_Mex('infoLevel',obj,infoL): "
-  CHECK_IN( 3 );
-  CHECK_OUT( 0 );
+  CHECK_IN_OUT( 3, 0 );
   int64_t ilev = getInt( arg_in_2, CMD " infoL" );
   pConsole->changeLevel( ilev );
   #undef CMD
@@ -12067,8 +11831,7 @@ do_set_max_threads(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD MODEL_NAME "_Mex('set_max_threads',obj,nt): "
-  CHECK_IN( 3 );
-  CHECK_OUT( 0 );
+  CHECK_IN_OUT( 3, 0 );
   int64_t N_threads = getInt( arg_in_2, CMD " nt" );
   convertMat2Ptr<ProblemStorage>(arg_in_1)->
     set_N_threads( Mechatronix::num_threads_bound( N_threads ) );
@@ -12088,8 +11851,7 @@ do_delete(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD MODEL_NAME "_Mex('delete',obj): "
-  CHECK_IN(2);
-  CHECK_OUT(0);
+  CHECK_IN_OUT( 2, 0 );
   destroyObject<ProblemStorage>( arg_in_1 );
   #undef CMD
 }
@@ -12936,6 +12698,20 @@ do_lagrange_target(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
+do_DlagrangeDxup(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('DlagrangeDxup',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DlagrangeDxup( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
 do_mayer_target(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
@@ -12945,6 +12721,20 @@ do_mayer_target(
     MODEL_NAME "_Mex('mayer_target',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
   convertMat2Ptr<ProblemStorage>(arg_in_1)->do_mayer_target( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_DmayerDxxp(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('DmayerDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DmayerDxxp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -17460,7 +17250,9 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"penalties",do_penalties},
   {"control_penalties",do_control_penalties},
   {"lagrange_target",do_lagrange_target},
+  {"DlagrangeDxup",do_DlagrangeDxup},
   {"mayer_target",do_mayer_target},
+  {"DmayerDxxp",do_DmayerDxxp},
   {"q",do_q},
   {"nodes",do_nodes},
   {"node_to_segment",do_node_to_segment},

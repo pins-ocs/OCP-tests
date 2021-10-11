@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars.hh                                            |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -142,6 +142,7 @@ namespace gtocX_2burn_parsDefine {
     using Mechatronix::Discretized_Indirect_OCP::dim_Pars;
     using Mechatronix::Discretized_Indirect_OCP::dim_Omega;
     using Mechatronix::Discretized_Indirect_OCP::dim_BC;
+    using Mechatronix::Discretized_Indirect_OCP::dim_full_BC;
     using Mechatronix::Discretized_Indirect_OCP::num_nodes;
 
     using Mechatronix::Discretized_Indirect_OCP::num_equations;

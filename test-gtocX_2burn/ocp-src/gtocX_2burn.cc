@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -197,6 +197,7 @@ namespace gtocX_2burnDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 

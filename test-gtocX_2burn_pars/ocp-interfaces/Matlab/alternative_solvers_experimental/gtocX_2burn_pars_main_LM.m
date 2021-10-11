@@ -1,5 +1,5 @@
 %-----------------------------------------------------------------------%
-%  file: gtocX_2burn_fsolve_main.m                                      %
+%  file: gtocX_2burn_pars_fsolve_main.m                                 %
 %                                                                       %
 %  version: 1.0   date 12/10/2021                                       %
 %                                                                       %
@@ -23,48 +23,33 @@ addpath('../../../../nlsys_solver');
 % -------------------------------------------------------------------------
 clc;
 clear all;
-close all
+close all;
 figsize=[0,0,400,800];
 
 % create object
-infolevel  = 4;
-ocp = gtocX_2burn( 'gtocX_2burn' );
-
-nlsys = @(x) nlsys_local(ocp,x);
-
+infolevel       = 4;
+do_minimization = false;
+ocp = gtocX_2burn_pars( 'gtocX_2burn_pars' );
 %ocp.help(); % print usage
 
 % -----------------------------------------------------------------------------
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
-% READ PROBLEM DATA-------------------------------------------------------------
-% model data from 'model' structure defined in the following m.file
-%ocp.setup(gtocX_2burn_data);
-%ocp.setup('../../data/gtocX_2burn_Data.lua');
-ocp.setup('../../data/gtocX_2burn_Data.rb');
+ocp.setup('../../data/gtocX_2burn_pars_Data.rb');
 ocp.infoLevel(infolevel);
 ocp.set_guess(); % use default guess
+%ocp.update_continuation(0,0,1);
 
-algo = { 'trust-region-dogleg', 'trust-region', 'levenberg-marquardt' };
+[xinit,uimit] = ocp.get_raw_solution();
+lm    = LevenbergMarquardt();
+fun   = @(x) ocp.eval_F(x,ocp.eval_U(x,ocp.init_U(x,do_minimization)));
+jac   = @(x) ocp.eval_JF(x,ocp.eval_U(x,ocp.init_U(x,do_minimization)));
+check = @(x) ocp.check_raw_solution(x);
 
-options = optimoptions(...
-  @fsolve,...
-  'Display','iter',...
-  'Algorithm',algo{1}, ...
-  'SpecifyObjectiveGradient',true, ...
-  'FunctionTolerance',1e-10, ...
-  'MaxIterations',1000,...
-  'OptimalityTolerance',1e-10, ...
-  'CheckGradients',false,...
-  'JacobPattern',ocp.eval_JF_pattern(), ...
-  'FiniteDifferenceType','central', ...
-  'FiniteDifferenceStepSize',eps^(1/3.5) ...
-);
+[x,ierr] = lm.solve( xinit, fun, jac, check );
 
-[x0,u0] = ocp.get_raw_solution();
-x       = fsolve( nlsys, x0, options );
+ierr
 
-do_minimization = false;
 u = ocp.eval_U(x,ocp.init_U(x,do_minimization));
 ocp.set_raw_solution(x,u);
 
@@ -80,19 +65,3 @@ ocp.plot_multipliers();
 
 subplot(3,1,3);
 ocp.plot_controls();
-
-%%clear mex
-%[Z,U] = gtocX_2burn_Mex('get_raw_solution',obj);
-%J     = gtocX_2burn_Mex('eval_JF',obj,Z,U);
-%f     = gtocX_2burn_Mex('eval_F',obj,Z,U);
-
-function [F,JF] = nlsys_local( ocp, x )
-  do_minimization = false;
-  u_guess  = ocp.init_U(x,do_minimization);
-  u        = ocp.eval_U(x,u_guess);
-  [F,ok1]  = ocp.eval_F(x,u);
-  [JF,ok2] = ocp.eval_JF(x,u);
-  if ~(ok1&&ok2)
-    F = NaN*ones(size(F));
-  end
-end

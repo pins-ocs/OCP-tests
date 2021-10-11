@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: gtocX_2burn_pins_run.rb                                        #
 #                                                                       #
-#  version: 1.0   date 5/7/2021                                         #
+#  version: 1.0   date 12/10/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -30,7 +30,6 @@ if ! File.exist?(problem_lib) ||
      ARGV.include?('-main')  then
   require "build"
   compiler = MXBuilder.new(problem_name)
-  compiler.add_framework('MechatronixAstro')
   compiler.build
   compiler.standalone if ARGV.include?('-main')
   exit if ARGV.include?('-b')

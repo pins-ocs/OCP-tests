@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 12/10/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -592,7 +592,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t227 = x_position_D_1_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t229 = y_position_D_1_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t231 = z_position_D_1_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 44  ] = t221 * t1 + t227 * t101 + t229 * t107 + t223 * t11 + t231 * t110 + t225 * t14;
+    result__[ 44  ] = t1 * t221 + t101 * t227 + t107 * t229 + t11 * t223 + t110 * t231 + t14 * t225;
     result__[ 45  ] = result__[4];
     result__[ 46  ] = result__[10];
     result__[ 47  ] = result__[16];
@@ -606,14 +606,14 @@ namespace gtocX_2burn_parsDefine {
     real_type t239 = x_position_D_4_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t241 = y_position_D_4_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t243 = z_position_D_4_4(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 52  ] = t233 * t1 + t239 * t101 + t241 * t107 + t235 * t11 + t243 * t110 + t237 * t14;
+    result__[ 52  ] = t1 * t233 + t101 * t239 + t107 * t241 + t11 * t235 + t110 * t243 + t14 * t237;
     real_type t245 = x_position_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t247 = y_position_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t249 = z_position_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t251 = x_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t253 = y_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t255 = z_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 53  ] = t245 * t1 + t251 * t101 + t253 * t107 + t247 * t11 + t255 * t110 + t249 * t14;
+    result__[ 53  ] = t1 * t245 + t101 * t251 + t107 * t253 + t11 * t247 + t110 * t255 + t14 * t249;
     result__[ 54  ] = result__[5];
     result__[ 55  ] = result__[11];
     result__[ 56  ] = result__[17];
@@ -628,7 +628,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t263 = x_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t265 = y_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t267 = z_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 62  ] = t257 * t1 + t263 * t101 + t265 * t107 + t259 * t11 + t267 * t110 + t261 * t14;
+    result__[ 62  ] = t1 * t257 + t101 * t263 + t107 * t265 + t11 * t259 + t110 * t267 + t14 * t261;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 63, i_segment_left, i_segment_right );
   }

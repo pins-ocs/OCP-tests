@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: gtocX_2burn_pars_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 5/7/2021                                         #
+#  version: 1.0   date 12/10/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-ray_epsi = 0.001
 ray_tol  = 0.001
+ray_epsi = 0.001
 
 mechatronix do |data|
 
@@ -190,8 +190,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 50,
+        :length => 1,
       },
     ],
   };
