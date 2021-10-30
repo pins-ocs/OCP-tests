@@ -28,31 +28,43 @@ addBoundaryConditions(
   final   = [ x=b ] # z=L must be set least squares in mayer term!
 );
 infoBoundaryConditions();
-setTarget(  lagrange = x(zeta)*sqrt(1+u(zeta)^2),  mayer    = (z(zeta_f)-L)^2 # BC z(1) = L);
+setTarget(
+  lagrange = x(zeta)*sqrt(1+u(zeta)^2),
+  mayer    = (z(zeta_f)-L)^2 # BC z(1) = L
+);
 PARS := [
   a  = 1,
   b  = 3,
-  u0 = b-a,  L0 = sqrt(1+u0^2),
+  u0 = b-a,
+  L0 = sqrt(1+u0^2),
   L1 = 4,
-  L  = L0];
+  L  = L0
+];
 GUESS := [
   x = a+zeta*(b-a),
   z = zeta*L
 ];
-CONT := [  [ L = L0*(1-s)+L1*s ]];
+CONT := [
+  [ L = L0*(1-s)+L1*s ]
+];
 #addUserFunction(x_guess(x));
 #Describe(generateOCProblem);
 generateOCProblem(
   "HangingChain", clean=true,
-  simplifyExpression = true,  parameters         = PARS,
+  parameters         = PARS,
   mesh               = [ length=1, n=400 ],
   controls_guess     = [ u=2*u0 ],
-  controls_iterative = true,  continuation       = CONT,  states_guess       = GUESS
+  controls_iterative = true,
+  continuation       = CONT,
+  states_guess       = GUESS
 );
 #res := XOptima:-getOCProblem();
 #indices(res);
 #eval(res["controls"]);
-#gg := subs(u(zeta)=u,#           x(zeta)=x,#           lambda1__xo(zeta)=lambda1,#           lambda2__xo(zeta)=lambda2,
+#gg := subs(u(zeta)=u,
+#           x(zeta)=x,
+#           lambda1__xo(zeta)=lambda1,
+#           lambda2__xo(zeta)=lambda2,
 #           res["controls"]["g"][1]);
 #solve( sqrt(u^2+1)=z, {u} ) ;
 #Dgg := simplify(diff(gg,u));
