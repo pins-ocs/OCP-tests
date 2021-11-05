@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train.hh                                                       |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 5/11/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -26,6 +26,9 @@
 // User Headers
 #include <MechatronixCore/MechatronixCore.hh>
 
+
+// User Header (begin)
+// User Header (end)
 
 #ifdef MECHATRONIX_OS_WINDOWS
   #ifndef TRAIN_API_DLL
@@ -57,6 +60,9 @@ namespace TrainDefine {
   // user class in namespaces
   using Mechatronix::MeshStd;
 
+
+  // User Namespaces (begin)
+  // User Namespaces (end)
 
   extern char const *namesBc[];
   extern char const *namesXvars[];
@@ -123,7 +129,7 @@ namespace TrainDefine {
     Train const & operator = ( Train const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
-    void continuationStep0( real_type s );
+    void continuation_step_0( real_type s );
 
   public:
 
@@ -142,6 +148,7 @@ namespace TrainDefine {
     using Mechatronix::Discretized_Indirect_OCP::dim_Pars;
     using Mechatronix::Discretized_Indirect_OCP::dim_Omega;
     using Mechatronix::Discretized_Indirect_OCP::dim_BC;
+    using Mechatronix::Discretized_Indirect_OCP::dim_full_BC;
     using Mechatronix::Discretized_Indirect_OCP::num_nodes;
 
     using Mechatronix::Discretized_Indirect_OCP::num_equations;
@@ -166,60 +173,62 @@ namespace TrainDefine {
       Console const * console
     );
 
-    TRAIN_API_DLL virtual
     ~Train() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    TRAIN_API_DLL virtual
+    // Begin: User Definitions
+    // End: User Definitions
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     char const * model_name() const override
     { return "Train"; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     TRAIN_API_DLL
     void
-    infoClasses() const;
+    info_classes() const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // C++ initializer (raccolti in setup( gc ))
     TRAIN_API_DLL
     void
-    setupParameters( GenericContainer const & gc );
+    setup_parameters( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     TRAIN_API_DLL
     void
-    setupParameters( real_type const Pars[] );
+    setup_parameters( real_type const Pars[] );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     TRAIN_API_DLL
     void
-    updateParameter( real_type val, integer idx )
+    update_parameter( real_type val, integer idx )
     { ModelPars[idx] = val; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     TRAIN_API_DLL
     void
-    setupClasses( GenericContainer const & gc );
+    setup_classes( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     TRAIN_API_DLL
     void
-    setupUserClasses( GenericContainer const & gc );
+    setup_user_classes( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     TRAIN_API_DLL
     void
-    setupUserMappedFunctions( GenericContainer const & gc );
+    setup_user_mapped_functions( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     TRAIN_API_DLL
     void
-    setupControls( GenericContainer const & gc );
+    setup_controls( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     TRAIN_API_DLL
     void
-    setupPointers( GenericContainer const & gc );
+    setup_pointers( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
@@ -257,7 +266,6 @@ namespace TrainDefine {
     ) override;
 
     // save model parameters
-    TRAIN_API_DLL virtual
     void
     save_OCP_info( GenericContainer & gc ) const override;
 

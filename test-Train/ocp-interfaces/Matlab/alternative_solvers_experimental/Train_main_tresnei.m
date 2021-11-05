@@ -23,48 +23,34 @@ addpath('../../../../nlsys_solver');
 % -------------------------------------------------------------------------
 clc;
 clear all;
-close all
+close all;
 figsize=[0,0,400,800];
 
 % create object
-infolevel  = 4;
+infolevel       = 4;
+do_minimization = false;
 ocp = Train( 'Train' );
-
-nlsys = @(x) nlsys_local(ocp,x);
-
 %ocp.help(); % print usage
 
 % -----------------------------------------------------------------------------
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
-% READ PROBLEM DATA-------------------------------------------------------------
-% model data from 'model' structure defined in the following m.file
-%ocp.setup(Train_data);
-%ocp.setup('../../data/Train_Data.lua');
 ocp.setup('../../data/Train_Data.rb');
 ocp.infoLevel(infolevel);
 ocp.set_guess(); % use default guess
+%ocp.update_continuation(0,0,1);
 
-algo = { 'trust-region-dogleg', 'trust-region', 'levenberg-marquardt' };
+[xinit,uimit] = ocp.get_raw_solution();
 
-options = optimoptions(...
-  @fsolve,...
-  'Display','iter',...
-  'Algorithm',algo{1}, ...
-  'SpecifyObjectiveGradient',true, ...
-  'FunctionTolerance',1e-10, ...
-  'MaxIterations',1000,...
-  'OptimalityTolerance',1e-10, ...
-  'CheckGradients',false,...
-  'JacobPattern',ocp.eval_JF_pattern(), ...
-  'FiniteDifferenceType','central', ...
-  'FiniteDifferenceStepSize',eps^(1/3.5) ...
-);
+LU = 1.e20*ones(size(xinit));
 
-[x0,u0] = ocp.get_raw_solution();
-x       = fsolve( nlsys, x0, options );
+options          = TRESNEI();
+options.output   = 1;
+options.jacobian = 'on';
+[x,ierr,output]  = TRESNEI(xinit,[length(xinit),0],@nlsys_local,-LU,LU,options,ocp);
 
-do_minimization = false;
+ierr
+
 u = ocp.eval_U(x,ocp.init_U(x,do_minimization));
 ocp.set_raw_solution(x,u);
 
@@ -81,12 +67,11 @@ ocp.plot_multipliers();
 subplot(3,1,3);
 ocp.plot_controls();
 
-%%clear mex
-%[Z,U] = Train_Mex('get_raw_solution',obj);
-%J     = Train_Mex('eval_JF',obj,Z,U);
-%f     = Train_Mex('eval_F',obj,Z,U);
+% -------------------------------------------------------------------------
+% LOCAL SYSTEM
+% -------------------------------------------------------------------------
 
-function [F,JF] = nlsys_local( ocp, x )
+function [F,JF] = nlsys_local( x, ocp )
   do_minimization = false;
   u_guess  = ocp.init_U(x,do_minimization);
   u        = ocp.eval_U(x,u_guess);

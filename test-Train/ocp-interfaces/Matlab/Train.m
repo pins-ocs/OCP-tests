@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Train.m                                                        %
 %                                                                       %
-%  version: 1.0   date 5/7/2021                                         %
+%  version: 1.0   date 5/11/2021                                        %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -459,20 +459,20 @@ classdef Train < handle
       U = Train_Mex( 'eval_U', self.objectHandle, x, u_guess );
     end
     % ---------------------------------------------------------------------
-    function F = eval_F( self, x, u )
+    function [F,ok] = eval_F( self, x, u )
       %
       % Return the nonlinear system of the indirect
       % methods evaluated at `x` and `u`.
       %
-      F = Train_Mex( 'eval_F', self.objectHandle, x, u );
+      [F,ok] = Train_Mex( 'eval_F', self.objectHandle, x, u );
     end
     % ---------------------------------------------------------------------
-    function JF = eval_JF( self, x, u )
+    function [JF,ok] = eval_JF( self, x, u )
       %
       % Return the jacobian of the nonlinear system 
       % of the indirect methods evaluated ad `x` and `u`.
       %
-      JF = Train_Mex( 'eval_JF', self.objectHandle, x, u );
+      [JF,ok] = Train_Mex( 'eval_JF', self.objectHandle, x, u );
     end
     % ---------------------------------------------------------------------
     function JF = eval_JF_pattern( self )
@@ -831,15 +831,15 @@ classdef Train < handle
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_penalties( self, iseg, q, x, lambda, u, pars )
+    function J = eval_penalties( self, iseg, q, x, u, pars )
       J = Train_Mex( ...
-        'penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
+        'penalties', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_control_penalties( self, iseg, q, x, lambda, u, pars )
+    function J = eval_control_penalties( self, iseg, q, x, u, pars )
       J = Train_Mex( ...
-        'control_penalties', self.objectHandle, iseg, q, x, lambda, u, pars ...
+        'control_penalties', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
@@ -849,17 +849,32 @@ classdef Train < handle
       );
     end
     % ---------------------------------------------------------------------
+    function DlagrangeDxup = eval_DlagrangeDxup( self, iseg, q, x, u, pars )
+      DlagrangeDxup = Train_Mex( ...
+        'DlagrangeDxup', self.objectHandle, iseg, q, x, u, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
     function target = eval_mayer_target( self, iseg_L, q_L, x_L, ...
                                                iseg_R, q_R, x_R, ...
-                                               u, pars )
+                                               pars )
       target = Train_Mex( ...
         'mayer_target', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, u, pars ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function DmayerDxxp = eval_DmayerDxxp( self, iseg_L, q_L, x_L, ...
+                                                 iseg_R, q_R, x_R, ...
+                                                 pars )
+      DmayerDxxp = Train_Mex( ...
+        'DmayerDxxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
     % ---------------------------------------------------------------------
     function target = eval_q( self, i_segment, s )
-      target = Train_Mex( 'q', self.objectHandle, i_segment, s );
+      target = Train_Mex( 'mesh_functions', self.objectHandle, i_segment, s );
     end
     % ---------------------------------------------------------------------
     function nodes = get_nodes( self )

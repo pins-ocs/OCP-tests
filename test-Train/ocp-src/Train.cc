@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train.cc                                                       |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 5/11/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "Train.hh"
 #include "Train_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -159,7 +157,7 @@ namespace TrainDefine {
     this->ns_continuation_begin = 0;
     this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
+    std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setup_names(
@@ -178,10 +176,13 @@ namespace TrainDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   Train::~Train() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -213,7 +214,7 @@ namespace TrainDefine {
       phase, old_s, s
     );
     switch ( phase ) {
-      case 0: continuationStep0( s ); break;
+      case 0: continuation_step_0( s ); break;
       default:
         UTILS_ERROR(
           "Train::update_continuation( phase number={}, old_s={}, s={} )"
@@ -233,10 +234,10 @@ namespace TrainDefine {
   // initialize parameters using associative array
   */
   void
-  Train::setupParameters( GenericContainer const & gc_data ) {
+  Train::setup_parameters( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Parameters"),
-      "Train::setupParameters: Missing key `Parameters` in data\n"
+      "Train::setup_parameters: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Parameters");
 
@@ -256,7 +257,7 @@ namespace TrainDefine {
   }
 
   void
-  Train::setupParameters( real_type const Pars[] ) {
+  Train::setup_parameters( real_type const Pars[] ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -269,7 +270,7 @@ namespace TrainDefine {
   //                     |_|
   */
   void
-  Train::setupClasses( GenericContainer const & gc_data ) {
+  Train::setup_classes( GenericContainer const & gc_data ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -281,7 +282,7 @@ namespace TrainDefine {
   //                    |_|
   */
   void
-  Train::setupUserClasses( GenericContainer const & gc ) {
+  Train::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -297,7 +298,7 @@ namespace TrainDefine {
   //              |_|  |_|
   */
   void
-  Train::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  Train::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -308,11 +309,11 @@ namespace TrainDefine {
   //                     |_|
   */
   void
-  Train::setupControls( GenericContainer const & gc_data ) {
+  Train::setup_controls( GenericContainer const & gc_data ) {
     // initialize Control penalties
     UTILS_ASSERT0(
       gc_data.exists("Controls"),
-      "Train::setupClasses: Missing key `Controls` in data\n"
+      "Train::setup_classes: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
     uaControl.setup( gc("uaControl") );
@@ -330,11 +331,11 @@ namespace TrainDefine {
   //                     |_|
   */
   void
-  Train::setupPointers( GenericContainer const & gc_data ) {
+  Train::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "Train::setupPointers: Missing key `Pointers` in data\n"
+      "Train::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -342,7 +343,7 @@ namespace TrainDefine {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in Train::setupPointers(gc) cant find key `pMesh' in gc\n"
+      "in Train::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -355,7 +356,7 @@ namespace TrainDefine {
   //  |_|_| |_|_|  \___/ \____|_|\__,_|___/___/\___||___/
   */
   void
-  Train::infoClasses() const {
+  Train::info_classes() const {
     int msg_level = 3;
     ostringstream mstr;
 
@@ -396,18 +397,22 @@ namespace TrainDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("Train::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
-    this->infoClasses();
+    this->info_classes();
     this->info();
   }
 

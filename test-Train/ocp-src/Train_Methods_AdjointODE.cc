@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_AdjointODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 5/11/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -211,11 +211,9 @@ namespace TrainDefine {
     real_type const * X__ = NODE__.x;
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_uaControl_D_1(U__[iU_ua], 0, ModelPars[iM_uaMax]);
-    real_type t5   = L__[iL_lambda2__xo];
-    result__[ 0   ] = t3 + X__[iX_v] + t5;
-    real_type t8   = ALIAS_ubControl_D_1(U__[iU_ub], 0, ModelPars[iM_ubMax]);
-    result__[ 1   ] = t8 - t5;
+    real_type t2   = L__[iL_lambda2__xo];
+    result__[ 0   ] = X__[iX_v] + t2;
+    result__[ 1   ] = -t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }

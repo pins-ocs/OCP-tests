@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_controls.cc                                      |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 5/11/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -101,11 +101,11 @@ namespace TrainDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_uaControl_D_1(UM__[0], 0, ModelPars[iM_uaMax]);
-    real_type t5   = LM__[1];
-    result__[ 0   ] = t3 + XM__[1] + t5;
+    real_type t2   = LM__[1];
+    real_type t5   = ALIAS_uaControl_D_1(UM__[0], 0, ModelPars[iM_uaMax]);
+    result__[ 0   ] = XM__[1] + t2 + t5;
     real_type t8   = ALIAS_ubControl_D_1(UM__[1], 0, ModelPars[iM_ubMax]);
-    result__[ 1   ] = t8 - t5;
+    result__[ 1   ] = -t2 + t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }

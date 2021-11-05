@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_problem.cc                                       |
  |                                                                       |
- |  version: 1.0   date 5/7/2021                                         |
+ |  version: 1.0   date 5/11/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,7 +70,7 @@ namespace TrainDefine {
   \*/
 
   void
-  Train::continuationStep0( real_type s ) {
+  Train::continuation_step_0( real_type s ) {
     real_type t2   = 1 - s;
     real_type t6   = ModelPars[iM_epsi_min] * s + t2 * ModelPars[iM_epsi_max];
     uaControl.update_epsilon(t6);
@@ -100,12 +100,9 @@ namespace TrainDefine {
     real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_ua];
-    real_type t3   = uaControl(t1, 0, ModelPars[iM_uaMax]);
-    real_type t4   = U__[iU_ub];
-    real_type t6   = ubControl(t4, 0, ModelPars[iM_ubMax]);
-    real_type t7   = X__[iX_v];
-    real_type t13  = acc(X__[iX_x], t7);
-    real_type result__ = t3 + t6 + t7 * t1 + t7 * L__[iL_lambda1__xo] + (t13 + t1 - t4) * L__[iL_lambda2__xo];
+    real_type t2   = X__[iX_v];
+    real_type t8   = acc(X__[iX_x], t2);
+    real_type result__ = t2 * t1 + t2 * L__[iL_lambda1__xo] + (t8 + t1 - U__[iU_ub]) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -248,6 +245,29 @@ namespace TrainDefine {
    |  |_____\__,_|\__, |_|  \__,_|_| |_|\__, |\___|
    |              |___/                 |___/
   \*/
+
+  integer
+  Train::DlagrangeDxup_numEqns() const
+  { return 4; }
+
+  void
+  Train::DlagrangeDxup_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = U__[iU_ua];
+    result__[ 2   ] = X__[iX_v];
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
+  }
 
   integer
   Train::DJDx_numEqns() const

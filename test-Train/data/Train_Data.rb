@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Train_Data.rb                                                  #
 #                                                                       #
-#  version: 1.0   date 5/7/2021                                         #
+#  version: 1.0   date 5/11/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-ubMax    = 2
 uaMax    = 10
 tol_max  = 0.01
 epsi_max = 0.01
+ubMax    = 2
 
 mechatronix do |data|
 
@@ -44,7 +44,7 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck         = false
+  data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
@@ -201,16 +201,16 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 25,
         :length => 0.25,
+        :n      => 25,
       },
       {
-        :n      => 3000,
         :length => 0.75,
+        :n      => 3000,
       },
       {
-        :n      => 100,
         :length => 3.8,
+        :n      => 100,
       },
     ],
   };
