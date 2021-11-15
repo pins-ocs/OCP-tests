@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan.cc                                                     |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,6 +27,8 @@
 
 #include "AliChan.hh"
 #include "AliChan_Pars.hh"
+
+#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -104,7 +106,7 @@ namespace AliChanDefine {
     nullptr
   };
 
-  char const *namesBc[numBc+1] = {
+  char const *namesBc[numBC+1] = {
     "initial_y1",
     "initial_y2",
     nullptr
@@ -141,7 +143,7 @@ namespace AliChanDefine {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBc,                    namesBc
+      numBC,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -149,13 +151,10 @@ namespace AliChanDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
-    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   AliChan::~AliChan() {
-    // Begin: User Exit Code
-    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -175,8 +174,8 @@ namespace AliChanDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase+1, s, s-old_s, old_s
+        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        phase+1, s, s-old_s
       ),
       msg_level
     );
@@ -192,11 +191,11 @@ namespace AliChanDefine {
   // initialize parameters using associative array
   */
   void
-  AliChan::setup_parameters( GenericContainer const & gc_data ) {
+  AliChan::setupParameters( GenericContainer const & gc_data ) {
   }
 
   void
-  AliChan::setup_parameters( real_type const Pars[] ) {
+  AliChan::setupParameters( real_type const Pars[] ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -208,7 +207,7 @@ namespace AliChanDefine {
   //                     |_|
   */
   void
-  AliChan::setup_classes( GenericContainer const & gc_data ) {
+  AliChan::setupClasses( GenericContainer const & gc_data ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -220,7 +219,7 @@ namespace AliChanDefine {
   //                    |_|
   */
   void
-  AliChan::setup_user_classes( GenericContainer const & gc ) {
+  AliChan::setupUserClasses( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -236,7 +235,7 @@ namespace AliChanDefine {
   //              |_|  |_|
   */
   void
-  AliChan::setup_user_mapped_functions( GenericContainer const & gc_data ) {
+  AliChan::setupUserMappedFunctions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -247,11 +246,11 @@ namespace AliChanDefine {
   //                     |_|
   */
   void
-  AliChan::setup_controls( GenericContainer const & gc_data ) {
+  AliChan::setupControls( GenericContainer const & gc_data ) {
     // initialize Control penalties
     UTILS_ASSERT0(
       gc_data.exists("Controls"),
-      "AliChan::setup_classes: Missing key `Controls` in data\n"
+      "AliChan::setupClasses: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
     uControl.setup( gc("uControl") );
@@ -268,11 +267,11 @@ namespace AliChanDefine {
   //                     |_|
   */
   void
-  AliChan::setup_pointers( GenericContainer const & gc_data ) {
+  AliChan::setupPointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "AliChan::setup_pointers: Missing key `Pointers` in data\n"
+      "AliChan::setupPointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -280,7 +279,7 @@ namespace AliChanDefine {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in AliChan::setup_pointers(gc) cant find key `pMesh' in gc\n"
+      "in AliChan::setupPointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -324,20 +323,16 @@ namespace AliChanDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("AliChan::setup, Debug");
 
-    this->setup_parameters( gc );
-    this->setup_classes( gc );
-    this->setup_user_mapped_functions( gc );
-    this->setup_user_classes( gc );
-    this->setup_pointers( gc );
+    this->setupParameters( gc );
+    this->setupClasses( gc );
+    this->setupUserMappedFunctions( gc );
+    this->setupUserClasses( gc );
+    this->setupPointers( gc );
     this->setup_BC( gc );
-    this->setup_controls( gc );
+    this->setupControls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
-
-    // Begin: User Setup Code
-    // End: User Setup Code
-
     this->info_BC();
     this->info_classes();
     this->info();

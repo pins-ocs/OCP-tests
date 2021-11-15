@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_problem.cc                                  |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ namespace UnderwaterDefine {
   \*/
 
   void
-  Underwater::continuation_step_0( real_type s ) {
+  Underwater::continuationStep0( real_type s ) {
     ModelPars[iM_inertia] = 0.15e1 - 0.138e1 * s;
   }
   /*\
@@ -90,7 +90,7 @@ namespace UnderwaterDefine {
   \*/
 
   void
-  Underwater::continuation_step_1( real_type s ) {
+  Underwater::continuationStep1( real_type s ) {
     real_type epsi = (1 - s) * ModelPars[iM_epsi_max] + s * ModelPars[iM_epsi_min];
     u1Control.update_epsilon(epsi);
     u2Control.update_epsilon(epsi);
@@ -105,16 +105,18 @@ namespace UnderwaterDefine {
    |
   \*/
 
+#if 0
   real_type
   Underwater::H_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
+    integer              i_segment,
+    CellType const &     CELL__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer     i_cell = CELL__.i_cell;
+    real_const_ptr Q__ = CELL__.qM;
+    real_const_ptr X__ = CELL__.xM;
+    real_const_ptr L__ = CELL__.lambdaM;
+    real_const_ptr U__ = CELL__.uM;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
     real_type t4   = X__[iX_vx];
@@ -123,17 +125,51 @@ namespace UnderwaterDefine {
     real_type t8   = X__[iX_vz];
     real_type t9   = sin(t5);
     real_type t21  = X__[iX_Omega];
-    real_type t26  = ModelPars[iM_m1];
-    real_type t27  = 1.0 / t26;
-    real_type t30  = ModelPars[iM_m3];
-    real_type t38  = 1.0 / t30;
-    real_type t49  = 1.0 / ModelPars[iM_inertia];
-    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + (-t27 * t30 * t21 * t8 + t27 * U__[iU_u1]) * t2 * L__[iL_lambda4__xo] + (t38 * t26 * t21 * t4 + t38 * U__[iU_u2]) * t2 * L__[iL_lambda5__xo] + (t49 * U__[iU_u3] + t49 * (t30 - t26) * t8 * t4) * t2 * L__[iL_lambda6__xo];
+    real_type t26  = ModelPars[iM_m3];
+    real_type t28  = U__[iU_u1];
+    real_type t30  = ModelPars[iM_m1];
+    real_type t38  = U__[iU_u2];
+    real_type t43  = U__[iU_u3];
+    real_type t54  = u1Control(t28, -1, 1);
+    real_type t56  = u2Control(t38, -1, 1);
+    real_type t58  = u3Control(t43, -1, 1);
+    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + 1.0 / t30 * (-t26 * t21 * t8 + t28) * t2 * L__[iL_lambda4__xo] + 1.0 / t26 * (t30 * t21 * t4 + t38) * t2 * L__[iL_lambda5__xo] + 1.0 / ModelPars[iM_inertia] * t2 * L__[iL_lambda6__xo] * (t43 - (-t26 + t30) * t8 * t4) + t54 * t2 + t56 * t2 + t58 * t2;
+    return result__;
+  }
+#else
+  real_type
+  Underwater::H_eval(
+    NodeType2 const    & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = P__[iP_T];
+    real_type t4   = X__[iX_vx];
+    real_type t5   = X__[iX_theta];
+    real_type t6   = cos(t5);
+    real_type t8   = X__[iX_vz];
+    real_type t9   = sin(t5);
+    real_type t21  = X__[iX_Omega];
+    real_type t26  = ModelPars[iM_m3];
+    real_type t28  = U__[iU_u1];
+    real_type t30  = ModelPars[iM_m1];
+    real_type t38  = U__[iU_u2];
+    real_type t43  = U__[iU_u3];
+    real_type t54  = u1Control(t28, -1, 1);
+    real_type t56  = u2Control(t38, -1, 1);
+    real_type t58  = u3Control(t43, -1, 1);
+    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + 1.0 / t30 * (-t26 * t21 * t8 + t28) * t2 * L__[iL_lambda4__xo] + 1.0 / t26 * (t30 * t21 * t4 + t38) * t2 * L__[iL_lambda5__xo] + 1.0 / ModelPars[iM_inertia] * t2 * L__[iL_lambda6__xo] * (t43 - (-t26 + t30) * t8 * t4) + t54 * t2 + t56 * t2 + t58 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -148,9 +184,9 @@ namespace UnderwaterDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
@@ -167,15 +203,14 @@ namespace UnderwaterDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
     real_type t3   = u1Control(U__[iU_u1], -1, 1);
-    real_type t6   = u2Control(U__[iU_u2], -1, 1);
-    real_type t9   = u3Control(U__[iU_u3], -1, 1);
-    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1;
+    real_type t5   = u2Control(U__[iU_u2], -1, 1);
+    real_type t7   = u3Control(U__[iU_u3], -1, 1);
+    real_type result__ = (t3 + t5 + t7) * P__[iP_T];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
     }
@@ -196,9 +231,9 @@ namespace UnderwaterDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
@@ -222,11 +257,11 @@ namespace UnderwaterDefine {
     P_const_pointer_type P__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = P__[iP_T];
@@ -239,22 +274,22 @@ namespace UnderwaterDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Underwater::DmayerDxxp_numEqns() const
-  { return 13; }
+  Underwater::DmayerDx_numEqns() const
+  { return 12; }
 
   void
-  Underwater::DmayerDxxp_eval(
+  Underwater::DmayerDx_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
@@ -269,9 +304,34 @@ namespace UnderwaterDefine {
     result__[ 9   ] = 0;
     result__[ 10  ] = 0;
     result__[ 11  ] = 0;
-    result__[ 12  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 13, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 12, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Underwater::DmayerDp_numEqns() const
+  { return 1; }
+
+  void
+  Underwater::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_ptr             result__
+  ) const {
+    integer i_segment_left  = LEFT__.i_segment;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "DmayerDp_eval", 1, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -284,35 +344,6 @@ namespace UnderwaterDefine {
   \*/
 
   integer
-  Underwater::DlagrangeDxup_numEqns() const
-  { return 10; }
-
-  void
-  Underwater::DlagrangeDxup_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    result__[ 2   ] = 0;
-    result__[ 3   ] = 0;
-    result__[ 4   ] = 0;
-    result__[ 5   ] = 0;
-    result__[ 6   ] = 0;
-    result__[ 7   ] = 0;
-    result__[ 8   ] = 0;
-    result__[ 9   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 10, i_segment );
-  }
-
-  integer
   Underwater::DJDx_numEqns() const
   { return 6; }
 
@@ -321,11 +352,11 @@ namespace UnderwaterDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
@@ -348,11 +379,11 @@ namespace UnderwaterDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = u1Control(U__[iU_u1], -1, 1);
     real_type t4   = u2Control(U__[iU_u2], -1, 1);
@@ -373,11 +404,11 @@ namespace UnderwaterDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
@@ -429,7 +460,7 @@ namespace UnderwaterDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_type            segmentLink[]
+    real_ptr             segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -450,8 +481,8 @@ namespace UnderwaterDefine {
 
   void
   Underwater::DsegmentLinkDxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -463,7 +494,7 @@ namespace UnderwaterDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+    real_ptr             DsegmentLinkDxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -485,16 +516,16 @@ namespace UnderwaterDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
+    real_const_ptr    LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
+    real_const_ptr    LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
@@ -529,8 +560,8 @@ namespace UnderwaterDefine {
 
   void
   Underwater::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 12  ;
@@ -565,16 +596,16 @@ namespace UnderwaterDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
+    real_const_ptr    LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
+    real_const_ptr    LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
@@ -622,7 +653,7 @@ namespace UnderwaterDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     // EMPTY!
   }
@@ -638,7 +669,7 @@ namespace UnderwaterDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
    // EMPTY!
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -61,40 +61,22 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::g_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
+    NodeType2 const &    NODE__,
+    U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = LM__[0];
-    real_type t4   = LM__[1];
-    real_type t5   = LM__[2];
-    real_type t6   = LM__[3];
-    result__[ 0   ] = UM__[0] / 50 + t3 + t4 + t5 + t6;
-    result__[ 1   ] = UM__[1] / 50 + t3 + 2 * t4 - t5 + 3 * t6;
+    real_type t3   = L__[iL_lambda1__xo];
+    real_type t4   = L__[iL_lambda2__xo];
+    real_type t5   = L__[iL_lambda3__xo];
+    real_type t6   = L__[iL_lambda4__xo];
+    result__[ 0   ] = U__[iU_u1] / 50 + t3 + t4 + t5 + t6;
+    result__[ 1   ] = U__[iU_u2] / 50 + t3 + 2 * t4 - t5 + 3 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -102,90 +84,56 @@ namespace AlpRiderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AlpRider::DgDxlxlp_numRows() const
+  AlpRider::DgDxlp_numRows() const
   { return 2; }
 
   integer
-  AlpRider::DgDxlxlp_numCols() const
-  { return 16; }
+  AlpRider::DgDxlp_numCols() const
+  { return 8; }
 
   integer
-  AlpRider::DgDxlxlp_nnz() const
-  { return 16; }
+  AlpRider::DgDxlp_nnz() const
+  { return 8; }
 
   void
-  AlpRider::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  AlpRider::DgDxlp_pattern(
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 7   ;
-    iIndex[4 ] = 0   ; jIndex[4 ] = 12  ;
-    iIndex[5 ] = 0   ; jIndex[5 ] = 13  ;
-    iIndex[6 ] = 0   ; jIndex[6 ] = 14  ;
-    iIndex[7 ] = 0   ; jIndex[7 ] = 15  ;
-    iIndex[8 ] = 1   ; jIndex[8 ] = 4   ;
-    iIndex[9 ] = 1   ; jIndex[9 ] = 5   ;
-    iIndex[10] = 1   ; jIndex[10] = 6   ;
-    iIndex[11] = 1   ; jIndex[11] = 7   ;
-    iIndex[12] = 1   ; jIndex[12] = 12  ;
-    iIndex[13] = 1   ; jIndex[13] = 13  ;
-    iIndex[14] = 1   ; jIndex[14] = 14  ;
-    iIndex[15] = 1   ; jIndex[15] = 15  ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 5   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 6   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 7   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  AlpRider::DgDxlxlp_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
+  AlpRider::DgDxlp_sparse(
+    NodeType2 const &    NODE__,
+    U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
-    result__[ 2   ] = 0.500000000000000000e0;
-    result__[ 3   ] = 0.500000000000000000e0;
-    result__[ 4   ] = 0.500000000000000000e0;
-    result__[ 5   ] = 0.500000000000000000e0;
-    result__[ 6   ] = 0.500000000000000000e0;
-    result__[ 7   ] = 0.500000000000000000e0;
-    result__[ 8   ] = 0.500000000000000000e0;
-    result__[ 9   ] = 1.0;
-    result__[ 10  ] = -0.500000000000000000e0;
-    result__[ 11  ] = 0.150000000000000000e1;
-    result__[ 12  ] = 0.500000000000000000e0;
-    result__[ 13  ] = 1.0;
-    result__[ 14  ] = -0.500000000000000000e0;
-    result__[ 15  ] = 0.150000000000000000e1;
+    result__[ 0   ] = 1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = 1;
+    result__[ 3   ] = 1;
+    result__[ 4   ] = 1;
+    result__[ 5   ] = 2;
+    result__[ 6   ] = -1;
+    result__[ 7   ] = 3;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 16, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -204,8 +152,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -215,33 +163,15 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DgDu_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
+    NodeType2 const &    NODE__,
+    U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1.0 / 0.50e2;
     result__[ 1   ] = 1.0 / 0.50e2;
@@ -272,34 +202,40 @@ namespace AlpRiderDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
+    real_type Q__[1];
+    real_type X__[4];
+    real_type L__[4];
     // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
+    Q__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
     // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
+    L__[0] = (LL__[0]+LR__[0])/2;
+    L__[1] = (LL__[1]+LR__[1])/2;
+    L__[2] = (LL__[2]+LR__[2])/2;
+    L__[3] = (LL__[3]+LR__[3])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = LM__[0];
-    real_type t2   = LM__[1];
-    real_type t3   = LM__[2];
-    real_type t4   = LM__[3];
-    U__[ iU_u1 ] = -50 * t1 - 50 * t2 - 50 * t3 - 50 * t4;
-    U__[ iU_u2 ] = -50 * t1 - 100 * t2 + 50 * t3 - 150 * t4;
+    real_type t1   = LL__[iL_lambda1__xo];
+    real_type t2   = LL__[iL_lambda2__xo];
+    real_type t3   = LL__[iL_lambda3__xo];
+    real_type t4   = LL__[iL_lambda4__xo];
+    real_type t5   = LR__[iL_lambda1__xo];
+    real_type t6   = LR__[iL_lambda2__xo];
+    real_type t7   = LR__[iL_lambda3__xo];
+    real_type t8   = LR__[iL_lambda4__xo];
+    U__[ iU_u1 ] = -25 * t1 - 25 * t2 - 25 * t3 - 25 * t4 - 25 * t5 - 25 * t6 - 25 * t7 - 25 * t8;
+    U__[ iU_u2 ] = -25 * t1 - 50 * t2 + 25 * t3 - 75 * t4 - 25 * t5 - 50 * t6 + 25 * t7 - 75 * t8;
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }
@@ -320,64 +256,65 @@ namespace AlpRiderDefine {
     NodeType2 const &          LEFT__,
     NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
-    U_const_pointer_type       UM__,
+    U_const_pointer_type       U__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
+    real_type Q__[1];
+    real_type X__[4];
+    real_type L__[4];
     // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
+    Q__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
     // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
+    L__[0] = (LL__[0]+LR__[0])/2;
+    L__[1] = (LL__[1]+LR__[1])/2;
+    L__[2] = (LL__[2]+LR__[2])/2;
+    L__[3] = (LL__[3]+LR__[3])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type tmp_0_0 = 0.0e0;
-    real_type tmp_1_0 = 0.0e0;
-    real_type tmp_0_1 = 0.0e0;
-    real_type tmp_1_1 = 0.0e0;
-    real_type tmp_0_2 = 0.0e0;
-    real_type tmp_1_2 = 0.0e0;
-    real_type tmp_0_3 = 0.0e0;
-    real_type tmp_1_3 = 0.0e0;
-    real_type tmp_0_4 = -0.25e2;
-    real_type tmp_1_4 = -0.25e2;
-    real_type tmp_0_5 = -0.25e2;
-    real_type tmp_1_5 = -0.50e2;
-    real_type tmp_0_6 = -0.25e2;
-    real_type tmp_1_6 = 0.25e2;
-    real_type tmp_0_7 = -0.25e2;
-    real_type tmp_1_7 = -0.75e2;
-    real_type tmp_0_8 = 0.0e0;
-    real_type tmp_1_8 = 0.0e0;
-    real_type tmp_0_9 = 0.0e0;
-    real_type tmp_1_9 = 0.0e0;
-    real_type tmp_0_10 = 0.0e0;
-    real_type tmp_1_10 = 0.0e0;
-    real_type tmp_0_11 = 0.0e0;
-    real_type tmp_1_11 = 0.0e0;
-    real_type tmp_0_12 = -0.25e2;
-    real_type tmp_1_12 = -0.25e2;
-    real_type tmp_0_13 = -0.25e2;
-    real_type tmp_1_13 = -0.50e2;
-    real_type tmp_0_14 = -0.25e2;
-    real_type tmp_1_14 = 0.25e2;
-    real_type tmp_0_15 = -0.25e2;
-    real_type tmp_1_15 = -0.75e2;
+    real_type tmp_0_0 = 0;
+    real_type tmp_1_0 = 0;
+    real_type tmp_0_1 = 0;
+    real_type tmp_1_1 = 0;
+    real_type tmp_0_2 = 0;
+    real_type tmp_1_2 = 0;
+    real_type tmp_0_3 = 0;
+    real_type tmp_1_3 = 0;
+    real_type tmp_0_4 = -25;
+    real_type tmp_1_4 = -25;
+    real_type tmp_0_5 = -25;
+    real_type tmp_1_5 = -50;
+    real_type tmp_0_6 = -25;
+    real_type tmp_1_6 = 25;
+    real_type tmp_0_7 = -25;
+    real_type tmp_1_7 = -75;
+    real_type tmp_0_8 = 0;
+    real_type tmp_1_8 = 0;
+    real_type tmp_0_9 = 0;
+    real_type tmp_1_9 = 0;
+    real_type tmp_0_10 = 0;
+    real_type tmp_1_10 = 0;
+    real_type tmp_0_11 = 0;
+    real_type tmp_1_11 = 0;
+    real_type tmp_0_12 = -25;
+    real_type tmp_1_12 = -25;
+    real_type tmp_0_13 = -25;
+    real_type tmp_1_13 = -50;
+    real_type tmp_0_14 = -25;
+    real_type tmp_1_14 = 25;
+    real_type tmp_0_15 = -25;
+    real_type tmp_1_15 = -75;
     DuDxlxlp(0, 0) = tmp_0_0;
     DuDxlxlp(1, 0) = tmp_1_0;
     DuDxlxlp(0, 1) = tmp_0_1;
@@ -428,9 +365,9 @@ namespace AlpRiderDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_y1];
     real_type t2   = t1 * t1;
@@ -444,7 +381,7 @@ namespace AlpRiderDefine {
     real_type t13  = Ybound(t2 + t4 + t6 + t8 - t11);
     real_type t17  = U__[iU_u1];
     real_type t18  = U__[iU_u2];
-    real_type t20  = pow(V__[0] + 10 * t1 - t17 - t18, 2);
+    real_type t20  = pow(-V__[0] - 10 * t1 + t17 + t18, 2);
     real_type t25  = pow(V__[1] + 2 * t3 - t17 - 2 * t18, 2);
     real_type t30  = pow(V__[2] + 3 * t5 - 5 * t7 - t17 + t18, 2);
     real_type t36  = pow(V__[3] - 5 * t5 + 3 * t7 - t17 - 3 * t18, 2);
@@ -467,11 +404,11 @@ namespace AlpRiderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = 2 * V__[0];
     real_type t4   = 20 * X__[iX_y1];
@@ -505,8 +442,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
@@ -522,11 +459,11 @@ namespace AlpRiderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 8;
     result__[ 1   ] = 10;

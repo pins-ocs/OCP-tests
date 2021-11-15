@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan_Mex.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -42,11 +42,12 @@ using namespace MechatronixLoad;
 
 class mystream : public std::streambuf {
 protected:
-
+  virtual
   std::streamsize
   xsputn(const char *s, std::streamsize n) override
   { mexPrintf("%.*s", n, s); mexEvalString("drawnow;"); return n; }
 
+  virtual
   int
   overflow(int c=EOF) override
   { if (c != EOF) { mexPrintf("%.1s", &c); } return 1; }
@@ -84,8 +85,6 @@ static char const help_msg[] =
 #define CHECK_OUT(N) \
   MEX_ASSERT2( nlhs == N, CMD "Expected {} argument(s), nlhs = {}\n", N, nlhs )
 
-#define CHECK_IN_OUT(N,M) CHECK_IN(N); CHECK_OUT(M)
-
 #define MEX_CHECK_DIMS(A,B,C,D) \
   MEX_ASSERT( A == C && B == D, CMD "Argument dimensions must be the same\n" )
 
@@ -119,14 +118,14 @@ static char const help_msg[] =
     "{} |Omega| = {} expected to be {}\n", CMD, nO, this->dim_Omega()  \
   );
 
-#define GET_ARG_OMEGA_FULL(ARG)                                         \
-  mwSize nO;                                                            \
-  OMEGA_full_const_pointer_type Omega(getVectorPointer( ARG, nO,        \
-    fmt::format( "{} argument pars", CMD )                              \
-  ) );                                                                  \
-  UTILS_ASSERT(                                                         \
-    nO == this->dim_full_BC(),                                          \
-    "{} |Omega| = {} expected to be {}\n", CMD, nO, this->dim_full_BC() \
+#define GET_ARG_OMEGA_FULL(ARG)                                        \
+  mwSize nO;                                                           \
+  OMEGA_full_const_pointer_type Omega(getVectorPointer( ARG, nO,       \
+    fmt::format( "{} argument pars", CMD )                             \
+  ) );                                                                 \
+  UTILS_ASSERT(                                                        \
+    nO == this->dim_BC(),                                              \
+    "{} |Omega| = {} expected to be {}\n", CMD, nO, this->dim_BC()     \
   );
 
 #define GET_ARG_V(ARG)                                              \
@@ -142,9 +141,9 @@ static char const help_msg[] =
 #define RETURN_SPARSE(MATNAME,...)                                     \
   size_t nnz = size_t(this->MATNAME##_nnz());                          \
   mxArray *args[5];                                                    \
-  real_type * Irow = createMatrixValue( args[0], 1, nnz );             \
-  real_type * Jcol = createMatrixValue( args[1], 1, nnz );             \
-  real_type * VALS = createMatrixValue( args[2], 1, nnz );             \
+  real_ptr Irow = createMatrixValue( args[0], 1, nnz );             \
+  real_ptr Jcol = createMatrixValue( args[1], 1, nnz );             \
+  real_ptr VALS = createMatrixValue( args[2], 1, nnz );             \
   setScalarValue( args[3], this->MATNAME##_numRows() );                \
   setScalarValue( args[4], this->MATNAME##_numCols() );                \
                                                                        \
@@ -206,7 +205,7 @@ public:
   ~ProblemStorage() {}
 
   void
-  done_setup() {
+  doneSetup() {
     setup_ok     = true;
     guess_ok     = false;
     solve_ok     = false;
@@ -216,7 +215,7 @@ public:
   }
 
   void
-  done_guess() {
+  doneGuess() {
     setup_ok     = true;
     guess_ok     = true;
     solve_ok     = false;
@@ -226,7 +225,7 @@ public:
   }
 
   void
-  done_solve() {
+  doneSolve() {
     setup_ok     = true;
     guess_ok     = true;
     solve_ok     = true;
@@ -265,7 +264,8 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('read',obj,filename): "
-    CHECK_IN_OUT(3,1);
+    CHECK_IN(3);
+    CHECK_OUT(1);
     MEX_ASSERT2(
       mxIsChar(arg_in_2),
       CMD "filename must be a string, found ``{}''\n", mxGetClassName( arg_in_2 )
@@ -290,7 +290,8 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('setup',obj,struct_or_filename): "
-    CHECK_IN_OUT(3,0);
+    CHECK_IN(3);
+    CHECK_OUT(0);
     gc_data.clear(); // clear data for rewrite it
     if ( mxIsStruct(arg_in_2) ) { // read from file
       mxArray_to_GenericContainer( arg_in_2, gc_data );
@@ -317,13 +318,12 @@ public:
     // setup model
     MODEL_CLASS::setup( gc_data );
 
-    this->done_setup();
+    this->doneSetup();
 
     #undef CMD
   }
 
   /*\
-   |                               _
    |  _ __  _____ __  _ __  ___ __| |_
    | | '  \/ -_) \ / | '  \/ -_|_-< ' \
    | |_|_|_\___/_\_\_|_|_|_\___/__/_||_|
@@ -338,7 +338,7 @@ public:
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'remesh'" );
     MEX_ASSERT2(
       nrhs == 3,
-      CMD " Expected 2 or 3 input argument(s), nrhs = {}\n", nrhs
+      CMD "Expected 2 or 3 input argument(s), nrhs = {}\n", nrhs
     );
     CHECK_OUT( 0 );
 
@@ -361,7 +361,7 @@ public:
     pMesh->setup( gc_mesh );
 
     MODEL_CLASS::setup( gc_data );
-    this->done_setup();
+    this->doneSetup();
     #undef CMD
   }
 
@@ -396,7 +396,7 @@ public:
       mxArray_to_GenericContainer( arg_in_2, gc_guess );
     }
     MODEL_CLASS::guess( gc_guess );
-    this->done_guess();
+    this->doneGuess();
     #undef CMD
   }
 
@@ -407,7 +407,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('get_guess',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'guess'" );
-    CHECK_IN_OUT(2,1);
+    CHECK_IN( 2 ); CHECK_OUT( 1 );
     GenericContainer_to_mxArray( gc_data("Guess"), arg_out_0 );
     #undef CMD
   }
@@ -418,11 +418,8 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_solution_as_guess',obj): "
-    MEX_ASSERT(
-      setup_ok,
-      CMD "use 'setup' before to use 'get_solution_as_guess'"
-    );
-    CHECK_IN_OUT( 2, 1 );
+    MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'get_solution_as_guess'" );
+    CHECK_IN( 2 ); CHECK_OUT( 1 );
     GenericContainer gc;
     this->get_solution_as_guess( gc );
     GenericContainer_to_mxArray( gc, arg_out_0 );
@@ -442,10 +439,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('solve',obj[,timeout]): "
-    MEX_ASSERT(
-      guess_ok,
-      CMD "use 'set_guess' before to use 'solve'"
-    );
+    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'solve'" );
     MEX_ASSERT2(
       nrhs == 2 || nrhs == 3,
       CMD "Expected 2 or 3 argument(s), nrhs = {}", nrhs
@@ -457,7 +451,7 @@ public:
     }
     solve_ok = MODEL_CLASS::solve();
     setScalarBool( arg_out_0, solve_ok );
-    this->done_solve();
+    this->doneSolve();
     #undef CMD
   }
 
@@ -475,17 +469,17 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('dims',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'dims'" );
-    CHECK_IN_OUT( 2, 1 );
+    CHECK_IN( 2 );
+    CHECK_OUT( 1 );
     GenericContainer gc;
-    gc["dim_q"]       = MODEL_CLASS::dim_Q();
-    gc["dim_x"]       = MODEL_CLASS::dim_X();
-    gc["dim_u"]       = MODEL_CLASS::dim_U();
-    gc["dim_pars"]    = MODEL_CLASS::dim_Pars();
-    gc["dim_omega"]   = MODEL_CLASS::dim_Omega();
-    gc["dim_bc"]      = MODEL_CLASS::dim_BC();
-    gc["dim_full_bc"] = MODEL_CLASS::dim_full_BC();
-    gc["num_nodes"]   = MODEL_CLASS::num_nodes();
-    gc["neq"]         = MODEL_CLASS::num_equations();
+    gc["dim_q"]     = MODEL_CLASS::dim_Q();
+    gc["dim_x"]     = MODEL_CLASS::dim_X();
+    gc["dim_u"]     = MODEL_CLASS::dim_U();
+    gc["dim_pars"]  = MODEL_CLASS::dim_Pars();
+    gc["dim_omega"] = MODEL_CLASS::dim_Omega();
+    gc["dim_bc"]    = MODEL_CLASS::dim_BC();
+    gc["num_nodes"] = MODEL_CLASS::nNodes();
+    gc["neq"]       = MODEL_CLASS::num_equations();
     GenericContainer_to_mxArray( gc, arg_out_0 );
     #undef CMD
   }
@@ -503,7 +497,7 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('names',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'names'" );
-    CHECK_IN_OUT( 2, 1 );
+    CHECK_IN( 2 ); CHECK_OUT( 1 );
     GenericContainer gc;
     this->get_names( gc );
     GenericContainer_to_mxArray( gc, arg_out_0 );
@@ -523,11 +517,8 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('update_continuation',obj,nphase,old_s,s): "
-    MEX_ASSERT(
-      setup_ok,
-      CMD "use 'setup' before to use 'update_continuation'"
-    );
-    CHECK_IN_OUT( 5, 0 );
+    MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'update_continuation'" );
+    CHECK_IN( 5 ); CHECK_OUT( 0 );
     int64_t nphase  = getInt( arg_in_2, CMD " nphase number" );
     real_type old_s = getScalarValue( arg_in_3, CMD " old_s" );
     real_type s     = getScalarValue( arg_in_4, CMD " s" );
@@ -548,14 +539,12 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_raw_solution',obj): "
-    MEX_ASSERT(
-      guess_ok,
-      CMD "use 'set_guess' before to use 'get_raw_solution'"
+    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_raw_solution'" );
+    CHECK_IN( 2 ); CHECK_OUT( 1 );
+    real_ptr x = createMatrixValue(
+      arg_out_0, this->num_equations()+this->num_parameters(), 1
     );
-    CHECK_IN_OUT( 2, 2 );
-    real_type * x = createMatrixValue( arg_out_0, this->num_equations(), 1 );
-    real_type * u = createMatrixValue( arg_out_1, this->num_parameters(), 1 );
-    this->get_raw_solution( x, u );
+    this->get_raw_solution( x );
     #undef CMD
   }
 
@@ -571,29 +560,19 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('set_raw_solution',obj,x,u): "
-    MEX_ASSERT(
-      setup_ok,
-      CMD "use 'setup' before to use 'set_raw_solution'"
-    );
-    CHECK_IN_OUT( 4, 0 );
-    mwSize dimx,dimu;
-    real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x");
-    real_type const * u = getVectorPointer( arg_in_3, dimu, CMD "argument u");
-    mwSize neq = this->num_equations();
+    #define CMD MODEL_NAME "_Mex('set_raw_solution',obj,x): "
+    MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'set_raw_solution'" );
+    CHECK_IN( 3 ); CHECK_OUT( 0 );
+    mwSize dimx;
+    real_const_ptr x = getVectorPointer( arg_in_2, dimx, CMD "argument x");
+    mwSize nep = this->num_equations()+this->num_parameters();
     MEX_ASSERT2(
-      dimx == neq,
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, neq
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
-    mwSize npar = this->num_parameters();
-    MEX_ASSERT2(
-      dimu == npar,
-      CMD " size(u) = {} must be equal to npars = {}\n",
-      dimu, npar
-    );
-    this->set_raw_solution( x, u );
-    this->done_guess(); // is equivalent to set guess
+    this->set_raw_solution( x );
+    this->doneGuess(); // is equivalent to set guess
     #undef CMD
   }
 
@@ -610,18 +589,15 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('check_raw_solution',obj,x): "
-    MEX_ASSERT(
-      guess_ok,
-      CMD "use 'set_guess' before to use 'check_raw_solution'"
-    );
-    CHECK_IN_OUT( 3, 1 );
-    mwSize dimx, dimp;
-    real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
-    mwSize neq = this->num_equations();
+    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'check_raw_solution'" );
+    CHECK_IN( 3 ); CHECK_OUT( 1 );
+    mwSize dimx;
+    real_const_ptr x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
+    mwSize nep = this->num_equations()+this->num_parameters();
     MEX_ASSERT2(
-      dimx == neq,
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, neq
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
     setScalarBool( arg_out_0, this->check_raw_solution(x) );
     #undef CMD
@@ -639,29 +615,19 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('check_jacobian',obj,x,u,epsi): "
-    MEX_ASSERT(
-      guess_ok,
-      CMD "use 'set_guess' before to use 'check_jacobian'"
-    );
-    CHECK_IN_OUT( 5, 0 );
-    mwSize dimx,dimu;
-    real_type const * x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
-    real_type const * u = getVectorPointer( arg_in_3, dimx, CMD "argument u" );
-    real_type epsi = getScalarValue( arg_in_4, CMD "argument epsi" );
-    mwSize neq = this->num_equations();
+    #define CMD MODEL_NAME "_Mex('check_jacobian',obj,x,epsi): "
+    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'check_jacobian'" );
+    CHECK_IN( 4 ); CHECK_OUT( 0 );
+    mwSize dimx;
+    real_const_ptr x = getVectorPointer( arg_in_2, dimx, CMD "argument x" );
+    real_type epsi = getScalarValue( arg_in_3, CMD "argument epsi" );
+    mwSize     nep = this->num_equations()+this->num_parameters();
     MEX_ASSERT2(
-      dimx == neq,
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, neq
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
-    mwSize npar = this->num_parameters();
-    MEX_ASSERT2(
-      dimu == npar,
-      CMD " size(x) = {} must be equal to npars = {}\n",
-      dimu, npar
-    );
-    this->check_jacobian(x,u,epsi);
+    this->check_jacobian(x,epsi);
     #undef CMD
   }
 
@@ -678,10 +644,7 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_solution',obj[,column_name]): "
-    MEX_ASSERT(
-      guess_ok,
-      CMD "use 'set_guess' before to use 'get_solution'"
-    );
+    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_solution'" );
     CHECK_OUT( 1 );
     if ( !solution1_ok ) {
       MODEL_CLASS::get_solution( gc_solution1 );
@@ -691,10 +654,7 @@ public:
     if ( nrhs == 2 ) {
       GenericContainer_to_mxArray( gc_solution1, arg_out_0 );
     } else if ( nrhs == 3 ) {
-      MEX_ASSERT(
-        mxIsChar(arg_in_2),
-        CMD " Third argument must be a string"
-      );
+      MEX_ASSERT( mxIsChar(arg_in_2), CMD " Third argument must be a string" );
       string const & cname = mxArrayToString(arg_in_2);
       GenericContainer const & idx = gc_solution1("idx");
       MEX_ASSERT2(
@@ -703,7 +663,7 @@ public:
       );
       integer icol = idx(cname).get_as_int();
       GenericContainer::mat_real_type const & data = gc_solution1("data").get_mat_real();
-      real_type * res = createMatrixValue( arg_out_0, data.numRows(), 1 );
+      real_ptr res = createMatrixValue( arg_out_0, data.numRows(), 1 );
       data.getColumn( icol, res );
     } else {
       MEX_ERROR2( CMD "use 2 or 3 arguments, nrhs = {}\n", nrhs );
@@ -717,11 +677,9 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_solution2',obj): "
-    MEX_ASSERT(
-      guess_ok,
-      CMD "use 'set_guess' before to use 'get_solution2'"
-    );
-    CHECK_IN_OUT( 2, 1 );
+    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_solution2'" );
+    CHECK_IN( 2 );
+    CHECK_OUT( 1 );
     if ( !solution2_ok ) {
       MODEL_CLASS::get_solution2( gc_solution2 );
       MODEL_CLASS::diagnostic( gc_data, gc_solution2 );
@@ -737,11 +695,9 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('get_solution3',obj): "
-    MEX_ASSERT(
-      guess_ok,
-      CMD "use 'set_guess' before to use 'get_solution3'"
-    );
-    CHECK_IN_OUT( 2, 1 );
+    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'get_solution3'" );
+    CHECK_IN( 2 );
+    CHECK_OUT( 1 );
     if ( !solution3_ok ) {
       MODEL_CLASS::get_solution3( gc_solution3 );
       MODEL_CLASS::diagnostic( gc_data, gc_solution3 );
@@ -765,77 +721,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('get_ocp_data',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'get_ocp_data'" );
-    CHECK_IN_OUT( 2, 1 );
+    CHECK_IN( 2 ); CHECK_OUT( 1 );
     GenericContainer_to_mxArray( gc_data, arg_out_0 );
-    #undef CMD
-  }
-
-  /*\
-   |                           _       _ _
-   |   _ __ ___   _____  __   (_)_ __ (_) |_    _   _
-   |  | '_ ` _ \ / _ \ \/ /   | | '_ \| | __|  | | | |
-   |  | | | | | |  __/>  <    | | | | | | |_   | |_| |
-   |  |_| |_| |_|\___/_/\_\___|_|_| |_|_|\__|___\__,_|
-   |                     |_____|           |_____|
-  \*/
-
-  void
-  do_init_U(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('init_U',obj,x,do_minimize): "
-    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'init_U'" );
-    CHECK_IN_OUT( 4, 1 );
-    mwSize dimx;
-    real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
-    mwSize neq = this->num_equations();
-    MEX_ASSERT2(
-      dimx == neq,
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, neq
-    );
-    bool do_minimize = getBool( arg_in_3, CMD );
-    real_type * u = createMatrixValue( arg_out_0, this->num_parameters(), 1 );
-    MODEL_CLASS::UC_initialize( x, u, do_minimize );
-    #undef CMD
-  }
-
-  /*\
-   |                                          _
-   |   _ __ ___   _____  __    _____   ____ _| |   _   _
-   |  | '_ ` _ \ / _ \ \/ /   / _ \ \ / / _` | |  | | | |
-   |  | | | | | |  __/>  <   |  __/\ V / (_| | |  | |_| |
-   |  |_| |_| |_|\___/_/\_\___\___| \_/ \__,_|_|___\__,_|
-   |                     |_____|              |_____|
-  \*/
-
-  void
-  do_eval_U(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('eval_U',obj,x,u_guess): "
-    MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'eval_U'" );
-    CHECK_IN_OUT( 4, 1 );
-    mwSize dimx, dimu;
-    real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
-    mwSize neq = this->num_equations();
-    MEX_ASSERT2(
-      dimx == neq,
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, neq
-    );
-    real_type const * u_guess = getVectorPointer( arg_in_3, dimu, CMD );
-    mwSize nu = this->num_parameters();
-    MEX_ASSERT2(
-      dimu == nu,
-      CMD " size(u) = {} must be equal to npars = {}\n",
-      dimu, nu
-    );
-    real_type * u = createMatrixValue( arg_out_0, this->num_parameters(), 1 );
-    std::copy_n( u_guess, nu, u );
-    MODEL_CLASS::UC_eval( x, u );
     #undef CMD
   }
 
@@ -851,36 +738,19 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('eval_F',obj,x,u): "
+    #define CMD MODEL_NAME "_Mex('eval_F',obj,x): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'eval_F'" );
-    CHECK_IN_OUT( 4, 2 );
-    mwSize dimx, dimu;
-    real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
-    real_type const * u = getVectorPointer( arg_in_3, dimu, CMD );
-    mwSize neq  = this->num_equations();
-    mwSize npar = this->num_parameters();
+    CHECK_IN( 3 ); CHECK_OUT( 1 );
+    mwSize dimx;
+    real_const_ptr x = getVectorPointer( arg_in_2, dimx, CMD );
+    mwSize nep = this->num_equations()+this->num_parameters();
     MEX_ASSERT2(
-      dimx == neq,
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, neq
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
-    MEX_ASSERT2(
-      dimu == npar,
-      CMD " size(u) = {} must be equal to npars = {}\n",
-      dimu, npar
-    );
-    real_type * f = createMatrixValue( arg_out_0, this->num_equations(), 1 );
-    bool ok = true;
-    try {
-      MODEL_CLASS::eval_F( x, u, f );
-    } catch ( std::exception const & exc ) {
-      mexWarnMsgTxt( fmt::format( "AliChan_Mex('eval_F',...) error: {}", exc.what() ).c_str() );
-      ok = false;
-    } catch ( ... ) {
-      mexWarnMsgTxt( "AliChan_Mex('eval_F',...) unkown error\n" );
-      ok = false;
-    }
-    setScalarBool( arg_out_1, ok );
+    real_ptr f = createMatrixValue( arg_out_0, this->num_equations(), 1 );
+    MODEL_CLASS::eval_F( x, f );
     #undef CMD
   }
 
@@ -896,29 +766,23 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('eval_JF',obj,x,u): "
+    #define CMD MODEL_NAME "_Mex('eval_JF',obj,x): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'eval_JF'" );
-    CHECK_IN_OUT( 4, 2 );
-    mwSize dimx, dimu;
-    real_type const * x = getVectorPointer( arg_in_2, dimx, CMD );
-    real_type const * u = getVectorPointer( arg_in_3, dimu, CMD );
-    mwSize neq  = this->num_equations();
-    mwSize npar = this->num_parameters();
+    CHECK_IN( 3 ); CHECK_OUT( 1 );
+
+    mwSize dimx;
+    real_const_ptr x = getVectorPointer( arg_in_2, dimx, CMD );
+    mwSize nep = this->num_equations()+this->num_parameters();
     MEX_ASSERT2(
-      dimx == neq,
-      CMD " size(x) = {} must be equal to neq = {}\n",
-      dimx, neq
-    );
-    MEX_ASSERT2(
-      dimu == npar,
-      CMD " size(u) = {} must be equal to npars = {}\n",
-      dimu, npar
+      dimx == nep,
+      CMD " size(x) = {} must be equal to neq+npars = {}\n",
+      dimx, nep
     );
 
     mxArray *args[5];
-    real_type * I = createMatrixValue( args[0], 1, nnz() );
-    real_type * J = createMatrixValue( args[1], 1, nnz() );
-    real_type * V = createMatrixValue( args[2], 1, nnz() );
+    real_ptr I = createMatrixValue( args[0], 1, nnz() );
+    real_ptr J = createMatrixValue( args[1], 1, nnz() );
+    real_ptr V = createMatrixValue( args[2], 1, nnz() );
     setScalarValue( args[3], num_equations() );
     setScalarValue( args[4], num_equations() );
 
@@ -938,19 +802,9 @@ public:
       );
     }
 
-    bool ok_value = true;
-    try {
-      MODEL_CLASS::eval_JF_values( x, u, V );
-    } catch ( std::exception const & exc ) {
-      mexWarnMsgTxt( fmt::format( "AliChan_Mex('eval_JF',...) error: {}", exc.what() ).c_str() );
-      ok_value = false;
-    } catch ( ... ) {
-      mexWarnMsgTxt( "AliChan_Mex('eval_JF',...) unkown error\n" );
-      ok_value = false;
-    }
+    MODEL_CLASS::eval_JF_values( x, V );
     int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
     MEX_ASSERT( ok == 0, CMD "failed the call sparse(...)" );
-    setScalarBool( arg_out_1, ok_value );
     #undef CMD
   }
 
@@ -968,11 +822,11 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('eval_JF_pattern',obj): "
     MEX_ASSERT( setup_ok, CMD "use 'setup' before to use 'eval_JF_pattern'" );
-    CHECK_IN_OUT( 2, 1 );
+    CHECK_IN( 2 ); CHECK_OUT( 1 );
 
     mxArray *args[5];
-    real_type * I = createMatrixValue( args[0], 1, nnz() );
-    real_type * J = createMatrixValue( args[1], 1, nnz() );
+    real_ptr I = createMatrixValue( args[0], 1, nnz() );
+    real_ptr J = createMatrixValue( args[1], 1, nnz() );
     setScalarValue( args[2], 1 );
     setScalarValue( args[3], num_equations() );
     setScalarValue( args[4], num_equations() );
@@ -1012,14 +866,15 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('pack',obj,x,lambda,pars,omega): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'pack'" );
-    CHECK_IN_OUT( 6, 1 );
+    CHECK_IN( 7 ); CHECK_OUT( 1 );
 
-    mwSize nrX, ncX, nrL, ncL, nP, nO;
+    mwSize nrX, ncX, nrL, ncL, nP, nO, nrU, ncU;
     X_const_pointer_type     X(getMatrixPointer( arg_in_2, nrX, ncX, CMD "argument x" ));
     L_const_pointer_type     L(getMatrixPointer( arg_in_3, nrL, ncL, CMD "argument lambda" ));
     P_const_pointer_type     P(getVectorPointer( arg_in_4, nP,       CMD "argument pars" ));
     OMEGA_const_pointer_type O(getVectorPointer( arg_in_5, nO,       CMD "argument omega" ));
-    integer nn = this->num_nodes();
+    U_const_pointer_type     U(getMatrixPointer( arg_in_6, nrU, ncU, CMD "argument U" ));
+    integer nn = this->nNodes();
     UTILS_ASSERT(
       nrX == mwSize(this->dim_X()) && ncX == nn,
       "{} size(x) = {} x {} expected to be {} x {}\n",
@@ -1040,8 +895,13 @@ public:
       "{} length(omega) = {} expected to be {}\n",
       CMD, nO, this->dim_Omega()
     );
-    real_type * Z = createMatrixValue( arg_out_0, 1, this->num_equations() );
-    this->pack( X, L, P, O, Z );
+    UTILS_ASSERT(
+      nrU == mwSize(this->dim_U()) && ncU == nn-1,
+      "{} size(u) = {} x {} expected to be {} x {}\n",
+      CMD, nrU, ncU, this->dim_U(), nn-1
+    );
+    real_ptr Z = createMatrixValue( arg_out_0, 1, this->num_equations() );
+    this->pack( X, L, P, O, U, Z );
     #undef CMD
   }
 
@@ -1059,11 +919,11 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('unpack',obj,Z): "
     MEX_ASSERT( guess_ok, CMD "use 'set_guess' before to use 'unpack'" );
-    CHECK_IN_OUT( 3, 4 );
+    CHECK_IN( 3 ); CHECK_OUT( 5 );
 
-    integer nn = this->num_nodes();
+    integer nn = this->nNodes();
     mwSize nZ;
-    real_type const * Z = getVectorPointer( arg_in_2, nZ, CMD "argument Z" );
+    real_const_ptr Z = getVectorPointer( arg_in_2, nZ, CMD "argument Z" );
     UTILS_ASSERT(
       nZ == mwSize(this->num_equations()),
       "{} length(Z) = {} expected to be {}\n",
@@ -1074,8 +934,9 @@ public:
     L_pointer_type     L(createMatrixValue( arg_out_1, this->dim_X(), nn ));
     P_pointer_type     P(createMatrixValue( arg_out_2, 1, this->dim_Pars() ));
     OMEGA_pointer_type O(createMatrixValue( arg_out_3, 1, this->dim_Omega() ));
+    U_pointer_type     U(createMatrixValue( arg_out_4, this->dim_U(), nn-1 ));
 
-    this->unpack( Z, X, L, P, O );
+    this->unpack( Z, X, L, P, O, U );
     #undef CMD
   }
 
@@ -1095,65 +956,57 @@ public:
     // -------------------
     L.i_segment = integer( getInt( arg_in_2, fmt::format( "{} L_segment", msg ) ) );
     UTILS_ASSERT(
-      L.i_segment >= 0 && L.i_segment < this->num_segments(),
-      "{} iseg_L = {} expected to be in [0,{})\n",
-      msg, L.i_segment, this->num_segments()
+      L.i_segment >= 0 && L.i_segment < this->nSegments(),
+      "iseg_L = {} expected to be in [0,{})\n", msg, L.i_segment, this->nSegments()
     );
 
     // -------------------
     L.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q_L", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "{} |q_L| = {} expected to be {}\n[try to call eval_q]\n",
-      msg, nQ, this->dim_Q()
+      "|q_L| = {} expected to be {}\n", msg, nQ, this->dim_Q()
     );
 
     // -------------------
     L.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x_L", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "{} |x_L| = {} expected to be {}\n",
-      msg, nX, this->dim_X()
+      "|x_L| = {} expected to be {}\n", msg, nX, this->dim_X()
     );
 
     // -------------------
     L.lambda = getVectorPointer( arg_in_5, nL, fmt::format( "{} argument lambda_L", msg ) );
     UTILS_ASSERT(
       nL == this->dim_X(),
-      "{} |lambda_L| = {} expected to be {}\n",
-      msg, nL, this->dim_X()
+      "|lambda_L| = {} expected to be {}\n", msg, nL, this->dim_X()
     );
 
     // -------------------
     R.i_segment = integer( getInt( arg_in_6, fmt::format( "{} R_segment", msg ) ) );
     UTILS_ASSERT(
-      R.i_segment >= 0 && R.i_segment < this->num_segments(),
-      "{} iseg_R = {} expected to be in [0,{})\n",
-      msg, R.i_segment, this->num_segments()
+      R.i_segment >= 0 && R.i_segment < this->nSegments(),
+      "iseg_R = {} expected to be in [0,{})\n", msg, R.i_segment, this->nSegments()
     );
 
     // -------------------
     R.q = getVectorPointer( arg_in_7, nQ, fmt::format( "{} argument q_R", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "{} |q_R| = {} expected to be {}\n",
-      msg, nQ, this->dim_Q()
+      "|q_R| = {} expected to be {}\n", msg, nQ, this->dim_Q()
     );
 
     // -------------------
     R.x = getVectorPointer( arg_in_8, nX, fmt::format( "{} argument x_R", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "{} |x_R| = {} expected to be {}\n",
-      msg, nX, this->dim_X()
+      "|x_R| = {} expected to be {}\n", msg, nX, this->dim_X()
     );
 
     // -------------------
     R.lambda = getVectorPointer( arg_in_9, nL, fmt::format( "{} argument lambda_R", msg ) );
     UTILS_ASSERT(
       nL == this->dim_X(),
-      "{} |lambda_R| = {} expected to be {}\n",
-      msg, nL, this->dim_X()
+      "|lambda_R| = {} expected to be {}\n", msg, nL, this->dim_X()
     );
   }
 
@@ -1172,33 +1025,29 @@ public:
     // -------------------
     N.i_segment = integer( getInt( arg_in_2, fmt::format( "{} i_segment", msg ) ) );
     UTILS_ASSERT(
-      N.i_segment >= 0 && N.i_segment < this->num_segments(),
-      "{} iseg_L = {} expected to be in [0,{})\n",
-      msg, N.i_segment, this->num_segments()
+      N.i_segment >= 0 && N.i_segment < this->nSegments(),
+      "iseg_L = {} expected to be in [0,{})\n", msg, N.i_segment, this->nSegments()
     );
 
     // -------------------
-    N.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q_M", msg ) );
+    N.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q_L", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "{} |q_L| = {} expected to be {}\n[try to call eval_q]\n",
-      msg, nQ, this->dim_Q()
+      "|q_L| = {} expected to be {}\n", msg, nQ, this->dim_Q()
     );
 
     // -------------------
-    N.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x_M", msg ) );
+    N.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x_L", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "{} |x_L| = {} expected to be {}\n",
-      msg, nX, this->dim_X()
+      "|x_L| = {} expected to be {}\n", msg, nX, this->dim_X()
     );
 
     // -------------------
-    N.lambda = getVectorPointer( arg_in_5, nL, fmt::format( "{} argument lambda_M", msg ) );
+    N.lambda = getVectorPointer( arg_in_5, nL, fmt::format( "{} argument lambda_L", msg ) );
     UTILS_ASSERT(
       nL == this->dim_X(),
-      "{} |lambda_L| = {} expected to be {}\n",
-      msg, nL, this->dim_X()
+      "|lambda_L| = {} expected to be {}\n", msg, nL, this->dim_X()
     );
   }
 
@@ -1216,7 +1065,8 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('ac', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
 
-    CHECK_IN_OUT( 12, 2 );
+    CHECK_IN( 12 );
+    CHECK_OUT( 2 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -1225,8 +1075,8 @@ public:
 
     integer n_thread = 0;
 
-    real_type * a = createMatrixValue( arg_out_0, 2*this->dim_X(), 1 );
-    real_type * c = createMatrixValue( arg_out_1, this->dim_Pars(), 1 );
+    real_ptr a = createMatrixValue( arg_out_0, 2*this->dim_X(), 1 );
+    real_ptr c = createMatrixValue( arg_out_1, this->dim_Pars(), 1 );
 
     this->ac_eval( n_thread, L, R, P, U, a, c );
 
@@ -1241,14 +1091,15 @@ public:
    |               |___|__/                            |___|
   \*/
   void
-  do_DacDxlxlp(
+  do_DacDxlp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DacDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U, DuDxlxlp ): "
+    "_Mex('DacDxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U, DuDxlxlp ): "
 
-    CHECK_IN_OUT( 13, 2 );
+    CHECK_IN( 13 );
+    CHECK_OUT( 2 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -1256,7 +1107,7 @@ public:
     GET_ARG_U( arg_in_11 );
 
     mwSize nXLP;
-    real_type const * DuDxlxlp_ptr = getMatrixPointer( arg_in_12, nU, nXLP,
+    real_const_ptr DuDxlxlp_ptr = getMatrixPointer( arg_in_12, nU, nXLP,
       fmt::format( "{} argument DuDxlxlp", CMD )
     );
     UTILS_ASSERT(
@@ -1269,14 +1120,14 @@ public:
     integer n_thread = 0;
     integer nCOL     = 4*this->dim_X()+this->dim_Pars();
     integer nR       = 2*this->dim_X();
-    real_type * a = createMatrixValue( arg_out_0, nR, nCOL );
-    real_type * c = createMatrixValue( arg_out_1, this->dim_Pars(), nCOL );
+    real_ptr a = createMatrixValue( arg_out_0, nR, nCOL );
+    real_ptr c = createMatrixValue( arg_out_1, this->dim_Pars(), nCOL );
 
     MatrixWrapper<real_type> DuDxlxlp( const_cast<real_type*>(DuDxlxlp_ptr), nU, nXLP, nU );
     MatrixWrapper<real_type> DaDxlxlp( a, nR, nCOL, nR );
     MatrixWrapper<real_type> DcDxlxlp( c, this->dim_Pars(), nCOL, this->dim_Pars() );
 
-    this->DacDxlxlp_eval( n_thread, L, R, P, U, DuDxlxlp, DaDxlxlp, DcDxlxlp );
+    this->DacDxlp_eval( n_thread, L, R, P, U, DuDxlxlp, DaDxlxlp, DcDxlxlp );
 
     #undef CMD
   }
@@ -1296,15 +1147,16 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('hc', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
 
-    CHECK_IN_OUT( 12, 2 );
+    CHECK_IN( 12 );
+    CHECK_OUT( 2 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_10 );
     GET_ARG_OMEGA( arg_in_11 );
 
-    real_type * h = createMatrixValue( arg_out_0, 2*this->dim_X(), 1 );
-    real_type * c = createMatrixValue( arg_out_1, this->dim_Pars(), 1 );
+    real_ptr h = createMatrixValue( arg_out_0, 2*this->dim_X(), 1 );
+    real_ptr c = createMatrixValue( arg_out_1, this->dim_Pars(), 1 );
 
     this->hc_eval( L, R, Omega, P, h, c );
 
@@ -1319,14 +1171,15 @@ public:
    |               |___|__/                            |___|
   \*/
   void
-  do_DhcDxlxlop(
+  do_DhcDxlop(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DhcDxlxlop', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
+    "_Mex('DhcDxlop', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
 
-    CHECK_IN_OUT( 12, 2 );
+    CHECK_IN( 12 );
+    CHECK_OUT( 2 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -1335,13 +1188,13 @@ public:
 
     mwSize nCOL = 4*this->dim_X()+this->dim_Pars();
     mwSize nR   = 2*this->dim_X();
-    real_type * h = createMatrixValue( arg_out_0, nR, nCOL );
-    real_type * c = createMatrixValue( arg_out_1, this->dim_Pars(), nCOL );
+    real_ptr h = createMatrixValue( arg_out_0, nR, nCOL );
+    real_ptr c = createMatrixValue( arg_out_1, this->dim_Pars(), nCOL );
 
     MatrixWrapper<real_type> DhDxlop( h, nR, nCOL, nR );
     MatrixWrapper<real_type> DcDxlop( c, this->dim_Pars(), nCOL, this->dim_Pars() );
 
-    this->DhcDxlxlop_eval( L, R, Omega, P, DhDxlop, DcDxlop );
+    this->DhcDxlop_eval( L, R, Omega, P, DhDxlop, DcDxlop );
 
     #undef CMD
   }
@@ -1358,33 +1211,51 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('u', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
+    "_Mex('u', obj, iseg_L, q_L, x_L, lambda_L[, iseg_R, q_R, x_R, lambda_R], pars ): "
 
-    CHECK_IN_OUT( 11, 1 );
+    //CHECK_IN( 12 );
+    CHECK_OUT( 1 );
 
-    mwSize nCOL;
+    mwSize nP, nU, nCOL;
     Mechatronix::U_solver & US = this->m_U_control_solver[0];
 
-    NodeType2 L, R;
-    get_LR2( CMD, nrhs, prhs, L, R );
-    GET_ARG_P( arg_in_10 );
+    if ( nrhs == 11 ) {
+      NodeType2 L, R;
+      get_LR2( CMD, nrhs, prhs, L, R );
+      GET_ARG_P( arg_in_10 );
 
-    U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
-    if ( m_U_solve_iterative ) {
-      this->u_guess_eval( L, R, P, U );
-      US.eval( L, R, P, U, U );
+      U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
+      if ( m_U_solve_iterative ) {
+        this->u_guess_eval( L, R, P, U );
+        US.eval( L, R, P, U, U );
+      } else {
+        this->u_eval_analytic( L, R, P, U );
+      }
+
+    } else if ( nrhs == 7 ) {
+      NodeType2 N;
+      get_N( CMD, nrhs, prhs, N );
+      GET_ARG_P( arg_in_6 );
+
+      U_pointer_type U( createMatrixValue( arg_out_0, this->dim_U(), 1 ) );
+      if ( m_U_solve_iterative ) {
+        this->u_guess_eval( N, P, U );
+        m_U_control_solver[0].eval( N, P, U, U );
+      } else {
+        this->u_eval_analytic( N, P, U );
+      }
+
     } else {
-      this->u_eval_analytic( L, R, P, U );
+      MEX_ASSERT( false, CMD "argument must be 12 or 8" );
     }
     #undef CMD
   }
   /*\
-   |   ____        ____       _      _
-   |  |  _ \ _   _|  _ \__  _| |_  _| |_ __
-   |  | | | | | | | | | \ \/ / \ \/ / | '_ \
-   |  | |_| | |_| | |_| |>  <| |>  <| | |_) |
-   |  |____/ \__,_|____//_/\_\_/_/\_\_| .__/
-   |                                  |_|
+   |   ___       ___      _
+   |  |   \ _  _|   \__ _| |_ __
+   |  | |) | || | |) \ \ / | '_ \
+   |  |___/ \_,_|___//_\_\_| .__/
+   |                       |_|
   \*/
   void
   do_DuDxlxlp(
@@ -1392,29 +1263,52 @@ public:
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DuDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
+    "_Mex('DuDxlxlp', obj, iseg_L, q_L, x_L, lambda_L[, iseg_R, q_R, x_R, lambda_R], pars, U ): "
 
-    CHECK_IN_OUT( 11, 1 );
+    //CHECK_IN( 12 );
+    CHECK_OUT( 1 );
 
-    mwSize nCOL;
+    mwSize nP, nU, nCOL;
     Mechatronix::U_solver & US = this->m_U_control_solver[0];
 
-    NodeType2 L, R;
-    get_LR2( CMD, nrhs, prhs, L, R );
-    GET_ARG_P( arg_in_10 );
-    GET_ARG_U( arg_in_11 );
+    if ( nrhs == 12 ) {
+      NodeType2 L, R;
+      get_LR2( CMD, nrhs, prhs, L, R );
+      GET_ARG_P( arg_in_10 );
+      GET_ARG_U( arg_in_11 );
 
-    nCOL = 4*this->dim_X() + this->dim_Pars();
-    real_type * DuDxlxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
+      nCOL = 4*this->dim_X() + this->dim_Pars();
+      real_ptr DuDxlxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
 
-    MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
+      MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
 
-    if ( m_U_solve_iterative ) {
-      US.u_eval_DuDxlxlp( L, R, P, U, DuDxlxlp );
+      if ( m_U_solve_iterative ) {
+        US.u_eval_DuDxlxlp( L, R, P, U, DuDxlxlp );
+      } else {
+        this->DuDxlxlp_full_analytic( L, R, P, U, DuDxlxlp );
+      }
+
+    } else if ( nrhs == 8 ) {
+
+      NodeType2 N;
+      get_N( CMD, nrhs, prhs, N );
+      GET_ARG_P( arg_in_6 );
+      GET_ARG_U( arg_in_7 );
+
+      nCOL = 4*this->dim_X() + this->dim_Pars();
+      real_ptr DuDxlxlp_ptr = createMatrixValue( arg_out_0, this->dim_U(), nCOL );
+
+      MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
+
+      if ( m_U_solve_iterative ) {
+        US.u_eval_DuDxlxlp( N, P, U, DuDxlxlp );
+      } else {
+        this->DuDxlxlp_full_analytic( N, P, U, DuDxlxlp );
+      }
+
     } else {
-      this->DuDxlxlp_full_analytic( L, R, P, U, DuDxlxlp );
+      MEX_ASSERT( false, CMD "argument must be 12 or 8" );
     }
-
     #undef CMD
   }
 
@@ -1433,25 +1327,22 @@ public:
     // -------------------
     N.i_segment = integer( getInt( arg_in_2, fmt::format( "{} i_segment", msg ) ) );
     UTILS_ASSERT(
-      N.i_segment >= 0 && N.i_segment < this->num_segments(),
-      "{} iseg_L = {} expected to be in [0,{})\n",
-      msg, N.i_segment, this->num_segments()
+      N.i_segment >= 0 && N.i_segment < this->nSegments(),
+      "iseg_L = {} expected to be in [0,{})\n", msg, N.i_segment, this->nSegments()
     );
 
     // -------------------
     N.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "{} |q_L| = {} expected to be {}\n",
-      msg, nQ, this->dim_Q()
+      "|q_L| = {} expected to be {}\n", msg, nQ, this->dim_Q()
     );
 
     // -------------------
     N.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "{} |x_L| = {} expected to be {}\n",
-      msg, nX, this->dim_X()
+      "|x_L| = {} expected to be {}\n", msg, nX, this->dim_X()
     );
   }
 
@@ -1468,7 +1359,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('rhs_ode', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1476,7 +1368,7 @@ public:
     GET_ARG_U( arg_in_5 );
     GET_ARG_P( arg_in_6 );
 
-    real_type * rhs = createMatrixValue( arg_out_0, this->rhs_ode_numEqns(), 1 );
+    real_ptr rhs = createMatrixValue( arg_out_0, this->rhs_ode_numEqns(), 1 );
     this->rhs_ode_eval( N, U, P, rhs );
 
     #undef CMD
@@ -1491,7 +1383,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Drhs_odeDx', i_seg, obj, q, x, u, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1512,7 +1405,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Drhs_odeDu', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1534,7 +1428,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Drhs_odeDp', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1561,7 +1456,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('A', obj, i_seg, q, x, pars ): "
 
-    CHECK_IN_OUT( 6, 1 );
+    CHECK_IN( 6 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1587,14 +1483,15 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('eta', obj, i_seg, q, x, lambda, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
 
     GET_ARG_P( arg_in_6 );
 
-    real_type * rhs = createMatrixValue( arg_out_0, this->eta_numEqns(), 1 );
+    real_ptr rhs = createMatrixValue( arg_out_0, this->eta_numEqns(), 1 );
     this->eta_eval( N, P, rhs );
 
     #undef CMD
@@ -1609,7 +1506,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DetaDx', obj, i_seg, q, x, lambda, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1630,7 +1528,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DetaDp', obj, i_seg, q, lambda, x, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1655,7 +1554,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('nu', obj, i_seg, q, x, V, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1663,7 +1563,7 @@ public:
     GET_ARG_V( arg_in_5 );
     GET_ARG_P( arg_in_6 );
 
-    real_type * rhs = createMatrixValue( arg_out_0, this->nu_numEqns(), 1 );
+    real_ptr rhs = createMatrixValue( arg_out_0, this->nu_numEqns(), 1 );
     this->nu_eval( N, V, P, rhs );
 
     #undef CMD
@@ -1678,7 +1578,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DnuDx', obj, i_seg, q, x, V, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1700,7 +1601,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DnuDp', obj, i_seg, q, x, V, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1733,7 +1635,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Hx', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN_OUT( 9, 1 );
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1742,7 +1645,7 @@ public:
     GET_ARG_U( arg_in_7 );
     GET_ARG_P( arg_in_8 );
 
-    real_type * rhs = createMatrixValue( arg_out_0, this->Hx_numEqns(), 1 );
+    real_ptr rhs = createMatrixValue( arg_out_0, this->Hx_numEqns(), 1 );
     this->Hx_eval( N, V, U, P, rhs );
 
     #undef CMD
@@ -1757,7 +1660,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHxDx', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN_OUT( 9, 1 );
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1780,7 +1684,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHxDp', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN_OUT( 9, 1 );
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_qx( CMD, nrhs, prhs, N );
@@ -1807,7 +1712,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Hu', obj, i_seg, q, x, lambda, u, pars ): "
 
-    CHECK_IN_OUT( 8, 1 );
+    CHECK_IN( 8 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1815,7 +1721,7 @@ public:
     GET_ARG_U( arg_in_6 );
     GET_ARG_P( arg_in_7 );
 
-    real_type * rhs = createMatrixValue( arg_out_0, this->Hu_numEqns(), 1 );
+    real_ptr rhs = createMatrixValue( arg_out_0, this->Hu_numEqns(), 1 );
     this->Hu_eval( N, U, P, rhs );
 
     #undef CMD
@@ -1830,7 +1736,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHuDx', obj, i_seg, q, x, lambda, u, pars ): "
 
-    CHECK_IN_OUT( 8, 1 );
+    CHECK_IN( 8 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1852,7 +1759,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHuDp', obj, i_seg, q, x, lambda, u, pars ): "
 
-    CHECK_IN_OUT( 8, 1 );
+    CHECK_IN( 8 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1879,7 +1787,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('Hp', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN_OUT( 9, 1 );
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1888,7 +1797,7 @@ public:
     GET_ARG_U( arg_in_7 );
     GET_ARG_P( arg_in_8 );
 
-    real_type * rhs = createMatrixValue( arg_out_0, this->Hp_numEqns(), 1 );
+    real_ptr rhs = createMatrixValue( arg_out_0, this->Hp_numEqns(), 1 );
     this->Hp_eval( N, V, U, P, rhs );
 
     #undef CMD
@@ -1903,7 +1812,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('DHpDp', obj, i_seg, q, x, lambda, V, u, pars ): "
 
-    CHECK_IN_OUT( 9, 1 );
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
 
     NodeType2 N;
     get_N( CMD, nrhs, prhs, N );
@@ -1941,49 +1851,43 @@ public:
     // -------------------
     L.i_segment = integer( getInt( arg_in_2, fmt::format( "{} L_segment", msg ) ) );
     UTILS_ASSERT(
-      L.i_segment >= 0 && L.i_segment < this->num_segments(),
-      "{} iseg_L = {} expected to be in [0,{})\n",
-      msg, L.i_segment, this->num_segments()
+      L.i_segment >= 0 && L.i_segment < this->nSegments(),
+      "iseg_L = {} expected to be in [0,{})\n", msg, L.i_segment, this->nSegments()
     );
 
     // -------------------
     L.q = getVectorPointer( arg_in_3, nQ, fmt::format( "{} argument q_L", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "{} |q_L| = {} expected to be {}\n",
-      msg, nQ, this->dim_Q()
+      "|q_L| = {} expected to be {}\n", msg, nQ, this->dim_Q()
     );
 
     // -------------------
     L.x = getVectorPointer( arg_in_4, nX, fmt::format( "{} argument x_L", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "{} |x_L| = {} expected to be {}\n",
-      msg, nX, this->dim_X()
+      "|x_L| = {} expected to be {}\n", msg, nX, this->dim_X()
     );
 
     // -------------------
     R.i_segment = integer( getInt( arg_in_5, fmt::format( "{} R_segment", msg ) ) );
     UTILS_ASSERT(
-      R.i_segment >= 0 && R.i_segment < this->num_segments(),
-      "{} iseg_R = {} expected to be in [0,{})\n",
-      msg, R.i_segment, this->num_segments()
+      R.i_segment >= 0 && R.i_segment < this->nSegments(),
+      "iseg_R = {} expected to be in [0,{})\n", msg, R.i_segment, this->nSegments()
     );
 
     // -------------------
     R.q = getVectorPointer( arg_in_6, nQ, fmt::format( "{} argument q_R", msg ) );
     UTILS_ASSERT(
       nQ == this->dim_Q(),
-      "{} |q_R| = {} expected to be {}\n",
-      msg, nQ, this->dim_Q()
+      "|q_R| = {} expected to be {}\n", msg, nQ, this->dim_Q()
     );
 
     // -------------------
     R.x = getVectorPointer( arg_in_7, nX, fmt::format( "{} argument x_R", msg ) );
     UTILS_ASSERT(
       nX == this->dim_X(),
-      "{} |x_R| = {} expected to be {}\n",
-      msg, nX, this->dim_X()
+      "|x_R| = {} expected to be {}\n", msg, nX, this->dim_X()
     );
   }
 
@@ -1997,13 +1901,14 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('boundaryConditions', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
-    CHECK_IN_OUT( 9, 1 );
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
 
     NodeType L, R;
     get_LR( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_8 );
 
-    real_type * bc = createMatrixValue( arg_out_0, this->dim_BC(), 1 );
+    real_ptr bc = createMatrixValue( arg_out_0, 2*this->dim_X(), 1 );
 
     this->boundaryConditions_eval( L, R, P, bc );
 
@@ -2013,19 +1918,41 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  do_DboundaryConditionsDxxp(
+  do_DboundaryConditionsDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('DboundaryConditionsDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+    #define CMD MODEL_NAME "_Mex('DboundaryConditionsDx', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
-    CHECK_IN_OUT( 9, 1 );
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
 
     NodeType L, R;
     get_LR( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_8 );
 
-    RETURN_SPARSE( DboundaryConditionsDxxp, L, R, P );
+    RETURN_SPARSE( DboundaryConditionsDx, L, R, P );
+
+    #undef CMD
+  }
+
+  // --------------------------------------------------------------------------
+
+  void
+  do_DboundaryConditionsDp(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('DboundaryConditionsDp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
+
+    NodeType L, R;
+    get_LR( CMD, nrhs, prhs, L, R );
+    GET_ARG_P( arg_in_8 );
+
+    RETURN_SPARSE( DboundaryConditionsDp, L, R, P );
 
     #undef CMD
   }
@@ -2045,43 +1972,72 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('adjointBC', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ): "
 
-    CHECK_IN_OUT( 12, 1 );
+    CHECK_IN( 12 );
+    CHECK_OUT( 1 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_10 );
     GET_ARG_OMEGA_FULL( arg_in_11 );
 
-    real_type * res = createMatrixValue( arg_out_0, this->adjointBC_numEqns(), 1 );
+    real_ptr res = createMatrixValue( arg_out_0, this->adjointBC_numEqns(), 1 );
     this->adjointBC_eval( L, R, P, Omega, res );
 
     #undef CMD
   }
 
   /*\
-   |   ____            _  _       _       _   ____   ____ ____
-   |  |  _ \  __ _  __| |(_) ___ (_)_ __ | |_| __ ) / ___|  _ \__  ____  ___ __
-   |  | | | |/ _` |/ _` || |/ _ \| | '_ \| __|  _ \| |   | | | \ \/ /\ \/ / '_ \
-   |  | |_| | (_| | (_| || | (_) | | | | | |_| |_) | |___| |_| |>  <  >  <| |_) |
-   |  |____/ \__,_|\__,_|/ |\___/|_|_| |_|\__|____/ \____|____//_/\_\/_/\_\ .__/
-   |                   |__/                                               |_|
+   |   ___          _  _     _     _   ___  ___ ___
+   |  |   \ __ _ __| |(_)___(_)_ _| |_| _ )/ __|   \__ __
+   |  | |) / _` / _` || / _ \ | ' \  _| _ \ (__| |) \ \ /
+   |  |___/\__,_\__,_|/ \___/_|_||_\__|___/\___|___//_\_\
+   |                |__/
   \*/
   void
-  do_DadjointBCDxxp(
+  do_DadjointBCDx(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME \
-    "_Mex('DadjointBCDxxp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ): "
+    "_Mex('DadjointBCDx', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ): "
 
-    CHECK_IN_OUT( 12, 1 );
+    CHECK_IN( 12 );
+    CHECK_OUT( 1 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_10 );
     GET_ARG_OMEGA_FULL( arg_in_11 );
 
-    RETURN_SPARSE( DadjointBCDxxp, L, R, P, Omega );
+    RETURN_SPARSE( DadjointBCDx, L, R, P, Omega );
+
+    #undef CMD
+  }
+
+  /*\
+   |   ___          _  _     _     _   ___  ___ ___
+   |  |   \ __ _ __| |(_)___(_)_ _| |_| _ )/ __|   \ _ __
+   |  | |) / _` / _` || / _ \ | ' \  _| _ \ (__| |) | '_ \
+   |  |___/\__,_\__,_|/ \___/_|_||_\__|___/\___|___/| .__/
+   |                |__/                            |_|
+  \*/
+  void
+  do_DadjointBCDp(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME \
+    "_Mex('DadjointBCDp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, Omega ): "
+
+    CHECK_IN( 12 );
+    CHECK_OUT( 1 );
+
+    NodeType2 L, R;
+    get_LR2( CMD, nrhs, prhs, L, R );
+    GET_ARG_P( arg_in_10 );
+    GET_ARG_OMEGA_FULL( arg_in_11 );
+
+    RETURN_SPARSE( DadjointBCDp, L, R, P, Omega );
 
     #undef CMD
   }
@@ -2101,13 +2057,14 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('jump', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
 
-    CHECK_IN_OUT( 11, 1 );
+    CHECK_IN( 11 );
+    CHECK_OUT( 1 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_10 );
 
-    real_type * res = createMatrixValue( arg_out_0, this->jump_numEqns(), 1 );
+    real_ptr res = createMatrixValue( arg_out_0, this->jump_numEqns(), 1 );
     this->jump_eval( L, R, P, res );
 
     #undef CMD
@@ -2128,7 +2085,8 @@ public:
     #define CMD MODEL_NAME \
     "_Mex('DjumpDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
 
-    CHECK_IN_OUT( 11, 1 );
+    CHECK_IN( 11 );
+    CHECK_OUT( 1 );
 
     NodeType2 L, R;
     get_LR2( CMD, nrhs, prhs, L, R );
@@ -2153,7 +2111,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('penalties', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -2175,7 +2134,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('control_penalties', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -2203,7 +2163,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('lagrange_target', obj, i_seg, q, x, u, pars ): "
 
-    CHECK_IN_OUT( 7, 1 );
+    CHECK_IN( 7 );
+    CHECK_OUT( 1 );
 
     NodeType N;
     get_qx( CMD, nrhs, prhs, N );
@@ -2219,37 +2180,14 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  do_DlagrangeDxup(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('DlagrangeDxup', obj, iseg, q, x, u, pars ): "
-
-    CHECK_IN_OUT( 7, 1 );
-
-    NodeType N;
-    get_qx( CMD, nrhs, prhs, N );
-
-    GET_ARG_U( arg_in_5 );
-    GET_ARG_P( arg_in_6 );
-
-    // Gradient is a row vector
-    real_type * res = createMatrixValue( arg_out_0, 1, this->DlagrangeDxup_numEqns() );
-    this->DlagrangeDxup_eval( N, U, P , res );
-
-    #undef CMD
-  }
-
-  // --------------------------------------------------------------------------
-
-  void
   do_mayer_target(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD MODEL_NAME "_Mex('mayer_target', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
-    CHECK_IN_OUT( 9, 1 );
+    CHECK_IN( 9 );
+    CHECK_OUT( 1 );
 
     NodeType L, R;
     get_LR( CMD, nrhs, prhs, L, R );
@@ -2263,42 +2201,20 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  do_DmayerDxxp(
+  do_q(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD MODEL_NAME "_Mex('DmayerDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+    #define CMD MODEL_NAME "_Mex('q', obj, i_segment, s ): "
 
-    CHECK_IN_OUT( 9, 1 );
-
-    NodeType L, R;
-    get_LR( CMD, nrhs, prhs, L, R );
-    GET_ARG_P( arg_in_8 );
-
-    // Gradient is a row vector
-    real_type * res = createMatrixValue( arg_out_0, 1, this->DmayerDxxp_numEqns() );
-    this->DmayerDxxp_eval( L, R, P , res );
-
-    #undef CMD
-  }
-
-  // --------------------------------------------------------------------------
-
-  void
-  do_mesh_functions(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('mesh_functions', obj, i_segment, s ): "
-
-    CHECK_IN_OUT( 4, 1 );
+    CHECK_IN( 4 );
+    CHECK_OUT( 1 );
 
     // -------------------
     integer i_segment = integer( getInt( arg_in_2, fmt::format( "{} i_segment", CMD ) ) );
     UTILS_ASSERT(
-      i_segment >= 0 && i_segment < this->num_segments(),
-      CMD "i_segment = {} expected to be in [0,{})\n",
-      i_segment, this->num_segments()
+      i_segment >= 0 && i_segment < this->nSegments(),
+      "i_segment = {} expected to be in [0,{})\n", CMD, i_segment, this->nSegments()
     );
 
     // -------------------
@@ -2318,12 +2234,13 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('nodes', obj ): "
 
-    CHECK_IN_OUT( 2, 1 );
+    CHECK_IN( 2 );
+    CHECK_OUT( 1 );
 
     integer n = m_mesh_base->num_nodes();
-    real_type * nodes = createMatrixValue( arg_out_0, n, 1 );
+    real_ptr nodes = createMatrixValue( arg_out_0, n, 1 );
 
-    for ( integer i = 0; i < n; ++i ) nodes[i] = m_mesh_base->ss_node( i );
+    for ( integer i = 0; i < n; ++i ) nodes[i] = m_mesh_base->ssNode( i );
 
     #undef CMD
   }
@@ -2337,7 +2254,8 @@ public:
   ) {
     #define CMD MODEL_NAME "_Mex('node_to_segment', obj ): "
 
-    CHECK_IN_OUT( 2, 1 );
+    CHECK_IN( 2 );
+    CHECK_OUT( 1 );
 
     integer n = m_mesh_base->num_nodes();
     int32_t * node_to_segment = createMatrixInt32( arg_out_0, n, 1 );
@@ -2376,7 +2294,8 @@ do_new(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD MODEL_NAME "_Mex('new',name): "
-  CHECK_IN_OUT( 2, 1 );
+  CHECK_IN(2);
+  CHECK_OUT(1);
   MEX_ASSERT( mxIsChar(arg_in_1), CMD "second argument must be a string" );
   ProblemStorage * ptr = new ProblemStorage( mxArrayToString(arg_in_1), pTP, pConsole );
   arg_out_0 = convertPtr2Mat<ProblemStorage>(ptr);
@@ -2398,7 +2317,8 @@ do_help(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD MODEL_NAME "_Mex('help'): "
-  CHECK_IN_OUT( 1, 0 );
+  CHECK_IN(1);
+  CHECK_OUT(0);
   mexPrintf( "%s", help_msg );
   #undef CMD
 }
@@ -2416,7 +2336,8 @@ do_infoLevel(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD MODEL_NAME "_Mex('infoLevel',obj,infoL): "
-  CHECK_IN_OUT( 3, 0 );
+  CHECK_IN( 3 );
+  CHECK_OUT( 0 );
   int64_t ilev = getInt( arg_in_2, CMD " infoL" );
   pConsole->changeLevel( ilev );
   #undef CMD
@@ -2431,12 +2352,13 @@ do_infoLevel(
 */
 static
 void
-do_set_max_threads(
+do_N_threads(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('set_max_threads',obj,nt): "
-  CHECK_IN_OUT( 3, 0 );
+  #define CMD MODEL_NAME "_Mex('N_threads',obj,nt): "
+  CHECK_IN( 3 );
+  CHECK_OUT( 0 );
   int64_t N_threads = getInt( arg_in_2, CMD " nt" );
   convertMat2Ptr<ProblemStorage>(arg_in_1)->
     set_N_threads( Mechatronix::num_threads_bound( N_threads ) );
@@ -2456,7 +2378,8 @@ do_delete(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD MODEL_NAME "_Mex('delete',obj): "
-  CHECK_IN_OUT( 2, 0 );
+  CHECK_IN(2);
+  CHECK_OUT(0);
   destroyObject<ProblemStorage>( arg_in_1 );
   #undef CMD
 }
@@ -2729,34 +2652,6 @@ do_get_ocp_data(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_init_U(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('init_U',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_init_U( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_eval_U(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('eval_U',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_eval_U( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
 do_eval_F(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
@@ -2841,15 +2736,15 @@ do_ac(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DacDxlxlp(
+do_DacDxlp(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DacDxlxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DacDxlp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DacDxlxlp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DacDxlp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -2869,15 +2764,15 @@ do_hc(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DhcDxlxlop(
+do_DhcDxlop(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DhcDxlxlop',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DhcDxlop',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DhcDxlxlop( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DhcDxlop( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3191,15 +3086,29 @@ do_boundaryConditions(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DboundaryConditionsDxxp(
+do_DboundaryConditionsDx(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DboundaryConditionsDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DboundaryConditionsDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDxxp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDx( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_DboundaryConditionsDp(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('DboundaryConditionsDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3219,15 +3128,29 @@ do_adjointBC(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DadjointBCDxxp(
+do_DadjointBCDx(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DadjointBCDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DadjointBCDx',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDxxp( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDx( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_DadjointBCDp(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('DadjointBCDp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3303,20 +3226,6 @@ do_lagrange_target(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DlagrangeDxup(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('DlagrangeDxup',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DlagrangeDxup( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
 do_mayer_target(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
@@ -3331,29 +3240,15 @@ do_mayer_target(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DmayerDxxp(
+do_q(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   MEX_ASSERT2(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DmayerDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('q',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_DmayerDxxp( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_mesh_functions(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('mesh_functions',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_mesh_functions( nlhs, plhs, nrhs, prhs );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_q( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -3404,17 +3299,15 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"get_solution2",do_get_solution2},
   {"get_solution3",do_get_solution3},
   {"get_ocp_data",do_get_ocp_data},
-  {"init_U",do_init_U},
-  {"eval_U",do_eval_U},
   {"eval_F",do_eval_F},
   {"eval_JF",do_eval_JF},
   {"eval_JF_pattern",do_eval_JF_pattern},
   {"pack",do_pack},
   {"unpack",do_unpack},
   {"ac",do_ac},
-  {"DacDxlxlp",do_DacDxlxlp},
+  {"DacDxlp",do_DacDxlp},
   {"hc",do_hc},
-  {"DhcDxlxlop",do_DhcDxlxlop},
+  {"DhcDxlop",do_DhcDxlop},
   {"u",do_u},
   {"DuDxlxlp",do_DuDxlxlp},
   {"rhs_ode",do_rhs_ode},
@@ -3437,23 +3330,23 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"Hp",do_Hp},
   {"DHpDp",do_DHpDp},
   {"boundaryConditions",do_boundaryConditions},
-  {"DboundaryConditionsDxxp",do_DboundaryConditionsDxxp},
+  {"DboundaryConditionsDx",do_DboundaryConditionsDx},
+  {"DboundaryConditionsDp",do_DboundaryConditionsDp},
   {"adjointBC",do_adjointBC},
-  {"DadjointBCDxxp",do_DadjointBCDxxp},
+  {"DadjointBCDx",do_DadjointBCDx},
+  {"DadjointBCDp",do_DadjointBCDp},
   {"jump",do_jump},
   {"DjumpDxlxlp",do_DjumpDxlxlp},
   {"penalties",do_penalties},
   {"control_penalties",do_control_penalties},
   {"lagrange_target",do_lagrange_target},
-  {"DlagrangeDxup",do_DlagrangeDxup},
   {"mayer_target",do_mayer_target},
-  {"DmayerDxxp",do_DmayerDxxp},
-  {"mesh_functions",do_mesh_functions},
+  {"q",do_q},
   {"nodes",do_nodes},
   {"node_to_segment",do_node_to_segment},
   {"new",do_new},
   {"infoLevel",do_infoLevel},
-  {"set_max_threads",do_set_max_threads},
+  {"N_threads",do_N_threads},
   {"help",do_help},
   {"delete",do_delete}
 };

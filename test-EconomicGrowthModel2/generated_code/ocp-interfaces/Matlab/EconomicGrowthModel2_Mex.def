@@ -1,0 +1,9 @@
+
+; mexFunction.def : Declares the module parameters for the DLL.
+
+LIBRARY      "EconomicGrowthModel2_Mex"
+DESCRIPTION  'Mex file for EconomicGrowthModel2'
+
+EXPORTS
+    ; Explicit exports can go here
+    mexFunction

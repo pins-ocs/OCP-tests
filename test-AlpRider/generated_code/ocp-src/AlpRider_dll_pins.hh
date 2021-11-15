@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_dll_pins.hh                                           |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,7 +84,7 @@ namespace AlpRiderDefine {
 
   #include <sstream>
 
-  #if !defined(MECHATRONIX_OS_WINDOWS) && !defined(MECHATRONIX_OS_MINGW)
+  #ifndef MECHATRONIX_OS_WINDOWS
     #include <signal.h>
     #include <execinfo.h>
   #endif
@@ -142,7 +142,7 @@ namespace AlpRiderDefine {
       catch ( std::exception const & exc ) {
         error = exc.what();
       }
-      catch ( char const exc[] ) {
+      catch ( char const * exc ) {
         error = exc;
       }
       catch (...) {

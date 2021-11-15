@@ -1,0 +1,64 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_y
+[ 2] final_x
+
+
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 1001
+Segment N.0: s0 = 0.000 length = 1.000 npts = 1001 no data set
+END Mesh[mesh]
+INFO CLASS = Dadebo1
+  num_nodes    = 1001
+  dim         = u = 1, q = 1, x = 2, p = 0, omega = 3, big_bc = 7
+  BC          = Inital = 4, Final = 3, Cyclic = 0
+  OMEGA       = Inital = 2, Final = 1, Cyclic = 0
+  total       = nZ = 4007, UC = 1000, Q = 1001
+  index start = omega = 4004, p = 4007
+  FD jacobian = NO
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton [ANALYTIC]
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 1] ( 0.000998 , 1.89e-05 ) [  0.239   , 0.00946  ] 1.00       [solverNewtonDumped]
+[  2, 1] ( 1.89e-05 , 2.07e-17 ) [ 0.00946  , 1.81e-17 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 2.38[ms]      timeout        = 0 [ms]
+iteration      = 2             tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 4007
+max acc. iter. = 800           N. System pars = 1000
+Converged      = YES           Memory Used    = 369Kb (+73bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 3             Jacobian       = 2         
+Factorization  = 2             Inversion      = 4         
+------------------------ USER INFO -------------------------
+last ||d||_inf = 8.5917e-17    last||d1||_inf = 0.075766
+last ||f||_inf = 1.0741e-16    last||f||_1    = 2.0720e-17
+------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ 0.000, 0.9242 ]
+[Penalties/Barriers,Controls] = [ 0.000, 0.000 ]
+All Done Folks!

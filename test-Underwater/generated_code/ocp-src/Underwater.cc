@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,6 +27,8 @@
 
 #include "Underwater.hh"
 #include "Underwater_Pars.hh"
+
+#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -141,7 +143,7 @@ namespace UnderwaterDefine {
     nullptr
   };
 
-  char const *namesBc[numBc+1] = {
+  char const *namesBc[numBC+1] = {
     "initial_x",
     "initial_z",
     "initial_vx",
@@ -181,7 +183,7 @@ namespace UnderwaterDefine {
     this->ns_continuation_begin = 0;
     this->ns_continuation_end   = 2;
     // Initialize to NaN all the ModelPars
-    std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
+    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setup_names(
@@ -192,7 +194,7 @@ namespace UnderwaterDefine {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBc,                    namesBc
+      numBC,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -200,13 +202,10 @@ namespace UnderwaterDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
-    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   Underwater::~Underwater() {
-    // Begin: User Exit Code
-    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -226,8 +225,8 @@ namespace UnderwaterDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase+1, s, s-old_s, old_s
+        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
+        phase+1, s, s-old_s
       ),
       msg_level
     );
@@ -238,8 +237,8 @@ namespace UnderwaterDefine {
       phase, old_s, s
     );
     switch ( phase ) {
-      case 0: continuation_step_0( s ); break;
-      case 1: continuation_step_1( s ); break;
+      case 0: continuationStep0( s ); break;
+      case 1: continuationStep1( s ); break;
       default:
         UTILS_ERROR(
           "Underwater::update_continuation( phase number={}, old_s={}, s={} )"
@@ -259,10 +258,10 @@ namespace UnderwaterDefine {
   // initialize parameters using associative array
   */
   void
-  Underwater::setup_parameters( GenericContainer const & gc_data ) {
+  Underwater::setupParameters( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Parameters"),
-      "Underwater::setup_parameters: Missing key `Parameters` in data\n"
+      "Underwater::setupParameters: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Parameters");
 
@@ -282,7 +281,7 @@ namespace UnderwaterDefine {
   }
 
   void
-  Underwater::setup_parameters( real_type const Pars[] ) {
+  Underwater::setupParameters( real_type const Pars[] ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -295,7 +294,7 @@ namespace UnderwaterDefine {
   //                     |_|
   */
   void
-  Underwater::setup_classes( GenericContainer const & gc_data ) {
+  Underwater::setupClasses( GenericContainer const & gc_data ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -307,7 +306,7 @@ namespace UnderwaterDefine {
   //                    |_|
   */
   void
-  Underwater::setup_user_classes( GenericContainer const & gc ) {
+  Underwater::setupUserClasses( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -323,7 +322,7 @@ namespace UnderwaterDefine {
   //              |_|  |_|
   */
   void
-  Underwater::setup_user_mapped_functions( GenericContainer const & gc_data ) {
+  Underwater::setupUserMappedFunctions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -334,11 +333,11 @@ namespace UnderwaterDefine {
   //                     |_|
   */
   void
-  Underwater::setup_controls( GenericContainer const & gc_data ) {
+  Underwater::setupControls( GenericContainer const & gc_data ) {
     // initialize Control penalties
     UTILS_ASSERT0(
       gc_data.exists("Controls"),
-      "Underwater::setup_classes: Missing key `Controls` in data\n"
+      "Underwater::setupClasses: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
     u1Control.setup( gc("u1Control") );
@@ -357,11 +356,11 @@ namespace UnderwaterDefine {
   //                     |_|
   */
   void
-  Underwater::setup_pointers( GenericContainer const & gc_data ) {
+  Underwater::setupPointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "Underwater::setup_pointers: Missing key `Pointers` in data\n"
+      "Underwater::setupPointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -369,7 +368,7 @@ namespace UnderwaterDefine {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in Underwater::setup_pointers(gc) cant find key `pMesh' in gc\n"
+      "in Underwater::setupPointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -424,20 +423,16 @@ namespace UnderwaterDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("Underwater::setup, Debug");
 
-    this->setup_parameters( gc );
-    this->setup_classes( gc );
-    this->setup_user_mapped_functions( gc );
-    this->setup_user_classes( gc );
-    this->setup_pointers( gc );
+    this->setupParameters( gc );
+    this->setupClasses( gc );
+    this->setupUserMappedFunctions( gc );
+    this->setupUserClasses( gc );
+    this->setupPointers( gc );
     this->setup_BC( gc );
-    this->setup_controls( gc );
+    this->setupControls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
-
-    // Begin: User Setup Code
-    // End: User Setup Code
-
     this->info_BC();
     this->info_classes();
     this->info();

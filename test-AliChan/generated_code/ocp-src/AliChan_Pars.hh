@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan_Pars.hh                                                |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef ALICHANPARS_DOT_HH
 #define ALICHANPARS_DOT_HH
 
-#define numBc                    2
+#define numBC                    2
 #define numModelPars             0
 #define numConstraint1D          0
 #define numConstraint2D          0

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_boundary_conditions.cc                        |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -67,14 +67,14 @@ namespace AlpRiderDefine {
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_y1] - ModelPars[iM_y1_i];
@@ -92,21 +92,21 @@ namespace AlpRiderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AlpRider::DboundaryConditionsDxxp_numRows() const
+  AlpRider::DboundaryConditionsDx_numRows() const
   { return 8; }
 
   integer
-  AlpRider::DboundaryConditionsDxxp_numCols() const
+  AlpRider::DboundaryConditionsDx_numCols() const
   { return 8; }
 
   integer
-  AlpRider::DboundaryConditionsDxxp_nnz() const
+  AlpRider::DboundaryConditionsDx_nnz() const
   { return 8; }
 
   void
-  AlpRider::DboundaryConditionsDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  AlpRider::DboundaryConditionsDx_pattern(
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -119,18 +119,18 @@ namespace AlpRiderDefine {
   }
 
   void
-  AlpRider::DboundaryConditionsDxxp_sparse(
+  AlpRider::DboundaryConditionsDx_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
@@ -142,7 +142,39 @@ namespace AlpRiderDefine {
     result__[ 6   ] = 1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 8, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  AlpRider::DboundaryConditionsDp_numRows() const
+  { return 8; }
+
+  integer
+  AlpRider::DboundaryConditionsDp_numCols() const
+  { return 0; }
+
+  integer
+  AlpRider::DboundaryConditionsDp_nnz() const
+  { return 0; }
+
+  void
+  AlpRider::DboundaryConditionsDp_pattern(
+    integer_ptr iIndex,
+    integer_ptr jIndex
+  ) const {
+  }
+
+  void
+  AlpRider::DboundaryConditionsDp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_ptr             result__
+  ) const {
+    // EMPTY
+
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -157,16 +189,16 @@ namespace AlpRiderDefine {
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
+    real_ptr                      result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
+    real_const_ptr    LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
+    real_const_ptr    LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
@@ -184,34 +216,67 @@ namespace AlpRiderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AlpRider::DadjointBCDxxp_numRows() const
+  AlpRider::DadjointBCDx_numRows() const
   { return 8; }
 
   integer
-  AlpRider::DadjointBCDxxp_numCols() const
+  AlpRider::DadjointBCDx_numCols() const
   { return 8; }
 
   integer
-  AlpRider::DadjointBCDxxp_nnz() const
+  AlpRider::DadjointBCDx_nnz() const
   { return 0; }
 
   void
-  AlpRider::DadjointBCDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  AlpRider::DadjointBCDx_pattern(
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
   }
 
   void
-  AlpRider::DadjointBCDxxp_sparse(
+  AlpRider::DadjointBCDx_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
+    real_ptr                      result__
   ) const {
     // EMPTY!
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  AlpRider::DadjointBCDp_numRows() const
+  { return 8; }
+
+  integer
+  AlpRider::DadjointBCDp_numCols() const
+  { return 0; }
+
+  integer
+  AlpRider::DadjointBCDp_nnz() const
+  { return 0; }
+
+  void
+  AlpRider::DadjointBCDp_pattern(
+    integer_ptr iIndex,
+    integer_ptr jIndex
+  ) const {
+  }
+
+  void
+  AlpRider::DadjointBCDp_sparse(
+    NodeType2 const             & LEFT__,
+    NodeType2 const             & RIGHT__,
+    P_const_pointer_type          P__,
+    OMEGA_full_const_pointer_type OMEGA__,
+    real_ptr                      result__
+  ) const {
+    // EMPTY!
+  }
+
 }
 
 // EOF: AlpRider_Methods_boundary_conditions.cc

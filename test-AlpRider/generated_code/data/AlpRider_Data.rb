@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: AlpRider_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 15/11/2021                                       #
+#  version: 1.0   date 16/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,11 +20,11 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-W0    = 0
-epsi0 = 0.1
-W     = W0
 tol0  = 0.1
 tol   = tol0
+W0    = 0
+W     = W0
+epsi0 = 0.1
 epsi  = epsi0
 
 mechatronix do |data|
@@ -46,12 +46,10 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck         = true
-  data.JacobianCheckFull     = false
-  data.JacobianCheck_epsilon = 1e-4
-
-  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  data.JacobianDiscretization = 'ANALYTIC'
+  data.JacobianCheck            = true
+  data.JacobianCheckFull        = false
+  data.JacobianCheck_epsilon    = 1e-4
+  data.FiniteDifferenceJacobian = false
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "AlpRider_dump"

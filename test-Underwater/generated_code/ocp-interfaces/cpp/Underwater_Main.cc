@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -88,7 +88,7 @@ main() {
     } else {
       cout << gc_solution("solver_message").get_string() << '\n';
       // dump solution to file
-      file.open( "data/Underwater_OCP_result_NOT_CONVERGED.txt" );
+      file.open( "data/Underwater_OCP_result_NOT_CONVERGED.ßtxt" );
     }
     file.precision(18);
     Mechatronix::save_OCP_solution_to_stream(gc_solution,file);
@@ -108,15 +108,13 @@ main() {
       gc_solution("parameters").print(cout);
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
-
-    delete m_model; 
   }
   catch ( std::exception const & exc ) {
     console.error(exc.what());
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

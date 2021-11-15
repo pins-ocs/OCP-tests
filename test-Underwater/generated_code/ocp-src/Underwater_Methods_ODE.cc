@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -88,11 +88,11 @@ namespace UnderwaterDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = X__[iX_vx];
@@ -104,14 +104,11 @@ namespace UnderwaterDefine {
     result__[ 1   ] = (-t7 * t2 + t4 * t6) * t1;
     real_type t13  = X__[iX_Omega];
     result__[ 2   ] = t13 * t1;
-    real_type t15  = ModelPars[iM_m1];
-    real_type t16  = 1.0 / t15;
-    real_type t19  = ModelPars[iM_m3];
-    result__[ 3   ] = (-t16 * t19 * t13 * t6 + t16 * U__[iU_u1]) * t1;
-    real_type t24  = 1.0 / t19;
-    result__[ 4   ] = (t24 * t15 * t13 * t2 + t24 * U__[iU_u2]) * t1;
-    real_type t32  = 1.0 / ModelPars[iM_inertia];
-    result__[ 5   ] = (t32 * U__[iU_u3] + t32 * (t19 - t15) * t6 * t2) * t1;
+    real_type t15  = ModelPars[iM_m3];
+    real_type t20  = ModelPars[iM_m1];
+    result__[ 3   ] = 1.0 / t20 * (-t15 * t13 * t6 + U__[iU_u1]) * t1;
+    result__[ 4   ] = 1.0 / t15 * (t20 * t13 * t2 + U__[iU_u2]) * t1;
+    result__[ 5   ] = 1.0 / ModelPars[iM_inertia] * (U__[iU_u3] - (-t15 + t20) * t6 * t2) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 6, i_segment );
   }
@@ -132,8 +129,8 @@ namespace UnderwaterDefine {
 
   void
   Underwater::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
@@ -157,11 +154,11 @@ namespace UnderwaterDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = X__[iX_vz];
@@ -169,10 +166,10 @@ namespace UnderwaterDefine {
     real_type t4   = cos(t3);
     real_type t6   = X__[iX_vx];
     real_type t7   = sin(t3);
-    result__[ 0   ] = (t4 * t2 - t7 * t6) * t1;
+    result__[ 0   ] = (t2 * t4 - t7 * t6) * t1;
     result__[ 1   ] = t4 * t1;
     result__[ 2   ] = t7 * t1;
-    result__[ 3   ] = (-t7 * t2 - t6 * t4) * t1;
+    result__[ 3   ] = (-t7 * t2 - t4 * t6) * t1;
     result__[ 4   ] = -result__[2];
     result__[ 5   ] = result__[1];
     result__[ 6   ] = t1;
@@ -210,8 +207,8 @@ namespace UnderwaterDefine {
 
   void
   Underwater::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
@@ -228,11 +225,11 @@ namespace UnderwaterDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_vx];
     real_type t2   = X__[iX_theta];
@@ -242,14 +239,11 @@ namespace UnderwaterDefine {
     result__[ 0   ] = t3 * t1 + t6 * t5;
     result__[ 1   ] = -t6 * t1 + t3 * t5;
     result__[ 2   ] = X__[iX_Omega];
-    real_type t11  = ModelPars[iM_m1];
-    real_type t12  = 1.0 / t11;
-    real_type t15  = ModelPars[iM_m3];
-    result__[ 3   ] = -t12 * t15 * result__[2] * t5 + t12 * U__[iU_u1];
-    real_type t19  = 1.0 / t15;
-    result__[ 4   ] = t19 * t11 * result__[2] * t1 + t19 * U__[iU_u2];
-    real_type t26  = 1.0 / ModelPars[iM_inertia];
-    result__[ 5   ] = t26 * U__[iU_u3] + t26 * (t15 - t11) * t5 * t1;
+    real_type t11  = ModelPars[iM_m3];
+    real_type t15  = ModelPars[iM_m1];
+    result__[ 3   ] = 1.0 / t15 * (-t11 * result__[2] * t5 + U__[iU_u1]);
+    result__[ 4   ] = 1.0 / t11 * (t15 * result__[2] * t1 + U__[iU_u2]);
+    result__[ 5   ] = 1.0 / ModelPars[iM_inertia] * (U__[iU_u3] - (-t11 + t15) * t5 * t1);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 6, i_segment );
   }
@@ -270,8 +264,8 @@ namespace UnderwaterDefine {
 
   void
   Underwater::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 3   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 4   ; jIndex[1 ] = 1   ;
@@ -285,11 +279,11 @@ namespace UnderwaterDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     result__[ 0   ] = 1.0 / ModelPars[iM_m1] * t1;
@@ -320,8 +314,8 @@ namespace UnderwaterDefine {
 
   void
   Underwater::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -337,11 +331,11 @@ namespace UnderwaterDefine {
   Underwater::A_sparse(
     NodeType const     & NODE__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;

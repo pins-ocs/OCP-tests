@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan_Methods_problem.cc                                     |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -62,26 +62,51 @@ namespace AliChanDefine {
    |
   \*/
 
+#if 0
+  real_type
+  AliChan::H_eval(
+    integer              i_segment,
+    CellType const &     CELL__,
+    P_const_pointer_type P__
+  ) const {
+    integer     i_cell = CELL__.i_cell;
+    real_const_ptr Q__ = CELL__.qM;
+    real_const_ptr X__ = CELL__.xM;
+    real_const_ptr L__ = CELL__.lambdaM;
+    real_const_ptr U__ = CELL__.uM;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_y2];
+    real_type t2   = t1 * t1;
+    real_type t4   = X__[iX_y1] * X__[iX_y1];
+    real_type t8   = U__[iU_u];
+    real_type t10  = uControl(t8, -1, 1);
+    real_type result__ = t1 * L__[iL_lambda1__xo] + t8 * L__[iL_lambda2__xo] + t10 + t2 - t4;
+    return result__;
+  }
+#else
   real_type
   AliChan::H_eval(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_y2];
-    real_type t8   = X__[iX_y1] * X__[iX_y1];
-    real_type t9   = t2 * t2;
-    real_type result__ = t2 * L__[iL_lambda1__xo] + L__[iL_lambda2__xo] * U__[iU_u] - t8 + t9;
+    real_type t1   = X__[iX_y2];
+    real_type t2   = t1 * t1;
+    real_type t4   = X__[iX_y1] * X__[iX_y1];
+    real_type t8   = U__[iU_u];
+    real_type t10  = uControl(t8, -1, 1);
+    real_type result__ = t1 * L__[iL_lambda1__xo] + t8 * L__[iL_lambda2__xo] + t10 + t2 - t4;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+#endif
 
   /*\
    |   ___               _ _   _
@@ -96,9 +121,9 @@ namespace AliChanDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
@@ -115,9 +140,9 @@ namespace AliChanDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = uControl(U__[iU_u], -1, 1);
     if ( m_debug ) {
@@ -140,9 +165,9 @@ namespace AliChanDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_y1] * X__[iX_y1];
     real_type t4   = X__[iX_y2] * X__[iX_y2];
@@ -168,11 +193,11 @@ namespace AliChanDefine {
     P_const_pointer_type P__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
@@ -185,22 +210,22 @@ namespace AliChanDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  AliChan::DmayerDxxp_numEqns() const
+  AliChan::DmayerDx_numEqns() const
   { return 4; }
 
   void
-  AliChan::DmayerDxxp_eval(
+  AliChan::DmayerDx_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
@@ -208,7 +233,23 @@ namespace AliChanDefine {
     result__[ 2   ] = 0;
     result__[ 3   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 4, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 4, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  AliChan::DmayerDp_numEqns() const
+  { return 0; }
+
+  void
+  AliChan::DmayerDp_eval(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_ptr             result__
+  ) const {
+    // EMPTY!
   }
 
   /*\
@@ -221,28 +262,6 @@ namespace AliChanDefine {
   \*/
 
   integer
-  AliChan::DlagrangeDxup_numEqns() const
-  { return 3; }
-
-  void
-  AliChan::DlagrangeDxup_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = -2 * X__[iX_y1];
-    result__[ 1   ] = 2 * X__[iX_y2];
-    result__[ 2   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
-  }
-
-  integer
   AliChan::DJDx_numEqns() const
   { return 2; }
 
@@ -251,11 +270,11 @@ namespace AliChanDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
@@ -274,7 +293,7 @@ namespace AliChanDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     // EMPTY!
   }
@@ -290,11 +309,11 @@ namespace AliChanDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
     if ( m_debug )
@@ -340,7 +359,7 @@ namespace AliChanDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_type            segmentLink[]
+    real_ptr             segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -361,8 +380,8 @@ namespace AliChanDefine {
 
   void
   AliChan::DsegmentLinkDxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -374,7 +393,7 @@ namespace AliChanDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+    real_ptr             DsegmentLinkDxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -396,16 +415,16 @@ namespace AliChanDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
+    real_const_ptr    LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
+    real_const_ptr    LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_y1] - XL__[iX_y1];
@@ -432,8 +451,8 @@ namespace AliChanDefine {
 
   void
   AliChan::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+    integer_ptr iIndex,
+    integer_ptr jIndex
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
@@ -452,16 +471,16 @@ namespace AliChanDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
+    real_const_ptr    QL__  = LEFT__.q;
+    real_const_ptr    XL__  = LEFT__.x;
+    real_const_ptr    LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
+    real_const_ptr    QR__  = RIGHT__.q;
+    real_const_ptr    XR__  = RIGHT__.x;
+    real_const_ptr    LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
@@ -493,7 +512,7 @@ namespace AliChanDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
     // EMPTY!
   }
@@ -509,7 +528,7 @@ namespace AliChanDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            result__[]
+    real_ptr             result__
   ) const {
    // EMPTY!
   }

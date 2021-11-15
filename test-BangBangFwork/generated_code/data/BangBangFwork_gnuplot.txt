@@ -1,0 +1,30 @@
+
+#
+# CONTROLS
+#
+set title "Controls"
+plot \
+  "BangBangFwork_OCP_result.txt" every ::1 using 2:6 with linespoints title "F" 
+
+pause -1 "Hit any key to continue"
+
+#
+# STATES
+#
+
+set title "States"
+plot \
+  "BangBangFwork_OCP_result.txt" every ::1 using 2:7 with linespoints title "x" , \
+  "BangBangFwork_OCP_result.txt" every ::1 using 2:8 with linespoints title "v" 
+
+pause -1 "Hit any key to continue"
+
+#
+# MULTIPLIERS
+#
+set title "Multipliers"
+plot \
+  "BangBangFwork_OCP_result.txt" every ::1 using 2:9 with linespoints title "lambda1__xo" , \
+  "BangBangFwork_OCP_result.txt" every ::1 using 2:10 with linespoints title "lambda2__xo" 
+
+pause -1 "Hit any key to continue"

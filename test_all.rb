@@ -36,8 +36,8 @@ def do_test(dir)
   system( cmd );
   puts "\n\n"
   FileUtils.cd "../.."
-  ff   = "#{dir}/generated_code/iterations.txt";
-  if File.exist? "#{dir}/generated_code/idata/#{name}_OCP_result.txt" then
+  ff = "#{dir}/generated_code/iterations.txt";
+  if File.exist? "#{dir}/generated_code/data/#{name}_OCP_result.txt" then
     gg = "./collected_results/#{name}_iterations.txt";
   else
     gg = "./collected_results/#{name}_iterations_NO_OK.txt";    
@@ -75,12 +75,8 @@ Dir.entries(ocps_path).select {|f|
 #ordina directory
 tests_dirs.sort!
 
-tests_dirs.each_with_index { |f,i|
-  puts "#{i}: #{f}"
-}
-excluded_tests.each_with_index { |f,i|
-  puts "#{i}: #{f}"
-}
+tests_dirs.each_with_index { |f,i| puts "#{i}: #{f}" }
+excluded_tests.each_with_index { |f,i| puts "#{i}: #{f}" }
 
 puts "Start loop on tests"
 tests_dirs.each do |d|

@@ -19,7 +19,7 @@ SET( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON    )
 SET( CMAKE_MACOSX_RPATH               ./lib )
 
 SET( CXX_WARN   "-Weverything -Wno-alloca -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-c++2a-compat -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-format-nonliteral -Wno-implicit-fallthrough -Wno-documentation -Wno-float-equal -Wno-padded -Wno-reserved-id-macro -Wno-unreachable-code-break -Wno-unused-macros -Wno-switch-enum -Wno-sign-conversion -Wno-signed-enum-bitfield -Wno-weak-vtables" )
-SET( CLANG_WARN "-Wall -Wno-float-equal -Wno-padded -Wno-comment" )
+SET( CLANG_WARN "-Wall -Wno-float-equal -Wno-padded" )
 SET( VS_WARN    "" )
 
 EXEC_PROGRAM( pins ARGS --cflags     OUTPUT_VARIABLE CFLAGS   )

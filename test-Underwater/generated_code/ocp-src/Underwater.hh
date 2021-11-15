@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater.hh                                                  |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -26,9 +26,6 @@
 // User Headers
 #include <MechatronixCore/MechatronixCore.hh>
 
-
-// User Header (begin)
-// User Header (end)
 
 #ifdef MECHATRONIX_OS_WINDOWS
   #ifndef UNDERWATER_API_DLL
@@ -60,9 +57,6 @@ namespace UnderwaterDefine {
   // user class in namespaces
   using Mechatronix::MeshStd;
 
-
-  // User Namespaces (begin)
-  // User Namespaces (end)
 
   extern char const *namesBc[];
   extern char const *namesXvars[];
@@ -130,29 +124,19 @@ namespace UnderwaterDefine {
     Underwater const & operator = ( Underwater const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
-    void continuation_step_0( real_type s );
-    void continuation_step_1( real_type s );
+    void continuationStep0( real_type s );
+    void continuationStep1( real_type s );
 
   public:
 
     using Mechatronix::Discretized_Indirect_OCP::setup;
     using Mechatronix::Discretized_Indirect_OCP::guess;
 
-    using Mechatronix::Discretized_Indirect_OCP::num_active_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_initial_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_final_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_BC;
+    using Mechatronix::Discretized_Indirect_OCP::num_omega;
 
-    using Mechatronix::Discretized_Indirect_OCP::num_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_initial_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_final_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_OMEGA;
-
-    using Mechatronix::Discretized_Indirect_OCP::bc_map;
     using Mechatronix::Discretized_Indirect_OCP::bc_inv_map;
-
-    using Mechatronix::Discretized_Indirect_OCP::omega_map;
-    using Mechatronix::Discretized_Indirect_OCP::omega_inv_map;
+    using Mechatronix::Discretized_Indirect_OCP::bc_map;
+    using Mechatronix::Discretized_Indirect_OCP::num_BC;
 
     using Mechatronix::Discretized_Indirect_OCP::dim_Q;
     using Mechatronix::Discretized_Indirect_OCP::dim_X;
@@ -160,11 +144,9 @@ namespace UnderwaterDefine {
     using Mechatronix::Discretized_Indirect_OCP::dim_Pars;
     using Mechatronix::Discretized_Indirect_OCP::dim_Omega;
     using Mechatronix::Discretized_Indirect_OCP::dim_BC;
-    using Mechatronix::Discretized_Indirect_OCP::dim_full_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_nodes;
+    using Mechatronix::Discretized_Indirect_OCP::nNodes;
 
     using Mechatronix::Discretized_Indirect_OCP::num_equations;
-    using Mechatronix::Discretized_Indirect_OCP::num_parameters;
     using Mechatronix::Discretized_Indirect_OCP::eval_F;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_nnz;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_pattern;
@@ -185,13 +167,11 @@ namespace UnderwaterDefine {
       Console const * console
     );
 
+    UNDERWATER_API_DLL virtual
     ~Underwater() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // Begin: User Definitions
-    // End: User Definitions
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    UNDERWATER_API_DLL virtual
     char const * model_name() const override
     { return "Underwater"; }
 
@@ -204,43 +184,43 @@ namespace UnderwaterDefine {
     // C++ initializer (raccolti in setup( gc ))
     UNDERWATER_API_DLL
     void
-    setup_parameters( GenericContainer const & gc );
+    setupParameters( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     UNDERWATER_API_DLL
     void
-    setup_parameters( real_type const Pars[] );
+    setupParameters( real_const_ptr Pars );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     UNDERWATER_API_DLL
     void
-    update_parameter( real_type val, integer idx )
+    updateParameter( real_type val, integer idx )
     { ModelPars[idx] = val; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     UNDERWATER_API_DLL
     void
-    setup_classes( GenericContainer const & gc );
+    setupClasses( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     UNDERWATER_API_DLL
     void
-    setup_user_classes( GenericContainer const & gc );
+    setupUserClasses( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     UNDERWATER_API_DLL
     void
-    setup_user_mapped_functions( GenericContainer const & gc );
+    setupUserMappedFunctions( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     UNDERWATER_API_DLL
     void
-    setup_controls( GenericContainer const & gc );
+    setupControls( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     UNDERWATER_API_DLL
     void
-    setup_pointers( GenericContainer const & gc );
+    setupPointers( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
@@ -269,6 +249,7 @@ namespace UnderwaterDefine {
     ) override;
 
     // save model parameters
+    UNDERWATER_API_DLL virtual
     void
     save_OCP_info( GenericContainer & gc ) const override;
 

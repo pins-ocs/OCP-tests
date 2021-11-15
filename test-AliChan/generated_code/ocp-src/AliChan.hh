@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AliChan.hh                                                     |
  |                                                                       |
- |  version: 1.0   date 15/11/2021                                       |
+ |  version: 1.0   date 16/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -26,9 +26,6 @@
 // User Headers
 #include <MechatronixCore/MechatronixCore.hh>
 
-
-// User Header (begin)
-// User Header (end)
 
 #ifdef MECHATRONIX_OS_WINDOWS
   #ifndef ALICHAN_API_DLL
@@ -60,9 +57,6 @@ namespace AliChanDefine {
   // user class in namespaces
   using Mechatronix::MeshStd;
 
-
-  // User Namespaces (begin)
-  // User Namespaces (end)
 
   extern char const *namesBc[];
   extern char const *namesXvars[];
@@ -133,21 +127,11 @@ namespace AliChanDefine {
     using Mechatronix::Discretized_Indirect_OCP::setup;
     using Mechatronix::Discretized_Indirect_OCP::guess;
 
-    using Mechatronix::Discretized_Indirect_OCP::num_active_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_initial_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_final_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_BC;
+    using Mechatronix::Discretized_Indirect_OCP::num_omega;
 
-    using Mechatronix::Discretized_Indirect_OCP::num_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_initial_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_final_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_OMEGA;
-
-    using Mechatronix::Discretized_Indirect_OCP::bc_map;
     using Mechatronix::Discretized_Indirect_OCP::bc_inv_map;
-
-    using Mechatronix::Discretized_Indirect_OCP::omega_map;
-    using Mechatronix::Discretized_Indirect_OCP::omega_inv_map;
+    using Mechatronix::Discretized_Indirect_OCP::bc_map;
+    using Mechatronix::Discretized_Indirect_OCP::num_BC;
 
     using Mechatronix::Discretized_Indirect_OCP::dim_Q;
     using Mechatronix::Discretized_Indirect_OCP::dim_X;
@@ -155,11 +139,9 @@ namespace AliChanDefine {
     using Mechatronix::Discretized_Indirect_OCP::dim_Pars;
     using Mechatronix::Discretized_Indirect_OCP::dim_Omega;
     using Mechatronix::Discretized_Indirect_OCP::dim_BC;
-    using Mechatronix::Discretized_Indirect_OCP::dim_full_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_nodes;
+    using Mechatronix::Discretized_Indirect_OCP::nNodes;
 
     using Mechatronix::Discretized_Indirect_OCP::num_equations;
-    using Mechatronix::Discretized_Indirect_OCP::num_parameters;
     using Mechatronix::Discretized_Indirect_OCP::eval_F;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_nnz;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_pattern;
@@ -180,13 +162,11 @@ namespace AliChanDefine {
       Console const * console
     );
 
+    ALICHAN_API_DLL virtual
     ~AliChan() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // Begin: User Definitions
-    // End: User Definitions
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ALICHAN_API_DLL virtual
     char const * model_name() const override
     { return "AliChan"; }
 
@@ -199,43 +179,43 @@ namespace AliChanDefine {
     // C++ initializer (raccolti in setup( gc ))
     ALICHAN_API_DLL
     void
-    setup_parameters( GenericContainer const & gc );
+    setupParameters( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ALICHAN_API_DLL
     void
-    setup_parameters( real_type const Pars[] );
+    setupParameters( real_const_ptr Pars );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ALICHAN_API_DLL
     void
-    update_parameter( real_type, integer )
+    updateParameter( real_type, integer )
     { } // no parameters to modify!
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ALICHAN_API_DLL
     void
-    setup_classes( GenericContainer const & gc );
+    setupClasses( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ALICHAN_API_DLL
     void
-    setup_user_classes( GenericContainer const & gc );
+    setupUserClasses( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ALICHAN_API_DLL
     void
-    setup_user_mapped_functions( GenericContainer const & gc );
+    setupUserMappedFunctions( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ALICHAN_API_DLL
     void
-    setup_controls( GenericContainer const & gc );
+    setupControls( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ALICHAN_API_DLL
     void
-    setup_pointers( GenericContainer const & gc );
+    setupPointers( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
@@ -264,6 +244,7 @@ namespace AliChanDefine {
     ) override;
 
     // save model parameters
+    ALICHAN_API_DLL virtual
     void
     save_OCP_info( GenericContainer & gc ) const override;
 
