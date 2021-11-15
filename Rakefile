@@ -62,23 +62,15 @@ begin # definitions
 
   puts "Compiling model: #{MODEL_NAME}\n"
 
-  MAPLET   = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.mpl"
-  SRC_DIR  = "#{ROOT}/ocp-src"
-  MAIN_DIR = "#{ROOT}/ocp-interfaces/cpp"
-  LIB_DIR  = "#{ROOT}/lib"
-  BIN_DIR  = "#{ROOT}/bin"
+  MAPLET = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.mpl"
 
   CLOBBER.include [
-    "#{ROOT}/{data,lib,bin}/*",
-    "#{ROOT}/ocp-*",
-    "#{ROOT}/*_run*.rb",
-    "#{ROOT}/#{MODEL_DIR}/bvpOut"
+    "#{ROOT}/#{MODEL_DIR}/bvpOut",
+    "#{ROOT}/generated_code"
   ]
 
   include FileUtils
-  # verbose(true)
-  mkdir_p LIB_DIR
-  mkdir_p BIN_DIR
+
 rescue ModelDirNotFoundError
   warn "Cannot find ``model`` directory!\n".red
   exit
@@ -108,7 +100,7 @@ end
 desc "Build executable".green
 task :main do
   ENV['PATH'] = ENV['PATH']+PATHLIB
-  cd ROOT
+  cd ROOT+'/generated_code'
   cmd = "pins #{MODEL_NAME}_pins_run.rb -f -b -main";
   puts "Run: #{cmd}".yellow
   system(cmd);
@@ -117,7 +109,7 @@ end
 desc "Run executable".green
 task :run do
   ENV['PATH'] = ENV['PATH']+PATHLIB
-  cd ROOT
+  cd ROOT+'/generated_code'
   cmd = "pins #{MODEL_NAME}_pins_run.rb";
   puts "Run: #{cmd}".yellow
   system(cmd);

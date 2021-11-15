@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "BrysonDenham_Mex"
-DESCRIPTION  'Mex file for BrysonDenham'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

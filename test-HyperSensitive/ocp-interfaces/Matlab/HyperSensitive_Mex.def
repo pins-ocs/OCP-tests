@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "HyperSensitive_Mex"
-DESCRIPTION  'Mex file for HyperSensitive'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

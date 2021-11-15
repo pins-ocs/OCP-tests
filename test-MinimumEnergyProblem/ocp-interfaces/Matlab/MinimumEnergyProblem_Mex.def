@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "MinimumEnergyProblem_Mex"
-DESCRIPTION  'Mex file for MinimumEnergyProblem'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

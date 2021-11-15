@@ -24,6 +24,7 @@ def do_test(dir)
   FileUtils.cd dir
   system("rake clobber maple" );
   puts "\n\n"
+  FileUtils.cd "generated_code"
   system("pins #{name}_pins_run.rb -f -b -main" );
   puts "\n\n"
   if OS == :windows then
@@ -34,9 +35,9 @@ def do_test(dir)
   puts "EXECUTE: #{cmd}\n"
   system( cmd );
   puts "\n\n"
-  FileUtils.cd ".."
-  ff   = "#{dir}/iterations.txt";
-  if File.exist? "#{dir}/data/#{name}_OCP_result.txt" then
+  FileUtils.cd "../.."
+  ff   = "#{dir}/generated_code/iterations.txt";
+  if File.exist? "#{dir}/generated_code/idata/#{name}_OCP_result.txt" then
     gg = "./collected_results/#{name}_iterations.txt";
   else
     gg = "./collected_results/#{name}_iterations_NO_OK.txt";    

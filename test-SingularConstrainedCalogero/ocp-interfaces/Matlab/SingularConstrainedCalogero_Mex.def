@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "SingularConstrainedCalogero_Mex"
-DESCRIPTION  'Mex file for SingularConstrainedCalogero'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "SingularLuus04_FreeTime_Mex"
-DESCRIPTION  'Mex file for SingularLuus04_FreeTime'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction
