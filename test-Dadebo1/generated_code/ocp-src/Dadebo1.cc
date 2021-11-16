@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1.cc                                                     |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "Dadebo1.hh"
 #include "Dadebo1_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -106,7 +104,7 @@ namespace Dadebo1Define {
     nullptr
   };
 
-  char const *namesBc[numBC+1] = {
+  char const *namesBc[numBc+1] = {
     "initial_x",
     "initial_y",
     "final_x",
@@ -143,7 +141,7 @@ namespace Dadebo1Define {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBC,                    namesBc
+      numBc,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -151,10 +149,13 @@ namespace Dadebo1Define {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   Dadebo1::~Dadebo1() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -174,8 +175,8 @@ namespace Dadebo1Define {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
-        phase+1, s, s-old_s
+        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
+        phase+1, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -191,11 +192,11 @@ namespace Dadebo1Define {
   // initialize parameters using associative array
   */
   void
-  Dadebo1::setupParameters( GenericContainer const & gc_data ) {
+  Dadebo1::setup_parameters( GenericContainer const & gc_data ) {
   }
 
   void
-  Dadebo1::setupParameters( real_type const Pars[] ) {
+  Dadebo1::setup_parameters( real_type const Pars[] ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -207,7 +208,7 @@ namespace Dadebo1Define {
   //                     |_|
   */
   void
-  Dadebo1::setupClasses( GenericContainer const & gc_data ) {
+  Dadebo1::setup_classes( GenericContainer const & gc_data ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -219,7 +220,7 @@ namespace Dadebo1Define {
   //                    |_|
   */
   void
-  Dadebo1::setupUserClasses( GenericContainer const & gc ) {
+  Dadebo1::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -235,7 +236,7 @@ namespace Dadebo1Define {
   //              |_|  |_|
   */
   void
-  Dadebo1::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  Dadebo1::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -246,7 +247,7 @@ namespace Dadebo1Define {
   //                     |_|
   */
   void
-  Dadebo1::setupControls( GenericContainer const & gc_data ) {
+  Dadebo1::setup_controls( GenericContainer const & gc_data ) {
     // no Control penalties, setup only iterative solver
     this->setup_control_solver( gc_data );
   }
@@ -260,11 +261,11 @@ namespace Dadebo1Define {
   //                     |_|
   */
   void
-  Dadebo1::setupPointers( GenericContainer const & gc_data ) {
+  Dadebo1::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "Dadebo1::setupPointers: Missing key `Pointers` in data\n"
+      "Dadebo1::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -272,7 +273,7 @@ namespace Dadebo1Define {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in Dadebo1::setupPointers(gc) cant find key `pMesh' in gc\n"
+      "in Dadebo1::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -311,16 +312,20 @@ namespace Dadebo1Define {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("Dadebo1::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
     this->info_classes();
     this->info();

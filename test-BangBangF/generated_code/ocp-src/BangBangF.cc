@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "BangBangF.hh"
 #include "BangBangF_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -107,7 +105,7 @@ namespace BangBangFDefine {
     nullptr
   };
 
-  char const *namesBc[numBC+1] = {
+  char const *namesBc[numBc+1] = {
     "initial_x",
     "initial_v",
     "final_v",
@@ -145,7 +143,7 @@ namespace BangBangFDefine {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBC,                    namesBc
+      numBc,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -153,10 +151,13 @@ namespace BangBangFDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   BangBangF::~BangBangF() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -176,8 +177,8 @@ namespace BangBangFDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
-        phase+1, s, s-old_s
+        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
+        phase+1, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -193,11 +194,11 @@ namespace BangBangFDefine {
   // initialize parameters using associative array
   */
   void
-  BangBangF::setupParameters( GenericContainer const & gc_data ) {
+  BangBangF::setup_parameters( GenericContainer const & gc_data ) {
   }
 
   void
-  BangBangF::setupParameters( real_type const Pars[] ) {
+  BangBangF::setup_parameters( real_type const Pars[] ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -209,7 +210,7 @@ namespace BangBangFDefine {
   //                     |_|
   */
   void
-  BangBangF::setupClasses( GenericContainer const & gc_data ) {
+  BangBangF::setup_classes( GenericContainer const & gc_data ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -221,7 +222,7 @@ namespace BangBangFDefine {
   //                    |_|
   */
   void
-  BangBangF::setupUserClasses( GenericContainer const & gc ) {
+  BangBangF::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -237,7 +238,7 @@ namespace BangBangFDefine {
   //              |_|  |_|
   */
   void
-  BangBangF::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  BangBangF::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -248,11 +249,11 @@ namespace BangBangFDefine {
   //                     |_|
   */
   void
-  BangBangF::setupControls( GenericContainer const & gc_data ) {
+  BangBangF::setup_controls( GenericContainer const & gc_data ) {
     // initialize Control penalties
     UTILS_ASSERT0(
       gc_data.exists("Controls"),
-      "BangBangF::setupClasses: Missing key `Controls` in data\n"
+      "BangBangF::setup_classes: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
     FControl.setup( gc("FControl") );
@@ -269,11 +270,11 @@ namespace BangBangFDefine {
   //                     |_|
   */
   void
-  BangBangF::setupPointers( GenericContainer const & gc_data ) {
+  BangBangF::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "BangBangF::setupPointers: Missing key `Pointers` in data\n"
+      "BangBangF::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -281,7 +282,7 @@ namespace BangBangFDefine {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in BangBangF::setupPointers(gc) cant find key `pMesh' in gc\n"
+      "in BangBangF::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -325,16 +326,20 @@ namespace BangBangFDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("BangBangF::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
     this->info_classes();
     this->info();

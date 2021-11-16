@@ -37,16 +37,17 @@ Model Parameters
 ................................epsilon0 = 0.1
 ................................epsilon1 = 0.0001
 INFO CLASS = BangBangFclip
-  num_nodes    = 401
-  dim         = u = 1, q = 1, x = 3, p = 0, omega = 5, big_bc = 11
+  #nodes      = 401
+  dim         = u = 1, q = 1, x = 3, p = 0, omega = 5, bc = 5, full_bc = 11
   BC          = Inital = 6, Final = 5, Cyclic = 0
   OMEGA       = Inital = 3, Final = 2, Cyclic = 0
   total       = nZ = 2411, UC = 400, Q = 401
   index start = omega = 2406, p = 2411
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton [ANALYTIC]
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
 Initializer Controls: Quasi-Newton
 Used threads:         15
 
@@ -62,22 +63,22 @@ NewtonDumped --- start iterations ---
 
 Continuation step N.1
 
-Continuation step N.1 s=0.20, ds=0.2000
+Continuation step N.1 s=0.20000, ds=0.20000, old_s=    0
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
 [  7, 1] ( 0.000341 , 4.74e-05 ) [ 0.00596  , 0.00219  ] 1.00       [solverNewtonDumped]
 [  8, 1] ( 4.74e-05 , 3.25e-08 ) [ 0.00175  , 9.47e-06 ] 1.00       [solverNewtonDumped]
 [  9, 1] ( 3.25e-08 , 1.42e-12 ) [ 9.60e-06 , 5.42e-10 ] 1.00       [solverNewtonDumped]
 
-Continuation step N.1 s=0.50, ds=0.3000
+Continuation step N.1 s=0.50000, ds=0.30000, old_s=  0.2
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 10, 1] ( 0.000560 , 0.000215 ) [ 0.00857  , 0.00811  ] 1.00       [solverNewtonDumped]
-[ 11, 1] ( 0.000215 , 1.06e-05 ) [ 0.00307  , 0.000332 ] 1.00       [solverNewtonDumped]
-[ 12, 1] ( 1.06e-05 , 2.02e-09 ) [ 0.000393 , 8.42e-07 ] 1.00       [solverNewtonDumped]
-[ 13, 1] ( 2.02e-09 , 2.99e-14 ) [ 8.47e-07 , 7.47e-12 ] 1.00       [solverNewtonDumped]
+[ 10, 2] ( 0.000560 , 0.000187 ) [ 0.00857  , 0.00133  ] 0.651      [solverNewtonDumped]
+[ 11, 1] ( 0.000187 , 1.65e-06 ) [ 0.00163  , 6.31e-05 ] 1.00       [solverNewtonDumped]
+[ 12, 1] ( 1.65e-06 , 8.15e-11 ) [ 6.05e-05 , 3.42e-08 ] 1.00       [solverNewtonDumped]
+[ 13, 1] ( 8.15e-11 , 5.22e-17 ) [ 3.43e-08 , 2.64e-14 ] 1.00       [solverNewtonDumped]
 
-Continuation step N.1 s=0.95, ds=0.4500
+Continuation step N.1 s=0.95000, ds=0.45000, old_s=  0.5
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
 [ 14, 2] ( 0.00162  , 0.00127  ) [  0.0532  ,  0.0418  ] 0.200      [solverNewtonDumped]
@@ -91,7 +92,7 @@ NewtonDumped --- start iterations ---
 [ 22, 1] ( 2.80e-08 , 1.07e-09 ) [ 6.26e-05 , 2.72e-06 ] 1.00       [solverNewtonDumped]
 [ 23, 1] ( 1.07e-09 , 2.07e-12 ) [ 2.98e-06 , 6.80e-09 ] 1.00       [solverNewtonDumped]
 
-Continuation step N.1 s=1.0, ds=0.05000
+Continuation step N.1 s=1.0000, ds=0.050000, old_s=0.9500000000000001
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
 [ 24, 2] ( 0.00172  , 0.00115  ) [  0.0365  ,  0.0238  ] 0.200      [solverNewtonDumped]
@@ -103,33 +104,31 @@ NewtonDumped --- start iterations ---
 [ 30, 2] ( 0.000302 , 0.000215 ) [ 0.000522 , 0.000522 ] 0.553      [solverNewtonDumped]
 [ 31, 2] ( 0.000215 , 0.000197 ) [ 0.000603 , 0.000486 ] 0.249      [solverNewtonDumped]
 [ 32, 2] ( 0.000197 , 0.000121 ) [ 0.000292 , 0.000268 ] 0.450      [solverNewtonDumped]
-[ 33, 1] ( 0.000121 , 0.000136 ) [ 0.000241 , 0.000216 ] 1.00       [solverNewtonDumped]
-[ 34, 2] ( 0.000136 , 8.85e-05 ) [ 0.000338 , 0.000138 ] 0.430      [solverNewtonDumped]
-[ 35, 1] ( 8.85e-05 , 8.78e-05 ) [ 0.000156 , 0.000143 ] 1.00       [solverNewtonDumped]
-[ 36, 2] ( 8.78e-05 , 6.71e-05 ) [ 0.000200 , 9.99e-05 ] 0.398      [solverNewtonDumped]
-[ 37, 1] ( 6.71e-05 , 4.10e-05 ) [ 0.000113 , 7.98e-05 ] 1.00       [solverNewtonDumped]
-[ 38, 1] ( 4.10e-05 , 1.33e-08 ) [ 8.98e-05 , 3.43e-05 ] 1.00       [solverNewtonDumped]
-[ 39, 1] ( 1.33e-08 , 4.22e-09 ) [ 9.12e-05 , 3.60e-05 ] 1.00       [solverNewtonDumped]
-[ 40, 1] ( 4.22e-09 , 9.64e-10 ) [ 8.67e-05 , 2.49e-05 ] 1.00       [solverNewtonDumped]
-[ 41, 1] ( 9.64e-10 , 8.39e-11 ) [ 4.42e-05 , 4.92e-06 ] 1.00       [solverNewtonDumped]
-[ 42, 1] ( 8.39e-11 , 7.94e-13 ) [ 6.04e-06 , 7.38e-08 ] 1.00       [solverNewtonDumped]
+[ 33, 2] ( 0.000121 , 7.37e-05 ) [ 0.000241 , 0.000171 ] 0.310      [solverNewtonDumped]
+[ 34, 1] ( 7.37e-05 , 7.68e-08 ) [ 0.000161 , 4.69e-05 ] 1.00       [solverNewtonDumped]
+[ 35, 1] ( 7.68e-08 , 2.54e-08 ) [ 0.000118 , 4.43e-05 ] 1.00       [solverNewtonDumped]
+[ 36, 1] ( 2.54e-08 , 8.43e-09 ) [ 0.000117 , 4.49e-05 ] 1.00       [solverNewtonDumped]
+[ 37, 1] ( 8.43e-09 , 2.50e-09 ) [ 0.000117 , 4.17e-05 ] 1.00       [solverNewtonDumped]
+[ 38, 1] ( 2.50e-09 , 4.85e-10 ) [ 9.42e-05 , 2.25e-05 ] 1.00       [solverNewtonDumped]
+[ 39, 1] ( 4.85e-10 , 2.92e-11 ) [ 3.65e-05 , 2.73e-06 ] 1.00       [solverNewtonDumped]
+[ 40, 1] ( 2.92e-11 , 1.27e-13 ) [ 3.14e-06 , 1.70e-08 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 26.6[ms]      timeout        = 0 [ms]
-iteration      = 42            tolerance      = 1.000e-09 
+Elapsed Time   = 26.1[ms]      timeout        = 0 [ms]
+iteration      = 40            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 2411
 max acc. iter. = 800           N. System pars = 400
-Converged      = YES           Memory Used    = 230Kb (+66bytes)
+Converged      = YES           Memory Used    = 231Kb (+67bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
 Few iterations = 8         
 ----------------------- EVALUATIONS ------------------------
-Function       = 69            Jacobian       = 42        
-Factorization  = 42            Inversion      = 106       
+Function       = 67            Jacobian       = 40        
+Factorization  = 40            Inversion      = 102       
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 2.3092e-06    last||d1||_inf = 0.00022836
-last ||f||_inf = 7.6762e-11    last||f||_1    = 7.9354e-13
+last ||d||_inf = 4.7390e-07    last||d1||_inf = 0.00010074
+last ||f||_inf = 9.1928e-12    last||f||_1    = 1.2745e-13
 ------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             

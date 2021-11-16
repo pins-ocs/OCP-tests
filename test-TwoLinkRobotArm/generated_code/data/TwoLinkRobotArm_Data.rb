@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: TwoLinkRobotArm_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-u_tolerance0 = 0.01
-u_tolerance  = u_tolerance0
 u_epsilon0   = 0.01
 u_epsilon    = u_epsilon0
+u_tolerance0 = 0.01
+u_tolerance  = u_tolerance0
 
 mechatronix do |data|
 
@@ -44,10 +44,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "TwoLinkRobotArm_dump"

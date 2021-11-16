@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_problem.cc                                  |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -63,7 +63,7 @@ namespace HangGliderDefine {
   \*/
 
   void
-  HangGlider::continuationStep0( real_type s ) {
+  HangGlider::continuation_step_0( real_type s ) {
     ModelPars[iM_W] = (1 - s) * ModelPars[iM_W0] + s * ModelPars[iM_W1];
   }
   /*\
@@ -74,7 +74,7 @@ namespace HangGliderDefine {
   \*/
 
   void
-  HangGlider::continuationStep1( real_type s ) {
+  HangGlider::continuation_step_1( real_type s ) {
     real_type t2   = 1 - s;
     real_type t3   = pow(ModelPars[iM_epsi_max], t2);
     real_type t5   = pow(ModelPars[iM_epsi_min], s);
@@ -92,51 +92,16 @@ namespace HangGliderDefine {
    |
   \*/
 
-#if 0
-  real_type
-  HangGlider::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer     i_cell = CELL__.i_cell;
-    real_const_ptr Q__ = CELL__.qM;
-    real_const_ptr X__ = CELL__.xM;
-    real_const_ptr L__ = CELL__.lambdaM;
-    real_const_ptr U__ = CELL__.uM;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = Tbound(t1);
-    real_type t4   = U__[iU_cL];
-    real_type t6   = pow(t4 - 0.7e0, 2);
-    real_type t10  = X__[iX_vx];
-    real_type t14  = X__[iX_vy];
-    real_type t19  = t4 * t4;
-    real_type t23  = X__[iX_x];
-    real_type t24  = Dfun(t23, t10, t14);
-    real_type t25  = t24 * (t19 * ModelPars[iM_c1] + ModelPars[iM_c0]);
-    real_type t27  = Lfun(t23, t10, t14);
-    real_type t28  = t27 * t4;
-    real_type t29  = w(t23, t14);
-    real_type t32  = ModelPars[iM_m];
-    real_type t33  = 1.0 / t32;
-    real_type t35  = v(t23, t10, t14);
-    real_type t36  = 1.0 / t35;
-    real_type t52  = cLControl(t4, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
-    real_type result__ = t2 + t6 * ModelPars[iM_W] + t10 * t1 * L__[iL_lambda1__xo] + t14 * t1 * L__[iL_lambda2__xo] - t36 * t33 * (t10 * t25 + t29 * t28) * L__[iL_lambda3__xo] * t1 - t36 * t33 * (t35 * t32 * ModelPars[iM_g] - t10 * t28 + t29 * t25) * L__[iL_lambda4__xo] * t1 + t52;
-    return result__;
-  }
-#else
   real_type
   HangGlider::H_eval(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = Tbound(t1);
@@ -144,25 +109,22 @@ namespace HangGliderDefine {
     real_type t6   = pow(t4 - 0.7e0, 2);
     real_type t10  = X__[iX_vx];
     real_type t14  = X__[iX_vy];
-    real_type t19  = t4 * t4;
-    real_type t23  = X__[iX_x];
-    real_type t24  = Dfun(t23, t10, t14);
-    real_type t25  = t24 * (t19 * ModelPars[iM_c1] + ModelPars[iM_c0]);
-    real_type t27  = Lfun(t23, t10, t14);
-    real_type t28  = t27 * t4;
-    real_type t29  = w(t23, t14);
-    real_type t32  = ModelPars[iM_m];
-    real_type t33  = 1.0 / t32;
-    real_type t35  = v(t23, t10, t14);
-    real_type t36  = 1.0 / t35;
-    real_type t52  = cLControl(t4, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
-    real_type result__ = t2 + t6 * ModelPars[iM_W] + t10 * t1 * L__[iL_lambda1__xo] + t14 * t1 * L__[iL_lambda2__xo] - t36 * t33 * (t10 * t25 + t29 * t28) * L__[iL_lambda3__xo] * t1 - t36 * t33 * (t35 * t32 * ModelPars[iM_g] - t10 * t28 + t29 * t25) * L__[iL_lambda4__xo] * t1 + t52;
+    real_type t19  = 1.0 / ModelPars[iM_m];
+    real_type t20  = X__[iX_x];
+    real_type t21  = v(t20, t10, t14);
+    real_type t22  = 1.0 / t21;
+    real_type t25  = t4 * t4;
+    real_type t29  = Dfun(t20, t10, t14);
+    real_type t30  = t29 * (t25 * ModelPars[iM_c1] + ModelPars[iM_c0]);
+    real_type t32  = Lfun(t20, t10, t14);
+    real_type t33  = t32 * t4;
+    real_type t34  = w(t20, t14);
+    real_type result__ = t2 + t6 * ModelPars[iM_W] + t10 * t1 * L__[iL_lambda1__xo] + t14 * t1 * L__[iL_lambda2__xo] + (-t10 * t30 - t34 * t33) * t22 * t19 * t1 * L__[iL_lambda3__xo] + ((t10 * t33 - t34 * t30) * t22 * t19 * t1 - ModelPars[iM_g] * t1) * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -177,9 +139,9 @@ namespace HangGliderDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = Tbound(P__[iP_T]);
     if ( m_debug ) {
@@ -196,9 +158,9 @@ namespace HangGliderDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = cLControl(U__[iU_cL], ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
     if ( m_debug ) {
@@ -221,9 +183,9 @@ namespace HangGliderDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t4   = pow(U__[iU_cL] - 0.7e0, 2);
     real_type result__ = t4 * ModelPars[iM_W];
@@ -248,11 +210,11 @@ namespace HangGliderDefine {
     P_const_pointer_type P__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = -XR__[iX_x];
@@ -265,22 +227,22 @@ namespace HangGliderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  HangGlider::DmayerDx_numEqns() const
-  { return 8; }
+  HangGlider::DmayerDxxp_numEqns() const
+  { return 9; }
 
   void
-  HangGlider::DmayerDx_eval(
+  HangGlider::DmayerDxxp_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
@@ -291,34 +253,9 @@ namespace HangGliderDefine {
     result__[ 5   ] = 0;
     result__[ 6   ] = 0;
     result__[ 7   ] = 0;
+    result__[ 8   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 8, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HangGlider::DmayerDp_numEqns() const
-  { return 1; }
-
-  void
-  HangGlider::DmayerDp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDp_eval", 1, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 9, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -331,6 +268,31 @@ namespace HangGliderDefine {
   \*/
 
   integer
+  HangGlider::DlagrangeDxup_numEqns() const
+  { return 6; }
+
+  void
+  HangGlider::DlagrangeDxup_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 2 * ModelPars[iM_W] * (U__[iU_cL] - 0.7e0);
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 6, i_segment );
+  }
+
+  integer
   HangGlider::DJDx_numEqns() const
   { return 4; }
 
@@ -339,11 +301,11 @@ namespace HangGliderDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
@@ -364,11 +326,11 @@ namespace HangGliderDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_Tbound_D(P__[iP_T]);
     if ( m_debug )
@@ -386,11 +348,11 @@ namespace HangGliderDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_cLControl_D_1(U__[iU_cL], ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
     if ( m_debug )
@@ -436,7 +398,7 @@ namespace HangGliderDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_ptr             segmentLink
+    real_type            segmentLink[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -457,8 +419,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DsegmentLinkDxp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -470,7 +432,7 @@ namespace HangGliderDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_ptr             DsegmentLinkDxp
+    real_type            DsegmentLinkDxp[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -492,16 +454,16 @@ namespace HangGliderDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
@@ -532,8 +494,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DjumpDxlxlp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 8   ;
@@ -560,16 +522,16 @@ namespace HangGliderDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
@@ -609,7 +571,7 @@ namespace HangGliderDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -625,7 +587,7 @@ namespace HangGliderDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
    // EMPTY!
   }

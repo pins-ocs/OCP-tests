@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: OrbitTransfer_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,13 +20,13 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-m0   = 1
 r0   = 1
+m0   = 1
 mu   = 1
-tf   = 16.60*(r0**3/mu)**(1/2.0)
 v0   = (mu/r0)**(1/2.0)
 T    = 0.1405e-1*m0*mu/r0**2
 mdot = 0.533*T*(mu/r0)**(1/2.0)
+tf   = 16.60*(r0**3/mu)**(1/2.0)
 
 mechatronix do |data|
 
@@ -47,10 +47,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "OrbitTransfer_dump"

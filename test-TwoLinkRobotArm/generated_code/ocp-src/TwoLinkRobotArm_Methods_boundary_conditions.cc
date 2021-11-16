@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods_boundary_conditions.cc                 |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -83,14 +83,14 @@ namespace TwoLinkRobotArmDefine {
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1];
@@ -108,21 +108,21 @@ namespace TwoLinkRobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoLinkRobotArm::DboundaryConditionsDx_numRows() const
+  TwoLinkRobotArm::DboundaryConditionsDxxp_numRows() const
   { return 8; }
 
   integer
-  TwoLinkRobotArm::DboundaryConditionsDx_numCols() const
-  { return 8; }
+  TwoLinkRobotArm::DboundaryConditionsDxxp_numCols() const
+  { return 9; }
 
   integer
-  TwoLinkRobotArm::DboundaryConditionsDx_nnz() const
+  TwoLinkRobotArm::DboundaryConditionsDxxp_nnz() const
   { return 8; }
 
   void
-  TwoLinkRobotArm::DboundaryConditionsDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  TwoLinkRobotArm::DboundaryConditionsDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -135,18 +135,18 @@ namespace TwoLinkRobotArmDefine {
   }
 
   void
-  TwoLinkRobotArm::DboundaryConditionsDx_sparse(
+  TwoLinkRobotArm::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
@@ -158,39 +158,7 @@ namespace TwoLinkRobotArmDefine {
     result__[ 6   ] = 1;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 8, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoLinkRobotArm::DboundaryConditionsDp_numRows() const
-  { return 8; }
-
-  integer
-  TwoLinkRobotArm::DboundaryConditionsDp_numCols() const
-  { return 1; }
-
-  integer
-  TwoLinkRobotArm::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  TwoLinkRobotArm::DboundaryConditionsDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  TwoLinkRobotArm::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -205,16 +173,16 @@ namespace TwoLinkRobotArmDefine {
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
@@ -225,8 +193,9 @@ namespace TwoLinkRobotArmDefine {
     result__[ 5   ] = OMEGA__[5] - LR__[iL_lambda2__xo];
     result__[ 6   ] = OMEGA__[6] - LR__[iL_lambda3__xo];
     result__[ 7   ] = OMEGA__[7] - LR__[iL_lambda4__xo];
-    real_type t18  = 2 * P__[iP_T];
-    result__[ 8   ] = ModelPars[iM_W] * (-t18 + 21) + t18 - 20;
+    real_type t17  = P__[iP_T];
+    real_type t18  = ModelPars[iM_W];
+    result__[ 8   ] = -2 * t18 * t17 + 2 * t17 + 21 * t18 - 20;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 9, i_segment_left, i_segment_right );
   }
@@ -234,80 +203,47 @@ namespace TwoLinkRobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoLinkRobotArm::DadjointBCDx_numRows() const
+  TwoLinkRobotArm::DadjointBCDxxp_numRows() const
   { return 9; }
 
   integer
-  TwoLinkRobotArm::DadjointBCDx_numCols() const
-  { return 8; }
+  TwoLinkRobotArm::DadjointBCDxxp_numCols() const
+  { return 9; }
 
   integer
-  TwoLinkRobotArm::DadjointBCDx_nnz() const
-  { return 0; }
+  TwoLinkRobotArm::DadjointBCDxxp_nnz() const
+  { return 1; }
 
   void
-  TwoLinkRobotArm::DadjointBCDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  TwoLinkRobotArm::DadjointBCDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
+    iIndex[0 ] = 8   ; jIndex[0 ] = 8   ;
   }
 
   void
-  TwoLinkRobotArm::DadjointBCDx_sparse(
+  TwoLinkRobotArm::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoLinkRobotArm::DadjointBCDp_numRows() const
-  { return 9; }
-
-  integer
-  TwoLinkRobotArm::DadjointBCDp_numCols() const
-  { return 1; }
-
-  integer
-  TwoLinkRobotArm::DadjointBCDp_nnz() const
-  { return 1; }
-
-  void
-  TwoLinkRobotArm::DadjointBCDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-    iIndex[0 ] = 8   ; jIndex[0 ] = 0   ;
-  }
-
-  void
-  TwoLinkRobotArm::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = 2 - 2 * ModelPars[iM_W];
+    result__[ 0   ] = -2 * ModelPars[iM_W] + 2;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 1, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 1, i_segment_left, i_segment_right );
   }
-
 }
 
 // EOF: TwoLinkRobotArm_Methods_boundary_conditions.cc

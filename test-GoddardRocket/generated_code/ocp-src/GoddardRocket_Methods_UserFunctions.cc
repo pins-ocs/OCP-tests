@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_UserFunctions.cc                         |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -242,7 +242,7 @@ namespace GoddardRocketDefine {
   GoddardRocket::explog_D_1_1( real_type xo__s, real_type xo__a, real_type xo__b ) const {
     real_type t1   = log(xo__a);
     real_type t2   = log(xo__b);
-    real_type t4   = pow(t1 - t2, 2);
+    real_type t4   = pow(-t1 + t2, 2);
     real_type t9   = exp(t1 * (1 - xo__s) + t2 * xo__s);
     real_type result__ = t9 * t4;
     if ( m_debug ) {
@@ -257,11 +257,12 @@ namespace GoddardRocketDefine {
 
   real_type
   GoddardRocket::explog_D_1_2( real_type xo__s, real_type xo__a, real_type xo__b ) const {
-    real_type t1   = 1 - xo__s;
-    real_type t2   = log(xo__a);
-    real_type t4   = log(xo__b);
-    real_type t7   = exp(t2 * t1 + t4 * xo__s);
-    real_type result__ = 1.0 / xo__a * (-t2 * t1 + t4 * t1 - 1) * t7;
+    real_type t2   = 1 - xo__s;
+    real_type t3   = log(xo__a);
+    real_type t5   = log(xo__b);
+    real_type t8   = exp(t3 * t2 + t5 * xo__s);
+    real_type t9   = t8 / xo__a;
+    real_type result__ = -t9 + t9 * t2 * (-t3 + t5);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -274,11 +275,11 @@ namespace GoddardRocketDefine {
 
   real_type
   GoddardRocket::explog_D_1_3( real_type xo__s, real_type xo__a, real_type xo__b ) const {
-    real_type t2   = log(xo__a);
-    real_type t4   = log(xo__b);
-    real_type t5   = t4 * xo__s;
-    real_type t7   = exp(t2 * (1 - xo__s) + t5);
-    real_type result__ = -1.0 / xo__b * (t2 * xo__s - t5 - 1) * t7;
+    real_type t3   = log(xo__a);
+    real_type t5   = log(xo__b);
+    real_type t8   = exp(t3 * (1 - xo__s) + t5 * xo__s);
+    real_type t9   = t8 / xo__b;
+    real_type result__ = t9 + t9 * xo__s * (-t3 + t5);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -308,12 +309,14 @@ namespace GoddardRocketDefine {
 
   real_type
   GoddardRocket::explog_D_2_2( real_type xo__s, real_type xo__a, real_type xo__b ) const {
-    real_type t1   = -1 + xo__s;
-    real_type t3   = log(xo__a);
-    real_type t5   = log(xo__b);
-    real_type t8   = exp(-t3 * t1 + t5 * xo__s);
-    real_type t10  = xo__a * xo__a;
-    real_type result__ = 1.0 / t10 * xo__s * t8 * t1;
+    real_type t1   = 1 - xo__s;
+    real_type t2   = xo__a * xo__a;
+    real_type t3   = 1.0 / t2;
+    real_type t5   = log(xo__a);
+    real_type t7   = log(xo__b);
+    real_type t10  = exp(t5 * t1 + t7 * xo__s);
+    real_type t12  = t1 * t1;
+    real_type result__ = -t10 * t3 * t1 + t10 * t3 * t12;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -359,12 +362,13 @@ namespace GoddardRocketDefine {
 
   real_type
   GoddardRocket::explog_D_3_3( real_type xo__s, real_type xo__a, real_type xo__b ) const {
-    real_type t1   = -1 + xo__s;
-    real_type t3   = log(xo__a);
-    real_type t5   = log(xo__b);
-    real_type t8   = exp(-t3 * t1 + t5 * xo__s);
-    real_type t10  = xo__b * xo__b;
-    real_type result__ = 1.0 / t10 * xo__s * t8 * t1;
+    real_type t1   = xo__b * xo__b;
+    real_type t2   = 1.0 / t1;
+    real_type t5   = log(xo__a);
+    real_type t7   = log(xo__b);
+    real_type t10  = exp(t5 * (1 - xo__s) + t7 * xo__s);
+    real_type t12  = xo__s * xo__s;
+    real_type result__ = t10 * t2 * t12 - t10 * t2 * xo__s;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

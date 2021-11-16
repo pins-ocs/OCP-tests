@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_ODE.cc                                        |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -88,11 +88,11 @@ namespace RobotArmDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     result__[ 0   ] = U__[iU_u_rho] * t1;
@@ -121,8 +121,8 @@ namespace RobotArmDefine {
 
   void
   RobotArm::Drhs_odeDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 3   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 4   ; jIndex[1 ] = 4   ;
@@ -136,11 +136,11 @@ namespace RobotArmDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = P__[iP_T];
     result__[ 1   ] = result__[0];
@@ -165,8 +165,8 @@ namespace RobotArmDefine {
 
   void
   RobotArm::Drhs_odeDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
@@ -183,11 +183,11 @@ namespace RobotArmDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = U__[iU_u_rho];
     result__[ 1   ] = U__[iU_u_theta];
@@ -215,8 +215,8 @@ namespace RobotArmDefine {
 
   void
   RobotArm::Drhs_odeDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -230,11 +230,11 @@ namespace RobotArmDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = P__[iP_T];
     result__[ 1   ] = result__[0];
@@ -264,8 +264,8 @@ namespace RobotArmDefine {
 
   void
   RobotArm::A_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 4   ;
@@ -281,11 +281,11 @@ namespace RobotArmDefine {
   RobotArm::A_sparse(
     NodeType const     & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ModelPars[iM_L];
     real_type t1   = X__[iX_rho];

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC.cc                                                        |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "CNOC.hh"
 #include "CNOC_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -173,7 +171,7 @@ namespace CNOCDefine {
     nullptr
   };
 
-  char const *namesBc[numBC+1] = {
+  char const *namesBc[numBc+1] = {
     "initial_n",
     "initial_vs",
     "initial_vn",
@@ -218,7 +216,7 @@ namespace CNOCDefine {
     m_U_solve_iterative = false;
 
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
+    std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setup_names(
@@ -229,7 +227,7 @@ namespace CNOCDefine {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBC,                    namesBc
+      numBc,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -237,10 +235,13 @@ namespace CNOCDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   CNOC::~CNOC() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -260,8 +261,8 @@ namespace CNOCDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
-        phase+1, s, s-old_s
+        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
+        phase+1, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -277,10 +278,10 @@ namespace CNOCDefine {
   // initialize parameters using associative array
   */
   void
-  CNOC::setupParameters( GenericContainer const & gc_data ) {
+  CNOC::setup_parameters( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Parameters"),
-      "CNOC::setupParameters: Missing key `Parameters` in data\n"
+      "CNOC::setup_parameters: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Parameters");
 
@@ -300,7 +301,7 @@ namespace CNOCDefine {
   }
 
   void
-  CNOC::setupParameters( real_type const Pars[] ) {
+  CNOC::setup_parameters( real_type const Pars[] ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -313,52 +314,52 @@ namespace CNOCDefine {
   //                     |_|
   */
   void
-  CNOC::setupClasses( GenericContainer const & gc_data ) {
+  CNOC::setup_classes( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Constraints"),
-      "CNOC::setupClasses: Missing key `Parameters` in data\n"
+      "CNOC::setup_classes: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
     UTILS_ASSERT0(
       gc.exists("timePositive"),
-      "in CNOC::setupClasses(gc) missing key: ``timePositive''\n"
+      "in CNOC::setup_classes(gc) missing key: ``timePositive''\n"
     );
     timePositive.setup( gc("timePositive") );
 
     UTILS_ASSERT0(
       gc.exists("vLimit"),
-      "in CNOC::setupClasses(gc) missing key: ``vLimit''\n"
+      "in CNOC::setup_classes(gc) missing key: ``vLimit''\n"
     );
     vLimit.setup( gc("vLimit") );
 
     UTILS_ASSERT0(
       gc.exists("PathFollowingTolerance"),
-      "in CNOC::setupClasses(gc) missing key: ``PathFollowingTolerance''\n"
+      "in CNOC::setup_classes(gc) missing key: ``PathFollowingTolerance''\n"
     );
     PathFollowingTolerance.setup( gc("PathFollowingTolerance") );
 
     UTILS_ASSERT0(
       gc.exists("as_limit"),
-      "in CNOC::setupClasses(gc) missing key: ``as_limit''\n"
+      "in CNOC::setup_classes(gc) missing key: ``as_limit''\n"
     );
     as_limit.setup( gc("as_limit") );
 
     UTILS_ASSERT0(
       gc.exists("an_limit"),
-      "in CNOC::setupClasses(gc) missing key: ``an_limit''\n"
+      "in CNOC::setup_classes(gc) missing key: ``an_limit''\n"
     );
     an_limit.setup( gc("an_limit") );
 
     UTILS_ASSERT0(
       gc.exists("ax_limit"),
-      "in CNOC::setupClasses(gc) missing key: ``ax_limit''\n"
+      "in CNOC::setup_classes(gc) missing key: ``ax_limit''\n"
     );
     ax_limit.setup( gc("ax_limit") );
 
     UTILS_ASSERT0(
       gc.exists("ay_limit"),
-      "in CNOC::setupClasses(gc) missing key: ``ay_limit''\n"
+      "in CNOC::setup_classes(gc) missing key: ``ay_limit''\n"
     );
     ay_limit.setup( gc("ay_limit") );
 
@@ -373,7 +374,7 @@ namespace CNOCDefine {
   //                    |_|
   */
   void
-  CNOC::setupUserClasses( GenericContainer const & gc ) {
+  CNOC::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -389,7 +390,7 @@ namespace CNOCDefine {
   //              |_|  |_|
   */
   void
-  CNOC::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  CNOC::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -400,11 +401,11 @@ namespace CNOCDefine {
   //                     |_|
   */
   void
-  CNOC::setupControls( GenericContainer const & gc_data ) {
+  CNOC::setup_controls( GenericContainer const & gc_data ) {
     // initialize Control penalties
     UTILS_ASSERT0(
       gc_data.exists("Controls"),
-      "CNOC::setupClasses: Missing key `Controls` in data\n"
+      "CNOC::setup_classes: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
     jsControl.setup( gc("jsControl") );
@@ -422,11 +423,11 @@ namespace CNOCDefine {
   //                     |_|
   */
   void
-  CNOC::setupPointers( GenericContainer const & gc_data ) {
+  CNOC::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "CNOC::setupPointers: Missing key `Pointers` in data\n"
+      "CNOC::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -434,7 +435,7 @@ namespace CNOCDefine {
 
     UTILS_ASSERT0(
       gc.exists("pToolPath2D"),
-      "in CNOC::setupPointers(gc) cant find key `pToolPath2D' in gc\n"
+      "in CNOC::setup_pointers(gc) cant find key `pToolPath2D' in gc\n"
     );
     pToolPath2D = gc("pToolPath2D").get_pointer<ToolPath2D*>();
   }
@@ -499,16 +500,20 @@ namespace CNOCDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("CNOC::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pToolPath2D, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
     this->info_classes();
     this->info();

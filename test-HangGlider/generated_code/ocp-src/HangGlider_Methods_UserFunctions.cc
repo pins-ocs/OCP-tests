@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_UserFunctions.cc                            |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -64,10 +64,7 @@ namespace HangGliderDefine {
   // user defined functions which has a body defined in MAPLE
   real_type
   HangGlider::r( real_type xo__x ) const {
-    real_type t1   = ModelPars[iM_rc];
-    real_type t4   = pow(xo__x - 0.25e1 * t1, 2);
-    real_type t5   = t1 * t1;
-    real_type result__ = 1.0 / t5 * t4;
+    real_type result__ = pow(xo__x / ModelPars[iM_rc] - 0.25e1, 2);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -80,9 +77,8 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::r_D( real_type xo__x ) const {
-    real_type t2   = ModelPars[iM_rc];
-    real_type t5   = t2 * t2;
-    real_type result__ = 1.0 / t5 * (2 * xo__x - 0.50e1 * t2);
+    real_type t2   = 1.0 / ModelPars[iM_rc];
+    real_type result__ = 2 * t2 * (t2 * xo__x - 0.25e1);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -124,10 +120,11 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::u_D( real_type xo__x ) const {
+    real_type t1   = ModelPars[iM_uc];
     real_type t2   = r_D(xo__x);
     real_type t4   = r(xo__x);
     real_type t5   = exp(-t4);
-    real_type result__ = (-2 + t4) * t5 * t2 * ModelPars[iM_uc];
+    real_type result__ = -t5 * t2 * t1 - t5 * t2 * (1 - t4) * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -140,12 +137,14 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::u_DD( real_type xo__x ) const {
-    real_type t1   = r(xo__x);
-    real_type t3   = r_DD(xo__x);
-    real_type t5   = r_D(xo__x);
-    real_type t6   = t5 * t5;
-    real_type t10  = exp(-t1);
-    real_type result__ = -ModelPars[iM_uc] * t10 * (t3 * (-t1 + 2) + (t1 - 3) * t6);
+    real_type t1   = ModelPars[iM_uc];
+    real_type t2   = r_DD(xo__x);
+    real_type t4   = r(xo__x);
+    real_type t5   = exp(-t4);
+    real_type t7   = r_D(xo__x);
+    real_type t8   = t7 * t7;
+    real_type t13  = (1 - t4) * t1;
+    real_type result__ = -t5 * t2 * t1 + 2 * t5 * t8 * t1 - t5 * t2 * t13 + t5 * t8 * t13;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -418,12 +417,12 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::v_D_1_1( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
-    real_type t1   = v2_D_1_1(xo__x, xo__x1, xo__y1);
-    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
+    real_type t2   = sqrt(t1);
     real_type t5   = v2_D_1(xo__x, xo__x1, xo__y1);
     real_type t6   = t5 * t5;
-    real_type t8   = sqrt(t2);
-    real_type result__ = 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
+    real_type t10  = v2_D_1_1(xo__x, xo__x1, xo__y1);
+    real_type result__ = -t6 / t2 / t1 / 4 + t10 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -436,12 +435,12 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::v_D_1_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
-    real_type t1   = v2_D_1_2(xo__x, xo__x1, xo__y1);
-    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
+    real_type t2   = sqrt(t1);
     real_type t5   = v2_D_1(xo__x, xo__x1, xo__y1);
-    real_type t6   = v2_D_2(xo__x, xo__x1, xo__y1);
-    real_type t9   = sqrt(t2);
-    real_type result__ = 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
+    real_type t7   = v2_D_2(xo__x, xo__x1, xo__y1);
+    real_type t11  = v2_D_1_2(xo__x, xo__x1, xo__y1);
+    real_type result__ = -t7 * t5 / t2 / t1 / 4 + t11 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -454,12 +453,12 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::v_D_1_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
-    real_type t1   = v2_D_1_3(xo__x, xo__x1, xo__y1);
-    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
+    real_type t2   = sqrt(t1);
     real_type t5   = v2_D_1(xo__x, xo__x1, xo__y1);
-    real_type t6   = v2_D_3(xo__x, xo__x1, xo__y1);
-    real_type t9   = sqrt(t2);
-    real_type result__ = 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
+    real_type t7   = v2_D_3(xo__x, xo__x1, xo__y1);
+    real_type t11  = v2_D_1_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = -t7 * t5 / t2 / t1 / 4 + t11 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -488,12 +487,12 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::v_D_2_2( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
-    real_type t1   = v2_D_2_2(xo__x, xo__x1, xo__y1);
-    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
+    real_type t2   = sqrt(t1);
     real_type t5   = v2_D_2(xo__x, xo__x1, xo__y1);
     real_type t6   = t5 * t5;
-    real_type t8   = sqrt(t2);
-    real_type result__ = 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
+    real_type t10  = v2_D_2_2(xo__x, xo__x1, xo__y1);
+    real_type result__ = -t6 / t2 / t1 / 4 + t10 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -506,12 +505,12 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::v_D_2_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
-    real_type t1   = v2_D_2_3(xo__x, xo__x1, xo__y1);
-    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
+    real_type t2   = sqrt(t1);
     real_type t5   = v2_D_2(xo__x, xo__x1, xo__y1);
-    real_type t6   = v2_D_3(xo__x, xo__x1, xo__y1);
-    real_type t9   = sqrt(t2);
-    real_type result__ = 1.0 / t9 / t2 * (2 * t2 * t1 - t6 * t5) / 4;
+    real_type t7   = v2_D_3(xo__x, xo__x1, xo__y1);
+    real_type t11  = v2_D_2_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = -t7 * t5 / t2 / t1 / 4 + t11 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -540,12 +539,12 @@ namespace HangGliderDefine {
 
   real_type
   HangGlider::v_D_3_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
-    real_type t1   = v2_D_3_3(xo__x, xo__x1, xo__y1);
-    real_type t2   = v2(xo__x, xo__x1, xo__y1);
+    real_type t1   = v2(xo__x, xo__x1, xo__y1);
+    real_type t2   = sqrt(t1);
     real_type t5   = v2_D_3(xo__x, xo__x1, xo__y1);
     real_type t6   = t5 * t5;
-    real_type t8   = sqrt(t2);
-    real_type result__ = 1.0 / t8 / t2 * (2 * t2 * t1 - t6) / 4;
+    real_type t10  = v2_D_3_3(xo__x, xo__x1, xo__y1);
+    real_type result__ = -t6 / t2 / t1 / 4 + t10 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

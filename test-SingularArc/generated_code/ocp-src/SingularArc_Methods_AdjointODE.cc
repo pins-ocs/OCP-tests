@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,12 +75,12 @@ namespace SingularArcDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
     real_type t4   = X__[iX_x1];
@@ -109,8 +109,8 @@ namespace SingularArcDefine {
 
   void
   SingularArc::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -121,18 +121,18 @@ namespace SingularArcDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
     real_type t4   = X__[iX_x1];
     real_type t5   = cos(t4);
     real_type t9   = sin(t4);
-    result__[ 0   ] = -t2 * t5 * L__[iL_lambda2__xo] - t2 * t9 * L__[iL_lambda3__xo];
+    result__[ 0   ] = -t5 * t2 * L__[iL_lambda2__xo] - t9 * t2 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
   }
@@ -153,8 +153,8 @@ namespace SingularArcDefine {
 
   void
   SingularArc::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -167,12 +167,12 @@ namespace SingularArcDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_x1];
     real_type t3   = sin(t2);
@@ -200,12 +200,12 @@ namespace SingularArcDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo] * P__[iP_T];
     if ( m_debug )
@@ -228,8 +228,8 @@ namespace SingularArcDefine {
 
   void
   SingularArc::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -240,7 +240,7 @@ namespace SingularArcDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -261,8 +261,8 @@ namespace SingularArcDefine {
 
   void
   SingularArc::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -274,12 +274,12 @@ namespace SingularArcDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     if ( m_debug )
@@ -305,12 +305,12 @@ namespace SingularArcDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_tfbound_D(P__[iP_T]);
     real_type t7   = X__[iX_x1];
@@ -337,8 +337,8 @@ namespace SingularArcDefine {
 
   void
   SingularArc::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -351,12 +351,12 @@ namespace SingularArcDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_tfbound_DD(P__[iP_T]);
     if ( m_debug )
@@ -378,12 +378,12 @@ namespace SingularArcDefine {
   SingularArc::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -408,8 +408,8 @@ namespace SingularArcDefine {
 
   void
   SingularArc::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -419,7 +419,7 @@ namespace SingularArcDefine {
   SingularArc::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -440,8 +440,8 @@ namespace SingularArcDefine {
 
   void
   SingularArc::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -451,7 +451,7 @@ namespace SingularArcDefine {
   SingularArc::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -472,11 +472,11 @@ namespace SingularArcDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -501,8 +501,8 @@ namespace SingularArcDefine {
 
   void
   SingularArc::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -513,7 +513,7 @@ namespace SingularArcDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -534,8 +534,8 @@ namespace SingularArcDefine {
 
   void
   SingularArc::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -546,7 +546,7 @@ namespace SingularArcDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ namespace RobotArmDefine {
   \*/
 
   void
-  RobotArm::continuationStep0( real_type s ) {
+  RobotArm::continuation_step_0( real_type s ) {
     ModelPars[iM_W] = s;
     real_type t2   = 1 - s;
     real_type t3   = pow(ModelPars[iM_u_epsilon0], t2);
@@ -104,53 +104,24 @@ namespace RobotArmDefine {
    |
   \*/
 
-#if 0
-  real_type
-  RobotArm::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer     i_cell = CELL__.i_cell;
-    real_const_ptr Q__ = CELL__.qM;
-    real_const_ptr X__ = CELL__.xM;
-    real_const_ptr L__ = CELL__.lambdaM;
-    real_const_ptr U__ = CELL__.uM;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = U__[iU_u_rho];
-    real_type t6   = U__[iU_u_theta];
-    real_type t9   = U__[iU_u_phi];
-    real_type t20  = u_rhoControl(t3, -1, 1);
-    real_type t21  = u_thetaControl(t6, -1, 1);
-    real_type t22  = u_phiControl(t9, -1, 1);
-    real_type result__ = (t3 * L__[iL_lambda1__xo] + t6 * L__[iL_lambda2__xo] + t9 * L__[iL_lambda3__xo] + L__[iL_lambda4__xo] * X__[iX_rho1] + L__[iL_lambda5__xo] * X__[iX_theta1] + L__[iL_lambda6__xo] * X__[iX_phi1] + t20 + t21 + t22) * P__[iP_T];
-    return result__;
-  }
-#else
   real_type
   RobotArm::H_eval(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = U__[iU_u_rho];
-    real_type t6   = U__[iU_u_theta];
-    real_type t9   = U__[iU_u_phi];
-    real_type t20  = u_rhoControl(t3, -1, 1);
-    real_type t21  = u_thetaControl(t6, -1, 1);
-    real_type t22  = u_phiControl(t9, -1, 1);
-    real_type result__ = (t3 * L__[iL_lambda1__xo] + t6 * L__[iL_lambda2__xo] + t9 * L__[iL_lambda3__xo] + L__[iL_lambda4__xo] * X__[iX_rho1] + L__[iL_lambda5__xo] * X__[iX_theta1] + L__[iL_lambda6__xo] * X__[iX_phi1] + t20 + t21 + t22) * P__[iP_T];
+    real_type t2   = P__[iP_T];
+    real_type result__ = U__[iU_u_rho] * t2 * L__[iL_lambda1__xo] + U__[iU_u_theta] * t2 * L__[iL_lambda2__xo] + U__[iU_u_phi] * t2 * L__[iL_lambda3__xo] + X__[iX_rho1] * t2 * L__[iL_lambda4__xo] + X__[iX_theta1] * t2 * L__[iL_lambda5__xo] + X__[iX_phi1] * t2 * L__[iL_lambda6__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -165,9 +136,9 @@ namespace RobotArmDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
@@ -184,14 +155,15 @@ namespace RobotArmDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = P__[iP_T];
     real_type t3   = u_rhoControl(U__[iU_u_rho], -1, 1);
-    real_type t5   = u_thetaControl(U__[iU_u_theta], -1, 1);
-    real_type t7   = u_phiControl(U__[iU_u_phi], -1, 1);
-    real_type result__ = (t3 + t5 + t7) * P__[iP_T];
+    real_type t6   = u_thetaControl(U__[iU_u_theta], -1, 1);
+    real_type t9   = u_phiControl(U__[iU_u_phi], -1, 1);
+    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
     }
@@ -212,9 +184,9 @@ namespace RobotArmDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
@@ -238,16 +210,16 @@ namespace RobotArmDefine {
     P_const_pointer_type P__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    real_type t1   = ModelPars[iM_W];
-    real_type t3   = P__[iP_T];
-    real_type result__ = -t3 * (t3 * (t1 - 1) - t1);
+    real_type t1   = P__[iP_T];
+    real_type t2   = ModelPars[iM_W];
+    real_type result__ = -(t1 * (t2 - 1) - t2) * t1;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
     }
@@ -257,22 +229,22 @@ namespace RobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  RobotArm::DmayerDx_numEqns() const
-  { return 12; }
+  RobotArm::DmayerDxxp_numEqns() const
+  { return 13; }
 
   void
-  RobotArm::DmayerDx_eval(
+  RobotArm::DmayerDxxp_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
@@ -287,35 +259,10 @@ namespace RobotArmDefine {
     result__[ 9   ] = 0;
     result__[ 10  ] = 0;
     result__[ 11  ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 12, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::DmayerDp_numEqns() const
-  { return 1; }
-
-  void
-  RobotArm::DmayerDp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = ModelPars[iM_W];
-    result__[ 0   ] = P__[iP_T] * (-2 * t1 + 2) + t1;
+    result__[ 12  ] = -2 * P__[iP_T] * (t1 - 1) + t1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDp_eval", 1, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 13, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -328,6 +275,35 @@ namespace RobotArmDefine {
   \*/
 
   integer
+  RobotArm::DlagrangeDxup_numEqns() const
+  { return 10; }
+
+  void
+  RobotArm::DlagrangeDxup_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    result__[ 7   ] = 0;
+    result__[ 8   ] = 0;
+    result__[ 9   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 10, i_segment );
+  }
+
+  integer
   RobotArm::DJDx_numEqns() const
   { return 6; }
 
@@ -336,11 +312,11 @@ namespace RobotArmDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
@@ -363,11 +339,11 @@ namespace RobotArmDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = u_rhoControl(U__[iU_u_rho], -1, 1);
     real_type t4   = u_thetaControl(U__[iU_u_theta], -1, 1);
@@ -388,11 +364,11 @@ namespace RobotArmDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
@@ -444,7 +420,7 @@ namespace RobotArmDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_ptr             segmentLink
+    real_type            segmentLink[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -465,8 +441,8 @@ namespace RobotArmDefine {
 
   void
   RobotArm::DsegmentLinkDxp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -478,7 +454,7 @@ namespace RobotArmDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_ptr             DsegmentLinkDxp
+    real_type            DsegmentLinkDxp[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -500,16 +476,16 @@ namespace RobotArmDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = XR__[iX_rho];
@@ -525,7 +501,8 @@ namespace RobotArmDefine {
     result__[ 6   ] = LR__[iL_lambda4__xo] - LL__[iL_lambda4__xo];
     result__[ 7   ] = LR__[iL_lambda5__xo] - LL__[iL_lambda5__xo];
     result__[ 8   ] = LR__[iL_lambda6__xo] - LL__[iL_lambda6__xo];
-    result__[ 9   ] = -ModelPars[iM_L] * (LL__[iL_lambda1__xo] - LR__[iL_lambda1__xo]);
+    real_type t20  = ModelPars[iM_L];
+    result__[ 9   ] = -t20 * LL__[iL_lambda1__xo] + t20 * LR__[iL_lambda1__xo];
     real_type t24  = I_theta(t1, t5);
     real_type t27  = I_theta(t2, t6);
     result__[ 10  ] = LR__[iL_lambda2__xo] * t24 - LL__[iL_lambda2__xo] * t27;
@@ -552,8 +529,8 @@ namespace RobotArmDefine {
 
   void
   RobotArm::DjumpDxlxlp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 12  ;
@@ -594,16 +571,16 @@ namespace RobotArmDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
@@ -672,7 +649,7 @@ namespace RobotArmDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -688,7 +665,7 @@ namespace RobotArmDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
    // EMPTY!
   }

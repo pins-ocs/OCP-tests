@@ -23,46 +23,46 @@ num. nodes = 101
 Segment N.0: s0 = 0.000 length = 1.000 npts = 101 no data set
 END Mesh[mesh]
 INFO CLASS = BangBangF
-  num_nodes    = 101
-  dim         = u = 1, q = 1, x = 2, p = 0, omega = 3, big_bc = 7
+  #nodes      = 101
+  dim         = u = 1, q = 1, x = 2, p = 0, omega = 3, bc = 3, full_bc = 7
   BC          = Inital = 4, Final = 3, Cyclic = 0
   OMEGA       = Inital = 2, Final = 1, Cyclic = 0
   total       = nZ = 407, UC = 100, Q = 101
   index start = omega = 404, p = 407
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton [ANALYTIC]
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
 Initializer Controls: Quasi-Newton
 Used threads:         15
 
 
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  1,13] ( 0.00409  , 0.00472  ) [   80.9   ,   80.8   ] 0.00114    [solverNewtonDumped]
-[  2, 5] ( 0.00472  , 0.00548  ) [   22.4   ,   22.3   ] 0.00256    [solverNewtonDumped]
-[  3, 5] ( 0.00548  , 0.00603  ) [   3.59   ,   3.54   ] 0.00844    [solverNewtonDumped]
-[  4, 3] ( 0.00603  , 0.00686  ) [  0.545   ,  0.459   ] 0.100      [solverNewtonDumped]
-[  5, 1] ( 0.00686  , 0.00267  ) [  0.425   ,  0.158   ] 0.634      [solverNewtonDumped]
-[  6, 1] ( 0.00267  , 1.04e-06 ) [  0.159   , 1.34e-05 ] 1.00       [solverNewtonDumped]
-[  7, 1] ( 1.04e-06 , 4.67e-18 ) [ 1.34e-05 , 6.28e-18 ] 1.00       [solverNewtonDumped]
+[  1,12] ( 0.00409  , 0.00574  ) [   80.9   ,   80.6   ] 0.00198    [solverNewtonDumped]
+[  2, 3] ( 0.00574  , 0.00786  ) [   10.0   ,   9.84   ] 0.0102     [solverNewtonDumped]
+[  3, 1] ( 0.00786  , 0.00934  ) [  0.470   ,  0.326   ] 0.202      [solverNewtonDumped]
+[  4, 1] ( 0.00934  , 0.000992 ) [  0.485   ,  0.0494  ] 0.899      [solverNewtonDumped]
+[  5, 1] ( 0.000992 , 3.31e-08 ) [  0.0495  , 4.24e-07 ] 1.00       [solverNewtonDumped]
+[  6, 1] ( 3.31e-08 , 4.81e-18 ) [ 4.24e-07 , 1.25e-17 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 5.90[ms]      timeout        = 0 [ms]
-iteration      = 7             tolerance      = 1.000e-09 
+Elapsed Time   = 4.06[ms]      timeout        = 0 [ms]
+iteration      = 6             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 407
 max acc. iter. = 800           N. System pars = 100
-Converged      = YES           Memory Used    = 52Kb (+41bytes)
+Converged      = YES           Memory Used    = 53Kb (+17bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
 Few iterations = 8         
 ----------------------- EVALUATIONS ------------------------
-Function       = 30            Jacobian       = 7         
-Factorization  = 7             Inversion      = 36        
+Function       = 20            Jacobian       = 6         
+Factorization  = 6             Inversion      = 25        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 3.4769e-17    last||d1||_inf = 0.00021160
-last ||f||_inf = 4.6838e-17    last||f||_1    = 4.6686e-18
+last ||d||_inf = 1.0548e-16    last||d1||_inf = 6.7302e-06
+last ||f||_inf = 5.5511e-17    last||f||_1    = 4.8058e-18
 ------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             

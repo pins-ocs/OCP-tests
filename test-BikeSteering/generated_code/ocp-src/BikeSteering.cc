@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering.cc                                                |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "BikeSteering.hh"
 #include "BikeSteering_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -122,7 +120,7 @@ namespace BikeSteeringDefine {
     nullptr
   };
 
-  char const *namesBc[numBC+1] = {
+  char const *namesBc[numBc+1] = {
     "initial_omega",
     "initial_phi",
     "final_omega",
@@ -152,7 +150,7 @@ namespace BikeSteeringDefine {
     m_U_solve_iterative = false;
 
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
+    std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setup_names(
@@ -163,7 +161,7 @@ namespace BikeSteeringDefine {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBC,                    namesBc
+      numBc,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -171,10 +169,13 @@ namespace BikeSteeringDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   BikeSteering::~BikeSteering() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -194,8 +195,8 @@ namespace BikeSteeringDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
-        phase+1, s, s-old_s
+        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
+        phase+1, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -211,10 +212,10 @@ namespace BikeSteeringDefine {
   // initialize parameters using associative array
   */
   void
-  BikeSteering::setupParameters( GenericContainer const & gc_data ) {
+  BikeSteering::setup_parameters( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Parameters"),
-      "BikeSteering::setupParameters: Missing key `Parameters` in data\n"
+      "BikeSteering::setup_parameters: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Parameters");
 
@@ -234,7 +235,7 @@ namespace BikeSteeringDefine {
   }
 
   void
-  BikeSteering::setupParameters( real_type const Pars[] ) {
+  BikeSteering::setup_parameters( real_type const Pars[] ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -247,16 +248,16 @@ namespace BikeSteeringDefine {
   //                     |_|
   */
   void
-  BikeSteering::setupClasses( GenericContainer const & gc_data ) {
+  BikeSteering::setup_classes( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Constraints"),
-      "BikeSteering::setupClasses: Missing key `Parameters` in data\n"
+      "BikeSteering::setup_classes: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
     UTILS_ASSERT0(
       gc.exists("minimumTimeSize"),
-      "in BikeSteering::setupClasses(gc) missing key: ``minimumTimeSize''\n"
+      "in BikeSteering::setup_classes(gc) missing key: ``minimumTimeSize''\n"
     );
     minimumTimeSize.setup( gc("minimumTimeSize") );
 
@@ -271,7 +272,7 @@ namespace BikeSteeringDefine {
   //                    |_|
   */
   void
-  BikeSteering::setupUserClasses( GenericContainer const & gc ) {
+  BikeSteering::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -287,7 +288,7 @@ namespace BikeSteeringDefine {
   //              |_|  |_|
   */
   void
-  BikeSteering::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  BikeSteering::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -298,11 +299,11 @@ namespace BikeSteeringDefine {
   //                     |_|
   */
   void
-  BikeSteering::setupControls( GenericContainer const & gc_data ) {
+  BikeSteering::setup_controls( GenericContainer const & gc_data ) {
     // initialize Control penalties
     UTILS_ASSERT0(
       gc_data.exists("Controls"),
-      "BikeSteering::setupClasses: Missing key `Controls` in data\n"
+      "BikeSteering::setup_classes: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
     FyControl.setup( gc("FyControl") );
@@ -319,11 +320,11 @@ namespace BikeSteeringDefine {
   //                     |_|
   */
   void
-  BikeSteering::setupPointers( GenericContainer const & gc_data ) {
+  BikeSteering::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "BikeSteering::setupPointers: Missing key `Pointers` in data\n"
+      "BikeSteering::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -331,7 +332,7 @@ namespace BikeSteeringDefine {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in BikeSteering::setupPointers(gc) cant find key `pMesh' in gc\n"
+      "in BikeSteering::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -389,16 +390,20 @@ namespace BikeSteeringDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("BikeSteering::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
     this->info_classes();
     this->info();

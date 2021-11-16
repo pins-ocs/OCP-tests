@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,24 +73,24 @@ namespace BrachiostocronaDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
-    real_type t1   = P__[iP_T];
-    real_type t2   = X__[iX_theta];
-    real_type t3   = cos(t2);
-    real_type t4   = L__[iL_lambda1__xo];
-    real_type t6   = sin(t2);
-    real_type t7   = L__[iL_lambda2__xo];
-    result__[ 2   ] = (t4 * t3 + t7 * t6) * t1;
+    real_type t2   = P__[iP_T];
+    real_type t3   = t2 * L__[iL_lambda1__xo];
+    real_type t4   = X__[iX_theta];
+    real_type t5   = cos(t4);
+    real_type t8   = t2 * L__[iL_lambda2__xo];
+    real_type t9   = sin(t4);
+    result__[ 2   ] = t5 * t3 + t9 * t8;
     real_type t11  = X__[iX_v];
-    result__[ 3   ] = (t11 * t7 * t3 - t11 * t4 * t6 - ModelPars[iM_g] * L__[iL_lambda3__xo] * t3) * t1;
+    result__[ 3   ] = -t5 * ModelPars[iM_g] * t2 * L__[iL_lambda3__xo] - t9 * t11 * t3 + t5 * t11 * t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -111,8 +111,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 2   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 3   ; jIndex[1 ] = 2   ;
@@ -125,23 +125,23 @@ namespace BrachiostocronaDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = X__[iX_theta];
-    real_type t3   = cos(t2);
-    real_type t4   = L__[iL_lambda2__xo];
-    real_type t6   = sin(t2);
-    real_type t7   = L__[iL_lambda1__xo];
-    result__[ 0   ] = (t4 * t3 - t7 * t6) * t1;
+    real_type t2   = P__[iP_T];
+    real_type t3   = t2 * L__[iL_lambda1__xo];
+    real_type t4   = X__[iX_theta];
+    real_type t5   = sin(t4);
+    real_type t8   = t2 * L__[iL_lambda2__xo];
+    real_type t9   = cos(t4);
+    result__[ 0   ] = -t5 * t3 + t9 * t8;
     result__[ 1   ] = result__[0];
     real_type t11  = X__[iX_v];
-    result__[ 2   ] = -(t11 * t7 * t3 + t11 * t4 * t6 - ModelPars[iM_g] * L__[iL_lambda3__xo] * t6) * t1;
+    result__[ 2   ] = t5 * ModelPars[iM_g] * t2 * L__[iL_lambda3__xo] - t9 * t11 * t3 - t5 * t11 * t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 3, i_segment );
   }
@@ -162,8 +162,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 2   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 3   ; jIndex[1 ] = 0   ;
@@ -177,12 +177,12 @@ namespace BrachiostocronaDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda1__xo];
     real_type t2   = X__[iX_theta];
@@ -214,12 +214,12 @@ namespace BrachiostocronaDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda4__xo];
     if ( m_debug )
@@ -242,8 +242,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -254,7 +254,7 @@ namespace BrachiostocronaDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -275,8 +275,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -287,7 +287,7 @@ namespace BrachiostocronaDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -311,12 +311,12 @@ namespace BrachiostocronaDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t4   = X__[iX_theta];
@@ -343,8 +343,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -356,7 +356,7 @@ namespace BrachiostocronaDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -376,12 +376,12 @@ namespace BrachiostocronaDefine {
   Brachiostocrona::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -407,8 +407,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -418,7 +418,7 @@ namespace BrachiostocronaDefine {
   Brachiostocrona::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -439,8 +439,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -450,7 +450,7 @@ namespace BrachiostocronaDefine {
   Brachiostocrona::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -471,11 +471,11 @@ namespace BrachiostocronaDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -501,8 +501,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -513,7 +513,7 @@ namespace BrachiostocronaDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -534,8 +534,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -546,7 +546,7 @@ namespace BrachiostocronaDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

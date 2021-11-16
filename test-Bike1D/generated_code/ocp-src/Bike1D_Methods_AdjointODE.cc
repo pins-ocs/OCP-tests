@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_AdjointODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -93,19 +93,20 @@ namespace Bike1DDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = X__[iX_v];
-    real_type t5   = t4 * t4;
-    real_type t8   = t4 - ModelPars[iM_v_min];
-    real_type t9   = ALIAS_vMinLimit_D(t8);
-    real_type t11  = vMinLimit(t8);
-    result__[ 0   ] = 1.0 / t5 * (-t5 * V__[0] * L__[iL_lambda1__xo] + t4 * t9 - t11 - 1);
+    real_type t1   = X__[iX_v];
+    real_type t2   = t1 * t1;
+    real_type t3   = 1.0 / t2;
+    real_type t5   = t1 - ModelPars[iM_v_min];
+    real_type t6   = vMinLimit(t5);
+    real_type t9   = ALIAS_vMinLimit_D(t5);
+    result__[ 0   ] = -t6 * t3 + t9 / t1 - t3 - L__[iL_lambda1__xo] * V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 1, i_segment );
   }
@@ -126,8 +127,8 @@ namespace Bike1DDefine {
 
   void
   Bike1D::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -138,20 +139,21 @@ namespace Bike1DDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_v];
-    real_type t3   = t1 - ModelPars[iM_v_min];
-    real_type t4   = ALIAS_vMinLimit_DD(t3);
-    real_type t5   = t1 * t1;
-    real_type t7   = ALIAS_vMinLimit_D(t3);
-    real_type t10  = vMinLimit(t3);
-    result__[ 0   ] = 1.0 / t5 / t1 * (-2 * t1 * t7 + t5 * t4 + 2 * t10 + 2);
+    real_type t2   = t1 * t1;
+    real_type t4   = 1.0 / t2 / t1;
+    real_type t6   = t1 - ModelPars[iM_v_min];
+    real_type t7   = vMinLimit(t6);
+    real_type t11  = ALIAS_vMinLimit_D(t6);
+    real_type t15  = ALIAS_vMinLimit_DD(t6);
+    result__[ 0   ] = 2 * t7 * t4 - 2 * t11 / t2 + t15 / t1 + 2 * t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
   }
@@ -172,8 +174,8 @@ namespace Bike1DDefine {
 
   void
   Bike1D::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -185,7 +187,7 @@ namespace Bike1DDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -208,12 +210,12 @@ namespace Bike1DDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo] * ModelPars[iM_g];
     result__[ 1   ] = result__[0];
@@ -237,8 +239,8 @@ namespace Bike1DDefine {
 
   void
   Bike1D::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -249,7 +251,7 @@ namespace Bike1DDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -270,8 +272,8 @@ namespace Bike1DDefine {
 
   void
   Bike1D::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -282,7 +284,7 @@ namespace Bike1DDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -306,7 +308,7 @@ namespace Bike1DDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -327,8 +329,8 @@ namespace Bike1DDefine {
 
   void
   Bike1D::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -340,7 +342,7 @@ namespace Bike1DDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -360,12 +362,12 @@ namespace Bike1DDefine {
   Bike1D::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_v] * L__[iL_lambda1__xo];
     if ( m_debug )
@@ -388,8 +390,8 @@ namespace Bike1DDefine {
 
   void
   Bike1D::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -400,12 +402,12 @@ namespace Bike1DDefine {
   Bike1D::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     if ( m_debug )
@@ -428,8 +430,8 @@ namespace Bike1DDefine {
 
   void
   Bike1D::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -439,7 +441,7 @@ namespace Bike1DDefine {
   Bike1D::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -460,11 +462,11 @@ namespace Bike1DDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_v] * V__[0];
     if ( m_debug )
@@ -487,8 +489,8 @@ namespace Bike1DDefine {
 
   void
   Bike1D::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -500,11 +502,11 @@ namespace Bike1DDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     if ( m_debug )
@@ -527,8 +529,8 @@ namespace Bike1DDefine {
 
   void
   Bike1D::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -539,7 +541,7 @@ namespace Bike1DDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -21,17 +21,17 @@
 
 -- Auxiliary values
 mu     = 398600441800000
-g0     = 9.80665
 days1  = 30
 r0     = 6678140
 v0     = (mu/r0)**(1/2.0)
-u0     = 0
-u0_bar = u0/v0
+g0     = 9.80665
 days   = 1
-T      = 0.68
 Isp    = 1500
+T      = 0.68
 mdot   = T/g0/Isp
 tf     = 86400*days
+u0     = 0
+u0_bar = u0/v0
 
 content = {
 
@@ -52,10 +52,12 @@ content = {
   LU_threaded = true,
 
   -- Enable check jacobian
-  JacobianCheck            = false,
-  JacobianCheckFull        = false,
-  JacobianCheck_epsilon    = 1e-4,
-  FiniteDifferenceJacobian = false,
+  JacobianCheck         = false,
+  JacobianCheckFull     = false,
+  JacobianCheck_epsilon = 1e-4,
+
+  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  JacobianDiscretization = 'ANALYTIC,
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "MaximumAscent_dump",
@@ -105,7 +107,7 @@ content = {
     max_iter             = 300,
     max_step_iter        = 40,
     max_accumulated_iter = 800,
-    tolerance            = 9.999999999999999e-10,
+    tolerance            = 1e-09,
 
     -- continuation parameters
     ns_continuation_begin = 0,

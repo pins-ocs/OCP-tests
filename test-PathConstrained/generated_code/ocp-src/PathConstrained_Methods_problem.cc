@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -63,7 +63,7 @@ namespace PathConstrainedDefine {
   \*/
 
   void
-  PathConstrained::continuationStep0( real_type s ) {
+  PathConstrained::continuation_step_0( real_type s ) {
     real_type t2   = 1 - s;
     real_type t3   = pow(ModelPars[iM_epsi_ctrl0], t2);
     real_type t5   = pow(ModelPars[iM_epsi_ctrl1], s);
@@ -85,59 +85,30 @@ namespace PathConstrainedDefine {
    |
   \*/
 
-#if 0
-  real_type
-  PathConstrained::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer     i_cell = CELL__.i_cell;
-    real_const_ptr Q__ = CELL__.qM;
-    real_const_ptr X__ = CELL__.xM;
-    real_const_ptr L__ = CELL__.lambdaM;
-    real_const_ptr U__ = CELL__.uM;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = pow(Q__[iQ_zeta] - 0.5e0, 2);
-    real_type t5   = X__[iX_x2];
-    real_type t7   = x2bound(8 * t3 - 0.5e0 - t5);
-    real_type t8   = U__[iU_u];
-    real_type t9   = uControl(t8, -20, 20);
-    real_type t10  = t5 * t5;
-    real_type t12  = L__[iL_lambda2__xo];
-    real_type t16  = t8 * t8;
-    real_type t19  = X__[iX_x1] * X__[iX_x1];
-    real_type result__ = t7 + t9 + t10 + t5 * (L__[iL_lambda1__xo] - 1.0 * t12) + 0.5e-2 * t16 + t19 + t8 * t12;
-    return result__;
-  }
-#else
   real_type
   PathConstrained::H_eval(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = pow(Q__[iQ_zeta] - 0.5e0, 2);
     real_type t5   = X__[iX_x2];
     real_type t7   = x2bound(8 * t3 - 0.5e0 - t5);
     real_type t8   = U__[iU_u];
-    real_type t9   = uControl(t8, -20, 20);
-    real_type t10  = t5 * t5;
-    real_type t12  = L__[iL_lambda2__xo];
-    real_type t16  = t8 * t8;
-    real_type t19  = X__[iX_x1] * X__[iX_x1];
-    real_type result__ = t7 + t9 + t10 + t5 * (L__[iL_lambda1__xo] - 1.0 * t12) + 0.5e-2 * t16 + t19 + t8 * t12;
+    real_type t9   = t8 * t8;
+    real_type t12  = X__[iX_x1] * X__[iX_x1];
+    real_type t13  = t5 * t5;
+    real_type result__ = t7 + 0.5e-2 * t9 + t12 + t13 + t5 * L__[iL_lambda1__xo] + (-t5 + t8) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -152,9 +123,9 @@ namespace PathConstrainedDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = pow(Q__[iQ_zeta] - 0.5e0, 2);
     real_type result__ = x2bound(8 * t3 - 0.5e0 - X__[iX_x2]);
@@ -172,9 +143,9 @@ namespace PathConstrainedDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = uControl(U__[iU_u], -20, 20);
     if ( m_debug ) {
@@ -197,9 +168,9 @@ namespace PathConstrainedDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_u] * U__[iU_u];
     real_type t5   = X__[iX_x1] * X__[iX_x1];
@@ -226,11 +197,11 @@ namespace PathConstrainedDefine {
     P_const_pointer_type P__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
@@ -243,22 +214,22 @@ namespace PathConstrainedDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  PathConstrained::DmayerDx_numEqns() const
+  PathConstrained::DmayerDxxp_numEqns() const
   { return 4; }
 
   void
-  PathConstrained::DmayerDx_eval(
+  PathConstrained::DmayerDxxp_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
@@ -266,23 +237,7 @@ namespace PathConstrainedDefine {
     result__[ 2   ] = 0;
     result__[ 3   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PathConstrained::DmayerDp_numEqns() const
-  { return 0; }
-
-  void
-  PathConstrained::DmayerDp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 4, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -295,6 +250,28 @@ namespace PathConstrainedDefine {
   \*/
 
   integer
+  PathConstrained::DlagrangeDxup_numEqns() const
+  { return 3; }
+
+  void
+  PathConstrained::DlagrangeDxup_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 2 * X__[iX_x1];
+    result__[ 1   ] = 2 * X__[iX_x2];
+    result__[ 2   ] = 0.10e-1 * U__[iU_u];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
+  }
+
+  integer
   PathConstrained::DJDx_numEqns() const
   { return 2; }
 
@@ -303,11 +280,11 @@ namespace PathConstrainedDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     real_type t3   = pow(Q__[iQ_zeta] - 0.5e0, 2);
@@ -328,7 +305,7 @@ namespace PathConstrainedDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -344,11 +321,11 @@ namespace PathConstrainedDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], -20, 20);
     if ( m_debug )
@@ -394,7 +371,7 @@ namespace PathConstrainedDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_ptr             segmentLink
+    real_type            segmentLink[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -415,8 +392,8 @@ namespace PathConstrainedDefine {
 
   void
   PathConstrained::DsegmentLinkDxp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -428,7 +405,7 @@ namespace PathConstrainedDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_ptr             DsegmentLinkDxp
+    real_type            DsegmentLinkDxp[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -450,16 +427,16 @@ namespace PathConstrainedDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
@@ -486,8 +463,8 @@ namespace PathConstrainedDefine {
 
   void
   PathConstrained::DjumpDxlxlp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
@@ -506,16 +483,16 @@ namespace PathConstrainedDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
@@ -547,7 +524,7 @@ namespace PathConstrainedDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -563,7 +540,7 @@ namespace PathConstrainedDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
    // EMPTY!
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_ODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,18 +78,18 @@ namespace BangBangFtauDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_v];
     real_type t1   = X__[iX_sT];
     real_type t2   = X__[iX_sB];
     result__[ 1   ] = clip(t1 - t2, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    result__[ 2   ] = 1.0 / ModelPars[iM_tauT] * (-t1 + U__[iU_vsT]);
-    result__[ 3   ] = 1.0 / ModelPars[iM_tauB] * (-t2 + U__[iU_vsB]);
+    result__[ 2   ] = -1.0 / ModelPars[iM_tauT] * (t1 - U__[iU_vsT]);
+    result__[ 3   ] = -1.0 / ModelPars[iM_tauB] * (t2 - U__[iU_vsB]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
@@ -110,8 +110,8 @@ namespace BangBangFtauDefine {
 
   void
   BangBangFtau::Drhs_odeDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
@@ -127,11 +127,11 @@ namespace BangBangFtauDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = ALIAS_clip_D_1(X__[iX_sT] - X__[iX_sB], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
@@ -158,8 +158,8 @@ namespace BangBangFtauDefine {
 
   void
   BangBangFtau::Drhs_odeDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -170,7 +170,7 @@ namespace BangBangFtauDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -191,8 +191,8 @@ namespace BangBangFtauDefine {
 
   void
   BangBangFtau::Drhs_odeDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 2   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 3   ; jIndex[1 ] = 1   ;
@@ -205,11 +205,11 @@ namespace BangBangFtauDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1.0 / ModelPars[iM_tauT];
     result__[ 1   ] = 1.0 / ModelPars[iM_tauB];
@@ -238,8 +238,8 @@ namespace BangBangFtauDefine {
 
   void
   BangBangFtau::A_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -253,11 +253,11 @@ namespace BangBangFtauDefine {
   BangBangFtau::A_sparse(
     NodeType const     & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;

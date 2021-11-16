@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_AdjointODE.cc                 |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,12 +73,12 @@ namespace SingularCalogeroModifiedDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = Q__[iQ_zeta] * Q__[iQ_zeta];
     result__[ 0   ] = 2 * ModelPars[iM_C] * t2 + 2 * X__[iX_x] - 2;
@@ -103,8 +103,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -115,12 +115,12 @@ namespace SingularCalogeroModifiedDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 2;
     if ( m_debug )
@@ -143,8 +143,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -156,7 +156,7 @@ namespace SingularCalogeroModifiedDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -179,12 +179,12 @@ namespace SingularCalogeroModifiedDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda2__xo];
     if ( m_debug )
@@ -207,8 +207,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -219,7 +219,7 @@ namespace SingularCalogeroModifiedDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -240,8 +240,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -252,7 +252,7 @@ namespace SingularCalogeroModifiedDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -276,7 +276,7 @@ namespace SingularCalogeroModifiedDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -297,8 +297,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -310,7 +310,7 @@ namespace SingularCalogeroModifiedDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -330,12 +330,12 @@ namespace SingularCalogeroModifiedDefine {
   SingularCalogeroModified::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -359,8 +359,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -370,7 +370,7 @@ namespace SingularCalogeroModifiedDefine {
   SingularCalogeroModified::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -391,8 +391,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -402,7 +402,7 @@ namespace SingularCalogeroModifiedDefine {
   SingularCalogeroModified::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -423,11 +423,11 @@ namespace SingularCalogeroModifiedDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -451,8 +451,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -463,7 +463,7 @@ namespace SingularCalogeroModifiedDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -484,8 +484,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -496,7 +496,7 @@ namespace SingularCalogeroModifiedDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

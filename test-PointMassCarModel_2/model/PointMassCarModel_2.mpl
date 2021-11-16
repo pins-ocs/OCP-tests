@@ -141,7 +141,7 @@ out_vars := [
 other_params := [
   wT0       = 0.01,
   wT1       = 1.0,
-  wT        = wT0, Lagrange target weight
+  wT        = wT0, # Lagrange target weight
      wMC       = 1,
   V0        = 5,#10 ,
   p_epsi0   = 0.1, 
@@ -166,11 +166,9 @@ continuation_param := [
   ]
 ];
 project_name := "PointMassCarModel_2";
-project_dir  := "../";
 int_out_vars := [[1/ZDOT, "t"]];
 generateOCProblem(
   project_name, 
-  output_directory         = project_dir,
   parameters               = [ op(point_mass_data), op(other_params) ] ,
   standard_post_processing = true,
   post_processing          = out_vars,

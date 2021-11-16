@@ -1,0 +1,161 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] final_x
+
+
+
+Controls
+uControl = {
+  type    = PENALTY QUADRATIC,
+  epsilon = 0.01,
+  size    = 0.01
+}
+
+Constraints 1D
+uMaxBound = {
+  Type      = GREATER THAN
+  SubType   = WallRegular, h=0.010000, epsilon=0.010000
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 601
+Segment N.0: s0 = 0.000 length = 3.000 npts = 601 no data set
+END Mesh[mesh]
+
+Model Parameters
+.................................tol_max = 0.01
+.................................tol_min = 0.001
+.....................................x_f = 3
+.....................................x_i = 0
+................................epsi_max = 0.01
+................................epsi_min = 0.001
+INFO CLASS = SingularConstrainedCalogero
+  #nodes      = 601
+  dim         = u = 1, q = 1, x = 1, p = 0, omega = 2, bc = 2, full_bc = 4
+  BC          = Inital = 2, Final = 2, Cyclic = 0
+  OMEGA       = Inital = 1, Final = 1, Cyclic = 0
+  total       = nZ = 1204, UC = 600, Q = 601
+  index start = omega = 1202, p = 1204
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1,17] ( 0.00247  , 0.00223  ) [ 9.82e+03 , 4.61e+03 ] 0.000133   [solverNewtonDumped]
+[  2, 1] ( 0.00223  , 0.00218  ) [  0.692   ,  0.675   ] 0.0231     [solverNewtonDumped]
+[  3, 1] ( 0.00218  , 0.00172  ) [  0.590   ,  0.469   ] 0.304      [solverNewtonDumped]
+[  4, 1] ( 0.00172  , 0.00185  ) [  0.444   ,  0.314   ] 1.00       [solverNewtonDumped]
+[  5, 1] ( 0.00185  , 8.97e-06 ) [  0.348   ,  0.297   ] 1.00       [solverNewtonDumped]
+[  6, 1] ( 8.97e-06 , 1.55e-05 ) [   7.87   ,   5.97   ] 1.00       [solverNewtonDumped]
+[  7, 1] ( 1.55e-05 , 5.44e-06 ) [   44.7   ,   16.9   ] 1.00       [solverNewtonDumped]
+[  8, 1] ( 5.44e-06 , 3.69e-07 ) [   34.6   ,   2.20   ] 1.00       [solverNewtonDumped]
+[  9, 1] ( 3.69e-07 , 1.10e-08 ) [   2.47   , 0.00674  ] 1.00       [solverNewtonDumped]
+[ 10, 1] ( 1.10e-08 , 1.95e-09 ) [ 0.00678  , 3.72e-07 ] 1.00       [solverNewtonDumped]
+[ 11, 1] ( 1.95e-09 , 5.31e-10 ) [ 3.72e-07 , 1.17e-07 ] 1.00       [solverNewtonDumped]
+[ 12, 1] ( 5.31e-10 , 1.39e-14 ) [ 1.17e-07 , 1.04e-13 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.20000, ds=0.20000, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 13, 1] ( 2.01e-06 , 5.31e-08 ) [   19.8   ,  0.423   ] 1.00       [solverNewtonDumped]
+[ 14, 1] ( 5.31e-08 , 6.82e-09 ) [  0.440   , 0.000171 ] 1.00       [solverNewtonDumped]
+[ 15, 1] ( 6.82e-09 , 1.12e-12 ) [ 0.000172 , 2.12e-10 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=0.50000, ds=0.30000, old_s=  0.2
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 16, 1] ( 2.85e-06 , 1.20e-07 ) [   52.5   ,   2.43   ] 1.00       [solverNewtonDumped]
+[ 17, 1] ( 1.20e-07 , 2.95e-09 ) [   2.65   , 0.00415  ] 1.00       [solverNewtonDumped]
+[ 18, 1] ( 2.95e-09 , 4.14e-10 ) [ 0.00416  , 7.87e-08 ] 1.00       [solverNewtonDumped]
+[ 19, 1] ( 4.14e-10 , 1.09e-10 ) [ 7.87e-08 , 2.40e-08 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=0.95000, ds=0.45000, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 20, 1] ( 3.85e-06 , 3.07e-07 ) [  366.0   ,   70.9   ] 1.00       [solverNewtonDumped]
+[ 21, 1] ( 3.07e-07 , 1.35e-08 ) [  100.0   ,   1.83   ] 1.00       [solverNewtonDumped]
+[ 22, 1] ( 1.35e-08 , 9.32e-11 ) [   1.89   , 0.000544 ] 1.00       [solverNewtonDumped]
+[ 23, 1] ( 9.32e-11 , 2.07e-12 ) [ 0.000544 , 3.84e-10 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=1.0000, ds=0.050000, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 24, 1] ( 4.78e-07 , 2.32e-08 ) [  273.0   ,   11.5   ] 1.00       [solverNewtonDumped]
+[ 25, 1] ( 2.32e-08 , 2.75e-09 ) [   12.4   ,  0.0163  ] 1.00       [solverNewtonDumped]
+[ 26, 1] ( 2.75e-09 , 1.15e-09 ) [  0.0163  , 2.19e-07 ] 1.00       [solverNewtonDumped]
+[ 27, 1] ( 1.15e-09 , 3.01e-10 ) [ 2.19e-07 , 6.62e-08 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 56.8[ms]      timeout        = 0 [ms]
+iteration      = 27            tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 1204
+max acc. iter. = 800           N. System pars = 600
+Converged      = YES           Memory Used    = 128Kb (+84bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 48            Jacobian       = 27        
+Factorization  = 27            Inversion      = 70        
+------------------------ USER INFO -------------------------
+last ||d||_inf = 1.4812e-07    last||d1||_inf = 6.5804e-07
+last ||f||_inf = 8.2991e-10    last||f||_1    = 3.0057e-10
+------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+#ERR 1 Jacobian block N. 440 type: FD [(x+l) x (2*(x+l)+p) = 2 x 4]
+
+jac[  1,  2] =   5.1015e-05 / -4.9306e-05  [A/FD] ---   0.00010032 / 196.65       [err/err(%)]
+
+#ERR 2 Jacobian block N. 441 type: FD [(x+l) x (2*(x+l)+p) = 2 x 4]
+
+jac[  1,  0] =   5.1015e-05 / -5.0494e-05  [A/FD] ---   0.00010151 / 198.98       [err/err(%)]
+jac[  1,  2] =   5.1015e-05 / -5.1667e-05  [A/FD] ---   0.00010268 / 198.74       [err/err(%)]
+
+#ERR 3 Jacobian block N. 442 type: FD [(x+l) x (2*(x+l)+p) = 2 x 4]
+
+jac[  1,  0] =   5.1015e-05 / -5.2843e-05  [A/FD] ---   0.00010386 / 196.54       [err/err(%)]
+jac[  1,  2] =   5.1015e-05 / -5.3750e-05  [A/FD] ---   0.00010477 / 194.91       [err/err(%)]
+
+#ERR 4 Jacobian block N. 443 type: FD [(x+l) x (2*(x+l)+p) = 2 x 4]
+
+jac[  1,  0] =   5.1015e-05 / -5.5170e-05  [A/FD] ---   0.00010619 / 192.47       [err/err(%)]
+jac[  1,  2] =   5.1015e-05 / -5.6318e-05  [A/FD] ---   0.00010733 / 190.58       [err/err(%)]
+
+#ERR 5 Jacobian block N. 444 type: FD [(x+l) x (2*(x+l)+p) = 2 x 4]
+
+jac[  1,  0] =   5.1015e-05 / -5.7735e-05  [A/FD] ---   0.00010875 / 188.36       [err/err(%)]
+jac[  1,  2] =   5.1015e-05 / -5.8622e-05  [A/FD] ---   0.00010964 / 187.02       [err/err(%)]
+
+#ERR 6 Jacobian block N. 445 type: FD [(x+l) x (2*(x+l)+p) = 2 x 4]
+
+jac[  1,  0] =   5.1015e-05 / -6.0019e-05  [A/FD] ---   0.00011103 / 185.00       [err/err(%)]
+jac[  1,  2] =   5.1015e-05 / -6.1147e-05  [A/FD] ---   0.00011216 / 183.43       [err/err(%)]
+
+skipping...
+Last block: OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ -7.499, 0.000 ]
+[Penalties/Barriers,Controls] = [ 1.908, 2.945e-09 ]
+All Done Folks!

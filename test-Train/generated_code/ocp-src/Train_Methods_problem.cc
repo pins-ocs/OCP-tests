@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_problem.cc                                       |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,7 +70,7 @@ namespace TrainDefine {
   \*/
 
   void
-  Train::continuationStep0( real_type s ) {
+  Train::continuation_step_0( real_type s ) {
     real_type t2   = 1 - s;
     real_type t6   = ModelPars[iM_epsi_min] * s + t2 * ModelPars[iM_epsi_max];
     uaControl.update_epsilon(t6);
@@ -88,55 +88,26 @@ namespace TrainDefine {
    |
   \*/
 
-#if 0
-  real_type
-  Train::H_eval(
-    integer              i_segment,
-    CellType const &     CELL__,
-    P_const_pointer_type P__
-  ) const {
-    integer     i_cell = CELL__.i_cell;
-    real_const_ptr Q__ = CELL__.qM;
-    real_const_ptr X__ = CELL__.xM;
-    real_const_ptr L__ = CELL__.lambdaM;
-    real_const_ptr U__ = CELL__.uM;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_ua];
-    real_type t3   = uaControl(t1, 0, ModelPars[iM_uaMax]);
-    real_type t4   = U__[iU_ub];
-    real_type t6   = ubControl(t4, 0, ModelPars[iM_ubMax]);
-    real_type t7   = L__[iL_lambda2__xo];
-    real_type t9   = X__[iX_v];
-    real_type t10  = acc(X__[iX_x], t9);
-    real_type result__ = t3 + t6 + t10 * t7 + t7 * (t1 - t4) + t9 * L__[iL_lambda1__xo] + t9 * t1;
-    return result__;
-  }
-#else
   real_type
   Train::H_eval(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_ua];
-    real_type t3   = uaControl(t1, 0, ModelPars[iM_uaMax]);
-    real_type t4   = U__[iU_ub];
-    real_type t6   = ubControl(t4, 0, ModelPars[iM_ubMax]);
-    real_type t7   = L__[iL_lambda2__xo];
-    real_type t9   = X__[iX_v];
-    real_type t10  = acc(X__[iX_x], t9);
-    real_type result__ = t3 + t6 + t10 * t7 + t7 * (t1 - t4) + t9 * L__[iL_lambda1__xo] + t9 * t1;
+    real_type t2   = X__[iX_v];
+    real_type t8   = acc(X__[iX_x], t2);
+    real_type result__ = t2 * t1 + t2 * L__[iL_lambda1__xo] + (t8 + t1 - U__[iU_ub]) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
-#endif
 
   /*\
    |   ___               _ _   _
@@ -151,9 +122,9 @@ namespace TrainDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
@@ -170,9 +141,9 @@ namespace TrainDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = uaControl(U__[iU_ua], 0, ModelPars[iM_uaMax]);
     real_type t6   = ubControl(U__[iU_ub], 0, ModelPars[iM_ubMax]);
@@ -197,9 +168,9 @@ namespace TrainDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = U__[iU_ua] * X__[iX_v];
     if ( m_debug ) {
@@ -223,11 +194,11 @@ namespace TrainDefine {
     P_const_pointer_type P__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
@@ -240,22 +211,22 @@ namespace TrainDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Train::DmayerDx_numEqns() const
+  Train::DmayerDxxp_numEqns() const
   { return 4; }
 
   void
-  Train::DmayerDx_eval(
+  Train::DmayerDxxp_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
@@ -263,23 +234,7 @@ namespace TrainDefine {
     result__[ 2   ] = 0;
     result__[ 3   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDx_eval", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DmayerDp_numEqns() const
-  { return 0; }
-
-  void
-  Train::DmayerDp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 4, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -292,6 +247,29 @@ namespace TrainDefine {
   \*/
 
   integer
+  Train::DlagrangeDxup_numEqns() const
+  { return 4; }
+
+  void
+  Train::DlagrangeDxup_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = U__[iU_ua];
+    result__[ 2   ] = X__[iX_v];
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
+  }
+
+  integer
   Train::DJDx_numEqns() const
   { return 2; }
 
@@ -300,11 +278,11 @@ namespace TrainDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
@@ -323,7 +301,7 @@ namespace TrainDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -339,11 +317,11 @@ namespace TrainDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_uaControl_D_1(U__[iU_ua], 0, ModelPars[iM_uaMax]);
     result__[ 1   ] = ALIAS_ubControl_D_1(U__[iU_ub], 0, ModelPars[iM_ubMax]);
@@ -390,7 +368,7 @@ namespace TrainDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_ptr             segmentLink
+    real_type            segmentLink[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -411,8 +389,8 @@ namespace TrainDefine {
 
   void
   Train::DsegmentLinkDxp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -424,7 +402,7 @@ namespace TrainDefine {
     NodeType const     & L,
     NodeType const     & R,
     P_const_pointer_type p,
-    real_ptr             DsegmentLinkDxp
+    real_type            DsegmentLinkDxp[]
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -446,16 +424,16 @@ namespace TrainDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
@@ -482,8 +460,8 @@ namespace TrainDefine {
 
   void
   Train::DjumpDxlxlp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
@@ -502,16 +480,16 @@ namespace TrainDefine {
     NodeType2 const    & LEFT__,
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
@@ -543,12 +521,12 @@ namespace TrainDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = uaControl(U__[iU_ua], 0, ModelPars[iM_uaMax]);
     result__[ 1   ] = ubControl(U__[iU_ub], 0, ModelPars[iM_ubMax]);
@@ -567,7 +545,7 @@ namespace TrainDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
    // EMPTY!
   }

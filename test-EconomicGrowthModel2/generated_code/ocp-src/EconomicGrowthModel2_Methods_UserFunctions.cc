@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -174,12 +174,14 @@ namespace EconomicGrowthModel2Define {
 
   real_type
   EconomicGrowthModel2::explog_D_1_1( real_type xo__a, real_type xo__b, real_type xo__s ) const {
-    real_type t1   = -1 + xo__s;
-    real_type t2   = log(xo__a);
-    real_type t5   = log(xo__b);
-    real_type t8   = exp(-t1 * t2 + xo__s * t5);
-    real_type t10  = xo__a * xo__a;
-    real_type result__ = 1.0 / t10 * xo__s * t8 * t1;
+    real_type t1   = xo__a * xo__a;
+    real_type t2   = 1.0 / t1;
+    real_type t3   = 1 - xo__s;
+    real_type t5   = log(xo__a);
+    real_type t7   = log(xo__b);
+    real_type t10  = exp(t3 * t5 + t7 * xo__s);
+    real_type t12  = t3 * t3;
+    real_type result__ = t10 * t12 * t2 - t10 * t2 * t3;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -209,12 +211,12 @@ namespace EconomicGrowthModel2Define {
 
   real_type
   EconomicGrowthModel2::explog_D_1_3( real_type xo__a, real_type xo__b, real_type xo__s ) const {
-    real_type t1   = -1 + xo__s;
+    real_type t1   = 1.0 / xo__a;
     real_type t2   = log(xo__a);
-    real_type t4   = -t1;
+    real_type t3   = 1 - xo__s;
     real_type t5   = log(xo__b);
-    real_type t11  = exp(t2 * t4 + xo__s * t5);
-    real_type result__ = 1.0 / xo__a * t11 * (t1 * t2 + t5 * t4 - 1);
+    real_type t8   = exp(t3 * t2 + xo__s * t5);
+    real_type result__ = -t8 * t1 + t8 * (-t2 + t5) * t3 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -243,12 +245,13 @@ namespace EconomicGrowthModel2Define {
 
   real_type
   EconomicGrowthModel2::explog_D_2_2( real_type xo__a, real_type xo__b, real_type xo__s ) const {
-    real_type t1   = -1 + xo__s;
-    real_type t2   = log(xo__a);
-    real_type t5   = log(xo__b);
-    real_type t8   = exp(-t1 * t2 + xo__s * t5);
-    real_type t10  = xo__b * xo__b;
-    real_type result__ = 1.0 / t10 * xo__s * t8 * t1;
+    real_type t1   = xo__b * xo__b;
+    real_type t2   = 1.0 / t1;
+    real_type t4   = log(xo__a);
+    real_type t7   = log(xo__b);
+    real_type t10  = exp((1 - xo__s) * t4 + t7 * xo__s);
+    real_type t12  = xo__s * xo__s;
+    real_type result__ = t10 * t12 * t2 - t10 * xo__s * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -261,11 +264,11 @@ namespace EconomicGrowthModel2Define {
 
   real_type
   EconomicGrowthModel2::explog_D_2_3( real_type xo__a, real_type xo__b, real_type xo__s ) const {
-    real_type t1   = log(xo__a);
-    real_type t4   = log(xo__b);
-    real_type t5   = xo__s * t4;
-    real_type t7   = exp((1 - xo__s) * t1 + t5);
-    real_type result__ = -1.0 / xo__b * (t1 * xo__s - t5 - 1) * t7;
+    real_type t1   = 1.0 / xo__b;
+    real_type t2   = log(xo__a);
+    real_type t5   = log(xo__b);
+    real_type t8   = exp((1 - xo__s) * t2 + xo__s * t5);
+    real_type result__ = t8 * t1 + t8 * (-t2 + t5) * xo__s * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -296,7 +299,7 @@ namespace EconomicGrowthModel2Define {
   EconomicGrowthModel2::explog_D_3_3( real_type xo__a, real_type xo__b, real_type xo__s ) const {
     real_type t1   = log(xo__a);
     real_type t2   = log(xo__b);
-    real_type t4   = pow(t1 - t2, 2);
+    real_type t4   = pow(-t1 + t2, 2);
     real_type t9   = exp((1 - xo__s) * t1 + xo__s * t2);
     real_type result__ = t9 * t4;
     if ( m_debug ) {

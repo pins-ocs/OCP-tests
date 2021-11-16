@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -151,22 +151,46 @@ namespace CNOCDefine {
 
   void
   CNOC::g_eval(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[7], LM__[7];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    XM__[6] = (XL__[6]+XR__[6])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    LM__[6] = (LL__[6]+LR__[6])/2;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_coV];
-    real_type t5   = ALIAS_jsControl_D_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    result__[ 0   ] = (t5 + L__[iL_lambda5__xo]) * t1;
-    real_type t9   = ModelPars[iM_jn_max];
-    real_type t10  = ALIAS_jnControl_D_1(U__[iU_jn], -t9, t9);
-    result__[ 1   ] = (t10 + L__[iL_lambda6__xo]) * t1;
+    real_type t1   = XM__[6];
+    real_type t6   = ALIAS_jsControl_D_1(UM__[0], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    result__[ 0   ] = (LM__[4] + t6) * t1;
+    real_type t10  = ModelPars[iM_jn_max];
+    real_type t11  = ALIAS_jnControl_D_1(UM__[1], -t10, t10);
+    result__[ 1   ] = (LM__[5] + t11) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -174,51 +198,83 @@ namespace CNOCDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  CNOC::DgDxlp_numRows() const
+  CNOC::DgDxlxlp_numRows() const
   { return 2; }
 
   integer
-  CNOC::DgDxlp_numCols() const
-  { return 14; }
+  CNOC::DgDxlxlp_numCols() const
+  { return 28; }
 
   integer
-  CNOC::DgDxlp_nnz() const
-  { return 4; }
+  CNOC::DgDxlxlp_nnz() const
+  { return 8; }
 
   void
-  CNOC::DgDxlp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  CNOC::DgDxlxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 6   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 11  ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 6   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 12  ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 20  ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 25  ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 6   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 12  ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 20  ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 26  ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CNOC::DgDxlp_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+  CNOC::DgDxlxlp_sparse(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[7], LM__[7];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    XM__[6] = (XL__[6]+XR__[6])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    LM__[6] = (LL__[6]+LR__[6])/2;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    real_type t5   = ALIAS_jsControl_D_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    result__[ 0   ] = L__[iL_lambda5__xo] + t5;
-    result__[ 1   ] = X__[iX_coV];
-    real_type t8   = ModelPars[iM_jn_max];
-    real_type t9   = ALIAS_jnControl_D_1(U__[iU_jn], -t8, t8);
-    result__[ 2   ] = L__[iL_lambda6__xo] + t9;
+    real_type t6   = ALIAS_jsControl_D_1(UM__[0], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    result__[ 0   ] = 0.5e0 * LM__[4] + 0.5e0 * t6;
+    result__[ 1   ] = 0.5e0 * XM__[6];
+    result__[ 2   ] = result__[0];
     result__[ 3   ] = result__[1];
+    real_type t12  = ModelPars[iM_jn_max];
+    real_type t13  = ALIAS_jnControl_D_1(UM__[1], -t12, t12);
+    result__[ 4   ] = 0.5e0 * LM__[5] + 0.5e0 * t13;
+    result__[ 5   ] = result__[3];
+    result__[ 6   ] = result__[4];
+    result__[ 7   ] = result__[5];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -237,8 +293,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DgDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -248,21 +304,45 @@ namespace CNOCDefine {
 
   void
   CNOC::DgDu_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[7], LM__[7];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    XM__[6] = (XL__[6]+XR__[6])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    LM__[6] = (LL__[6]+LR__[6])/2;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_coV];
-    real_type t5   = ALIAS_jsControl_D_1_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t1   = XM__[6];
+    real_type t5   = ALIAS_jsControl_D_1_1(UM__[0], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     result__[ 0   ] = t5 * t1;
     real_type t7   = ModelPars[iM_jn_max];
-    real_type t8   = ALIAS_jnControl_D_1_1(U__[iU_jn], -t7, t7);
+    real_type t8   = ALIAS_jnControl_D_1_1(UM__[1], -t7, t7);
     result__[ 1   ] = t8 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
@@ -291,42 +371,37 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[7];
-    real_type L__[7];
+    real_type QM__[1], XM__[7], LM__[7];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
-    X__[5] = (XL__[5]+XR__[5])/2;
-    X__[6] = (XL__[6]+XR__[6])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    XM__[6] = (XL__[6]+XR__[6])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
-    L__[2] = (LL__[2]+LR__[2])/2;
-    L__[3] = (LL__[3]+LR__[3])/2;
-    L__[4] = (LL__[4]+LR__[4])/2;
-    L__[5] = (LL__[5]+LR__[5])/2;
-    L__[6] = (LL__[6]+LR__[6])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    LM__[6] = (LL__[6]+LR__[6])/2;
     integer i_segment = LEFT__.i_segment;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    real_type t2   = XL__[iX_coV];
-    real_type t5   = XR__[iX_coV];
-    real_type t9   = 1.0 / (t2 + t5);
-    U__[ iU_js ] = jsControl.solve(t9 * (-t2 * LL__[iL_lambda5__xo] - t5 * LR__[iL_lambda5__xo]), ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    real_type t19  = ModelPars[iM_jn_max];
-    U__[ iU_jn ] = jnControl.solve(t9 * (-t2 * LL__[iL_lambda6__xo] - t5 * LR__[iL_lambda6__xo]), -t19, t19);
+    U__[ iU_js ] = jsControl.solve(-LM__[4], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t5   = ModelPars[iM_jn_max];
+    U__[ iU_jn ] = jnControl.solve(-LM__[5], -t5, t5);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }
@@ -347,114 +422,97 @@ namespace CNOCDefine {
     NodeType2 const &          LEFT__,
     NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
+    U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[7];
-    real_type L__[7];
+    // midpoint
+    real_type QM__[1], XM__[7], LM__[7];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
-    X__[5] = (XL__[5]+XR__[5])/2;
-    X__[6] = (XL__[6]+XR__[6])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    XM__[6] = (XL__[6]+XR__[6])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
-    L__[2] = (LL__[2]+LR__[2])/2;
-    L__[3] = (LL__[3]+LR__[3])/2;
-    L__[4] = (LL__[4]+LR__[4])/2;
-    L__[5] = (LL__[5]+LR__[5])/2;
-    L__[6] = (LL__[6]+LR__[6])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    LM__[6] = (LL__[6]+LR__[6])/2;
     integer i_segment = LEFT__.i_segment;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    real_type tmp_0_0 = 0;
-    real_type tmp_1_0 = 0;
-    real_type tmp_0_1 = 0;
-    real_type tmp_1_1 = 0;
-    real_type tmp_0_2 = 0;
-    real_type tmp_1_2 = 0;
-    real_type tmp_0_3 = 0;
-    real_type tmp_1_3 = 0;
-    real_type tmp_0_4 = 0;
-    real_type tmp_1_4 = 0;
-    real_type tmp_0_5 = 0;
-    real_type tmp_1_5 = 0;
-    real_type t1   = LL__[iL_lambda5__xo];
-    real_type t2   = XL__[iX_coV];
-    real_type t4   = LR__[iL_lambda5__xo];
-    real_type t5   = XR__[iX_coV];
-    real_type t8   = t2 + t5;
-    real_type t9   = 1.0 / t8;
-    real_type t13  = jsControl.solve_rhs(t9 * (-t2 * t1 - t5 * t4), ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    real_type t14  = t5 * t13;
-    real_type t16  = t8 * t8;
-    real_type t17  = 1.0 / t16;
-    real_type t18  = t17 * (t1 - t4);
-    real_type tmp_0_6 = -t18 * t14;
-    real_type t20  = LL__[iL_lambda6__xo];
-    real_type t22  = LR__[iL_lambda6__xo];
-    real_type t26  = ModelPars[iM_jn_max];
-    real_type t27  = jnControl.solve_rhs(t9 * (-t2 * t20 - t22 * t5), -t26, t26);
-    real_type t28  = t5 * t27;
-    real_type t30  = t17 * (t20 - t22);
-    real_type tmp_1_6 = -t30 * t28;
-    real_type tmp_0_7 = 0;
-    real_type tmp_1_7 = 0;
-    real_type tmp_0_8 = 0;
-    real_type tmp_1_8 = 0;
-    real_type tmp_0_9 = 0;
-    real_type tmp_1_9 = 0;
-    real_type tmp_0_10 = 0;
-    real_type tmp_1_10 = 0;
-    real_type t32  = t2 * t13;
-    real_type tmp_0_11 = -t9 * t32;
-    real_type tmp_1_11 = 0;
-    real_type tmp_0_12 = 0;
-    real_type t34  = t2 * t27;
-    real_type tmp_1_12 = -t9 * t34;
-    real_type tmp_0_13 = 0;
-    real_type tmp_1_13 = 0;
-    real_type tmp_0_14 = 0;
-    real_type tmp_1_14 = 0;
-    real_type tmp_0_15 = 0;
-    real_type tmp_1_15 = 0;
-    real_type tmp_0_16 = 0;
-    real_type tmp_1_16 = 0;
-    real_type tmp_0_17 = 0;
-    real_type tmp_1_17 = 0;
-    real_type tmp_0_18 = 0;
-    real_type tmp_1_18 = 0;
-    real_type tmp_0_19 = 0;
-    real_type tmp_1_19 = 0;
-    real_type tmp_0_20 = t18 * t32;
-    real_type tmp_1_20 = t30 * t34;
-    real_type tmp_0_21 = 0;
-    real_type tmp_1_21 = 0;
-    real_type tmp_0_22 = 0;
-    real_type tmp_1_22 = 0;
-    real_type tmp_0_23 = 0;
-    real_type tmp_1_23 = 0;
-    real_type tmp_0_24 = 0;
-    real_type tmp_1_24 = 0;
-    real_type tmp_0_25 = -t9 * t14;
-    real_type tmp_1_25 = 0;
-    real_type tmp_0_26 = 0;
-    real_type tmp_1_26 = -t9 * t28;
-    real_type tmp_0_27 = 0;
-    real_type tmp_1_27 = 0;
+    real_type tmp_0_0 = 0.0e0;
+    real_type tmp_1_0 = 0.0e0;
+    real_type tmp_0_1 = 0.0e0;
+    real_type tmp_1_1 = 0.0e0;
+    real_type tmp_0_2 = 0.0e0;
+    real_type tmp_1_2 = 0.0e0;
+    real_type tmp_0_3 = 0.0e0;
+    real_type tmp_1_3 = 0.0e0;
+    real_type tmp_0_4 = 0.0e0;
+    real_type tmp_1_4 = 0.0e0;
+    real_type tmp_0_5 = 0.0e0;
+    real_type tmp_1_5 = 0.0e0;
+    real_type tmp_0_6 = 0.0e0;
+    real_type tmp_1_6 = 0.0e0;
+    real_type tmp_0_7 = 0.0e0;
+    real_type tmp_1_7 = 0.0e0;
+    real_type tmp_0_8 = 0.0e0;
+    real_type tmp_1_8 = 0.0e0;
+    real_type tmp_0_9 = 0.0e0;
+    real_type tmp_1_9 = 0.0e0;
+    real_type tmp_0_10 = 0.0e0;
+    real_type tmp_1_10 = 0.0e0;
+    real_type t4   = jsControl.solve_rhs(-LM__[4], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type tmp_0_11 = -0.5e0 * t4;
+    real_type tmp_1_11 = 0.0e0;
+    real_type tmp_0_12 = 0.0e0;
+    real_type t7   = ModelPars[iM_jn_max];
+    real_type t8   = jnControl.solve_rhs(-LM__[5], -t7, t7);
+    real_type tmp_1_12 = -0.5e0 * t8;
+    real_type tmp_0_13 = 0.0e0;
+    real_type tmp_1_13 = 0.0e0;
+    real_type tmp_0_14 = 0.0e0;
+    real_type tmp_1_14 = 0.0e0;
+    real_type tmp_0_15 = 0.0e0;
+    real_type tmp_1_15 = 0.0e0;
+    real_type tmp_0_16 = 0.0e0;
+    real_type tmp_1_16 = 0.0e0;
+    real_type tmp_0_17 = 0.0e0;
+    real_type tmp_1_17 = 0.0e0;
+    real_type tmp_0_18 = 0.0e0;
+    real_type tmp_1_18 = 0.0e0;
+    real_type tmp_0_19 = 0.0e0;
+    real_type tmp_1_19 = 0.0e0;
+    real_type tmp_0_20 = 0.0e0;
+    real_type tmp_1_20 = 0.0e0;
+    real_type tmp_0_21 = 0.0e0;
+    real_type tmp_1_21 = 0.0e0;
+    real_type tmp_0_22 = 0.0e0;
+    real_type tmp_1_22 = 0.0e0;
+    real_type tmp_0_23 = 0.0e0;
+    real_type tmp_1_23 = 0.0e0;
+    real_type tmp_0_24 = 0.0e0;
+    real_type tmp_1_24 = 0.0e0;
+    real_type tmp_0_25 = tmp_0_11;
+    real_type tmp_1_25 = 0.0e0;
+    real_type tmp_0_26 = 0.0e0;
+    real_type tmp_1_26 = tmp_1_12;
+    real_type tmp_0_27 = 0.0e0;
+    real_type tmp_1_27 = 0.0e0;
     DuDxlxlp(0, 0) = tmp_0_0;
     DuDxlxlp(1, 0) = tmp_1_0;
     DuDxlxlp(0, 1) = tmp_0_1;
@@ -529,9 +587,9 @@ namespace CNOCDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t2   = timePositive(t1);
@@ -562,7 +620,7 @@ namespace CNOCDefine {
     real_type t63  = ALIAS_kappa(t33);
     real_type t66  = 1.0 / (-t63 * t15 + 1);
     real_type t70  = pow(-t1 * t66 * t3 + V__[0], 2);
-    real_type t74  = pow(-t1 * t5 + V__[1], 2);
+    real_type t74  = pow(-t5 * t1 + V__[1], 2);
     real_type t77  = t66 * t63;
     real_type t82  = pow(V__[2] + t1 * (-t77 * t5 * t3 - t21), 2);
     real_type t89  = pow(V__[3] + t1 * (t66 * t63 * t4 - t27), 2);
@@ -588,11 +646,11 @@ namespace CNOCDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t2   = U__[iU_js];
@@ -600,7 +658,7 @@ namespace CNOCDefine {
     real_type t8   = X__[iX_vs];
     real_type t12  = ALIAS_kappa(X__[iX_s]);
     real_type t17  = 1.0 / (-t12 * X__[iX_n] + 1) * t12;
-    result__[ 0   ] = t1 * t5 - 2 * t1 * (V__[4] + t1 * (-t17 * X__[iX_an] * t8 - t2));
+    result__[ 0   ] = t5 * t1 - 2 * t1 * (V__[4] + t1 * (-t17 * X__[iX_an] * t8 - t2));
     real_type t24  = U__[iU_jn];
     real_type t25  = ModelPars[iM_jn_max];
     real_type t26  = ALIAS_jnControl_D_1(t24, -t25, t25);
@@ -625,8 +683,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DmDuu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -640,19 +698,20 @@ namespace CNOCDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t5   = ALIAS_jsControl_D_1_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    real_type t6   = 2 * t1;
-    result__[ 0   ] = (t5 + t6) * t1;
-    real_type t9   = ModelPars[iM_jn_max];
-    real_type t10  = ALIAS_jnControl_D_1_1(U__[iU_jn], -t9, t9);
-    result__[ 1   ] = (t10 + t6) * t1;
+    real_type t7   = t1 * t1;
+    real_type t8   = 2 * t7;
+    result__[ 0   ] = t5 * t1 + t8;
+    real_type t10  = ModelPars[iM_jn_max];
+    real_type t11  = ALIAS_jnControl_D_1_1(U__[iU_jn], -t10, t10);
+    result__[ 1   ] = t11 * t1 + t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 2, i_segment );
   }

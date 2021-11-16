@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal.cc                                             |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "SingularMarchal.hh"
 #include "SingularMarchal_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -113,7 +111,7 @@ namespace SingularMarchalDefine {
     nullptr
   };
 
-  char const *namesBc[numBC+1] = {
+  char const *namesBc[numBc+1] = {
     "initial_x",
     "initial_y",
     "final_x",
@@ -142,7 +140,7 @@ namespace SingularMarchalDefine {
     m_U_solve_iterative = false;
 
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
+    std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setup_names(
@@ -153,7 +151,7 @@ namespace SingularMarchalDefine {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBC,                    namesBc
+      numBc,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -161,10 +159,13 @@ namespace SingularMarchalDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   SingularMarchal::~SingularMarchal() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -184,8 +185,8 @@ namespace SingularMarchalDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
-        phase+1, s, s-old_s
+        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
+        phase+1, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -201,10 +202,10 @@ namespace SingularMarchalDefine {
   // initialize parameters using associative array
   */
   void
-  SingularMarchal::setupParameters( GenericContainer const & gc_data ) {
+  SingularMarchal::setup_parameters( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Parameters"),
-      "SingularMarchal::setupParameters: Missing key `Parameters` in data\n"
+      "SingularMarchal::setup_parameters: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Parameters");
 
@@ -224,7 +225,7 @@ namespace SingularMarchalDefine {
   }
 
   void
-  SingularMarchal::setupParameters( real_type const Pars[] ) {
+  SingularMarchal::setup_parameters( real_type const Pars[] ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -237,7 +238,7 @@ namespace SingularMarchalDefine {
   //                     |_|
   */
   void
-  SingularMarchal::setupClasses( GenericContainer const & gc_data ) {
+  SingularMarchal::setup_classes( GenericContainer const & gc_data ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -249,7 +250,7 @@ namespace SingularMarchalDefine {
   //                    |_|
   */
   void
-  SingularMarchal::setupUserClasses( GenericContainer const & gc ) {
+  SingularMarchal::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -265,7 +266,7 @@ namespace SingularMarchalDefine {
   //              |_|  |_|
   */
   void
-  SingularMarchal::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  SingularMarchal::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -276,11 +277,11 @@ namespace SingularMarchalDefine {
   //                     |_|
   */
   void
-  SingularMarchal::setupControls( GenericContainer const & gc_data ) {
+  SingularMarchal::setup_controls( GenericContainer const & gc_data ) {
     // initialize Control penalties
     UTILS_ASSERT0(
       gc_data.exists("Controls"),
-      "SingularMarchal::setupClasses: Missing key `Controls` in data\n"
+      "SingularMarchal::setup_classes: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
     uControl.setup( gc("uControl") );
@@ -297,11 +298,11 @@ namespace SingularMarchalDefine {
   //                     |_|
   */
   void
-  SingularMarchal::setupPointers( GenericContainer const & gc_data ) {
+  SingularMarchal::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "SingularMarchal::setupPointers: Missing key `Pointers` in data\n"
+      "SingularMarchal::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -309,7 +310,7 @@ namespace SingularMarchalDefine {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in SingularMarchal::setupPointers(gc) cant find key `pMesh' in gc\n"
+      "in SingularMarchal::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -362,16 +363,20 @@ namespace SingularMarchalDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("SingularMarchal::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
     this->info_classes();
     this->info();

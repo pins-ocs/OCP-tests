@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SlidingMode.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "SlidingMode.hh"
 #include "SlidingMode_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -110,7 +108,7 @@ namespace SlidingModeDefine {
     nullptr
   };
 
-  char const *namesBc[numBC+1] = {
+  char const *namesBc[numBc+1] = {
     "initial_x",
     "initial_y",
     "final_x",
@@ -138,7 +136,7 @@ namespace SlidingModeDefine {
     m_U_solve_iterative = false;
 
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
+    std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setup_names(
@@ -149,7 +147,7 @@ namespace SlidingModeDefine {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBC,                    namesBc
+      numBc,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -157,10 +155,13 @@ namespace SlidingModeDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   SlidingMode::~SlidingMode() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -180,8 +181,8 @@ namespace SlidingModeDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
-        phase+1, s, s-old_s
+        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
+        phase+1, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -197,10 +198,10 @@ namespace SlidingModeDefine {
   // initialize parameters using associative array
   */
   void
-  SlidingMode::setupParameters( GenericContainer const & gc_data ) {
+  SlidingMode::setup_parameters( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Parameters"),
-      "SlidingMode::setupParameters: Missing key `Parameters` in data\n"
+      "SlidingMode::setup_parameters: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Parameters");
 
@@ -220,7 +221,7 @@ namespace SlidingModeDefine {
   }
 
   void
-  SlidingMode::setupParameters( real_type const Pars[] ) {
+  SlidingMode::setup_parameters( real_type const Pars[] ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -233,7 +234,7 @@ namespace SlidingModeDefine {
   //                     |_|
   */
   void
-  SlidingMode::setupClasses( GenericContainer const & gc_data ) {
+  SlidingMode::setup_classes( GenericContainer const & gc_data ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -245,7 +246,7 @@ namespace SlidingModeDefine {
   //                    |_|
   */
   void
-  SlidingMode::setupUserClasses( GenericContainer const & gc ) {
+  SlidingMode::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -261,7 +262,7 @@ namespace SlidingModeDefine {
   //              |_|  |_|
   */
   void
-  SlidingMode::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  SlidingMode::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -272,11 +273,11 @@ namespace SlidingModeDefine {
   //                     |_|
   */
   void
-  SlidingMode::setupControls( GenericContainer const & gc_data ) {
+  SlidingMode::setup_controls( GenericContainer const & gc_data ) {
     // initialize Control penalties
     UTILS_ASSERT0(
       gc_data.exists("Controls"),
-      "SlidingMode::setupClasses: Missing key `Controls` in data\n"
+      "SlidingMode::setup_classes: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
     uControl.setup( gc("uControl") );
@@ -293,11 +294,11 @@ namespace SlidingModeDefine {
   //                     |_|
   */
   void
-  SlidingMode::setupPointers( GenericContainer const & gc_data ) {
+  SlidingMode::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "SlidingMode::setupPointers: Missing key `Pointers` in data\n"
+      "SlidingMode::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -305,7 +306,7 @@ namespace SlidingModeDefine {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in SlidingMode::setupPointers(gc) cant find key `pMesh' in gc\n"
+      "in SlidingMode::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -358,16 +359,20 @@ namespace SlidingModeDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("SlidingMode::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
     this->info_classes();
     this->info();

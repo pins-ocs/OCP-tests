@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_boundary_conditions.cc                        |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -92,14 +92,14 @@ namespace RobotArmDefine {
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_rho] - 0.45e1;
@@ -122,21 +122,21 @@ namespace RobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  RobotArm::DboundaryConditionsDx_numRows() const
+  RobotArm::DboundaryConditionsDxxp_numRows() const
   { return 12; }
 
   integer
-  RobotArm::DboundaryConditionsDx_numCols() const
-  { return 12; }
+  RobotArm::DboundaryConditionsDxxp_numCols() const
+  { return 13; }
 
   integer
-  RobotArm::DboundaryConditionsDx_nnz() const
+  RobotArm::DboundaryConditionsDxxp_nnz() const
   { return 12; }
 
   void
-  RobotArm::DboundaryConditionsDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  RobotArm::DboundaryConditionsDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -153,18 +153,18 @@ namespace RobotArmDefine {
   }
 
   void
-  RobotArm::DboundaryConditionsDx_sparse(
+  RobotArm::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
@@ -180,39 +180,7 @@ namespace RobotArmDefine {
     result__[ 10  ] = 1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 12, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::DboundaryConditionsDp_numRows() const
-  { return 12; }
-
-  integer
-  RobotArm::DboundaryConditionsDp_numCols() const
-  { return 1; }
-
-  integer
-  RobotArm::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  RobotArm::DboundaryConditionsDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  RobotArm::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -227,16 +195,16 @@ namespace RobotArmDefine {
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda4__xo];
@@ -259,7 +227,7 @@ namespace RobotArmDefine {
     real_type t37  = I_phi(t31);
     result__[ 11  ] = -LR__[iL_lambda3__xo] * t37 + OMEGA__[11];
     real_type t40  = ModelPars[iM_W];
-    result__[ 12  ] = P__[iP_T] * (-2 * t40 + 2) + t40;
+    result__[ 12  ] = -2 * P__[iP_T] * (t40 - 1) + t40;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 13, i_segment_left, i_segment_right );
   }
@@ -267,21 +235,21 @@ namespace RobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  RobotArm::DadjointBCDx_numRows() const
+  RobotArm::DadjointBCDxxp_numRows() const
   { return 13; }
 
   integer
-  RobotArm::DadjointBCDx_numCols() const
-  { return 12; }
+  RobotArm::DadjointBCDxxp_numCols() const
+  { return 13; }
 
   integer
-  RobotArm::DadjointBCDx_nnz() const
-  { return 6; }
+  RobotArm::DadjointBCDxxp_nnz() const
+  { return 7; }
 
   void
-  RobotArm::DadjointBCDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  RobotArm::DadjointBCDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 4   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 4   ; jIndex[1 ] = 2   ;
@@ -289,24 +257,25 @@ namespace RobotArmDefine {
     iIndex[3 ] = 10  ; jIndex[3 ] = 6   ;
     iIndex[4 ] = 10  ; jIndex[4 ] = 8   ;
     iIndex[5 ] = 11  ; jIndex[5 ] = 6   ;
+    iIndex[6 ] = 12  ; jIndex[6 ] = 12  ;
   }
 
   void
-  RobotArm::DadjointBCDx_sparse(
+  RobotArm::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = XL__[iX_rho];
@@ -327,55 +296,10 @@ namespace RobotArmDefine {
     result__[ 4   ] = -t11 * t13;
     real_type t15  = I_phi_D(t8);
     result__[ 5   ] = -LR__[iL_lambda3__xo] * t15;
+    result__[ 6   ] = -2 * ModelPars[iM_W] + 2;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 6, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 7, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::DadjointBCDp_numRows() const
-  { return 13; }
-
-  integer
-  RobotArm::DadjointBCDp_numCols() const
-  { return 1; }
-
-  integer
-  RobotArm::DadjointBCDp_nnz() const
-  { return 1; }
-
-  void
-  RobotArm::DadjointBCDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-    iIndex[0 ] = 12  ; jIndex[0 ] = 0   ;
-  }
-
-  void
-  RobotArm::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
-  ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = -2 * ModelPars[iM_W] + 2;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 1, i_segment_left, i_segment_right );
-  }
-
 }
 
 // EOF: RobotArm_Methods_boundary_conditions.cc

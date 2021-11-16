@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,14 +80,14 @@ namespace GoddardRocketDefine {
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_h] - ModelPars[iM_h_i];
@@ -101,21 +101,21 @@ namespace GoddardRocketDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  GoddardRocket::DboundaryConditionsDx_numRows() const
+  GoddardRocket::DboundaryConditionsDxxp_numRows() const
   { return 4; }
 
   integer
-  GoddardRocket::DboundaryConditionsDx_numCols() const
-  { return 6; }
+  GoddardRocket::DboundaryConditionsDxxp_numCols() const
+  { return 7; }
 
   integer
-  GoddardRocket::DboundaryConditionsDx_nnz() const
+  GoddardRocket::DboundaryConditionsDxxp_nnz() const
   { return 4; }
 
   void
-  GoddardRocket::DboundaryConditionsDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  GoddardRocket::DboundaryConditionsDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -124,18 +124,18 @@ namespace GoddardRocketDefine {
   }
 
   void
-  GoddardRocket::DboundaryConditionsDx_sparse(
+  GoddardRocket::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
@@ -143,39 +143,7 @@ namespace GoddardRocketDefine {
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GoddardRocket::DboundaryConditionsDp_numRows() const
-  { return 4; }
-
-  integer
-  GoddardRocket::DboundaryConditionsDp_numCols() const
-  { return 1; }
-
-  integer
-  GoddardRocket::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  GoddardRocket::DboundaryConditionsDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  GoddardRocket::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -190,16 +158,16 @@ namespace GoddardRocketDefine {
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
@@ -216,67 +184,34 @@ namespace GoddardRocketDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  GoddardRocket::DadjointBCDx_numRows() const
+  GoddardRocket::DadjointBCDxxp_numRows() const
   { return 7; }
 
   integer
-  GoddardRocket::DadjointBCDx_numCols() const
-  { return 6; }
+  GoddardRocket::DadjointBCDxxp_numCols() const
+  { return 7; }
 
   integer
-  GoddardRocket::DadjointBCDx_nnz() const
+  GoddardRocket::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  GoddardRocket::DadjointBCDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  GoddardRocket::DadjointBCDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
   void
-  GoddardRocket::DadjointBCDx_sparse(
+  GoddardRocket::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GoddardRocket::DadjointBCDp_numRows() const
-  { return 7; }
-
-  integer
-  GoddardRocket::DadjointBCDp_numCols() const
-  { return 1; }
-
-  integer
-  GoddardRocket::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  GoddardRocket::DadjointBCDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  GoddardRocket::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: GoddardRocket_Methods_boundary_conditions.cc

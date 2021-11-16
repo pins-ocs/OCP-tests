@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido_dll_ruby.hh                                               |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,7 +82,7 @@ namespace DidoDefine {
 
   #include <sstream>
 
-  #ifndef MECHATRONIX_OS_WINDOWS
+  #if !defined(MECHATRONIX_OS_WINDOWS) && !defined(MECHATRONIX_OS_MINGW)
     #include <signal.h>
     #include <execinfo.h>
   #endif
@@ -136,7 +136,7 @@ namespace DidoDefine {
         error = exc.what();
         ok    = false;
       }
-      catch ( char const * exc ) {
+      catch ( char const exc[] ) {
         error = exc;
         ok    = false;
       }
@@ -240,24 +240,24 @@ namespace DidoDefine {
   EXTERN_C
   DIDO_API_DLL
   bool
-  Dido_ocp_setup( char const * id, GenericContainer & gc_data );
+  Dido_ocp_setup( char const id[], GenericContainer & gc_data );
 
   EXTERN_C
   DIDO_API_DLL
   bool
-  Dido_ocp_guess( char const * id, GenericContainer & gc_guess );
+  Dido_ocp_guess( char const id[], GenericContainer & gc_guess );
 
   EXTERN_C
   DIDO_API_DLL
   bool
-  Dido_ocp_solve( char const       * id,
+  Dido_ocp_solve( char const id[],
                   GenericContainer & gc_data,
                   GenericContainer & gc_solution );
 
   EXTERN_C
   DIDO_API_DLL
   void
-  Dido_write_ocp_solution( char const * id, char const * fname );
+  Dido_write_ocp_solution( char const id[], char const fname[] );
 
 }
 

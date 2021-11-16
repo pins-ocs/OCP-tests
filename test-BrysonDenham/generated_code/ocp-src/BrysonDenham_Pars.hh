@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Pars.hh                                           |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef BRYSONDENHAMPARS_DOT_HH
 #define BRYSONDENHAMPARS_DOT_HH
 
-#define numBC                    4
+#define numBc                    4
 #define numModelPars             0
 #define numConstraint1D          1
 #define numConstraint2D          0

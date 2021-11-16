@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_dll_ruby.cc                                          |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ namespace BangBangFDefine {
   EXTERN_C
   BANGBANGF_API_DLL
   bool
-  BangBangF_ocp_setup( char const * id, GenericContainer & gc_data ) {
+  BangBangF_ocp_setup( char const id[], GenericContainer & gc_data ) {
     if ( pTP      == nullptr ) pTP      = new ThreadPool(std::thread::hardware_concurrency());
     if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
     map< string, BangBangF_Problem * >::iterator it = problems.find(id);
@@ -100,7 +100,7 @@ namespace BangBangFDefine {
   EXTERN_C
   BANGBANGF_API_DLL
   bool
-  BangBangF_ocp_guess( char const * id, GenericContainer & gc_data ) {
+  BangBangF_ocp_guess( char const id[], GenericContainer & gc_data ) {
     map< string, BangBangF_Problem * >::iterator it = problems.find(id);
     if ( it == problems.end() ) {
       return false;
@@ -115,7 +115,7 @@ namespace BangBangFDefine {
   EXTERN_C
   BANGBANGF_API_DLL
   bool
-  BangBangF_ocp_solve( char const       * id,
+  BangBangF_ocp_solve( char const id[],
                        GenericContainer & gc_data,
                        GenericContainer & gc_solution ) {
     map< string, BangBangF_Problem * >::iterator it = problems.find(id);
@@ -141,7 +141,7 @@ namespace BangBangFDefine {
   EXTERN_C
   BANGBANGF_API_DLL
   void
-  BangBangF_write_ocp_solution( char const * id, char const * fname ) {
+  BangBangF_write_ocp_solution( char const id[], char const fname[] ) {
     map< string, BangBangF_Problem * >::const_iterator it = problems.find(id);
     if ( it == problems.end() ) {
       pConsole->error("BangBangF_write_ocp_solution, no solution found!\n" );

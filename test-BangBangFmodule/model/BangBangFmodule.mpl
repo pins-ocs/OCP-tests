@@ -1,20 +1,20 @@
 restart:;
 with(XOptima):;
-EQ1 := diff(x(t),t) - v(t) ;
-EQ2 := diff(v(t),t) - (Fp(t)-Fm(t)) ;
+EQ1 := diff(x(t),t) - v(t);
+EQ2 := diff(v(t),t) - (Fp(t)-Fm(t));
 EQNS_T := [EQ||(1..2)];
-qvars := [x(t),v(t)] ;
-cvars := [Fp(t),Fm(t)] ;
+qvars := [x(t),v(t)];
+cvars := [Fp(t),Fm(t)];
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
   states    = qvars
-) ;
+);
 addBoundaryConditions(
   initial = [x=0,v=0],
   final   = [x=1,v=0]
 );
-infoBoundaryConditions() ;
+infoBoundaryConditions();
 addControlBound(
   Fp,
   label       = "controlP",
@@ -28,8 +28,8 @@ addControlBound(
   min         = 0,
   max         = FmMax,
   controlType = "U_CUBIC"
-) ;
-setTarget( lagrange = Fp(zeta)+Fm(zeta) ) ;
+);
+setTarget( lagrange = Fp(zeta)+Fm(zeta) );
 POST := [
   [controlP(Fp(zeta),0,FpMax),"ForceP"],
   [controlM(Fm(zeta),0,FmMax),"ForceM"],
@@ -45,5 +45,5 @@ generateOCProblem(
   controls_guess  = UGUESS, # uncomment to force iterative control computation
   states_guess    = [ x = zeta ],
   controls_guess  = [ Fm = FmMax/2, Fp = FpMax/2 ]
-) ;
+);
 ;

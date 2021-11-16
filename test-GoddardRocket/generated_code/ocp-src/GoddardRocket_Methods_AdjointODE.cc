@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,12 +79,12 @@ namespace GoddardRocketDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_TimeSize];
     real_type t3   = t2 * L__[iL_lambda2__xo];
@@ -122,8 +122,8 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
@@ -142,12 +142,12 @@ namespace GoddardRocketDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = L__[iL_lambda2__xo] * P__[iP_TimeSize];
     real_type t4   = X__[iX_h];
@@ -194,8 +194,8 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
@@ -210,12 +210,12 @@ namespace GoddardRocketDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda2__xo];
     real_type t2   = X__[iX_h];
@@ -229,7 +229,7 @@ namespace GoddardRocketDefine {
     result__[ 1   ] = -t6 * t11 * t1 + L__[iL_lambda1__xo];
     real_type t15  = DD(t2, t3);
     real_type t18  = t5 * t5;
-    result__[ 2   ] = 1.0 / t18 * (-U__[iU_T] + t15) * t1;
+    result__[ 2   ] = -1.0 / t18 * (U__[iU_T] - t15) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }
@@ -252,12 +252,12 @@ namespace GoddardRocketDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_TimeSize];
     result__[ 0   ] = 1.0 / X__[iX_m] * t2 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t2 * L__[iL_lambda3__xo];
@@ -281,8 +281,8 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
   }
@@ -294,12 +294,12 @@ namespace GoddardRocketDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = X__[iX_m] * X__[iX_m];
     result__[ 0   ] = -1.0 / t5 * P__[iP_TimeSize] * L__[iL_lambda2__xo];
@@ -323,8 +323,8 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -336,12 +336,12 @@ namespace GoddardRocketDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda2__xo] / X__[iX_m] - L__[iL_lambda3__xo] / ModelPars[iM_c];
     if ( m_debug )
@@ -367,21 +367,20 @@ namespace GoddardRocketDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_TSPositive_D(P__[iP_TimeSize]);
     real_type t4   = X__[iX_v];
-    real_type t7   = X__[iX_h];
-    real_type t8   = gg(t7);
-    real_type t9   = X__[iX_m];
-    real_type t11  = U__[iU_T];
-    real_type t12  = DD(t7, t4);
-    result__[ 0   ] = t2 + t4 * L__[iL_lambda1__xo] + 1.0 / t9 * (-t9 * t8 + t11 - t12) * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t11 * L__[iL_lambda3__xo];
+    real_type t7   = U__[iU_T];
+    real_type t8   = X__[iX_h];
+    real_type t9   = DD(t8, t4);
+    real_type t14  = gg(t8);
+    result__[ 0   ] = t2 + t4 * L__[iL_lambda1__xo] + (1.0 / X__[iX_m] * (t7 - t9) - t14) * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_c] * t7 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
@@ -402,8 +401,8 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -416,12 +415,12 @@ namespace GoddardRocketDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_TSPositive_DD(P__[iP_TimeSize]);
     if ( m_debug )
@@ -443,12 +442,12 @@ namespace GoddardRocketDefine {
   GoddardRocket::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -473,8 +472,8 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -484,7 +483,7 @@ namespace GoddardRocketDefine {
   GoddardRocket::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -505,8 +504,8 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -516,7 +515,7 @@ namespace GoddardRocketDefine {
   GoddardRocket::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -537,11 +536,11 @@ namespace GoddardRocketDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -566,8 +565,8 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -578,7 +577,7 @@ namespace GoddardRocketDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -599,8 +598,8 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -611,7 +610,7 @@ namespace GoddardRocketDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Pars.hh                                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef ECONOMICGROWTHMODEL2PARS_DOT_HH
 #define ECONOMICGROWTHMODEL2PARS_DOT_HH
 
-#define numBC                    7
+#define numBc                    7
 #define numModelPars             8
 #define numConstraint1D          1
 #define numConstraint2D          0

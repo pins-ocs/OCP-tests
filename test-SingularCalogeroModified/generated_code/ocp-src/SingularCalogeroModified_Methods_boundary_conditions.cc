@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_boundary_conditions.cc        |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -74,14 +74,14 @@ namespace SingularCalogeroModifiedDefine {
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_y] - ModelPars[iM_y_i];
@@ -93,77 +93,45 @@ namespace SingularCalogeroModifiedDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularCalogeroModified::DboundaryConditionsDx_numRows() const
+  SingularCalogeroModified::DboundaryConditionsDxxp_numRows() const
   { return 2; }
 
   integer
-  SingularCalogeroModified::DboundaryConditionsDx_numCols() const
+  SingularCalogeroModified::DboundaryConditionsDxxp_numCols() const
   { return 4; }
 
   integer
-  SingularCalogeroModified::DboundaryConditionsDx_nnz() const
+  SingularCalogeroModified::DboundaryConditionsDxxp_nnz() const
   { return 2; }
 
   void
-  SingularCalogeroModified::DboundaryConditionsDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  SingularCalogeroModified::DboundaryConditionsDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 3   ;
   }
 
   void
-  SingularCalogeroModified::DboundaryConditionsDx_sparse(
+  SingularCalogeroModified::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 2, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogeroModified::DboundaryConditionsDp_numRows() const
-  { return 2; }
-
-  integer
-  SingularCalogeroModified::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularCalogeroModified::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  SingularCalogeroModified::DboundaryConditionsDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  SingularCalogeroModified::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -178,16 +146,16 @@ namespace SingularCalogeroModifiedDefine {
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = LL__[iL_lambda1__xo];
@@ -201,67 +169,34 @@ namespace SingularCalogeroModifiedDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularCalogeroModified::DadjointBCDx_numRows() const
+  SingularCalogeroModified::DadjointBCDxxp_numRows() const
   { return 4; }
 
   integer
-  SingularCalogeroModified::DadjointBCDx_numCols() const
+  SingularCalogeroModified::DadjointBCDxxp_numCols() const
   { return 4; }
 
   integer
-  SingularCalogeroModified::DadjointBCDx_nnz() const
+  SingularCalogeroModified::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  SingularCalogeroModified::DadjointBCDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  SingularCalogeroModified::DadjointBCDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
   void
-  SingularCalogeroModified::DadjointBCDx_sparse(
+  SingularCalogeroModified::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogeroModified::DadjointBCDp_numRows() const
-  { return 4; }
-
-  integer
-  SingularCalogeroModified::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularCalogeroModified::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  SingularCalogeroModified::DadjointBCDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  SingularCalogeroModified::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: SingularCalogeroModified_Methods_boundary_conditions.cc

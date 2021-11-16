@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_tolerance0 = 0.01;
-    real_type u_tolerance = u_tolerance0;
     real_type u_epsilon0 = 0.01;
     real_type u_epsilon = u_epsilon0;
+    real_type u_tolerance0 = 0.01;
+    real_type u_tolerance = u_tolerance0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -105,7 +105,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 2;
@@ -240,7 +240,7 @@ TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 400;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const * exc ) {
+  catch ( char const exc[] ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

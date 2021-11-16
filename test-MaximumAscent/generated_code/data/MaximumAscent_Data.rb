@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,17 +21,17 @@ include Mechatronix
 
 # Auxiliary values
 mu     = 398600441800000
-g0     = 9.80665
 days1  = 30
 r0     = 6678140
 v0     = (mu/r0)**(1/2.0)
-u0     = 0
-u0_bar = u0/v0
+g0     = 9.80665
 days   = 1
-T      = 0.68
 Isp    = 1500
+T      = 0.68
 mdot   = T/g0/Isp
 tf     = 86400*days
+u0     = 0
+u0_bar = u0/v0
 
 mechatronix do |data|
 
@@ -52,10 +52,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "MaximumAscent_dump"

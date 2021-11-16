@@ -39,16 +39,17 @@ Model Parameters
 ......................................xf = 5
 ......................................yf = -2
 INFO CLASS = Brachiostocrona2
-  num_nodes    = 501
-  dim         = u = 1, q = 1, x = 3, p = 1, omega = 5, big_bc = 11
+  #nodes      = 501
+  dim         = u = 1, q = 1, x = 3, p = 1, omega = 5, bc = 5, full_bc = 11
   BC          = Inital = 6, Final = 5, Cyclic = 0
   OMEGA       = Inital = 3, Final = 2, Cyclic = 0
   total       = nZ = 3012, UC = 500, Q = 501
   index start = omega = 3006, p = 3011
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton [ITERATIVE]
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
 Initializer Controls: Quasi-Newton
 Used threads:         15
 
@@ -63,40 +64,40 @@ NewtonDumped --- start iterations ---
 
 Continuation step N.1
 
-Continuation step N.1 s=0.20, ds=0.2000
+Continuation step N.1 s=0.20000, ds=0.20000, old_s=    0
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
 [  6, 1] ( 0.000178 , 1.12e-06 ) [  0.0183  , 0.000174 ] 1.00       [solverNewtonDumped]
 [  7, 1] ( 1.12e-06 , 5.96e-11 ) [ 0.000173 , 8.66e-09 ] 1.00       [solverNewtonDumped]
-[  8, 1] ( 5.96e-11 , 4.60e-13 ) [ 8.66e-09 , 7.43e-11 ] 1.00       [solverNewtonDumped]
+[  8, 1] ( 5.96e-11 , 5.22e-13 ) [ 8.66e-09 , 7.50e-11 ] 1.00       [solverNewtonDumped]
 
-Continuation step N.1 s=0.50, ds=0.3000
+Continuation step N.1 s=0.50000, ds=0.30000, old_s=  0.2
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
 [  9, 1] ( 0.000353 , 4.31e-06 ) [  0.0369  , 0.000599 ] 1.00       [solverNewtonDumped]
 [ 10, 1] ( 4.31e-06 , 5.38e-10 ) [ 0.000594 , 9.40e-08 ] 1.00       [solverNewtonDumped]
 [ 11, 1] ( 5.38e-10 , 5.87e-13 ) [ 9.40e-08 , 6.67e-11 ] 1.00       [solverNewtonDumped]
 
-Continuation step N.1 s=0.95, ds=0.4500
+Continuation step N.1 s=0.95000, ds=0.45000, old_s=  0.5
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
 [ 12, 1] ( 0.000914 , 2.86e-05 ) [  0.104   , 0.00256  ] 1.00       [solverNewtonDumped]
 [ 13, 1] ( 2.86e-05 , 2.82e-08 ) [ 0.00263  , 2.44e-06 ] 1.00       [solverNewtonDumped]
 [ 14, 1] ( 2.82e-08 , 2.80e-13 ) [ 2.44e-06 , 6.49e-12 ] 1.00       [solverNewtonDumped]
 
-Continuation step N.1 s=1.0, ds=0.05000
+Continuation step N.1 s=1.0000, ds=0.050000, old_s=0.9500000000000001
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
 [ 15, 1] ( 0.000156 , 6.33e-07 ) [  0.0191  , 4.25e-05 ] 1.00       [solverNewtonDumped]
 [ 16, 1] ( 6.33e-07 , 1.66e-11 ) [ 4.29e-05 , 1.13e-09 ] 1.00       [solverNewtonDumped]
-[ 17, 1] ( 1.66e-11 , 5.64e-16 ) [ 1.13e-09 , 8.60e-15 ] 1.00       [solverNewtonDumped]
+[ 17, 1] ( 1.66e-11 , 4.53e-13 ) [ 1.13e-09 , 1.83e-11 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 20.0[ms]      timeout        = 0 [ms]
+Elapsed Time   = 18.1[ms]      timeout        = 0 [ms]
 iteration      = 17            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 3012
 max acc. iter. = 800           N. System pars = 500
-Converged      = YES           Memory Used    = 351Kb (+9bytes)
+Converged      = YES           Memory Used    = 352Kb (+50bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -105,8 +106,8 @@ Few iterations = 8
 Function       = 22            Jacobian       = 17        
 Factorization  = 17            Inversion      = 34        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 2.2758e-14    last||d1||_inf = 5.1460e-09
-last ||f||_inf = 3.8095e-15    last||f||_1    = 5.6410e-16
+last ||d||_inf = 3.4631e-10    last||d1||_inf = 5.1460e-09
+last ||f||_inf = 1.8437e-11    last||f||_1    = 4.5299e-13
 ------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             

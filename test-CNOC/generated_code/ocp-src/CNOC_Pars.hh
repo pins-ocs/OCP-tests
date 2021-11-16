@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Pars.hh                                                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef CNOCPARS_DOT_HH
 #define CNOCPARS_DOT_HH
 
-#define numBC                    12
+#define numBc                    12
 #define numModelPars             20
 #define numConstraint1D          7
 #define numConstraint2D          0

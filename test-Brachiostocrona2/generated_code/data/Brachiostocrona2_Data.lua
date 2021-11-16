@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -22,11 +22,11 @@
 -- Auxiliary values
 epsi0  = 1
 xf     = 5
-g      = 9.81
 yf     = -2
+g      = 9.81
+Tf     = (-2.0*yf/g)**(1/2.0)
 Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 theta0 = arctan(yf,xf)
-Tf     = (-2.0*yf/g)**(1/2.0)
 epsi   = epsi0
 
 content = {
@@ -48,10 +48,12 @@ content = {
   LU_threaded = true,
 
   -- Enable check jacobian
-  JacobianCheck            = false,
-  JacobianCheckFull        = false,
-  JacobianCheck_epsilon    = 1e-4,
-  FiniteDifferenceJacobian = false,
+  JacobianCheck         = false,
+  JacobianCheckFull     = false,
+  JacobianCheck_epsilon = 1e-4,
+
+  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  JacobianDiscretization = 'ANALYTIC,
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "Brachiostocrona2_dump",
@@ -101,7 +103,7 @@ content = {
     max_iter             = 300,
     max_step_iter        = 40,
     max_accumulated_iter = 800,
-    tolerance            = 9.999999999999999e-10,
+    tolerance            = 1e-09,
 
     -- continuation parameters
     ns_continuation_begin = 0,

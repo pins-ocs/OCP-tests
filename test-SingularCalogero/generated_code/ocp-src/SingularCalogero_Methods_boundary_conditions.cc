@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -74,7 +74,7 @@ namespace SingularCalogeroDefine {
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -82,64 +82,32 @@ namespace SingularCalogeroDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularCalogero::DboundaryConditionsDx_numRows() const
+  SingularCalogero::DboundaryConditionsDxxp_numRows() const
   { return 0; }
 
   integer
-  SingularCalogero::DboundaryConditionsDx_numCols() const
+  SingularCalogero::DboundaryConditionsDxxp_numCols() const
   { return 2; }
 
   integer
-  SingularCalogero::DboundaryConditionsDx_nnz() const
+  SingularCalogero::DboundaryConditionsDxxp_nnz() const
   { return 0; }
 
   void
-  SingularCalogero::DboundaryConditionsDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  SingularCalogero::DboundaryConditionsDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
   void
-  SingularCalogero::DboundaryConditionsDx_sparse(
+  SingularCalogero::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogero::DboundaryConditionsDp_numRows() const
-  { return 0; }
-
-  integer
-  SingularCalogero::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularCalogero::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  SingularCalogero::DboundaryConditionsDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  SingularCalogero::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    // EMPTY
-
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -154,16 +122,16 @@ namespace SingularCalogeroDefine {
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = LL__[iL_lambda1__xo];
@@ -175,67 +143,34 @@ namespace SingularCalogeroDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularCalogero::DadjointBCDx_numRows() const
+  SingularCalogero::DadjointBCDxxp_numRows() const
   { return 2; }
 
   integer
-  SingularCalogero::DadjointBCDx_numCols() const
+  SingularCalogero::DadjointBCDxxp_numCols() const
   { return 2; }
 
   integer
-  SingularCalogero::DadjointBCDx_nnz() const
+  SingularCalogero::DadjointBCDxxp_nnz() const
   { return 0; }
 
   void
-  SingularCalogero::DadjointBCDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  SingularCalogero::DadjointBCDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
   void
-  SingularCalogero::DadjointBCDx_sparse(
+  SingularCalogero::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     // EMPTY!
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogero::DadjointBCDp_numRows() const
-  { return 2; }
-
-  integer
-  SingularCalogero::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  SingularCalogero::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  SingularCalogero::DadjointBCDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  SingularCalogero::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: SingularCalogero_Methods_boundary_conditions.cc

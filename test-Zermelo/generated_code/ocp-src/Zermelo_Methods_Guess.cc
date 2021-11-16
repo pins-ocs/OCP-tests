@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_Guess.cc                                       |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,30 +82,111 @@ namespace ZermeloDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
-  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
-  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
-  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
-  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__node__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        ipos,i_segment,MSG,a-b                                        \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__node__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        ipos,i_segment,MSG,a-b                                        \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__cell__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        icell,i_segment,MSG,a-b                                       \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__cell__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        icell,i_segment,MSG,a-b                                       \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__pars__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__pars__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__params__lt(A,B,MSG)                         \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__params__le(A,B,MSG)                         \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
 
 
 
-  // node_check_strings
-  #define Xoptima__message_node_check_0 "0 < T(zeta)"
 
 
-  // cell_check_strings
-  #define Xoptima__message_cell_check_0 "0 < T(zeta)"
 
-
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   Zermelo::p_check( P_const_pointer_type P__ ) const {
     return true;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   Zermelo::xlambda_check_node(
@@ -113,29 +194,6 @@ namespace ZermeloDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    Xoptima__check__node__lt(0, X__[iX_T], Xoptima__message_node_check_0);
-    return true;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
-  Zermelo::xlambda_check_cell(
-    integer              icell,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    Xoptima__check__cell__lt(0, X__[iX_T], Xoptima__message_cell_check_0);
     return true;
   }
 
@@ -148,29 +206,7 @@ namespace ZermeloDefine {
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__
   ) const {
-    NodeType2 NODE__;
-    real_type Q__[1];
-    real_type X__[5];
-    real_type L__[5];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q         = Q__;
-    NODE__.x         = X__;
-    NODE__.lambda    = L__;
-    // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
-    // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    return xlambda_check_cell( icell, NODE__, P__ );
+    return true;
   }
 
   /*\
@@ -191,10 +227,10 @@ namespace ZermeloDefine {
     P_const_pointer_type P__,
     U_pointer_type       UGUESS__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
       MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_u ] = arctan2(-L__[iL_lambda4__xo], -L__[iL_lambda3__xo]);
@@ -251,10 +287,10 @@ namespace ZermeloDefine {
     P_const_pointer_type P__
   ) const {
     bool ok = true;
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     // no controls to check
     return ok;
   }

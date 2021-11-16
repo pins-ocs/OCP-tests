@@ -103,7 +103,7 @@ POST := [
 ALIAS := [
   D(kappa)=kappa_D, (D@@2)(kappa)=kappa_DD
 ];
-project_dir  := "../";
+project_dir  := "../generated_code";
 project_name := "Crossroad";
 generateOCProblem(
   clean = false,
@@ -116,11 +116,10 @@ generateOCProblem(
   controls_guess     = [jerk = 0],
   mesh               = [[length = 0.5, n = 100],[length = 0.5, n = 100]]
 );
-#tmp := getOCProblem();
-#eval(tmp);
+# quit;
 launchSolver(project_dir,project_name);
 with(plots):;
-XOptimaPlots:-loadSolution(project_dir,project_name);load solution
+XOptimaPlots:-loadSolution(project_dir,project_name); # load solution
 XOptimaPlots:-getHeaders();
 z_sol      := XOptimaPlots:-getSolution(zeta):
 jerk_sol   := XOptimaPlots:-getSolution(jerk):

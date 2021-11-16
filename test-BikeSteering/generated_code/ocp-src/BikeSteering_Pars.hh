@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Pars.hh                                           |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef BIKESTEERINGPARS_DOT_HH
 #define BIKESTEERINGPARS_DOT_HH
 
-#define numBC                    4
+#define numBc                    4
 #define numModelPars             9
 #define numConstraint1D          1
 #define numConstraint2D          0

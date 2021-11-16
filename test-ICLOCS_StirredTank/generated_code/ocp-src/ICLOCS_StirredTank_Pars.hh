@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Pars.hh                                     |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef ICLOCS_STIRREDTANKPARS_DOT_HH
 #define ICLOCS_STIRREDTANKPARS_DOT_HH
 
-#define numBC                    0
+#define numBc                    0
 #define numModelPars             16
 #define numConstraint1D          3
 #define numConstraint2D          0

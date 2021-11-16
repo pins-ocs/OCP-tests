@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: CNOC_main.m                                                    %
 %                                                                       %
-%  version: 1.0   date 16/11/2021                                       %
+%  version: 1.0   date 17/11/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -79,7 +79,8 @@ check_jacobian = false; % set true if you want to check jacobian matrix
 if check_jacobian
   % check the jacobian of initial guess
   epsi = 1e-5;
-  ocp.check_jacobian( ocp.get_raw_solution(), epsi );
+  [Z,U] = ocp.get_raw_solution();
+  ocp.check_jacobian( Z, U, epsi );
 end
 
 names = ocp.names();
@@ -101,7 +102,8 @@ ok = ocp.solve( timeout_ms );
 if check_jacobian
   % check the jacobian of the computed solution
   epsi = 1e-5;
-  ocp.check_jacobian( ocp.get_raw_solution(), epsi );
+  [Z, U] = ocp.get_raw_solution();
+  ocp.check_jacobian( Z, U, epsi );
 end
 
 % -------------------------------------------------------------------------
@@ -123,6 +125,6 @@ ocp.plot_multipliers();
 subplot(3,1,3);
 ocp.plot_controls();
 
-%x = CNOC_Mex('get_raw_solution',obj);
-%J = CNOC_Mex('eval_JF',obj,x);
-%f = CNOC_Mex('eval_F',obj,x);
+%[Z,U] = CNOC_Mex('get_raw_solution',obj);
+%J     = CNOC_Mex('eval_JF',obj,Z,U);
+%f     = CNOC_Mex('eval_F',obj,Z,U);

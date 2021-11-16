@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Pars.hh                            |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef SINGULARCONSTRAINEDCALOGEROPARS_DOT_HH
 #define SINGULARCONSTRAINEDCALOGEROPARS_DOT_HH
 
-#define numBC                    2
+#define numBc                    2
 #define numModelPars             6
 #define numConstraint1D          1
 #define numConstraint2D          0

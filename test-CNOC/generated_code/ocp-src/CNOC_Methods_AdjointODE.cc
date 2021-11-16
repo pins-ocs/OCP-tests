@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_AdjointODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -156,91 +156,99 @@ namespace CNOCDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_ay_max];
-    real_type t2   = X__[iX_s];
-    real_type t3   = ALIAS_theta_D(t2);
-    real_type t5   = X__[iX_n];
-    real_type t6   = ALIAS_kappa(t2);
-    real_type t8   = t6 * t5 - 1;
-    real_type t9   = t8 * t8;
-    real_type t10  = X__[iX_as];
-    real_type t11  = ALIAS_theta(t2);
-    real_type t12  = sin(t11);
-    real_type t14  = X__[iX_an];
-    real_type t15  = cos(t11);
-    real_type t17  = t12 * t10 + t15 * t14;
-    real_type t21  = t15 * t10 - t12 * t14;
-    real_type t22  = ModelPars[iM_ax_max];
-    real_type t23  = 1.0 / t22;
-    real_type t24  = t23 * t21;
-    real_type t25  = ALIAS_ax_limit_D(t24);
-    real_type t29  = 1.0 / t1;
-    real_type t30  = t29 * t17;
-    real_type t31  = ALIAS_ay_limit_D(t30);
-    real_type t34  = ALIAS_kappa_D(t2);
-    real_type t36  = X__[iX_vs];
+    real_type t1   = X__[iX_coV];
+    real_type t2   = X__[iX_as];
+    real_type t3   = X__[iX_s];
+    real_type t4   = ALIAS_theta(t3);
+    real_type t5   = cos(t4);
+    real_type t7   = X__[iX_an];
+    real_type t8   = sin(t4);
+    real_type t12  = 1.0 / ModelPars[iM_ax_max];
+    real_type t13  = t12 * (t5 * t2 - t8 * t7);
+    real_type t14  = ALIAS_ax_limit_D(t13);
+    real_type t15  = t14 * t1;
+    real_type t16  = ALIAS_theta_D(t3);
+    real_type t17  = t16 * t2;
+    real_type t19  = t16 * t7;
+    real_type t28  = 1.0 / ModelPars[iM_ay_max];
+    real_type t29  = t28 * (t8 * t2 + t5 * t7);
+    real_type t30  = ALIAS_ay_limit_D(t29);
+    real_type t31  = t30 * t1;
     real_type t37  = L__[iL_lambda1__xo];
-    real_type t39  = L__[iL_lambda3__xo];
-    real_type t40  = X__[iX_vn];
-    real_type t41  = t40 * t39;
-    real_type t42  = L__[iL_lambda4__xo];
-    real_type t43  = t36 * t42;
-    real_type t44  = L__[iL_lambda5__xo];
-    real_type t45  = t14 * t44;
-    real_type t46  = L__[iL_lambda6__xo];
-    real_type t47  = t10 * t46;
-    real_type t54  = X__[iX_coV];
-    real_type t57  = 1.0 / t9;
-    result__[ 0   ] = t57 * t29 * t23 * t54 * (-t25 * t17 * t9 * t3 * t1 + (t31 * t21 * t9 * t3 + (t5 * t37 + t41 - t43 + t45 - t47) * t36 * t34 * t1) * t22);
-    real_type t59  = ModelPars[iM_path_following_tolerance];
-    real_type t60  = 1.0 / t59;
-    real_type t61  = t60 * t5;
-    real_type t62  = ALIAS_PathFollowingTolerance_D(t61);
-    result__[ 1   ] = t57 * t60 * t54 * (t62 * t9 + t36 * t6 * (t6 * (t41 - t43 + t45 - t47) + t37) * t59);
-    real_type t73  = t36 * t36;
-    real_type t74  = t40 * t40;
-    real_type t76  = sqrt(t73 + t74);
-    real_type t77  = 1.0 / t76;
-    real_type t79  = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
-    real_type t81  = ALIAS_nominalFeed();
-    real_type t82  = 1.0 / t81;
-    real_type t84  = 0.101e1 - t82 * t76;
-    real_type t85  = ALIAS_vLimit_D(t84);
-    real_type t107 = 1.0 / t79;
-    real_type t109 = 1.0 / t8;
-    result__[ 2   ] = -t109 * t107 * t82 * t54 * (t85 * t8 * t36 * t79 + (t76 * (t6 * (t79 * (t41 - 2 * t43 + t45 - t47) - 2 * t36 * t5) + t79 * t37 + 2 * t36) + 2 * t8 * t36 * t81) * t81) * t77;
-    real_type t116 = t76 - t81;
-    real_type t122 = L__[iL_lambda2__xo];
-    real_type t126 = t109 * t54 * t6;
-    result__[ 3   ] = 2 * t40 * t77 * t107 * t116 * t54 - t40 * t82 * t77 * t85 * t54 - t126 * t36 * t39 + t54 * t122;
-    real_type t129 = 1.0 / ModelPars[iM_as_max];
-    real_type t130 = t129 * t10;
-    real_type t131 = ALIAS_as_limit_D(t130);
-    real_type t134 = t25 * t54;
-    real_type t137 = t31 * t54;
-    result__[ 4   ] = t29 * t12 * t137 + t126 * t36 * t46 + t129 * t131 * t54 + t23 * t15 * t134 + t54 * t39;
-    real_type t144 = 1.0 / ModelPars[iM_an_max];
-    real_type t145 = t144 * t14;
-    real_type t146 = ALIAS_an_limit_D(t145);
-    result__[ 5   ] = -t23 * t12 * t134 - t126 * t36 * t44 + t29 * t15 * t137 + t144 * t146 * t54 + t54 * t42;
-    real_type t156 = ALIAS_timePositive_D(t54);
-    real_type t157 = vLimit(t84);
-    real_type t158 = PathFollowingTolerance(t61);
-    real_type t159 = as_limit(t130);
-    real_type t160 = an_limit(t145);
-    real_type t161 = ax_limit(t24);
-    real_type t162 = ay_limit(t30);
-    real_type t163 = t116 * t116;
-    real_type t170 = -1.0 / t8;
-    real_type t171 = t170 * t6;
-    result__[ 6   ] = t156 + t157 + t158 + t159 + t160 + t161 + t162 + t107 * t163 - t109 * t36 * t37 + t40 * t122 - (-t171 * t40 * t36 - t10) * t39 - (t170 * t6 * t73 - t14) * t42 - (-t171 * t14 * t36 - U__[iU_js]) * t44 - (t171 * t10 * t36 - U__[iU_jn]) * t46;
+    real_type t38  = X__[iX_vs];
+    real_type t39  = t38 * t37;
+    real_type t40  = X__[iX_n];
+    real_type t41  = ALIAS_kappa(t3);
+    real_type t43  = -t41 * t40 + 1;
+    real_type t44  = t43 * t43;
+    real_type t45  = 1.0 / t44;
+    real_type t48  = ALIAS_kappa_D(t3);
+    real_type t51  = L__[iL_lambda3__xo];
+    real_type t52  = X__[iX_vn];
+    real_type t53  = t52 * t38;
+    real_type t54  = 1.0 / t43;
+    real_type t55  = t54 * t48;
+    real_type t59  = t48 * t40 * t45;
+    real_type t64  = L__[iL_lambda4__xo];
+    real_type t65  = t38 * t38;
+    real_type t68  = t41 * t65;
+    real_type t73  = L__[iL_lambda5__xo];
+    real_type t74  = t7 * t38;
+    real_type t81  = L__[iL_lambda6__xo];
+    real_type t82  = t2 * t38;
+    result__[ 0   ] = t12 * (-t8 * t17 - t5 * t19) * t15 + t28 * (t5 * t17 - t8 * t19) * t31 + t48 * t40 * t1 * t45 * t39 - t1 * (-t59 * t41 * t53 - t55 * t53) * t51 - t1 * (t54 * t48 * t65 + t59 * t68) * t64 - t1 * (-t59 * t41 * t74 - t55 * t74) * t73 - t1 * (t59 * t41 * t82 + t55 * t82) * t81;
+    real_type t90  = 1.0 / ModelPars[iM_path_following_tolerance];
+    real_type t91  = t90 * t40;
+    real_type t92  = ALIAS_PathFollowingTolerance_D(t91);
+    real_type t98  = t38 * t51;
+    real_type t100 = t41 * t41;
+    real_type t102 = t1 * t45 * t100;
+    real_type t106 = t38 * t73;
+    real_type t109 = t38 * t81;
+    result__[ 1   ] = t41 * t1 * t45 * t39 + t90 * t92 * t1 + t102 * t7 * t106 - t102 * t2 * t109 + t102 * t52 * t98 - t102 * t65 * t64;
+    real_type t112 = t52 * t52;
+    real_type t114 = sqrt(t65 + t112);
+    real_type t115 = ALIAS_nominalFeed();
+    real_type t116 = 1.0 / t115;
+    real_type t118 = 0.101e1 - t116 * t114;
+    real_type t119 = ALIAS_vLimit_D(t118);
+    real_type t120 = t119 * t1;
+    real_type t121 = 1.0 / t114;
+    real_type t122 = t116 * t121;
+    real_type t125 = t114 - t115;
+    real_type t126 = t125 * t1;
+    real_type t128 = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
+    real_type t129 = 1.0 / t128;
+    real_type t130 = t121 * t129;
+    real_type t137 = t54 * t41;
+    real_type t138 = t1 * t137;
+    result__[ 2   ] = t1 * t54 * t37 - t38 * t122 * t120 + 2 * t38 * t130 * t126 - t138 * t2 * t81 - 2 * t138 * t38 * t64 + t138 * t52 * t51 + t138 * t7 * t73;
+    real_type t152 = L__[iL_lambda2__xo];
+    result__[ 3   ] = -t52 * t122 * t120 + 2 * t52 * t130 * t126 + t1 * t152 + t138 * t98;
+    real_type t156 = 1.0 / ModelPars[iM_as_max];
+    real_type t157 = t156 * t2;
+    real_type t158 = ALIAS_as_limit_D(t157);
+    result__[ 4   ] = t156 * t158 * t1 + t12 * t5 * t15 + t28 * t8 * t31 + t1 * t51 - t138 * t109;
+    real_type t168 = 1.0 / ModelPars[iM_an_max];
+    real_type t169 = t168 * t7;
+    real_type t170 = ALIAS_an_limit_D(t169);
+    result__[ 5   ] = t168 * t170 * t1 - t12 * t8 * t15 + t28 * t5 * t31 + t1 * t64 + t138 * t106;
+    real_type t179 = ALIAS_timePositive_D(t1);
+    real_type t180 = vLimit(t118);
+    real_type t181 = PathFollowingTolerance(t91);
+    real_type t182 = as_limit(t157);
+    real_type t183 = an_limit(t169);
+    real_type t184 = ax_limit(t13);
+    real_type t185 = ay_limit(t29);
+    real_type t186 = t125 * t125;
+    result__[ 6   ] = t179 + t180 + t181 + t182 + t183 + t184 + t185 + t129 * t186 + t54 * t39 + t52 * t152 - (-t137 * t53 - t2) * t51 - (t54 * t68 - t7) * t64 - (-t137 * t74 - U__[iU_js]) * t73 - (t137 * t82 - U__[iU_jn]) * t81;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 7, i_segment );
   }
@@ -261,8 +269,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
@@ -317,179 +325,230 @@ namespace CNOCDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_ax_max];
-    real_type t2   = X__[iX_n];
+    real_type t1   = X__[iX_coV];
+    real_type t2   = X__[iX_as];
     real_type t3   = X__[iX_s];
-    real_type t4   = ALIAS_kappa(t3);
-    real_type t6   = t4 * t2 - 1;
-    real_type t7   = t6 * t6;
-    real_type t8   = t7 * t6;
-    real_type t10  = ModelPars[iM_ay_max];
-    real_type t11  = t10 * t10;
-    real_type t12  = X__[iX_as];
-    real_type t13  = ALIAS_theta_D(t3);
-    real_type t14  = t13 * t13;
-    real_type t16  = X__[iX_an];
-    real_type t17  = ALIAS_theta_DD(t3);
-    real_type t19  = t14 * t12 + t17 * t16;
-    real_type t20  = ALIAS_theta(t3);
-    real_type t21  = cos(t20);
-    real_type t23  = sin(t20);
-    real_type t26  = t17 * t12 - t14 * t16;
-    real_type t32  = t21 * t12 - t23 * t16;
-    real_type t33  = 1.0 / t1;
-    real_type t34  = t33 * t32;
-    real_type t35  = ALIAS_ax_limit_D(t34);
-    real_type t41  = t23 * t12 + t21 * t16;
-    real_type t42  = t41 * t41;
-    real_type t44  = ALIAS_ax_limit_DD(t34);
-    real_type t47  = t1 * t1;
-    real_type t53  = 1.0 / t10;
-    real_type t54  = t53 * t41;
-    real_type t55  = ALIAS_ay_limit_D(t54);
-    real_type t59  = t32 * t32;
-    real_type t60  = ALIAS_ay_limit_DD(t54);
-    real_type t63  = X__[iX_vs];
-    real_type t65  = ALIAS_kappa_DD(t3);
-    real_type t68  = ALIAS_kappa_D(t3);
-    real_type t69  = t68 * t68;
-    real_type t73  = L__[iL_lambda1__xo];
-    real_type t74  = t2 * t73;
-    real_type t75  = L__[iL_lambda3__xo];
-    real_type t76  = X__[iX_vn];
-    real_type t77  = t76 * t75;
-    real_type t78  = L__[iL_lambda4__xo];
-    real_type t79  = t63 * t78;
-    real_type t80  = L__[iL_lambda5__xo];
-    real_type t81  = t16 * t80;
-    real_type t82  = L__[iL_lambda6__xo];
-    real_type t83  = t12 * t82;
-    real_type t84  = t74 + t77 - t79 + t81 - t83;
-    real_type t90  = X__[iX_coV];
-    real_type t92  = 1.0 / t47;
-    real_type t93  = 1.0 / t11;
-    real_type t94  = t93 * t92;
-    real_type t95  = 1.0 / t8;
-    result__[ 0   ] = t95 * t94 * t90 * (-t35 * (t21 * t19 + t26 * t23) * t11 * t8 * t1 + t44 * t42 * t8 * t14 * t11 + (-t55 * (t19 * t23 - t21 * t26) * t10 * t8 + t60 * t59 * t8 * t14 + t84 * (t2 * t65 * t4 - 2 * t2 * t69 - t65) * t63 * t11) * t47);
-    real_type t99  = 2 * t79;
-    result__[ 1   ] = -t95 * (t4 * (t74 + 2 * t77 - t99 + 2 * t81 - 2 * t83) + t73) * t90 * t63 * t68;
-    real_type t108 = t90 * t68;
-    real_type t110 = 1.0 / t7;
-    result__[ 2   ] = t110 * (t74 + t77 - t99 + t81 - t83) * t108;
-    real_type t112 = t63 * t75;
-    result__[ 3   ] = t110 * t108 * t112;
-    real_type t114 = t21 * t13;
-    real_type t116 = t41 * t7;
-    real_type t117 = t44 * t116;
-    real_type t119 = t23 * t13;
-    real_type t121 = t35 * t7 * t11;
-    real_type t124 = t60 * t32 * t7;
-    real_type t126 = t55 * t7;
-    real_type t129 = t10 * t63;
-    real_type t139 = t110 * t94;
-    result__[ 4   ] = -t139 * t90 * (t117 * t11 * t114 + (t121 * t119 + (-t124 * t119 + t10 * (t129 * t68 * t82 - t126 * t114)) * t1) * t1);
-    result__[ 5   ] = t139 * (t117 * t11 * t119 + (-t121 * t114 + t1 * (t124 * t114 + (t129 * t68 * t80 - t126 * t119) * t10)) * t1) * t90;
-    result__[ 6   ] = t110 * t53 * t33 * (-t35 * t116 * t13 * t10 + t1 * (t84 * t63 * t68 * t10 + t55 * t32 * t7 * t13));
-    result__[ 7   ] = result__[1];
-    real_type t170 = ModelPars[iM_path_following_tolerance];
-    real_type t171 = 1.0 / t170;
-    real_type t172 = t171 * t2;
-    real_type t173 = ALIAS_PathFollowingTolerance_DD(t172);
-    real_type t176 = t170 * t170;
-    real_type t179 = t4 * (t77 - t79 + t81 - t83) + t73;
-    real_type t181 = t4 * t4;
-    result__[ 8   ] = -2 * t95 / t176 * t90 * (-t173 * t8 / 2 + t63 * t181 * t179 * t176);
-    real_type t190 = t77 - t99 + t81 - t83;
-    result__[ 9   ] = t110 * t90 * (t4 * t190 + t73) * t4;
-    real_type t196 = t110 * t90 * t181;
-    result__[ 10  ] = t196 * t112;
-    real_type t197 = t63 * t82;
-    result__[ 11  ] = -t196 * t197;
-    real_type t199 = t63 * t80;
-    result__[ 12  ] = t196 * t199;
-    real_type t200 = ALIAS_PathFollowingTolerance_D(t172);
-    result__[ 13  ] = t110 * t171 * (t170 * t63 * t179 * t4 + t200 * t7);
-    result__[ 14  ] = result__[2];
+    real_type t4   = ALIAS_theta(t3);
+    real_type t5   = cos(t4);
+    real_type t7   = X__[iX_an];
+    real_type t8   = sin(t4);
+    real_type t11  = ModelPars[iM_ax_max];
+    real_type t12  = 1.0 / t11;
+    real_type t13  = t12 * (t2 * t5 - t7 * t8);
+    real_type t14  = ALIAS_ax_limit_DD(t13);
+    real_type t15  = t14 * t1;
+    real_type t16  = ALIAS_theta_D(t3);
+    real_type t17  = t16 * t2;
+    real_type t19  = t16 * t7;
+    real_type t21  = -t17 * t8 - t19 * t5;
+    real_type t22  = t21 * t21;
+    real_type t23  = t11 * t11;
+    real_type t24  = 1.0 / t23;
+    real_type t27  = ALIAS_ax_limit_D(t13);
+    real_type t28  = t27 * t1;
+    real_type t29  = ALIAS_theta_DD(t3);
+    real_type t30  = t29 * t2;
+    real_type t32  = t16 * t16;
+    real_type t33  = t32 * t2;
+    real_type t35  = t29 * t7;
+    real_type t37  = t32 * t7;
+    real_type t45  = ModelPars[iM_ay_max];
+    real_type t46  = 1.0 / t45;
+    real_type t47  = t46 * (t2 * t8 + t5 * t7);
+    real_type t48  = ALIAS_ay_limit_DD(t47);
+    real_type t49  = t48 * t1;
+    real_type t52  = t17 * t5 - t19 * t8;
+    real_type t53  = t52 * t52;
+    real_type t54  = t45 * t45;
+    real_type t55  = 1.0 / t54;
+    real_type t58  = ALIAS_ay_limit_D(t47);
+    real_type t59  = t58 * t1;
+    real_type t67  = L__[iL_lambda1__xo];
+    real_type t68  = X__[iX_vs];
+    real_type t69  = t68 * t67;
+    real_type t70  = X__[iX_n];
+    real_type t71  = ALIAS_kappa(t3);
+    real_type t73  = -t70 * t71 + 1;
+    real_type t74  = t73 * t73;
+    real_type t76  = 1.0 / t74 / t73;
+    real_type t77  = t76 * t69;
+    real_type t78  = t70 * t70;
+    real_type t80  = ALIAS_kappa_D(t3);
+    real_type t81  = t80 * t80;
+    real_type t85  = 1.0 / t74;
+    real_type t87  = t70 * t1;
+    real_type t88  = ALIAS_kappa_DD(t3);
+    real_type t91  = L__[iL_lambda3__xo];
+    real_type t92  = X__[iX_vn];
+    real_type t93  = t92 * t68;
+    real_type t94  = 1.0 / t73;
+    real_type t95  = t94 * t88;
+    real_type t98  = t70 * t85 * t81;
+    real_type t101 = t71 * t93;
+    real_type t103 = t81 * t78 * t76;
+    real_type t106 = t70 * t85;
+    real_type t107 = t88 * t106;
+    real_type t112 = L__[iL_lambda4__xo];
+    real_type t113 = t68 * t68;
+    real_type t119 = t71 * t113;
+    real_type t126 = L__[iL_lambda5__xo];
+    real_type t127 = t7 * t68;
+    real_type t131 = t71 * t127;
+    real_type t138 = L__[iL_lambda6__xo];
+    real_type t139 = t2 * t68;
+    real_type t143 = t71 * t139;
+    result__[ 0   ] = t24 * t22 * t15 + t12 * (-t30 * t8 - t33 * t5 - t35 * t5 + t37 * t8) * t28 + t55 * t53 * t49 + t46 * (t30 * t5 - t33 * t8 - t35 * t8 - t37 * t5) * t59 + 2 * t81 * t78 * t1 * t77 + t88 * t87 * t85 * t69 - t1 * (-2 * t101 * t103 - t101 * t107 - t93 * t95 - 2 * t93 * t98) * t91 - t1 * (2 * t106 * t113 * t81 + t113 * t88 * t94 + 2 * t103 * t119 + t107 * t119) * t112 - t1 * (-2 * t103 * t131 - t107 * t131 - t127 * t95 - 2 * t127 * t98) * t126 - t1 * (2 * t103 * t143 + t107 * t143 + t139 * t95 + 2 * t139 * t98) * t138;
+    real_type t153 = 2 * t71 * t80 * t87 * t77;
+    real_type t154 = t1 * t85;
+    real_type t155 = t80 * t154;
+    real_type t156 = t155 * t69;
+    real_type t158 = t71 * t85 * t80;
+    real_type t160 = t71 * t71;
+    real_type t163 = t80 * t70 * t76;
+    real_type t169 = t80 * t113;
+    real_type t170 = t71 * t85;
+    result__[ 1   ] = t153 + t156 - t1 * (-2 * t160 * t163 * t93 - 2 * t158 * t93) * t91 - t1 * (2 * t113 * t160 * t163 + 2 * t169 * t170) * t112 - t1 * (-2 * t127 * t160 * t163 - 2 * t127 * t158) * t126 - t1 * (2 * t139 * t160 * t163 + 2 * t139 * t158) * t138;
+    real_type t192 = t85 * t67;
+    real_type t194 = t80 * t87 * t192;
+    real_type t198 = t80 * t106;
+    real_type t207 = t198 * t68 * t71 + t68 * t80 * t94;
+    result__[ 2   ] = t194 - t1 * (-t198 * t71 * t92 - t80 * t92 * t94) * t91 - 2 * t1 * t207 * t112 - t1 * (-t198 * t7 * t71 - t7 * t80 * t94) * t126 - t1 * (t198 * t2 * t71 + t2 * t80 * t94) * t138;
+    real_type t225 = -t207;
+    result__[ 3   ] = -t1 * t225 * t91;
+    real_type t230 = t21 * t24 * t5 * t15;
+    real_type t231 = t8 * t16;
+    real_type t233 = t12 * t231 * t28;
+    real_type t236 = t52 * t55 * t8 * t49;
+    real_type t237 = t5 * t16;
+    real_type t239 = t46 * t237 * t59;
+    result__[ 4   ] = -t1 * t138 * t207 + t230 - t233 + t236 + t239;
+    real_type t242 = t24 * t8;
+    real_type t244 = t21 * t242 * t15;
+    real_type t246 = t12 * t237 * t28;
+    real_type t247 = t55 * t5;
+    real_type t249 = t52 * t247 * t49;
+    real_type t251 = t46 * t231 * t59;
+    result__[ 5   ] = -t1 * t126 * t225 - t244 - t246 + t249 - t251;
+    real_type t259 = t94 * t80;
+    result__[ 6   ] = t12 * t21 * t27 + t46 * t52 * t58 + t198 * t69 - (-t101 * t198 - t259 * t93) * t91 - (t119 * t198 + t169 * t94) * t112 - (-t127 * t259 - t131 * t198) * t126 - (t139 * t259 + t143 * t198) * t138;
+    real_type t276 = t68 * t91;
+    real_type t277 = t92 * t276;
+    real_type t279 = t80 * t1 * t170;
+    real_type t282 = t160 * t92;
+    real_type t284 = t1 * t76;
+    real_type t285 = t80 * t70;
+    real_type t286 = t285 * t284;
+    real_type t289 = t113 * t112;
+    real_type t296 = t68 * t126;
+    real_type t297 = t7 * t296;
+    real_type t300 = t160 * t7;
+    real_type t304 = t68 * t138;
+    real_type t305 = t2 * t304;
+    real_type t308 = t160 * t2;
+    result__[ 7   ] = -2 * t155 * t289 * t71 - 2 * t160 * t286 * t289 + 2 * t276 * t282 * t286 + 2 * t286 * t296 * t300 - 2 * t286 * t304 * t308 + 2 * t277 * t279 + 2 * t279 * t297 - 2 * t279 * t305 + t153 + t156;
+    real_type t312 = ModelPars[iM_path_following_tolerance];
+    real_type t313 = 1.0 / t312;
+    real_type t314 = t313 * t70;
+    real_type t315 = ALIAS_PathFollowingTolerance_DD(t314);
+    real_type t317 = t312 * t312;
+    real_type t325 = t1 * t76 * t160 * t71;
+    result__[ 8   ] = 1.0 / t317 * t315 * t1 + 2 * t160 * t284 * t69 + 2 * t325 * t277 - 2 * t325 * t289 + 2 * t325 * t297 - 2 * t325 * t305;
+    real_type t336 = t92 * t91;
+    real_type t337 = t85 * t160;
+    real_type t338 = t1 * t337;
+    real_type t340 = t68 * t112;
+    real_type t343 = t7 * t126;
+    real_type t345 = t2 * t138;
+    result__[ 9   ] = t1 * t192 * t71 + t336 * t338 - 2 * t338 * t340 + t338 * t343 - t338 * t345;
+    result__[ 10  ] = t338 * t276;
+    result__[ 11  ] = -t338 * t304;
+    result__[ 12  ] = t338 * t296;
+    real_type t348 = ALIAS_PathFollowingTolerance_D(t314);
+    result__[ 13  ] = t276 * t282 * t85 + t296 * t300 * t85 - t304 * t308 * t85 + t170 * t69 - t289 * t337 + t313 * t348;
+    real_type t358 = t1 * t259;
+    real_type t361 = t285 * t154;
+    result__[ 14  ] = t336 * t361 * t71 - 2 * t340 * t361 * t71 + t343 * t361 * t71 - t345 * t361 * t71 + t336 * t358 - 2 * t340 * t358 + t343 * t358 - t345 * t358 + t194;
     result__[ 15  ] = result__[9];
-    real_type t207 = t63 * t63;
-    real_type t208 = t76 * t76;
-    real_type t209 = t207 + t208;
-    real_type t210 = sqrt(t209);
-    real_type t211 = ALIAS_nominalFeed();
-    real_type t212 = 1.0 / t211;
-    real_type t214 = 0.101e1 - t212 * t210;
-    real_type t215 = ALIAS_vLimit_DD(t214);
-    real_type t216 = t215 * t90;
-    real_type t217 = 1.0 / t209;
-    real_type t218 = t211 * t211;
-    real_type t219 = 1.0 / t218;
-    real_type t223 = ALIAS_vLimit_D(t214);
-    real_type t224 = t223 * t90;
-    real_type t225 = t210 * t209;
-    real_type t226 = 1.0 / t225;
-    real_type t230 = 1.0 / t210;
-    real_type t233 = t217 * t90;
-    real_type t235 = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
-    real_type t236 = 1.0 / t235;
-    real_type t240 = t210 - t211;
-    real_type t241 = t240 * t90;
-    real_type t250 = 1.0 / t6;
-    real_type t251 = t250 * t4;
-    result__[ 16  ] = t207 * t212 * t226 * t224 + t207 * t219 * t217 * t216 - 2 * t207 * t226 * t236 * t241 + 2 * t236 * t207 * t233 - t212 * t230 * t224 + 2 * t230 * t236 * t241 + 2 * t251 * t90 * t78;
-    result__[ 17  ] = t76 * t63 * t212 * t226 * t224 + t63 * t76 * t219 * t217 * t216 - 2 * t76 * t63 * t226 * t236 * t241 + 2 * t63 * t236 * t76 * t233 - t251 * t90 * t75;
-    result__[ 18  ] = t250 * t90 * t4 * t82;
-    result__[ 19  ] = -t90 / t6 * t4 * t80;
-    result__[ 20  ] = -t250 * t236 * t212 * t230 * (t223 * t6 * t63 * t235 + t211 * (t210 * (t4 * (t235 * t190 - 2 * t63 * t2) + t235 * t73 + 2 * t63) + 2 * t6 * t63 * t211));
-    result__[ 21  ] = result__[3];
+    real_type t374 = t92 * t92;
+    real_type t375 = t113 + t374;
+    real_type t376 = sqrt(t375);
+    real_type t377 = ALIAS_nominalFeed();
+    real_type t378 = 1.0 / t377;
+    real_type t380 = 0.101e1 - t378 * t376;
+    real_type t381 = ALIAS_vLimit_DD(t380);
+    real_type t382 = t381 * t1;
+    real_type t383 = 1.0 / t375;
+    real_type t384 = t377 * t377;
+    real_type t385 = 1.0 / t384;
+    real_type t386 = t385 * t383;
+    real_type t389 = ALIAS_vLimit_D(t380);
+    real_type t390 = t389 * t1;
+    real_type t392 = 1.0 / t376 / t375;
+    real_type t393 = t378 * t392;
+    real_type t396 = 1.0 / t376;
+    real_type t398 = t378 * t396 * t390;
+    real_type t399 = t383 * t1;
+    real_type t401 = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
+    real_type t402 = 1.0 / t401;
+    real_type t406 = t376 - t377;
+    real_type t407 = t406 * t1;
+    real_type t408 = t392 * t402;
+    real_type t414 = 2 * t396 * t402 * t407;
+    real_type t416 = t1 * t94;
+    result__[ 16  ] = -2 * t112 * t416 * t71 + t113 * t382 * t386 + t113 * t390 * t393 + 2 * t113 * t399 * t402 - 2 * t113 * t407 * t408 - t398 + t414;
+    real_type t424 = t68 * t378;
+    result__[ 17  ] = t382 * t383 * t385 * t68 * t92 - 2 * t392 * t402 * t407 * t68 * t92 + t390 * t392 * t424 * t92 + 2 * t399 * t402 * t68 * t92 + t416 * t71 * t91;
+    result__[ 18  ] = -t416 * t71 * t138;
+    result__[ 19  ] = t416 * t71 * t126;
+    real_type t441 = t396 * t389;
+    real_type t443 = t402 * t406;
+    real_type t448 = t94 * t71;
+    result__[ 20  ] = 2 * t396 * t443 * t68 + t336 * t448 - 2 * t340 * t448 + t343 * t448 - t345 * t448 - t424 * t441 + t67 * t94;
+    result__[ 21  ] = t276 * t361 * t71 + t276 * t358;
     result__[ 22  ] = result__[10];
     result__[ 23  ] = result__[17];
-    real_type t302 = t207 * t211;
-    real_type t311 = t208 * t208;
-    real_type t323 = t209 * t209;
-    result__[ 24  ] = 2 * t236 * t219 / t210 / t323 * t90 * (-t235 * t302 * t209 * t223 / 2 + t235 * t225 * t208 * t215 / 2 + (t210 * (-t208 * t207 - t311) + t208 * (2 * t225 - t302) + t207 * (t225 - t302)) * t218);
-    result__[ 25  ] = -t76 * t212 * t230 * t223 + 2 * t76 * t230 * t236 * t240 - t251 * t112 + L__[iL_lambda2__xo];
-    result__[ 26  ] = result__[4];
+    result__[ 24  ] = t374 * t382 * t386 + t374 * t390 * t393 + 2 * t374 * t399 * t402 - 2 * t374 * t407 * t408 - t398 + t414;
+    result__[ 25  ] = -t378 * t441 * t92 + 2 * t396 * t443 * t92 + t276 * t448 + L__[iL_lambda2__xo];
+    result__[ 26  ] = -t304 * t361 * t71 - t304 * t358 + t230 - t233 + t236 + t239;
     result__[ 27  ] = result__[11];
     result__[ 28  ] = result__[18];
-    real_type t338 = ModelPars[iM_as_max];
-    real_type t339 = 1.0 / t338;
-    real_type t340 = t339 * t12;
-    real_type t341 = ALIAS_as_limit_DD(t340);
-    real_type t343 = t338 * t338;
-    real_type t346 = t44 * t90;
-    real_type t347 = t21 * t21;
-    real_type t350 = t60 * t90;
-    real_type t351 = t23 * t23;
-    result__[ 29  ] = 1.0 / t343 * t341 * t90 + t92 * t347 * t346 + t93 * t351 * t350;
-    result__[ 30  ] = -t93 * t92 * (t11 * t44 - t47 * t60) * t90 * t21 * t23;
-    real_type t362 = ALIAS_as_limit_D(t340);
-    result__[ 31  ] = t33 * t21 * t35 + t53 * t23 * t55 + t251 * t197 + t339 * t362 + t75;
-    result__[ 32  ] = result__[5];
+    real_type t477 = ModelPars[iM_as_max];
+    real_type t478 = 1.0 / t477;
+    real_type t479 = t478 * t2;
+    real_type t480 = ALIAS_as_limit_DD(t479);
+    real_type t482 = t477 * t477;
+    real_type t485 = t5 * t5;
+    real_type t488 = t8 * t8;
+    result__[ 29  ] = 1.0 / t482 * t480 * t1 + t24 * t485 * t15 + t55 * t488 * t49;
+    result__[ 30  ] = -t15 * t242 * t5 + t247 * t49 * t8;
+    real_type t495 = ALIAS_as_limit_D(t479);
+    result__[ 31  ] = t12 * t27 * t5 + t46 * t58 * t8 - t304 * t448 + t478 * t495 + t91;
+    result__[ 32  ] = t296 * t361 * t71 + t296 * t358 - t244 - t246 + t249 - t251;
     result__[ 33  ] = result__[12];
     result__[ 34  ] = result__[19];
     result__[ 35  ] = result__[30];
-    real_type t369 = ModelPars[iM_an_max];
-    real_type t370 = 1.0 / t369;
-    real_type t371 = t370 * t16;
-    real_type t372 = ALIAS_an_limit_DD(t371);
-    real_type t374 = t369 * t369;
-    result__[ 36  ] = 1.0 / t374 * t372 * t90 + t92 * t351 * t346 + t93 * t347 * t350;
-    real_type t381 = ALIAS_an_limit_D(t371);
-    result__[ 37  ] = t53 * t21 * t55 - t33 * t23 * t35 - t251 * t199 + t370 * t381 + t78;
+    real_type t505 = ModelPars[iM_an_max];
+    real_type t506 = 1.0 / t505;
+    real_type t507 = t506 * t7;
+    real_type t508 = ALIAS_an_limit_DD(t507);
+    real_type t510 = t505 * t505;
+    result__[ 36  ] = 1.0 / t510 * t508 * t1 + t24 * t488 * t15 + t55 * t485 * t49;
+    real_type t517 = ALIAS_an_limit_D(t507);
+    result__[ 37  ] = -t12 * t27 * t8 + t46 * t5 * t58 + t296 * t448 + t506 * t517 + t112;
     result__[ 38  ] = result__[6];
     result__[ 39  ] = result__[13];
     result__[ 40  ] = result__[20];
     result__[ 41  ] = result__[25];
     result__[ 42  ] = result__[31];
     result__[ 43  ] = result__[37];
-    result__[ 44  ] = ALIAS_timePositive_DD(t90);
+    result__[ 44  ] = ALIAS_timePositive_DD(t1);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 45, i_segment );
   }
@@ -510,8 +569,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -523,7 +582,7 @@ namespace CNOCDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -546,12 +605,12 @@ namespace CNOCDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_coV];
     result__[ 0   ] = t2 * L__[iL_lambda5__xo];
@@ -576,8 +635,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 6   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 6   ;
@@ -590,12 +649,12 @@ namespace CNOCDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda5__xo];
     result__[ 1   ] = L__[iL_lambda6__xo];
@@ -619,8 +678,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -631,7 +690,7 @@ namespace CNOCDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -655,7 +714,7 @@ namespace CNOCDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -676,8 +735,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -689,7 +748,7 @@ namespace CNOCDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -709,12 +768,12 @@ namespace CNOCDefine {
   CNOC::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -743,8 +802,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -754,7 +813,7 @@ namespace CNOCDefine {
   CNOC::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -775,8 +834,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -786,7 +845,7 @@ namespace CNOCDefine {
   CNOC::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -807,11 +866,11 @@ namespace CNOCDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -840,8 +899,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -852,7 +911,7 @@ namespace CNOCDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -873,8 +932,8 @@ namespace CNOCDefine {
 
   void
   CNOC::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -885,7 +944,7 @@ namespace CNOCDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

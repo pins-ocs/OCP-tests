@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -40,10 +40,12 @@ content = {
   LU_threaded = true,
 
   -- Enable check jacobian
-  JacobianCheck            = false,
-  JacobianCheckFull        = false,
-  JacobianCheck_epsilon    = 1e-4,
-  FiniteDifferenceJacobian = false,
+  JacobianCheck         = false,
+  JacobianCheckFull     = false,
+  JacobianCheck_epsilon = 1e-4,
+
+  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  JacobianDiscretization = 'ANALYTIC,
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "HyperSensitive_dump",
@@ -93,7 +95,7 @@ content = {
     max_iter             = 300,
     max_step_iter        = 40,
     max_accumulated_iter = 800,
-    tolerance            = 9.999999999999999e-10,
+    tolerance            = 1e-09,
 
     -- continuation parameters
     ns_continuation_begin = 0,
@@ -163,11 +165,11 @@ content = {
     segments = {
       
       {
+        length           = 10000,
         density_function = {
           C   = 50,
           rho = 0.8,
         },
-        length           = 10000,
       },
     },
   },

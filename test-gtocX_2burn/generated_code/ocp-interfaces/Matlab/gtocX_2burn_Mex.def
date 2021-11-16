@@ -1,0 +1,9 @@
+
+; mexFunction.def : Declares the module parameters for the DLL.
+
+LIBRARY      "gtocX_2burn_Mex"
+DESCRIPTION  'Mex file for gtocX_2burn'
+
+EXPORTS
+    ; Explicit exports can go here
+    mexFunction

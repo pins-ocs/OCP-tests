@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -59,11 +59,11 @@ namespace MaximumAscentDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = tf(ModelPars[iM_days]);
     real_type t3   = eta(t2);
@@ -71,16 +71,16 @@ namespace MaximumAscentDefine {
     real_type t5   = X__[iX_v];
     real_type t6   = t5 * t5;
     real_type t7   = X__[iX_r];
-    real_type t11  = t7 * t7;
+    real_type t8   = 1.0 / t7;
+    real_type t10  = t7 * t7;
     real_type t14  = Tbar(t2);
     real_type t22  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0]) * t14;
     real_type t23  = U__[iU_alpha];
     real_type t24  = sin(t23);
-    result__[ 1   ] = 1.0 / t11 * (t7 * t6 - 1) * t3 + t24 * t22;
-    real_type t26  = 1.0 / t7;
-    real_type t29  = cos(t23);
-    result__[ 2   ] = -t26 * t5 * result__[0] + t29 * t22;
-    result__[ 3   ] = t26 * t5 * t3;
+    result__[ 1   ] = (t8 * t6 - 1.0 / t10) * t3 + t24 * t22;
+    real_type t28  = cos(t23);
+    result__[ 2   ] = -t8 * t5 * result__[0] + t28 * t22;
+    result__[ 3   ] = t8 * t5 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
@@ -101,8 +101,8 @@ namespace MaximumAscentDefine {
 
   void
   MaximumAscent::Drhs_odeDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
@@ -121,11 +121,11 @@ namespace MaximumAscentDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = tf(ModelPars[iM_days]);
     result__[ 0   ] = eta(t2);
@@ -165,8 +165,8 @@ namespace MaximumAscentDefine {
 
   void
   MaximumAscent::Drhs_odeDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -177,7 +177,7 @@ namespace MaximumAscentDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -198,8 +198,8 @@ namespace MaximumAscentDefine {
 
   void
   MaximumAscent::Drhs_odeDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 2   ; jIndex[1 ] = 0   ;
@@ -212,20 +212,20 @@ namespace MaximumAscentDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = tf(ModelPars[iM_days]);
     real_type t3   = Tbar(t2);
-    real_type t9   = -Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0];
+    real_type t11  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0]) * t3;
     real_type t12  = U__[iU_alpha];
     real_type t13  = cos(t12);
-    result__[ 0   ] = t13 / t9 * t3;
+    result__[ 0   ] = t13 * t11;
     real_type t14  = sin(t12);
-    result__[ 1   ] = -1.0 / t9 * t14 * t3;
+    result__[ 1   ] = -t14 * t11;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
   }
@@ -251,8 +251,8 @@ namespace MaximumAscentDefine {
 
   void
   MaximumAscent::A_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -266,11 +266,11 @@ namespace MaximumAscentDefine {
   MaximumAscent::A_sparse(
     NodeType const     & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;

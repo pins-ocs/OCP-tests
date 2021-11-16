@@ -1,0 +1,495 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x1
+[ 1] initial_x2
+[ 2] initial_x3
+[ 3] final_x2
+[ 4] final_x3
+
+
+
+Controls
+uControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.01,
+  size    = 0.01
+}
+
+Constraints 1D
+tfbound = {
+  Type      = GREATER THAN
+  SubType   = BarrierLog, h = 0.10000
+  Tolerance = 0.1
+  Epsilon   = 0.01
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
+Segment N.0: s0 = 0.000 length = 1.000 npts = 401 no data set
+END Mesh[mesh]
+
+Model Parameters
+..................................T_init = 100
+....................................x1_i = 1.5707963267948966
+....................................x2_i = 4
+....................................x3_i = 0
+..............................epsi_ctrl0 = 0.01
+..............................epsi_ctrl1 = 0.0001
+...............................tol_ctrl0 = 0.01
+...............................tol_ctrl1 = 0.0001
+INFO CLASS = SingularArc
+  #nodes      = 401
+  dim         = u = 1, q = 1, x = 3, p = 1, omega = 5, bc = 5, full_bc = 11
+  BC          = Inital = 6, Final = 5, Cyclic = 0
+  OMEGA       = Inital = 3, Final = 2, Cyclic = 0
+  total       = nZ = 2412, UC = 400, Q = 401
+  index start = omega = 2406, p = 2411
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-17.86280623030798) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 3] (  0.0825  ,  0.0479  ) [   2.29   ,   2.49   ] 0.500      [solverNewtonDumped]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-4.175820878337873) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  2, 9] (  0.0479  ,  0.0481  ) [  0.964   ,  0.961   ] 0.00629    [solverNewtonDumped]
+[  3, 1] (  0.0481  ,  0.0410  ) [  0.877   ,  0.746   ] 0.159      [solverNewtonDumped]
+[  4, 4] (  0.0410  ,  0.0461  ) [   1.37   ,   1.23   ] 0.0527     [solverNewtonDumped]
+[  5, 1] (  0.0461  ,  0.0256  ) [  0.814   ,  0.494   ] 0.459      [solverNewtonDumped]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-2.8849417384715643) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  6, 3] (  0.0256  ,  0.0130  ) [  0.632   ,  0.364   ] 0.500      [solverNewtonDumped]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-2.3387973542900227) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  7, 3] (  0.0130  , 0.00687  ) [  0.574   ,  0.387   ] 0.500      [solverNewtonDumped]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-1.3358735339326628) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  8, 3] ( 0.00687  , 0.00563  ) [   1.23   ,   1.33   ] 0.500      [solverNewtonDumped]
+[  9, 3] ( 0.00563  , 0.00661  ) [   7.11   ,   6.04   ] 0.182      [solverNewtonDumped]
+[ 10, 4] ( 0.00661  , 0.00788  ) [   12.8   ,   11.3   ] 0.129      [solverNewtonDumped]
+[ 11,10] ( 0.00788  ,  0.0110  ) [  359.0   ,  210.0   ] 0.00599    [solverNewtonDumped]
+[ 12,10] (  0.0110  ,  0.0124  ) [ 7.05e+03 , 4.40e+03 ] 0.000370   [solverNewtonDumped]
+[ 13, 1] (  0.0124  ,  0.0135  ) [   31.9   ,   13.3   ] 0.0385     [solverNewtonDumped]
+[ 14, 6] (  0.0135  ,  0.0186  ) [  223.0   ,  104.0   ] 0.0170     [solverNewtonDumped]
+[ 15,12] (  0.0186  ,  0.0239  ) [ 2.67e+04 , 1.61e+04 ] 0.000206   [solverNewtonDumped]
+[ 16, 5] (  0.0239  ,  0.0305  ) [ 5.77e+03 , 2.57e+03 ] 0.00109    [solverNewtonDumped]
+[ 17, 4] (  0.0305  ,  0.0420  ) [ 2.16e+03 , 1.28e+03 ] 0.00437    [solverNewtonDumped]
+[ 18, 6] (  0.0420  ,  0.0547  ) [ 4.39e+03 , 1.88e+03 ] 0.00289    [solverNewtonDumped]
+[ 19,11] (  0.0547  ,  0.0724  ) [ 1.07e+05 , 6.42e+04 ] 0.000148   [solverNewtonDumped]
+[ 20, 7] (  0.0724  ,  0.0881  ) [ 5.63e+04 , 2.41e+04 ] 0.000306   [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 21, 2] (  0.0881  ,  0.0990  ) [ 1.93e+03 , 1.12e+03 ] 0.00699    [solverNewtonDumped]
+[ 22, 3] (  0.0990  ,  0.117   ) [  904.0   ,  304.0   ] 0.0192     [solverNewtonDumped]
+[ 23,20] (  0.117   ,  0.143   ) [ 2.03e+05 , 1.19e+05 ] 0.000116   [solverNewtonDumped]
+[ 24, 6] (  0.143   ,  0.186   ) [ 7.25e+04 , 2.53e+04 ] 0.000472   [solverNewtonDumped]
+[ 25,12] (  0.186   ,  0.224   ) [ 1.19e+06 , 6.95e+05 ] 3.43e-05   [solverNewtonDumped]
+[ 26, 7] (  0.224   ,  0.294   ) [ 3.65e+05 , 1.27e+05 ] 0.000147   [solverNewtonDumped]
+[ 27,12] (  0.294   ,  0.345   ) [ 3.20e+06 , 1.87e+06 ] 1.92e-05   [solverNewtonDumped]
+[ 28, 6] (  0.345   ,  0.443   ) [ 3.88e+05 , 1.35e+05 ] 0.000191   [solverNewtonDumped]
+[ 29,12] (  0.443   ,  0.574   ) [ 5.28e+06 , 3.09e+06 ] 2.19e-05   [solverNewtonDumped]
+[ 30,10] (  0.574   ,  0.678   ) [ 5.23e+06 , 1.82e+06 ] 2.24e-05   [solverNewtonDumped]
+[ 31, 2] (  0.678   ,  0.843   ) [ 7.19e+04 , 4.17e+04 ] 0.00189    [solverNewtonDumped]
+[ 32,12] (  0.843   ,   1.00   ) [ 2.34e+06 , 8.02e+05 ] 6.87e-05   [solverNewtonDumped]
+[ 33,11] (   1.00   ,   1.38   ) [ 1.18e+07 , 6.89e+06 ] 2.28e-05   [solverNewtonDumped]
+[ 34,11] (   1.38   ,   1.70   ) [ 2.65e+07 , 9.08e+06 ] 1.31e-05   [solverNewtonDumped]
+[ 35,12] (   1.70   ,   2.18   ) [ 7.14e+07 , 4.17e+07 ] 5.72e-06   [solverNewtonDumped]
+[ 36, 9] (   2.18   ,   2.97   ) [ 3.16e+07 , 1.08e+07 ] 1.99e-05   [solverNewtonDumped]
+[ 37,15] (   2.97   ,   3.66   ) [ 5.58e+08 , 3.26e+08 ] 1.34e-06   [solverNewtonDumped]
+[ 38, 6] (   3.66   ,   4.24   ) [ 1.23e+07 , 4.22e+06 ] 5.06e-05   [solverNewtonDumped]
+[ 39,12] (   4.24   ,   5.76   ) [ 9.44e+07 , 5.50e+07 ] 1.12e-05   [solverNewtonDumped]
+[ 40, 7] (   5.76   ,   7.10   ) [ 1.68e+07 , 5.75e+06 ] 8.43e-05   [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 41,16] (   7.10   ,   9.31   ) [ 1.13e+09 , 6.60e+08 ] 1.59e-06   [solverNewtonDumped]
+[ 42,12] (   9.31   ,   11.3   ) [ 1.03e+09 , 3.54e+08 ] 1.99e-06   [solverNewtonDumped]
+[ 43,13] (   11.3   ,   14.6   ) [ 2.10e+09 , 1.23e+09 ] 1.28e-06   [solverNewtonDumped]
+[ 44, 9] (   14.6   ,   19.2   ) [ 4.17e+08 , 1.43e+08 ] 9.41e-06   [solverNewtonDumped]
+[ 45,17] (   19.2   ,   24.8   ) [ 1.69e+10 , 9.83e+09 ] 3.05e-07   [solverNewtonDumped]
+[ 46, 6] (   24.8   ,   29.9   ) [ 2.19e+08 , 7.49e+07 ] 2.41e-05   [solverNewtonDumped]
+[ 47,17] (   29.9   ,   38.0   ) [ 1.37e+10 , 7.96e+09 ] 4.88e-07   [solverNewtonDumped]
+[ 48,13] (   38.0   ,   49.5   ) [ 1.53e+10 , 5.24e+09 ] 6.35e-07   [solverNewtonDumped]
+[ 49,16] (   49.5   ,   67.2   ) [ 1.07e+11 , 6.26e+10 ] 1.38e-07   [solverNewtonDumped]
+[ 50,14] (   67.2   ,   76.8   ) [ 6.94e+10 , 2.38e+10 ] 1.94e-07   [solverNewtonDumped]
+[ 51,11] (   76.8   ,  104.0   ) [ 1.54e+10 , 8.99e+09 ] 1.21e-06   [solverNewtonDumped]
+[ 52, 1] (  104.0   ,  104.0   ) [ 2.51e+04 , 2.50e+04 ] 0.00220    [solverNewtonDumped]
+[ 53,16] (  104.0   ,  122.0   ) [ 2.73e+09 , 9.27e+08 ] 8.10e-06   [solverNewtonDumped]
+[ 54, 1] (  122.0   ,  121.0   ) [ 3.83e+04 , 3.81e+04 ] 0.00569    [solverNewtonDumped]
+[ 55, 1] (  121.0   ,  118.0   ) [ 3.80e+04 , 3.84e+04 ] 0.151      [solverNewtonDumped]
+[ 56,25] (  118.0   ,  151.0   ) [ 2.17e+10 , 7.13e+09 ] 1.15e-06   [solverNewtonDumped]
+[ 57, 1] (  151.0   ,  151.0   ) [ 4.68e+04 , 4.67e+04 ] 0.00214    [solverNewtonDumped]
+[ 58, 1] (  151.0   ,  140.0   ) [ 4.66e+04 , 4.82e+04 ] 0.0925     [solverNewtonDumped]
+[ 59,18] (  140.0   ,  167.0   ) [ 1.86e+08 , 9.84e+07 ] 0.000121   [solverNewtonDumped]
+[ 60, 1] (  167.0   ,  163.0   ) [ 4.69e+04 , 4.58e+04 ] 0.0220     [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 61, 1] (  163.0   ,  179.0   ) [ 4.05e+04 , 4.19e+04 ] 0.297      [solverNewtonDumped]
+[ 62,17] (  179.0   ,  243.0   ) [ 3.99e+08 , 1.90e+08 ] 0.000139   [solverNewtonDumped]
+[ 63,13] (  243.0   ,  334.0   ) [ 6.60e+09 , 3.80e+09 ] 1.07e-05   [solverNewtonDumped]
+[ 64,14] (  334.0   ,  397.0   ) [ 4.85e+10 , 2.84e+10 ] 1.71e-06   [solverNewtonDumped]
+[ 65, 7] (  397.0   ,  398.0   ) [ 1.01e+08 , 7.77e+07 ] 3.29e-05   [solverNewtonDumped]
+[ 66,13] (  398.0   ,  398.0   ) [ 1.36e+09 , 3.47e+08 ] 5.21e-06   [solverNewtonDumped]
+[ 67,10] (  398.0   ,  404.0   ) [ 2.00e+09 , 1.37e+09 ] 1.09e-05   [solverNewtonDumped]
+[ 68,12] (  404.0   ,  444.0   ) [ 1.14e+10 , 6.89e+09 ] 5.22e-06   [solverNewtonDumped]
+[ 69,11] (  444.0   ,  561.0   ) [ 1.64e+10 , 5.76e+09 ] 6.28e-06   [solverNewtonDumped]
+[ 70, 7] (  561.0   ,  766.0   ) [ 2.97e+09 , 9.58e+08 ] 6.30e-05   [solverNewtonDumped]
+[ 71, 1] (  766.0   ,  749.0   ) [ 7.95e+04 , 7.66e+04 ] 0.0159     [solverNewtonDumped]
+[ 72, 3] (  749.0   ,  677.0   ) [ 5.71e+04 , 6.09e+04 ] 0.138      [solverNewtonDumped]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-1.1502096200566498) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-0.23359328759693965) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[ 73, 4] (  677.0   ,  572.0   ) [ 1.11e+05 , 9.04e+04 ] 0.186      [solverNewtonDumped]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-1.5778470129409834) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-0.676566067154034) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-0.2259255942605593) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-0.0006053578138219551) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[ 74, 6] (  572.0   ,  545.0   ) [ 1.07e+05 , 9.95e+04 ] 0.0538     [solverNewtonDumped]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-0.466080252151098) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-0.17701274587077565) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-0.032478992730614456) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[ 75, 5] (  545.0   ,  507.0   ) [ 7.02e+04 , 6.31e+04 ] 0.0580     [solverNewtonDumped]
+[ 76, 1] (  507.0   ,  242.0   ) [ 1.05e+04 , 5.44e+03 ] 0.482      [solverNewtonDumped]
+[ 77, 1] (  242.0   ,   38.2   ) [ 2.64e+03 ,  523.0   ] 1.00       [solverNewtonDumped]
+[ 78, 1] (   38.2   ,  0.101   ) [  461.0   ,   2.53   ] 1.00       [solverNewtonDumped]
+[ 79, 1] (  0.101   , 0.00279  ) [   4.04   ,  0.0656  ] 1.00       [solverNewtonDumped]
+[ 80, 1] ( 0.00279  , 0.00173  ) [  0.103   , 0.000947 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 81, 1] ( 0.00173  , 0.00173  ) [ 0.000947 , 2.26e-11 ] 1.00       [solverNewtonDumped]
+[ 82, 1] ( 0.00173  , 0.00173  ) [ 4.91e-09 , 1.17e-11 ] 1.00       [solverNewtonDumped]
+[ 83, 1] ( 0.00173  , 0.00173  ) [ 1.17e-11 , 6.99e-12 ] 1.00       [solverNewtonDumped]
+[ 84, 1] ( 0.00173  , 0.00173  ) [ 6.99e-12 , 6.92e-12 ] 1.00       [solverNewtonDumped]
+[ 85, 1] ( 0.00173  , 0.00173  ) [ 6.92e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[ 86, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[ 87, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.64e-12 ] 1.00       [solverNewtonDumped]
+[ 88, 1] ( 0.00173  , 0.00173  ) [ 6.64e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[ 89, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[ 90, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[ 91, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[ 92, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[ 93, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[ 94, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[ 95, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[ 96, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[ 97, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[ 98, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[ 99, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[100, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[101, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[102, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[103, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[104, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[105, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[106, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[107, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[108, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[109, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[110, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[111, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[112, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[113, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[114, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[115, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[116, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[117, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[118, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[119, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[120, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[121, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[122, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[123, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[124, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[125, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[126, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[127, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[128, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[129, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[130, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[131, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[132, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[133, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[134, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[135, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[136, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[137, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[138, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[139, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[140, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[141, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[142, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[143, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[144, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[145, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[146, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[147, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[148, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[149, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[150, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[151, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[152, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[153, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[154, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[155, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[156, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[157, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[158, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[159, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[160, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[161, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[162, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[163, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[164, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[165, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[166, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[167, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[168, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[169, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[170, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[171, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[172, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[173, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[174, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[175, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[176, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[177, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[178, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[179, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[180, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[181, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[182, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[183, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[184, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[185, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[186, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[187, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[188, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[189, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[190, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[191, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[192, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[193, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[194, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[195, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[196, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[197, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[198, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[199, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[200, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[201, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[202, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[203, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[204, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[205, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[206, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[207, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[208, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[209, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[210, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[211, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[212, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[213, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[214, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[215, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[216, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[217, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[218, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[219, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[220, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[221, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[222, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[223, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[224, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[225, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[226, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[227, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[228, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[229, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[230, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[231, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[232, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[233, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[234, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[235, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[236, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[237, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[238, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[239, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[240, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[241, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[242, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[243, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[244, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[245, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[246, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[247, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[248, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[249, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[250, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[251, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[252, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[253, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[254, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[255, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[256, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[257, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[258, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[259, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[260, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[261, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[262, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[263, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[264, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[265, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[266, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[267, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[268, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[269, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[270, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[271, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[272, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[273, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[274, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[275, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[276, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[277, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[278, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[279, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[280, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[281, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[282, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[283, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[284, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[285, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[286, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[287, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[288, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[289, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[290, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[291, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[292, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[293, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[294, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[295, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.63e-12 ] 1.00       [solverNewtonDumped]
+[296, 1] ( 0.00173  , 0.00173  ) [ 6.63e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+[297, 1] ( 0.00173  , 0.00173  ) [ 6.61e-12 , 6.60e-12 ] 1.00       [solverNewtonDumped]
+[298, 1] ( 0.00173  , 0.00173  ) [ 6.60e-12 , 6.59e-12 ] 1.00       [solverNewtonDumped]
+[299, 1] ( 0.00173  , 0.00173  ) [ 6.59e-12 , 6.58e-12 ] 1.00       [solverNewtonDumped]
+[300, 1] ( 0.00173  , 0.00173  ) [ 6.58e-12 , 6.61e-12 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 300.0[ms]     timeout        = 0 [ms]
+iteration      = 301           tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 2412
+max acc. iter. = 800           N. System pars = 400
+Converged      = NO            Memory Used    = 287Kb (+15bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 852           Jacobian       = 301       
+Factorization  = 301           Inversion      = 1138      
+------------------------ USER INFO -------------------------
+last ||d||_inf = 2.7415e-11    last||d1||_inf = 2.7415e-11
+last ||f||_inf = 1.3278        last||f||_1    = 0.0017258
+------------------------------------------------------------
+          __  ___     __   __             ___  __   __   ___  __      
+    |\ | /  \  |     /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \     
+    | \| \__/  |     \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/     
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+NewtonDumped[solverNewtonDumped]::solve() too many iterations!
+Iter = 301, maxIter = 300, tolerance = 1.0000e-09
+||d||_inf = 2.7415e-11, ||f||_inf = 1.3278
+
+target [Lagrange,Mayer]       = [ 0.000, 0.09206 ]
+[Penalties/Barriers,Controls] = [ 0.01083, 0.03551 ]
+Optimization parameters:
+T: 0.0920604526706042675
+All Done Folks!

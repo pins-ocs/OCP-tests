@@ -27,25 +27,30 @@ Segment N.2: s0 = 0.5000 length = 0.4000 npts = 41 no data set
 Segment N.3: s0 = 0.9000 length = 0.1000 npts = 11 no data set
 END Mesh[mesh]
 INFO CLASS = BangBangFtminP
-  num_nodes    = 104
-  dim         = u = 1, q = 1, x = 2, p = 1, omega = 4, big_bc = 8
+  #nodes      = 104
+  dim         = u = 1, q = 1, x = 2, p = 1, omega = 4, bc = 4, full_bc = 8
   BC          = Inital = 4, Final = 4, Cyclic = 0
   OMEGA       = Inital = 2, Final = 2, Cyclic = 0
   total       = nZ = 421, UC = 103, Q = 104
   index start = omega = 416, p = 420
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton [ANALYTIC]
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
 Initializer Controls: Quasi-Newton
 Used threads:         15
 
 
 NewtonDumped --- start iterations ---
 Failed check on parameter: 0 < T
+err (lhs-rhs)=38.5792166625003
 Failed check on parameter: 0 < T
+err (lhs-rhs)=18.78960833125015
 Failed check on parameter: 0 < T
+err (lhs-rhs)=1.4737010414062688
 Failed check on parameter: 0 < T
+err (lhs-rhs)=0.2368505207031344
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
 [  1, 8] ( 0.00950  ,  0.0110  ) [   11.0   ,   10.8   ] 0.00854    [solverNewtonDumped]
 [  2, 1] (  0.0110  ,  0.0119  ) [  0.644   ,  0.490   ] 0.185      [solverNewtonDumped]
@@ -53,14 +58,14 @@ Failed check on parameter: 0 < T
 [  4, 1] ( 0.00561  , 0.000684 ) [  0.176   ,  0.0140  ] 1.00       [solverNewtonDumped]
 [  5, 1] ( 0.000684 , 6.44e-06 ) [  0.0120  , 9.34e-05 ] 1.00       [solverNewtonDumped]
 [  6, 1] ( 6.44e-06 , 1.22e-09 ) [ 9.77e-05 , 4.40e-08 ] 1.00       [solverNewtonDumped]
-[  7, 1] ( 1.22e-09 , 1.49e-16 ) [ 4.41e-08 , 4.65e-15 ] 1.00       [solverNewtonDumped]
+[  7, 1] ( 1.22e-09 , 1.48e-16 ) [ 4.41e-08 , 1.85e-12 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 4.12[ms]      timeout        = 0 [ms]
+Elapsed Time   = 7.03[ms]      timeout        = 0 [ms]
 iteration      = 7             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 421
 max acc. iter. = 800           N. System pars = 103
-Converged      = YES           Memory Used    = 66Kb (+26bytes)
+Converged      = YES           Memory Used    = 66Kb (+70bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
@@ -69,8 +74,8 @@ Few iterations = 8
 Function       = 11            Jacobian       = 7         
 Factorization  = 7             Inversion      = 17        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 1.4704e-14    last||d1||_inf = 2.8983e-07
-last ||f||_inf = 7.8444e-15    last||f||_1    = 1.4895e-16
+last ||d||_inf = 7.3491e-12    last||d1||_inf = 2.8983e-07
+last ||f||_inf = 7.4142e-15    last||f||_1    = 1.4796e-16
 ------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             

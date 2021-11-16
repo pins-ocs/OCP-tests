@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,19 +70,35 @@ namespace EconomicGrowthModelDefine {
 
   void
   EconomicGrowthModel::g_eval(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[3], LM__[3];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
-    real_type t5   = Q(X__[iX_x1], X__[iX_x2]);
-    result__[ 0   ] = X__[iX_T] * (t2 + (L__[iL_lambda1__xo] - L__[iL_lambda2__xo]) * t5);
+    real_type t6   = Q(XM__[0], XM__[1]);
+    real_type t9   = ALIAS_uControl_D_1(UM__[0], 0, 1);
+    result__[ 0   ] = XM__[2] * (t6 * (LM__[0] - LM__[1]) + t9);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -90,58 +106,84 @@ namespace EconomicGrowthModelDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  EconomicGrowthModel::DgDxlp_numRows() const
+  EconomicGrowthModel::DgDxlxlp_numRows() const
   { return 1; }
 
   integer
-  EconomicGrowthModel::DgDxlp_numCols() const
-  { return 6; }
+  EconomicGrowthModel::DgDxlxlp_numCols() const
+  { return 12; }
 
   integer
-  EconomicGrowthModel::DgDxlp_nnz() const
-  { return 5; }
+  EconomicGrowthModel::DgDxlxlp_nnz() const
+  { return 10; }
 
   void
-  EconomicGrowthModel::DgDxlp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  EconomicGrowthModel::DgDxlxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
     iIndex[4 ] = 0   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 0   ; jIndex[5 ] = 6   ;
+    iIndex[6 ] = 0   ; jIndex[6 ] = 7   ;
+    iIndex[7 ] = 0   ; jIndex[7 ] = 8   ;
+    iIndex[8 ] = 0   ; jIndex[8 ] = 9   ;
+    iIndex[9 ] = 0   ; jIndex[9 ] = 10  ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  EconomicGrowthModel::DgDxlp_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+  EconomicGrowthModel::DgDxlxlp_sparse(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[3], LM__[3];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_x1];
-    real_type t2   = X__[iX_x2];
-    real_type t3   = Q_D_1(t1, t2);
-    real_type t4   = X__[iX_T];
-    real_type t8   = L__[iL_lambda1__xo] - L__[iL_lambda2__xo];
-    result__[ 0   ] = t8 * t4 * t3;
-    real_type t9   = Q_D_2(t1, t2);
-    result__[ 1   ] = t8 * t4 * t9;
-    real_type t12  = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
-    real_type t13  = Q(t1, t2);
-    result__[ 2   ] = t13 * t8 + t12;
-    result__[ 3   ] = t4 * t13;
+    real_type t3   = LM__[0] - LM__[1];
+    real_type t4   = XM__[0];
+    real_type t5   = XM__[1];
+    real_type t6   = Q_D_1(t4, t5);
+    real_type t8   = XM__[2];
+    result__[ 0   ] = 0.5e0 * t8 * t6 * t3;
+    real_type t10  = Q_D_2(t4, t5);
+    result__[ 1   ] = 0.5e0 * t8 * t10 * t3;
+    real_type t13  = Q(t4, t5);
+    real_type t17  = ALIAS_uControl_D_1(UM__[0], 0, 1);
+    result__[ 2   ] = 0.5e0 * t13 * t3 + 0.5e0 * t17;
+    result__[ 3   ] = 0.5e0 * t8 * t13;
     result__[ 4   ] = -result__[3];
+    result__[ 5   ] = result__[0];
+    result__[ 6   ] = result__[1];
+    result__[ 7   ] = result__[2];
+    result__[ 8   ] = result__[3];
+    result__[ 9   ] = result__[4];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 5, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 10, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -160,8 +202,8 @@ namespace EconomicGrowthModelDefine {
 
   void
   EconomicGrowthModel::DgDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -170,18 +212,34 @@ namespace EconomicGrowthModelDefine {
 
   void
   EconomicGrowthModel::DgDu_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[3], LM__[3];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 1);
-    result__[ 0   ] = t3 * X__[iX_T];
+    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], 0, 1);
+    result__[ 0   ] = XM__[2] * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -209,33 +267,28 @@ namespace EconomicGrowthModelDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[3];
-    real_type L__[3];
+    real_type QM__[1], XM__[3], LM__[3];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
-    L__[2] = (LL__[2]+LR__[2])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XL__[iX_T];
-    real_type t8   = Q(XL__[iX_x1], XL__[iX_x2]);
-    real_type t12  = Q(XR__[iX_x1], XR__[iX_x2]);
-    real_type t13  = XR__[iX_T];
-    U__[ iU_u ] = uControl.solve(1.0 / (t1 + t13) * (-t8 * (LL__[iL_lambda1__xo] - LL__[iL_lambda2__xo]) * t1 - (LR__[iL_lambda1__xo] - LR__[iL_lambda2__xo]) * t13 * t12), 0, 1);
+    real_type t6   = Q(XM__[0], XM__[1]);
+    U__[ iU_u ] = uControl.solve(-t6 * (LM__[0] - LM__[1]), 0, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
@@ -256,67 +309,51 @@ namespace EconomicGrowthModelDefine {
     NodeType2 const &          LEFT__,
     NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
+    U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[3];
-    real_type L__[3];
+    // midpoint
+    real_type QM__[1], XM__[3], LM__[3];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
-    L__[2] = (LL__[2]+LR__[2])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XL__[iX_T];
-    real_type t4   = LL__[iL_lambda1__xo] - LL__[iL_lambda2__xo];
-    real_type t6   = XL__[iX_x1];
-    real_type t7   = XL__[iX_x2];
-    real_type t8   = Q(t6, t7);
-    real_type t10  = XR__[iX_x1];
-    real_type t11  = XR__[iX_x2];
-    real_type t12  = Q(t10, t11);
-    real_type t13  = XR__[iX_T];
-    real_type t17  = LR__[iL_lambda1__xo] - LR__[iL_lambda2__xo];
-    real_type t20  = t1 + t13;
-    real_type t21  = 1.0 / t20;
-    real_type t23  = uControl.solve_rhs(t21 * (-t8 * t4 * t1 - t17 * t13 * t12), 0, 1);
-    real_type t24  = t1 * t23;
-    real_type t25  = -t4;
-    real_type t26  = Q_D_1(t6, t7);
-    real_type tmp_0_0 = t21 * t26 * t25 * t24;
-    real_type t29  = Q_D_2(t6, t7);
-    real_type tmp_0_1 = t21 * t29 * t25 * t24;
-    real_type t36  = t20 * t20;
-    real_type t38  = 1.0 / t36 * (-t17 * t12 + t8 * t4);
-    real_type tmp_0_2 = -t38 * t13 * t23;
-    real_type t41  = t21 * t8 * t24;
-    real_type tmp_0_3 = -t41;
-    real_type tmp_0_4 = t41;
-    real_type tmp_0_5 = 0;
-    real_type t42  = Q_D_1(t10, t11);
-    real_type t45  = t21 * t17 * t13;
-    real_type tmp_0_6 = -t45 * t42 * t23;
-    real_type t47  = Q_D_2(t10, t11);
-    real_type tmp_0_7 = -t45 * t47 * t23;
-    real_type tmp_0_8 = t38 * t24;
-    real_type t52  = t21 * t13 * t12 * t23;
-    real_type tmp_0_9 = -t52;
-    real_type tmp_0_10 = t52;
-    real_type tmp_0_11 = 0;
+    real_type t3   = LM__[0] - LM__[1];
+    real_type t4   = XM__[0];
+    real_type t5   = XM__[1];
+    real_type t6   = Q(t4, t5);
+    real_type t8   = uControl.solve_rhs(-t6 * t3, 0, 1);
+    real_type t9   = t8 * t3;
+    real_type t10  = Q_D_1(t4, t5);
+    real_type tmp_0_0 = -0.5e0 * t10 * t9;
+    real_type t13  = Q_D_2(t4, t5);
+    real_type tmp_0_1 = -0.5e0 * t13 * t9;
+    real_type tmp_0_2 = 0.0e0;
+    real_type t17  = 0.5e0 * t6 * t8;
+    real_type tmp_0_3 = -t17;
+    real_type tmp_0_4 = t17;
+    real_type tmp_0_5 = 0.0e0;
+    real_type tmp_0_6 = tmp_0_0;
+    real_type tmp_0_7 = tmp_0_1;
+    real_type tmp_0_8 = 0.0e0;
+    real_type tmp_0_9 = tmp_0_3;
+    real_type tmp_0_10 = tmp_0_4;
+    real_type tmp_0_11 = 0.0e0;
     DuDxlxlp(0, 0) = tmp_0_0;
     DuDxlxlp(0, 1) = tmp_0_1;
     DuDxlxlp(0, 2) = tmp_0_2;
@@ -347,9 +384,9 @@ namespace EconomicGrowthModelDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t2   = Tpositive(t1);
@@ -357,7 +394,7 @@ namespace EconomicGrowthModelDefine {
     real_type t4   = uControl(t3, 0, 1);
     real_type t9   = Q(X__[iX_x1], X__[iX_x2]);
     real_type t13  = pow(-t1 * t9 * t3 + V__[0], 2);
-    real_type t19  = pow(t9 * (t3 - 1) * t1 + V__[1], 2);
+    real_type t19  = pow(V__[1] - t1 * t9 * (1 - t3), 2);
     real_type t21  = V__[2] * V__[2];
     real_type result__ = t4 * t1 + t13 + t19 + t2 + t21;
     if ( m_debug ) {
@@ -378,18 +415,17 @@ namespace EconomicGrowthModelDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
-    real_type t4   = Q(X__[iX_x1], X__[iX_x2]);
-    real_type t5   = t4 * t4;
-    real_type t6   = U__[iU_u];
-    real_type t18  = ALIAS_uControl_D_1(t6, 0, 1);
-    result__[ 0   ] = (4 * t1 * t6 * t5 - 2 * t1 * t5 - 2 * V__[0] * t4 + 2 * V__[1] * t4 + t18) * t1;
+    real_type t2   = U__[iU_u];
+    real_type t3   = ALIAS_uControl_D_1(t2, 0, 1);
+    real_type t8   = Q(X__[iX_x1], X__[iX_x2]);
+    result__[ 0   ] = t3 * t1 - 2 * t1 * t8 * (-t1 * t8 * t2 + V__[0]) + 2 * t1 * t8 * (V__[1] - t1 * t8 * (1 - t2));
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }
@@ -410,8 +446,8 @@ namespace EconomicGrowthModelDefine {
 
   void
   EconomicGrowthModel::DmDuu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -424,18 +460,18 @@ namespace EconomicGrowthModelDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t3   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 1);
     real_type t7   = Q(X__[iX_x1], X__[iX_x2]);
     real_type t8   = t7 * t7;
     real_type t9   = t1 * t1;
-    result__[ 0   ] = t3 * t1 + 4 * t9 * t8;
+    result__[ 0   ] = t1 * t3 + 4 * t8 * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

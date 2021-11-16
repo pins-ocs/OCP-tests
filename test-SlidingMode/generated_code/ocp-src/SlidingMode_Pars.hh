@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SlidingMode_Pars.hh                                            |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef SLIDINGMODEPARS_DOT_HH
 #define SLIDINGMODEPARS_DOT_HH
 
-#define numBC                    3
+#define numBc                    3
 #define numModelPars             3
 #define numConstraint1D          0
 #define numConstraint2D          0

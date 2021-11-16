@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_controls.cc                                    |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -61,20 +61,40 @@ namespace ZermeloDefine {
 
   void
   Zermelo::g_eval(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[5], LM__[5];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = U__[iU_u];
-    real_type t5   = cos(t4);
-    real_type t8   = sin(t4);
-    result__[ 0   ] = (L__[iL_lambda4__xo] * t5 - L__[iL_lambda3__xo] * t8) * ModelPars[iM_S] * X__[iX_T];
+    real_type t5   = UM__[0];
+    real_type t6   = cos(t5);
+    real_type t9   = sin(t5);
+    result__[ 0   ] = (t6 * LM__[3] - t9 * LM__[2]) * ModelPars[iM_S] * XM__[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -82,51 +102,77 @@ namespace ZermeloDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Zermelo::DgDxlp_numRows() const
+  Zermelo::DgDxlxlp_numRows() const
   { return 1; }
 
   integer
-  Zermelo::DgDxlp_numCols() const
-  { return 10; }
+  Zermelo::DgDxlxlp_numCols() const
+  { return 20; }
 
   integer
-  Zermelo::DgDxlp_nnz() const
-  { return 3; }
+  Zermelo::DgDxlxlp_nnz() const
+  { return 6; }
 
   void
-  Zermelo::DgDxlp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  Zermelo::DgDxlxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 8   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 14  ;
+    iIndex[4 ] = 0   ; jIndex[4 ] = 17  ;
+    iIndex[5 ] = 0   ; jIndex[5 ] = 18  ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Zermelo::DgDxlp_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+  Zermelo::DgDxlxlp_sparse(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[5], LM__[5];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ModelPars[iM_S];
-    real_type t4   = U__[iU_u];
-    real_type t5   = sin(t4);
-    real_type t9   = cos(t4);
-    result__[ 0   ] = -t5 * t2 * L__[iL_lambda3__xo] + t9 * t2 * L__[iL_lambda4__xo];
-    real_type t12  = t2 * X__[iX_T];
-    result__[ 1   ] = -t5 * t12;
-    result__[ 2   ] = t9 * t12;
+    real_type t1   = ModelPars[iM_S];
+    real_type t3   = UM__[0];
+    real_type t4   = cos(t3);
+    real_type t7   = sin(t3);
+    result__[ 0   ] = 0.5e0 * (t4 * LM__[3] - t7 * LM__[2]) * t1;
+    real_type t12  = t1 * XM__[4];
+    result__[ 1   ] = -0.5e0 * t7 * t12;
+    result__[ 2   ] = 0.5e0 * t4 * t12;
+    result__[ 3   ] = result__[0];
+    result__[ 4   ] = result__[1];
+    result__[ 5   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -145,8 +191,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DgDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -155,20 +201,40 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DgDu_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[5], LM__[5];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = U__[iU_u];
-    real_type t5   = sin(t4);
-    real_type t8   = cos(t4);
-    result__[ 0   ] = -(L__[iL_lambda4__xo] * t5 + L__[iL_lambda3__xo] * t8) * ModelPars[iM_S] * X__[iX_T];
+    real_type t5   = UM__[0];
+    real_type t6   = sin(t5);
+    real_type t9   = cos(t5);
+    result__[ 0   ] = (-t6 * LM__[3] - t9 * LM__[2]) * ModelPars[iM_S] * XM__[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -196,35 +262,31 @@ namespace ZermeloDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[5];
-    real_type L__[5];
+    real_type QM__[1], XM__[5], LM__[5];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
-    L__[2] = (LL__[2]+LR__[2])/2;
-    L__[3] = (LL__[3]+LR__[3])/2;
-    L__[4] = (LL__[4]+LR__[4])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XL__[iX_T];
-    real_type t4   = XR__[iX_T];
-    U__[ iU_u ] = atan(1.0 / (t1 * LL__[iL_lambda3__xo] + t4 * LR__[iL_lambda3__xo]) * (LL__[iL_lambda4__xo] * t1 + LR__[iL_lambda4__xo] * t4));
+    U__[ iU_u ] = atan(LM__[3] / LM__[2]);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
@@ -245,75 +307,60 @@ namespace ZermeloDefine {
     NodeType2 const &          LEFT__,
     NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
+    U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[5];
-    real_type L__[5];
+    // midpoint
+    real_type QM__[1], XM__[5], LM__[5];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
-    L__[2] = (LL__[2]+LR__[2])/2;
-    L__[3] = (LL__[3]+LR__[3])/2;
-    L__[4] = (LL__[4]+LR__[4])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type tmp_0_0 = 0;
-    real_type tmp_0_1 = 0;
-    real_type tmp_0_2 = 0;
-    real_type tmp_0_3 = 0;
-    real_type t1   = XR__[iX_T];
-    real_type t2   = LL__[iL_lambda3__xo];
-    real_type t3   = LR__[iL_lambda4__xo];
-    real_type t5   = LL__[iL_lambda4__xo];
-    real_type t6   = LR__[iL_lambda3__xo];
-    real_type t8   = t3 * t2 - t6 * t5;
-    real_type t10  = t6 * t6;
-    real_type t11  = t3 * t3;
-    real_type t13  = t1 * t1;
-    real_type t15  = XL__[iX_T];
-    real_type t22  = t15 * t15;
-    real_type t23  = t2 * t2;
-    real_type t24  = t5 * t5;
-    real_type t28  = 1.0 / (t13 * (t10 + t11) + 2 * t1 * (t6 * t2 + t3 * t5) * t15 + (t23 + t24) * t22);
-    real_type tmp_0_4 = -t28 * t8 * t1;
-    real_type tmp_0_5 = 0;
-    real_type tmp_0_6 = 0;
-    real_type t32  = t3 * t1 + t5 * t15;
-    real_type tmp_0_7 = -t28 * t15 * t32;
-    real_type t37  = t1 * t6 + t15 * t2;
-    real_type t38  = 1.0 / t37;
-    real_type t40  = t32 * t32;
-    real_type t41  = t37 * t37;
-    real_type t45  = 1.0 / (1.0 / t41 * t40 + 1);
-    real_type tmp_0_8 = t45 * t38 * t15;
-    real_type tmp_0_9 = 0;
-    real_type tmp_0_10 = 0;
-    real_type tmp_0_11 = 0;
-    real_type tmp_0_12 = 0;
-    real_type tmp_0_13 = 0;
-    real_type tmp_0_14 = t28 * t8 * t15;
-    real_type tmp_0_15 = 0;
-    real_type tmp_0_16 = 0;
-    real_type tmp_0_17 = -t28 * t1 * t32;
-    real_type tmp_0_18 = t45 * t38 * t1;
-    real_type tmp_0_19 = 0;
+    real_type tmp_0_0 = 0.0e0;
+    real_type tmp_0_1 = 0.0e0;
+    real_type tmp_0_2 = 0.0e0;
+    real_type tmp_0_3 = 0.0e0;
+    real_type tmp_0_4 = 0.0e0;
+    real_type tmp_0_5 = 0.0e0;
+    real_type tmp_0_6 = 0.0e0;
+    real_type t1   = LM__[3];
+    real_type t2   = LM__[2];
+    real_type t3   = t2 * t2;
+    real_type t4   = 1.0 / t3;
+    real_type t6   = t1 * t1;
+    real_type t9   = 1.0 / (t4 * t6 + 1);
+    real_type tmp_0_7 = -0.5e0 * t9 * t4 * t1;
+    real_type tmp_0_8 = 0.5e0 * t9 / t2;
+    real_type tmp_0_9 = 0.0e0;
+    real_type tmp_0_10 = 0.0e0;
+    real_type tmp_0_11 = 0.0e0;
+    real_type tmp_0_12 = 0.0e0;
+    real_type tmp_0_13 = 0.0e0;
+    real_type tmp_0_14 = 0.0e0;
+    real_type tmp_0_15 = 0.0e0;
+    real_type tmp_0_16 = 0.0e0;
+    real_type tmp_0_17 = tmp_0_7;
+    real_type tmp_0_18 = tmp_0_8;
+    real_type tmp_0_19 = 0.0e0;
     DuDxlxlp(0, 0) = tmp_0_0;
     DuDxlxlp(0, 1) = tmp_0_1;
     DuDxlxlp(0, 2) = tmp_0_2;
@@ -352,9 +399,9 @@ namespace ZermeloDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t2   = Tpositive(t1);
@@ -390,16 +437,19 @@ namespace ZermeloDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = U__[iU_u];
-    real_type t5   = cos(t4);
-    real_type t8   = sin(t4);
-    result__[ 0   ] = -2 * (V__[3] * t5 - V__[2] * t8) * ModelPars[iM_S] * X__[iX_T];
+    real_type t2   = X__[iX_T];
+    real_type t3   = ModelPars[iM_S];
+    real_type t4   = t3 * t2;
+    real_type t5   = U__[iU_u];
+    real_type t6   = cos(t5);
+    real_type t10  = sin(t5);
+    result__[ 0   ] = 2 * t10 * t3 * t2 * (-t6 * t4 + V__[2]) - 2 * t6 * t3 * t2 * (-t10 * t4 + V__[3]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }
@@ -420,8 +470,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DmDuu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -434,16 +484,24 @@ namespace ZermeloDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = U__[iU_u];
-    real_type t5   = sin(t4);
-    real_type t8   = cos(t4);
-    result__[ 0   ] = 2 * (V__[3] * t5 + V__[2] * t8) * ModelPars[iM_S] * X__[iX_T];
+    real_type t1   = X__[iX_T];
+    real_type t2   = t1 * t1;
+    real_type t3   = ModelPars[iM_S];
+    real_type t4   = t3 * t3;
+    real_type t5   = t4 * t2;
+    real_type t6   = U__[iU_u];
+    real_type t7   = sin(t6);
+    real_type t8   = t7 * t7;
+    real_type t11  = t3 * t1;
+    real_type t12  = cos(t6);
+    real_type t18  = t12 * t12;
+    result__[ 0   ] = 2 * t8 * t5 + 2 * t12 * t3 * t1 * (-t11 * t12 + V__[2]) + 2 * t18 * t5 + 2 * t7 * t3 * t1 * (-t11 * t7 + V__[3]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

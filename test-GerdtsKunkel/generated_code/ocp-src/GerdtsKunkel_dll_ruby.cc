@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_dll_ruby.cc                                       |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ namespace GerdtsKunkelDefine {
   EXTERN_C
   GERDTSKUNKEL_API_DLL
   bool
-  GerdtsKunkel_ocp_setup( char const * id, GenericContainer & gc_data ) {
+  GerdtsKunkel_ocp_setup( char const id[], GenericContainer & gc_data ) {
     if ( pTP      == nullptr ) pTP      = new ThreadPool(std::thread::hardware_concurrency());
     if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
     map< string, GerdtsKunkel_Problem * >::iterator it = problems.find(id);
@@ -100,7 +100,7 @@ namespace GerdtsKunkelDefine {
   EXTERN_C
   GERDTSKUNKEL_API_DLL
   bool
-  GerdtsKunkel_ocp_guess( char const * id, GenericContainer & gc_data ) {
+  GerdtsKunkel_ocp_guess( char const id[], GenericContainer & gc_data ) {
     map< string, GerdtsKunkel_Problem * >::iterator it = problems.find(id);
     if ( it == problems.end() ) {
       return false;
@@ -115,7 +115,7 @@ namespace GerdtsKunkelDefine {
   EXTERN_C
   GERDTSKUNKEL_API_DLL
   bool
-  GerdtsKunkel_ocp_solve( char const       * id,
+  GerdtsKunkel_ocp_solve( char const id[],
                           GenericContainer & gc_data,
                           GenericContainer & gc_solution ) {
     map< string, GerdtsKunkel_Problem * >::iterator it = problems.find(id);
@@ -141,7 +141,7 @@ namespace GerdtsKunkelDefine {
   EXTERN_C
   GERDTSKUNKEL_API_DLL
   void
-  GerdtsKunkel_write_ocp_solution( char const * id, char const * fname ) {
+  GerdtsKunkel_write_ocp_solution( char const id[], char const fname[] ) {
     map< string, GerdtsKunkel_Problem * >::const_iterator it = problems.find(id);
     if ( it == problems.end() ) {
       pConsole->error("GerdtsKunkel_write_ocp_solution, no solution found!\n" );

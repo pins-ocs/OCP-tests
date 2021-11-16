@@ -26,9 +26,7 @@ end
 FileUtils.rm_rf "./collected_results/"
 FileUtils.mkdir "./collected_results/"
 
-ffile = File.open("./collected_results/000_list_failed.txt","w")
-
-def do_test(dir,idx)
+def do_test(dir,idx,ffile)
   name = dir.split("test-")[1];
   FileUtils.cd dir do
     puts "\n\n"
@@ -111,12 +109,12 @@ File.open("./collected_results/000_list.txt","w") do |file|
 end
 
 puts "Start loop on tests"
+ffile = File.open("./collected_results/000_list_failed.txt","w")
 tests_dirs.each_with_index do |d,idx|
   puts "\n"
   puts "-------------------------------------------------------------------------------"
   puts "Testing: #{d}"
-  do_test(d,idx+1) ;
+  do_test(d,idx+1,ffile) ;
   puts "\n\n#{d}\n\n\n"
 end
-
 ffile.close()

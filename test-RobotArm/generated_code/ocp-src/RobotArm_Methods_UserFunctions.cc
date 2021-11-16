@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -96,8 +96,9 @@ namespace RobotArmDefine {
 
   real_type
   RobotArm::I_phi_D( real_type xo__rho ) const {
-    real_type t1   = ModelPars[iM_L];
-    real_type result__ = (2 * xo__rho - t1) * t1;
+    real_type t3   = pow(ModelPars[iM_L] - xo__rho, 2);
+    real_type t4   = xo__rho * xo__rho;
+    real_type result__ = -t3 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -203,12 +204,12 @@ namespace RobotArmDefine {
 
   real_type
   RobotArm::I_theta_D_2_2( real_type xo__rho, real_type xo__phi ) const {
-    real_type t1   = cos(xo__phi);
-    real_type t2   = t1 * t1;
-    real_type t3   = sin(xo__phi);
-    real_type t4   = t3 * t3;
-    real_type t7   = I_phi(xo__rho);
-    real_type result__ = t7 * (2 * t2 - 2 * t4);
+    real_type t1   = I_phi(xo__rho);
+    real_type t2   = cos(xo__phi);
+    real_type t3   = t2 * t2;
+    real_type t5   = sin(xo__phi);
+    real_type t6   = t5 * t5;
+    real_type result__ = 2 * t3 * t1 - 2 * t6 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

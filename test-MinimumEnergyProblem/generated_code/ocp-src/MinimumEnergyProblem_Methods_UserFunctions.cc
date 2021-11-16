@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -71,10 +71,10 @@ namespace MinimumEnergyProblemDefine {
   real_type
   MinimumEnergyProblem::interpLog_D_1( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
     real_type t2   = pow(xo__v0, 1 - xo__s);
-    real_type t3   = pow(xo__v1, xo__s);
-    real_type t5   = log(xo__v0);
-    real_type t6   = log(xo__v1);
-    real_type result__ = -(t5 - t6) * t3 * t2;
+    real_type t3   = log(xo__v0);
+    real_type t5   = pow(xo__v1, xo__s);
+    real_type t8   = log(xo__v1);
+    real_type result__ = -t5 * t3 * t2 + t8 * t5 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -88,11 +88,12 @@ namespace MinimumEnergyProblemDefine {
   real_type
   MinimumEnergyProblem::interpLog_D_1_1( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
     real_type t2   = pow(xo__v0, 1 - xo__s);
-    real_type t3   = pow(xo__v1, xo__s);
-    real_type t5   = log(xo__v0);
-    real_type t6   = log(xo__v1);
-    real_type t8   = pow(t5 - t6, 2);
-    real_type result__ = t8 * t3 * t2;
+    real_type t3   = log(xo__v0);
+    real_type t4   = t3 * t3;
+    real_type t6   = pow(xo__v1, xo__s);
+    real_type t9   = log(xo__v1);
+    real_type t14  = t9 * t9;
+    real_type result__ = -2 * t2 * t3 * t6 * t9 + t14 * t2 * t6 + t2 * t4 * t6;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -105,13 +106,14 @@ namespace MinimumEnergyProblemDefine {
 
   real_type
   MinimumEnergyProblem::interpLog_D_1_2( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
-    real_type t1   = pow(xo__v1, xo__s);
-    real_type t2   = -1 + xo__s;
-    real_type t3   = log(xo__v0);
-    real_type t5   = -t2;
-    real_type t6   = log(xo__v1);
-    real_type t10  = pow(xo__v0, t5);
-    real_type result__ = 1.0 / xo__v0 * t10 * (t3 * t2 + t6 * t5 - 1) * t1;
+    real_type t1   = 1 - xo__s;
+    real_type t2   = pow(xo__v0, t1);
+    real_type t3   = t1 * t2;
+    real_type t4   = 1.0 / xo__v0;
+    real_type t5   = log(xo__v0);
+    real_type t7   = pow(xo__v1, xo__s);
+    real_type t13  = log(xo__v1);
+    real_type result__ = t13 * t7 * t4 * t3 - t7 * t5 * t4 * t3 - t7 * t4 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -125,10 +127,12 @@ namespace MinimumEnergyProblemDefine {
   real_type
   MinimumEnergyProblem::interpLog_D_1_3( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
     real_type t2   = pow(xo__v0, 1 - xo__s);
-    real_type t3   = pow(xo__v1, xo__s);
-    real_type t5   = log(xo__v0);
-    real_type t7   = log(xo__v1);
-    real_type result__ = -1.0 / xo__v1 * (xo__s * t5 - xo__s * t7 - 1) * t3 * t2;
+    real_type t3   = log(xo__v0);
+    real_type t5   = pow(xo__v1, xo__s);
+    real_type t7   = 1.0 / xo__v1;
+    real_type t10  = t5 * t2;
+    real_type t12  = log(xo__v1);
+    real_type result__ = -t7 * xo__s * t5 * t3 * t2 + t12 * t7 * xo__s * t10 + t7 * t10;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -159,9 +163,11 @@ namespace MinimumEnergyProblemDefine {
   MinimumEnergyProblem::interpLog_D_2_2( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
     real_type t1   = 1 - xo__s;
     real_type t2   = pow(xo__v0, t1);
-    real_type t5   = pow(xo__v1, xo__s);
-    real_type t7   = xo__v0 * xo__v0;
-    real_type result__ = -1.0 / t7 * xo__s * t5 * t1 * t2;
+    real_type t3   = t1 * t1;
+    real_type t5   = xo__v0 * xo__v0;
+    real_type t7   = pow(xo__v1, xo__s);
+    real_type t8   = t7 / t5;
+    real_type result__ = -t8 * t1 * t2 + t8 * t3 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -205,11 +211,13 @@ namespace MinimumEnergyProblemDefine {
 
   real_type
   MinimumEnergyProblem::interpLog_D_3_3( real_type xo__s, real_type xo__v0, real_type xo__v1 ) const {
-    real_type t1   = 1 - xo__s;
-    real_type t2   = pow(xo__v0, t1);
-    real_type t5   = pow(xo__v1, xo__s);
-    real_type t7   = xo__v1 * xo__v1;
-    real_type result__ = -1.0 / t7 * xo__s * t5 * t1 * t2;
+    real_type t2   = pow(xo__v0, 1 - xo__s);
+    real_type t3   = pow(xo__v1, xo__s);
+    real_type t4   = t3 * t2;
+    real_type t5   = xo__s * xo__s;
+    real_type t6   = xo__v1 * xo__v1;
+    real_type t7   = 1.0 / t6;
+    real_type result__ = t7 * t5 * t4 - t7 * xo__s * t4;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

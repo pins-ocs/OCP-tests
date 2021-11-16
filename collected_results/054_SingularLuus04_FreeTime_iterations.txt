@@ -1,0 +1,158 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_y
+[ 2] initial_z
+[ 3] final_x
+[ 4] final_y
+[ 5] final_z
+
+
+
+Controls
+uControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.01,
+  size    = 0.01
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 5001
+Segment N.0: s0 = 0.000 length = 1.000 npts = 5001 no data set
+END Mesh[mesh]
+
+Model Parameters
+.................................T_guess = 50
+...................................theta = 1
+..................................theta0 = 1
+..................................theta1 = 0.01
+..................................u_epsi = 0.01
+.....................................x_f = 0
+.....................................x_i = 1
+.....................................y_f = 0
+.....................................y_i = 0
+.....................................z_f = 0
+.....................................z_i = 0
+..............................min_u_epsi = 0.001
+INFO CLASS = SingularLuus04_FreeTime
+  #nodes      = 5001
+  dim         = u = 1, q = 1, x = 4, p = 0, omega = 6, bc = 6, full_bc = 14
+  BC          = Inital = 7, Final = 7, Cyclic = 0
+  OMEGA       = Inital = 3, Final = 3, Cyclic = 0
+  total       = nZ = 40014, UC = 5000, Q = 5001
+  index start = omega = 40008, p = 40014
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=0.49442302382176706
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 3] ( 0.00505  , 0.00263  ) [   6.33   ,   3.17   ] 0.500      [solverNewtonDumped]
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=0.47135346624563823
+[  2, 3] ( 0.00263  , 0.00141  ) [   3.20   ,   1.62   ] 0.500      [solverNewtonDumped]
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=0.404384100108814
+[  3, 3] ( 0.00141  , 0.000815 ) [   1.69   ,  0.886   ] 0.500      [solverNewtonDumped]
+Failed check on node=0 segment=0: 0 < T(zeta)
+err (lhs-rhs)=0.2199136175216978
+[  4, 3] ( 0.000815 , 0.000527 ) [   1.03   ,  0.589   ] 0.500      [solverNewtonDumped]
+[  5, 1] ( 0.000527 , 0.000433 ) [  0.769   ,  0.727   ] 1.00       [solverNewtonDumped]
+[  6, 2] ( 0.000433 , 0.000344 ) [   1.83   ,   1.79   ] 0.500      [solverNewtonDumped]
+[  7, 1] ( 0.000344 , 0.000372 ) [   1.38   ,  0.844   ] 1.00       [solverNewtonDumped]
+[  8, 1] ( 0.000372 , 7.07e-05 ) [  0.729   ,  0.0891  ] 1.00       [solverNewtonDumped]
+[  9, 1] ( 7.07e-05 , 2.43e-05 ) [  0.179   ,  0.0354  ] 1.00       [solverNewtonDumped]
+[ 10, 1] ( 2.43e-05 , 3.05e-06 ) [  0.0468  , 0.000986 ] 1.00       [solverNewtonDumped]
+[ 11, 1] ( 3.05e-06 , 9.67e-09 ) [ 0.00103  , 2.21e-06 ] 1.00       [solverNewtonDumped]
+[ 12, 1] ( 9.67e-09 , 8.36e-14 ) [ 2.21e-06 , 3.65e-11 ] 1.00       [solverNewtonDumped]
+[ 13, 1] ( 8.36e-14 , 1.18e-16 ) [ 3.65e-11 , 2.60e-15 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.20000, ds=0.20000, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 14, 1] ( 3.15e-05 , 1.26e-08 ) [  0.351   , 4.56e-05 ] 1.00       [solverNewtonDumped]
+[ 15, 1] ( 1.26e-08 , 5.08e-12 ) [ 4.22e-05 , 9.17e-10 ] 1.00       [solverNewtonDumped]
+[ 16, 1] ( 5.08e-12 , 9.12e-17 ) [ 9.17e-10 , 2.44e-15 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=0.50000, ds=0.30000, old_s=  0.2
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 17, 1] ( 4.73e-05 , 4.92e-08 ) [  0.527   , 0.000131 ] 1.00       [solverNewtonDumped]
+[ 18, 1] ( 4.92e-08 , 9.07e-11 ) [ 0.000112 , 1.19e-08 ] 1.00       [solverNewtonDumped]
+[ 19, 1] ( 9.07e-11 , 6.69e-17 ) [ 1.19e-08 , 2.51e-15 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=0.95000, ds=0.45000, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 20, 1] ( 7.10e-05 , 4.19e-07 ) [  0.791   , 0.000691 ] 1.00       [solverNewtonDumped]
+[ 21, 1] ( 4.19e-07 , 1.74e-08 ) [ 0.000421 , 4.39e-07 ] 1.00       [solverNewtonDumped]
+[ 22, 1] ( 1.74e-08 , 6.88e-14 ) [ 4.41e-07 , 1.75e-12 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=1.0000, ds=0.050000, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 23, 1] ( 8.00e-06 , 2.54e-07 ) [  0.0879  , 0.000442 ] 1.00       [solverNewtonDumped]
+[ 24, 1] ( 2.54e-07 , 9.00e-09 ) [ 0.000402 , 4.70e-07 ] 1.00       [solverNewtonDumped]
+[ 25, 1] ( 9.00e-09 , 1.94e-14 ) [ 4.71e-07 , 8.48e-13 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 112.0[ms]     timeout        = 0 [ms]
+iteration      = 25            tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 40014
+max acc. iter. = 800           N. System pars = 5000
+Converged      = YES           Memory Used    = 3Mb (+30Kb)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 35            Jacobian       = 25        
+Factorization  = 25            Inversion      = 55        
+------------------------ USER INFO -------------------------
+last ||d||_inf = 3.8303e-10    last||d1||_inf = 9.4558e-05
+last ||f||_inf = 2.1402e-10    last||f||_1    = 1.9434e-14
+------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+#ERR 1 Jacobian block N. 1246 type: FD [(x+l) x (2*(x+l)+p) = 8 x 16]
+
+jac[  2,  6] =      0.16514 / 0.16495      [A/FD] ---   0.00019282 / 0.11676      [err/err(%)]
+jac[  2, 14] =      0.16514 / 0.16495      [A/FD] ---   0.00019282 / 0.11676      [err/err(%)]
+
+#ERR 2 Jacobian block N. 1247 type: FD [(x+l) x (2*(x+l)+p) = 8 x 16]
+
+jac[  2,  6] =      0.40809 / 0.40765      [A/FD] ---   0.00044380 / 0.10875      [err/err(%)]
+jac[  2, 14] =      0.40809 / 0.40765      [A/FD] ---   0.00044380 / 0.10875      [err/err(%)]
+
+#ERR 3 Jacobian block N. 1248 type: FD [(x+l) x (2*(x+l)+p) = 8 x 16]
+
+jac[  2,  6] =      0.46761 / 0.46800      [A/FD] ---   0.00039166 / 0.083687     [err/err(%)]
+jac[  2, 14] =      0.46761 / 0.46800      [A/FD] ---   0.00039166 / 0.083687     [err/err(%)]
+
+#ERR 4 Jacobian block N. 1249 type: FD [(x+l) x (2*(x+l)+p) = 8 x 16]
+
+jac[  2,  6] =      0.19596 / 0.19620      [A/FD] ---   0.00024369 / 0.12421      [err/err(%)]
+jac[  2, 14] =      0.19596 / 0.19620      [A/FD] ---   0.00024369 / 0.12421      [err/err(%)]
+
+Last block: OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ 1.368, 0.000 ]
+[Penalties/Barriers,Controls] = [ 0.000, 0.004051 ]
+All Done Folks!

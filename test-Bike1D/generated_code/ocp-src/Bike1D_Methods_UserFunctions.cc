@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_UserFunctions.cc                                |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,8 +82,7 @@ namespace Bike1DDefine {
   // user defined functions which has a body defined in MAPLE
   real_type
   Bike1D::Tmax_normalized( real_type xo__v ) const {
-    real_type t2   = ModelPars[iM_vmax];
-    real_type result__ = -1.0 / t2 / ModelPars[iM_g] / ModelPars[iM_m] * (-t2 + xo__v) * ModelPars[iM_Pmax];
+    real_type result__ = ModelPars[iM_Pmax] / ModelPars[iM_m] / ModelPars[iM_g] * (1 - xo__v / ModelPars[iM_vmax]);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

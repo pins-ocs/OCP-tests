@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Pars.hh                                          |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef ORBITTRANSFERPARS_DOT_HH
 #define ORBITTRANSFERPARS_DOT_HH
 
-#define numBC                    7
+#define numBc                    7
 #define numModelPars             7
 #define numConstraint1D          0
 #define numConstraint2D          0

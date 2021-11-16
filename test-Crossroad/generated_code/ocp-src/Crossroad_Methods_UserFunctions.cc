@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_UserFunctions.cc                             |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -68,7 +68,7 @@ namespace CrossroadDefine {
   // user defined functions which has a body defined in MAPLE
   real_type
   Crossroad::kappa( real_type xo__s ) const {
-    real_type result__ = (xo__s < ModelPars[iM_L] / 2 ? (ModelPars[iM_kappa0] * ModelPars[iM_L] - 2 * xo__s * (ModelPars[iM_kappa0] - ModelPars[iM_kappa1])) / ModelPars[iM_L] : ((2 * ModelPars[iM_kappa1] - ModelPars[iM_kappa2]) * ModelPars[iM_L] - 2 * xo__s * (ModelPars[iM_kappa1] - ModelPars[iM_kappa2])) / ModelPars[iM_L]);
+    real_type result__ = (xo__s < ModelPars[iM_L] / 2 ? 2 * ((ModelPars[iM_L] / 2 - xo__s) * ModelPars[iM_kappa0] + xo__s * ModelPars[iM_kappa1]) / ModelPars[iM_L] : 2 * ((ModelPars[iM_L] - xo__s) * ModelPars[iM_kappa1] + (xo__s - ModelPars[iM_L] / 2) * ModelPars[iM_kappa2]) / ModelPars[iM_L]);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -81,7 +81,7 @@ namespace CrossroadDefine {
 
   real_type
   Crossroad::kappa_D( real_type xo__s ) const {
-    real_type result__ = (xo__s < ModelPars[iM_L] / 2 ? (2 * ModelPars[iM_kappa1] - 2 * ModelPars[iM_kappa0]) / ModelPars[iM_L] : (2 * ModelPars[iM_kappa2] - 2 * ModelPars[iM_kappa1]) / ModelPars[iM_L]);
+    real_type result__ = (xo__s < ModelPars[iM_L] / 2 ? 2 * (ModelPars[iM_kappa1] - ModelPars[iM_kappa0]) / ModelPars[iM_L] : 2 * (ModelPars[iM_kappa2] - ModelPars[iM_kappa1]) / ModelPars[iM_L]);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

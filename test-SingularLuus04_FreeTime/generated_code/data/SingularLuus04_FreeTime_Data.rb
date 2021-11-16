@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus04_FreeTime_Data.rb                                #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,9 +21,9 @@ include Mechatronix
 
 # Auxiliary values
 u_epsi = 0.01
-u_tol  = 0.01
 theta0 = 1
 theta  = theta0
+u_tol  = 0.01
 
 mechatronix do |data|
 
@@ -44,10 +44,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "SingularLuus04_FreeTime_dump"
@@ -194,8 +196,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 5000,
+        :length => 1,
       },
     ],
   };

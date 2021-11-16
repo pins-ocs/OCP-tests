@@ -81,6 +81,9 @@ generateOCProblem(
   states_guess         = GUESS,
   continuation         = CONT,
   post_processing      = POST,
-  max_accumulated_iter = 4000
+  # change parameter of the solver for convergence
+  continuation_min_step = 1e-6,
+  max_step_iter         = 20,
+  max_accumulated_iter  = 10000
 );
 ;

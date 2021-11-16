@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,23 +20,23 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-h_i       = 1
-tol_TS    = 0.01
-tol_mass  = 0.01
-m_i       = 1
-vc        = 620
-epsi_mass = 0.01
-epsi_TS   = 0.01
-tol_v     = 0.01
-g0        = 1
-Tmax      = 3.5*g0*m_i
-c         = 0.5*(g0*h_i)**(1/2.0)
-epsi_T    = 0.01
-epsi_v    = 0.01
-Dc        = 0.5*vc*m_i/g0
-tol_T     = 0.01
 mc        = 0.6
+h_i       = 1
+epsi_mass = 0.01
+epsi_v    = 0.01
+m_i       = 1
+tol_TS    = 0.01
+tol_T     = 0.01
+tol_mass  = 0.01
+vc        = 620
+epsi_T    = 0.01
+g0        = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
 m_f       = mc*m_i
+epsi_TS   = 0.01
+Dc        = 0.5*vc*m_i/g0
+Tmax      = 3.5*g0*m_i
+tol_v     = 0.01
 
 mechatronix do |data|
 
@@ -57,10 +57,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "GoddardRocket_dump"
@@ -233,8 +235,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 1000,
+        :length => 1,
       },
     ],
   };

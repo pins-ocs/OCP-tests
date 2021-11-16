@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_UserFunctions.cc                          |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -112,9 +112,10 @@ namespace TwoStageCSTRDefine {
   real_type
   TwoStageCSTR::R1_D_1_2( real_type xo__x1, real_type xo__x2 ) const {
     real_type t1   = xo__x2 + 2;
-    real_type t5   = exp(25 / t1 * xo__x2);
-    real_type t6   = t1 * t1;
-    real_type result__ = 50 / t6 * t5;
+    real_type t2   = 1.0 / t1;
+    real_type t3   = t1 * t1;
+    real_type t10  = exp(25 * t2 * xo__x2);
+    real_type result__ = t10 * (25 * t2 - 25 / t3 * xo__x2);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -128,9 +129,10 @@ namespace TwoStageCSTRDefine {
   real_type
   TwoStageCSTR::R1_D_2( real_type xo__x1, real_type xo__x2 ) const {
     real_type t2   = xo__x2 + 2;
-    real_type t6   = exp(25 / t2 * xo__x2);
-    real_type t8   = t2 * t2;
-    real_type result__ = 50 / t8 * t6 * (xo__x1 + 0.5e0);
+    real_type t3   = 1.0 / t2;
+    real_type t4   = t2 * t2;
+    real_type t12  = exp(25 * t3 * xo__x2);
+    real_type result__ = t12 * (25 * t3 - 25 / t4 * xo__x2) * (xo__x1 + 0.5e0);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -143,11 +145,14 @@ namespace TwoStageCSTRDefine {
 
   real_type
   TwoStageCSTR::R1_D_2_2( real_type xo__x1, real_type xo__x2 ) const {
+    real_type t1   = xo__x1 + 0.5e0;
     real_type t2   = xo__x2 + 2;
-    real_type t6   = exp(25 / t2 * xo__x2);
-    real_type t9   = t2 * t2;
-    real_type t10  = t9 * t9;
-    real_type result__ = -100 / t10 * (xo__x2 - 23) * t6 * (xo__x1 + 0.5e0);
+    real_type t3   = t2 * t2;
+    real_type t4   = 1.0 / t3;
+    real_type t11  = 1.0 / t2;
+    real_type t14  = exp(25 * t11 * xo__x2);
+    real_type t19  = pow(-25 * t4 * xo__x2 + 25 * t11, 2);
+    real_type result__ = t14 * (-50 * t4 + 50 / t3 / t2 * xo__x2) * t1 + t14 * t19 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -201,9 +206,10 @@ namespace TwoStageCSTRDefine {
   real_type
   TwoStageCSTR::R2_D_1_2( real_type xo__x3, real_type xo__x4 ) const {
     real_type t1   = xo__x4 + 2;
-    real_type t5   = exp(25 / t1 * xo__x4);
-    real_type t6   = t1 * t1;
-    real_type result__ = 50 / t6 * t5;
+    real_type t2   = 1.0 / t1;
+    real_type t3   = t1 * t1;
+    real_type t10  = exp(25 * t2 * xo__x4);
+    real_type result__ = t10 * (25 * t2 - 25 / t3 * xo__x4);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -217,9 +223,10 @@ namespace TwoStageCSTRDefine {
   real_type
   TwoStageCSTR::R2_D_2( real_type xo__x3, real_type xo__x4 ) const {
     real_type t2   = xo__x4 + 2;
-    real_type t6   = exp(25 / t2 * xo__x4);
-    real_type t8   = t2 * t2;
-    real_type result__ = 50 / t8 * t6 * (xo__x3 + 0.25e0);
+    real_type t3   = 1.0 / t2;
+    real_type t4   = t2 * t2;
+    real_type t12  = exp(25 * t3 * xo__x4);
+    real_type result__ = t12 * (25 * t3 - 25 / t4 * xo__x4) * (xo__x3 + 0.25e0);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -232,11 +239,14 @@ namespace TwoStageCSTRDefine {
 
   real_type
   TwoStageCSTR::R2_D_2_2( real_type xo__x3, real_type xo__x4 ) const {
+    real_type t1   = xo__x3 + 0.25e0;
     real_type t2   = xo__x4 + 2;
-    real_type t6   = exp(25 / t2 * xo__x4);
-    real_type t9   = t2 * t2;
-    real_type t10  = t9 * t9;
-    real_type result__ = -100 / t10 * (xo__x4 - 23) * t6 * (xo__x3 + 0.25e0);
+    real_type t3   = t2 * t2;
+    real_type t4   = 1.0 / t3;
+    real_type t11  = 1.0 / t2;
+    real_type t14  = exp(25 * t11 * xo__x4);
+    real_type t19  = pow(-25 * t4 * xo__x4 + 25 * t11, 2);
+    real_type result__ = t14 * (-50 * t4 + 50 / t3 / t2 * xo__x4) * t1 + t14 * t19 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

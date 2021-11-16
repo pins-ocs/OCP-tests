@@ -43,16 +43,17 @@ Model Parameters
 ...................................maxAF = 10
 .....................................w_F = 10
 INFO CLASS = BangBangFredundant
-  num_nodes    = 101
-  dim         = u = 2, q = 1, x = 6, p = 0, omega = 3, big_bc = 15
+  #nodes      = 101
+  dim         = u = 2, q = 1, x = 6, p = 0, omega = 3, bc = 3, full_bc = 15
   BC          = Inital = 8, Final = 7, Cyclic = 0
   OMEGA       = Inital = 2, Final = 1, Cyclic = 0
   total       = nZ = 1215, UC = 200, Q = 101
   index start = omega = 1212, p = 1215
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton [ANALYTIC]
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
 Initializer Controls: Quasi-Newton
 Used threads:         15
 
@@ -61,127 +62,100 @@ NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
 [  1,16] ( 0.00137  , 0.00137  ) [ 1.79e+03 , 1.78e+03 ] 9.75e-05   [solverNewtonDumped]
 [  2, 5] ( 0.00137  , 0.00140  ) [   90.0   ,   84.8   ] 0.000616   [solverNewtonDumped]
-[  3, 6] ( 0.00140  , 0.00162  ) [   30.1   ,   30.0   ] 0.00186    [solverNewtonDumped]
-[  4, 6] ( 0.00162  , 0.00185  ) [   14.6   ,   14.5   ] 0.00258    [solverNewtonDumped]
-[  5, 5] ( 0.00185  , 0.00216  ) [   6.08   ,   6.02   ] 0.00505    [solverNewtonDumped]
-[  6, 5] ( 0.00216  , 0.00241  ) [   2.38   ,   2.35   ] 0.00830    [solverNewtonDumped]
-[  7, 4] ( 0.00241  , 0.00275  ) [   1.11   ,   1.08   ] 0.0162     [solverNewtonDumped]
-[  8, 3] ( 0.00275  , 0.00313  ) [  0.521   ,  0.496   ] 0.0339     [solverNewtonDumped]
-[  9, 2] ( 0.00313  , 0.00340  ) [  0.256   ,  0.230   ] 0.0737     [solverNewtonDumped]
-[ 10, 2] ( 0.00340  , 0.00325  ) [  0.134   ,  0.118   ] 0.109      [solverNewtonDumped]
-[ 11, 1] ( 0.00325  , 0.00301  ) [  0.101   ,  0.0532  ] 0.659      [solverNewtonDumped]
-[ 12, 1] ( 0.00301  , 0.00129  ) [  0.0503  , 0.00211  ] 1.00       [solverNewtonDumped]
-[ 13, 2] ( 0.00129  , 0.00109  ) [ 0.00408  , 0.00374  ] 0.200      [solverNewtonDumped]
-[ 14, 1] ( 0.00109  , 0.000883 ) [ 0.00757  , 0.00216  ] 0.894      [solverNewtonDumped]
-[ 15, 1] ( 0.000883 , 0.000472 ) [ 0.00177  , 0.00182  ] 1.00       [solverNewtonDumped]
-[ 16, 1] ( 0.000472 , 8.22e-05 ) [ 0.000524 , 9.48e-05 ] 1.00       [solverNewtonDumped]
-[ 17, 1] ( 8.22e-05 , 1.77e-05 ) [ 0.000210 , 3.99e-05 ] 1.00       [solverNewtonDumped]
-[ 18, 1] ( 1.77e-05 , 1.16e-06 ) [ 0.000993 , 0.000671 ] 1.00       [solverNewtonDumped]
-[ 19, 1] ( 1.16e-06 , 5.66e-09 ) [ 0.000595 , 0.000439 ] 1.00       [solverNewtonDumped]
-[ 20, 1] ( 5.66e-09 , 1.36e-13 ) [ 0.000239 , 0.000170 ] 1.00       [solverNewtonDumped]
+[  3, 5] ( 0.00140  , 0.00181  ) [   30.1   ,   29.9   ] 0.00243    [solverNewtonDumped]
+[  4, 5] ( 0.00181  , 0.00227  ) [   9.90   ,   9.78   ] 0.00470    [solverNewtonDumped]
+[  5, 4] ( 0.00227  , 0.00290  ) [   2.70   ,   2.63   ] 0.0120     [solverNewtonDumped]
+[  6, 3] ( 0.00290  , 0.00362  ) [  0.866   ,  0.822   ] 0.0293     [solverNewtonDumped]
+[  7, 2] ( 0.00362  , 0.00413  ) [  0.334   ,  0.300   ] 0.0684     [solverNewtonDumped]
+[  8, 2] ( 0.00413  , 0.00401  ) [  0.149   ,  0.131   ] 0.105      [solverNewtonDumped]
+[  9, 1] ( 0.00401  , 0.00375  ) [  0.105   ,  0.0657  ] 0.647      [solverNewtonDumped]
+[ 10, 1] ( 0.00375  , 0.00341  ) [  0.0553  , 0.00711  ] 1.00       [solverNewtonDumped]
+[ 11, 5] ( 0.00341  , 0.00319  ) [ 0.00880  , 0.00727  ] 0.0905     [solverNewtonDumped]
+[ 12, 3] ( 0.00319  , 0.00321  ) [ 0.00498  , 0.00482  ] 0.0799     [solverNewtonDumped]
+[ 13, 3] ( 0.00321  , 0.00382  ) [  0.0156  ,  0.0149  ] 0.105      [solverNewtonDumped]
+[ 14, 6] ( 0.00382  , 0.00482  ) [  0.0504  ,  0.0479  ] 0.0619     [solverNewtonDumped]
+[ 15, 1] ( 0.00482  , 0.00606  ) [  0.0130  , 0.00365  ] 0.497      [solverNewtonDumped]
+[ 16, 2] ( 0.00606  , 0.00494  ) [  0.0110  , 0.00885  ] 0.200      [solverNewtonDumped]
+[ 17, 3] ( 0.00494  , 0.00440  ) [  0.0209  ,  0.0197  ] 0.119      [solverNewtonDumped]
+[ 18, 5] ( 0.00440  , 0.00450  ) [ 0.00811  , 0.00780  ] 0.0325     [solverNewtonDumped]
+[ 19, 3] ( 0.00450  , 0.00464  ) [  0.0629  ,  0.0584  ] 0.0463     [solverNewtonDumped]
+[ 20, 3] ( 0.00464  , 0.00565  ) [  0.0461  ,  0.0437  ] 0.0759     [solverNewtonDumped]
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 21, 1] ( 1.36e-13 , 3.07e-17 ) [ 0.000175 , 0.000114 ] 1.00       [solverNewtonDumped]
-[ 22, 1] ( 3.07e-17 , 2.67e-17 ) [ 0.000148 , 0.000147 ] 1.00       [solverNewtonDumped]
-[ 23, 1] ( 2.67e-17 , 2.50e-17 ) [ 3.89e-16 , 7.43e-16 ] 1.00       [solverNewtonDumped]
+[ 21, 5] ( 0.00565  , 0.00794  ) [  0.0590  ,  0.0513  ] 0.0995     [solverNewtonDumped]
+[ 22, 1] ( 0.00794  , 0.00398  ) [  0.0157  , 0.00642  ] 0.631      [solverNewtonDumped]
+[ 23, 1] ( 0.00398  , 0.00139  ) [ 0.00712  , 0.000733 ] 1.00       [solverNewtonDumped]
+[ 24, 1] ( 0.00139  , 0.000614 ) [ 0.00617  , 0.000770 ] 1.00       [solverNewtonDumped]
+[ 25, 2] ( 0.000614 , 0.000481 ) [ 0.00203  , 0.00183  ] 0.618      [solverNewtonDumped]
+[ 26, 1] ( 0.000481 , 0.000214 ) [ 0.00169  , 0.00105  ] 1.00       [solverNewtonDumped]
+[ 27, 1] ( 0.000214 , 7.35e-05 ) [ 0.000317 , 9.26e-05 ] 1.00       [solverNewtonDumped]
+[ 28, 1] ( 7.35e-05 , 1.83e-05 ) [ 0.000205 , 3.90e-05 ] 1.00       [solverNewtonDumped]
+[ 29, 1] ( 1.83e-05 , 1.15e-06 ) [ 6.22e-05 , 4.00e-06 ] 1.00       [solverNewtonDumped]
+[ 30, 1] ( 1.15e-06 , 6.05e-09 ) [ 4.59e-06 , 2.30e-08 ] 1.00       [solverNewtonDumped]
+[ 31, 1] ( 6.05e-09 , 1.52e-13 ) [ 2.32e-08 , 6.08e-13 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 20.6[ms]      timeout        = 0 [ms]
-iteration      = 23            tolerance      = 1.000e-09 
+Elapsed Time   = 27.3[ms]      timeout        = 0 [ms]
+iteration      = 31            tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 1215
 max acc. iter. = 800           N. System pars = 200
-Converged      = YES           Memory Used    = 199Kb (+27bytes)
+Converged      = YES           Memory Used    = 202Kb (+91bytes)
 ----------------------- CONTINUATION -----------------------
 Initial Step   = 0.2           Minimum Step   = 0.001     
 Reduce Factor  = 0.5           Augment Factor = 1.5       
 Few iterations = 8         
 ----------------------- EVALUATIONS ------------------------
-Function       = 69            Jacobian       = 23        
-Factorization  = 23            Inversion      = 91        
+Function       = 95            Jacobian       = 31        
+Factorization  = 31            Inversion      = 125       
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 4.9151e-15    last||d1||_inf = 4.1448e-15
-last ||f||_inf = 5.6251e-16    last||f||_1    = 2.5003e-17
+last ||d||_inf = 2.9454e-11    last||d1||_inf = 1.1265e-06
+last ||f||_inf = 1.7909e-11    last||f||_1    = 1.5222e-13
 ------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Jacobian block N. 0 type; FD
+#ERR 1 Jacobian block N. 0 type: FD [(x+l) x (2*(x+l)+p) = 12 x 24]
 
 jac[  4, 10] =       767.66 / 769.16       [A/FD] ---       1.5026 / 0.19536      [err/err(%)]
 jac[  5, 11] =       767.66 / 769.16       [A/FD] ---       1.5026 / 0.19536      [err/err(%)]
 jac[  4, 22] =       767.66 / 769.16       [A/FD] ---       1.5026 / 0.19536      [err/err(%)]
 jac[  5, 23] =       767.66 / 769.16       [A/FD] ---       1.5026 / 0.19536      [err/err(%)]
 
-Jacobian block N. 1 type; FD
+#ERR 2 Jacobian block N. 1 type: FD [(x+l) x (2*(x+l)+p) = 12 x 24]
 
-jac[  4, 10] =       312.87 / 313.66       [A/FD] ---      0.79018 / 0.25193      [err/err(%)]
-jac[  5, 11] =       312.87 / 313.66       [A/FD] ---      0.79018 / 0.25193      [err/err(%)]
-jac[  4, 22] =       312.87 / 313.66       [A/FD] ---      0.79018 / 0.25193      [err/err(%)]
-jac[  5, 23] =       312.87 / 313.66       [A/FD] ---      0.79018 / 0.25193      [err/err(%)]
+jac[  4, 10] =       312.87 / 313.66       [A/FD] ---      0.79019 / 0.25193      [err/err(%)]
+jac[  5, 11] =       312.87 / 313.66       [A/FD] ---      0.79019 / 0.25193      [err/err(%)]
+jac[  4, 22] =       312.87 / 313.66       [A/FD] ---      0.79019 / 0.25193      [err/err(%)]
+jac[  5, 23] =       312.87 / 313.66       [A/FD] ---      0.79019 / 0.25193      [err/err(%)]
 
-Jacobian block N. 2 type; FD
+#ERR 3 Jacobian block N. 2 type: FD [(x+l) x (2*(x+l)+p) = 12 x 24]
 
 jac[  4, 10] =       381.59 / 382.64       [A/FD] ---       1.0541 / 0.27548      [err/err(%)]
 jac[  5, 11] =       381.59 / 382.64       [A/FD] ---       1.0541 / 0.27548      [err/err(%)]
 jac[  4, 22] =       381.59 / 382.64       [A/FD] ---       1.0541 / 0.27548      [err/err(%)]
 jac[  5, 23] =       381.59 / 382.64       [A/FD] ---       1.0541 / 0.27548      [err/err(%)]
 
-Jacobian block N. 3 type; FD
+#ERR 4 Jacobian block N. 3 type: FD [(x+l) x (2*(x+l)+p) = 12 x 24]
 
 jac[  4, 10] =       768.09 / 769.59       [A/FD] ---       1.5013 / 0.19507      [err/err(%)]
 jac[  5, 11] =       768.09 / 769.59       [A/FD] ---       1.5013 / 0.19507      [err/err(%)]
 jac[  4, 22] =       768.09 / 769.59       [A/FD] ---       1.5013 / 0.19507      [err/err(%)]
 jac[  5, 23] =       768.09 / 769.59       [A/FD] ---       1.5013 / 0.19507      [err/err(%)]
 
-Jacobian block N. 4 type; FD
+#ERR 5 Jacobian block N. 4 type: FD [(x+l) x (2*(x+l)+p) = 12 x 24]
 
 jac[  4, 10] =       1243.0 / 1238.1       [A/FD] ---       4.8554 / 0.39062      [err/err(%)]
 jac[  5, 11] =       1243.0 / 1238.1       [A/FD] ---       4.8554 / 0.39062      [err/err(%)]
 jac[  4, 22] =       1243.0 / 1238.1       [A/FD] ---       4.8554 / 0.39062      [err/err(%)]
 jac[  5, 23] =       1243.0 / 1238.1       [A/FD] ---       4.8554 / 0.39062      [err/err(%)]
 
-Jacobian block N. 5 type; FD
+#ERR 6 Jacobian block N. 5 type: FD [(x+l) x (2*(x+l)+p) = 12 x 24]
 
 jac[  4, 10] =       1305.0 / 1298.4       [A/FD] ---       6.5907 / 0.50505      [err/err(%)]
 jac[  5, 11] =       1305.0 / 1298.4       [A/FD] ---       6.5907 / 0.50505      [err/err(%)]
 jac[  4, 22] =       1305.0 / 1298.4       [A/FD] ---       6.5907 / 0.50505      [err/err(%)]
 jac[  5, 23] =       1305.0 / 1298.4       [A/FD] ---       6.5907 / 0.50505      [err/err(%)]
-
-Jacobian block N. 6 type; FD
-
-jac[  4, 10] =       1295.9 / 1289.6       [A/FD] ---       6.3206 / 0.48775      [err/err(%)]
-jac[  5, 11] =       1295.9 / 1289.6       [A/FD] ---       6.3206 / 0.48775      [err/err(%)]
-jac[  4, 22] =       1295.9 / 1289.6       [A/FD] ---       6.3206 / 0.48775      [err/err(%)]
-jac[  5, 23] =       1295.9 / 1289.6       [A/FD] ---       6.3206 / 0.48775      [err/err(%)]
-
-Jacobian block N. 7 type; FD
-
-jac[  4, 10] =       1303.6 / 1297.0       [A/FD] ---       6.5492 / 0.50240      [err/err(%)]
-jac[  5, 11] =       1303.6 / 1297.0       [A/FD] ---       6.5492 / 0.50240      [err/err(%)]
-jac[  4, 22] =       1303.6 / 1297.0       [A/FD] ---       6.5492 / 0.50240      [err/err(%)]
-jac[  5, 23] =       1303.6 / 1297.0       [A/FD] ---       6.5492 / 0.50240      [err/err(%)]
-
-Jacobian block N. 8 type; FD
-
-jac[  4, 10] =       1308.0 / 1301.3       [A/FD] ---       6.6828 / 0.51091      [err/err(%)]
-jac[  5, 11] =       1308.0 / 1301.3       [A/FD] ---       6.6828 / 0.51091      [err/err(%)]
-jac[  4, 22] =       1308.0 / 1301.3       [A/FD] ---       6.6828 / 0.51091      [err/err(%)]
-jac[  5, 23] =       1308.0 / 1301.3       [A/FD] ---       6.6828 / 0.51091      [err/err(%)]
-
-Jacobian block N. 9 type; FD
-
-jac[  4, 10] =       1307.8 / 1301.1       [A/FD] ---       6.6770 / 0.51055      [err/err(%)]
-jac[  5, 11] =       1307.8 / 1301.1       [A/FD] ---       6.6770 / 0.51055      [err/err(%)]
-jac[  4, 22] =       1307.8 / 1301.1       [A/FD] ---       6.6770 / 0.51055      [err/err(%)]
-jac[  5, 23] =       1307.8 / 1301.1       [A/FD] ---       6.6770 / 0.51055      [err/err(%)]
-
-Jacobian block N. 10 type; FD
-
-jac[  4, 10] =       1306.0 / 1299.3       [A/FD] ---       6.6213 / 0.50700      [err/err(%)]
-jac[  5, 11] =       1306.0 / 1299.3       [A/FD] ---       6.6213 / 0.50700      [err/err(%)]
-jac[  4, 22] =       1306.0 / 1299.3       [A/FD] ---       6.6213 / 0.50700      [err/err(%)]
-jac[  5, 23] =       1306.0 / 1299.3       [A/FD] ---       6.6213 / 0.50700      [err/err(%)]
 
 skipping...
 Last block: OK

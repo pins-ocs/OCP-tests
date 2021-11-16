@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_controls.cc                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -68,20 +68,34 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::g_eval(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t9   = pow(ModelPars[iM_C] * t4 + X__[iX_x] - 1, 2);
-    real_type t12  = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
-    result__[ 0   ] = L__[iL_lambda2__xo] + t12 * (ModelPars[iM_epsilon] + t9);
+    real_type t5   = QM__[0] * QM__[0];
+    real_type t9   = pow(t5 * ModelPars[iM_C] + XM__[0] - 1, 2);
+    real_type t12  = ALIAS_uControl_D_1(UM__[0], -1, 1);
+    result__[ 0   ] = LM__[1] + t12 * (ModelPars[iM_epsilon] + t9);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -89,46 +103,64 @@ namespace SingularCalogeroModifiedDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  SingularCalogeroModified::DgDxlp_numRows() const
+  SingularCalogeroModified::DgDxlxlp_numRows() const
   { return 1; }
 
   integer
-  SingularCalogeroModified::DgDxlp_numCols() const
-  { return 4; }
+  SingularCalogeroModified::DgDxlxlp_numCols() const
+  { return 8; }
 
   integer
-  SingularCalogeroModified::DgDxlp_nnz() const
-  { return 2; }
+  SingularCalogeroModified::DgDxlxlp_nnz() const
+  { return 4; }
 
   void
-  SingularCalogeroModified::DgDxlp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  SingularCalogeroModified::DgDxlxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 7   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularCalogeroModified::DgDxlp_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+  SingularCalogeroModified::DgDxlxlp_sparse(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t9   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
-    result__[ 0   ] = t9 * (2 * ModelPars[iM_C] * t2 + 2 * X__[iX_x] - 2);
-    result__[ 1   ] = 1;
+    real_type t2   = QM__[0] * QM__[0];
+    real_type t9   = ALIAS_uControl_D_1(UM__[0], -1, 1);
+    result__[ 0   ] = 0.5e0 * t9 * (2 * ModelPars[iM_C] * t2 + 2 * XM__[0] - 2);
+    result__[ 1   ] = 0.5e0;
+    result__[ 2   ] = result__[0];
+    result__[ 3   ] = 0.5e0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -147,8 +179,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DgDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -157,19 +189,33 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DgDu_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
-    real_type t11  = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
+    real_type t3   = QM__[0] * QM__[0];
+    real_type t8   = pow(ModelPars[iM_C] * t3 + XM__[0] - 1, 2);
+    real_type t11  = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
     result__[ 0   ] = t11 * (ModelPars[iM_epsilon] + t8);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
@@ -198,37 +244,32 @@ namespace SingularCalogeroModifiedDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[2];
-    real_type L__[2];
+    real_type QM__[1], XM__[2], LM__[2];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t5   = QL__[iQ_zeta] * QL__[iQ_zeta];
-    real_type t6   = t5 * t5;
-    real_type t8   = QR__[iQ_zeta] * QR__[iQ_zeta];
-    real_type t9   = t8 * t8;
-    real_type t11  = ModelPars[iM_C];
-    real_type t12  = t11 * t11;
-    real_type t14  = XL__[iX_x];
-    real_type t18  = XR__[iX_x];
-    real_type t24  = t14 * t14;
-    real_type t25  = t18 * t18;
-    U__[ iU_u ] = uControl.solve(1.0 / (t12 * (t6 + t9) + t11 * (t5 * (2 * t14 - 2) + 2 * (t18 - 1) * t8) + t24 + t25 - 2 * t14 - 2 * t18 + 2 * ModelPars[iM_epsilon] + 2) * (-LL__[iL_lambda2__xo] - LR__[iL_lambda2__xo]), -1, 1);
+    real_type t2   = XM__[0];
+    real_type t3   = t2 * t2;
+    real_type t4   = ModelPars[iM_C];
+    real_type t6   = QM__[0] * QM__[0];
+    real_type t7   = t6 * t4;
+    real_type t11  = t4 * t4;
+    real_type t12  = t6 * t6;
+    U__[ iU_u ] = uControl.solve(-1.0 / (t3 + t2 * (2 * t7 - 2) + t12 * t11 - 2 * t7 + ModelPars[iM_epsilon] + 1) * LM__[1], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
@@ -249,59 +290,47 @@ namespace SingularCalogeroModifiedDefine {
     NodeType2 const &          LEFT__,
     NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
+    U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[2];
-    real_type L__[2];
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = -LL__[iL_lambda2__xo] - LR__[iL_lambda2__xo];
-    real_type t5   = QL__[iQ_zeta] * QL__[iQ_zeta];
-    real_type t6   = t5 * t5;
-    real_type t8   = QR__[iQ_zeta] * QR__[iQ_zeta];
-    real_type t9   = t8 * t8;
-    real_type t11  = ModelPars[iM_C];
-    real_type t12  = t11 * t11;
-    real_type t13  = t12 * (t6 + t9);
-    real_type t14  = XL__[iX_x];
-    real_type t15  = t14 - 1;
-    real_type t18  = XR__[iX_x];
-    real_type t19  = t18 - 1;
-    real_type t24  = t14 * t14;
-    real_type t25  = t18 * t18;
-    real_type t26  = 2 * t14;
-    real_type t27  = 2 * t18;
-    real_type t29  = 2 * ModelPars[iM_epsilon];
-    real_type t30  = t13 + t11 * (2 * t15 * t5 + 2 * t19 * t8) + t24 + t25 - t26 - t27 + t29 + 2;
-    real_type t31  = 1.0 / t30;
-    real_type t33  = uControl.solve_rhs(t31 * t3, -1, 1);
-    real_type t35  = -t3 * t33;
-    real_type t38  = t30 * t30;
-    real_type tmp_0_0 = 2 / t38 * (t11 * t5 + t14 - 1) * t35;
-    real_type tmp_0_1 = 0;
-    real_type tmp_0_2 = 0;
-    real_type tmp_0_3 = -t31 * t33;
-    real_type t52  = pow(t13 + t11 * (2 * t15 * t5 + 2 * t19 * t8) + t24 + t25 - t26 - t27 + t29 + 2, 2);
-    real_type tmp_0_4 = 2 / t52 * (t11 * t8 + t18 - 1) * t35;
-    real_type tmp_0_5 = 0;
-    real_type tmp_0_6 = 0;
+    real_type t1   = LM__[1];
+    real_type t2   = XM__[0];
+    real_type t3   = t2 * t2;
+    real_type t4   = ModelPars[iM_C];
+    real_type t6   = QM__[0] * QM__[0];
+    real_type t7   = t6 * t4;
+    real_type t11  = t4 * t4;
+    real_type t12  = t6 * t6;
+    real_type t16  = t3 + t2 * (2 * t7 - 2) + t12 * t11 - 2 * t7 + ModelPars[iM_epsilon] + 1;
+    real_type t17  = 1.0 / t16;
+    real_type t19  = uControl.solve_rhs(-t17 * t1, -1, 1);
+    real_type t21  = t16 * t16;
+    real_type tmp_0_0 = 0.5e0 * (2 * t7 + 2 * t2 - 2) / t21 * t1 * t19;
+    real_type tmp_0_1 = 0.0e0;
+    real_type tmp_0_2 = 0.0e0;
+    real_type tmp_0_3 = -0.5e0 * t17 * t19;
+    real_type tmp_0_4 = tmp_0_0;
+    real_type tmp_0_5 = 0.0e0;
+    real_type tmp_0_6 = 0.0e0;
     real_type tmp_0_7 = tmp_0_3;
     DuDxlxlp(0, 0) = tmp_0_0;
     DuDxlxlp(0, 1) = tmp_0_1;
@@ -329,12 +358,12 @@ namespace SingularCalogeroModifiedDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
+    real_type t8   = pow(t3 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
     real_type t10  = U__[iU_u];
     real_type t11  = uControl(t10, -1, 1);
     real_type t16  = pow(V__[0] - X__[iX_y], 2);
@@ -358,14 +387,14 @@ namespace SingularCalogeroModifiedDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
+    real_type t8   = pow(t3 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
     real_type t10  = U__[iU_u];
     real_type t11  = ALIAS_uControl_D_1(t10, -1, 1);
     result__[ 0   ] = t11 * (ModelPars[iM_epsilon] + t8) - 2 * V__[1] + 2 * t10;
@@ -389,8 +418,8 @@ namespace SingularCalogeroModifiedDefine {
 
   void
   SingularCalogeroModified::DmDuu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -403,11 +432,11 @@ namespace SingularCalogeroModifiedDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
     real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);

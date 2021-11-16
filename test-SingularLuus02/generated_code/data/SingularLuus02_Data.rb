@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus02_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-Tf     = 5
 epsi_x = 0.0001
+Tf     = 5
 
 mechatronix do |data|
 
@@ -42,10 +42,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "SingularLuus02_dump"
@@ -179,8 +181,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => Tf,
         :n      => 400,
+        :length => Tf,
       },
     ],
   };

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -21,11 +21,11 @@
 
 -- Auxiliary values
 W0    = 0
-W     = W0
-tol0  = 0.1
-tol   = tol0
 epsi0 = 0.1
 epsi  = epsi0
+tol0  = 0.1
+tol   = tol0
+W     = W0
 
 content = {
 
@@ -46,10 +46,12 @@ content = {
   LU_threaded = true,
 
   -- Enable check jacobian
-  JacobianCheck            = false,
-  JacobianCheckFull        = false,
-  JacobianCheck_epsilon    = 1e-4,
-  FiniteDifferenceJacobian = false,
+  JacobianCheck         = false,
+  JacobianCheckFull     = false,
+  JacobianCheck_epsilon = 1e-4,
+
+  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  JacobianDiscretization = 'ANALYTIC,
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "AlpRider_dump",
@@ -97,19 +99,19 @@ content = {
 
     -- solver parameters
     max_iter             = 300,
-    max_step_iter        = 40,
-    max_accumulated_iter = 4000,
-    tolerance            = 9.999999999999999e-10,
+    max_step_iter        = 20,
+    max_accumulated_iter = 10000,
+    tolerance            = 1e-09,
 
     -- continuation parameters
     ns_continuation_begin = 0,
     ns_continuation_end   = 1,
     continuation = {
-      initial_step   = 0.2,   -- initial step for continuation
-      min_step       = 0.001, -- minimum accepted step for continuation
-      reduce_factor  = 0.5,   -- if continuation step fails, reduce step by this factor
-      augment_factor = 1.5,   -- if step successful in less than few_iteration augment step by this factor
-      few_iterations = 8
+      initial_step   =   0, -- initial step for continuation
+      min_step       =   0, -- minimum accepted step for continuation
+      reduce_factor  =   0, -- if continuation step fails, reduce step by this factor
+      augment_factor =   1, -- if step successful in less than few_iteration augment step by this factor
+      few_iterations =   8, -- if step successful in less than few_iteration augment step by this factor
     }
   },
 
@@ -196,8 +198,8 @@ content = {
     segments = {
       
       {
-        length = 20,
         n      = 4000,
+        length = 20,
       },
     },
   },

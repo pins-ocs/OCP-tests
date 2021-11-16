@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Pars.hh                                                |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef ZERMELOPARS_DOT_HH
 #define ZERMELOPARS_DOT_HH
 
-#define numBC                    7
+#define numBc                    7
 #define numModelPars             1
 #define numConstraint1D          1
 #define numConstraint2D          0

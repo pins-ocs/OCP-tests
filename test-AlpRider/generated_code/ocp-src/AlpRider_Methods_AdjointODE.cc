@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -66,12 +66,12 @@ namespace AlpRiderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_y1];
     real_type t2   = t1 * t1;
@@ -113,8 +113,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
@@ -140,12 +140,12 @@ namespace AlpRiderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_y1];
     real_type t2   = t1 * t1;
@@ -155,35 +155,34 @@ namespace AlpRiderDefine {
     real_type t6   = t5 * t5;
     real_type t7   = X__[iX_y4];
     real_type t8   = t7 * t7;
-    real_type t11  = q(Q__[iQ_zeta]);
-    real_type t12  = t2 + t4 + t6 + t8 - t11;
-    real_type t13  = ALIAS_Ybound_DD(t12);
-    real_type t14  = t13 * (t2 + t4 + t6 + t8 + 1);
-    real_type t18  = 2 * t4;
-    real_type t19  = 2 * t6;
-    real_type t20  = 2 * t8;
-    real_type t22  = ALIAS_Ybound_D(t12);
+    real_type t10  = q(Q__[iQ_zeta]);
+    real_type t11  = t2 + t4 + t6 + t8 - t10;
+    real_type t12  = Ybound(t11);
+    real_type t13  = 2 * t12;
+    real_type t14  = ALIAS_Ybound_D(t11);
+    real_type t17  = t2 + t4 + t6 + t8 + 1;
+    real_type t18  = ALIAS_Ybound_DD(t11);
+    real_type t19  = t18 * t17;
+    real_type t23  = 2 * t14 * t17;
     real_type t25  = 2 * ModelPars[iM_W];
-    real_type t26  = Ybound(t12);
-    real_type t27  = 2 * t26;
-    result__[ 0   ] = 4 * t2 * t14 + t22 * (10 * t2 + t18 + t19 + t20 + 2) + t25 + t27;
-    real_type t30  = t14 + 2 * t22;
-    result__[ 1   ] = 4 * t30 * t1 * t3;
-    result__[ 2   ] = 4 * t5 * t30 * t1;
-    result__[ 3   ] = 4 * t30 * t1 * t7;
+    result__[ 0   ] = 8 * t14 * t2 + 4 * t2 * t19 + t13 + t23 + t25;
+    real_type t26  = t14 * t1;
+    result__[ 1   ] = 4 * t1 * t3 * t19 + 8 * t3 * t26;
+    result__[ 2   ] = 4 * t1 * t5 * t19 + 8 * t5 * t26;
+    result__[ 3   ] = 4 * t1 * t7 * t19 + 8 * t7 * t26;
     result__[ 4   ] = result__[1];
-    real_type t38  = 2 * t2;
-    result__[ 5   ] = 4 * t4 * t14 + t22 * (t38 + 10 * t4 + t19 + t20 + 2) + t25 + t27;
-    result__[ 6   ] = 4 * t5 * t30 * t3;
-    result__[ 7   ] = 4 * t30 * t3 * t7;
+    result__[ 5   ] = 8 * t14 * t4 + 4 * t4 * t19 + t13 + t23 + t25;
+    real_type t46  = t14 * t3;
+    result__[ 6   ] = 4 * t3 * t5 * t19 + 8 * t5 * t46;
+    result__[ 7   ] = 4 * t3 * t7 * t19 + 8 * t7 * t46;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
-    result__[ 10  ] = 4 * t6 * t14 + t22 * (t38 + t18 + 10 * t6 + t20 + 2) + t25 + t27;
-    result__[ 11  ] = 4 * t5 * t30 * t7;
+    result__[ 10  ] = 8 * t14 * t6 + 4 * t6 * t19 + t13 + t23 + t25;
+    result__[ 11  ] = 8 * t7 * t14 * t5 + 4 * t5 * t7 * t19;
     result__[ 12  ] = result__[3];
     result__[ 13  ] = result__[7];
     result__[ 14  ] = result__[11];
-    result__[ 15  ] = 4 * t8 * t14 + t22 * (t38 + t18 + t19 + 10 * t8 + 2) + t25 + t27;
+    result__[ 15  ] = 8 * t14 * t8 + 4 * t8 * t19 + t13 + t23 + t25;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 16, i_segment );
   }
@@ -204,8 +203,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -217,7 +216,7 @@ namespace AlpRiderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -240,12 +239,12 @@ namespace AlpRiderDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = L__[iL_lambda1__xo];
     real_type t4   = L__[iL_lambda2__xo];
@@ -273,8 +272,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -285,7 +284,7 @@ namespace AlpRiderDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -306,8 +305,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -318,7 +317,7 @@ namespace AlpRiderDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -342,7 +341,7 @@ namespace AlpRiderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -363,8 +362,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -376,7 +375,7 @@ namespace AlpRiderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -396,12 +395,12 @@ namespace AlpRiderDefine {
   AlpRider::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -427,8 +426,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -438,7 +437,7 @@ namespace AlpRiderDefine {
   AlpRider::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -459,8 +458,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -470,7 +469,7 @@ namespace AlpRiderDefine {
   AlpRider::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -491,11 +490,11 @@ namespace AlpRiderDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -521,8 +520,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -533,7 +532,7 @@ namespace AlpRiderDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -554,8 +553,8 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -566,7 +565,7 @@ namespace AlpRiderDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

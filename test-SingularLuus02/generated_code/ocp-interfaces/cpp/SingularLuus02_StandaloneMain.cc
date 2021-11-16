@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus02_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type Tf = 5;
     real_type epsi_x = 0.0001;
+    real_type Tf = 5;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -103,7 +103,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 0;
@@ -163,8 +163,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularLuus02_data.Mesh["s0"] = 0;
-SingularLuus02_data.Mesh["segments"][0]["length"] = Tf;
 SingularLuus02_data.Mesh["segments"][0]["n"] = 400;
+SingularLuus02_data.Mesh["segments"][0]["length"] = Tf;
 
 
     // alias for user object classes passed as pointers
@@ -223,7 +223,7 @@ SingularLuus02_data.Mesh["segments"][0]["n"] = 400;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const * exc ) {
+  catch ( char const exc[] ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

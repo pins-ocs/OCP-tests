@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,14 +78,14 @@ namespace TwoPhaseSchwartzDefine {
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x1] - 1;
@@ -99,21 +99,21 @@ namespace TwoPhaseSchwartzDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoPhaseSchwartz::DboundaryConditionsDx_numRows() const
+  TwoPhaseSchwartz::DboundaryConditionsDxxp_numRows() const
   { return 4; }
 
   integer
-  TwoPhaseSchwartz::DboundaryConditionsDx_numCols() const
+  TwoPhaseSchwartz::DboundaryConditionsDxxp_numCols() const
   { return 8; }
 
   integer
-  TwoPhaseSchwartz::DboundaryConditionsDx_nnz() const
+  TwoPhaseSchwartz::DboundaryConditionsDxxp_nnz() const
   { return 6; }
 
   void
-  TwoPhaseSchwartz::DboundaryConditionsDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  TwoPhaseSchwartz::DboundaryConditionsDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -124,18 +124,18 @@ namespace TwoPhaseSchwartzDefine {
   }
 
   void
-  TwoPhaseSchwartz::DboundaryConditionsDx_sparse(
+  TwoPhaseSchwartz::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
@@ -145,39 +145,7 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 4   ] = -1;
     result__[ 5   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 6, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoPhaseSchwartz::DboundaryConditionsDp_numRows() const
-  { return 4; }
-
-  integer
-  TwoPhaseSchwartz::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoPhaseSchwartz::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  TwoPhaseSchwartz::DboundaryConditionsDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  TwoPhaseSchwartz::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -192,16 +160,16 @@ namespace TwoPhaseSchwartzDefine {
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
@@ -221,82 +189,49 @@ namespace TwoPhaseSchwartzDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  TwoPhaseSchwartz::DadjointBCDx_numRows() const
+  TwoPhaseSchwartz::DadjointBCDxxp_numRows() const
   { return 8; }
 
   integer
-  TwoPhaseSchwartz::DadjointBCDx_numCols() const
+  TwoPhaseSchwartz::DadjointBCDxxp_numCols() const
   { return 8; }
 
   integer
-  TwoPhaseSchwartz::DadjointBCDx_nnz() const
+  TwoPhaseSchwartz::DadjointBCDxxp_nnz() const
   { return 2; }
 
   void
-  TwoPhaseSchwartz::DadjointBCDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  TwoPhaseSchwartz::DadjointBCDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 6   ; jIndex[0 ] = 6   ;
     iIndex[1 ] = 7   ; jIndex[1 ] = 7   ;
   }
 
   void
-  TwoPhaseSchwartz::DadjointBCDx_sparse(
+  TwoPhaseSchwartz::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 10;
     result__[ 1   ] = 10;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 2, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 2, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoPhaseSchwartz::DadjointBCDp_numRows() const
-  { return 8; }
-
-  integer
-  TwoPhaseSchwartz::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoPhaseSchwartz::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  TwoPhaseSchwartz::DadjointBCDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  TwoPhaseSchwartz::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: TwoPhaseSchwartz_Methods_boundary_conditions.cc

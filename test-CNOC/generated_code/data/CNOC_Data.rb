@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,14 +20,14 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-mesh_segments            = 100
-js_min                   = -50
 v_nom                    = 0.173
 deltaFeed                = v_nom
+mesh_segments            = 100
 jn_max                   = 65
 path_following_tolerance = 1.0e-05
-js_max                   = 30
 pf_error                 = path_following_tolerance
+js_min                   = -50
+js_max                   = 30
 
 mechatronix do |data|
 
@@ -48,10 +48,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "CNOC_dump"

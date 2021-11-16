@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Bike1D_Data.rb                                                 #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -43,10 +43,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "Bike1D_dump"
@@ -166,7 +168,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithSinAtan
-  data.MappedObjects[:clip] = { :delta => 0, :h => 0.01, :delta2 => 0 }
+  data.MappedObjects[:clip] = { :delta => 0, :delta2 => 0, :h => 0.01 }
 
   # Controls
   # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
@@ -205,8 +207,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 1000,
         :length => 1000,
+        :n      => 1000,
       },
     ],
   };

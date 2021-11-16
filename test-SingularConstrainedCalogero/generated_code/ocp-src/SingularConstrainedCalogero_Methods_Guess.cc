@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_Guess.cc                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -88,39 +88,115 @@ namespace SingularConstrainedCalogeroDefine {
    |   \____|_| |_|\___|\___|_|\_\
   \*/
 
-  #define Xoptima__check__node__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
-  #define Xoptima__check__node__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on cell={} segment={}: {}\n",ipos,i_segment,MSG),3); return false; }
-  #define Xoptima__check__cell__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
-  #define Xoptima__check__cell__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on node={} segment={}: {}\n",icell,i_segment,MSG),3); return false; }
-  #define Xoptima__check__pars__lt(A,B,MSG)   if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__pars__le(A,B,MSG)   if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__params__lt(A,B,MSG) if ( (A) >= (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
-  #define Xoptima__check__params__le(A,B,MSG) if ( (A) >  (B) ) { m_console->yellow(fmt::format("Failed check on model parameter: {}\n",MSG),3); return false; }
+  #define Xoptima__check__node__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        ipos,i_segment,MSG,a-b                                        \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__node__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        ipos,i_segment,MSG,a-b                                        \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__cell__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        icell,i_segment,MSG,a-b                                       \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__cell__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
+        icell,i_segment,MSG,a-b                                       \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__pars__lt(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__pars__le(A,B,MSG)                           \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__params__lt(A,B,MSG)                         \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a >= b ) {                                                   \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
+
+  #define Xoptima__check__params__le(A,B,MSG)                         \
+  {                                                                   \
+    real_type a = A, b=B;                                             \
+    if ( a > b ) {                                                    \
+      m_console->yellow(fmt::format(                                  \
+        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
 
 
 
 
 
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   SingularConstrainedCalogero::p_check( P_const_pointer_type P__ ) const {
     return true;
   }
 
-  bool
-  SingularConstrainedCalogero::xlambda_check_node(
-    integer              ipos,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
-  ) const {
-    return true;
-  }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  SingularConstrainedCalogero::xlambda_check_cell(
-    integer              icell,
+  SingularConstrainedCalogero::xlambda_check_node(
+    integer              ipos,
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
@@ -157,10 +233,10 @@ namespace SingularConstrainedCalogeroDefine {
     P_const_pointer_type P__,
     U_pointer_type       UGUESS__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
       MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     real_type t5   = fmax(0.1e0, X__[iX_x] / 2 + 1.0 / 2.0 - Q__[iQ_zeta] / 2);
@@ -210,10 +286,10 @@ namespace SingularConstrainedCalogeroDefine {
     P_const_pointer_type P__
   ) const {
     bool ok = true;
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     uControl.check_range(U__[iU_u], 0, 2);
     return ok;

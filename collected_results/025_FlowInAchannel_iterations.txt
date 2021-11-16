@@ -20,16 +20,17 @@ END Mesh[mesh]
 Model Parameters
 .......................................R = 10000
 INFO CLASS = FlowInAchannel
-  num_nodes    = 101
-  dim         = u = 0, q = 1, x = 4, p = 0, omega = 4, big_bc = 12
+  #nodes      = 101
+  dim         = u = 0, q = 1, x = 4, p = 0, omega = 4, bc = 4, full_bc = 12
   BC          = Inital = 6, Final = 6, Cyclic = 0
   OMEGA       = Inital = 2, Final = 2, Cyclic = 0
   total       = nZ = 812, UC = 0, Q = 101
   index start = omega = 808, p = 812
-  FD jacobian = NO
+  FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton [ANALYTIC]
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
 Initializer Controls: Quasi-Newton
 Used threads:         15
 
@@ -41,10 +42,10 @@ NewtonDumped --- start iterations ---
 [  3, 1] (   36.0   ,  0.999   ) [   13.8   ,  0.344   ] 1.00       [solverNewtonDumped]
 [  4, 1] (  0.999   , 0.00156  ) [  0.366   , 0.000504 ] 1.00       [solverNewtonDumped]
 [  5, 1] ( 0.00156  , 2.82e-09 ) [ 0.000505 , 1.26e-09 ] 1.00       [solverNewtonDumped]
-[  6, 1] ( 2.82e-09 , 5.96e-15 ) [ 1.26e-09 , 2.15e-15 ] 1.00       [solverNewtonDumped]
+[  6, 1] ( 2.82e-09 , 5.22e-15 ) [ 1.26e-09 , 3.66e-15 ] 1.00       [solverNewtonDumped]
 
 ------------------------ STATISTIC -------------------------
-Elapsed Time   = 3.30[ms]      timeout        = 0 [ms]
+Elapsed Time   = 3.08[ms]      timeout        = 0 [ms]
 iteration      = 6             tolerance      = 1.000e-09 
 max iterations = 300           N. Equations   = 812
 max acc. iter. = 800           N. System pars = 0
@@ -57,8 +58,8 @@ Few iterations = 8
 Function       = 8             Jacobian       = 6         
 Factorization  = 6             Inversion      = 13        
 ------------------------ USER INFO -------------------------
-last ||d||_inf = 5.6275e-13    last||d1||_inf = 3.0237e-07
-last ||f||_inf = 1.5063e-12    last||f||_1    = 5.9572e-15
+last ||d||_inf = 1.6062e-12    last||d1||_inf = 3.0237e-07
+last ||f||_inf = 1.8190e-12    last||f||_1    = 5.2229e-15
 ------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             

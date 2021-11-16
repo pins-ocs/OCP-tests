@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,23 +75,22 @@ namespace BikeSteeringDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda1__xo];
     real_type t2   = X__[iX_TimeSize];
     result__[ 0   ] = t2 * t1;
     real_type t3   = L__[iL_lambda2__xo];
-    real_type t5   = ModelPars[iM_m];
-    real_type t6   = ModelPars[iM_g];
+    real_type t7   = ModelPars[iM_m] * ModelPars[iM_g];
     real_type t8   = ModelPars[iM_h];
-    result__[ 1   ] = t8 * t6 * t5 * t2 * t3;
+    result__[ 1   ] = t8 * t7 * t2 * t3;
     real_type t10  = ALIAS_minimumTimeSize_D(t2);
-    result__[ 2   ] = t10 + t8 * t3 * (t5 * t6 * X__[iX_phi] - U__[iU_Fy]) + X__[iX_omega] * t1;
+    result__[ 2   ] = t10 + X__[iX_omega] * t1 + (X__[iX_phi] * t8 * t7 - U__[iU_Fy] * t8) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }
@@ -112,8 +111,8 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
@@ -128,12 +127,12 @@ namespace BikeSteeringDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo] * ModelPars[iM_m] * ModelPars[iM_g] * ModelPars[iM_h];
@@ -160,8 +159,8 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -173,7 +172,7 @@ namespace BikeSteeringDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -196,12 +195,12 @@ namespace BikeSteeringDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -L__[iL_lambda2__xo] * X__[iX_TimeSize] * ModelPars[iM_h];
     if ( m_debug )
@@ -224,8 +223,8 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
   }
@@ -237,12 +236,12 @@ namespace BikeSteeringDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -L__[iL_lambda2__xo] * ModelPars[iM_h];
     if ( m_debug )
@@ -265,8 +264,8 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -277,7 +276,7 @@ namespace BikeSteeringDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -301,7 +300,7 @@ namespace BikeSteeringDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -322,8 +321,8 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -335,7 +334,7 @@ namespace BikeSteeringDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -355,12 +354,12 @@ namespace BikeSteeringDefine {
   BikeSteering::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ModelPars[iM_Ix] * L__[iL_lambda2__xo];
     result__[ 1   ] = L__[iL_lambda1__xo];
@@ -385,8 +384,8 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -396,7 +395,7 @@ namespace BikeSteeringDefine {
   BikeSteering::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -417,8 +416,8 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -428,7 +427,7 @@ namespace BikeSteeringDefine {
   BikeSteering::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -449,11 +448,11 @@ namespace BikeSteeringDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[1];
     result__[ 1   ] = ModelPars[iM_Ix] * V__[0];
@@ -478,8 +477,8 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -490,7 +489,7 @@ namespace BikeSteeringDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -511,8 +510,8 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -523,7 +522,7 @@ namespace BikeSteeringDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

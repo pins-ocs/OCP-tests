@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_dll_ruby.hh                                         |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,7 +82,7 @@ namespace UnderwaterDefine {
 
   #include <sstream>
 
-  #ifndef MECHATRONIX_OS_WINDOWS
+  #if !defined(MECHATRONIX_OS_WINDOWS) && !defined(MECHATRONIX_OS_MINGW)
     #include <signal.h>
     #include <execinfo.h>
   #endif
@@ -136,7 +136,7 @@ namespace UnderwaterDefine {
         error = exc.what();
         ok    = false;
       }
-      catch ( char const * exc ) {
+      catch ( char const exc[] ) {
         error = exc;
         ok    = false;
       }
@@ -240,24 +240,24 @@ namespace UnderwaterDefine {
   EXTERN_C
   UNDERWATER_API_DLL
   bool
-  Underwater_ocp_setup( char const * id, GenericContainer & gc_data );
+  Underwater_ocp_setup( char const id[], GenericContainer & gc_data );
 
   EXTERN_C
   UNDERWATER_API_DLL
   bool
-  Underwater_ocp_guess( char const * id, GenericContainer & gc_guess );
+  Underwater_ocp_guess( char const id[], GenericContainer & gc_guess );
 
   EXTERN_C
   UNDERWATER_API_DLL
   bool
-  Underwater_ocp_solve( char const       * id,
+  Underwater_ocp_solve( char const id[],
                         GenericContainer & gc_data,
                         GenericContainer & gc_solution );
 
   EXTERN_C
   UNDERWATER_API_DLL
   void
-  Underwater_write_ocp_solution( char const * id, char const * fname );
+  Underwater_write_ocp_solution( char const id[], char const fname[] );
 
 }
 

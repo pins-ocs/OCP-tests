@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Main.cc                            |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_max = 0.01;
     real_type tol_max = 0.01;
+    real_type epsi_max = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -103,7 +103,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
@@ -175,8 +175,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularConstrainedCalogero_data.Mesh["s0"] = 0;
-SingularConstrainedCalogero_data.Mesh["segments"][0]["n"] = 600;
 SingularConstrainedCalogero_data.Mesh["segments"][0]["length"] = 3;
+SingularConstrainedCalogero_data.Mesh["segments"][0]["n"] = 600;
 
 
     // alias for user object classes passed as pointers
@@ -235,7 +235,7 @@ SingularConstrainedCalogero_data.Mesh["segments"][0]["length"] = 3;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const * exc ) {
+  catch ( char const exc[] ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

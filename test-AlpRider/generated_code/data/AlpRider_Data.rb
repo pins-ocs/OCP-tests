@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: AlpRider_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,11 +21,11 @@ include Mechatronix
 
 # Auxiliary values
 W0    = 0
-W     = W0
-tol0  = 0.1
-tol   = tol0
 epsi0 = 0.1
 epsi  = epsi0
+tol0  = 0.1
+tol   = tol0
+W     = W0
 
 mechatronix do |data|
 
@@ -46,10 +46,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "AlpRider_dump"
@@ -104,19 +106,19 @@ mechatronix do |data|
 
     # solver parameters
     :max_iter             => 300,
-    :max_step_iter        => 40,
-    :max_accumulated_iter => 4000,
+    :max_step_iter        => 20,
+    :max_accumulated_iter => 10000,
     :tolerance            => 9.999999999999999e-10,
 
     # continuation parameters
     :ns_continuation_begin => 0,
     :ns_continuation_end   => 1,
     :continuation => {
-      :initial_step   => 0.2,   # initial step for continuation
-      :min_step       => 0.001, # minimum accepted step for continuation
-      :reduce_factor  => 0.5,   # p fails, reduce step by this factor
-      :augment_factor => 1.5,   # if step successful in less than few_iteration augment step by this factor
-      :few_iterations => 8,     #
+      :initial_step   =>    0.2, # -- initial step for continuation
+      :min_step       =>  1e-06, # -- minimum accepted step for continuation
+      :reduce_factor  =>    0.5, # -- if continuation step fails, reduce step by this factor
+      :augment_factor =>    1.5, # -- if step successful in less than few_iteration augment step by this factor
+      :few_iterations =>         8  # -- if step successful in less than few_iteration augment step by this factor
     }
   }
 
@@ -202,8 +204,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 20,
         :n      => 4000,
+        :length => 20,
       },
     ],
   };

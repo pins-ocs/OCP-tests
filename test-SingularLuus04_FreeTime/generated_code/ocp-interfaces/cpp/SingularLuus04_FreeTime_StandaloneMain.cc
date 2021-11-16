@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Main.cc                                |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -51,9 +51,9 @@ main() {
 
     // Auxiliary values
     real_type u_epsi = 0.01;
-    real_type u_tol = 0.01;
     real_type theta0 = 1;
     real_type theta = theta0;
+    real_type u_tol = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -105,7 +105,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
@@ -178,8 +178,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularLuus04_FreeTime_data.Mesh["s0"] = 0;
-SingularLuus04_FreeTime_data.Mesh["segments"][0]["length"] = 1;
 SingularLuus04_FreeTime_data.Mesh["segments"][0]["n"] = 5000;
+SingularLuus04_FreeTime_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -238,7 +238,7 @@ SingularLuus04_FreeTime_data.Mesh["segments"][0]["n"] = 5000;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const * exc ) {
+  catch ( char const exc[] ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

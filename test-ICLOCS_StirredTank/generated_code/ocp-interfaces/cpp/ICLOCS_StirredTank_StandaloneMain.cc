@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -51,11 +51,11 @@ main() {
 
     // Auxiliary values
     real_type epsi_T = 0.001;
-    real_type x_tol = 0.01;
     real_type tol_T = 1;
-    real_type x_epsi = 0.1;
-    real_type epsi_ctrl = 0.001;
     real_type tol_ctrl = 0.001;
+    real_type epsi_ctrl = 0.001;
+    real_type x_tol = 0.01;
+    real_type x_epsi = 0.1;
     real_type w_exp_min = 0;
     real_type w = exp(w_exp_min);
     integer InfoLevel = 4;
@@ -109,7 +109,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
@@ -267,7 +267,7 @@ ICLOCS_StirredTank_data.Mesh["segments"][0]["length"] = 1;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const * exc ) {
+  catch ( char const exc[] ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

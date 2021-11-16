@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero.cc                                            |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "SingularCalogero.hh"
 #include "SingularCalogero_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -102,7 +100,7 @@ namespace SingularCalogeroDefine {
     nullptr
   };
 
-  char const *namesBc[numBC+1] = {
+  char const *namesBc[numBc+1] = {
     nullptr
   };
 
@@ -137,7 +135,7 @@ namespace SingularCalogeroDefine {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBC,                    namesBc
+      numBc,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -145,10 +143,13 @@ namespace SingularCalogeroDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   SingularCalogero::~SingularCalogero() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -168,8 +169,8 @@ namespace SingularCalogeroDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
-        phase+1, s, s-old_s
+        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
+        phase+1, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -185,11 +186,11 @@ namespace SingularCalogeroDefine {
   // initialize parameters using associative array
   */
   void
-  SingularCalogero::setupParameters( GenericContainer const & gc_data ) {
+  SingularCalogero::setup_parameters( GenericContainer const & gc_data ) {
   }
 
   void
-  SingularCalogero::setupParameters( real_type const Pars[] ) {
+  SingularCalogero::setup_parameters( real_type const Pars[] ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -201,7 +202,7 @@ namespace SingularCalogeroDefine {
   //                     |_|
   */
   void
-  SingularCalogero::setupClasses( GenericContainer const & gc_data ) {
+  SingularCalogero::setup_classes( GenericContainer const & gc_data ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -213,7 +214,7 @@ namespace SingularCalogeroDefine {
   //                    |_|
   */
   void
-  SingularCalogero::setupUserClasses( GenericContainer const & gc ) {
+  SingularCalogero::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -229,7 +230,7 @@ namespace SingularCalogeroDefine {
   //              |_|  |_|
   */
   void
-  SingularCalogero::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  SingularCalogero::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -240,11 +241,11 @@ namespace SingularCalogeroDefine {
   //                     |_|
   */
   void
-  SingularCalogero::setupControls( GenericContainer const & gc_data ) {
+  SingularCalogero::setup_controls( GenericContainer const & gc_data ) {
     // initialize Control penalties
     UTILS_ASSERT0(
       gc_data.exists("Controls"),
-      "SingularCalogero::setupClasses: Missing key `Controls` in data\n"
+      "SingularCalogero::setup_classes: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
     uControl.setup( gc("uControl") );
@@ -261,11 +262,11 @@ namespace SingularCalogeroDefine {
   //                     |_|
   */
   void
-  SingularCalogero::setupPointers( GenericContainer const & gc_data ) {
+  SingularCalogero::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "SingularCalogero::setupPointers: Missing key `Pointers` in data\n"
+      "SingularCalogero::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -273,7 +274,7 @@ namespace SingularCalogeroDefine {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in SingularCalogero::setupPointers(gc) cant find key `pMesh' in gc\n"
+      "in SingularCalogero::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -317,16 +318,20 @@ namespace SingularCalogeroDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("SingularCalogero::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
     this->info_classes();
     this->info();

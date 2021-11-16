@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularArc_Pars.hh                                            |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef SINGULARARCPARS_DOT_HH
 #define SINGULARARCPARS_DOT_HH
 
-#define numBC                    5
+#define numBc                    5
 #define numModelPars             8
 #define numConstraint1D          1
 #define numConstraint2D          0

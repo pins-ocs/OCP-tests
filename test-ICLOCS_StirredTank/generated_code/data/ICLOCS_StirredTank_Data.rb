@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_StirredTank_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,11 +21,11 @@ include Mechatronix
 
 # Auxiliary values
 epsi_T    = 0.001
-x_tol     = 0.01
 tol_T     = 1
-x_epsi    = 0.1
-epsi_ctrl = 0.001
 tol_ctrl  = 0.001
+epsi_ctrl = 0.001
+x_tol     = 0.01
+x_epsi    = 0.1
 w_exp_min = 0
 w         = Math::exp(w_exp_min)
 
@@ -48,10 +48,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "ICLOCS_StirredTank_dump"

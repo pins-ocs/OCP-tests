@@ -1,0 +1,77 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+
+
+
+Controls
+uControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.0001,
+  size    = 0.0001
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
+Segment N.0: s0 = 0.000 length = 1.000 npts = 401 no data set
+END Mesh[mesh]
+
+Model Parameters
+.....................................x_i = 0
+INFO CLASS = WorstCaseScenario
+  #nodes      = 401
+  dim         = u = 1, q = 1, x = 1, p = 0, omega = 1, bc = 1, full_bc = 3
+  BC          = Inital = 2, Final = 1, Cyclic = 0
+  OMEGA       = Inital = 1, Final = 0, Cyclic = 0
+  total       = nZ = 803, UC = 400, Q = 401
+  index start = omega = 802, p = 803
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1,16] ( 0.00156  , 0.00182  ) [  739.0   ,  739.0   ] 0.000216   [solverNewtonDumped]
+[  2, 5] ( 0.00182  , 0.00225  ) [   47.2   ,   47.0   ] 0.00222    [solverNewtonDumped]
+[  3, 1] ( 0.00225  , 0.00225  ) [  0.725   ,  0.616   ] 0.0943     [solverNewtonDumped]
+[  4, 1] ( 0.00225  , 0.000870 ) [  0.716   ,  0.276   ] 0.614      [solverNewtonDumped]
+[  5, 1] ( 0.000870 , 4.07e-09 ) [  0.276   , 8.16e-07 ] 1.00       [solverNewtonDumped]
+[  6, 1] ( 4.07e-09 , 1.10e-18 ) [ 8.16e-07 , 8.38e-19 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 6.34[ms]      timeout        = 0 [ms]
+iteration      = 6             tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 803
+max acc. iter. = 800           N. System pars = 400
+Converged      = YES           Memory Used    = 89Kb (+46bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 26            Jacobian       = 6         
+Factorization  = 6             Inversion      = 31        
+------------------------ USER INFO -------------------------
+last ||d||_inf = 1.3864e-17    last||d1||_inf = 3.2675e-06
+last ||f||_inf = 2.7105e-17    last||f||_1    = 1.1010e-18
+------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ 0.000, -0.2500 ]
+[Penalties/Barriers,Controls] = [ 0.000, 0.0001055 ]
+All Done Folks!

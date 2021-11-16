@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_AdjointODE.cc                               |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -75,48 +75,58 @@ namespace HangGliderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_x];
-    real_type t2   = X__[iX_vy];
-    real_type t3   = w_D_1(t1, t2);
-    real_type t4   = L__[iL_lambda4__xo];
-    real_type t7   = U__[iU_cL];
-    real_type t8   = t7 * t7;
-    real_type t11  = t8 * ModelPars[iM_c1] + ModelPars[iM_c0];
-    real_type t12  = X__[iX_vx];
-    real_type t13  = Dfun(t1, t12, t2);
-    real_type t14  = t13 * t11;
-    real_type t16  = L__[iL_lambda3__xo];
-    real_type t18  = w(t1, t2);
-    real_type t21  = (t16 * t12 + t18 * t4) * t11;
-    real_type t22  = Dfun_D_1(t1, t12, t2);
-    real_type t25  = Lfun(t1, t12, t2);
-    real_type t27  = Lfun_D_1(t1, t12, t2);
-    real_type t30  = -t12 * t4 + t18 * t16;
-    real_type t35  = v(t1, t12, t2);
-    real_type t37  = v_D_1(t1, t12, t2);
-    real_type t41  = t30 * t25 * t7 + t13 * t21;
-    real_type t44  = P__[iP_T];
-    real_type t46  = ModelPars[iM_m];
-    real_type t48  = t35 * t35;
-    real_type t50  = 1.0 / t48 / t46;
-    result__[ 0   ] = -t50 * t44 * (t35 * (t14 * t4 * t3 + t22 * t21 + t7 * (t25 * t3 * t16 + t30 * t27)) - t41 * t37);
+    real_type t2   = P__[iP_T];
+    real_type t3   = t2 * L__[iL_lambda3__xo];
+    real_type t5   = 1.0 / ModelPars[iM_m];
+    real_type t6   = t5 * t3;
+    real_type t7   = X__[iX_x];
+    real_type t8   = X__[iX_vx];
+    real_type t9   = X__[iX_vy];
+    real_type t10  = v(t7, t8, t9);
+    real_type t11  = t10 * t10;
+    real_type t12  = 1.0 / t11;
+    real_type t14  = U__[iU_cL];
+    real_type t15  = t14 * t14;
+    real_type t18  = t15 * ModelPars[iM_c1] + ModelPars[iM_c0];
+    real_type t19  = Dfun(t7, t8, t9);
+    real_type t20  = t19 * t18;
+    real_type t22  = Lfun(t7, t8, t9);
+    real_type t23  = t22 * t14;
+    real_type t24  = w(t7, t9);
+    real_type t27  = (-t20 * t8 - t23 * t24) * t12;
+    real_type t28  = v_D_1(t7, t8, t9);
+    real_type t31  = 1.0 / t10;
+    real_type t32  = t31 * t5;
+    real_type t33  = Dfun_D_1(t7, t8, t9);
+    real_type t34  = t33 * t18;
+    real_type t36  = Lfun_D_1(t7, t8, t9);
+    real_type t37  = t36 * t14;
+    real_type t39  = w_D_1(t7, t9);
+    real_type t44  = L__[iL_lambda4__xo];
+    real_type t45  = t5 * t2;
+    real_type t49  = (-t24 * t20 + t23 * t8) * t12;
+    result__[ 0   ] = -t28 * t27 * t6 + (-t23 * t39 - t24 * t37 - t34 * t8) * t32 * t3 + (-t28 * t49 * t45 + (-t20 * t39 - t24 * t34 + t37 * t8) * t31 * t45) * t44;
     result__[ 1   ] = 0;
-    real_type t57  = Dfun_D_2(t1, t12, t2);
-    real_type t60  = Lfun_D_2(t1, t12, t2);
-    real_type t66  = v_D_2(t1, t12, t2);
-    result__[ 2   ] = t50 * t44 * (t48 * t46 * L__[iL_lambda1__xo] + t35 * (-t13 * t11 * t16 - t57 * t21 - t7 * (-t25 * t4 + t30 * t60)) + t41 * t66);
-    real_type t73  = w_D_2(t1, t2);
-    real_type t76  = Dfun_D_3(t1, t12, t2);
-    real_type t80  = Lfun_D_3(t1, t12, t2);
-    real_type t86  = v_D_3(t1, t12, t2);
-    result__[ 3   ] = t50 * t44 * (t48 * t46 * L__[iL_lambda2__xo] + t35 * (-t14 * t4 * t73 - t76 * t21 - t7 * (t25 * t16 * t73 + t30 * t80)) + t86 * t41);
+    real_type t62  = v_D_2(t7, t8, t9);
+    real_type t65  = Dfun_D_2(t7, t8, t9);
+    real_type t66  = t65 * t18;
+    real_type t68  = Lfun_D_2(t7, t8, t9);
+    real_type t69  = t68 * t14;
+    result__[ 2   ] = t2 * L__[iL_lambda1__xo] - t62 * t27 * t6 + (-t24 * t69 - t66 * t8 - t20) * t32 * t3 + (-t62 * t49 * t45 + (-t24 * t66 + t69 * t8 + t23) * t31 * t45) * t44;
+    real_type t85  = v_D_3(t7, t8, t9);
+    real_type t88  = Dfun_D_3(t7, t8, t9);
+    real_type t89  = t88 * t18;
+    real_type t91  = Lfun_D_3(t7, t8, t9);
+    real_type t92  = t91 * t14;
+    real_type t94  = w_D_2(t7, t9);
+    result__[ 3   ] = t2 * L__[iL_lambda2__xo] - t85 * t27 * t6 + (-t23 * t94 - t24 * t92 - t8 * t89) * t32 * t3 + (-t85 * t49 * t45 + (-t94 * t20 - t24 * t89 + t8 * t92) * t31 * t45) * t44;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -137,8 +147,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
@@ -157,92 +167,112 @@ namespace HangGliderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = X__[iX_x];
-    real_type t3   = X__[iX_vy];
-    real_type t4   = w_D_1_1(t2, t3);
-    real_type t5   = L__[iL_lambda4__xo];
-    real_type t8   = U__[iU_cL];
-    real_type t9   = t8 * t8;
-    real_type t12  = t9 * ModelPars[iM_c1] + ModelPars[iM_c0];
-    real_type t13  = X__[iX_vx];
-    real_type t14  = Dfun(t2, t13, t3);
-    real_type t15  = t14 * t12;
-    real_type t17  = w_D_1(t2, t3);
-    real_type t18  = t5 * t17;
-    real_type t19  = Dfun_D_1(t2, t13, t3);
-    real_type t20  = t19 * t12;
-    real_type t23  = L__[iL_lambda3__xo];
-    real_type t25  = Lfun(t2, t13, t3);
-    real_type t26  = t25 * t8;
-    real_type t29  = w(t2, t3);
-    real_type t32  = (t13 * t23 + t29 * t5) * t12;
-    real_type t33  = Dfun_D_1_1(t2, t13, t3);
-    real_type t35  = t17 * t23;
-    real_type t36  = Lfun_D_1(t2, t13, t3);
-    real_type t39  = Lfun_D_1_1(t2, t13, t3);
-    real_type t42  = -t13 * t5 + t29 * t23;
-    real_type t47  = v(t2, t13, t3);
-    real_type t48  = t47 * t47;
-    real_type t50  = t15 * t18;
-    real_type t51  = t19 * t32;
-    real_type t56  = -t50 - t51 - t8 * (t25 * t35 + t42 * t36);
-    real_type t58  = v_D_1(t2, t13, t3);
-    real_type t62  = t14 * t32 + t42 * t26;
-    real_type t63  = v_D_1_1(t2, t13, t3);
-    real_type t67  = t58 * t58;
-    real_type t76  = 1.0 / t48 / t47 / ModelPars[iM_m];
-    result__[ 0   ] = -t76 * (t48 * (t15 * t5 * t4 + 2 * t20 * t18 + t26 * t4 * t23 + t33 * t32 + t8 * (2 * t36 * t35 + t42 * t39)) + t47 * (2 * t58 * t56 - t63 * t62) + 2 * t67 * t62) * t1;
-    real_type t78  = t12 * t23;
-    real_type t80  = Dfun_D_2(t2, t13, t3);
-    real_type t81  = t80 * t12;
-    real_type t83  = Dfun_D_1_2(t2, t13, t3);
-    real_type t86  = Lfun_D_2(t2, t13, t3);
-    real_type t88  = Lfun_D_1_2(t2, t13, t3);
-    real_type t100 = -t14 * t78 - t80 * t32 - (-t25 * t5 + t42 * t86) * t8;
-    real_type t102 = v_D_2(t2, t13, t3);
-    real_type t104 = v_D_1_2(t2, t13, t3);
-    result__[ 1   ] = -t76 * t1 * (t48 * (t19 * t78 + t81 * t18 + t83 * t32 + t8 * (t86 * t35 - t36 * t5 + t42 * t88)) + t47 * (t58 * t100 + t102 * t56 - t62 * t104) + 2 * t62 * t102 * t58);
-    real_type t114 = w_D_1_2(t2, t3);
-    real_type t119 = w_D_2(t2, t3);
-    real_type t120 = t5 * t119;
-    real_type t122 = Dfun_D_3(t2, t13, t3);
-    real_type t123 = t122 * t12;
-    real_type t125 = Dfun_D_1_3(t2, t13, t3);
-    real_type t127 = t119 * t23;
-    real_type t129 = Lfun_D_3(t2, t13, t3);
-    real_type t131 = Lfun_D_1_3(t2, t13, t3);
-    real_type t137 = t15 * t120;
-    real_type t139 = t122 * t32;
-    real_type t148 = v_D_3(t2, t13, t3);
-    real_type t150 = v_D_1_3(t2, t13, t3);
-    result__[ 2   ] = -t76 * t1 * (t48 * (t15 * t5 * t114 + t26 * t114 * t23 + t20 * t120 + t123 * t18 + t125 * t32 + t8 * (t36 * t127 + t129 * t35 + t42 * t131)) + t47 * (t58 * (-t42 * t8 * t129 - t26 * t127 - t137 - t139) + t148 * (-t42 * t8 * t36 - t26 * t35 - t50 - t51) - t150 * t62) + 2 * t58 * t62 * t148);
+    real_type t2   = P__[iP_T];
+    real_type t3   = t2 * L__[iL_lambda3__xo];
+    real_type t5   = 1.0 / ModelPars[iM_m];
+    real_type t6   = t5 * t3;
+    real_type t7   = X__[iX_x];
+    real_type t8   = X__[iX_vx];
+    real_type t9   = X__[iX_vy];
+    real_type t10  = v(t7, t8, t9);
+    real_type t11  = t10 * t10;
+    real_type t13  = 1.0 / t11 / t10;
+    real_type t15  = U__[iU_cL];
+    real_type t16  = t15 * t15;
+    real_type t19  = t16 * ModelPars[iM_c1] + ModelPars[iM_c0];
+    real_type t20  = Dfun(t7, t8, t9);
+    real_type t21  = t20 * t19;
+    real_type t23  = Lfun(t7, t8, t9);
+    real_type t24  = t23 * t15;
+    real_type t25  = w(t7, t9);
+    real_type t27  = -t21 * t8 - t24 * t25;
+    real_type t28  = t27 * t13;
+    real_type t29  = v_D_1(t7, t8, t9);
+    real_type t30  = t29 * t29;
+    real_type t34  = 1.0 / t11;
+    real_type t35  = Dfun_D_1(t7, t8, t9);
+    real_type t36  = t35 * t19;
+    real_type t38  = Lfun_D_1(t7, t8, t9);
+    real_type t39  = t38 * t15;
+    real_type t41  = w_D_1(t7, t9);
+    real_type t44  = (-t24 * t41 - t25 * t39 - t36 * t8) * t34;
+    real_type t48  = t27 * t34;
+    real_type t49  = v_D_1_1(t7, t8, t9);
+    real_type t52  = 1.0 / t10;
+    real_type t53  = t52 * t5;
+    real_type t54  = Dfun_D_1_1(t7, t8, t9);
+    real_type t55  = t54 * t19;
+    real_type t57  = Lfun_D_1_1(t7, t8, t9);
+    real_type t58  = t57 * t15;
+    real_type t62  = w_D_1_1(t7, t9);
+    real_type t67  = L__[iL_lambda4__xo];
+    real_type t68  = t5 * t2;
+    real_type t71  = -t21 * t25 + t24 * t8;
+    real_type t72  = t71 * t13;
+    real_type t80  = (-t21 * t41 - t25 * t36 + t39 * t8) * t34;
+    real_type t84  = t71 * t34;
+    result__[ 0   ] = 2 * t30 * t28 * t6 - 2 * t29 * t44 * t6 - t49 * t48 * t6 + (-t24 * t62 - t25 * t58 - 2 * t39 * t41 - t55 * t8) * t53 * t3 + (2 * t30 * t72 * t68 - 2 * t29 * t80 * t68 - t49 * t84 * t68 + (-t21 * t62 - t25 * t55 - 2 * t36 * t41 + t58 * t8) * t52 * t68) * t67;
+    real_type t97  = v_D_2(t7, t8, t9);
+    real_type t102 = Dfun_D_2(t7, t8, t9);
+    real_type t103 = t102 * t19;
+    real_type t105 = Lfun_D_2(t7, t8, t9);
+    real_type t106 = t105 * t15;
+    real_type t109 = (-t103 * t8 - t106 * t25 - t21) * t34;
+    real_type t112 = v_D_1_2(t7, t8, t9);
+    real_type t117 = Dfun_D_1_2(t7, t8, t9);
+    real_type t118 = t117 * t19;
+    real_type t120 = Lfun_D_1_2(t7, t8, t9);
+    real_type t121 = t120 * t15;
+    real_type t127 = t13 * t68;
+    real_type t128 = t29 * t71;
+    real_type t135 = (-t103 * t25 + t106 * t8 + t24) * t34;
+    result__[ 1   ] = 2 * t97 * t29 * t28 * t6 - t29 * t109 * t6 - t112 * t48 * t6 - t97 * t44 * t6 + (-t106 * t41 - t118 * t8 - t121 * t25 - t36) * t53 * t3 + (2 * t97 * t128 * t127 - t29 * t135 * t68 - t112 * t84 * t68 - t97 * t80 * t68 + (-t103 * t41 - t118 * t25 + t121 * t8 + t39) * t52 * t68) * t67;
+    real_type t150 = v_D_3(t7, t8, t9);
+    real_type t155 = Dfun_D_3(t7, t8, t9);
+    real_type t156 = t155 * t19;
+    real_type t158 = Lfun_D_3(t7, t8, t9);
+    real_type t159 = t158 * t15;
+    real_type t161 = w_D_2(t7, t9);
+    real_type t164 = (-t156 * t8 - t159 * t25 - t161 * t24) * t34;
+    real_type t167 = v_D_1_3(t7, t8, t9);
+    real_type t172 = Dfun_D_1_3(t7, t8, t9);
+    real_type t173 = t172 * t19;
+    real_type t175 = Lfun_D_1_3(t7, t8, t9);
+    real_type t176 = t175 * t15;
+    real_type t180 = w_D_1_2(t7, t9);
+    real_type t192 = (-t156 * t25 + t159 * t8 - t161 * t21) * t34;
+    result__[ 2   ] = 2 * t150 * t29 * t28 * t6 - t29 * t164 * t6 - t167 * t48 * t6 - t150 * t44 * t6 + (-t159 * t41 - t161 * t39 - t173 * t8 - t176 * t25 - t180 * t24) * t53 * t3 + (2 * t150 * t128 * t127 - t29 * t192 * t68 - t167 * t84 * t68 - t150 * t80 * t68 + (-t156 * t41 - t161 * t36 - t173 * t25 + t176 * t8 - t180 * t21) * t52 * t68) * t67;
     result__[ 3   ] = result__[1];
-    real_type t162 = Dfun_D_2_2(t2, t13, t3);
-    real_type t166 = Lfun_D_2_2(t2, t13, t3);
-    real_type t174 = v_D_2_2(t2, t13, t3);
-    real_type t178 = t102 * t102;
-    result__[ 4   ] = -t76 * t1 * (t48 * (2 * t80 * t78 + t162 * t32 + t8 * (t42 * t166 - 2 * t86 * t5)) + t47 * (2 * t102 * t100 - t62 * t174) + 2 * t178 * t62);
-    real_type t186 = Dfun_D_2_3(t2, t13, t3);
-    real_type t190 = Lfun_D_2_3(t2, t13, t3);
-    real_type t200 = -t137 - t139 - t8 * (t25 * t127 + t42 * t129);
-    real_type t203 = v_D_2_3(t2, t13, t3);
-    result__[ 5   ] = -t76 * t1 * (t48 * (t81 * t120 + t122 * t78 + t186 * t32 + t8 * (t86 * t127 - t129 * t5 + t42 * t190)) + t47 * (t148 * t100 + t102 * t200 - t62 * t203) + 2 * t62 * t148 * t102);
+    real_type t209 = t97 * t97;
+    real_type t216 = v_D_2_2(t7, t8, t9);
+    real_type t219 = Dfun_D_2_2(t7, t8, t9);
+    real_type t220 = t219 * t19;
+    real_type t223 = Lfun_D_2_2(t7, t8, t9);
+    real_type t224 = t223 * t15;
+    result__[ 4   ] = 2 * t209 * t28 * t6 - 2 * t97 * t109 * t6 - t216 * t48 * t6 + (-t220 * t8 - t224 * t25 - 2 * t103) * t53 * t3 + (2 * t209 * t72 * t68 - 2 * t97 * t135 * t68 - t216 * t84 * t68 + (-t220 * t25 + t224 * t8 + 2 * t106) * t52 * t68) * t67;
+    real_type t251 = v_D_2_3(t7, t8, t9);
+    real_type t256 = Dfun_D_2_3(t7, t8, t9);
+    real_type t257 = t256 * t19;
+    real_type t259 = Lfun_D_2_3(t7, t8, t9);
+    real_type t260 = t259 * t15;
+    result__[ 5   ] = 2 * t150 * t97 * t28 * t6 - t97 * t164 * t6 - t251 * t48 * t6 - t150 * t109 * t6 + (-t106 * t161 - t25 * t260 - t257 * t8 - t156) * t53 * t3 + (2 * t150 * t97 * t71 * t127 - t97 * t192 * t68 - t251 * t84 * t68 - t150 * t135 * t68 + (-t103 * t161 - t25 * t257 + t260 * t8 + t159) * t52 * t68) * t67;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
-    real_type t213 = w_D_2_2(t2, t3);
-    real_type t220 = Dfun_D_3_3(t2, t13, t3);
-    real_type t224 = Lfun_D_3_3(t2, t13, t3);
-    real_type t232 = v_D_3_3(t2, t13, t3);
-    real_type t236 = t148 * t148;
-    result__[ 8   ] = -t76 * (t48 * (t15 * t5 * t213 + 2 * t123 * t120 + t26 * t213 * t23 + t220 * t32 + t8 * (2 * t129 * t127 + t42 * t224)) + t47 * (2 * t148 * t200 - t232 * t62) + 2 * t236 * t62) * t1;
+    real_type t284 = t150 * t150;
+    real_type t291 = v_D_3_3(t7, t8, t9);
+    real_type t294 = Dfun_D_3_3(t7, t8, t9);
+    real_type t295 = t294 * t19;
+    real_type t297 = Lfun_D_3_3(t7, t8, t9);
+    real_type t298 = t297 * t15;
+    real_type t302 = w_D_2_2(t7, t9);
+    result__[ 8   ] = 2 * t284 * t28 * t6 - 2 * t150 * t164 * t6 - t291 * t48 * t6 + (-2 * t159 * t161 - t24 * t302 - t25 * t298 - t295 * t8) * t53 * t3 + (2 * t284 * t72 * t68 - 2 * t150 * t192 * t68 - t291 * t84 * t68 + (-2 * t156 * t161 - t21 * t302 - t25 * t295 + t298 * t8) * t52 * t68) * t67;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
   }
@@ -263,8 +293,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 2   ; jIndex[1 ] = 0   ;
@@ -279,47 +309,55 @@ namespace HangGliderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_x];
-    real_type t2   = X__[iX_vy];
-    real_type t3   = w_D_1(t1, t2);
-    real_type t4   = L__[iL_lambda4__xo];
-    real_type t7   = U__[iU_cL];
-    real_type t8   = t7 * t7;
-    real_type t11  = t8 * ModelPars[iM_c1] + ModelPars[iM_c0];
-    real_type t12  = X__[iX_vx];
-    real_type t13  = Dfun(t1, t12, t2);
-    real_type t14  = t13 * t11;
-    real_type t16  = L__[iL_lambda3__xo];
-    real_type t18  = w(t1, t2);
-    real_type t21  = (t12 * t16 + t18 * t4) * t11;
-    real_type t22  = Dfun_D_1(t1, t12, t2);
-    real_type t25  = Lfun(t1, t12, t2);
-    real_type t27  = Lfun_D_1(t1, t12, t2);
-    real_type t30  = -t12 * t4 + t18 * t16;
-    real_type t35  = v(t1, t12, t2);
-    real_type t40  = t30 * t7 * t25 + t13 * t21;
-    real_type t41  = v_D_1(t1, t12, t2);
-    real_type t44  = ModelPars[iM_m];
-    real_type t45  = 1.0 / t44;
-    real_type t47  = t35 * t35;
-    real_type t48  = 1.0 / t47;
-    result__[ 0   ] = t48 * t45 * (t35 * (-t14 * t4 * t3 - t22 * t21 - t7 * (t25 * t3 * t16 + t30 * t27)) + t41 * t40);
-    real_type t54  = Dfun_D_2(t1, t12, t2);
-    real_type t57  = Lfun_D_2(t1, t12, t2);
-    real_type t63  = v_D_2(t1, t12, t2);
-    result__[ 1   ] = t48 * t45 * (t47 * t44 * L__[iL_lambda1__xo] + t35 * (-t13 * t11 * t16 - t54 * t21 - (-t25 * t4 + t30 * t57) * t7) + t40 * t63);
-    real_type t70  = w_D_2(t1, t2);
-    real_type t73  = Dfun_D_3(t1, t12, t2);
-    real_type t77  = Lfun_D_3(t1, t12, t2);
-    real_type t83  = v_D_3(t1, t12, t2);
-    result__[ 2   ] = t48 * t45 * (t47 * t44 * L__[iL_lambda2__xo] + t35 * (-t14 * t4 * t70 - t73 * t21 - t7 * (t25 * t70 * t16 + t30 * t77)) + t40 * t83);
+    real_type t3   = 1.0 / ModelPars[iM_m];
+    real_type t4   = t3 * L__[iL_lambda3__xo];
+    real_type t5   = X__[iX_x];
+    real_type t6   = X__[iX_vx];
+    real_type t7   = X__[iX_vy];
+    real_type t8   = v(t5, t6, t7);
+    real_type t9   = t8 * t8;
+    real_type t10  = 1.0 / t9;
+    real_type t12  = U__[iU_cL];
+    real_type t13  = t12 * t12;
+    real_type t16  = t13 * ModelPars[iM_c1] + ModelPars[iM_c0];
+    real_type t17  = Dfun(t5, t6, t7);
+    real_type t18  = t17 * t16;
+    real_type t20  = Lfun(t5, t6, t7);
+    real_type t21  = t20 * t12;
+    real_type t22  = w(t5, t7);
+    real_type t25  = (-t6 * t18 - t22 * t21) * t10;
+    real_type t26  = v_D_1(t5, t6, t7);
+    real_type t29  = 1.0 / t8;
+    real_type t30  = Dfun_D_1(t5, t6, t7);
+    real_type t31  = t30 * t16;
+    real_type t33  = Lfun_D_1(t5, t6, t7);
+    real_type t34  = t33 * t12;
+    real_type t36  = w_D_1(t5, t7);
+    real_type t41  = L__[iL_lambda4__xo];
+    real_type t42  = t10 * t3;
+    real_type t45  = -t22 * t18 + t6 * t21;
+    real_type t48  = t29 * t3;
+    result__[ 0   ] = -t26 * t25 * t4 + (-t36 * t21 - t22 * t34 - t6 * t31) * t29 * t4 + (-t26 * t45 * t42 + (-t36 * t18 - t22 * t31 + t6 * t34) * t48) * t41;
+    real_type t57  = v_D_2(t5, t6, t7);
+    real_type t60  = Dfun_D_2(t5, t6, t7);
+    real_type t61  = t60 * t16;
+    real_type t63  = Lfun_D_2(t5, t6, t7);
+    real_type t64  = t63 * t12;
+    result__[ 1   ] = L__[iL_lambda1__xo] - t57 * t25 * t4 + (-t22 * t64 - t6 * t61 - t18) * t29 * t4 + (-t57 * t45 * t42 + (-t22 * t61 + t6 * t64 + t21) * t48) * t41;
+    real_type t78  = v_D_3(t5, t6, t7);
+    real_type t81  = Dfun_D_3(t5, t6, t7);
+    real_type t82  = t81 * t16;
+    real_type t84  = Lfun_D_3(t5, t6, t7);
+    real_type t85  = t84 * t12;
+    real_type t87  = w_D_2(t5, t7);
+    result__[ 2   ] = L__[iL_lambda2__xo] - t78 * t25 * t4 + (-t87 * t21 - t22 * t85 - t6 * t82) * t29 * t4 + (-t78 * t45 * t42 + (-t87 * t18 - t22 * t82 + t6 * t85) * t48) * t41;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }
@@ -342,26 +380,25 @@ namespace HangGliderDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_cL];
-    real_type t6   = P__[iP_T];
-    real_type t10  = t2 * ModelPars[iM_c1];
+    real_type t7   = P__[iP_T];
     real_type t11  = X__[iX_x];
     real_type t12  = X__[iX_vx];
     real_type t13  = X__[iX_vy];
-    real_type t14  = Dfun(t11, t12, t13);
-    real_type t17  = Lfun(t11, t12, t13);
-    real_type t18  = w(t11, t13);
-    real_type t23  = 1.0 / ModelPars[iM_m];
-    real_type t25  = v(t11, t12, t13);
-    real_type t26  = 1.0 / t25;
-    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[iM_W] - 2 * t26 * t23 * (t12 * t14 * t10 + t18 * t17 / 2) * L__[iL_lambda3__xo] * t6 + (-2 * t18 * t14 * t10 + t12 * t17) * t26 * t23 * t6 * L__[iL_lambda4__xo];
+    real_type t14  = v(t11, t12, t13);
+    real_type t16  = 1.0 / t14 / ModelPars[iM_m];
+    real_type t18  = t2 * ModelPars[iM_c1];
+    real_type t19  = Dfun(t11, t12, t13);
+    real_type t23  = Lfun(t11, t12, t13);
+    real_type t24  = w(t11, t13);
+    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[iM_W] + (-2 * t12 * t19 * t18 - t23 * t24) * t16 * t7 * L__[iL_lambda3__xo] + (-2 * t24 * t19 * t18 + t12 * t23) * t16 * t7 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -382,8 +419,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
@@ -397,46 +434,46 @@ namespace HangGliderDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = X__[iX_x];
-    real_type t3   = X__[iX_vy];
-    real_type t4   = w_D_1(t2, t3);
-    real_type t5   = L__[iL_lambda4__xo];
-    real_type t7   = U__[iU_cL];
-    real_type t8   = ModelPars[iM_c1];
-    real_type t9   = t8 * t7;
-    real_type t10  = X__[iX_vx];
-    real_type t11  = Dfun(t2, t10, t3);
-    real_type t12  = t11 * t9;
-    real_type t15  = L__[iL_lambda3__xo];
-    real_type t17  = Lfun(t2, t10, t3);
-    real_type t20  = w(t2, t3);
-    real_type t22  = t10 * t15 + t20 * t5;
-    real_type t23  = Dfun_D_1(t2, t10, t3);
-    real_type t27  = Lfun_D_1(t2, t10, t3);
-    real_type t30  = -t10 * t5 + t20 * t15;
-    real_type t33  = v(t2, t10, t3);
-    real_type t35  = v_D_1(t2, t10, t3);
-    real_type t40  = 2 * t11 * t22 * t9 + t30 * t17;
-    real_type t46  = t33 * t33;
-    real_type t48  = 1.0 / t46 / ModelPars[iM_m];
-    result__[ 0   ] = -t48 * (t33 * (2 * t12 * t5 * t4 + t17 * t4 * t15 + 2 * t23 * t22 * t9 + t30 * t27) - t40 * t35) * t1;
-    real_type t55  = Dfun_D_2(t2, t10, t3);
-    real_type t59  = Lfun_D_2(t2, t10, t3);
-    real_type t63  = v_D_2(t2, t10, t3);
-    result__[ 1   ] = -t48 * t1 * (t33 * (2 * t11 * t8 * t7 * t15 + 2 * t55 * t22 * t9 - t5 * t17 + t30 * t59) - t40 * t63);
-    real_type t68  = w_D_2(t2, t3);
-    real_type t74  = Dfun_D_3(t2, t10, t3);
-    real_type t78  = Lfun_D_3(t2, t10, t3);
-    real_type t82  = v_D_3(t2, t10, t3);
-    result__[ 2   ] = -t48 * (t33 * (2 * t12 * t5 * t68 + t17 * t68 * t15 + 2 * t74 * t22 * t9 + t30 * t78) - t40 * t82) * t1;
+    real_type t2   = P__[iP_T];
+    real_type t3   = t2 * L__[iL_lambda3__xo];
+    real_type t5   = 1.0 / ModelPars[iM_m];
+    real_type t6   = t5 * t3;
+    real_type t7   = X__[iX_x];
+    real_type t8   = X__[iX_vx];
+    real_type t9   = X__[iX_vy];
+    real_type t10  = v(t7, t8, t9);
+    real_type t11  = t10 * t10;
+    real_type t12  = 1.0 / t11;
+    real_type t15  = ModelPars[iM_c1] * U__[iU_cL];
+    real_type t16  = Dfun(t7, t8, t9);
+    real_type t20  = Lfun(t7, t8, t9);
+    real_type t21  = w(t7, t9);
+    real_type t24  = (-2 * t8 * t16 * t15 - t21 * t20) * t12;
+    real_type t25  = v_D_1(t7, t8, t9);
+    real_type t29  = 1.0 / t10 * t5;
+    real_type t30  = Dfun_D_1(t7, t8, t9);
+    real_type t34  = Lfun_D_1(t7, t8, t9);
+    real_type t36  = w_D_1(t7, t9);
+    real_type t42  = t2 * L__[iL_lambda4__xo];
+    real_type t43  = t5 * t42;
+    real_type t49  = (-2 * t21 * t16 * t15 + t8 * t20) * t12;
+    result__[ 0   ] = -t25 * t24 * t6 + (-2 * t8 * t30 * t15 - t36 * t20 - t21 * t34) * t29 * t3 - t25 * t49 * t43 + (-2 * t36 * t16 * t15 - 2 * t21 * t30 * t15 + t8 * t34) * t29 * t42;
+    real_type t62  = v_D_2(t7, t8, t9);
+    real_type t65  = Dfun_D_2(t7, t8, t9);
+    real_type t71  = Lfun_D_2(t7, t8, t9);
+    result__[ 1   ] = -t62 * t24 * t6 + (-2 * t8 * t65 * t15 - 2 * t16 * t15 - t21 * t71) * t29 * t3 - t62 * t49 * t43 + (-2 * t21 * t65 * t15 + t8 * t71 + t20) * t29 * t42;
+    real_type t85  = v_D_3(t7, t8, t9);
+    real_type t88  = Dfun_D_3(t7, t8, t9);
+    real_type t92  = Lfun_D_3(t7, t8, t9);
+    real_type t94  = w_D_2(t7, t9);
+    result__[ 2   ] = -t85 * t24 * t6 + (-2 * t8 * t88 * t15 - t94 * t20 - t21 * t92) * t29 * t3 - t85 * t49 * t43 + (-2 * t94 * t16 * t15 - 2 * t21 * t88 * t15 + t8 * t92) * t29 * t42;
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 3, i_segment );
   }
@@ -457,8 +494,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -470,23 +507,24 @@ namespace HangGliderDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = L__[iL_lambda3__xo];
-    real_type t5   = X__[iX_vx];
-    real_type t7   = L__[iL_lambda4__xo];
-    real_type t8   = X__[iX_x];
-    real_type t9   = X__[iX_vy];
-    real_type t10  = w(t8, t9);
-    real_type t13  = Dfun(t8, t5, t9);
-    real_type t17  = Lfun(t8, t5, t9);
-    real_type t26  = v(t8, t5, t9);
-    result__[ 0   ] = 1.0 / t26 / ModelPars[iM_m] * (-2 * t13 * (t10 * t7 + t5 * t4) * ModelPars[iM_c1] * U__[iU_cL] - (t10 * t4 - t5 * t7) * t17);
+    real_type t3   = 1.0 / ModelPars[iM_m];
+    real_type t5   = X__[iX_x];
+    real_type t6   = X__[iX_vx];
+    real_type t7   = X__[iX_vy];
+    real_type t8   = v(t5, t6, t7);
+    real_type t9   = 1.0 / t8;
+    real_type t12  = ModelPars[iM_c1] * U__[iU_cL];
+    real_type t13  = Dfun(t5, t6, t7);
+    real_type t17  = Lfun(t5, t6, t7);
+    real_type t18  = w(t5, t7);
+    result__[ 0   ] = (-2 * t6 * t13 * t12 - t18 * t17) * t9 * t3 * L__[iL_lambda3__xo] + (-2 * t18 * t13 * t12 + t6 * t17) * t9 * t3 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHuDp_sparse", 1, i_segment );
   }
@@ -510,27 +548,28 @@ namespace HangGliderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_m];
-    real_type t3   = X__[iX_vx];
-    real_type t6   = L__[iL_lambda4__xo];
-    real_type t9   = X__[iX_vy];
-    real_type t12  = ALIAS_Tbound_D(P__[iP_T]);
-    real_type t15  = X__[iX_x];
-    real_type t16  = v(t15, t3, t9);
-    real_type t19  = U__[iU_cL];
-    real_type t20  = t19 * t19;
-    real_type t24  = L__[iL_lambda3__xo];
-    real_type t26  = w(t15, t9);
-    real_type t30  = Dfun(t15, t3, t9);
-    real_type t32  = Lfun(t15, t3, t9);
-    result__[ 0   ] = 1.0 / t16 / t1 * (t16 * (t3 * L__[iL_lambda1__xo] - t6 * ModelPars[iM_g] + t9 * L__[iL_lambda2__xo] + t12) * t1 - t30 * (t3 * t24 + t26 * t6) * (t20 * ModelPars[iM_c1] + ModelPars[iM_c0]) - (t26 * t24 - t3 * t6) * t32 * t19);
+    real_type t2   = ALIAS_Tbound_D(P__[iP_T]);
+    real_type t4   = X__[iX_vx];
+    real_type t7   = X__[iX_vy];
+    real_type t11  = 1.0 / ModelPars[iM_m];
+    real_type t13  = X__[iX_x];
+    real_type t14  = v(t13, t4, t7);
+    real_type t15  = 1.0 / t14;
+    real_type t17  = U__[iU_cL];
+    real_type t18  = t17 * t17;
+    real_type t22  = Dfun(t13, t4, t7);
+    real_type t23  = t22 * (t18 * ModelPars[iM_c1] + ModelPars[iM_c0]);
+    real_type t25  = Lfun(t13, t4, t7);
+    real_type t26  = t25 * t17;
+    real_type t27  = w(t13, t7);
+    result__[ 0   ] = t2 + t4 * L__[iL_lambda1__xo] + t7 * L__[iL_lambda2__xo] + (-t4 * t23 - t27 * t26) * t15 * t11 * L__[iL_lambda3__xo] + ((-t27 * t23 + t4 * t26) * t15 * t11 - ModelPars[iM_g]) * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
@@ -551,8 +590,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
@@ -565,12 +604,12 @@ namespace HangGliderDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_Tbound_DD(P__[iP_T]);
     if ( m_debug )
@@ -592,12 +631,12 @@ namespace HangGliderDefine {
   HangGlider::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -623,8 +662,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -634,7 +673,7 @@ namespace HangGliderDefine {
   HangGlider::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -655,8 +694,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -666,7 +705,7 @@ namespace HangGliderDefine {
   HangGlider::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -687,11 +726,11 @@ namespace HangGliderDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -717,8 +756,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -729,7 +768,7 @@ namespace HangGliderDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -750,8 +789,8 @@ namespace HangGliderDefine {
 
   void
   HangGlider::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -762,7 +801,7 @@ namespace HangGliderDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

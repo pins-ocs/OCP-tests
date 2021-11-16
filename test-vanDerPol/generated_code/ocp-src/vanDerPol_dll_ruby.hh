@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_dll_ruby.hh                                          |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,7 +82,7 @@ namespace vanDerPolDefine {
 
   #include <sstream>
 
-  #ifndef MECHATRONIX_OS_WINDOWS
+  #if !defined(MECHATRONIX_OS_WINDOWS) && !defined(MECHATRONIX_OS_MINGW)
     #include <signal.h>
     #include <execinfo.h>
   #endif
@@ -136,7 +136,7 @@ namespace vanDerPolDefine {
         error = exc.what();
         ok    = false;
       }
-      catch ( char const * exc ) {
+      catch ( char const exc[] ) {
         error = exc;
         ok    = false;
       }
@@ -240,24 +240,24 @@ namespace vanDerPolDefine {
   EXTERN_C
   VANDERPOL_API_DLL
   bool
-  vanDerPol_ocp_setup( char const * id, GenericContainer & gc_data );
+  vanDerPol_ocp_setup( char const id[], GenericContainer & gc_data );
 
   EXTERN_C
   VANDERPOL_API_DLL
   bool
-  vanDerPol_ocp_guess( char const * id, GenericContainer & gc_guess );
+  vanDerPol_ocp_guess( char const id[], GenericContainer & gc_guess );
 
   EXTERN_C
   VANDERPOL_API_DLL
   bool
-  vanDerPol_ocp_solve( char const       * id,
+  vanDerPol_ocp_solve( char const id[],
                        GenericContainer & gc_data,
                        GenericContainer & gc_solution );
 
   EXTERN_C
   VANDERPOL_API_DLL
   void
-  vanDerPol_write_ocp_solution( char const * id, char const * fname );
+  vanDerPol_write_ocp_solution( char const id[], char const fname[] );
 
 }
 

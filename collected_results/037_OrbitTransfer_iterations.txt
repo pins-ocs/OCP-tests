@@ -1,0 +1,86 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_m
+[ 1] initial_alpha
+[ 2] initial_r
+[ 3] initial_u
+[ 4] initial_v
+[ 5] final_u
+[ 6] v_final
+
+
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 1001
+Segment N.0: s0 = 0.000 length = 1.000 npts = 1001 no data set
+END Mesh[mesh]
+
+Model Parameters
+.......................................T = 0.01405
+......................................m0 = 1
+....................................mdot = 0.00748865
+......................................mu = 1
+......................................r0 = 1
+......................................tf = 16.6
+......................................v0 = 1
+INFO CLASS = OrbitTransfer
+  #nodes      = 1001
+  dim         = u = 1, q = 1, x = 5, p = 0, omega = 7, bc = 7, full_bc = 17
+  BC          = Inital = 10, Final = 7, Cyclic = 0
+  OMEGA       = Inital = 5, Final = 2, Cyclic = 0
+  total       = nZ = 10017, UC = 1000, Q = 1001
+  index start = omega = 10010, p = 10017
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1,14] ( 0.000136 , 0.000135 ) [  0.664   ,  0.512   ] 0.00175    [solverNewtonDumped]
+[  2, 1] ( 0.000135 , 0.000136 ) [  0.664   ,  0.611   ] 0.0838     [solverNewtonDumped]
+[  3, 4] ( 0.000136 , 0.000158 ) [  0.648   ,  0.537   ] 0.182      [solverNewtonDumped]
+[  4, 6] ( 0.000158 , 0.000194 ) [  0.607   ,  0.476   ] 0.238      [solverNewtonDumped]
+[  5, 5] ( 0.000194 , 0.000248 ) [  0.588   ,  0.420   ] 0.340      [solverNewtonDumped]
+[  6, 3] ( 0.000248 , 0.000337 ) [  0.513   ,  0.262   ] 0.626      [solverNewtonDumped]
+[  7, 2] ( 0.000337 , 0.000187 ) [  0.363   ,  0.0954  ] 0.555      [solverNewtonDumped]
+[  8, 1] ( 0.000187 , 1.46e-05 ) [  0.0877  , 0.00416  ] 1.00       [solverNewtonDumped]
+[  9, 1] ( 1.46e-05 , 4.73e-08 ) [ 0.00403  , 5.28e-05 ] 1.00       [solverNewtonDumped]
+[ 10, 1] ( 4.73e-08 , 3.53e-12 ) [ 5.37e-05 , 1.07e-08 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 29.2[ms]      timeout        = 0 [ms]
+iteration      = 10            tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 10017
+max acc. iter. = 800           N. System pars = 1000
+Converged      = YES           Memory Used    = 881Kb (+46bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 39            Jacobian       = 10        
+Factorization  = 10            Inversion      = 48        
+------------------------ USER INFO -------------------------
+last ||d||_inf = 1.0117e-07    last||d1||_inf = 0.00059130
+last ||f||_inf = 3.7510e-11    last||f||_1    = 3.5303e-12
+------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ 0.000, -1.698 ]
+[Penalties/Barriers,Controls] = [ 0.000, 0.000 ]
+All Done Folks!

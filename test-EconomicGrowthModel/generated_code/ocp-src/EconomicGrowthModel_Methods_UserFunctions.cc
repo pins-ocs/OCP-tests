@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_UserFunctions.cc                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -311,7 +311,7 @@ namespace EconomicGrowthModelDefine {
   real_type
   EconomicGrowthModel::x1R( real_type xo__t ) const {
     real_type t1   = ModelPars[iM_x2_i];
-    real_type result__ = -2 / (-2 + t1 * (xo__t - ModelPars[iM_t0])) * t1;
+    real_type result__ = 1.0 / (1 + (ModelPars[iM_t0] - xo__t) * t1 / 2) * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -326,8 +326,8 @@ namespace EconomicGrowthModelDefine {
   EconomicGrowthModel::x1R_D( real_type xo__t ) const {
     real_type t1   = ModelPars[iM_x2_i];
     real_type t2   = t1 * t1;
-    real_type t7   = pow(-2 + t1 * (xo__t - ModelPars[iM_t0]), 2);
-    real_type result__ = 2 / t7 * t2;
+    real_type t8   = pow(1 + (ModelPars[iM_t0] - xo__t) * t1 / 2, 2);
+    real_type result__ = 1.0 / t8 * t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -342,9 +342,9 @@ namespace EconomicGrowthModelDefine {
   EconomicGrowthModel::x1R_DD( real_type xo__t ) const {
     real_type t1   = ModelPars[iM_x2_i];
     real_type t2   = t1 * t1;
-    real_type t7   = -2 + t1 * (xo__t - ModelPars[iM_t0]);
-    real_type t8   = t7 * t7;
-    real_type result__ = -4 / t8 / t7 * t2 * t1;
+    real_type t8   = 1 + (ModelPars[iM_t0] - xo__t) * t1 / 2;
+    real_type t9   = t8 * t8;
+    real_type result__ = 1.0 / t9 / t8 * t2 * t1 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -398,8 +398,8 @@ namespace EconomicGrowthModelDefine {
   EconomicGrowthModel::l1R( real_type xo__t ) const {
     real_type t1   = ModelPars[iM_t0];
     real_type t2   = l1L(t1);
-    real_type t7   = pow(-2 + ModelPars[iM_x2_i] * (xo__t - t1), 2);
-    real_type result__ = t7 * t2 / 4;
+    real_type t8   = pow((xo__t - t1) * ModelPars[iM_x2_i] / 2 - 1, 2);
+    real_type result__ = t8 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -414,8 +414,8 @@ namespace EconomicGrowthModelDefine {
   EconomicGrowthModel::l1R_D( real_type xo__t ) const {
     real_type t1   = ModelPars[iM_t0];
     real_type t2   = l1L(t1);
-    real_type t4   = ModelPars[iM_x2_i];
-    real_type result__ = t4 * (-2 + t4 * (xo__t - t1)) * t2 / 2;
+    real_type t3   = ModelPars[iM_x2_i];
+    real_type result__ = t3 * ((xo__t - t1) * t3 / 2 - 1) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

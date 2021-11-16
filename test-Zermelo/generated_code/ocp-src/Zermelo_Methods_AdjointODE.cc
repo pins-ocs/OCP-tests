@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_AdjointODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -66,34 +66,36 @@ namespace ZermeloDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_T];
-    real_type t2   = X__[iX_x];
-    real_type t3   = X__[iX_y];
-    real_type t4   = velX_D_1(t2, t3);
-    real_type t5   = L__[iL_lambda1__xo];
-    real_type t7   = velY_D_1(t2, t3);
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = X__[iX_T];
+    real_type t3   = t2 * t1;
+    real_type t4   = X__[iX_x];
+    real_type t5   = X__[iX_y];
+    real_type t6   = velX_D_1(t4, t5);
     real_type t8   = L__[iL_lambda2__xo];
-    result__[ 0   ] = (t5 * t4 + t8 * t7) * t1;
-    real_type t11  = velX_D_2(t2, t3);
-    real_type t13  = velY_D_2(t2, t3);
-    result__[ 1   ] = (t5 * t11 + t8 * t13) * t1;
-    result__[ 2   ] = t1 * t5;
-    result__[ 3   ] = t1 * t8;
-    real_type t16  = ALIAS_Tpositive_D(t1);
-    real_type t18  = velX(t2, t3);
-    real_type t22  = velY(t2, t3);
+    real_type t9   = t2 * t8;
+    real_type t10  = velY_D_1(t4, t5);
+    result__[ 0   ] = t10 * t9 + t6 * t3;
+    real_type t12  = velX_D_2(t4, t5);
+    real_type t14  = velY_D_2(t4, t5);
+    result__[ 1   ] = t12 * t3 + t14 * t9;
+    result__[ 2   ] = t2 * t1;
+    result__[ 3   ] = t2 * t8;
+    real_type t16  = ALIAS_Tpositive_D(t2);
+    real_type t18  = velX(t4, t5);
+    real_type t22  = velY(t4, t5);
     real_type t26  = ModelPars[iM_S];
     real_type t28  = U__[iU_u];
     real_type t29  = cos(t28);
     real_type t33  = sin(t28);
-    result__[ 4   ] = t16 + (X__[iX_vx] + t18) * t5 + (X__[iX_vy] + t22) * t8 + t29 * t26 * L__[iL_lambda3__xo] + t33 * t26 * L__[iL_lambda4__xo];
+    result__[ 4   ] = t16 + (X__[iX_vx] + t18) * t1 + (X__[iX_vy] + t22) * t8 + t29 * t26 * L__[iL_lambda3__xo] + t33 * t26 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }
@@ -114,8 +116,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
@@ -138,41 +140,43 @@ namespace ZermeloDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_T];
-    real_type t2   = X__[iX_x];
-    real_type t3   = X__[iX_y];
-    real_type t4   = velX_D_1_1(t2, t3);
-    real_type t5   = L__[iL_lambda1__xo];
-    real_type t7   = velY_D_1_1(t2, t3);
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = X__[iX_T];
+    real_type t3   = t2 * t1;
+    real_type t4   = X__[iX_x];
+    real_type t5   = X__[iX_y];
+    real_type t6   = velX_D_1_1(t4, t5);
     real_type t8   = L__[iL_lambda2__xo];
-    result__[ 0   ] = (t5 * t4 + t8 * t7) * t1;
-    real_type t11  = velX_D_1_2(t2, t3);
-    real_type t13  = velY_D_1_2(t2, t3);
-    result__[ 1   ] = (t5 * t11 + t8 * t13) * t1;
-    real_type t16  = velX_D_1(t2, t3);
-    real_type t18  = velY_D_1(t2, t3);
-    result__[ 2   ] = t16 * t5 + t18 * t8;
+    real_type t9   = t2 * t8;
+    real_type t10  = velY_D_1_1(t4, t5);
+    result__[ 0   ] = t10 * t9 + t6 * t3;
+    real_type t12  = velX_D_1_2(t4, t5);
+    real_type t14  = velY_D_1_2(t4, t5);
+    result__[ 1   ] = t12 * t3 + t14 * t9;
+    real_type t16  = velX_D_1(t4, t5);
+    real_type t18  = velY_D_1(t4, t5);
+    result__[ 2   ] = t16 * t1 + t18 * t8;
     result__[ 3   ] = result__[1];
-    real_type t20  = velX_D_2_2(t2, t3);
-    real_type t22  = velY_D_2_2(t2, t3);
-    result__[ 4   ] = (t5 * t20 + t8 * t22) * t1;
-    real_type t25  = velX_D_2(t2, t3);
-    real_type t27  = velY_D_2(t2, t3);
-    result__[ 5   ] = t25 * t5 + t27 * t8;
-    result__[ 6   ] = t5;
+    real_type t20  = velX_D_2_2(t4, t5);
+    real_type t22  = velY_D_2_2(t4, t5);
+    result__[ 4   ] = t20 * t3 + t22 * t9;
+    real_type t24  = velX_D_2(t4, t5);
+    real_type t26  = velY_D_2(t4, t5);
+    result__[ 5   ] = t24 * t1 + t26 * t8;
+    result__[ 6   ] = t1;
     result__[ 7   ] = t8;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[5];
     result__[ 10  ] = result__[6];
     result__[ 11  ] = result__[7];
-    result__[ 12  ] = ALIAS_Tpositive_DD(t1);
+    result__[ 12  ] = ALIAS_Tpositive_DD(t2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 13, i_segment );
   }
@@ -193,8 +197,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -206,7 +210,7 @@ namespace ZermeloDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -229,17 +233,19 @@ namespace ZermeloDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = U__[iU_u];
-    real_type t5   = cos(t4);
-    real_type t8   = sin(t4);
-    result__[ 0   ] = (L__[iL_lambda4__xo] * t5 - L__[iL_lambda3__xo] * t8) * ModelPars[iM_S] * X__[iX_T];
+    real_type t2   = X__[iX_T];
+    real_type t4   = ModelPars[iM_S];
+    real_type t5   = U__[iU_u];
+    real_type t6   = sin(t5);
+    real_type t11  = cos(t5);
+    result__[ 0   ] = t11 * t2 * t4 * L__[iL_lambda4__xo] - t2 * t4 * t6 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -260,8 +266,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
   }
@@ -273,12 +279,12 @@ namespace ZermeloDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_S];
     real_type t4   = U__[iU_u];
@@ -305,8 +311,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -317,7 +323,7 @@ namespace ZermeloDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -341,7 +347,7 @@ namespace ZermeloDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -362,8 +368,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -375,7 +381,7 @@ namespace ZermeloDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -395,12 +401,12 @@ namespace ZermeloDefine {
   Zermelo::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -427,8 +433,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -438,7 +444,7 @@ namespace ZermeloDefine {
   Zermelo::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -459,8 +465,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -470,7 +476,7 @@ namespace ZermeloDefine {
   Zermelo::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -491,11 +497,11 @@ namespace ZermeloDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -522,8 +528,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -534,7 +540,7 @@ namespace ZermeloDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -555,8 +561,8 @@ namespace ZermeloDefine {
 
   void
   Zermelo::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -567,7 +573,7 @@ namespace ZermeloDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

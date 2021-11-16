@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Pars.hh                                     |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef BANGBANGFREDUNDANTPARS_DOT_HH
 #define BANGBANGFREDUNDANTPARS_DOT_HH
 
-#define numBC                    3
+#define numBc                    3
 #define numModelPars             2
 #define numConstraint1D          1
 #define numConstraint2D          0

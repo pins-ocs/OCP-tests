@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank.hh                                          |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -26,6 +26,9 @@
 // User Headers
 #include <MechatronixCore/MechatronixCore.hh>
 
+
+// User Header (begin)
+// User Header (end)
 
 #ifdef MECHATRONIX_OS_WINDOWS
   #ifndef ICLOCS_STIRREDTANK_API_DLL
@@ -57,6 +60,9 @@ namespace ICLOCS_StirredTankDefine {
   // user class in namespaces
   using Mechatronix::MeshStd;
 
+
+  // User Namespaces (begin)
+  // User Namespaces (end)
 
   extern char const *namesBc[];
   extern char const *namesXvars[];
@@ -125,18 +131,28 @@ namespace ICLOCS_StirredTankDefine {
     ICLOCS_StirredTank const & operator = ( ICLOCS_StirredTank const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
-    void continuationStep0( real_type s );
+    void continuation_step_0( real_type s );
 
   public:
 
     using Mechatronix::Discretized_Indirect_OCP::setup;
     using Mechatronix::Discretized_Indirect_OCP::guess;
 
-    using Mechatronix::Discretized_Indirect_OCP::num_omega;
+    using Mechatronix::Discretized_Indirect_OCP::num_active_BC;
+    using Mechatronix::Discretized_Indirect_OCP::num_initial_BC;
+    using Mechatronix::Discretized_Indirect_OCP::num_final_BC;
+    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_BC;
 
-    using Mechatronix::Discretized_Indirect_OCP::bc_inv_map;
+    using Mechatronix::Discretized_Indirect_OCP::num_OMEGA;
+    using Mechatronix::Discretized_Indirect_OCP::num_initial_OMEGA;
+    using Mechatronix::Discretized_Indirect_OCP::num_final_OMEGA;
+    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_OMEGA;
+
     using Mechatronix::Discretized_Indirect_OCP::bc_map;
-    using Mechatronix::Discretized_Indirect_OCP::num_BC;
+    using Mechatronix::Discretized_Indirect_OCP::bc_inv_map;
+
+    using Mechatronix::Discretized_Indirect_OCP::omega_map;
+    using Mechatronix::Discretized_Indirect_OCP::omega_inv_map;
 
     using Mechatronix::Discretized_Indirect_OCP::dim_Q;
     using Mechatronix::Discretized_Indirect_OCP::dim_X;
@@ -144,9 +160,11 @@ namespace ICLOCS_StirredTankDefine {
     using Mechatronix::Discretized_Indirect_OCP::dim_Pars;
     using Mechatronix::Discretized_Indirect_OCP::dim_Omega;
     using Mechatronix::Discretized_Indirect_OCP::dim_BC;
-    using Mechatronix::Discretized_Indirect_OCP::nNodes;
+    using Mechatronix::Discretized_Indirect_OCP::dim_full_BC;
+    using Mechatronix::Discretized_Indirect_OCP::num_nodes;
 
     using Mechatronix::Discretized_Indirect_OCP::num_equations;
+    using Mechatronix::Discretized_Indirect_OCP::num_parameters;
     using Mechatronix::Discretized_Indirect_OCP::eval_F;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_nnz;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_pattern;
@@ -167,11 +185,13 @@ namespace ICLOCS_StirredTankDefine {
       Console const * console
     );
 
-    ICLOCS_STIRREDTANK_API_DLL virtual
     ~ICLOCS_StirredTank() override;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    ICLOCS_STIRREDTANK_API_DLL virtual
+    // Begin: User Definitions
+    // End: User Definitions
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     char const * model_name() const override
     { return "ICLOCS_StirredTank"; }
 
@@ -184,43 +204,43 @@ namespace ICLOCS_StirredTankDefine {
     // C++ initializer (raccolti in setup( gc ))
     ICLOCS_STIRREDTANK_API_DLL
     void
-    setupParameters( GenericContainer const & gc );
+    setup_parameters( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_STIRREDTANK_API_DLL
     void
-    setupParameters( real_const_ptr Pars );
+    setup_parameters( real_type const Pars[] );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_STIRREDTANK_API_DLL
     void
-    updateParameter( real_type val, integer idx )
+    update_parameter( real_type val, integer idx )
     { ModelPars[idx] = val; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_STIRREDTANK_API_DLL
     void
-    setupClasses( GenericContainer const & gc );
+    setup_classes( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_STIRREDTANK_API_DLL
     void
-    setupUserClasses( GenericContainer const & gc );
+    setup_user_classes( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_STIRREDTANK_API_DLL
     void
-    setupUserMappedFunctions( GenericContainer const & gc );
+    setup_user_mapped_functions( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_STIRREDTANK_API_DLL
     void
-    setupControls( GenericContainer const & gc );
+    setup_controls( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_STIRREDTANK_API_DLL
     void
-    setupPointers( GenericContainer const & gc );
+    setup_pointers( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
@@ -249,7 +269,6 @@ namespace ICLOCS_StirredTankDefine {
     ) override;
 
     // save model parameters
-    ICLOCS_STIRREDTANK_API_DLL virtual
     void
     save_OCP_info( GenericContainer & gc ) const override;
 

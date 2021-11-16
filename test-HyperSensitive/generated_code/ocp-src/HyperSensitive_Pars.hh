@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Pars.hh                                         |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -18,7 +18,7 @@
 #ifndef HYPERSENSITIVEPARS_DOT_HH
 #define HYPERSENSITIVEPARS_DOT_HH
 
-#define numBC                    2
+#define numBc                    2
 #define numModelPars             2
 #define numConstraint1D          0
 #define numConstraint2D          0

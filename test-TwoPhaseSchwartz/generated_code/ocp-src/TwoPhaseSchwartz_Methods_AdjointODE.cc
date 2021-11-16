@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,12 +77,12 @@ namespace TwoPhaseSchwartzDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x1];
     real_type t2   = t1 - 1;
@@ -93,14 +93,14 @@ namespace TwoPhaseSchwartzDefine {
     real_type t13  = L__[iL_lambda2__xo];
     result__[ 0   ] = 18 * t2 * t10 - 0.4e0 * t5 * t1 * t13;
     real_type t21  = ALIAS_bound2_D(0.8e0 + t5);
-    real_type t24  = t1 * t1;
-    result__[ 1   ] = (0.2222222222e2 * t5 - 0.8888888886e1) * t10 + t21 + L__[iL_lambda1__xo] - 0.1e0 * t13 - 0.2e0 * t24 * t13;
-    real_type t27  = L__[iL_lambda4__xo];
+    real_type t23  = t1 * t1;
+    result__[ 1   ] = (0.2222222222e2 * t5 - 0.8888888886e1) * t10 + t21 + L__[iL_lambda1__xo] + (-0.1e0 - 0.2e0 * t23) * t13;
     real_type t28  = ModelPars[iM_T2];
+    real_type t29  = t28 * L__[iL_lambda4__xo];
     real_type t30  = X__[iX_x3];
-    result__[ 2   ] = -0.4e0 * X__[iX_x4] * t30 * t28 * t27;
+    result__[ 2   ] = -0.4e0 * X__[iX_x4] * t30 * t29;
     real_type t37  = t30 * t30;
-    result__[ 3   ] = (L__[iL_lambda3__xo] - 0.1e0 * t27 - 0.2e0 * t37 * t27) * t28;
+    result__[ 3   ] = t28 * L__[iL_lambda3__xo] + (-0.1e0 - 0.2e0 * t37) * t29;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -121,8 +121,8 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
@@ -139,32 +139,34 @@ namespace TwoPhaseSchwartzDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x1];
-    real_type t2   = t1 - 1.0;
+    real_type t2   = t1 - 1;
     real_type t3   = t2 * t2;
-    real_type t5   = pow(t1 - 1, 2);
-    real_type t7   = X__[iX_x2];
-    real_type t10  = pow(0.3333333333e1 * t7 - 0.1333333333e1, 2);
-    real_type t11  = -1 + 9 * t5 + t10;
-    real_type t12  = ALIAS_bound1_DD(t11);
-    real_type t15  = ALIAS_bound1_D(t11);
-    real_type t17  = L__[iL_lambda2__xo];
-    result__[ 0   ] = 0.324e3 * t12 * t3 + 0.18e2 * t15 - 0.4e0 * t7 * t17;
-    result__[ 1   ] = 0.18e2 * t2 * (0.2222222222e2 * t7 - 0.8888888886e1) * t12 - 0.4e0 * t1 * t17;
+    real_type t5   = X__[iX_x2];
+    real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
+    real_type t9   = -1 + 9 * t3 + t8;
+    real_type t10  = ALIAS_bound1_DD(t9);
+    real_type t11  = 18 * t2;
+    real_type t12  = t11 * t11;
+    real_type t14  = ALIAS_bound1_D(t9);
+    real_type t16  = L__[iL_lambda2__xo];
+    result__[ 0   ] = t12 * t10 + 18 * t14 - 0.4e0 * t5 * t16;
+    real_type t20  = 0.2222222222e2 * t5 - 0.8888888886e1;
+    result__[ 1   ] = t11 * t20 * t10 - 0.4e0 * t1 * t16;
     result__[ 2   ] = result__[1];
-    real_type t27  = t7 * t7;
-    real_type t34  = ALIAS_bound2_DD(0.8e0 + t7);
-    result__[ 3   ] = t12 * (0.4938271604e3 * t27 - 0.3950617282e3 * t7 + 0.7901234563e2) + 0.2222222222e2 * t15 + t34;
-    real_type t37  = ModelPars[iM_T2] * L__[iL_lambda4__xo];
-    result__[ 4   ] = -0.4e0 * X__[iX_x4] * t37;
-    result__[ 5   ] = -0.4e0 * X__[iX_x3] * t37;
+    real_type t25  = t20 * t20;
+    real_type t29  = ALIAS_bound2_DD(0.8e0 + t5);
+    result__[ 3   ] = t25 * t10 + 0.2222222222e2 * t14 + t29;
+    real_type t32  = ModelPars[iM_T2] * L__[iL_lambda4__xo];
+    result__[ 4   ] = -0.4e0 * X__[iX_x4] * t32;
+    result__[ 5   ] = -0.4e0 * X__[iX_x3] * t32;
     result__[ 6   ] = result__[5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 7, i_segment );
@@ -186,8 +188,8 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -199,7 +201,7 @@ namespace TwoPhaseSchwartzDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -222,12 +224,12 @@ namespace TwoPhaseSchwartzDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda2__xo];
     result__[ 1   ] = L__[iL_lambda4__xo] * ModelPars[iM_T2] + 2 * ModelPars[iM_epsilon] * U__[iU_u2];
@@ -251,8 +253,8 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -263,7 +265,7 @@ namespace TwoPhaseSchwartzDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -284,8 +286,8 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -296,7 +298,7 @@ namespace TwoPhaseSchwartzDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -320,7 +322,7 @@ namespace TwoPhaseSchwartzDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -341,8 +343,8 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -354,7 +356,7 @@ namespace TwoPhaseSchwartzDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -374,12 +376,12 @@ namespace TwoPhaseSchwartzDefine {
   TwoPhaseSchwartz::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -405,8 +407,8 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -416,7 +418,7 @@ namespace TwoPhaseSchwartzDefine {
   TwoPhaseSchwartz::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -437,8 +439,8 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -448,7 +450,7 @@ namespace TwoPhaseSchwartzDefine {
   TwoPhaseSchwartz::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -469,11 +471,11 @@ namespace TwoPhaseSchwartzDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -499,8 +501,8 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -511,7 +513,7 @@ namespace TwoPhaseSchwartzDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -532,8 +534,8 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -544,7 +546,7 @@ namespace TwoPhaseSchwartzDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

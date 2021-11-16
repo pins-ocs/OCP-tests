@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_dll_pins.cc                                 |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -235,9 +235,8 @@ namespace BangBangFredundantDefine {
       Mechatronix::mrb_to_GC( mrb, data_value, gc_data, "mrb_to_GC:" );
 
       bool ok = it->second->solve();
-      if ( !ok ) {
+      if ( !ok )
         pConsole->error( "BangBangFredundant_ocp_solve, solution failed!\n" );
-      }
       it->second->diagnostic( gc_data, gc_data );
     }
 

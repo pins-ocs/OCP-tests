@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,15 +50,15 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_tol0 = 0.1;
-    real_type u_tol = u_tol0;
-    real_type x2_i = 2;
     real_type x1_i = 1;
-    real_type t0 = -ln(x1_i/x2_i)/x2_i;
+    real_type x2_i = 2;
     real_type l1_i = -1/x1_i/x2_i;
-    real_type l2_i = l1_i*(x1_i*t0+exp(-t0*x2_i));
+    real_type t0 = -ln(x1_i/x2_i)/x2_i;
     real_type u_epsi0 = 0.1;
     real_type u_epsi = u_epsi0;
+    real_type l2_i = l1_i*(x1_i*t0+exp(-t0*x2_i));
+    real_type u_tol0 = 0.1;
+    real_type u_tol = u_tol0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -110,7 +110,7 @@ main() {
     data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
-    data_Solver["tolerance"]             = 9.999999999999999e-10;
+    data_Solver["tolerance"]             = 1e-09;
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
@@ -247,7 +247,7 @@ EconomicGrowthModel_data.Mesh["segments"][0]["length"] = 1;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const * exc ) {
+  catch ( char const exc[] ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

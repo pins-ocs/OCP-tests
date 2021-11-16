@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_ODE.cc                                          |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -99,19 +99,19 @@ namespace FarmerDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = (-X__[iX_x1] + U__[iU_x1__o]) / ModelPars[iM_tau__1];
-    result__[ 1   ] = (-X__[iX_x2] + U__[iU_x2__o]) / ModelPars[iM_tau__2];
-    real_type t11  = X__[iX_x3];
-    result__[ 2   ] = 1.0 / ModelPars[iM_tau__3] * (-t11 + U__[iU_x3__o]);
-    real_type t16  = X__[iX_x4];
-    result__[ 3   ] = 1.0 / ModelPars[iM_tau__4] * (t11 - t16);
-    result__[ 4   ] = 1.0 / ModelPars[iM_tau__5] * (-t16 + U__[iU_x4__o]);
+    result__[ 0   ] = -(X__[iX_x1] - U__[iU_x1__o]) / ModelPars[iM_tau__1];
+    result__[ 1   ] = -(X__[iX_x2] - U__[iU_x2__o]) / ModelPars[iM_tau__2];
+    real_type t13  = X__[iX_x3];
+    result__[ 2   ] = -1.0 / ModelPars[iM_tau__3] * (t13 - U__[iU_x3__o]);
+    real_type t19  = X__[iX_x4];
+    result__[ 3   ] = -1.0 / ModelPars[iM_tau__4] * (-t13 + t19);
+    result__[ 4   ] = -1.0 / ModelPars[iM_tau__5] * (t19 - U__[iU_x4__o]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 5, i_segment );
   }
@@ -132,8 +132,8 @@ namespace FarmerDefine {
 
   void
   Farmer::Drhs_odeDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -150,11 +150,11 @@ namespace FarmerDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -1.0 / ModelPars[iM_tau__1];
     result__[ 1   ] = -1.0 / ModelPars[iM_tau__2];
@@ -182,8 +182,8 @@ namespace FarmerDefine {
 
   void
   Farmer::Drhs_odeDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -194,7 +194,7 @@ namespace FarmerDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -215,8 +215,8 @@ namespace FarmerDefine {
 
   void
   Farmer::Drhs_odeDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -231,11 +231,11 @@ namespace FarmerDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1.0 / ModelPars[iM_tau__1];
     result__[ 1   ] = 1.0 / ModelPars[iM_tau__2];
@@ -266,8 +266,8 @@ namespace FarmerDefine {
 
   void
   Farmer::A_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -282,11 +282,11 @@ namespace FarmerDefine {
   Farmer::A_sparse(
     NodeType const     & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;

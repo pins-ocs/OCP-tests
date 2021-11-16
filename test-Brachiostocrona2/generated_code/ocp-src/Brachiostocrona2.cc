@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2.cc                                            |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "Brachiostocrona2.hh"
 #include "Brachiostocrona2_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -122,7 +120,7 @@ namespace Brachiostocrona2Define {
     nullptr
   };
 
-  char const *namesBc[numBC+1] = {
+  char const *namesBc[numBc+1] = {
     "initial_x",
     "initial_y",
     "initial_v",
@@ -155,7 +153,7 @@ namespace Brachiostocrona2Define {
     this->ns_continuation_begin = 0;
     this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
-    std::fill( ModelPars, ModelPars + numModelPars, Utils::NaN<real_type>() );
+    std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setup_names(
@@ -166,7 +164,7 @@ namespace Brachiostocrona2Define {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBC,                    namesBc
+      numBc,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -174,10 +172,13 @@ namespace Brachiostocrona2Define {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   Brachiostocrona2::~Brachiostocrona2() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -197,8 +198,8 @@ namespace Brachiostocrona2Define {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
-        phase+1, s, s-old_s
+        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
+        phase+1, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -209,7 +210,7 @@ namespace Brachiostocrona2Define {
       phase, old_s, s
     );
     switch ( phase ) {
-      case 0: continuationStep0( s ); break;
+      case 0: continuation_step_0( s ); break;
       default:
         UTILS_ERROR(
           "Brachiostocrona2::update_continuation( phase number={}, old_s={}, s={} )"
@@ -229,10 +230,10 @@ namespace Brachiostocrona2Define {
   // initialize parameters using associative array
   */
   void
-  Brachiostocrona2::setupParameters( GenericContainer const & gc_data ) {
+  Brachiostocrona2::setup_parameters( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Parameters"),
-      "Brachiostocrona2::setupParameters: Missing key `Parameters` in data\n"
+      "Brachiostocrona2::setup_parameters: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Parameters");
 
@@ -252,7 +253,7 @@ namespace Brachiostocrona2Define {
   }
 
   void
-  Brachiostocrona2::setupParameters( real_type const Pars[] ) {
+  Brachiostocrona2::setup_parameters( real_type const Pars[] ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -265,16 +266,16 @@ namespace Brachiostocrona2Define {
   //                     |_|
   */
   void
-  Brachiostocrona2::setupClasses( GenericContainer const & gc_data ) {
+  Brachiostocrona2::setup_classes( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Constraints"),
-      "Brachiostocrona2::setupClasses: Missing key `Parameters` in data\n"
+      "Brachiostocrona2::setup_classes: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
     UTILS_ASSERT0(
       gc.exists("TimePositive"),
-      "in Brachiostocrona2::setupClasses(gc) missing key: ``TimePositive''\n"
+      "in Brachiostocrona2::setup_classes(gc) missing key: ``TimePositive''\n"
     );
     TimePositive.setup( gc("TimePositive") );
 
@@ -289,7 +290,7 @@ namespace Brachiostocrona2Define {
   //                    |_|
   */
   void
-  Brachiostocrona2::setupUserClasses( GenericContainer const & gc ) {
+  Brachiostocrona2::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -305,7 +306,7 @@ namespace Brachiostocrona2Define {
   //              |_|  |_|
   */
   void
-  Brachiostocrona2::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  Brachiostocrona2::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -316,7 +317,7 @@ namespace Brachiostocrona2Define {
   //                     |_|
   */
   void
-  Brachiostocrona2::setupControls( GenericContainer const & gc_data ) {
+  Brachiostocrona2::setup_controls( GenericContainer const & gc_data ) {
     // no Control penalties, setup only iterative solver
     this->setup_control_solver( gc_data );
   }
@@ -330,11 +331,11 @@ namespace Brachiostocrona2Define {
   //                     |_|
   */
   void
-  Brachiostocrona2::setupPointers( GenericContainer const & gc_data ) {
+  Brachiostocrona2::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "Brachiostocrona2::setupPointers: Missing key `Pointers` in data\n"
+      "Brachiostocrona2::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -342,7 +343,7 @@ namespace Brachiostocrona2Define {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in Brachiostocrona2::setupPointers(gc) cant find key `pMesh' in gc\n"
+      "in Brachiostocrona2::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -395,16 +396,20 @@ namespace Brachiostocrona2Define {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("Brachiostocrona2::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
     this->info_classes();
     this->info();

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_AdjointODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,12 +79,12 @@ namespace CrossroadDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_a];
     real_type t2   = t1 * t1;
@@ -131,8 +131,8 @@ namespace CrossroadDefine {
 
   void
   Crossroad::DHxDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
@@ -156,48 +156,51 @@ namespace CrossroadDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
-    real_type t3   = X__[iX_s];
-    real_type t4   = kappa_DD(t3);
-    real_type t5   = kappa(t3);
-    real_type t7   = kappa_D(t3);
+    real_type t1   = X__[iX_a];
+    real_type t2   = t1 * t1;
+    real_type t4   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
+    real_type t5   = 1.0 / t4;
+    real_type t7   = X__[iX_v];
     real_type t8   = t7 * t7;
-    real_type t11  = X__[iX_a];
+    real_type t9   = t8 * t8;
+    real_type t10  = X__[iX_s];
+    real_type t11  = kappa(t10);
     real_type t12  = t11 * t11;
-    real_type t14  = ModelPars[iM_along_max] * ModelPars[iM_along_max];
-    real_type t15  = 1.0 / t14;
-    real_type t17  = X__[iX_v];
-    real_type t18  = t17 * t17;
-    real_type t19  = t18 * t18;
-    real_type t20  = t5 * t5;
-    real_type t22  = 1.0 / t2;
-    real_type t24  = -t22 * t20 * t19 - t15 * t12 + 1;
-    real_type t25  = ALIAS_AccBound_D(t24);
-    real_type t29  = ALIAS_AccBound_DD(t24);
-    real_type t34  = t2 * t2;
-    real_type t35  = 1.0 / t34;
-    result__[ 0   ] = 4 * t35 * t19 * (-t25 * (t5 * t4 + t8) * t2 / 2 + t19 * t29 * t20 * t8);
-    real_type t38  = t18 * t17;
-    result__[ 1   ] = 8 * t35 * (t19 * t29 * t20 - t2 * t25) * t38 * t5 * t7;
-    real_type t47  = t15 * t11 * t29;
-    result__[ 2   ] = 4 * t7 * t22 * t5 * t19 * t47;
+    real_type t15  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
+    real_type t16  = 1.0 / t15;
+    real_type t18  = -t16 * t12 * t9 - t5 * t2 + 1;
+    real_type t19  = ALIAS_AccBound_DD(t18);
+    real_type t20  = t9 * t9;
+    real_type t22  = t15 * t15;
+    real_type t23  = 1.0 / t22;
+    real_type t25  = kappa_D(t10);
+    real_type t26  = t25 * t25;
+    real_type t30  = ALIAS_AccBound_D(t18);
+    real_type t31  = t9 * t30;
+    real_type t35  = t16 * t11;
+    real_type t36  = kappa_DD(t10);
+    result__[ 0   ] = 4 * t26 * t23 * t12 * t20 * t19 - 2 * t16 * t26 * t31 - 2 * t36 * t35 * t31;
+    real_type t40  = t8 * t7;
+    result__[ 1   ] = 8 * t25 * t23 * t12 * t11 * t9 * t40 * t19 - 8 * t25 * t35 * t40 * t30;
+    real_type t52  = t5 * t1 * t19;
+    result__[ 2   ] = 4 * t25 * t16 * t11 * t9 * t52;
     result__[ 3   ] = result__[1];
-    real_type t54  = t20 * t20;
-    real_type t62  = ALIAS_VelBound_DD(t17);
-    result__[ 4   ] = 16 * t35 * t54 * t19 * t18 * t29 - 12 * t22 * t20 * t18 * t25 + t62;
-    result__[ 5   ] = 8 * t22 * t20 * t38 * t47;
+    real_type t59  = t12 * t12;
+    real_type t67  = ALIAS_VelBound_DD(t7);
+    result__[ 4   ] = 16 * t23 * t59 * t9 * t8 * t19 - 12 * t16 * t12 * t8 * t30 + t67;
+    result__[ 5   ] = 8 * t16 * t12 * t40 * t52;
     result__[ 6   ] = L__[iL_lambda1__xo];
     result__[ 7   ] = result__[2];
     result__[ 8   ] = result__[5];
-    real_type t67  = t14 * t14;
-    result__[ 9   ] = 4 / t67 * t12 * t29 - 2 * t15 * t25;
+    real_type t72  = t4 * t4;
+    result__[ 9   ] = 4 / t72 * t2 * t19 - 2 * t5 * t30;
     result__[ 10  ] = L__[iL_lambda2__xo];
     result__[ 11  ] = result__[6];
     result__[ 12  ] = result__[10];
@@ -222,8 +225,8 @@ namespace CrossroadDefine {
 
   void
   Crossroad::DHxDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -235,7 +238,7 @@ namespace CrossroadDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -258,14 +261,15 @@ namespace CrossroadDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_Ts] * (2 * U__[iU_jerk] * ModelPars[iM_wJ] + L__[iL_lambda3__xo]);
+    real_type t4   = X__[iX_Ts];
+    result__[ 0   ] = 2 * t4 * ModelPars[iM_wJ] * U__[iU_jerk] + t4 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -286,8 +290,8 @@ namespace CrossroadDefine {
 
   void
   Crossroad::DHuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
   }
@@ -299,14 +303,14 @@ namespace CrossroadDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * U__[iU_jerk] * ModelPars[iM_wJ] + L__[iL_lambda3__xo];
+    result__[ 0   ] = 2 * ModelPars[iM_wJ] * U__[iU_jerk] + L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }
@@ -327,8 +331,8 @@ namespace CrossroadDefine {
 
   void
   Crossroad::DHuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -339,7 +343,7 @@ namespace CrossroadDefine {
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -363,7 +367,7 @@ namespace CrossroadDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -384,8 +388,8 @@ namespace CrossroadDefine {
 
   void
   Crossroad::DHpDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -397,7 +401,7 @@ namespace CrossroadDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -417,12 +421,12 @@ namespace CrossroadDefine {
   Crossroad::eta_eval(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment     = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
+    real_type const * L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -448,8 +452,8 @@ namespace CrossroadDefine {
 
   void
   Crossroad::DetaDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -459,7 +463,7 @@ namespace CrossroadDefine {
   Crossroad::DetaDx_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -480,8 +484,8 @@ namespace CrossroadDefine {
 
   void
   Crossroad::DetaDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -491,7 +495,7 @@ namespace CrossroadDefine {
   Crossroad::DetaDp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -512,11 +516,11 @@ namespace CrossroadDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];
@@ -542,8 +546,8 @@ namespace CrossroadDefine {
 
   void
   Crossroad::DnuDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -554,7 +558,7 @@ namespace CrossroadDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -575,8 +579,8 @@ namespace CrossroadDefine {
 
   void
   Crossroad::DnuDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -587,7 +591,7 @@ namespace CrossroadDefine {
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }

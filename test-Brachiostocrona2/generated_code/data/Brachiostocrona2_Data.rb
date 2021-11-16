@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona2_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -22,11 +22,11 @@ include Mechatronix
 # Auxiliary values
 epsi0  = 1
 xf     = 5
-g      = 9.81
 yf     = -2
+g      = 9.81
+Tf     = (-2.0*yf/g)**(1/2.0)
 Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 theta0 = Math::atan2(yf,xf)
-Tf     = (-2.0*yf/g)**(1/2.0)
 epsi   = epsi0
 
 mechatronix do |data|
@@ -48,10 +48,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "Brachiostocrona2_dump"

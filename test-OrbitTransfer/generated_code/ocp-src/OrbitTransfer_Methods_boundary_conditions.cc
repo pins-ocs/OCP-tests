@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -63,14 +63,14 @@ namespace OrbitTransferDefine {
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    integer i_segment_left  = LEFT__.i_segment;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_m] - ModelPars[iM_m0];
@@ -88,21 +88,21 @@ namespace OrbitTransferDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  OrbitTransfer::DboundaryConditionsDx_numRows() const
+  OrbitTransfer::DboundaryConditionsDxxp_numRows() const
   { return 7; }
 
   integer
-  OrbitTransfer::DboundaryConditionsDx_numCols() const
+  OrbitTransfer::DboundaryConditionsDxxp_numCols() const
   { return 10; }
 
   integer
-  OrbitTransfer::DboundaryConditionsDx_nnz() const
+  OrbitTransfer::DboundaryConditionsDxxp_nnz() const
   { return 8; }
 
   void
-  OrbitTransfer::DboundaryConditionsDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  OrbitTransfer::DboundaryConditionsDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -115,18 +115,18 @@ namespace OrbitTransferDefine {
   }
 
   void
-  OrbitTransfer::DboundaryConditionsDx_sparse(
+  OrbitTransfer::DboundaryConditionsDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
@@ -142,39 +142,7 @@ namespace OrbitTransferDefine {
     result__[ 6   ] = 1.0 / t8 * t1 / t5 / 2;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxp_sparse", 8, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DboundaryConditionsDp_numRows() const
-  { return 7; }
-
-  integer
-  OrbitTransfer::DboundaryConditionsDp_numCols() const
-  { return 0; }
-
-  integer
-  OrbitTransfer::DboundaryConditionsDp_nnz() const
-  { return 0; }
-
-  void
-  OrbitTransfer::DboundaryConditionsDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  OrbitTransfer::DboundaryConditionsDp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_ptr             result__
-  ) const {
-    // EMPTY
-
+      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -189,16 +157,16 @@ namespace OrbitTransferDefine {
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda4__xo];
@@ -223,43 +191,44 @@ namespace OrbitTransferDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  OrbitTransfer::DadjointBCDx_numRows() const
+  OrbitTransfer::DadjointBCDxxp_numRows() const
   { return 10; }
 
   integer
-  OrbitTransfer::DadjointBCDx_numCols() const
+  OrbitTransfer::DadjointBCDxxp_numCols() const
   { return 10; }
 
   integer
-  OrbitTransfer::DadjointBCDx_nnz() const
+  OrbitTransfer::DadjointBCDxxp_nnz() const
   { return 1; }
 
   void
-  OrbitTransfer::DadjointBCDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  OrbitTransfer::DadjointBCDxxp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 7   ; jIndex[0 ] = 7   ;
   }
 
   void
-  OrbitTransfer::DadjointBCDx_sparse(
+  OrbitTransfer::DadjointBCDxxp_sparse(
     NodeType2 const             & LEFT__,
     NodeType2 const             & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
+    real_type                     result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_const_ptr    QL__  = LEFT__.q;
-    real_const_ptr    XL__  = LEFT__.x;
-    real_const_ptr    LL__  = LEFT__.lambda;
+    real_type const * QL__  = LEFT__.q;
+    real_type const * XL__  = LEFT__.x;
+    real_type const * LL__  = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr    QR__  = RIGHT__.q;
-    real_const_ptr    XR__  = RIGHT__.x;
-    real_const_ptr    LR__  = RIGHT__.lambda;
+    real_type const * QR__  = RIGHT__.q;
+    real_type const * XR__  = RIGHT__.x;
+    real_type const * LR__  = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    real_type t1   = OMEGA__[6];
     real_type t2   = ModelPars[iM_mu];
     real_type t3   = XR__[iX_r];
     real_type t5   = 1.0 / t3 * t2;
@@ -267,43 +236,10 @@ namespace OrbitTransferDefine {
     real_type t10  = t2 * t2;
     real_type t11  = t3 * t3;
     real_type t12  = t11 * t11;
-    result__[ 0   ] = -3.0 / 4.0 / t12 * t10 / t6 / t5 * OMEGA__[6];
+    result__[ 0   ] = 1.0 / t12 * t10 / t6 / t5 * t1 / 4 - 1.0 / t11 / t3 * t2 / t6 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxp_sparse", 1, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 1, i_segment_left, i_segment_right );
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DadjointBCDp_numRows() const
-  { return 10; }
-
-  integer
-  OrbitTransfer::DadjointBCDp_numCols() const
-  { return 0; }
-
-  integer
-  OrbitTransfer::DadjointBCDp_nnz() const
-  { return 0; }
-
-  void
-  OrbitTransfer::DadjointBCDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
-  ) const {
-  }
-
-  void
-  OrbitTransfer::DadjointBCDp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_ptr                      result__
-  ) const {
-    // EMPTY!
-  }
-
 }
 
 // EOF: OrbitTransfer_Methods_boundary_conditions.cc

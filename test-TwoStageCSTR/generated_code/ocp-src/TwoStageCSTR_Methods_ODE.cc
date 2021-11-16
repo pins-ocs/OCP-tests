@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_ODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,11 +79,11 @@ namespace TwoStageCSTRDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x1];
     real_type t2   = X__[iX_x2];
@@ -92,10 +92,10 @@ namespace TwoStageCSTRDefine {
     result__[ 1   ] = t3 - (2 + U__[iU_u1]) * (t2 + 0.25e0);
     real_type t8   = X__[iX_x3];
     real_type t9   = ModelPars[iM_tau];
-    real_type t12  = X__[iX_x4];
-    real_type t13  = R2(t8, t12);
-    result__[ 2   ] = t1 - t8 - result__[0] * t9 - t13 + 0.25e0;
-    result__[ 3   ] = t2 - 2 * t12 + U__[iU_u2] * (-1.0 * t12 - 0.25e0) - result__[1] * t9 + t13 - 0.25e0;
+    real_type t11  = X__[iX_x4];
+    real_type t12  = R2(t8, t11);
+    result__[ 2   ] = t1 - t8 - result__[0] * t9 - t12 + 0.25e0;
+    result__[ 3   ] = t2 - 2 * t11 - (t11 + 0.25e0) * U__[iU_u2] - result__[1] * t9 + t12 - 0.25e0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
@@ -116,8 +116,8 @@ namespace TwoStageCSTRDefine {
 
   void
   TwoStageCSTR::Drhs_odeDx_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
@@ -140,11 +140,11 @@ namespace TwoStageCSTRDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x1];
     real_type t2   = X__[iX_x2];
@@ -153,11 +153,9 @@ namespace TwoStageCSTRDefine {
     real_type t4   = R1_D_2(t1, t2);
     result__[ 1   ] = -t4;
     result__[ 2   ] = t3;
-    real_type t5   = U__[iU_u1];
-    result__[ 3   ] = t4 - 2 - t5;
+    result__[ 3   ] = t4 - 2 - U__[iU_u1];
     real_type t6   = ModelPars[iM_tau];
-    real_type t7   = result__[2] * t6;
-    result__[ 4   ] = t7 + t6 + 1;
+    result__[ 4   ] = -result__[0] * t6 + 1;
     result__[ 5   ] = t4 * t6;
     real_type t8   = X__[iX_x3];
     real_type t9   = X__[iX_x4];
@@ -165,8 +163,8 @@ namespace TwoStageCSTRDefine {
     result__[ 6   ] = -1 - t10;
     real_type t11  = R2_D_2(t8, t9);
     result__[ 7   ] = -t11;
-    result__[ 8   ] = -t7;
-    result__[ 9   ] = -result__[5] + 1 + t6 * (t5 + 2);
+    result__[ 8   ] = -result__[2] * t6;
+    result__[ 9   ] = -result__[3] * t6 + 1;
     result__[ 10  ] = t10;
     result__[ 11  ] = -2 - U__[iU_u2] + t11;
     if ( m_debug )
@@ -189,8 +187,8 @@ namespace TwoStageCSTRDefine {
 
   void
   TwoStageCSTR::Drhs_odeDp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
   }
 
@@ -201,7 +199,7 @@ namespace TwoStageCSTRDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
     // EMPTY!
   }
@@ -222,8 +220,8 @@ namespace TwoStageCSTRDefine {
 
   void
   TwoStageCSTR::Drhs_odeDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 3   ; jIndex[1 ] = 0   ;
@@ -237,11 +235,11 @@ namespace TwoStageCSTRDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -X__[iX_x2] - 0.25e0;
     result__[ 1   ] = -result__[0] * ModelPars[iM_tau];
@@ -271,8 +269,8 @@ namespace TwoStageCSTRDefine {
 
   void
   TwoStageCSTR::A_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -286,11 +284,11 @@ namespace TwoStageCSTRDefine {
   TwoStageCSTR::A_sparse(
     NodeType const     & NODE__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;

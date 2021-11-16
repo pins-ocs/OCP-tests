@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Crossroad_Data.rb                                              #
 #                                                                       #
-#  version: 1.0   date 16/11/2021                                       #
+#  version: 1.0   date 17/11/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,8 +21,8 @@ include Mechatronix
 
 # Auxiliary values
 L        = 100
-v_max    = 30
 jerk_min = -10
+v_max    = 30
 s_f      = L
 jerk_max = 10
 wJ       = 1/jerk_max**2
@@ -46,10 +46,12 @@ mechatronix do |data|
   data.LU_threaded = true
 
   # Enable check jacobian
-  data.JacobianCheck            = true
-  data.JacobianCheckFull        = false
-  data.JacobianCheck_epsilon    = 1e-4
-  data.FiniteDifferenceJacobian = false
+  data.JacobianCheck         = true
+  data.JacobianCheckFull     = false
+  data.JacobianCheck_epsilon = 1e-4
+
+  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretization = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "Crossroad_dump"

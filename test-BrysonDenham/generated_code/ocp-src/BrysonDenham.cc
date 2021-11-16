@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham.cc                                                |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -27,8 +27,6 @@
 
 #include "BrysonDenham.hh"
 #include "BrysonDenham_Pars.hh"
-
-#include <time.h> /* time_t, struct tm, time, localtime, asctime */
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -108,7 +106,7 @@ namespace BrysonDenhamDefine {
     nullptr
   };
 
-  char const *namesBc[numBC+1] = {
+  char const *namesBc[numBc+1] = {
     "initial_x",
     "initial_v",
     "final_x",
@@ -147,7 +145,7 @@ namespace BrysonDenhamDefine {
       numQvars,                 namesQvars,
       numPostProcess,           namesPostProcess,
       numIntegratedPostProcess, namesIntegratedPostProcess,
-      numBC,                    namesBc
+      numBc,                    namesBc
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
@@ -155,10 +153,13 @@ namespace BrysonDenhamDefine {
     #ifdef LAPACK_WRAPPER_USE_OPENBLAS
     openblas_set_num_threads(1);
     goto_set_num_threads(1);
+    m_console->message( lapack_wrapper::openblas_info(), 1 );
     #endif
   }
 
   BrysonDenham::~BrysonDenham() {
+    // Begin: User Exit Code
+    // End: User Exit Code
   }
 
   /* --------------------------------------------------------------------------
@@ -178,8 +179,8 @@ namespace BrysonDenhamDefine {
     int msg_level = 3;
     m_console->message(
       fmt::format(
-        "\nContinuation step N.{} s={:.2}, ds={:.4}\n",
-        phase+1, s, s-old_s
+        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
+        phase+1, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -195,11 +196,11 @@ namespace BrysonDenhamDefine {
   // initialize parameters using associative array
   */
   void
-  BrysonDenham::setupParameters( GenericContainer const & gc_data ) {
+  BrysonDenham::setup_parameters( GenericContainer const & gc_data ) {
   }
 
   void
-  BrysonDenham::setupParameters( real_type const Pars[] ) {
+  BrysonDenham::setup_parameters( real_type const Pars[] ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -211,16 +212,16 @@ namespace BrysonDenhamDefine {
   //                     |_|
   */
   void
-  BrysonDenham::setupClasses( GenericContainer const & gc_data ) {
+  BrysonDenham::setup_classes( GenericContainer const & gc_data ) {
     UTILS_ASSERT0(
       gc_data.exists("Constraints"),
-      "BrysonDenham::setupClasses: Missing key `Parameters` in data\n"
+      "BrysonDenham::setup_classes: Missing key `Parameters` in data\n"
     );
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
     UTILS_ASSERT0(
       gc.exists("X1bound"),
-      "in BrysonDenham::setupClasses(gc) missing key: ``X1bound''\n"
+      "in BrysonDenham::setup_classes(gc) missing key: ``X1bound''\n"
     );
     X1bound.setup( gc("X1bound") );
 
@@ -235,7 +236,7 @@ namespace BrysonDenhamDefine {
   //                    |_|
   */
   void
-  BrysonDenham::setupUserClasses( GenericContainer const & gc ) {
+  BrysonDenham::setup_user_classes( GenericContainer const & gc ) {
   }
 
   /* --------------------------------------------------------------------------
@@ -251,7 +252,7 @@ namespace BrysonDenhamDefine {
   //              |_|  |_|
   */
   void
-  BrysonDenham::setupUserMappedFunctions( GenericContainer const & gc_data ) {
+  BrysonDenham::setup_user_mapped_functions( GenericContainer const & gc_data ) {
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -262,7 +263,7 @@ namespace BrysonDenhamDefine {
   //                     |_|
   */
   void
-  BrysonDenham::setupControls( GenericContainer const & gc_data ) {
+  BrysonDenham::setup_controls( GenericContainer const & gc_data ) {
     // no Control penalties, setup only iterative solver
     this->setup_control_solver( gc_data );
   }
@@ -276,11 +277,11 @@ namespace BrysonDenhamDefine {
   //                     |_|
   */
   void
-  BrysonDenham::setupPointers( GenericContainer const & gc_data ) {
+  BrysonDenham::setup_pointers( GenericContainer const & gc_data ) {
 
     UTILS_ASSERT0(
       gc_data.exists("Pointers"),
-      "BrysonDenham::setupPointers: Missing key `Pointers` in data\n"
+      "BrysonDenham::setup_pointers: Missing key `Pointers` in data\n"
     );
     GenericContainer const & gc = gc_data("Pointers");
 
@@ -288,7 +289,7 @@ namespace BrysonDenhamDefine {
 
     UTILS_ASSERT0(
       gc.exists("pMesh"),
-      "in BrysonDenham::setupPointers(gc) cant find key `pMesh' in gc\n"
+      "in BrysonDenham::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
     pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
@@ -332,16 +333,20 @@ namespace BrysonDenhamDefine {
     if ( gc.exists("Debug") )
       m_debug = gc("Debug").get_bool("BrysonDenham::setup, Debug");
 
-    this->setupParameters( gc );
-    this->setupClasses( gc );
-    this->setupUserMappedFunctions( gc );
-    this->setupUserClasses( gc );
-    this->setupPointers( gc );
+    this->setup_parameters( gc );
+    this->setup_classes( gc );
+    this->setup_user_mapped_functions( gc );
+    this->setup_user_classes( gc );
+    this->setup_pointers( gc );
     this->setup_BC( gc );
-    this->setupControls( gc );
+    this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
     this->setup( pMesh, gc );
+
+    // Begin: User Setup Code
+    // End: User Setup Code
+
     this->info_BC();
     this->info_classes();
     this->info();

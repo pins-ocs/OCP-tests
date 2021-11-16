@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_controls.cc                                      |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,20 +77,34 @@ namespace TrainDefine {
 
   void
   Train::g_eval(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = L__[iL_lambda2__xo];
-    real_type t5   = ALIAS_uaControl_D_1(U__[iU_ua], 0, ModelPars[iM_uaMax]);
-    result__[ 0   ] = X__[iX_v] + t2 + t5;
-    real_type t8   = ALIAS_ubControl_D_1(U__[iU_ub], 0, ModelPars[iM_ubMax]);
+    real_type t2   = LM__[1];
+    real_type t5   = ALIAS_uaControl_D_1(UM__[0], 0, ModelPars[iM_uaMax]);
+    result__[ 0   ] = XM__[1] + t2 + t5;
+    real_type t8   = ALIAS_ubControl_D_1(UM__[1], 0, ModelPars[iM_ubMax]);
     result__[ 1   ] = -t2 + t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
@@ -99,46 +113,66 @@ namespace TrainDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  Train::DgDxlp_numRows() const
+  Train::DgDxlxlp_numRows() const
   { return 2; }
 
   integer
-  Train::DgDxlp_numCols() const
-  { return 4; }
+  Train::DgDxlxlp_numCols() const
+  { return 8; }
 
   integer
-  Train::DgDxlp_nnz() const
-  { return 3; }
+  Train::DgDxlxlp_nnz() const
+  { return 6; }
 
   void
-  Train::DgDxlp_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+  Train::DgDxlxlp_pattern(
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 3   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 7   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 3   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 7   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Train::DgDxlp_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+  Train::DgDxlxlp_sparse(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1;
-    result__[ 1   ] = 1;
-    result__[ 2   ] = -1;
+    result__[ 0   ] = 0.500000000000000000e0;
+    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 2   ] = 0.500000000000000000e0;
+    result__[ 3   ] = 0.500000000000000000e0;
+    result__[ 4   ] = -0.500000000000000000e0;
+    result__[ 5   ] = -0.500000000000000000e0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlp_sparse", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -157,8 +191,8 @@ namespace TrainDefine {
 
   void
   Train::DgDu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
@@ -168,18 +202,32 @@ namespace TrainDefine {
 
   void
   Train::DgDu_sparse(
-    NodeType2 const &    NODE__,
-    U_const_pointer_type U__,
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = LEFT__.i_segment;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uaControl_D_1_1(U__[iU_ua], 0, ModelPars[iM_uaMax]);
-    result__[ 1   ] = ALIAS_ubControl_D_1_1(U__[iU_ub], 0, ModelPars[iM_ubMax]);
+    result__[ 0   ] = ALIAS_uaControl_D_1_1(UM__[0], 0, ModelPars[iM_uaMax]);
+    result__[ 1   ] = ALIAS_ubControl_D_1_1(UM__[1], 0, ModelPars[iM_ubMax]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -207,30 +255,27 @@ namespace TrainDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[2];
-    real_type L__[2];
+    real_type QM__[1], XM__[2], LM__[2];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = LL__[iL_lambda2__xo];
-    real_type t4   = LR__[iL_lambda2__xo];
-    U__[ iU_ua ] = uaControl.solve(-XL__[iX_v] / 2 - t2 / 2 - XR__[iX_v] / 2 - t4 / 2, 0, ModelPars[iM_uaMax]);
-    U__[ iU_ub ] = ubControl.solve(t2 / 2 + t4 / 2, 0, ModelPars[iM_ubMax]);
+    real_type t2   = LM__[1];
+    U__[ iU_ua ] = uaControl.solve(-XM__[1] - t2, 0, ModelPars[iM_uaMax]);
+    U__[ iU_ub ] = ubControl.solve(t2, 0, ModelPars[iM_ubMax]);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }
@@ -251,47 +296,45 @@ namespace TrainDefine {
     NodeType2 const &          LEFT__,
     NodeType2 const &          RIGHT__,
     P_const_pointer_type       P__,
-    U_const_pointer_type       U__,
+    U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
     // midpoint
-    real_type Q__[1];
-    real_type X__[2];
-    real_type L__[2];
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
     // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
+    QM__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
     // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type tmp_0_0 = 0;
-    real_type tmp_1_0 = 0;
-    real_type t2   = LL__[iL_lambda2__xo];
-    real_type t4   = LR__[iL_lambda2__xo];
-    real_type t8   = uaControl.solve_rhs(-XL__[iX_v] / 2 - t2 / 2 - XR__[iX_v] / 2 - t4 / 2, 0, ModelPars[iM_uaMax]);
-    real_type tmp_0_1 = -t8 / 2;
-    real_type tmp_1_1 = 0;
-    real_type tmp_0_2 = 0;
-    real_type tmp_1_2 = 0;
+    real_type tmp_0_0 = 0.0e0;
+    real_type tmp_1_0 = 0.0e0;
+    real_type t2   = LM__[1];
+    real_type t5   = uaControl.solve_rhs(-XM__[1] - t2, 0, ModelPars[iM_uaMax]);
+    real_type tmp_0_1 = -0.5e0 * t5;
+    real_type tmp_1_1 = 0.0e0;
+    real_type tmp_0_2 = 0.0e0;
+    real_type tmp_1_2 = 0.0e0;
     real_type tmp_0_3 = tmp_0_1;
-    real_type t13  = ubControl.solve_rhs(t2 / 2 + t4 / 2, 0, ModelPars[iM_ubMax]);
-    real_type tmp_1_3 = t13 / 2;
-    real_type tmp_0_4 = 0;
-    real_type tmp_1_4 = 0;
+    real_type t8   = ubControl.solve_rhs(t2, 0, ModelPars[iM_ubMax]);
+    real_type tmp_1_3 = 0.5e0 * t8;
+    real_type tmp_0_4 = 0.0e0;
+    real_type tmp_1_4 = 0.0e0;
     real_type tmp_0_5 = tmp_0_3;
-    real_type tmp_1_5 = 0;
-    real_type tmp_0_6 = 0;
-    real_type tmp_1_6 = 0;
+    real_type tmp_1_5 = 0.0e0;
+    real_type tmp_0_6 = 0.0e0;
+    real_type tmp_1_6 = 0.0e0;
     real_type tmp_0_7 = tmp_0_5;
     real_type tmp_1_7 = tmp_1_3;
     DuDxlxlp(0, 0) = tmp_0_0;
@@ -328,9 +371,9 @@ namespace TrainDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_ua];
     real_type t3   = uaControl(t1, 0, ModelPars[iM_uaMax]);
@@ -359,11 +402,11 @@ namespace TrainDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_ua];
     real_type t3   = ALIAS_uaControl_D_1(t1, 0, ModelPars[iM_uaMax]);
@@ -396,8 +439,8 @@ namespace TrainDefine {
 
   void
   Train::DmDuu_pattern(
-    integer_ptr iIndex,
-    integer_ptr jIndex
+    integer iIndex[],
+    integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
@@ -413,11 +456,11 @@ namespace TrainDefine {
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_ptr             result__
+    real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
+    integer     i_segment = NODE__.i_segment;
+    real_type const * Q__ = NODE__.q;
+    real_type const * X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uaControl_D_1_1(U__[iU_ua], 0, ModelPars[iM_uaMax]);
     result__[ 0   ] = t3 + 2;

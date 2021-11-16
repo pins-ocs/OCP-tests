@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
-u_tolerance0 = 0.01
-u_tolerance  = u_tolerance0
 u_epsilon0   = 0.01
 u_epsilon    = u_epsilon0
+u_tolerance0 = 0.01
+u_tolerance  = u_tolerance0
 
 content = {
 
@@ -44,10 +44,12 @@ content = {
   LU_threaded = true,
 
   -- Enable check jacobian
-  JacobianCheck            = false,
-  JacobianCheckFull        = false,
-  JacobianCheck_epsilon    = 1e-4,
-  FiniteDifferenceJacobian = false,
+  JacobianCheck         = false,
+  JacobianCheckFull     = false,
+  JacobianCheck_epsilon = 1e-4,
+
+  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  JacobianDiscretization = 'ANALYTIC,
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "TwoLinkRobotArm_dump",
@@ -97,7 +99,7 @@ content = {
     max_iter             = 300,
     max_step_iter        = 40,
     max_accumulated_iter = 800,
-    tolerance            = 9.999999999999999e-10,
+    tolerance            = 1e-09,
 
     -- continuation parameters
     ns_continuation_begin = 0,

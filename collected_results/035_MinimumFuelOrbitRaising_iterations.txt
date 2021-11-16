@@ -1,0 +1,78 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x1
+[ 1] initial_x2
+[ 2] initial_x3
+[ 3] final_x2
+[ 4] x3x1
+
+
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
+Segment N.0: s0 = 0.000 length = 3.320 npts = 401 no data set
+END Mesh[mesh]
+
+Model Parameters
+.......................................T = 0.1405
+......................................md = 0.0749
+INFO CLASS = MinimumFuelOrbitRaising
+  #nodes      = 401
+  dim         = u = 1, q = 1, x = 3, p = 0, omega = 5, bc = 5, full_bc = 11
+  BC          = Inital = 6, Final = 5, Cyclic = 0
+  OMEGA       = Inital = 3, Final = 2, Cyclic = 0
+  total       = nZ = 2411, UC = 400, Q = 401
+  index start = omega = 2406, p = 2411
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1,18] ( 0.00160  , 0.00160  ) [  0.662   ,  0.698   ] 3.62e-05   [solverNewtonDumped]
+[  2, 1] ( 0.00160  , 0.00158  ) [  0.663   ,  0.660   ] 0.0120     [solverNewtonDumped]
+[  3, 1] ( 0.00158  , 0.00149  ) [  0.674   ,  0.559   ] 0.219      [solverNewtonDumped]
+[  4, 3] ( 0.00149  , 0.00118  ) [  0.865   ,  0.997   ] 0.249      [solverNewtonDumped]
+[  5, 1] ( 0.00118  , 0.000297 ) [  0.182   ,  0.0603  ] 0.998      [solverNewtonDumped]
+[  6, 1] ( 0.000297 , 0.000123 ) [  0.0907  ,  0.0166  ] 1.00       [solverNewtonDumped]
+[  7, 1] ( 0.000123 , 1.65e-06 ) [  0.0126  , 0.000318 ] 1.00       [solverNewtonDumped]
+[  8, 1] ( 1.65e-06 , 4.36e-09 ) [ 0.000309 , 6.62e-07 ] 1.00       [solverNewtonDumped]
+[  9, 1] ( 4.36e-09 , 4.14e-14 ) [ 6.68e-07 , 1.21e-11 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 9.52[ms]      timeout        = 0 [ms]
+iteration      = 9             tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 2411
+max acc. iter. = 800           N. System pars = 400
+Converged      = YES           Memory Used    = 233Kb (+27bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 29            Jacobian       = 9         
+Factorization  = 9             Inversion      = 37        
+------------------------ USER INFO -------------------------
+last ||d||_inf = 5.3332e-11    last||d1||_inf = 3.4902e-06
+last ||f||_inf = 3.6617e-12    last||f||_1    = 4.1378e-14
+------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ -0.6598, 0.000 ]
+[Penalties/Barriers,Controls] = [ 0.000, 0.000 ]
+All Done Folks!

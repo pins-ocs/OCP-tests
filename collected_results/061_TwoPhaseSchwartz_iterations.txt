@@ -1,0 +1,373 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x1
+[ 1] initial_x2
+[ 2] x13
+[ 3] x24
+
+
+
+Controls
+u1Control = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.1,
+  size    = 0.1
+}
+
+Constraints 1D
+bound1 = {
+  Type      = GREATER THAN
+  SubType   = WallRegular, h=0.10000, epsilon=0.10000
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+bound2 = {
+  Type      = GREATER THAN
+  SubType   = WallRegular, h=0.10000, epsilon=0.10000
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 101
+Segment N.0: s0 = 0.000 length = 1.000 npts = 101 no data set
+END Mesh[mesh]
+
+Model Parameters
+......................................T2 = 1.9
+...................................epsi0 = 0.1
+...................................epsi1 = 0.001
+.................................epsilon = 0.001
+....................................tol0 = 0.1
+....................................tol1 = 0.001
+................................epsilon0 = 0.001
+................................epsilon1 = 1e-10
+INFO CLASS = TwoPhaseSchwartz
+  #nodes      = 101
+  dim         = u = 2, q = 1, x = 4, p = 0, omega = 4, bc = 4, full_bc = 12
+  BC          = Inital = 6, Final = 4, Cyclic = 2
+  OMEGA       = Inital = 2, Final = 0, Cyclic = 2
+  total       = nZ = 812, UC = 200, Q = 101
+  index start = omega = 808, p = 812
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 1] (  0.0293  , 0.00105  ) [  0.400   ,  0.0276  ] 1.00       [solverNewtonDumped]
+[  2, 1] ( 0.00105  , 9.90e-06 ) [  0.0240  , 0.000640 ] 1.00       [solverNewtonDumped]
+[  3, 1] ( 9.90e-06 , 5.13e-09 ) [ 0.000638 , 1.68e-07 ] 1.00       [solverNewtonDumped]
+[  4, 1] ( 5.13e-09 , 3.95e-11 ) [ 1.68e-07 , 1.55e-09 ] 1.00       [solverNewtonDumped]
+[  5, 1] ( 3.95e-11 , 8.49e-11 ) [ 1.55e-09 , 1.11e-09 ] 1.00       [solverNewtonDumped]
+[  6, 1] ( 8.49e-11 , 2.16e-11 ) [ 1.11e-09 , 4.50e-11 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.20000, ds=0.20000, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  7, 5] (  0.120   ,  0.0984  ) [  0.266   ,  0.256   ] 0.181      [solverNewtonDumped]
+[  8, 5] (  0.0984  ,  0.0833  ) [  0.812   ,  0.0351  ] 0.155      [solverNewtonDumped]
+[  9, 1] (  0.0833  ,  0.0179  ) [  0.161   ,  0.0548  ] 0.786      [solverNewtonDumped]
+[ 10, 1] (  0.0179  , 4.91e-05 ) [  0.0531  ,  0.0102  ] 1.00       [solverNewtonDumped]
+[ 11, 1] ( 4.91e-05 , 1.16e-06 ) [ 0.00873  , 2.95e-05 ] 1.00       [solverNewtonDumped]
+[ 12, 1] ( 1.16e-06 , 1.60e-11 ) [ 2.95e-05 , 3.83e-10 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=0.50000, ds=0.30000, old_s=  0.2
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 13, 2] (  0.631   ,  0.0315  ) [ 0.00222  , 0.00192  ] 0.950      [solverNewtonDumped]
+[ 14, 1] (  0.0315  , 2.58e-08 ) [ 0.00150  , 0.000398 ] 1.00       [solverNewtonDumped]
+[ 15, 1] ( 2.58e-08 , 1.30e-09 ) [ 0.000295 , 2.79e-08 ] 1.00       [solverNewtonDumped]
+[ 16, 1] ( 1.30e-09 , 1.31e-09 ) [ 2.79e-08 , 1.88e-08 ] 1.00       [solverNewtonDumped]
+[ 17, 1] ( 1.31e-09 , 6.91e-10 ) [ 1.88e-08 , 7.70e-10 ] 1.00       [solverNewtonDumped]
+[ 18, 1] ( 6.91e-10 , 6.92e-10 ) [ 7.70e-10 , 3.23e-11 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=0.95000, ds=0.45000, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 19, 3] (   7.11   ,   3.23   ) [  0.0423  ,  0.0143  ] 0.546      [solverNewtonDumped]
+[ 20, 3] (   3.23   ,   1.46   ) [  0.0451  ,  0.0175  ] 0.546      [solverNewtonDumped]
+[ 21, 1] (   1.46   , 7.08e-06 ) [  0.0205  ,  0.0100  ] 1.00       [solverNewtonDumped]
+[ 22, 1] ( 7.08e-06 , 1.49e-05 ) [ 0.00691  , 0.000559 ] 1.00       [solverNewtonDumped]
+[ 23, 1] ( 1.49e-05 , 1.69e-05 ) [ 0.000559 , 0.000146 ] 1.00       [solverNewtonDumped]
+[ 24, 1] ( 1.69e-05 , 2.07e-05 ) [ 0.000146 , 5.87e-06 ] 1.00       [solverNewtonDumped]
+[ 25, 1] ( 2.07e-05 , 2.05e-05 ) [ 5.85e-06 , 2.21e-07 ] 1.00       [solverNewtonDumped]
+[ 26, 1] ( 2.05e-05 , 2.05e-05 ) [ 2.20e-07 , 8.18e-09 ] 1.00       [solverNewtonDumped]
+[ 27, 1] ( 2.05e-05 , 2.05e-05 ) [ 8.15e-09 , 3.05e-10 ] 1.00       [solverNewtonDumped]
+[ 28, 1] ( 2.05e-05 , 2.05e-05 ) [ 3.04e-10 , 1.27e-11 ] 1.00       [solverNewtonDumped]
+[ 29, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.26e-11 , 1.68e-12 ] 1.00       [solverNewtonDumped]
+[ 30, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.67e-12 , 1.36e-12 ] 1.00       [solverNewtonDumped]
+[ 31, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.36e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 32, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 33, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 34, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 35, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 36, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 37, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 38, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 39, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 40, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 41, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 42, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 43, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 44, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 45, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 46, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 47, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 48, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 49, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 50, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 51, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 52, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 53, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 54, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 55, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 56, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 57, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+[ 58, 1] ( 2.05e-05 , 2.05e-05 ) [ 1.35e-12 , 1.35e-12 ] 1.00       [solverNewtonDumped]
+solve_with_continuation() at phase 0 found: NewtonDumped[solverNewtonDumped]::solve() too many iterations!
+Iter = 41, maxIter = 40, tolerance = 1.0000e-09
+||d||_inf = 5.4235e-12, ||f||_inf = 0.00043395
+
+
+Continuation step N.1 s=0.72500, ds=0.22500, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 60, 3] (  0.184   ,  0.0836  ) [ 0.00331  , 0.00303  ] 0.546      [solverNewtonDumped]
+[ 61, 3] (  0.0836  ,  0.0380  ) [ 0.00648  , 0.00169  ] 0.546      [solverNewtonDumped]
+[ 62, 1] (  0.0380  , 9.20e-08 ) [ 0.00246  , 0.000962 ] 1.00       [solverNewtonDumped]
+[ 63, 1] ( 9.20e-08 , 1.06e-05 ) [ 0.000663 , 0.000270 ] 1.00       [solverNewtonDumped]
+[ 64, 1] ( 1.06e-05 , 7.00e-06 ) [ 0.000270 , 8.94e-06 ] 1.00       [solverNewtonDumped]
+[ 65, 1] ( 7.00e-06 , 6.90e-06 ) [ 8.95e-06 , 3.72e-07 ] 1.00       [solverNewtonDumped]
+[ 66, 1] ( 6.90e-06 , 6.90e-06 ) [ 3.73e-07 , 1.59e-08 ] 1.00       [solverNewtonDumped]
+[ 67, 1] ( 6.90e-06 , 6.90e-06 ) [ 1.59e-08 , 7.00e-10 ] 1.00       [solverNewtonDumped]
+[ 68, 2] ( 6.90e-06 , 6.90e-06 ) [ 7.01e-10 , 3.62e-10 ] 0.479      [solverNewtonDumped]
+[ 69, 2] ( 6.90e-06 , 6.90e-06 ) [ 3.62e-10 , 2.91e-10 ] 0.200      [solverNewtonDumped]
+[ 70, 4] ( 6.90e-06 , 6.90e-06 ) [ 2.91e-10 , 2.79e-10 ] 0.0439     [solverNewtonDumped]
+[ 71, 5] ( 6.90e-06 , 6.90e-06 ) [ 2.79e-10 , 2.75e-10 ] 0.0159     [solverNewtonDumped]
+[ 72, 8] ( 6.90e-06 , 6.90e-06 ) [ 2.75e-10 , 2.74e-10 ] 0.00389    [solverNewtonDumped]
+[ 73, 8] ( 6.90e-06 , 6.90e-06 ) [ 2.74e-10 , 2.73e-10 ] 0.00165    [solverNewtonDumped]
+[ 74,10] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 0.000311   [solverNewtonDumped]
+[ 75,10] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 9.10e-05   [solverNewtonDumped]
+[ 76,13] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 8.67e-06   [solverNewtonDumped]
+[ 77,12] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 4.65e-06   [solverNewtonDumped]
+[ 78,17] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 2.14e-07   [solverNewtonDumped]
+[ 79,18] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 2.64e-08   [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 80,18] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 9.29e-09   [solverNewtonDumped]
+[ 81,18] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 5.50e-09   [solverNewtonDumped]
+[ 82,22] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 4.63e-10   [solverNewtonDumped]
+[ 83,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 4.06e-10   [solverNewtonDumped]
+[ 84,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.81e-10   [solverNewtonDumped]
+[ 85,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.68e-10   [solverNewtonDumped]
+[ 86,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.62e-10   [solverNewtonDumped]
+[ 87,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.60e-10   [solverNewtonDumped]
+[ 88,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.58e-10   [solverNewtonDumped]
+[ 89,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 90,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 91,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 92,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 93,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 94,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 95,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 96,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 97,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 98,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+[ 99,20] ( 6.90e-06 , 6.90e-06 ) [ 2.73e-10 , 2.73e-10 ] 3.57e-10   [solverNewtonDumped]
+solve_with_continuation() at phase 0 found: NewtonDumped[solverNewtonDumped]::solve() too many iterations!
+Iter = 41, maxIter = 40, tolerance = 1.0000e-09
+||d||_inf = 2.1518e-09, ||f||_inf = 0.00013382
+
+
+Continuation step N.1 s=0.61250, ds=0.11250, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[101, 1] (  0.0259  , 8.58e-08 ) [ 0.000911 , 0.000148 ] 1.00       [solverNewtonDumped]
+[102, 1] ( 8.58e-08 , 8.64e-08 ) [ 0.000119 , 3.62e-06 ] 1.00       [solverNewtonDumped]
+[103, 1] ( 8.64e-08 , 1.50e-07 ) [ 3.62e-06 , 1.22e-07 ] 1.00       [solverNewtonDumped]
+[104, 1] ( 1.50e-07 , 1.48e-07 ) [ 1.22e-07 , 5.01e-09 ] 1.00       [solverNewtonDumped]
+[105, 1] ( 1.48e-07 , 1.48e-07 ) [ 5.01e-09 , 2.10e-10 ] 1.00       [solverNewtonDumped]
+[106, 1] ( 1.48e-07 , 1.48e-07 ) [ 2.10e-10 , 1.12e-11 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=0.78125, ds=0.16875, old_s=0.6125
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[107, 3] (  0.0713  ,  0.0324  ) [ 0.00244  , 0.000650 ] 0.546      [solverNewtonDumped]
+[108, 1] (  0.0324  , 6.92e-08 ) [ 0.000983 , 0.000124 ] 1.00       [solverNewtonDumped]
+[109, 1] ( 6.92e-08 , 1.04e-06 ) [ 9.24e-05 , 2.84e-05 ] 1.00       [solverNewtonDumped]
+[110, 1] ( 1.04e-06 , 1.26e-06 ) [ 2.84e-05 , 1.00e-06 ] 1.00       [solverNewtonDumped]
+[111, 1] ( 1.26e-06 , 1.24e-06 ) [ 1.01e-06 , 4.12e-08 ] 1.00       [solverNewtonDumped]
+[112, 1] ( 1.24e-06 , 1.24e-06 ) [ 4.12e-08 , 1.71e-09 ] 1.00       [solverNewtonDumped]
+[113, 1] ( 1.24e-06 , 1.24e-06 ) [ 1.71e-09 , 7.22e-11 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=1.0000, ds=0.21875, old_s=0.78125
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[114, 3] (  0.166   ,  0.0751  ) [  0.112   ,  0.111   ] 0.546      [solverNewtonDumped]
+[115, 3] (  0.0751  ,  0.0315  ) [  0.107   ,  0.0119  ] 0.581      [solverNewtonDumped]
+[116, 1] (  0.0315  , 2.45e-05 ) [  0.0301  , 0.00908  ] 1.00       [solverNewtonDumped]
+[117, 1] ( 2.45e-05 , 1.39e-05 ) [ 0.00736  , 0.000538 ] 1.00       [solverNewtonDumped]
+[118, 1] ( 1.39e-05 , 1.80e-05 ) [ 0.000537 , 7.85e-05 ] 1.00       [solverNewtonDumped]
+[119, 1] ( 1.80e-05 , 2.03e-05 ) [ 7.85e-05 , 3.28e-06 ] 1.00       [solverNewtonDumped]
+[120, 1] ( 2.03e-05 , 2.02e-05 ) [ 3.27e-06 , 1.24e-07 ] 1.00       [solverNewtonDumped]
+[121, 1] ( 2.02e-05 , 2.02e-05 ) [ 1.23e-07 , 4.61e-09 ] 1.00       [solverNewtonDumped]
+[122, 1] ( 2.02e-05 , 2.02e-05 ) [ 4.59e-09 , 1.72e-10 ] 1.00       [solverNewtonDumped]
+[123, 1] ( 2.02e-05 , 2.02e-05 ) [ 1.72e-10 , 6.98e-12 ] 1.00       [solverNewtonDumped]
+[124, 1] ( 2.02e-05 , 2.02e-05 ) [ 6.95e-12 , 7.40e-13 ] 1.00       [solverNewtonDumped]
+[125, 1] ( 2.02e-05 , 2.02e-05 ) [ 7.40e-13 , 5.47e-13 ] 1.00       [solverNewtonDumped]
+[126, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.47e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[127, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[128, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[129, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[130, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[131, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[132, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[133, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[134, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[135, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[136, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[137, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[138, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[139, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[140, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[141, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[142, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[143, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[144, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[145, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[146, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[147, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[148, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[149, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[150, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[151, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[152, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+[153, 1] ( 2.02e-05 , 2.02e-05 ) [ 5.41e-13 , 5.41e-13 ] 1.00       [solverNewtonDumped]
+solve_with_continuation() at phase 0 found: NewtonDumped[solverNewtonDumped]::solve() too many iterations!
+Iter = 41, maxIter = 40, tolerance = 1.0000e-09
+||d||_inf = 2.3496e-12, ||f||_inf = 0.00042102
+
+
+Continuation step N.1 s=0.89062, ds=0.10938, old_s=0.78125
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[155, 1] (  0.0242  , 2.56e-07 ) [ 0.00138  , 0.000231 ] 1.00       [solverNewtonDumped]
+[156, 1] ( 2.56e-07 , 1.13e-06 ) [ 0.000192 , 3.43e-05 ] 1.00       [solverNewtonDumped]
+[157, 1] ( 1.13e-06 , 1.66e-06 ) [ 3.43e-05 , 1.24e-06 ] 1.00       [solverNewtonDumped]
+[158, 1] ( 1.66e-06 , 1.64e-06 ) [ 1.24e-06 , 5.03e-08 ] 1.00       [solverNewtonDumped]
+[159, 1] ( 1.64e-06 , 1.64e-06 ) [ 5.03e-08 , 2.04e-09 ] 1.00       [solverNewtonDumped]
+[160, 1] ( 1.64e-06 , 1.64e-06 ) [ 2.04e-09 , 8.35e-11 ] 1.00       [solverNewtonDumped]
+[161, 1] ( 1.64e-06 , 1.64e-06 ) [ 8.34e-11 , 3.73e-12 ] 1.00       [solverNewtonDumped]
+[162, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.72e-12 , 4.62e-13 ] 1.00       [solverNewtonDumped]
+[163, 1] ( 1.64e-06 , 1.64e-06 ) [ 4.62e-13 , 3.51e-13 ] 1.00       [solverNewtonDumped]
+[164, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.51e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[165, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[166, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[167, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[168, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[169, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[170, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[171, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[172, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[173, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[174, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[175, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[176, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[177, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[178, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[179, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[180, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[181, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[182, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[183, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[184, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[185, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[186, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[187, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[188, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[189, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[190, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[191, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[192, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[193, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+[194, 1] ( 1.64e-06 , 1.64e-06 ) [ 3.47e-13 , 3.47e-13 ] 1.00       [solverNewtonDumped]
+solve_with_continuation() at phase 0 found: NewtonDumped[solverNewtonDumped]::solve() too many iterations!
+Iter = 41, maxIter = 40, tolerance = 1.0000e-09
+||d||_inf = 1.1190e-12, ||f||_inf = 3.4349e-05
+
+
+Continuation step N.1 s=0.83594, ds=0.054688, old_s=0.78125
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[196, 1] ( 0.00709  , 2.53e-08 ) [ 0.000625 , 2.44e-05 ] 1.00       [solverNewtonDumped]
+[197, 1] ( 2.53e-08 , 2.09e-07 ) [ 2.31e-05 , 5.24e-06 ] 1.00       [solverNewtonDumped]
+[198, 1] ( 2.09e-07 , 2.58e-07 ) [ 5.24e-06 , 2.07e-07 ] 1.00       [solverNewtonDumped]
+[199, 1] ( 2.58e-07 , 2.55e-07 ) [ 2.07e-07 , 8.48e-09 ] 1.00       [solverNewtonDumped]
+[200, 1] ( 2.55e-07 , 2.55e-07 ) [ 8.48e-09 , 3.48e-10 ] 1.00       [solverNewtonDumped]
+[201, 1] ( 2.55e-07 , 2.55e-07 ) [ 3.48e-10 , 1.44e-11 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=0.91797, ds=0.082031, old_s=0.8359375
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[202, 1] (  0.0138  , 1.36e-07 ) [ 0.00109  , 9.00e-05 ] 1.00       [solverNewtonDumped]
+[203, 1] ( 1.36e-07 , 4.22e-07 ) [ 8.20e-05 , 1.37e-05 ] 1.00       [solverNewtonDumped]
+[204, 1] ( 4.22e-07 , 6.78e-07 ) [ 1.37e-05 , 4.75e-07 ] 1.00       [solverNewtonDumped]
+[205, 1] ( 6.78e-07 , 6.68e-07 ) [ 4.75e-07 , 1.92e-08 ] 1.00       [solverNewtonDumped]
+[206, 1] ( 6.68e-07 , 6.69e-07 ) [ 1.92e-08 , 7.84e-10 ] 1.00       [solverNewtonDumped]
+[207, 1] ( 6.69e-07 , 6.68e-07 ) [ 7.84e-10 , 3.21e-11 ] 1.00       [solverNewtonDumped]
+
+Continuation step N.1 s=1.0000, ds=0.082031, old_s=0.91796875
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[208, 3] (  0.0139  , 0.00629  ) [ 0.000433 , 0.000509 ] 0.546      [solverNewtonDumped]
+[209, 1] ( 0.00629  , 1.22e-06 ) [ 0.00154  , 0.000199 ] 1.00       [solverNewtonDumped]
+[210, 1] ( 1.22e-06 , 1.23e-07 ) [ 0.000199 , 2.88e-06 ] 1.00       [solverNewtonDumped]
+[211, 1] ( 1.23e-07 , 1.80e-07 ) [ 2.88e-06 , 1.11e-07 ] 1.00       [solverNewtonDumped]
+[212, 1] ( 1.80e-07 , 1.78e-07 ) [ 1.11e-07 , 4.47e-09 ] 1.00       [solverNewtonDumped]
+[213, 1] ( 1.78e-07 , 1.78e-07 ) [ 4.47e-09 , 1.82e-10 ] 1.00       [solverNewtonDumped]
+[214, 1] ( 1.78e-07 , 1.78e-07 ) [ 1.82e-10 , 7.40e-12 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 180.0[ms]     timeout        = 0 [ms]
+iteration      = 214           tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 812
+max acc. iter. = 4000          N. System pars = 200
+Converged      = YES           Memory Used    = 136Kb (+44bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 722           Jacobian       = 214       
+Factorization  = 214           Inversion      = 924       
+------------------------ USER INFO -------------------------
+last ||d||_inf = 6.3652e-11    last||d1||_inf = 1.5618e-09
+last ||f||_inf = 3.7782e-06    last||f||_1    = 1.7821e-07
+------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ 5.915e-10, 2.054e-20 ]
+[Penalties/Barriers,Controls] = [ 9.493e-07, 7.844e-10 ]
+All Done Folks!

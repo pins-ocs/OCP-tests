@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_dll_ruby.cc                                              |
  |                                                                       |
- |  version: 1.0   date 16/11/2021                                       |
+ |  version: 1.0   date 17/11/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ namespace TrainDefine {
   EXTERN_C
   TRAIN_API_DLL
   bool
-  Train_ocp_setup( char const * id, GenericContainer & gc_data ) {
+  Train_ocp_setup( char const id[], GenericContainer & gc_data ) {
     if ( pTP      == nullptr ) pTP      = new ThreadPool(std::thread::hardware_concurrency());
     if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
     map< string, Train_Problem * >::iterator it = problems.find(id);
@@ -100,7 +100,7 @@ namespace TrainDefine {
   EXTERN_C
   TRAIN_API_DLL
   bool
-  Train_ocp_guess( char const * id, GenericContainer & gc_data ) {
+  Train_ocp_guess( char const id[], GenericContainer & gc_data ) {
     map< string, Train_Problem * >::iterator it = problems.find(id);
     if ( it == problems.end() ) {
       return false;
@@ -115,7 +115,7 @@ namespace TrainDefine {
   EXTERN_C
   TRAIN_API_DLL
   bool
-  Train_ocp_solve( char const       * id,
+  Train_ocp_solve( char const id[],
                    GenericContainer & gc_data,
                    GenericContainer & gc_solution ) {
     map< string, Train_Problem * >::iterator it = problems.find(id);
@@ -141,7 +141,7 @@ namespace TrainDefine {
   EXTERN_C
   TRAIN_API_DLL
   void
-  Train_write_ocp_solution( char const * id, char const * fname ) {
+  Train_write_ocp_solution( char const id[], char const fname[] ) {
     map< string, Train_Problem * >::const_iterator it = problems.find(id);
     if ( it == problems.end() ) {
       pConsole->error("Train_write_ocp_solution, no solution found!\n" );
