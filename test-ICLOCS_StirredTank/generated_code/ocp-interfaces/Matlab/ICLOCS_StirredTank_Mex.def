@@ -1,0 +1,9 @@
+
+; mexFunction.def : Declares the module parameters for the DLL.
+
+LIBRARY      "ICLOCS_StirredTank_Mex"
+DESCRIPTION  'Mex file for ICLOCS_StirredTank'
+
+EXPORTS
+    ; Explicit exports can go here
+    mexFunction

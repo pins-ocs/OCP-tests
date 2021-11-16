@@ -1,14 +1,5 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: Economic Growth Model 2
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-restart:
-with(XOptima):
-# Dynamical system equations
+restart:;
+with(XOptima):;
 TT := T(zeta) ;
 EQ1 := diff(x1(zeta),zeta) = y1(zeta)*TT :
 EQ2 := diff(y1(zeta),zeta) = u(zeta)*Q(x1(zeta),x2(zeta))*TT:
@@ -16,10 +7,8 @@ EQ3 := diff(x2(zeta),zeta) = y2(zeta)*TT :
 EQ4 := diff(y2(zeta),zeta) = (1-u(zeta))*Q(x1(zeta),x2(zeta))*TT:
 EQ5 := diff(T(zeta),zeta) = 0 :
 EQNS_T := [ EQ||(1..5) ] : <%> ;
-# Variabili del problema e controlli
 qvars := [x1(zeta),x2(zeta),y1(zeta),y2(zeta),T(zeta)] ;
 cvars := [u(zeta)] ;
-# Optimal Contol Problem
 #infoRegisteredObjects();
 loadDynamicSystem(equations=EQNS_T,controls=cvars,states=qvars) ;
 addUserFunction( Q(x,y)=x*y ) ;
@@ -33,7 +22,6 @@ setStatusBoundaryConditions(
   generic=["FinalX","FinalY1","FinalY2"]
 );
 infoBoundaryConditions() ;
-# Penalty
 addControlBound(
   u,
   controlType = "U_COS_LOGARITHMIC",
@@ -68,7 +56,9 @@ generateOCProblem(
   parameters          = PARS,
   continuation        = CONT,
   mesh                = [length=1, n=5000],
-  controls_guess      = [u = 0.5],  controls_iterative  = false,  states_guess        = [ T=T_guess, x1=x1_i, x2=x2_i, y1=y1_i, y2=y2_i ]
+  controls_guess      = [u = 0.1],
+  controls_iterative  = false,
+  states_guess        = [ T=T_guess, x1=x1_i, x2=x2_i, y1=y1_i, y2=y2_i ]
 );
 #Describe(generateOCProblem);
-
+;

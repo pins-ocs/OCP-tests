@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-tol_ctrl  = 1e-05
 epsi_ctrl = 1e-05
+tol_ctrl  = 1e-05
 
 content = {
 
@@ -174,8 +174,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

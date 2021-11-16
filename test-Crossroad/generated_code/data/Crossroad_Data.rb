@@ -20,12 +20,12 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-jerk_max = 10
-jerk_min = -10
-wJ       = 1/jerk_max**2
 L        = 100
 v_max    = 30
+jerk_min = -10
 s_f      = L
+jerk_max = 10
+wJ       = 1/jerk_max**2
 
 mechatronix do |data|
 
@@ -226,12 +226,12 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 100,
         :length => 0.5,
+        :n      => 100,
       },
       {
-        :n      => 100,
         :length => 0.5,
+        :n      => 100,
       },
     ],
   };

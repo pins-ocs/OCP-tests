@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol0  = 0.1
-tol   = tol0
 W0    = 0
 W     = W0
+tol0  = 0.1
+tol   = tol0
 epsi0 = 0.1
 epsi  = epsi0
 

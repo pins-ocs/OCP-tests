@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
-h0       = 0.1
-epsilon0 = 0.1
 vFmax    = 10
+epsilon0 = 0.1
+h0       = 0.1
 
 content = {
 
@@ -159,8 +159,8 @@ content = {
   MappedObjects = {
   -- ClipIntervalWithErf
     cliph = h0,
-    clipdelta2 = 0,
     clipdelta = 0,
+    clipdelta2 = 0,
   },
 
   -- Controls
@@ -187,8 +187,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

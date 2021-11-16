@@ -1,25 +1,11 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Speyer problem (ICLOCS example 11)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-# Periodic Optimal Flight
-# Jason L. Speyer
-# JOURNALFOGUIDANCE, CONTROL,ANDYNAMICS Vol.19, 1996
-restart:
-with(XOptima):
+restart:;
+with(XOptima):;
 #XOptimaInfo() ;
-# Equations of motion
 EQ1    := diff(x1(t),t) = x2(t):
 EQ2    := diff(x2(t),t) = u(t):
 EQNS_T := [ EQ||(1..2)]: <%>;
-# State variables and controls
 qvars := [x1(t),x2(t)];
 cvars := [u(t)];
-# Optimal Control: problem definition
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
@@ -42,7 +28,6 @@ pars := [
   b1 = 1e-5,
   b  = b0
 ];
-
 GUESS := [
   x1 = sin(2*Pi*zeta),
   x2 = cos(2*Pi*zeta) # must be initialized
@@ -63,4 +48,4 @@ generateOCProblem(
 );
 #ocp := getOCProblem();
 #eval(ocp);
-
+;

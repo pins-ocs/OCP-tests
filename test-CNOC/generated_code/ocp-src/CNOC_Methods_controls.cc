@@ -398,7 +398,7 @@ namespace CNOCDefine {
     real_type t5   = XR__[iX_coV];
     real_type t8   = t2 + t5;
     real_type t9   = 1.0 / t8;
-    real_type t13  = jsControl.solve_rhs(t9 * (-t1 * t2 - t4 * t5), ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t13  = jsControl.solve_rhs(t9 * (-t2 * t1 - t5 * t4), ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type t14  = t5 * t13;
     real_type t16  = t8 * t8;
     real_type t17  = 1.0 / t16;

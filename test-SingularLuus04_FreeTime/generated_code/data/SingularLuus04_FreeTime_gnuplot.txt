@@ -1,0 +1,34 @@
+
+#
+# CONTROLS
+#
+set title "Controls"
+plot \
+  "SingularLuus04_FreeTime_OCP_result.txt" every ::1 using 2:6 with linespoints title "u" 
+
+pause -1 "Hit any key to continue"
+
+#
+# STATES
+#
+
+set title "States"
+plot \
+  "SingularLuus04_FreeTime_OCP_result.txt" every ::1 using 2:7 with linespoints title "x" , \
+  "SingularLuus04_FreeTime_OCP_result.txt" every ::1 using 2:8 with linespoints title "y" , \
+  "SingularLuus04_FreeTime_OCP_result.txt" every ::1 using 2:9 with linespoints title "z" , \
+  "SingularLuus04_FreeTime_OCP_result.txt" every ::1 using 2:10 with linespoints title "T" 
+
+pause -1 "Hit any key to continue"
+
+#
+# MULTIPLIERS
+#
+set title "Multipliers"
+plot \
+  "SingularLuus04_FreeTime_OCP_result.txt" every ::1 using 2:11 with linespoints title "lambda1__xo" , \
+  "SingularLuus04_FreeTime_OCP_result.txt" every ::1 using 2:12 with linespoints title "lambda2__xo" , \
+  "SingularLuus04_FreeTime_OCP_result.txt" every ::1 using 2:13 with linespoints title "lambda3__xo" , \
+  "SingularLuus04_FreeTime_OCP_result.txt" every ::1 using 2:14 with linespoints title "lambda4__xo" 
+
+pause -1 "Hit any key to continue"

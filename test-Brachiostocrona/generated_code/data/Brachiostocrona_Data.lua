@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
+yf = -2
 xf = 5
 g  = 9.81
-yf = -2
 Tf = (-2.0*yf/g)**(1/2.0)
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 

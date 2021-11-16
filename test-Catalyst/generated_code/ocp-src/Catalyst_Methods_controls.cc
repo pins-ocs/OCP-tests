@@ -81,7 +81,7 @@ namespace CatalystDefine {
     real_type t2   = X__[iX_x2];
     real_type t4   = X__[iX_x1];
     real_type t12  = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
-    result__[ 0   ] = (10 * t2 - t4) * L__[iL_lambda1__xo] + (t4 - 9 * t2) * L__[iL_lambda2__xo] + t12;
+    result__[ 0   ] = (10 * t2 - t4) * L__[iL_lambda1__xo] + L__[iL_lambda2__xo] * (t4 - 9 * t2) + t12;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }

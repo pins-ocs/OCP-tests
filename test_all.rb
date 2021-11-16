@@ -1,5 +1,13 @@
-require 'fileutils'
-require 'rbconfig'
+require "rake/clean"
+
+%w(pry rbconfig colorize fileutils).each do |gem|
+  begin
+    require gem
+  rescue LoadError
+    warn "Install the #{gem} gem:\n$ (sudo) gem install #{gem}"
+    exit 1
+  end
+end
 
 host_os = RbConfig::CONFIG['host_os']
 case host_os
@@ -18,31 +26,46 @@ end
 FileUtils.rm_rf "./collected_results/"
 FileUtils.mkdir "./collected_results/"
 
-def do_test(dir)
+ffile = File.open("./collected_results/000_list_failed.txt","w")
+
+def do_test(dir,idx)
   name = dir.split("test-")[1];
-  puts "\n\n"
-  FileUtils.cd dir
-  system("rake clobber maple" );
-  puts "\n\n"
-  FileUtils.cd "generated_code"
-  system("pins #{name}_pins_run.rb -f -b -main" );
-  puts "\n\n"
-  if OS == :windows then
-    cmd = 'bin\main | ' + "perl -ne \"print \$_; print STDERR \$_;\" 2> iterations.txt" ;
-  else
-    cmd = "./bin/main | tee iterations.txt";
+  FileUtils.cd dir do
+    puts "\n\n"
+    system("rake clobber maple" );
+    puts "\n\n"
+    begin
+      FileUtils.cd "generated_code" do
+        system("pins #{name}_pins_run.rb -f -b -main" );
+        puts "\n\n"
+        if OS == :windows then
+          cmd = 'bin\main | ' + "perl -ne \"print \$_; print STDERR \$_;\" 2> iterations.txt" ;
+        else
+          cmd = "./bin/main | tee iterations.txt";
+        end
+        puts "EXECUTE: #{cmd}\n"
+        system( cmd );
+        puts "\n\n"
+      end
+    rescue => e
+      p e
+      ffile.puts name
+      #binding.pry
+    end
   end
-  puts "EXECUTE: #{cmd}\n"
-  system( cmd );
-  puts "\n\n"
-  FileUtils.cd "../.."
-  ff = "#{dir}/generated_code/iterations.txt";
-  if File.exist? "#{dir}/generated_code/data/#{name}_OCP_result.txt" then
-    gg = "./collected_results/#{name}_iterations.txt";
-  else
-    gg = "./collected_results/#{name}_iterations_NO_OK.txt";    
+  begin
+    ff = "#{dir}/generated_code/iterations.txt";
+    if File.exist? "#{dir}/generated_code/data/#{name}_OCP_result.txt" then
+      gg = "./collected_results/#{'%03d' % idx}_#{name}_iterations.txt";
+    else
+      gg = "./collected_results/#{'%03d' % idx}_#{name}_iterations_NO_OK.txt";    
+    end
+    FileUtils.cp ff, gg if File.exist? ff
+  rescue => e
+    p e
+    ffile.puts name
+    #binding.pry
   end
-  FileUtils.cp ff, gg if File.exist? ff
 end
 
 #List of test that are excluded from
@@ -57,7 +80,7 @@ banner =
 puts "#{banner}"
 
 ## Get all test directries in folder
-ocps_path = '.'
+ocps_path  = '.'
 tests_dirs = []
 excluded_tests = []
 Dir.entries(ocps_path).select {|f|
@@ -75,14 +98,25 @@ Dir.entries(ocps_path).select {|f|
 #ordina directory
 tests_dirs.sort!
 
-tests_dirs.each_with_index { |f,i| puts "#{i}: #{f}" }
-excluded_tests.each_with_index { |f,i| puts "#{i}: #{f}" }
+File.open("./collected_results/000_list.txt","w") do |file|
+  file.puts banner
+  tests_dirs.each_with_index do |f,i|
+    puts "#{i}: #{f}";
+    file.puts "#{i}: #{f}";
+  end
+  excluded_tests.each_with_index do |f,i|
+    puts "#{i}: #{f}";
+    file.puts "#{i}: #{f}";
+  end
+end
 
 puts "Start loop on tests"
-tests_dirs.each do |d|
+tests_dirs.each_with_index do |d,idx|
   puts "\n"
   puts "-------------------------------------------------------------------------------"
   puts "Testing: #{d}"
-  do_test(d) ;
+  do_test(d,idx+1) ;
   puts "\n\n#{d}\n\n\n"
 end
+
+ffile.close()

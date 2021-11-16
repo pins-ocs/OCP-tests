@@ -1,19 +1,6 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: TwoPhaseSchwartz
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-# 
-# Users Guide for dyn.Opt, Example 4
-# Schwartz, A. L., Theory and Implementation of Numerical Methods based on Runge-Kutta Integration for Solving Optimal Control Problems. 
-# Ph.D. Dissertation, University of California, Berkeley, 1989
 restart:
 with(XOptima):
 XOptimaInfo();
-# Equations of motion
 EQ1    := diff(x1(t),t) = x2(t):
 EQ2    := diff(x2(t),t) = u1(t)-0.1*(1+2*x1(t)^2)*x2(t):
 EQ3    := diff(x3(t),t) = T2*(x4(t)):
@@ -21,15 +8,12 @@ EQ4    := diff(x4(t),t) = T2*(u2(t)-0.1*(1+2*x3(t)^2)*x4(t)):
 EQNS_T := [ EQ||(1..4) ]:<%>;
 qvars := map([x1,x2,x3,x4],(t));
 cvars := [u1(t),u2(t)];
-# Optimal Control: problem definition
-# Load dynamical system
 #infoRegisteredObjects() ;
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
   states    = qvars
 );
-# Boundary conditions
 addBoundaryConditions(
   initial = [ x1=1, x2=1 ],
   generic = [
@@ -38,7 +22,6 @@ addBoundaryConditions(
   ]
 );
 infoBoundaryConditions() ;
-# Constraints on control
 addControlBound(
   u1,
   controlType = "U_COS_LOGARITHMIC", 
@@ -47,7 +30,6 @@ addControlBound(
   tolerance   = tol,
   scale       = 1
 );
-# 
 addUnilateralConstraint(
   1-9*(x1(zeta)-1)^2-((x2(zeta)-0.4)/0.3)^2<=0,
   bound1,
@@ -62,7 +44,6 @@ addUnilateralConstraint(
   tolerance = tol,
   scale     = 1
 );
-# Cost function: target
 setTarget(
   lagrange = epsilon*u2(zeta)^2, 
   mayer    = 5*(x3(zeta_f)^2+x4(zeta_f)^2)
@@ -96,7 +77,6 @@ CONT := [
     ["u1","tolerance"]     = tol0*(1-s)+tol1*s
   ]
 ];
-# Problem generation
 #Describe(generateOCProblem);
 POST := [
   [1+T2*zeta, "Time2"]
@@ -118,4 +98,4 @@ generateOCProblem(
 );
 ocp := getOCProblem();
 eval(ocp["controls"]);
-
+;

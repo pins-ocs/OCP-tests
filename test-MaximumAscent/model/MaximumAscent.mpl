@@ -1,15 +1,5 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: Maximum Ascent Problem
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-restart:
-with(XOptima):
-# Model Equations
-# mdot > 0!
+restart:;
+with(XOptima):;
 TF   := tf(days);
 TBAR := Tbar(TF) ;
 ETA  := eta(TF) ;
@@ -20,25 +10,20 @@ EQ3 := diff(v(zeta),zeta)     = -(ETA*u(zeta)*v(zeta)/r(zeta)) + k*cos(alpha(zet
 EQ4 := diff(theta(zeta),zeta) = ETA*(v(zeta)/r(zeta)) :
 EQNS := convert([EQ||(1..4)],Vector) ;
 #simplify(EQ6*lambda_u(zeta)+EQ7*lambda_v(zeta),size);
-# Variabili del problema
-# Variabili
 xvars := [r(zeta),u(zeta),v(zeta),theta(zeta)] ;
-# Controlli
 uvars := [alpha(zeta)] ;
-# BVP
 loadDynamicSystem(
   equations = EQNS,
   controls  = uvars,
   states    = xvars
 );
-# Initial conditions
-# Launch from zero altitude with zero initial velocity
-# All Boundary Conditions are non-dimensional
+# Initial conditions;
+# Launch from zero altitude with zero initial velocity;
+# All Boundary Conditions are non-dimensional;
 addFunction(arctan2(y,x),2) ;
 addUserFunction(eta(tf)=v0*tf/r0) ;
 addUserFunction(Tbar(tf)=T*tf/v0) ;
 addUserFunction(tf(days)=days*24*3600);
-
 #Describe(addBoundaryConditions) ;
 addBoundaryConditions(
   initial = [r=r0_bar,u=u0_bar,v=v0_bar,theta=theta0],
@@ -47,11 +32,8 @@ addBoundaryConditions(
 );
 infoBoundaryConditions() ;
 setTarget( mayer = -r(zeta_f), lagrange = 0) ;
-# Control deduced minimizing Hamiltonian
-# Use arctan2__xo, arctan version of PINS
 CONTROL := [alpha = arctan2__xo(-lambda2__xo(zeta),-lambda3__xo(zeta))] ;
 GUESS := [ r=r0_bar, u=u0_bar, v=v0_bar, theta=theta0, lambda2__xo = -1 ] ;
-# parameters
 model_params := [ T       = 0.68,
                   m0      = 5000,
                   g0      = 9.80665,
@@ -84,4 +66,4 @@ generateOCProblem(
   #parameters_guess = [ T=sqrt((x1-x0)^2+(y1-y0)^2)/V],
   states_guess    = GUESS
 );
-
+;

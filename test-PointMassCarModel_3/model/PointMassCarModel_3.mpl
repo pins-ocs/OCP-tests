@@ -1,17 +1,7 @@
-
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Point mass car optimal control
-# Free time by segment, use 1/sqrt(Vsegment) for scaling
-# 
-# 
-# Discontinuous: zeta_dot as algebric variable defined in UserFunction no Jump conditions
 restart:
 with(plots):
-with(XOptima):
-# Model
-read("point_mass_model.mpl"):
-# Switch to zeta domain:
+with(XOptima):;
+read("point_mass_model.mpl"):;
 zvars  := subs(t=zeta, tvars):
 zuvars := subs(t=zeta, uvars):
 <zuvars>, <zvars>;
@@ -30,9 +20,7 @@ zeqns := [op(simplify(op(solve( zeqns, diff(zvars,zeta) )))),
          diff(sqrt_inv_Vseg(zeta),zeta)=0]:
 <zeqns>;
 zvars := [op(subs(t=zeta, tvars)),sqrt_inv_Vseg(zeta)];
-# Formulate the problem with XOptima
-# Road definition
-read("roads.mpl"):
+read("roads.mpl"):;
 qvars := [
   L()              = ssLength(),
   ssSegmentMin()   = ssSegmentMin(),
@@ -51,8 +39,7 @@ qextra := [
   yL(zeta)           = isoLeftY(zeta),
   xR(zeta)           = isoRightX(zeta),
   yR(zeta)           = isoRightY(zeta)
-]:
-# Map Maple mesh functions to methods of C++ objects 
+]:;
 mapUserFunctionToObject(
   [op(qvars),op(qextra)],
   "*pRoad",             # istanza class tipo pointer
@@ -60,17 +47,13 @@ mapUserFunctionToObject(
   road_data_init
 );
 ALIASES := [];#  [ D(leftWidth)=leftWidth_D, D(rightWidth)=rightWidth_D];
-# Dynamic system load
 loadDynamicSystem(
   states        = zvars,
   controls      = zuvars,
   equations     = zeqns,
   meshFunctions = map(lhs,qvars)
 );
-# 
-#Describe(addBoundaryConditions)
-;
-# Set hte boundaries conditions
+#Describe(addBoundaryConditions);
 if true  then # CYCLIC ----
   addBoundaryConditions(
     #initial = [V=V0,s=ssSegmentMin_L()],
@@ -99,8 +82,7 @@ else           # MAYER CYCLIC ----
                 + ( (V(zeta_i) - V(zeta_f) )/30 )^2
                 + ( (fx(zeta_i) - fx(zeta_f))/1 )^2
                 + ( (Omega(zeta_i) - Omega(zeta_f))/0.1 )^2;
-end:
-
+end:;
 setInterfaceConditionFixed(
   s,
   s(zeta_L)-zeta_L, #ssSegmentMax_L(),
@@ -108,17 +90,13 @@ setInterfaceConditionFixed(
 );
 setInterfaceConditionFree( sqrt_inv_Vseg );
 SCALE := sqrt_inv_Vseg(zeta)^2;
-# Define the target
 setTarget(
   lagrange = wT * SCALE,
   mayer    = wMC*Mayer_cyclic
 );
-# Define penalties options
 penalties_opts      := scale = SCALE, epsilon = p_epsi0,  tolerance = p_tol0;
 road_penalties_opts := scale = SCALE, epsilon = p_epsi0,  tolerance = road_tol0;
 u_penalties_opts    := scale = SCALE, epsilon = up_epsi0, tolerance = up_tol0;
-# Add penalties
-# Adherence limit: rotate the ellipse by an angle beta
 MU_X :=  subs(t=zeta, fx(t)/(mu__x__max*g) );
 MU_Y :=  subs(t=zeta, fy/(mu__y__max*g) );
 ellipse := (MU_X)^2 + (MU_Y)^2;
@@ -127,7 +105,6 @@ addUnilateralConstraint(
   AdherenceEllipse,
   penalties_opts
 );
-# RoadBorders
 addUnilateralConstraint(
   n(zeta) < leftWidth(s(zeta)),
   RoadLeftBorder,
@@ -138,7 +115,6 @@ addUnilateralConstraint(
   RoadRightBorder,
   road_penalties_opts
 );
-# Maximum power
 power := V(zeta)*fx(zeta)*m;
 addUnilateralConstraint(
   power/Pmax < 1,
@@ -150,7 +126,6 @@ addUnilateralConstraint(
 #  Spos,
 #  penalties_opts
 #);
-# Add control bounds
 addControlBound(
   v__fx(zeta),
   controlType = "U_COS_LOGARITHMIC",
@@ -165,7 +140,6 @@ addControlBound(
   max         = 1,
   u_penalties_opts
 );
-# Post processing
 out_vars := [
   [Kappa(s(zeta)),      "Kappa"],
   [leftWidth(s(zeta)),  "leftWidth"],
@@ -187,13 +161,11 @@ out_vars := [
   [ZDOT,                      "zeta_dot_eq"]
 ]:
 <%>;
-# Ocp data
 other_params := [
   wT0       = 0.01,
   wT1       = 1.0,
-  wT        = wT0, # Lagrange target weight
-#     
-wMC       = 1,
+  wT        = wT0, Lagrange target weight
+    wMC       = 1,
   V0        = 0,
   Vguess    = 10,
   p_epsi0   = 0.1, 
@@ -204,15 +176,13 @@ wMC       = 1,
   up_tol0   = 1e-2,
   road_tol0 = 0.01
 ]: <%>;
-# Define the states check and guess
 admissible_region_expr := []:
 states_guess_expr := [
   V             = Vguess,
   Omega         = Vguess/R0,
   sqrt_inv_Vseg = sqrt(1/Vguess),
   s             = zeta
-]:
-# Define the continuation in the penalties
+]:;
 continuation_param := [ 
   [ wT = wT0 + s*(wT1-wT0)],
   [ 
@@ -224,12 +194,9 @@ continuation_param := [
    ["v__Omega","epsilon"]         = up_epsi0 + s * (up_epsi1 - up_epsi0)
   ]
 ];
-
 project_name := "PointMassCarModel_3";
 project_dir  := "../";
-
 int_out_vars := [[sqrt_inv_Vseg(zeta)^2, "t"]];
-# Generate the project
 generateOCProblem( clean=false,
   project_name, 
   output_directory         = project_dir,
@@ -249,7 +216,6 @@ ocp := getOCProblem();
 ocp["bvp"]["interface_equations"][1..7];
 ocp["bvp"]["interface_equations"][8..14];
 indices(ocp["bvp"]);
-ocp["bvp"]["boundary_conditions"]
-;
+ocp["bvp"]["boundary_conditions"];
 OCP_data["bc_vec"];
-
+;

@@ -1,4 +1,4 @@
-# Date:             00:37:51 2021-11-16
+# Date:             20:19:21 2021-11-16
 # MX Version:       1.4.9-d149dirty-osx_12.0.1 hash: 4ad3dfb5 Tue Nov 16 00:25:52 2021
 # Computation type: Optimal control solution
 # Model name:       AliChan
@@ -14,7 +14,7 @@
 # max_accumulated_iter = 800
 # tolerance            = 9.999999999999999e-10
 # iterations           = 301
-# cpu_time             = 769.859 ms
+# cpu_time             = 760.737 ms
 # solver_type          = CyclicReduction+LU and LastBlock LUPQ
 # lapack version       = Accelerate
 #

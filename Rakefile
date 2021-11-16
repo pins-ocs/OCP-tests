@@ -1,9 +1,9 @@
 require "rake/clean"
-%w(pry colorize).each do |gem|
+%w(pry pp colorize fileutils nokogiri).each do |gem|
   begin
     require gem
   rescue LoadError
-    warn "Install the #{gem} gem:\n $ (sudo) gem install #{gem}"
+    warn "Install the #{gem} gem:\n$ (sudo) gem install #{gem}"
     exit 1
   end
 end
@@ -14,33 +14,19 @@ class ModelDirNotFoundError < Exception; end
 PATHLIB = `pins --path`
 
 case RUBY_PLATFORM
-
 when /darwin/
-
-  OS         = :mac
-  WHICH_CMD  = 'which'
-  DYL_EXT    = 'dylib'
-  #MAPLECMD   = `ls -1 /Applications/Maple*/maple | tail -1`.gsub(' ','\ ').chomp
-  MAPLECMD   = "/Library/Frameworks/Maple.framework/Versions/Current/bin/maple"
-
+  OS       = :mac
+  MAPLECMD = "/Library/Frameworks/Maple.framework/Versions/Current/bin/maple"
 when /linux/
-
-  OS         = :linux
-  WHICH_CMD  = 'which'
-  DYL_EXT    = 'so'
-  PREFIX     = '/usr/local'
-  V1         = Dir.glob("/usr/local/maple*/bin/maple").map { |d| d }
-  V2         = Dir.glob("/opt/maple*/bin/maple").map { |d| d }
-  MAPLECMD   = V1.push(V2).flatten.sort.last # da sistenare
-
+  OS       = :linux
+  PREFIX   = '/usr/local'
+  V1       = Dir.glob("/usr/local/maple*/bin/maple").map { |d| d }
+  V2       = Dir.glob("/opt/maple*/bin/maple").map { |d| d }
+  MAPLECMD = V1.push(V2).flatten.sort.last # da sistenare
 when /mingw|mswin/
-
-  OS        = :win
-  WHICH_CMD = 'where'
-  DYL_EXT   = 'dll'
-  PREFIX    = '/usr/local'
+  OS       = :win
+  PREFIX   = '/usr/local'
   MAPLECMD = '"' + Dir.glob("C:/Program Files*/Maple*/bin*/cmaple.exe").map { |d| d }.sort.last + '"'
-
 else
   raise RuntimeError, "Unsupported OS: #{RUBY_PLATFORM}"
 end
@@ -62,14 +48,12 @@ begin # definitions
 
   puts "Compiling model: #{MODEL_NAME}\n"
 
-  MAPLET = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.mpl"
+  MAPLE_SRC = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.mw"
 
   CLOBBER.include [
     "#{ROOT}/#{MODEL_DIR}/bvpOut",
     "#{ROOT}/generated_code"
   ]
-
-  include FileUtils
 
 rescue ModelDirNotFoundError
   warn "Cannot find ``model`` directory!\n".red
@@ -79,51 +63,83 @@ rescue WrongTestDirError
   exit
 rescue => e
   p e
-  require 'pry'
   binding.pry
 end
 
-desc "Run the mpl file and generate source".green
+def check_maple_input( node )
+  return true if node['style'] == "Maple Input"
+  node.xpath('.//*').each do |link|
+    return true if link['style'] == "Maple Input"
+    return true if check_maple_input(link)
+  end
+  return false;
+end
+
+desc "Run the maple file and generate source".green
 task :maple do
-  mpl = File.basename MAPLET
-  dir = File.dirname MAPLET
-  if File.exist?(MAPLET)
-    cd dir do
-      sh "#{MAPLECMD} #{mpl}"
+  mpl = File.basename MAPLE_SRC
+  dir = File.dirname MAPLE_SRC
+  cd dir do
+    if File.exist?(MODEL_NAME+".mw")
+      #
+      # extract Maplet
+      #
+      File.open("#{MODEL_NAME}.mpl", "w") do |f|
+        doc = Nokogiri::XML(File.read(MODEL_NAME+".mw"))
+        doc.xpath('//Worksheet//Input//Text-field').each do |link|
+          next unless check_maple_input( link )
+          line = link.content.strip
+          line += ';' if line[-1] != ';' # add missing ;
+          f.puts line
+        end
+      end
+      #
+      # execute maple
+      #
+      cmd = "#{MAPLECMD} -q -w 0 #{MODEL_NAME}.mpl"
+      puts ">> #{cmd}".green
+      sh cmd
+      puts ">> source code generated".green
+    else
+      warn ">> #{MODEL_NAME}.mw does not exist!".red
     end
-    puts ">> source code generated".green
-  else
-    warn ">> #{MAPLET} does not exist!".red
   end
 end
 
 desc "Build executable".green
 task :main do
   ENV['PATH'] = ENV['PATH']+PATHLIB
-  cd ROOT+'/generated_code'
-  cmd = "pins #{MODEL_NAME}_pins_run.rb -f -b -main";
-  puts "Run: #{cmd}".yellow
-  system(cmd);
+  dir = ROOT+'/generated_code'
+  if File.exist?(dir) then
+    cd dir do
+      cmd = "pins #{MODEL_NAME}_pins_run.rb -f -b -main";
+      puts "Run: #{cmd}".yellow
+      system(cmd);
+    end
+  else
+    puts "Missing: #{dir}".red
+  end
 end
 
 desc "Run executable".green
 task :run do
   ENV['PATH'] = ENV['PATH']+PATHLIB
-  cd ROOT+'/generated_code'
-  cmd = "pins #{MODEL_NAME}_pins_run.rb";
-  puts "Run: #{cmd}".yellow
-  system(cmd);
+  dir = ROOT+'/generated_code'
+  if File.exist?(dir) then
+    cd dir do
+      cmd = "pins #{MODEL_NAME}_pins_run.rb";
+      puts "Run: #{cmd}".yellow
+      system(cmd);
+    end
+  else
+    puts "Missing: #{dir}".red
+  end
 end
 
 task :all do
-  puts "\n\n\nCLOBBER\n\n".green
   Rake::Task[:clobber].invoke
-  puts "\n\nMAPLE\n\n".green
   Rake::Task[:maple].invoke
-  puts "\n\nCLEAN\n\n".green
   Rake::Task[:clean].invoke
-  puts "\n\nMAIN\n\n".green
   Rake::Task[:main].invoke
-  puts "\n\nRUN\n\n".green
   Rake::Task[:run].invoke
 end

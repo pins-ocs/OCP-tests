@@ -1,24 +1,13 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# FlowInAchannel (COPS example 8)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-restart:
-with(XOptima):
+restart:;
+with(XOptima):;
 #XOptimaInfo() ;
-# Equations of motion
 EQ1    := diff(u(t),t)  = u1(t):
 EQ2    := diff(u1(t),t) = u2(t):
 EQ3    := diff(u2(t),t) = u3(t):
 EQ4    := diff(u3(t),t) = R*(u1(t)*u2(t)-u(t)*u3(t)):
 EQNS_T := [ EQ||(1..4)]: <%>;
-# State variables and controls
 qvars := map([u,u1,u2,u3],(t));
 cvars := [];
-# Optimal Control: problem definition
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
@@ -37,7 +26,6 @@ setTarget(
 pars := [
   R = 10000
 ];
-
 GG := zeta^2*(3 - 2*zeta);
 GUESS := [
   u  = GG,
@@ -57,4 +45,4 @@ generateOCProblem(
 );
 #ocp := getOCProblem();
 #eval(ocp);
-
+;

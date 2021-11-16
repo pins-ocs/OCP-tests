@@ -100,30 +100,30 @@ namespace UnderwaterDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
-    real_type t1   = X__[iX_theta];
-    real_type t2   = sin(t1);
-    real_type t3   = L__[iL_lambda1__xo];
-    real_type t4   = X__[iX_vx];
-    real_type t6   = L__[iL_lambda2__xo];
-    real_type t7   = X__[iX_vz];
-    real_type t11  = cos(t1);
-    real_type t17  = P__[iP_T];
-    result__[ 2   ] = -t17 * ((t4 * t3 + t7 * t6) * t2 - (t7 * t3 - t4 * t6) * t11);
-    real_type t19  = t17 * t3;
-    real_type t21  = t17 * t6;
-    real_type t24  = t17 * L__[iL_lambda5__xo];
+    real_type t1   = P__[iP_T];
+    real_type t2   = X__[iX_theta];
+    real_type t3   = sin(t2);
+    real_type t4   = L__[iL_lambda1__xo];
+    real_type t5   = X__[iX_vx];
+    real_type t7   = L__[iL_lambda2__xo];
+    real_type t8   = X__[iX_vz];
+    real_type t12  = cos(t2);
+    result__[ 2   ] = -((t5 * t4 + t8 * t7) * t3 - (t8 * t4 - t5 * t7) * t12) * t1;
+    real_type t19  = t1 * t4;
+    real_type t21  = t7 * t1;
+    real_type t24  = t1 * L__[iL_lambda5__xo];
     real_type t25  = X__[iX_Omega];
     real_type t26  = ModelPars[iM_m1];
     real_type t28  = ModelPars[iM_m3];
     real_type t29  = 1.0 / t28;
-    real_type t33  = t17 * L__[iL_lambda6__xo];
+    real_type t33  = t1 * L__[iL_lambda6__xo];
     real_type t34  = t28 - t26;
     real_type t37  = 1.0 / ModelPars[iM_inertia];
-    result__[ 3   ] = t29 * t26 * t25 * t24 + t37 * t34 * t7 * t33 + t11 * t19 - t2 * t21;
-    real_type t43  = t17 * L__[iL_lambda4__xo];
+    result__[ 3   ] = t29 * t26 * t25 * t24 + t37 * t34 * t8 * t33 + t12 * t19 - t3 * t21;
+    real_type t43  = t1 * L__[iL_lambda4__xo];
     real_type t45  = 1.0 / t26;
-    result__[ 4   ] = -t45 * t28 * t25 * t43 + t37 * t34 * t4 * t33 + t11 * t21 + t2 * t19;
-    result__[ 5   ] = t29 * t26 * t4 * t24 - t45 * t28 * t7 * t43 + t17 * L__[iL_lambda3__xo];
+    result__[ 4   ] = -t45 * t28 * t25 * t43 + t37 * t34 * t5 * t33 + t12 * t21 + t3 * t19;
+    result__[ 5   ] = t29 * t26 * t5 * t24 - t45 * t28 * t8 * t43 + t1 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 6, i_segment );
   }
@@ -407,7 +407,7 @@ namespace UnderwaterDefine {
     real_type t17  = X__[iX_Omega];
     real_type t21  = ModelPars[iM_m3];
     real_type t26  = ModelPars[iM_m1];
-    result__[ 0   ] = (t4 * t2 + t7 * t6) * L__[iL_lambda1__xo] + (-t7 * t2 + t4 * t6) * L__[iL_lambda2__xo] + t17 * L__[iL_lambda3__xo] + 1.0 / t26 * (-t21 * t17 * t6 + U__[iU_u1]) * L__[iL_lambda4__xo] + 1.0 / t21 * (t26 * t17 * t2 + U__[iU_u2]) * L__[iL_lambda5__xo] + 1.0 / ModelPars[iM_inertia] * L__[iL_lambda6__xo] * (U__[iU_u3] - (-t21 + t26) * t6 * t2);
+    result__[ 0   ] = (t4 * t2 + t7 * t6) * L__[iL_lambda1__xo] + (-t7 * t2 + t4 * t6) * L__[iL_lambda2__xo] + t17 * L__[iL_lambda3__xo] + 1.0 / t26 * (-t21 * t17 * t6 + U__[iU_u1]) * L__[iL_lambda4__xo] + 1.0 / t21 * (t26 * t17 * t2 + U__[iU_u2]) * L__[iL_lambda5__xo] + 1.0 / ModelPars[iM_inertia] * (U__[iU_u3] - (-t21 + t26) * t6 * t2) * L__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }

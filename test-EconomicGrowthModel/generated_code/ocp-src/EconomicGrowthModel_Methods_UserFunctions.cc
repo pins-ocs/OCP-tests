@@ -412,10 +412,10 @@ namespace EconomicGrowthModelDefine {
 
   real_type
   EconomicGrowthModel::l1R_D( real_type xo__t ) const {
-    real_type t1   = ModelPars[iM_x2_i];
-    real_type t2   = ModelPars[iM_t0];
-    real_type t3   = l1L(t2);
-    real_type result__ = (-2 + t1 * (xo__t - t2)) * t3 * t1 / 2;
+    real_type t1   = ModelPars[iM_t0];
+    real_type t2   = l1L(t1);
+    real_type t4   = ModelPars[iM_x2_i];
+    real_type result__ = t4 * (-2 + t4 * (xo__t - t1)) * t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

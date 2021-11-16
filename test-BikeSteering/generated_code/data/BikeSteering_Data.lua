@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-mu   = 1
 g    = 9.81
+mu   = 1
 m    = 250
 Fmax = m*g*mu
 

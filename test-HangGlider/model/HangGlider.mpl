@@ -1,14 +1,5 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: HANG GLIDER (Test 11 di COPS, pag 282 libro Betts)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-restart:
-with(XOptima):
-# ODE model
+restart:;
+with(XOptima):;
 addUserFunction(r(x)=(x/rc-2.5)^2);
 addUserFunction(u(x)=uc*(1-r(x))*exp(-r(x)));
 addUserFunction(w(x,y1)=y1-u(x));
@@ -20,18 +11,14 @@ sin_eta := w(x(t),vy(t)) / v(x(t),vx(t),vy(t));
 cos_eta := vx(t) / v(x(t),vx(t),vy(t));
 DD      := (c0+c1*cL(t)^2)*Dfun(x(t),vx(t),vy(t));
 LL      := cL(t)*Lfun(x(t),vx(t),vy(t));
-
 EQ1 := diff(x(t),t)  = T*vx(t):
 EQ2 := diff(y(t),t)  = T*vy(t):
 EQ3 := diff(vx(t),t) = T/m*simplify(-LL*sin_eta-DD*cos_eta):
 EQ4 := diff(vy(t),t) = T/m*simplify(LL*cos_eta-DD*sin_eta)-T*g:
 ode := [EQ||(1..4)]: <%>;
-# OCP variables
 xvars := map([x,y,vx,vy],(t));
 uvars := [cL(t)];
-pvars := [T]; # optimization parameter
-;
-# OCP
+pvars := [T]; # optimization parameter;
 loadDynamicSystem(
   equations = ode,
   controls  = uvars,
@@ -67,7 +54,6 @@ addUnilateralConstraint(
   scale     = 1, 
   barrier   = true
 );
-# Target function
 setTarget(
   lagrange = W*(cL(zeta)-0.7)^2,
   mayer    = -x(zeta_f)
@@ -140,4 +126,4 @@ eval(ocp["controls"]);
 CF1 := simplify(epsilon/log(cos(m_pi_2*(1-h))));
 P   := CF1*log(cos(m_pi_2*x));
 simplify(diff(P,x))/CF1;
-
+;

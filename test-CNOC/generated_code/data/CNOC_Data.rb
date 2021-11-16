@@ -21,13 +21,13 @@ include Mechatronix
 
 # Auxiliary values
 mesh_segments            = 100
-path_following_tolerance = 1.0e-05
-pf_error                 = path_following_tolerance
 js_min                   = -50
 v_nom                    = 0.173
 deltaFeed                = v_nom
 jn_max                   = 65
+path_following_tolerance = 1.0e-05
 js_max                   = 30
+pf_error                 = path_following_tolerance
 
 mechatronix do |data|
 

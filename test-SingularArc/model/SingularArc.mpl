@@ -1,25 +1,13 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Singular Arc problem (ICLOCS example 10)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-restart:
-with(XOptima):
+restart:;
+with(XOptima):;
 #XOptimaInfo() ;
-# Equations of motion
 EQ1    := diff(x1(t),t) = T*u(t):
 EQ2    := diff(x2(t),t) = T*cos(x1(t)):
 EQ3    := diff(x3(t),t) = T*sin(x1(t)):
 EQNS_T := [ EQ||(1..3)]: <%> ;
-# State variables and controls
 qvars := [x1(t),x2(t),x3(t)];
 cvars := [u(t)];
-pars := [T]; # optimization parameters
-;
-# Optimal Control: problem definition
+pars := [T]; # optimization parameters;
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
@@ -47,7 +35,6 @@ addUnilateralConstraint(
   tolerance = tol_T,
   barrier   = true
 );
-# Post processing functions
 setTarget( mayer = T, lagrange = 0 );
 pars := [
   epsi_ctrl0 = 0.01,
@@ -63,7 +50,6 @@ pars := [
   x3_i       = 0,
   T_init     = 100
 ] ;
-
 GUESS := [
   x1 = x1_i*(1-zeta),
   x2 = x2_i*(1-zeta),
@@ -91,4 +77,4 @@ generateOCProblem(
 ) ;
 #ocp := getOCProblem();
 #eval(ocp);
-
+;

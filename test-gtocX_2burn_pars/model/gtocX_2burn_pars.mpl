@@ -1,14 +1,6 @@
-
-# 
-
-# GTOCX model 2 burn fixed time
-# Authors: E. Bertolazzi
-# Load Packages
-# Load maple packages
 restart:
 interface(rtablesize=20);
-with(XOptima):
-# Dynamic system: Spacecraft equations
+with(XOptima):;
 read "gtocX_user_functions_pars.mpl";
 ode[1];
 ode[2];
@@ -16,13 +8,11 @@ ode[3];
 ode[4];
 ode[5];
 ode[6];
-# List of states and controls
 uvars := []:
 pvars := [p,h,k]: # parametri ottimizzazione
 xvars := map([f,g,L],(zeta)):
-odes  := Vector([ode[2],ode[3],ode[6]]):
+odes  := Vector([ode[2],ode[3],ode[6]]):;
 odes;
-# Optimal Control Problem
 #Describe(loadDynamicSystem);
 loadDynamicSystem(
   equations  = odes,
@@ -59,7 +49,7 @@ LAGRANGE :=
   (h-h_guess(0))^2 +
   (k-k_guess(0))^2 +
   (L(zeta)-L_guess(TGUESS,time_i))^2 ;
-setTarget( lagrange = (1-w_guess)*LAGRANGE ):
+setTarget( lagrange = (1-w_guess)*LAGRANGE ):;
 addUserFunction(p_guess(t),derivatives=0);
 addUserFunction(f_guess(t),derivatives=0);
 addUserFunction(g_guess(t),derivatives=0);
@@ -116,5 +106,3 @@ generateOCProblem(
   mesh              = [length=1, n=50],
   clean             = false
 );
-NULL;
-

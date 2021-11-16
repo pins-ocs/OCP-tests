@@ -1,19 +1,8 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Robot Arm (COPS example 8)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-# Rein Luus. Iterative Dynamic Programming. Chapman & Hall/CRC Monographs and Surveys in Pure and Applied Mathematics, 2000.
-restart:
-with(XOptima):
+restart:;
+with(XOptima):;
 #XOptimaInfo() ;
-# Equations of motion
 addUserFunction(I_phi(rho)=((L-rho)^3+rho^3)/3);
 addUserFunction(I_theta(rho,phi)=I_phi(rho)*sin(phi)^2);
-
 EQ1 := L*diff(rho1(t),t)                        = T*u_rho(t):
 EQ2 := I_theta(rho(t),phi(t))*diff(theta1(t),t) = T*u_theta(t):
 EQ3 := I_phi(rho(t))*diff(phi1(t),t)            = T*u_phi(t):
@@ -21,12 +10,9 @@ EQ4 := diff(rho(t),t)                           = T*rho1(t):
 EQ5 := diff(theta(t),t)                         = T*theta1(t):
 EQ6 := diff(phi(t),t)                           = T*phi1(t):
 EQNS_T := [ EQ||(1..6)]: <%>;
-# State variables and controls
 qvars := [rho(t),theta(t),phi(t),rho1(t),theta1(t),phi1(t)];
 cvars := [u_rho(t),u_theta(t),u_phi(t)];
-pars := [T]; # optimization parameter
-;
-# Optimal Control: problem definition
+pars := [T]; # optimization parameter;
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
@@ -121,4 +107,4 @@ generateOCProblem(
 );
 #ocp := getOCProblem();
 #eval(ocp);
-
+;

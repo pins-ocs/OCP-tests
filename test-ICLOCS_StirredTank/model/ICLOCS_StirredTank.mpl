@@ -1,25 +1,13 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Continuously-stirred tank reactor (ICLOCS example 8)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-# Inizializzazione
-restart:
-with(XOptima):
+restart:;
+with(XOptima):;
 #XOptimaInfo() ;
-# Equations of motion
 REACT := k*x1(t)*exp(-En/x2(t));
 EQ1 := diff(x1(t),t) = T*((1-x1(t))/theta - REACT):
 EQ2 := diff(x2(t),t) = T*((Tf-x2(t))/theta + REACT-a*u(t)*(x2(t)-Tc)):
 EQNS_T := [ EQ||(1..2)]: <%> ;
-# State variables and controls
 qvars := [x1(t),x2(t)];
 cvars := [u(t)];
 optimization_pars := [T];
-# Optimal Control: problem definition
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
@@ -100,7 +88,6 @@ PARS := [
   w         = exp(w_exp_min),
   wT        = 0.001
 ];
-
 GUESS := [
   x1 = x1_f,
   x2 = x2_f
@@ -108,8 +95,7 @@ GUESS := [
 PGUESS := [ T = T_guess ];
 CONT := [
   [ w = exp(w_exp_max*s+w_exp_min*(1-s)) ]
-]
-;
+];
 #Describe(generateOCProblem);
 generateOCProblem(
   "ICLOCS_StirredTank",
@@ -121,4 +107,4 @@ generateOCProblem(
   optimization_parameters = PGUESS,
   continuation            = CONT
 );
-
+;

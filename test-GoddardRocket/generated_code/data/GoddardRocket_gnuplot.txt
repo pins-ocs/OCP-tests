@@ -1,0 +1,32 @@
+
+#
+# CONTROLS
+#
+set title "Controls"
+plot \
+  "GoddardRocket_OCP_result.txt" every ::1 using 2:6 with linespoints title "T" 
+
+pause -1 "Hit any key to continue"
+
+#
+# STATES
+#
+
+set title "States"
+plot \
+  "GoddardRocket_OCP_result.txt" every ::1 using 2:7 with linespoints title "h" , \
+  "GoddardRocket_OCP_result.txt" every ::1 using 2:8 with linespoints title "v" , \
+  "GoddardRocket_OCP_result.txt" every ::1 using 2:9 with linespoints title "m" 
+
+pause -1 "Hit any key to continue"
+
+#
+# MULTIPLIERS
+#
+set title "Multipliers"
+plot \
+  "GoddardRocket_OCP_result.txt" every ::1 using 2:10 with linespoints title "lambda1__xo" , \
+  "GoddardRocket_OCP_result.txt" every ::1 using 2:11 with linespoints title "lambda2__xo" , \
+  "GoddardRocket_OCP_result.txt" every ::1 using 2:12 with linespoints title "lambda3__xo" 
+
+pause -1 "Hit any key to continue"

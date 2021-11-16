@@ -1,0 +1,210 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_v
+[ 2] initial_sT
+[ 3] initial_sB
+[ 4] final_v
+
+
+
+Constraints 1D
+vsTpositive = {
+  Type      = GREATER THAN
+  SubType   = WallRegular, h=0.0010000, epsilon=0.0010000
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+vsBpositive = {
+  Type      = GREATER THAN
+  SubType   = WallRegular, h=0.0010000, epsilon=0.0010000
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+vsTmax = {
+  Type      = GREATER THAN
+  SubType   = WallRegular, h=0.0010000, epsilon=0.0010000
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+vsTBInterval = {
+  Type      = INTERVAL
+  SubType   = WallRegular, h=0.0010000, epsilon=0.0010000
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  MinValue  = -1
+  MaxValue  = 1
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 4
+num. nodes = 104
+Segment N.0: s0 = 0.000 length = 0.1000 npts = 11 no data set
+Segment N.1: s0 = 0.1000 length = 0.4000 npts = 41 no data set
+Segment N.2: s0 = 0.5000 length = 0.4000 npts = 41 no data set
+Segment N.3: s0 = 0.9000 length = 0.1000 npts = 11 no data set
+END Mesh[mesh]
+
+User mapped functions
+User function ``clip'' mapped with: ClipIntervalWithErf, h=0.10000, delta=0.0000, delta2=0.0000
+
+Model Parameters
+..................................epsiTB = 0.001
+.................................maxClip = 1
+....................................maxT = 2
+.................................minClip = -1
+....................................tauB = 0.001
+....................................tauT = 0.02
+INFO CLASS = BangBangFtau
+  num_nodes    = 104
+  dim         = u = 2, q = 1, x = 4, p = 0, omega = 5, big_bc = 13
+  BC          = Inital = 8, Final = 5, Cyclic = 0
+  OMEGA       = Inital = 4, Final = 1, Cyclic = 0
+  total       = nZ = 837, UC = 206, Q = 104
+  index start = omega = 832, p = 837
+  FD jacobian = NO
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton [ITERATIVE]
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1,13] (  0.101   ,  0.108   ) [   15.0   ,   15.0   ] 0.000454   [solverNewtonDumped]
+[  2, 6] (  0.108   ,  0.126   ) [   17.6   ,   17.5   ] 0.000932   [solverNewtonDumped]
+[  3, 4] (  0.126   ,  0.148   ) [   21.7   ,   21.5   ] 0.00404    [solverNewtonDumped]
+[  4, 4] (  0.148   ,  0.159   ) [   7.20   ,   7.07   ] 0.00840    [solverNewtonDumped]
+[  5, 3] (  0.159   ,  0.165   ) [   1.15   ,   1.11   ] 0.0211     [solverNewtonDumped]
+[  6, 2] (  0.165   ,  0.165   ) [  0.332   ,  0.305   ] 0.0581     [solverNewtonDumped]
+[  7, 4] (  0.165   ,  0.191   ) [  0.237   ,  0.179   ] 0.234      [solverNewtonDumped]
+[  8, 1] (  0.191   ,  0.128   ) [  0.173   ,  0.0608  ] 0.967      [solverNewtonDumped]
+[  9, 5] (  0.128   ,  0.119   ) [  0.0422  ,  0.0418  ] 0.0643     [solverNewtonDumped]
+[ 10, 3] (  0.119   ,  0.113   ) [  0.0400  ,  0.0380  ] 0.0592     [solverNewtonDumped]
+[ 11, 2] (  0.113   ,  0.122   ) [  0.0404  ,  0.0340  ] 0.194      [solverNewtonDumped]
+[ 12,10] (  0.122   ,  0.0948  ) [  0.0290  ,  0.0213  ] 0.0570     [solverNewtonDumped]
+[ 13, 4] (  0.0948  ,  0.0866  ) [  0.0249  ,  0.0234  ] 0.118      [solverNewtonDumped]
+[ 14, 3] (  0.0866  ,  0.0674  ) [  0.0160  ,  0.0129  ] 0.251      [solverNewtonDumped]
+[ 15, 2] (  0.0674  ,  0.0362  ) [  0.0114  , 0.00943  ] 0.578      [solverNewtonDumped]
+[ 16, 1] (  0.0362  , 0.00125  ) [ 0.00621  , 0.000461 ] 1.00       [solverNewtonDumped]
+[ 17, 1] ( 0.00125  , 0.000108 ) [ 0.000467 , 1.02e-05 ] 1.00       [solverNewtonDumped]
+[ 18, 1] ( 0.000108 , 5.62e-06 ) [ 1.29e-05 , 5.05e-07 ] 1.00       [solverNewtonDumped]
+[ 19, 1] ( 5.62e-06 , 2.18e-08 ) [ 5.83e-07 , 3.16e-09 ] 1.00       [solverNewtonDumped]
+[ 20, 1] ( 2.18e-08 , 3.85e-11 ) [ 3.19e-09 , 2.97e-11 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 21, 1] ( 3.85e-11 , 4.21e-13 ) [ 2.97e-11 , 7.51e-14 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 26.2[ms]      timeout        = 0 [ms]
+iteration      = 21            tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 837
+max acc. iter. = 800           N. System pars = 206
+Converged      = YES           Memory Used    = 136Kb (+39bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 73            Jacobian       = 21        
+Factorization  = 21            Inversion      = 93        
+------------------------ USER INFO -------------------------
+last ||d||_inf = 4.5957e-12    last||d1||_inf = 1.9789e-09
+last ||f||_inf = 3.2822e-10    last||f||_1    = 4.2067e-13
+------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Jacobian block N. 0 type; FD
+
+jac[  2,  7] =       5.3825 / 5.3872       [A/FD] ---    0.0046581 / 0.086467     [err/err(%)]
+jac[  3,  7] =       107.65 / 107.74       [A/FD] ---     0.093162 / 0.086467     [err/err(%)]
+jac[  2, 15] =       5.3825 / 5.3872       [A/FD] ---    0.0046581 / 0.086467     [err/err(%)]
+jac[  3, 15] =       107.65 / 107.74       [A/FD] ---     0.093162 / 0.086467     [err/err(%)]
+
+Jacobian block N. 1 type; FD
+
+jac[  2,  7] =       3.9810 / 3.9833       [A/FD] ---    0.0023020 / 0.057793     [err/err(%)]
+jac[  3,  7] =       79.620 / 79.666       [A/FD] ---     0.046041 / 0.057793     [err/err(%)]
+jac[  2, 15] =       3.9810 / 3.9833       [A/FD] ---    0.0023020 / 0.057793     [err/err(%)]
+jac[  3, 15] =       79.620 / 79.666       [A/FD] ---     0.046041 / 0.057793     [err/err(%)]
+
+Jacobian block N. 2 type; FD
+
+jac[  2,  7] =       4.6716 / 4.6749       [A/FD] ---    0.0033435 / 0.071521     [err/err(%)]
+jac[  3,  7] =       93.432 / 93.499       [A/FD] ---     0.066871 / 0.071521     [err/err(%)]
+jac[  2, 15] =       4.6716 / 4.6749       [A/FD] ---    0.0033435 / 0.071521     [err/err(%)]
+jac[  3, 15] =       93.432 / 93.499       [A/FD] ---     0.066871 / 0.071521     [err/err(%)]
+
+Jacobian block N. 3 type; FD
+
+jac[  2,  7] =       7.3746 / 7.3843       [A/FD] ---    0.0097164 / 0.13158      [err/err(%)]
+jac[  3,  7] =       147.49 / 147.69       [A/FD] ---      0.19433 / 0.13158      [err/err(%)]
+jac[  2, 15] =       7.3746 / 7.3843       [A/FD] ---    0.0097164 / 0.13158      [err/err(%)]
+jac[  3, 15] =       147.49 / 147.69       [A/FD] ---      0.19433 / 0.13158      [err/err(%)]
+
+Jacobian block N. 4 type; FD
+
+jac[  2,  7] =       12.810 / 12.846       [A/FD] ---     0.035297 / 0.27478      [err/err(%)]
+jac[  3,  7] =       256.21 / 256.91       [A/FD] ---      0.70594 / 0.27478      [err/err(%)]
+jac[  2, 15] =       12.810 / 12.846       [A/FD] ---     0.035297 / 0.27478      [err/err(%)]
+jac[  3, 15] =       256.21 / 256.91       [A/FD] ---      0.70594 / 0.27478      [err/err(%)]
+
+Jacobian block N. 5 type; FD
+
+jac[  2,  7] =       21.608 / 21.727       [A/FD] ---      0.11990 / 0.55184      [err/err(%)]
+jac[  3,  7] =       432.15 / 434.55       [A/FD] ---       2.3980 / 0.55184      [err/err(%)]
+jac[  2, 15] =       21.608 / 21.727       [A/FD] ---      0.11990 / 0.55184      [err/err(%)]
+jac[  3, 15] =       432.15 / 434.55       [A/FD] ---       2.3980 / 0.55184      [err/err(%)]
+
+Jacobian block N. 6 type; FD
+
+jac[  2,  7] =       33.821 / 34.164       [A/FD] ---      0.34279 / 1.0034       [err/err(%)]
+jac[  3,  7] =       676.43 / 683.28       [A/FD] ---       6.8559 / 1.0034       [err/err(%)]
+jac[  2, 15] =       33.821 / 34.164       [A/FD] ---      0.34279 / 1.0034       [err/err(%)]
+jac[  3, 15] =       676.43 / 683.28       [A/FD] ---       6.8559 / 1.0034       [err/err(%)]
+
+Jacobian block N. 7 type; FD
+
+jac[  2,  7] =       47.728 / 48.499       [A/FD] ---      0.77086 / 1.5894       [err/err(%)]
+jac[  3,  7] =       954.58 / 970.00       [A/FD] ---       15.417 / 1.5894       [err/err(%)]
+jac[  2, 15] =       47.728 / 48.499       [A/FD] ---      0.77086 / 1.5894       [err/err(%)]
+jac[  3, 15] =       954.58 / 970.00       [A/FD] ---       15.417 / 1.5894       [err/err(%)]
+
+Jacobian block N. 8 type; FD
+
+jac[  2,  7] =       61.482 / 62.884       [A/FD] ---       1.4022 / 2.2298       [err/err(%)]
+jac[  3,  7] =       1229.7 / 1257.7       [A/FD] ---       28.044 / 2.2298       [err/err(%)]
+jac[  2, 15] =       61.482 / 62.884       [A/FD] ---       1.4022 / 2.2298       [err/err(%)]
+jac[  3, 15] =       1229.7 / 1257.7       [A/FD] ---       28.044 / 2.2298       [err/err(%)]
+
+Jacobian block N. 9 type; FD
+
+jac[  2,  7] =       73.028 / 75.138       [A/FD] ---       2.1093 / 2.8073       [err/err(%)]
+jac[  3,  7] =       1460.6 / 1502.8       [A/FD] ---       42.187 / 2.8073       [err/err(%)]
+jac[  2, 15] =       73.028 / 75.138       [A/FD] ---       2.1093 / 2.8073       [err/err(%)]
+jac[  3, 15] =       1460.6 / 1502.8       [A/FD] ---       42.187 / 2.8073       [err/err(%)]
+
+Jacobian block N. 11 type; FD
+
+jac[  2,  7] =       82.021 / 84.803       [A/FD] ---       2.7813 / 3.2798       [err/err(%)]
+jac[  3,  7] =       1640.4 / 1696.1       [A/FD] ---       55.627 / 3.2798       [err/err(%)]
+jac[  2, 15] =       82.021 / 84.803       [A/FD] ---       2.7813 / 3.2798       [err/err(%)]
+jac[  3, 15] =       1640.4 / 1696.1       [A/FD] ---       55.627 / 3.2798       [err/err(%)]
+
+skipping...
+Last block: OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ 0.001931, -0.2221 ]
+[Penalties/Barriers,Controls] = [ 0.0003978, 0.000 ]
+All Done Folks!

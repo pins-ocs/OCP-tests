@@ -20,14 +20,14 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-g      = 9.81
 epsi0  = 1
-epsi   = epsi0
 xf     = 5
+g      = 9.81
 yf     = -2
-theta0 = Math::atan2(yf,xf)
 Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+theta0 = Math::atan2(yf,xf)
 Tf     = (-2.0*yf/g)**(1/2.0)
+epsi   = epsi0
 
 mechatronix do |data|
 

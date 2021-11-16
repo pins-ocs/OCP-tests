@@ -564,7 +564,7 @@ namespace UnderwaterDefine {
     real_type t23  = ALIAS_u2Control_D_1(t22, -1, 1);
     real_type t24  = t5 * t5;
     real_type t29  = X__[iX_vx];
-    result__[ 1   ] = 2 / t24 * t1 * (t24 * t23 / 2 - t5 * V__[4] + (t11 * t4 * t29 + t22) * t1);
+    result__[ 1   ] = 2 / t24 * (t24 * t23 / 2 - t5 * V__[4] + (t11 * t4 * t29 + t22) * t1) * t1;
     real_type t38  = U__[iU_u3];
     real_type t39  = ALIAS_u3Control_D_1(t38, -1, 1);
     real_type t40  = ModelPars[iM_inertia];

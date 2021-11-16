@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_ctrl = 1e-05;
     real_type epsi_ctrl = 1e-05;
+    real_type tol_ctrl = 1e-05;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -162,8 +162,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Catalyst_data.Mesh["s0"] = 0;
-Catalyst_data.Mesh["segments"][0]["length"] = 1;
 Catalyst_data.Mesh["segments"][0]["n"] = 400;
+Catalyst_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

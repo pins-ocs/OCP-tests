@@ -1,0 +1,9 @@
+
+; mexFunction.def : Declares the module parameters for the DLL.
+
+LIBRARY      "SingularArc_Mex"
+DESCRIPTION  'Mex file for SingularArc'
+
+EXPORTS
+    ; Explicit exports can go here
+    mexFunction

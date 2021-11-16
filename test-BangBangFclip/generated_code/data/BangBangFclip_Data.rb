@@ -20,9 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-h0       = 0.1
-epsilon0 = 0.1
 vFmax    = 10
+epsilon0 = 0.1
+h0       = 0.1
 
 mechatronix do |data|
 
@@ -166,7 +166,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :h => h0, :delta2 => 0, :delta => 0 }
+  data.MappedObjects[:clip] = { :h => h0, :delta => 0, :delta2 => 0 }
 
   # Controls
   # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
@@ -190,8 +190,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 400,
+        :length => 1,
       },
     ],
   };

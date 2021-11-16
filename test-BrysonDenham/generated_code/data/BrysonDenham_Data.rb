@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol  = 0.0001
 epsi = 0.0001
+tol  = 0.0001
 
 mechatronix do |data|
 

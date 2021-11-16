@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
-mur_min = -1
 muf_min = -1
 mur_max = 1
+mur_min = -1
 
 content = {
 
@@ -135,6 +135,7 @@ content = {
     muf_min = muf_min,
     mur_max = mur_max,
     mur_min = mur_min,
+    v_min   = 1,
 
     -- Guess Parameters
 
@@ -157,9 +158,9 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithSinAtan
-    clipdelta2 = 0,
     clipdelta = 0,
     cliph = 0.01,
+    clipdelta2 = 0,
   },
 
   -- Controls
@@ -179,7 +180,15 @@ content = {
   },
 
   Constraints = {
-  -- Constraint1D: none defined
+  -- Constraint1D
+  -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    -- PenaltyBarrier1DGreaterThan
+    vMinLimitsubType   = "BARRIER_LOG",
+    vMinLimitepsilon   = 0.1,
+    vMinLimittolerance = 0.1,
+    vMinLimitactive    = true
+
   -- Constraint2D: none defined
   },
 

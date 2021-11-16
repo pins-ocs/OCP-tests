@@ -20,9 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-mur_min = -1
 muf_min = -1
 mur_max = 1
+mur_min = -1
 
 mechatronix do |data|
 
@@ -142,6 +142,7 @@ mechatronix do |data|
     :muf_min => muf_min,
     :mur_max => mur_max,
     :mur_min => mur_min,
+    :v_min   => 1,
 
     # Guess Parameters
 
@@ -165,27 +166,36 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithSinAtan
-  data.MappedObjects[:clip] = { :delta2 => 0, :delta => 0, :h => 0.01 }
+  data.MappedObjects[:clip] = { :delta => 0, :h => 0.01, :delta2 => 0 }
 
   # Controls
   # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:murControl] = {
-    :type      => 'LOGARITHMIC',
+    :type      => 'COS_LOGARITHMIC',
     :epsilon   => 0.001,
     :tolerance => 0.001
   }
 
   data.Controls[:mufControl] = {
-    :type      => 'LOGARITHMIC',
+    :type      => 'COS_LOGARITHMIC',
     :epsilon   => 0.001,
     :tolerance => 0.001
   }
 
 
   data.Constraints = {}
-  # Constraint1D: none defined
+  # Constraint1D
+  # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+  # PenaltyBarrier1DGreaterThan
+  data.Constraints[:vMinLimit] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => 0.1,
+    :tolerance => 0.1,
+    :active    => true
+  }
   # Constraint2D: none defined
 
   # User defined classes initialization

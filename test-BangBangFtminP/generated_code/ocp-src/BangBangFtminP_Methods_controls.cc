@@ -331,7 +331,7 @@ namespace BangBangFtminPDefine {
     real_type t1   = P__[iP_T];
     real_type t2   = U__[iU_F];
     real_type t5   = ALIAS_Fcontrol_D_1(t2, -1, 1);
-    result__[ 0   ] = (2 * t2 * t1 + t5 - 2 * V__[1]) * t1;
+    result__[ 0   ] = (2 * t1 * t2 + t5 - 2 * V__[1]) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

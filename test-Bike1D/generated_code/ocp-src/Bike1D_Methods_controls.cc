@@ -50,6 +50,8 @@ using Mechatronix::MeshStd;
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
+#define ALIAS_vMinLimit_DD(__t1) vMinLimit.DD( __t1)
+#define ALIAS_vMinLimit_D(__t1) vMinLimit.D( __t1)
 #define ALIAS_mufControl_D_3(__t1, __t2, __t3) mufControl.D_3( __t1, __t2, __t3)
 #define ALIAS_mufControl_D_2(__t1, __t2, __t3) mufControl.D_2( __t1, __t2, __t3)
 #define ALIAS_mufControl_D_1(__t1, __t2, __t3) mufControl.D_1( __t1, __t2, __t3)
@@ -363,14 +365,15 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_v];
     real_type t2   = 1.0 / t1;
-    real_type t3   = U__[iU_mur];
-    real_type t5   = Tmax_normalized(t1);
-    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
-    real_type t8   = murControl(t3, ModelPars[iM_mur_min], t7);
-    real_type t10  = U__[iU_muf];
-    real_type t12  = mufControl(t10, ModelPars[iM_muf_min], 0);
-    real_type t20  = pow((t3 + t10) * ModelPars[iM_g] - V__[0] * t1, 2);
-    real_type result__ = t12 * t2 + t8 * t2 + t20;
+    real_type t5   = vMinLimit(t1 - ModelPars[iM_v_min]);
+    real_type t7   = U__[iU_mur];
+    real_type t9   = Tmax_normalized(t1);
+    real_type t11  = clip(t9, 0, ModelPars[iM_mur_max]);
+    real_type t12  = murControl(t7, ModelPars[iM_mur_min], t11);
+    real_type t14  = U__[iU_muf];
+    real_type t16  = mufControl(t14, ModelPars[iM_muf_min], 0);
+    real_type t24  = pow((t7 + t14) * ModelPars[iM_g] - V__[0] * t1, 2);
+    real_type result__ = t12 * t2 + t16 * t2 + t5 * t2 + t24;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }

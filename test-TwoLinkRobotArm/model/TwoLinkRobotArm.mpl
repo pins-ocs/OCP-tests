@@ -1,16 +1,6 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Two-link Robot Arm (ICLOCS example 12)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-# Rein Luus. Iterative Dynamic Programming. Chapman & Hall/CRC Monographs and Surveys in Pure and Applied Mathematics, 2000.
-restart:
-with(XOptima):
+restart:;
+with(XOptima):;
 #XOptimaInfo() ;
-# Equations of motion
 C3 := cos(x3(t));
 S3 := sin(x3(t));
 U1 := u1(t);
@@ -25,12 +15,9 @@ EQ2    := diff(x2(t),t) = -T*rhs2/den:
 EQ3    := diff(x3(t),t) = T*(x2(t)-x1(t)):
 EQ4    := diff(x4(t),t) = T*x1(t):
 EQNS_T := [ EQ||(1..4)]: <%>;
-# State variables and controls
 qvars := [x1(t),x2(t),x3(t),x4(t)];
 cvars := [u1(t),u2(t)];
-pars := [T]; # optimization parameters
-;
-# Optimal Control: problem definition
+pars := [T]; # optimization parameters;
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
@@ -100,4 +87,4 @@ generateOCProblem(
 );
 #ocp := getOCProblem();
 #eval(ocp);
-
+;

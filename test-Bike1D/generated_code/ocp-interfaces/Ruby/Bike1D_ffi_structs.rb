@@ -56,6 +56,8 @@ module Bike1D
 
       :v_i,     :data_t,
 
+      :v_min,   :data_t,
+
       :vmax,    :data_t,
 
     )
@@ -86,6 +88,9 @@ module Bike1D
   class Bike1D_constraints_params < FFI::Struct
     layout(
       # 1D constraints
+      :vMinLimitSubType,   :index_t,
+      :vMinLimitEpsilon,   :data_t,
+      :vMinLimitTolerance, :data_t,
 
       # 2D constraints
 

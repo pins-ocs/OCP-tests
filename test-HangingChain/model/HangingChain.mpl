@@ -1,23 +1,10 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: HANGING CHAIN (Test 4 of COPS3)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-restart:
-with(XOptima):
-# Dynamical system equations
+restart:;
+with(XOptima):;
 EQ1 := diff(x(t),t) = u(t):
 EQ2 := diff(z(t),t) = sqrt(1+u(t)^2):
 ode := [EQ||(1..2)]: <%>;
-# States and Controls
-# States
 xvars := [x(t),z(t)] ;
-# Controls
 uvars := [u(t)] ;
-# Optimal Contol Problem
 loadDynamicSystem(
   equations = ode,
   controls  = uvars,
@@ -71,4 +58,4 @@ generateOCProblem(
 #RES := solve( gg, {u} );
 #simplify(subs(RES[1],Dgg)) assuming x::real, lambda1::real, lambda2::real;
 #simplify(subs(RES[2],Dgg)) assuming x::real, lambda1::real, lambda2::real;
-
+;

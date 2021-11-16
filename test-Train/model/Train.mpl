@@ -1,32 +1,14 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: Train model with two controls
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-# Description
-# The optimal control problem has to move a train along a railways with slope using two bounded controls: one for acceleration and the second for traction.with fixed initial and final conditions.
-# The problem make use of user defined code that is provided by the user with addUserFunction() command. 
-# 
-# Load Packages
-
-# Load maple packages
-restart: with(plots):
-with(XOptima):
-#`diff/h`   := proc() h_1(args[1])*diff(args[1],args[2]) end:
-#`diff/h_1` := proc() h_2(args[1])*diff(args[1],args[2]) end:
-with(plots):
-# Dynamic system equations
+restart: with(plots):;
+with(XOptima):;
+#`diff/h`   := proc() h_1(args[1])*diff(args[1],args[2]) end:;
+#`diff/h_1` := proc() h_2(args[1])*diff(args[1],args[2]) end:;
+with(plots):;
 ODE1 := diff(x(t),t)=v(t);
 ACC := acc(x(t),v(t)) ; # h(x(t))-(alpha+beta*v(t)+gm*v(t)^2);
 ODE2 := diff(v(t),t)=ACC + ua(t) - ub(t);
-# List of states and controls
 uvars := [ua(zeta),ub(zeta)] ;
 xvars := [x(zeta), v(zeta)] ;
 ode   := subs(t=zeta,Vector([ODE1,ODE2]));
-# Optimal Contol Problem
 #Describe(loadDynamicSystem) ;
 loadDynamicSystem(equations=ode,controls=uvars,states=xvars) ;
 addUserFunction(acc(x,v)=h(x)-(alpha+beta*v+gm*v^2));#,["pippo",2,3]) ;
@@ -34,13 +16,11 @@ addUserFunction(h(x)) ;
 addBoundaryConditions(initial=[x,v],final=[x,v]);
 setStatusBoundaryConditions(initial=[x,v],final=[x,v]);
 infoBoundaryConditions() ;
-# penalty che dipendono dagli ingressi
 addControlBound( ua, controlType="U_COS_LOGARITHMIC", min=0, max=uaMax, 
                  epsilon =epsi_max, tolerance = tol_max ) ;
 addControlBound( ub, controlType="U_COS_LOGARITHMIC", min=0, max=ubMax,
                  epsilon =epsi_max, tolerance = tol_max ) ;
-# Penalty description
-#addPenaltyGT( v(zeta), positiveVelocity ):
+#addPenaltyGT( v(zeta), positiveVelocity ):;
 setTarget( lagrange = ua(zeta)*v(zeta) ) ;
 #Describe(generateOCProblem) ;
 POST := [
@@ -81,4 +61,3 @@ generateOCProblem(
    clean=true
 );
 #Describe(generateOCProblem);
-

@@ -1,0 +1,243 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_v
+[ 1] final_v
+
+
+
+Controls
+murControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+mufControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+
+Constraints 1D
+vMinLimit = {
+  Type      = GREATER THAN
+  SubType   = BarrierLog, h = 0.10000
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 1001
+Segment N.0: s0 = 0.000 length = 1000.0 npts = 1001 no data set
+END Mesh[mesh]
+
+User mapped functions
+User function ``clip'' mapped with: ClipIntervalWithSinAtan, h=0.010000, delta=0.0000, delta2=0.0000
+
+Model Parameters
+....................................Pmax = 50000
+.......................................g = 9.81
+.......................................m = 275
+.................................muf_min = -1
+.................................mur_max = 1
+.................................mur_min = -1
+.....................................v_f = 10
+.....................................v_i = 10
+...................................v_min = 1
+....................................vmax = 100
+INFO CLASS = Bike1D
+  num_nodes    = 1001
+  dim         = u = 2, q = 1, x = 1, p = 0, omega = 2, big_bc = 4
+  BC          = Inital = 2, Final = 2, Cyclic = 0
+  OMEGA       = Inital = 1, Final = 1, Cyclic = 0
+  total       = nZ = 2004, UC = 2000, Q = 1001
+  index start = omega = 2002, p = 2004
+  FD jacobian = NO
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton [ANALYTIC]
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[  1, 1] (   2.45   ,  0.802   ) [   2.49   ,   1.11   ] 1.00       [solverNewtonDumped]
+[  2, 2] (  0.802   ,  0.837   ) [   3.72   ,   1.85   ] 0.835      [solverNewtonDumped]
+[  3, 1] (  0.837   ,  0.431   ) [   5.25   ,   2.33   ] 1.00       [solverNewtonDumped]
+[  4, 6] (  0.431   ,  0.460   ) [   7.83   ,   6.78   ] 0.149      [solverNewtonDumped]
+[  5, 5] (  0.460   ,  0.491   ) [   8.37   ,   7.30   ] 0.141      [solverNewtonDumped]
+[  6, 5] (  0.491   ,  0.568   ) [   8.92   ,   7.36   ] 0.200      [solverNewtonDumped]
+[  7, 5] (  0.568   ,  0.622   ) [   9.73   ,   8.42   ] 0.150      [solverNewtonDumped]
+[  8, 5] (  0.622   ,  0.677   ) [   10.4   ,   9.06   ] 0.140      [solverNewtonDumped]
+[  9, 5] (  0.677   ,  0.736   ) [   11.0   ,   9.65   ] 0.135      [solverNewtonDumped]
+[ 10, 5] (  0.736   ,  0.803   ) [   11.6   ,   10.2   ] 0.133      [solverNewtonDumped]
+[ 11, 5] (  0.803   ,  0.879   ) [   12.2   ,   10.8   ] 0.132      [solverNewtonDumped]
+[ 12, 5] (  0.879   ,  0.965   ) [   12.8   ,   11.3   ] 0.131      [solverNewtonDumped]
+[ 13, 5] (  0.965   ,   1.06   ) [   13.4   ,   11.8   ] 0.131      [solverNewtonDumped]
+[ 14, 5] (   1.06   ,   1.18   ) [   14.0   ,   12.3   ] 0.131      [solverNewtonDumped]
+[ 15, 5] (   1.18   ,   1.30   ) [   14.6   ,   12.8   ] 0.131      [solverNewtonDumped]
+[ 16, 5] (   1.30   ,   1.45   ) [   15.1   ,   13.3   ] 0.131      [solverNewtonDumped]
+[ 17, 5] (   1.45   ,   1.62   ) [   15.6   ,   13.7   ] 0.130      [solverNewtonDumped]
+[ 18, 5] (   1.62   ,   1.81   ) [   16.0   ,   14.0   ] 0.130      [solverNewtonDumped]
+[ 19, 5] (   1.81   ,   2.02   ) [   16.2   ,   14.3   ] 0.130      [solverNewtonDumped]
+[ 20, 7] (   2.02   ,   2.34   ) [   16.4   ,   15.7   ] 0.0431     [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 21, 8] (   2.34   ,   2.62   ) [   16.2   ,   16.0   ] 0.0143     [solverNewtonDumped]
+[ 22, 6] (   2.62   ,   3.10   ) [   16.1   ,   15.7   ] 0.0248     [solverNewtonDumped]
+[ 23, 6] (   3.10   ,   3.68   ) [   15.9   ,   15.3   ] 0.0327     [solverNewtonDumped]
+[ 24, 3] (   3.68   ,   4.34   ) [   15.5   ,   12.7   ] 0.198      [solverNewtonDumped]
+[ 25, 4] (   4.34   ,   4.74   ) [   14.7   ,   10.9   ] 0.277      [solverNewtonDumped]
+[ 26, 5] (   4.74   ,   5.08   ) [   12.2   ,   9.87   ] 0.181      [solverNewtonDumped]
+[ 27, 5] (   5.08   ,   5.56   ) [   8.33   ,   5.90   ] 0.250      [solverNewtonDumped]
+[ 28, 1] (   5.56   ,   2.13   ) [   9.10   ,   1.26   ] 0.999      [solverNewtonDumped]
+[ 29, 1] (   2.13   ,   1.10   ) [   1.62   ,  0.904   ] 1.00       [solverNewtonDumped]
+[ 30, 2] (   1.10   ,   1.03   ) [  0.985   ,  0.203   ] 0.727      [solverNewtonDumped]
+[ 31, 1] (   1.03   ,  0.338   ) [  0.275   ,  0.104   ] 1.00       [solverNewtonDumped]
+[ 32, 1] (  0.338   ,  0.242   ) [  0.107   ,  0.104   ] 1.00       [solverNewtonDumped]
+[ 33, 1] (  0.242   ,  0.206   ) [  0.0923  ,  0.0591  ] 1.00       [solverNewtonDumped]
+[ 34, 1] (  0.206   ,  0.138   ) [  0.0585  ,  0.0548  ] 1.00       [solverNewtonDumped]
+[ 35, 1] (  0.138   ,  0.105   ) [  0.0511  ,  0.0331  ] 1.00       [solverNewtonDumped]
+[ 36, 1] (  0.105   ,  0.0857  ) [  0.0335  ,  0.0276  ] 1.00       [solverNewtonDumped]
+[ 37, 1] (  0.0857  ,  0.0639  ) [  0.0258  ,  0.0143  ] 1.00       [solverNewtonDumped]
+[ 38, 1] (  0.0639  ,  0.0395  ) [  0.0143  ,  0.0101  ] 1.00       [solverNewtonDumped]
+[ 39, 1] (  0.0395  ,  0.0229  ) [ 0.00974  , 0.00436  ] 1.00       [solverNewtonDumped]
+[ 40, 1] (  0.0229  ,  0.0127  ) [ 0.00441  , 0.00226  ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 41, 1] (  0.0127  , 0.00682  ) [ 0.00217  , 0.000716 ] 1.00       [solverNewtonDumped]
+[ 42, 1] ( 0.00682  , 0.00188  ) [ 0.000719 , 0.000432 ] 1.00       [solverNewtonDumped]
+[ 43, 3] ( 0.00188  , 0.000843 ) [ 0.000430 , 0.000138 ] 0.546      [solverNewtonDumped]
+[ 44, 1] ( 0.000843 , 0.000217 ) [ 0.000138 , 4.63e-05 ] 1.00       [solverNewtonDumped]
+[ 45, 1] ( 0.000217 , 7.67e-05 ) [ 4.64e-05 , 3.63e-05 ] 1.00       [solverNewtonDumped]
+[ 46, 1] ( 7.67e-05 , 6.08e-05 ) [ 3.63e-05 , 4.06e-05 ] 1.00       [solverNewtonDumped]
+[ 47, 1] ( 6.08e-05 , 6.64e-05 ) [ 4.06e-05 , 3.24e-05 ] 1.00       [solverNewtonDumped]
+[ 48, 1] ( 6.64e-05 , 5.26e-05 ) [ 3.24e-05 , 2.16e-05 ] 1.00       [solverNewtonDumped]
+[ 49, 1] ( 5.26e-05 , 3.48e-05 ) [ 2.16e-05 , 1.25e-05 ] 1.00       [solverNewtonDumped]
+[ 50, 1] ( 3.48e-05 , 1.99e-05 ) [ 1.25e-05 , 6.12e-06 ] 1.00       [solverNewtonDumped]
+[ 51, 1] ( 1.99e-05 , 9.73e-06 ) [ 6.12e-06 , 2.47e-06 ] 1.00       [solverNewtonDumped]
+[ 52, 1] ( 9.73e-06 , 3.93e-06 ) [ 2.47e-06 , 8.76e-07 ] 1.00       [solverNewtonDumped]
+[ 53, 1] ( 3.93e-06 , 1.44e-06 ) [ 8.76e-07 , 7.09e-07 ] 1.00       [solverNewtonDumped]
+[ 54, 1] ( 1.44e-06 , 1.19e-06 ) [ 7.09e-07 , 8.02e-07 ] 1.00       [solverNewtonDumped]
+[ 55, 1] ( 1.19e-06 , 1.31e-06 ) [ 8.02e-07 , 6.38e-07 ] 1.00       [solverNewtonDumped]
+[ 56, 1] ( 1.31e-06 , 1.03e-06 ) [ 6.38e-07 , 4.20e-07 ] 1.00       [solverNewtonDumped]
+[ 57, 1] ( 1.03e-06 , 6.74e-07 ) [ 4.20e-07 , 2.36e-07 ] 1.00       [solverNewtonDumped]
+[ 58, 1] ( 6.74e-07 , 3.77e-07 ) [ 2.36e-07 , 1.13e-07 ] 1.00       [solverNewtonDumped]
+[ 59, 1] ( 3.77e-07 , 1.79e-07 ) [ 1.13e-07 , 4.39e-08 ] 1.00       [solverNewtonDumped]
+[ 60, 1] ( 1.79e-07 , 7.00e-08 ) [ 4.39e-08 , 1.60e-08 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
+[ 61, 1] ( 7.00e-08 , 2.64e-08 ) [ 1.60e-08 , 1.53e-08 ] 1.00       [solverNewtonDumped]
+[ 62, 1] ( 2.64e-08 , 2.56e-08 ) [ 1.53e-08 , 1.61e-08 ] 1.00       [solverNewtonDumped]
+[ 63, 1] ( 2.56e-08 , 2.64e-08 ) [ 1.61e-08 , 1.25e-08 ] 1.00       [solverNewtonDumped]
+[ 64, 1] ( 2.64e-08 , 2.01e-08 ) [ 1.25e-08 , 8.03e-09 ] 1.00       [solverNewtonDumped]
+[ 65, 1] ( 2.01e-08 , 1.29e-08 ) [ 8.03e-09 , 4.43e-09 ] 1.00       [solverNewtonDumped]
+[ 66, 1] ( 1.29e-08 , 7.07e-09 ) [ 4.43e-09 , 2.06e-09 ] 1.00       [solverNewtonDumped]
+[ 67, 1] ( 7.07e-09 , 3.27e-09 ) [ 2.06e-09 , 7.82e-10 ] 1.00       [solverNewtonDumped]
+[ 68, 1] ( 3.27e-09 , 1.25e-09 ) [ 7.82e-10 , 2.99e-10 ] 1.00       [solverNewtonDumped]
+[ 69, 1] ( 1.25e-09 , 4.98e-10 ) [ 2.99e-10 , 3.25e-10 ] 1.00       [solverNewtonDumped]
+[ 70, 1] ( 4.98e-10 , 5.40e-10 ) [ 3.25e-10 , 3.23e-10 ] 1.00       [solverNewtonDumped]
+[ 71, 1] ( 5.40e-10 , 5.27e-10 ) [ 3.23e-10 , 2.43e-10 ] 1.00       [solverNewtonDumped]
+[ 72, 1] ( 5.27e-10 , 3.92e-10 ) [ 2.43e-10 , 1.53e-10 ] 1.00       [solverNewtonDumped]
+[ 73, 1] ( 3.92e-10 , 2.46e-10 ) [ 1.53e-10 , 8.28e-11 ] 1.00       [solverNewtonDumped]
+[ 74, 1] ( 2.46e-10 , 1.32e-10 ) [ 8.28e-11 , 3.76e-11 ] 1.00       [solverNewtonDumped]
+[ 75, 1] ( 1.32e-10 , 5.98e-11 ) [ 3.76e-11 , 1.39e-11 ] 1.00       [solverNewtonDumped]
+
+------------------------ STATISTIC -------------------------
+Elapsed Time   = 67.5[ms]      timeout        = 0 [ms]
+iteration      = 75            tolerance      = 1.000e-09 
+max iterations = 300           N. Equations   = 2004
+max acc. iter. = 800           N. System pars = 2000
+Converged      = YES           Memory Used    = 278Kb (+17bytes)
+----------------------- CONTINUATION -----------------------
+Initial Step   = 0.2           Minimum Step   = 0.001     
+Reduce Factor  = 0.5           Augment Factor = 1.5       
+Few iterations = 8         
+----------------------- EVALUATIONS ------------------------
+Function       = 181           Jacobian       = 75        
+Factorization  = 75            Inversion      = 255       
+------------------------ USER INFO -------------------------
+last ||d||_inf = 9.3110e-10    last||d1||_inf = 2.2633e-09
+last ||f||_inf = 3.8681e-09    last||f||_1    = 5.9774e-11
+------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Jacobian block N. 449 type; FD
+
+jac[  0,  0] =      -94.358 / -94.342      [A/FD] ---     0.016723 / 0.017722     [err/err(%)]
+jac[  0,  2] =       94.462 / 94.479       [A/FD] ---     0.016723 / 0.017700     [err/err(%)]
+
+Jacobian block N. 450 type; FD
+
+jac[  0,  0] =      -94.462 / -94.398      [A/FD] ---     0.064513 / 0.068295     [err/err(%)]
+jac[  0,  2] =       94.566 / 94.630       [A/FD] ---     0.064513 / 0.068174     [err/err(%)]
+
+Jacobian block N. 451 type; FD
+
+jac[  0,  0] =      -94.566 / -94.008      [A/FD] ---      0.55768 / 0.58972      [err/err(%)]
+jac[  0,  2] =       94.669 / 95.226       [A/FD] ---      0.55768 / 0.58563      [err/err(%)]
+
+Jacobian block N. 452 type; FD
+
+jac[  0,  0] =      -94.669 / -93.803      [A/FD] ---      0.86543 / 0.91417      [err/err(%)]
+jac[  0,  2] =       94.770 / 95.635       [A/FD] ---      0.86543 / 0.90493      [err/err(%)]
+
+Jacobian block N. 453 type; FD
+
+jac[  0,  0] =      -94.770 / -93.875      [A/FD] ---      0.89524 / 0.94465      [err/err(%)]
+jac[  0,  2] =       94.869 / 95.764       [A/FD] ---      0.89524 / 0.93484      [err/err(%)]
+
+Jacobian block N. 454 type; FD
+
+jac[  0,  0] =      -94.869 / -93.967      [A/FD] ---      0.90239 / 0.95120      [err/err(%)]
+jac[  0,  1] =       17.924 / 17.926       [A/FD] ---    0.0018049 / 0.010069     [err/err(%)]
+jac[  0,  2] =       94.966 / 95.868       [A/FD] ---      0.90239 / 0.94128      [err/err(%)]
+jac[  0,  3] =       17.924 / 17.926       [A/FD] ---    0.0018049 / 0.010069     [err/err(%)]
+
+Jacobian block N. 455 type; FD
+
+jac[  0,  0] =      -94.966 / -94.061      [A/FD] ---      0.90513 / 0.95310      [err/err(%)]
+jac[  0,  1] =       18.045 / 18.047       [A/FD] ---    0.0018313 / 0.010147     [err/err(%)]
+jac[  0,  2] =       95.061 / 95.966       [A/FD] ---      0.90513 / 0.94317      [err/err(%)]
+jac[  0,  3] =       18.045 / 18.047       [A/FD] ---    0.0018313 / 0.010147     [err/err(%)]
+
+Jacobian block N. 456 type; FD
+
+jac[  0,  0] =      -95.061 / -94.155      [A/FD] ---      0.90645 / 0.95354      [err/err(%)]
+jac[  0,  1] =       18.168 / 18.170       [A/FD] ---    0.0018581 / 0.010226     [err/err(%)]
+jac[  0,  2] =       95.155 / 96.061       [A/FD] ---      0.90645 / 0.94362      [err/err(%)]
+jac[  0,  3] =       18.168 / 18.170       [A/FD] ---    0.0018581 / 0.010226     [err/err(%)]
+
+Jacobian block N. 457 type; FD
+
+jac[  0,  0] =      -95.155 / -94.248      [A/FD] ---      0.90719 / 0.95339      [err/err(%)]
+jac[  0,  1] =       18.292 / 18.294       [A/FD] ---    0.0018854 / 0.010306     [err/err(%)]
+jac[  0,  2] =       95.246 / 96.153       [A/FD] ---      0.90719 / 0.94348      [err/err(%)]
+jac[  0,  3] =       18.292 / 18.294       [A/FD] ---    0.0018854 / 0.010306     [err/err(%)]
+
+Jacobian block N. 458 type; FD
+
+jac[  0,  0] =      -95.246 / -94.339      [A/FD] ---      0.90765 / 0.95295      [err/err(%)]
+jac[  0,  1] =       18.417 / 18.419       [A/FD] ---    0.0019131 / 0.010387     [err/err(%)]
+jac[  0,  2] =       95.336 / 96.244       [A/FD] ---      0.90765 / 0.94308      [err/err(%)]
+jac[  0,  3] =       18.417 / 18.419       [A/FD] ---    0.0019131 / 0.010387     [err/err(%)]
+
+Jacobian block N. 459 type; FD
+
+jac[  0,  0] =      -95.336 / -94.428      [A/FD] ---      0.90795 / 0.95237      [err/err(%)]
+jac[  0,  1] =       18.544 / 18.546       [A/FD] ---    0.0019413 / 0.010468     [err/err(%)]
+jac[  0,  2] =       95.424 / 96.332       [A/FD] ---      0.90795 / 0.94253      [err/err(%)]
+jac[  0,  3] =       18.544 / 18.546       [A/FD] ---    0.0019413 / 0.010468     [err/err(%)]
+
+skipping...
+Last block: OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ 16.21, 0.000 ]
+[Penalties/Barriers,Controls] = [ 0.003900, 0.03368 ]
+All Done Folks!

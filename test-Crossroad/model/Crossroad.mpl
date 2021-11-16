@@ -1,30 +1,14 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: Crossroad problem
-# Authors: E. Bertolazzi, M.Frego, P.Bevilacqua
-# Date:
-# 
-# Load library
-restart:
-# Load optimal control library
+restart:;
 with(plots):
 with(XOptima):
-interface(rtablesize=40):
-# Equations of Dynamics
+interface(rtablesize=40):;
 EQ1 := diff(s(zeta),zeta)  = Ts(zeta)*v(zeta):
 EQ2 := diff(v(zeta),zeta)  = Ts(zeta)*a(zeta):
 EQ3 := diff(a(zeta),zeta)  = Ts(zeta)*jerk(zeta):
-EQ4 := diff(Ts(zeta),zeta) = 0:
+EQ4 := diff(Ts(zeta),zeta) = 0:;
 eqns := [EQ||(1..4)]:<%>;
 xvars := [s(zeta),v(zeta),a(zeta),Ts(zeta)] ;
 uvars := [jerk(zeta)] ;
-# Optimal control
-# Optimal control problem definition
-# Load dynamic system
-# Load the ODE dynamic system: list of controls, state variables and differential equations.
-# By default the command sets the independent variable to "zeta".
 #Describe(loadDynamicSystem);
 loadDynamicSystem(
   controls  = uvars,
@@ -60,14 +44,14 @@ addControlBound(
   epsilon     = 0.01,
   tolerance   = 0.01,
   controlType = "U_LOGARITHMIC"
-):
+):;
 addUnilateralConstraint(
   Ts(zeta)>0, Tpositive,
   #barrier   = true,
   scale     = 1,
   epsilon   = 0.01,
   tolerance = 0.01
-):
+):;
 ELLISSE := (a(zeta)/along_max)^2+(v(zeta)^2*kappa(s(zeta))/alat_max)^2;
 addUnilateralConstraint(
   ELLISSE <= 1, AccBound,
@@ -75,7 +59,7 @@ addUnilateralConstraint(
   scale     = 1,
   epsilon   = 0.01,
   tolerance = 0.01
-):
+):;
 addBilateralConstraint(
   v(zeta), VelBound,
   #barrier   = true,
@@ -84,11 +68,7 @@ addBilateralConstraint(
   scale     = 1,
   epsilon   = 0.01,
   tolerance = 0.01
-):
-# Optimal Control Problem
-# Set guess solution (optional)
-# A guess solution can be specified for some or all state variables. The guess solution can be a function of the independent variable "zeta". Piecewise solution are not allowed.
-# Note that the lambda3 multiplier cannot vanish, otherwise the corresponding control goes to infinity.
+):;
 PARS := [
   L         = 100,
   Vmean     = 2,
@@ -135,13 +115,12 @@ generateOCProblem(
   controls_iterative = true,
   controls_guess     = [jerk = 0],
   mesh               = [[length = 0.5, n = 100],[length = 0.5, n = 100]]
-); 
+);
 #tmp := getOCProblem();
 #eval(tmp);
-# Plotting
 launchSolver(project_dir,project_name);
-with(plots):
-XOptimaPlots:-loadSolution(project_dir,project_name);# load solution
+with(plots):;
+XOptimaPlots:-loadSolution(project_dir,project_name);load solution
 XOptimaPlots:-getHeaders();
 z_sol      := XOptimaPlots:-getSolution(zeta):
 jerk_sol   := XOptimaPlots:-getSolution(jerk):
@@ -152,10 +131,9 @@ a_su_along := XOptimaPlots:-getSolution(a_su_along):
 a_su_alat  := XOptimaPlots:-getSolution(a_su_alat):
 kappa      := XOptimaPlots:-getSolution(kappa):
 Ts_sol     := XOptimaPlots:-getSolution(Ts):
-lgr_sol    := XOptimaPlots:-getSolution("lagrange_target"):
-
-printf("Ts = %g\n", Ts_sol[-1]);
-printf("Ts = %g\n", Ts_sol[1]);
+lgr_sol    := XOptimaPlots:-getSolution("lagrange_target"):;
+printf("Ts = %g\134n", Ts_sol[-1]);
+printf("Ts = %g\134n", Ts_sol[1]);
 display(
   XOptimaPlots:-plotSolution(
     zeta, ["s"],
@@ -225,4 +203,4 @@ display(
 );
 ell := a_su_alat^~2+a_su_along^~2;
 plot([seq([s_sol[k],ell[k]],k=1..202)]);
-
+;

@@ -264,13 +264,14 @@ namespace CNOCDefine {
     real_type t21  = t8 * t8;
     real_type t23  = t12 * result__[4] * t21;
     result__[ 7   ] = t23 * t18;
-    result__[ 8   ] = result__[2] * t8 * result__[5];
+    real_type t24  = t8 * result__[5];
+    result__[ 8   ] = result__[2] * t24;
     result__[ 9   ] = result__[2] * t14;
     result__[ 10  ] = result__[4];
     real_type t25  = X__[iX_as];
     real_type t26  = 1.0 / t10;
-    real_type t27  = t26 * t8;
-    result__[ 11  ] = -t27 * t18 + t25;
+    real_type t27  = t26 * t1;
+    result__[ 11  ] = -t27 * t24 + t25;
     real_type t29  = t1 * t1;
     result__[ 12  ] = -t15 * t6 * t29;
     result__[ 13  ] = -t15 * t21 * t29;
@@ -283,15 +284,17 @@ namespace CNOCDefine {
     real_type t39  = t36 * t1;
     result__[ 17  ] = t20 * t39;
     result__[ 18  ] = t23 * t39;
-    result__[ 19  ] = result__[2] * t8 * t36;
+    real_type t40  = t8 * t36;
+    result__[ 19  ] = result__[2] * t40;
     result__[ 20  ] = result__[9];
-    result__[ 21  ] = -t27 * t39 + U__[iU_js];
+    result__[ 21  ] = -t27 * t40 + U__[iU_js];
     real_type t43  = t25 * t1;
     result__[ 22  ] = -t20 * t43;
     result__[ 23  ] = -t23 * t43;
-    result__[ 24  ] = t34 * t8 * t25;
+    real_type t46  = t8 * t25;
+    result__[ 24  ] = t34 * t46;
     result__[ 25  ] = t35;
-    result__[ 26  ] = t27 * t43 + U__[iU_jn];
+    result__[ 26  ] = t27 * t46 + U__[iU_jn];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 27, i_segment );
   }

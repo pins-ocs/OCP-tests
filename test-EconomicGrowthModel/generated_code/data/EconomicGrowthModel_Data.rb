@@ -20,13 +20,13 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-x1_i    = 1
-x2_i    = 2
-l1_i    = -1/x1_i/x2_i
-t0      = -Math::Math::log(x1_i/x2_i)/x2_i
-l2_i    = l1_i*(x1_i*t0+Math::exp(-t0*x2_i))
 u_tol0  = 0.1
 u_tol   = u_tol0
+x2_i    = 2
+x1_i    = 1
+t0      = -Math::Math::log(x1_i/x2_i)/x2_i
+l1_i    = -1/x1_i/x2_i
+l2_i    = l1_i*(x1_i*t0+Math::exp(-t0*x2_i))
 u_epsi0 = 0.1
 u_epsi  = u_epsi0
 
@@ -203,8 +203,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 1000,
+        :length => 1,
       },
     ],
   };

@@ -170,8 +170,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFmodule_data.Mesh["s0"] = 0;
-BangBangFmodule_data.Mesh["segments"][0]["n"] = 100;
 BangBangFmodule_data.Mesh["segments"][0]["length"] = 1;
+BangBangFmodule_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

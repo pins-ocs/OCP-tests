@@ -101,13 +101,14 @@ namespace Bike1DDefine {
   class Bike1D : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[9];
+    real_type ModelPars[10];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU murControl;
     Mechatronix::PenaltyBarrierU mufControl;
 
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DGreaterThan vMinLimit;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

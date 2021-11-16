@@ -50,6 +50,8 @@ using Mechatronix::MeshStd;
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
+#define ALIAS_vMinLimit_DD(__t1) vMinLimit.DD( __t1)
+#define ALIAS_vMinLimit_D(__t1) vMinLimit.D( __t1)
 #define ALIAS_mufControl_D_3(__t1, __t2, __t3) mufControl.D_3( __t1, __t2, __t3)
 #define ALIAS_mufControl_D_2(__t1, __t2, __t3) mufControl.D_2( __t1, __t2, __t3)
 #define ALIAS_mufControl_D_1(__t1, __t2, __t3) mufControl.D_1( __t1, __t2, __t3)
@@ -98,8 +100,12 @@ namespace Bike1DDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_v] * X__[iX_v];
-    result__[ 0   ] = -1.0 / t2 - L__[iL_lambda1__xo] * V__[0];
+    real_type t4   = X__[iX_v];
+    real_type t5   = t4 * t4;
+    real_type t8   = t4 - ModelPars[iM_v_min];
+    real_type t9   = ALIAS_vMinLimit_D(t8);
+    real_type t11  = vMinLimit(t8);
+    result__[ 0   ] = 1.0 / t5 * (-t5 * V__[0] * L__[iL_lambda1__xo] + t4 * t9 - t11 - 1);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 1, i_segment );
   }
@@ -140,8 +146,12 @@ namespace Bike1DDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_v];
-    real_type t2   = t1 * t1;
-    result__[ 0   ] = 2 / t2 / t1;
+    real_type t3   = t1 - ModelPars[iM_v_min];
+    real_type t4   = ALIAS_vMinLimit_DD(t3);
+    real_type t5   = t1 * t1;
+    real_type t7   = ALIAS_vMinLimit_D(t3);
+    real_type t10  = vMinLimit(t3);
+    result__[ 0   ] = 1.0 / t5 / t1 * (-2 * t1 * t7 + t5 * t4 + 2 * t10 + 2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
   }

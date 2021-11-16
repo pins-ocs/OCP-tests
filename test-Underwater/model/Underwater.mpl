@@ -1,16 +1,5 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: Underwater vehicle
-# Authors: E. Bertolazzi, F. Biral
-# Date: December 18, 2018
-# 
-# Load Packages
-# Load maple packages
-restart: with(plots):
-with(XOptima):
-# Dynamic system equations
+restart: with(plots):;
+with(XOptima):;
 g1 := u1(zeta)/m1 ;
 g2 := u2(zeta)/m3 ;
 g3 := u3(zeta)/inertia ;
@@ -21,15 +10,15 @@ EQ4    := diff(vx(zeta),zeta)    = T*(g1-vz(zeta)*Omega(zeta)*(m3/m1)):
 EQ5    := diff(vz(zeta),zeta)    = T*(g2+vx(zeta)*Omega(zeta)*(m1/m3)):
 EQ6    := diff(Omega(zeta),zeta) = T*(g3+vx(zeta)*vz(zeta)*(m3-m1)/inertia):
 EQNS_T := [ EQ||(1..6) ]: <%> ;
-# States and Controls
 qvars := [x(zeta),z(zeta),theta(zeta),vx(zeta),vz(zeta),Omega(zeta)] ;
 cvars := [u1(zeta),u2(zeta),u3(zeta)] ;
-# Load Dynamical System
-loadDynamicSystem(  equations = EQNS_T,  controls  = cvars,  states    = qvars);
-# Insert boundary conditions
+loadDynamicSystem(
+  equations = EQNS_T,
+  controls  = cvars,
+  states    = qvars
+);
 addBoundaryConditions(initial=[x,z,vx,vz,theta],final=[x,z,vx,vz,theta]);
 infoBoundaryConditions() ;
-# Bound for the controls
 addControlBound( u1,
                  scale       = T,
                  controlType = "U_COS_LOGARITHMIC",
@@ -49,7 +38,6 @@ addControlBound( u3,
                  epsilon     = epsi_penalty,
                  tolerance   = tol_penalty) ;
 setTarget( mayer = T ) ;
-
 pars := [
   inertia      = 0.12,
   epsi_penalty = 0.1,
@@ -98,4 +86,4 @@ generateOCProblem(
   optimization_parameters = [ T = Tguess ],
   states_guess            = GUESS
 ) ;
-
+;

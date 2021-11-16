@@ -133,7 +133,7 @@ namespace UnderwaterDefine {
     real_type t54  = u1Control(t28, -1, 1);
     real_type t56  = u2Control(t38, -1, 1);
     real_type t58  = u3Control(t43, -1, 1);
-    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + 1.0 / t30 * (-t26 * t21 * t8 + t28) * t2 * L__[iL_lambda4__xo] + 1.0 / t26 * (t30 * t21 * t4 + t38) * t2 * L__[iL_lambda5__xo] + 1.0 / ModelPars[iM_inertia] * t2 * L__[iL_lambda6__xo] * (t43 - (-t26 + t30) * t8 * t4) + t54 * t2 + t56 * t2 + t58 * t2;
+    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + 1.0 / t30 * (-t26 * t21 * t8 + t28) * t2 * L__[iL_lambda4__xo] + 1.0 / t26 * (t30 * t21 * t4 + t38) * t2 * L__[iL_lambda5__xo] + L__[iL_lambda6__xo] / ModelPars[iM_inertia] * t2 * (t43 - (-t26 + t30) * t8 * t4) + t54 * t2 + t56 * t2 + t58 * t2;
     return result__;
   }
 #else
@@ -163,7 +163,7 @@ namespace UnderwaterDefine {
     real_type t54  = u1Control(t28, -1, 1);
     real_type t56  = u2Control(t38, -1, 1);
     real_type t58  = u3Control(t43, -1, 1);
-    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + 1.0 / t30 * (-t26 * t21 * t8 + t28) * t2 * L__[iL_lambda4__xo] + 1.0 / t26 * (t30 * t21 * t4 + t38) * t2 * L__[iL_lambda5__xo] + 1.0 / ModelPars[iM_inertia] * t2 * L__[iL_lambda6__xo] * (t43 - (-t26 + t30) * t8 * t4) + t54 * t2 + t56 * t2 + t58 * t2;
+    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + 1.0 / t30 * (-t26 * t21 * t8 + t28) * t2 * L__[iL_lambda4__xo] + 1.0 / t26 * (t30 * t21 * t4 + t38) * t2 * L__[iL_lambda5__xo] + L__[iL_lambda6__xo] / ModelPars[iM_inertia] * t2 * (t43 - (-t26 + t30) * t8 * t4) + t54 * t2 + t56 * t2 + t58 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }

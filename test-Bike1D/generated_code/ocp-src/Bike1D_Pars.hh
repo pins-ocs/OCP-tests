@@ -19,8 +19,8 @@
 #define BIKE1DPARS_DOT_HH
 
 #define numBC                    2
-#define numModelPars             9
-#define numConstraint1D          0
+#define numModelPars             10
+#define numConstraint1D          1
 #define numConstraint2D          0
 #define numConstraintU           2
 #define numXvars                 1
@@ -57,7 +57,8 @@
 #define iM_mur_min     5
 #define iM_v_f         6
 #define iM_v_i         7
-#define iM_vmax        8
+#define iM_v_min       8
+#define iM_vmax        9
 
 #endif
 

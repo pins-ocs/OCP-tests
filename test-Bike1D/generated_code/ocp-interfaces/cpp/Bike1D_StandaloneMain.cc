@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type mur_min = -1;
     real_type muf_min = -1;
     real_type mur_max = 1;
+    real_type mur_min = -1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -133,6 +133,7 @@ main() {
     data_Parameters["muf_min"] = muf_min;
     data_Parameters["mur_max"] = mur_max;
     data_Parameters["mur_min"] = mur_min;
+    data_Parameters["v_min"] = 1;
 
     // Guess Parameters
 
@@ -156,9 +157,9 @@ main() {
 
     // ClipIntervalWithSinAtan
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta2"] = 0;
     data_clip["delta"] = 0;
     data_clip["h"] = 0.01;
+    data_clip["delta2"] = 0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
@@ -177,7 +178,16 @@ main() {
 
 
 
-    // Constraint1D: none defined
+    // Constraint1D
+    // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    GenericContainer & data_Constraints = gc_data["Constraints"];
+    // PenaltyBarrier1DGreaterThan
+    GenericContainer & data_vMinLimit = data_Constraints["vMinLimit"];
+    data_vMinLimit["subType"]   = "BARRIER_LOG";
+    data_vMinLimit["epsilon"]   = 0.1;
+    data_vMinLimit["tolerance"] = 0.1;
+    data_vMinLimit["active"]    = true;
     // Constraint2D: none defined
 
     // User defined classes initialization

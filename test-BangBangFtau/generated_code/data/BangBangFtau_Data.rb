@@ -210,20 +210,20 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 0.1,
         :n      => 10,
-      },
-      {
-        :length => 0.4,
-        :n      => 40,
-      },
-      {
-        :length => 0.4,
-        :n      => 40,
-      },
-      {
         :length => 0.1,
+      },
+      {
+        :n      => 40,
+        :length => 0.4,
+      },
+      {
+        :n      => 40,
+        :length => 0.4,
+      },
+      {
         :n      => 10,
+        :length => 0.1,
       },
     ],
   };

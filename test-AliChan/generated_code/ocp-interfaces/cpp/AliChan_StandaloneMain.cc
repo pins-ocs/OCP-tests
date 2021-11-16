@@ -159,8 +159,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 AliChan_data.Mesh["s0"] = 0;
-AliChan_data.Mesh["segments"][0]["n"] = 1000;
 AliChan_data.Mesh["segments"][0]["length"] = L;
+AliChan_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

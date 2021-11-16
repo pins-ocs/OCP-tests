@@ -99,11 +99,13 @@ namespace Bike1DDefine {
     "mur_min",
     "v_f",
     "v_i",
+    "v_min",
     "vmax",
     nullptr
   };
 
   char const *namesConstraint1D[numConstraint1D+1] = {
+    "vMinLimit",
     nullptr
   };
 
@@ -139,6 +141,7 @@ namespace Bike1DDefine {
   , murControl("murControl")
   , mufControl("mufControl")
   // Constraints 1D
+  , vMinLimit("vMinLimit")
   // Constraints 2D
   // User classes
   {
@@ -241,6 +244,18 @@ namespace Bike1DDefine {
   */
   void
   Bike1D::setupClasses( GenericContainer const & gc_data ) {
+    UTILS_ASSERT0(
+      gc_data.exists("Constraints"),
+      "Bike1D::setupClasses: Missing key `Parameters` in data\n"
+    );
+    GenericContainer const & gc = gc_data("Constraints");
+    // Initialize Constraints 1D
+    UTILS_ASSERT0(
+      gc.exists("vMinLimit"),
+      "in Bike1D::setupClasses(gc) missing key: ``vMinLimit''\n"
+    );
+    vMinLimit.setup( gc("vMinLimit") );
+
   }
 
   /* --------------------------------------------------------------------------
@@ -347,6 +362,11 @@ namespace Bike1DDefine {
     mstr.str("");
     murControl.info(mstr);
     mufControl.info(mstr);
+    m_console->message(mstr.str(),msg_level);
+
+    m_console->message("\nConstraints 1D\n",msg_level);
+    mstr.str("");
+    vMinLimit.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);

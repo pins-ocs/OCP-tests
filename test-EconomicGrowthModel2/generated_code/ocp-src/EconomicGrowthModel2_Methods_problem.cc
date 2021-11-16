@@ -94,7 +94,7 @@ namespace EconomicGrowthModel2Define {
     real_type t3   = uControl(t2, 0, 1);
     real_type t14  = Q(X__[iX_x1], X__[iX_x2]);
     real_type t16  = Tpositive(t1);
-    real_type result__ = t3 * t1 + t14 * t1 * (L__[iL_lambda4__xo] * (1 - t2) + t2 * L__[iL_lambda2__xo]) + t16 + t1 * (L__[iL_lambda1__xo] * X__[iX_y1] + L__[iL_lambda3__xo] * X__[iX_y2]);
+    real_type result__ = t3 * t1 + t14 * (L__[iL_lambda4__xo] * (1 - t2) + t2 * L__[iL_lambda2__xo]) * t1 + t16 + t1 * (L__[iL_lambda1__xo] * X__[iX_y1] + L__[iL_lambda3__xo] * X__[iX_y2]);
     return result__;
   }
 #else
@@ -114,7 +114,7 @@ namespace EconomicGrowthModel2Define {
     real_type t3   = uControl(t2, 0, 1);
     real_type t14  = Q(X__[iX_x1], X__[iX_x2]);
     real_type t16  = Tpositive(t1);
-    real_type result__ = t3 * t1 + t14 * t1 * (L__[iL_lambda4__xo] * (1 - t2) + t2 * L__[iL_lambda2__xo]) + t16 + t1 * (L__[iL_lambda1__xo] * X__[iX_y1] + L__[iL_lambda3__xo] * X__[iX_y2]);
+    real_type result__ = t3 * t1 + t14 * (L__[iL_lambda4__xo] * (1 - t2) + t2 * L__[iL_lambda2__xo]) * t1 + t16 + t1 * (L__[iL_lambda1__xo] * X__[iX_y1] + L__[iL_lambda3__xo] * X__[iX_y2]);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }

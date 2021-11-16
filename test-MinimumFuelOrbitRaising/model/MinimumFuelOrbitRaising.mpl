@@ -1,23 +1,12 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Minimum Fuel Orbit Raising (ICLOCS example 6)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-restart:
-with(XOptima):
+restart:;
+with(XOptima):;
 #XOptimaInfo() ;
-# Equations of motion
 EQ1    := diff(x1(t),t) = x2(t):
 EQ2    := diff(x2(t),t) = x3(t)^3/x1(t)-1/x1(t)^2+T*sin(u(t))/(1-md*t):
 EQ3    := diff(x3(t),t) = -x2(t)*x3(t)/x1(t)+T*cos(u(t))/(1-md*t):
 EQNS_T := [ EQ||(1..3)]: <%> ;
-# State variables and controls
 qvars := [x1(t),x2(t),x3(t)] ;
 cvars := [u(t)] ;
-# Optimal Control: problem definition
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
@@ -38,22 +27,25 @@ addBoundaryConditions(
   ]
 );
 infoBoundaryConditions() ;
-setTarget(  mayer    = 0,  lagrange = -x2(zeta));
-
+setTarget(
+  mayer    = 0,
+  lagrange = -x2(zeta)
+);
 pars := [
   epsi_ctrl = 0.001,
   tol_ctrl  = 0.001,
   T         = 0.1405,
   md        = 0.0749,
-  tf        = 3.32] ;
+  tf        = 3.32
+] ;
 GUESS := [
   x1 = 1,
   x2 = 0,
   x3 = 1,
-  lambda3__xo = -1e-10 # must be initialized <> 0];
+  lambda3__xo = -1e-10 # must be initialized <> 0
+];
 REGION := [
 ];
-# Set control to the minimum of the Hamiltonian
 U_SOLVED := [u = arctan(-lambda2__xo(zeta),-lambda3__xo(zeta))];
 #Describe(generateOCProblem);
 generateOCProblem(
@@ -72,6 +64,5 @@ ocp := getOCProblem();
 indices(ocp);
 eval(ocp["controls"]["g"]); solve( %[1], {u(zeta)} );
 SOL := eval(ocp["controls"]["u"][1]);
-subs(u=SOL,diff(subs(u(zeta)=u,ocp["Hamiltonian"]),u,u)); simplify(expand(%))
+subs(u=SOL,diff(subs(u(zeta)=u,ocp["Hamiltonian"]),u,u)); simplify(expand(%));
 ;
-

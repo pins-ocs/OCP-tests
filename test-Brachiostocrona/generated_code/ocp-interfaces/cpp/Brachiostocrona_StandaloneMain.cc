@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type yf = -2;
     real_type xf = 5;
     real_type g = 9.81;
-    real_type yf = -2;
     real_type Tf = (-2.0*yf/g)^(1/2.0);
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;

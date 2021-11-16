@@ -1,28 +1,14 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: single mass moved with bounded control 
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-restart:
-with(XOptima):
-# Equations of motion
+restart:;
+with(XOptima):;
 EQ1 := diff(x(t),t) - v(t);
 EQ2 := diff(v(t),t) - clip(sT(t)-sB(t),minClip,maxClip);
 EQ3 := diff(sT(t),t) + (sT(t) - vsT(t))/tauT ;
 EQ4 := diff(sB(t),t) + (sB(t) - vsB(t))/tauB ;
 EQNS_T := [ EQ||(1..4) ];
-# States and Controls
-# States
 qvars := [x(t),v(t),sT(t),sB(t)] ;
-# Controls
 cvars := [vsT(t),vsB(t)] ;
-# Optimal control problem formulation
 loadDynamicSystem(equations=EQNS_T,controls=cvars,states=qvars) ;
 mapUserFunctionToRegularized( clip, "ClipIntervalWithErf" ) ;
-# Boundary conditions
 addBoundaryConditions(initial=[x=0,v=0,sT=0,sB=0],final=[v=0]);
 infoBoundaryConditions() ;
 addUnilateralConstraint( vsT(zeta) >= 0, vsTpositive );
@@ -59,4 +45,4 @@ generateOCProblem(
   controls_guess     = [vsT=0,vsB=0],
   mesh               = MESH_PRB
 ) ;
-
+;

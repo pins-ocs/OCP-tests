@@ -43,6 +43,8 @@
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
+#define ALIAS_vMinLimit_DD(__t1) vMinLimit.DD( __t1)
+#define ALIAS_vMinLimit_D(__t1) vMinLimit.D( __t1)
 #define ALIAS_mufControl_D_3(__t1, __t2, __t3) mufControl.D_3( __t1, __t2, __t3)
 #define ALIAS_mufControl_D_2(__t1, __t2, __t3) mufControl.D_2( __t1, __t2, __t3)
 #define ALIAS_mufControl_D_1(__t1, __t2, __t3) mufControl.D_1( __t1, __t2, __t3)
@@ -115,6 +117,12 @@ namespace Bike1DDefine {
 
 
 
+  // node_check_strings
+  #define Xoptima__message_node_check_0 "v_min < v(zeta)"
+
+
+  // cell_check_strings
+  #define Xoptima__message_cell_check_0 "v_min < v(zeta)"
 
 
 
@@ -129,6 +137,12 @@ namespace Bike1DDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    Xoptima__check__node__lt(ModelPars[iM_v_min], X__[iX_v], Xoptima__message_node_check_0);
     return true;
   }
 
@@ -140,6 +154,12 @@ namespace Bike1DDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    Xoptima__check__cell__lt(ModelPars[iM_v_min], X__[iX_v], Xoptima__message_cell_check_0);
     return true;
   }
 
@@ -152,7 +172,21 @@ namespace Bike1DDefine {
     NodeType2 const    & RIGHT__,
     P_const_pointer_type P__
   ) const {
-    return true;
+    NodeType2 NODE__;
+    real_type Q__[1];
+    real_type X__[1];
+    real_type L__[1];
+    NODE__.i_segment = LEFT__.i_segment;
+    NODE__.q         = Q__;
+    NODE__.x         = X__;
+    NODE__.lambda    = L__;
+    // Qvars
+    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
+    // Xvars
+    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
+    // Lvars
+    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
+    return xlambda_check_cell( icell, NODE__, P__ );
   }
 
   /*\

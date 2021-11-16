@@ -182,7 +182,7 @@ namespace CatalystDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_x2];
     real_type t4   = X__[iX_x1];
-    result__[ 0   ] = (10 * t2 - t4) * L__[iL_lambda1__xo] + (t4 - 9 * t2) * L__[iL_lambda2__xo];
+    result__[ 0   ] = (10 * t2 - t4) * L__[iL_lambda1__xo] + L__[iL_lambda2__xo] * (t4 - 9 * t2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }

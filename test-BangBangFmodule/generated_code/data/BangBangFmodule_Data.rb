@@ -186,8 +186,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 100,
         :length => 1,
+        :n      => 100,
       },
     ],
   };

@@ -1,27 +1,14 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: Goddard Rocket (from COPS3 test 10)
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-# Inizializzazione
-restart:
-with(XOptima):
-# Dynamic system equations
+restart:;
+with(XOptima):;
 addUserFunction(DD(h,v)=Dc*v^2*exp(hc*(1-h/h_i)));
 addUserFunction(gg(h)=g0*(h_i/h)^2);
 EQ1 := diff(h(t),t) = TimeSize * v(t) ;
 EQ2 := diff(v(t),t) = TimeSize * ( ((T(t)-DD(h(t),v(t)))/m(t)) - gg(h(t)) ) ;
 EQ3 := diff(m(t),t) = -TimeSize * T(t)/c ;
 EQNS := convert([EQ||(1..3)],Vector) ;
-# States and Controls
 xvars := [h(t),v(t),m(t)];
 uvars := [T(t)];
-pars := [ TimeSize ]; # optimization parameters
-;
-# Optimal Contol Problem
+pars := [ TimeSize ]; # optimization parameters;
 loadDynamicSystem(
   equations = EQNS,
   controls  = uvars,
@@ -55,7 +42,6 @@ addUnilateralConstraint(
   epsilon   = epsi_TS,
   barrier   = true
 );
-# penalty che dipendono dagli ingressi
 addControlBound(
   T,
   min       = 0,
@@ -115,4 +101,4 @@ generateOCProblem(
   states_guess            = GUESS,
   optimization_parameters = [ TimeSize = Tmax ]
 );
-
+;

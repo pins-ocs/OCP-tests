@@ -167,25 +167,23 @@ namespace AlpRiderDefine {
     real_type t26  = Ybound(t12);
     real_type t27  = 2 * t26;
     result__[ 0   ] = 4 * t2 * t14 + t22 * (10 * t2 + t18 + t19 + t20 + 2) + t25 + t27;
-    real_type t29  = t14 + 2 * t22;
-    real_type t30  = t29 * t1;
-    result__[ 1   ] = 4 * t3 * t30;
-    result__[ 2   ] = 4 * t29 * t1 * t5;
-    result__[ 3   ] = 4 * t7 * t30;
+    real_type t30  = t14 + 2 * t22;
+    result__[ 1   ] = 4 * t30 * t1 * t3;
+    result__[ 2   ] = 4 * t5 * t30 * t1;
+    result__[ 3   ] = 4 * t30 * t1 * t7;
     result__[ 4   ] = result__[1];
-    real_type t37  = 2 * t2;
-    result__[ 5   ] = 4 * t4 * t14 + t22 * (t37 + 10 * t4 + t19 + t20 + 2) + t25 + t27;
-    real_type t41  = t29 * t5;
-    result__[ 6   ] = 4 * t3 * t41;
-    result__[ 7   ] = 4 * t3 * t7 * t29;
+    real_type t38  = 2 * t2;
+    result__[ 5   ] = 4 * t4 * t14 + t22 * (t38 + 10 * t4 + t19 + t20 + 2) + t25 + t27;
+    result__[ 6   ] = 4 * t5 * t30 * t3;
+    result__[ 7   ] = 4 * t30 * t3 * t7;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
-    result__[ 10  ] = 4 * t6 * t14 + t22 * (t37 + t18 + 10 * t6 + t20 + 2) + t25 + t27;
-    result__[ 11  ] = 4 * t7 * t41;
+    result__[ 10  ] = 4 * t6 * t14 + t22 * (t38 + t18 + 10 * t6 + t20 + 2) + t25 + t27;
+    result__[ 11  ] = 4 * t5 * t30 * t7;
     result__[ 12  ] = result__[3];
     result__[ 13  ] = result__[7];
     result__[ 14  ] = result__[11];
-    result__[ 15  ] = 4 * t8 * t14 + t22 * (t37 + t18 + t19 + 10 * t8 + 2) + t25 + t27;
+    result__[ 15  ] = 4 * t8 * t14 + t22 * (t38 + t18 + t19 + 10 * t8 + 2) + t25 + t27;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 16, i_segment );
   }

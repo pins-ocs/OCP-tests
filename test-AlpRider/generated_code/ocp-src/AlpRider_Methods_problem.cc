@@ -331,7 +331,7 @@ namespace AlpRiderDefine {
     result__[ 0   ] = 2 * t1 * t16;
     result__[ 1   ] = 2 * t3 * t16;
     result__[ 2   ] = 2 * t5 * t16;
-    result__[ 3   ] = 2 * t7 * t16;
+    result__[ 3   ] = 2 * t16 * t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJDx_eval", 4, i_segment );
   }
