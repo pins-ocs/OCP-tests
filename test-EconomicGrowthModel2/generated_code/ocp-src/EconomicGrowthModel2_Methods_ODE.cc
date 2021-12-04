@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_ODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -74,9 +74,9 @@ namespace EconomicGrowthModel2Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_T];
     result__[ 0   ] = t2 * X__[iX_y1];
@@ -130,9 +130,9 @@ namespace EconomicGrowthModel2Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_T];
     result__[ 1   ] = X__[iX_y1];
@@ -220,9 +220,9 @@ namespace EconomicGrowthModel2Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q(X__[iX_x1], X__[iX_x2]);
     result__[ 0   ] = X__[iX_T] * t3;
@@ -270,9 +270,9 @@ namespace EconomicGrowthModel2Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;

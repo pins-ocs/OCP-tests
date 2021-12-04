@@ -39,31 +39,45 @@ Used threads:         15
 
 
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  1,12] ( 0.00409  , 0.00574  ) [   80.9   ,   80.6   ] 0.00198    [solverNewtonDumped]
-[  2, 3] ( 0.00574  , 0.00786  ) [   10.0   ,   9.84   ] 0.0102     [solverNewtonDumped]
-[  3, 1] ( 0.00786  , 0.00934  ) [  0.470   ,  0.326   ] 0.202      [solverNewtonDumped]
-[  4, 1] ( 0.00934  , 0.000992 ) [  0.485   ,  0.0494  ] 0.899      [solverNewtonDumped]
-[  5, 1] ( 0.000992 , 3.31e-08 ) [  0.0495  , 4.24e-07 ] 1.00       [solverNewtonDumped]
-[  6, 1] ( 3.31e-08 , 4.81e-18 ) [ 4.24e-07 , 1.25e-17 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1, 8] ( 0.00409  , 0.00530  ) [   80.9   ,   80.7   ] 0.00164    [1:0:4:0:2:0:0]
+[  2, 7] ( 0.00530  , 0.00616  ) [   13.4   ,   13.3   ] 0.00410    [1:0:2:0:3:0:0]
+[  3, 5] ( 0.00616  , 0.00713  ) [   1.69   ,   1.61   ] 0.0256     [1:0:0:0:3:0:0]
+[  4, 1] ( 0.00713  , 0.00310  ) [  0.421   ,  0.0539  ] 1.00       [0:0:0:0:0:0:0]
+[  5, 1] ( 0.00310  , 6.78e-18 ) [  0.0539  , 8.20e-17 ] 1.00       [0:0:0:0:0:0:0]
 
------------------------- STATISTIC -------------------------
-Elapsed Time   = 4.06[ms]      timeout        = 0 [ms]
-iteration      = 6             tolerance      = 1.000e-09 
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.010000      lambda_min     = 1.0000e-10
+dump_min       = 0.40000       dump_max       = 0.90000
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.010000      lambda_min     = 1.0000e-10
+dump_min       = 0.40000       dump_max       = 0.90000
+ratio ||f||_2  = 1.4000        ratio ||d||_2  = 1.4000
+ratio ||f||_1  = 1.4000        ratio ||d||_1  = 1.4000
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 4.29[ms]      timeout        = 0 [ms]
+iteration      = 5             tolerance      = 1.000e-09
 max iterations = 300           N. Equations   = 407
 max acc. iter. = 800           N. System pars = 100
-Converged      = YES           Memory Used    = 53Kb (+17bytes)
------------------------ CONTINUATION -----------------------
-Initial Step   = 0.2           Minimum Step   = 0.001     
-Reduce Factor  = 0.5           Augment Factor = 1.5       
-Few iterations = 8         
------------------------ EVALUATIONS ------------------------
-Function       = 20            Jacobian       = 6         
-Factorization  = 6             Inversion      = 25        
------------------------- USER INFO -------------------------
-last ||d||_inf = 1.0548e-16    last||d1||_inf = 6.7302e-06
-last ||f||_inf = 5.5511e-17    last||f||_1    = 4.8058e-18
-------------------------------------------------------------
+Converged      = YES           Memory Used    = 53Kb (+14bytes)
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 23            Jacobian       = 5
+Factorization  = 5             Inversion      = 27
+........................... last residuals ...........................
+last ||f||_inf = 6.2450e-17    last ||d||_inf = 5.0755e-16
+last ||f||_1   = 6.7791e-18    last ||d||_1   = 8.2003e-17
+last ||f||_2   = 1.3947e-17    last ||d||_2   = 1.5932e-16
+----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             

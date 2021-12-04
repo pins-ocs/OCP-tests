@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,12 +84,12 @@ namespace TwoLinkRobotArmDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[4], LM__[4];
     // Qvars
@@ -166,12 +166,12 @@ namespace TwoLinkRobotArmDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[4], LM__[4];
     // Qvars
@@ -201,7 +201,7 @@ namespace TwoLinkRobotArmDefine {
     real_type t30  = t17 * t17;
     real_type t31  = 1.0 / t30;
     real_type t33  = t5 * t8;
-    result__[ 0   ] = 0.5e0 * t18 * (-162 * t5 * t10 * t8 - 54 * t5 * t3) + 0.810e2 * t33 * t31 * (81 * t10 * t15 - 48 * t2 * t25 + 54 * t8 * t3 - 112 * t10);
+    result__[ 0   ] = 0.5e0 * t18 * (-162 * t10 * t5 * t8 - 54 * t3 * t5) + 0.810e2 * t33 * t31 * (81 * t10 * t15 - 48 * t2 * t25 + 54 * t3 * t8 - 112 * t10);
     result__[ 1   ] = -0.240e2 * t18 * t2;
     result__[ 2   ] = 0.270e2 * t18 * t8 * t2;
     result__[ 3   ] = result__[0];
@@ -212,7 +212,7 @@ namespace TwoLinkRobotArmDefine {
     real_type t45  = ALIAS_u2Control_D_1(UM__[1], -1, 1);
     real_type t48  = t25 - t1;
     real_type t56  = t8 * t48;
-    result__[ 7   ] = 0.5e0 * t18 * (-54 * t2 * t5 * t48 - 162 * t45 * t33) + 0.810e2 * t33 * t31 * (t45 * t17 + 54 * t2 * (t56 + 8.0 / 9.0 * t25 - 0.14e2 / 9.0 * t1));
+    result__[ 7   ] = 0.5e0 * t18 * (-54 * t2 * t48 * t5 - 162 * t33 * t45) + 0.810e2 * t33 * t31 * (t45 * t17 + 54 * t2 * (t56 + 8.0 / 9.0 * t25 - 0.14e2 / 9.0 * t1));
     result__[ 8   ] = 0.270e2 * t18 * t2 * (t8 + 8.0 / 9.0);
     result__[ 9   ] = 0.270e2 * t18 * t2 * (-t8 - 0.14e2 / 9.0);
     result__[ 10  ] = result__[7];
@@ -257,12 +257,12 @@ namespace TwoLinkRobotArmDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[4], LM__[4];
     // Qvars
@@ -281,7 +281,7 @@ namespace TwoLinkRobotArmDefine {
     real_type t2   = cos(XM__[2]);
     real_type t3   = t2 * t2;
     real_type t5   = ALIAS_u1Control_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = 1.0 / (81 * t3 - 112) * (81 * t5 * t3 - 112 * t5);
+    result__[ 0   ] = 1.0 / (81 * t3 - 112) * (81 * t3 * t5 - 112 * t5);
     result__[ 1   ] = ALIAS_u2Control_D_1_1(UM__[1], -1, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
@@ -310,12 +310,12 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[4], LM__[4];
     // Qvars
@@ -363,13 +363,12 @@ namespace TwoLinkRobotArmDefine {
     U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-    // midpoint
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[4], LM__[4];
     // Qvars
@@ -492,9 +491,9 @@ namespace TwoLinkRobotArmDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u1];
     real_type t2   = u1Control(t1, -1, 1);
@@ -535,9 +534,9 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u1];
     real_type t2   = ALIAS_u1Control_D_1(t1, -1, 1);
@@ -595,9 +594,9 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
     real_type t4   = P__[iP_T] * P__[iP_T];

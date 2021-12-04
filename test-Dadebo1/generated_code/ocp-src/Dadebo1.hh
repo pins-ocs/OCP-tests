@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1.hh                                                     |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -203,7 +203,7 @@ namespace Dadebo1Define {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DADEBO1_API_DLL
     void
-    setup_parameters( real_type const Pars[] );
+    setup_parameters( real_const_ptr Pars );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DADEBO1_API_DLL

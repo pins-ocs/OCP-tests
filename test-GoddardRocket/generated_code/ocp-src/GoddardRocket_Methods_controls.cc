@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -81,12 +81,12 @@ namespace GoddardRocketDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[3], LM__[3];
     // Qvars
@@ -146,12 +146,12 @@ namespace GoddardRocketDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[3], LM__[3];
     // Qvars
@@ -177,7 +177,7 @@ namespace GoddardRocketDefine {
     result__[ 3   ] = result__[0];
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[2];
-    result__[ 6   ] = t9 * t1 - t12 * LM__[2];
+    result__[ 6   ] = t1 * t9 - t12 * LM__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 7, i_segment );
   }
@@ -215,12 +215,12 @@ namespace GoddardRocketDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[3], LM__[3];
     // Qvars
@@ -262,12 +262,12 @@ namespace GoddardRocketDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[3], LM__[3];
     // Qvars
@@ -308,13 +308,12 @@ namespace GoddardRocketDefine {
     U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-    // midpoint
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[3], LM__[3];
     // Qvars
@@ -335,7 +334,7 @@ namespace GoddardRocketDefine {
     real_type t3   = ModelPars[iM_c];
     real_type t5   = XM__[2];
     real_type t6   = LM__[2];
-    real_type t8   = t3 * LM__[1] - t6 * t5;
+    real_type t8   = t3 * LM__[1] - t5 * t6;
     real_type t9   = t8 * t1;
     real_type t10  = 1.0 / t5;
     real_type t11  = 1.0 / t3;
@@ -385,9 +384,9 @@ namespace GoddardRocketDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_m];
     real_type t2   = massPositive(t1);
@@ -424,9 +423,9 @@ namespace GoddardRocketDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_T];
     real_type t3   = ALIAS_TControl_D_1(t1, 0, ModelPars[iM_Tmax]);
@@ -436,7 +435,7 @@ namespace GoddardRocketDefine {
     real_type t11  = 1.0 / X__[iX_m];
     real_type t13  = gg(t6);
     real_type t23  = 1.0 / ModelPars[iM_c];
-    result__[ 0   ] = t3 - 2 * t11 * t5 * (V__[1] - (t11 * (t1 - t8) - t13) * t5) + 2 * t23 * t5 * (t1 * t23 * t5 + V__[2]);
+    result__[ 0   ] = t3 - 2 * t11 * t5 * (V__[1] - (t11 * (t1 - t8) - t13) * t5) + 2 * t23 * t5 * (t23 * t1 * t5 + V__[2]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }
@@ -473,9 +472,9 @@ namespace GoddardRocketDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_TControl_D_1_1(U__[iU_T], 0, ModelPars[iM_Tmax]);
     real_type t5   = P__[iP_TimeSize] * P__[iP_TimeSize];

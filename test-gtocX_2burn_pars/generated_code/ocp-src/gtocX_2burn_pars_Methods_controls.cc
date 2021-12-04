@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -68,12 +68,12 @@ namespace gtocX_2burn_parsDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[3], LM__[3];
     // Qvars
@@ -222,16 +222,16 @@ namespace gtocX_2burn_parsDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_f];
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t5   = X__[iX_g];
     real_type t6   = sin(t2);
-    real_type t8   = t1 * t3 + t5 * t6 + 1;
+    real_type t8   = t3 * t1 + t6 * t5 + 1;
     real_type t9   = ray_positive(t8);
     real_type t13  = ModelPars[iM_time_f] - ModelPars[iM_time_i];
     real_type t14  = P__[iP_p];
@@ -242,8 +242,8 @@ namespace gtocX_2burn_parsDefine {
     real_type t22  = ray(t14, t1, t5, t2);
     real_type t23  = acceleration_r(t22, t17);
     real_type t24  = t23 * ModelPars[iM_w_nonlin];
-    real_type t28  = pow(-t20 * t24 * t6 + V__[0], 2);
-    real_type t33  = pow(t20 * t24 * t3 + V__[1], 2);
+    real_type t28  = pow(-t6 * t24 * t20 + V__[0], 2);
+    real_type t33  = pow(t3 * t24 * t20 + V__[1], 2);
     real_type t35  = t8 * t8;
     real_type t42  = pow(V__[2] - t18 / t15 / t14 * t35 * t13, 2);
     real_type result__ = t9 + t28 + t33 + t42;
@@ -267,9 +267,9 @@ namespace gtocX_2burn_parsDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
 
     if ( m_debug )

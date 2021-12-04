@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,23 +50,23 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type mc = 0.6;
-    real_type h_i = 1;
-    real_type epsi_mass = 0.01;
-    real_type epsi_v = 0.01;
-    real_type m_i = 1;
     real_type tol_TS = 0.01;
-    real_type tol_T = 0.01;
-    real_type tol_mass = 0.01;
-    real_type vc = 620;
-    real_type epsi_T = 0.01;
-    real_type g0 = 1;
-    real_type c = 0.5*(g0*h_i)^(1/2.0);
-    real_type m_f = mc*m_i;
-    real_type epsi_TS = 0.01;
-    real_type Dc = 0.5*vc*m_i/g0;
-    real_type Tmax = 3.5*g0*m_i;
     real_type tol_v = 0.01;
+    real_type tol_mass = 0.01;
+    real_type epsi_TS = 0.01;
+    real_type epsi_mass = 0.01;
+    real_type epsi_T = 0.01;
+    real_type epsi_v = 0.01;
+    real_type h_i = 1;
+    real_type tol_T = 0.01;
+    real_type m_i = 1;
+    real_type vc = 620;
+    real_type mc = 0.6;
+    real_type m_f = mc*m_i;
+    real_type g0 = 1;
+    real_type Tmax = 3.5*g0*m_i;
+    real_type Dc = 0.5*vc*m_i/g0;
+    real_type c = 0.5*(g0*h_i)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -119,15 +119,17 @@ main() {
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
     data_Solver["tolerance"]             = 1e-09;
+
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
+
     GenericContainer & data_Continuation = data_Solver["continuation"];
-    data_Continuation["initial_step"]   = 0.2;   // initial step for continuation
-    data_Continuation["min_step"]       = 0.001; // minimum accepted step for continuation
-    data_Continuation["reduce_factor"]  = 0.5;   // p fails, reduce step by this factor
-    data_Continuation["augment_factor"] = 1.5;   // if step successful in less than few_iteration augment step by this factor
-    data_Continuation["few_iterations"] = 8;
+    data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
+    data_Continuation["min_step"]        = 0.001 ; // minimum accepted step for continuation
+    data_Continuation["reduce_factor"]   = 0.5   ; // if continuation step fails, reduce step by this factor
+    data_Continuation["augment_factor"]  = 1.5   ; // if step successful in less than few_iteration augment step by this factor
+    data_Continuation["few_iterations"]  = 8     ; // if step successful in less than few_iteration augment step by this factor
 
     // Boundary Conditions
     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
@@ -215,8 +217,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 GoddardRocket_data.Mesh["s0"] = 0;
-GoddardRocket_data.Mesh["segments"][0]["n"] = 1000;
 GoddardRocket_data.Mesh["segments"][0]["length"] = 1;
+GoddardRocket_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_AdjointODE.cc              |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,10 +77,10 @@ namespace SingularConstrainedCalogeroDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = ALIAS_uMaxBound_D(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
     result__[ 0   ] = -t5;
@@ -118,10 +118,10 @@ namespace SingularConstrainedCalogeroDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_uMaxBound_DD(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
     if ( m_debug )
@@ -182,10 +182,10 @@ namespace SingularConstrainedCalogeroDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta];
     real_type t5   = ALIAS_uMaxBound_D(U__[iU_u] - 1 - X__[iX_x] + t3);
@@ -225,10 +225,10 @@ namespace SingularConstrainedCalogeroDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = ALIAS_uMaxBound_DD(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
     result__[ 0   ] = -t5;
@@ -344,10 +344,10 @@ namespace SingularConstrainedCalogeroDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     if ( m_debug )
@@ -436,9 +436,9 @@ namespace SingularConstrainedCalogeroDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     if ( m_debug )

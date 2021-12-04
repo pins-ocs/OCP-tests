@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -168,11 +168,11 @@ namespace PointMassCarModel_2Define {
     real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
     Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     real_type t1   = XL__[iX_V];
@@ -225,12 +225,12 @@ namespace PointMassCarModel_2Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
     Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
@@ -262,35 +262,35 @@ namespace PointMassCarModel_2Define {
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
   ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
     Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[1];
     real_type t6   = ALIAS_Kappa_L(QL__[iQ_zeta]);
     real_type t7   = zeta__dot(XL__[iX_V], XL__[iX_alpha], XL__[iX_n], t6);
-    result__[ 0   ] = LL__[iL_lambda1__xo] * t7 - t1;
+    result__[ 0   ] = t7 * LL__[iL_lambda1__xo] - t1;
     real_type t10  = OMEGA__[2];
-    result__[ 1   ] = LL__[iL_lambda2__xo] * t7 - t10;
+    result__[ 1   ] = t7 * LL__[iL_lambda2__xo] - t10;
     real_type t14  = OMEGA__[3];
-    result__[ 2   ] = LL__[iL_lambda3__xo] * t7 - t14 + OMEGA__[0];
+    result__[ 2   ] = t7 * LL__[iL_lambda3__xo] - t14 + OMEGA__[0];
     real_type t17  = OMEGA__[5];
-    result__[ 3   ] = LL__[iL_lambda5__xo] * t7 - t17;
+    result__[ 3   ] = t7 * LL__[iL_lambda5__xo] - t17;
     real_type t20  = OMEGA__[4];
-    result__[ 4   ] = LL__[iL_lambda4__xo] * t7 - t20;
+    result__[ 4   ] = t7 * LL__[iL_lambda4__xo] - t20;
     real_type t27  = ALIAS_Kappa_R(QR__[iQ_zeta]);
     real_type t28  = zeta__dot(XR__[iX_V], XR__[iX_alpha], XR__[iX_n], t27);
-    result__[ 5   ] = -LR__[iL_lambda1__xo] * t28 + t1;
-    result__[ 6   ] = -LR__[iL_lambda2__xo] * t28 + t10;
-    result__[ 7   ] = -LR__[iL_lambda3__xo] * t28 + t14;
-    result__[ 8   ] = -LR__[iL_lambda5__xo] * t28 + t17;
-    result__[ 9   ] = -LR__[iL_lambda4__xo] * t28 + t20;
+    result__[ 5   ] = -t28 * LR__[iL_lambda1__xo] + t1;
+    result__[ 6   ] = -t28 * LR__[iL_lambda2__xo] + t10;
+    result__[ 7   ] = -t28 * LR__[iL_lambda3__xo] + t14;
+    result__[ 8   ] = -t28 * LR__[iL_lambda5__xo] + t17;
+    result__[ 9   ] = -t28 * LR__[iL_lambda4__xo] + t20;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 10, i_segment_left, i_segment_right );
   }
@@ -354,14 +354,14 @@ namespace PointMassCarModel_2Define {
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
   ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
     Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     real_type t1   = XL__[iX_V];
@@ -374,7 +374,7 @@ namespace PointMassCarModel_2Define {
     real_type t8   = zeta__dot_D_2(t1, t2, t3, t5);
     result__[ 1   ] = t7 * t8;
     real_type t9   = zeta__dot_D_1(t1, t2, t3, t5);
-    result__[ 2   ] = t9 * t7;
+    result__[ 2   ] = t7 * t9;
     real_type t10  = LL__[iL_lambda2__xo];
     result__[ 3   ] = t10 * t6;
     result__[ 4   ] = t10 * t8;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type muf_min = -1;
     real_type mur_max = 1;
+    real_type muf_min = -1;
     real_type mur_min = -1;
     integer InfoLevel = 4;
 
@@ -105,15 +105,17 @@ main() {
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
     data_Solver["tolerance"]             = 1e-09;
+
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 0;
+
     GenericContainer & data_Continuation = data_Solver["continuation"];
-    data_Continuation["initial_step"]   = 0.2;   // initial step for continuation
-    data_Continuation["min_step"]       = 0.001; // minimum accepted step for continuation
-    data_Continuation["reduce_factor"]  = 0.5;   // p fails, reduce step by this factor
-    data_Continuation["augment_factor"] = 1.5;   // if step successful in less than few_iteration augment step by this factor
-    data_Continuation["few_iterations"] = 8;
+    data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
+    data_Continuation["min_step"]        = 0.001 ; // minimum accepted step for continuation
+    data_Continuation["reduce_factor"]   = 0.5   ; // if continuation step fails, reduce step by this factor
+    data_Continuation["augment_factor"]  = 1.5   ; // if step successful in less than few_iteration augment step by this factor
+    data_Continuation["few_iterations"]  = 8     ; // if step successful in less than few_iteration augment step by this factor
 
     // Boundary Conditions
     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
@@ -157,8 +159,8 @@ main() {
 
     // ClipIntervalWithSinAtan
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta"] = 0;
     data_clip["delta2"] = 0;
+    data_clip["delta"] = 0;
     data_clip["h"] = 0.01;
 
     // Controls
@@ -193,8 +195,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Bike1D_data.Mesh["s0"] = 0;
-Bike1D_data.Mesh["segments"][0]["length"] = 1000;
 Bike1D_data.Mesh["segments"][0]["n"] = 1000;
+Bike1D_data.Mesh["segments"][0]["length"] = 1000;
 
 
     // alias for user object classes passed as pointers

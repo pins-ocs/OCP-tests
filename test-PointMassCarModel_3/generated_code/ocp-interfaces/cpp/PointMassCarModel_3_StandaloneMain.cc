@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,15 +50,15 @@ main() {
     Road2D           road( "road" );
 
     // Auxiliary values
-    real_type road_tol0 = 0.01;
-    real_type p_tol0 = 0.1;
-    real_type p_epsi0 = 0.1;
     real_type up_tol0 = 0.01;
-    real_type m = 700;
-    real_type up_epsi0 = 0.1;
-    real_type kD = 0.2500000000/m;
     real_type wT0 = 0.01;
+    real_type up_epsi0 = 0.1;
+    real_type road_tol0 = 0.01;
     real_type wT = wT0;
+    real_type p_epsi0 = 0.1;
+    real_type p_tol0 = 0.1;
+    real_type m = 700;
+    real_type kD = 0.2500000000/m;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -111,15 +111,17 @@ main() {
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
     data_Solver["tolerance"]             = 1e-09;
+
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 2;
+
     GenericContainer & data_Continuation = data_Solver["continuation"];
-    data_Continuation["initial_step"]   = 0.2;   // initial step for continuation
-    data_Continuation["min_step"]       = 0.001; // minimum accepted step for continuation
-    data_Continuation["reduce_factor"]  = 0.5;   // p fails, reduce step by this factor
-    data_Continuation["augment_factor"] = 1.5;   // if step successful in less than few_iteration augment step by this factor
-    data_Continuation["few_iterations"] = 8;
+    data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
+    data_Continuation["min_step"]        = 0.001 ; // minimum accepted step for continuation
+    data_Continuation["reduce_factor"]   = 0.5   ; // if continuation step fails, reduce step by this factor
+    data_Continuation["augment_factor"]  = 1.5   ; // if step successful in less than few_iteration augment step by this factor
+    data_Continuation["few_iterations"]  = 8     ; // if step successful in less than few_iteration augment step by this factor
 
     // Boundary Conditions
     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
@@ -228,54 +230,54 @@ PointMassCarModel_3_data.Road["x0"] = 0;
 PointMassCarModel_3_data.Road["y0"] = 0;
 PointMassCarModel_3_data.Road["is_SAE"] = false;
 PointMassCarModel_3_data.Road["segments"][0]["length"] = 190;
+PointMassCarModel_3_data.Road["segments"][0]["rightWidth"] = 60;
 PointMassCarModel_3_data.Road["segments"][0]["gridSize"] = 1;
 PointMassCarModel_3_data.Road["segments"][0]["curvature"] = 0;
-PointMassCarModel_3_data.Road["segments"][0]["rightWidth"] = 60;
 PointMassCarModel_3_data.Road["segments"][0]["leftWidth"] = 15/2;
 PointMassCarModel_3_data.Road["segments"][1]["length"] = 973.8937227;
+PointMassCarModel_3_data.Road["segments"][1]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][1]["gridSize"] = 1;
 PointMassCarModel_3_data.Road["segments"][1]["curvature"] = 0.003225806452;
-PointMassCarModel_3_data.Road["segments"][1]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][1]["leftWidth"] = 60;
 PointMassCarModel_3_data.Road["segments"][2]["length"] = 180;
+PointMassCarModel_3_data.Road["segments"][2]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][2]["gridSize"] = 1;
 PointMassCarModel_3_data.Road["segments"][2]["curvature"] = 0;
-PointMassCarModel_3_data.Road["segments"][2]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][2]["leftWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][3]["length"] = 235.619449;
+PointMassCarModel_3_data.Road["segments"][3]["rightWidth"] = 15;
 PointMassCarModel_3_data.Road["segments"][3]["gridSize"] = 1;
 PointMassCarModel_3_data.Road["segments"][3]["curvature"] = 0.006666666667;
-PointMassCarModel_3_data.Road["segments"][3]["rightWidth"] = 15;
 PointMassCarModel_3_data.Road["segments"][3]["leftWidth"] = 20;
 PointMassCarModel_3_data.Road["segments"][4]["length"] = 240;
+PointMassCarModel_3_data.Road["segments"][4]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][4]["gridSize"] = 1;
 PointMassCarModel_3_data.Road["segments"][4]["curvature"] = 0;
-PointMassCarModel_3_data.Road["segments"][4]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][4]["leftWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][5]["length"] = 235.619449;
+PointMassCarModel_3_data.Road["segments"][5]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][5]["gridSize"] = 1;
 PointMassCarModel_3_data.Road["segments"][5]["curvature"] = -1/150;
-PointMassCarModel_3_data.Road["segments"][5]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][5]["leftWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][6]["length"] = 200;
+PointMassCarModel_3_data.Road["segments"][6]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][6]["gridSize"] = 1;
 PointMassCarModel_3_data.Road["segments"][6]["curvature"] = 0;
-PointMassCarModel_3_data.Road["segments"][6]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][6]["leftWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][7]["length"] = 125.6637062;
+PointMassCarModel_3_data.Road["segments"][7]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][7]["gridSize"] = 1;
 PointMassCarModel_3_data.Road["segments"][7]["curvature"] = 0.025;
-PointMassCarModel_3_data.Road["segments"][7]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][7]["leftWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][8]["length"] = 480;
+PointMassCarModel_3_data.Road["segments"][8]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][8]["gridSize"] = 1;
 PointMassCarModel_3_data.Road["segments"][8]["curvature"] = 0;
-PointMassCarModel_3_data.Road["segments"][8]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][8]["leftWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][9]["length"] = 10;
+PointMassCarModel_3_data.Road["segments"][9]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][9]["gridSize"] = 0.1;
 PointMassCarModel_3_data.Road["segments"][9]["curvature"] = 0;
-PointMassCarModel_3_data.Road["segments"][9]["rightWidth"] = 30;
 PointMassCarModel_3_data.Road["segments"][9]["leftWidth"] = 30;
 
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_AdjointODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -158,10 +158,10 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t2   = X__[iX_as];
@@ -327,10 +327,10 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t2   = X__[iX_as];
@@ -341,13 +341,13 @@ namespace CNOCDefine {
     real_type t8   = sin(t4);
     real_type t11  = ModelPars[iM_ax_max];
     real_type t12  = 1.0 / t11;
-    real_type t13  = t12 * (t2 * t5 - t7 * t8);
+    real_type t13  = t12 * (t5 * t2 - t8 * t7);
     real_type t14  = ALIAS_ax_limit_DD(t13);
     real_type t15  = t14 * t1;
     real_type t16  = ALIAS_theta_D(t3);
     real_type t17  = t16 * t2;
     real_type t19  = t16 * t7;
-    real_type t21  = -t17 * t8 - t19 * t5;
+    real_type t21  = -t8 * t17 - t5 * t19;
     real_type t22  = t21 * t21;
     real_type t23  = t11 * t11;
     real_type t24  = 1.0 / t23;
@@ -361,10 +361,10 @@ namespace CNOCDefine {
     real_type t37  = t32 * t7;
     real_type t45  = ModelPars[iM_ay_max];
     real_type t46  = 1.0 / t45;
-    real_type t47  = t46 * (t2 * t8 + t5 * t7);
+    real_type t47  = t46 * (t8 * t2 + t5 * t7);
     real_type t48  = ALIAS_ay_limit_DD(t47);
     real_type t49  = t48 * t1;
-    real_type t52  = t17 * t5 - t19 * t8;
+    real_type t52  = t5 * t17 - t8 * t19;
     real_type t53  = t52 * t52;
     real_type t54  = t45 * t45;
     real_type t55  = 1.0 / t54;
@@ -375,7 +375,7 @@ namespace CNOCDefine {
     real_type t69  = t68 * t67;
     real_type t70  = X__[iX_n];
     real_type t71  = ALIAS_kappa(t3);
-    real_type t73  = -t70 * t71 + 1;
+    real_type t73  = -t71 * t70 + 1;
     real_type t74  = t73 * t73;
     real_type t76  = 1.0 / t74 / t73;
     real_type t77  = t76 * t69;
@@ -404,7 +404,7 @@ namespace CNOCDefine {
     real_type t138 = L__[iL_lambda6__xo];
     real_type t139 = t2 * t68;
     real_type t143 = t71 * t139;
-    result__[ 0   ] = t24 * t22 * t15 + t12 * (-t30 * t8 - t33 * t5 - t35 * t5 + t37 * t8) * t28 + t55 * t53 * t49 + t46 * (t30 * t5 - t33 * t8 - t35 * t8 - t37 * t5) * t59 + 2 * t81 * t78 * t1 * t77 + t88 * t87 * t85 * t69 - t1 * (-2 * t101 * t103 - t101 * t107 - t93 * t95 - 2 * t93 * t98) * t91 - t1 * (2 * t106 * t113 * t81 + t113 * t88 * t94 + 2 * t103 * t119 + t107 * t119) * t112 - t1 * (-2 * t103 * t131 - t107 * t131 - t127 * t95 - 2 * t127 * t98) * t126 - t1 * (2 * t103 * t143 + t107 * t143 + t139 * t95 + 2 * t139 * t98) * t138;
+    result__[ 0   ] = t24 * t22 * t15 + t12 * (-t8 * t30 - t5 * t33 - t5 * t35 + t8 * t37) * t28 + t55 * t53 * t49 + t46 * (t5 * t30 - t8 * t33 - t8 * t35 - t5 * t37) * t59 + 2 * t81 * t78 * t1 * t77 + t88 * t87 * t85 * t69 - t1 * (-2 * t103 * t101 - t107 * t101 - t95 * t93 - 2 * t98 * t93) * t91 - t1 * (2 * t106 * t81 * t113 + t94 * t88 * t113 + 2 * t103 * t119 + t107 * t119) * t112 - t1 * (-2 * t103 * t131 - t107 * t131 - t95 * t127 - 2 * t98 * t127) * t126 - t1 * (2 * t103 * t143 + t107 * t143 + t95 * t139 + 2 * t98 * t139) * t138;
     real_type t153 = 2 * t71 * t80 * t87 * t77;
     real_type t154 = t1 * t85;
     real_type t155 = t80 * t154;
@@ -414,12 +414,12 @@ namespace CNOCDefine {
     real_type t163 = t80 * t70 * t76;
     real_type t169 = t80 * t113;
     real_type t170 = t71 * t85;
-    result__[ 1   ] = t153 + t156 - t1 * (-2 * t160 * t163 * t93 - 2 * t158 * t93) * t91 - t1 * (2 * t113 * t160 * t163 + 2 * t169 * t170) * t112 - t1 * (-2 * t127 * t160 * t163 - 2 * t127 * t158) * t126 - t1 * (2 * t139 * t160 * t163 + 2 * t139 * t158) * t138;
+    result__[ 1   ] = t153 + t156 - t1 * (-2 * t163 * t160 * t93 - 2 * t158 * t93) * t91 - t1 * (2 * t163 * t160 * t113 + 2 * t170 * t169) * t112 - t1 * (-2 * t163 * t160 * t127 - 2 * t158 * t127) * t126 - t1 * (2 * t163 * t160 * t139 + 2 * t158 * t139) * t138;
     real_type t192 = t85 * t67;
     real_type t194 = t80 * t87 * t192;
     real_type t198 = t80 * t106;
-    real_type t207 = t198 * t68 * t71 + t68 * t80 * t94;
-    result__[ 2   ] = t194 - t1 * (-t198 * t71 * t92 - t80 * t92 * t94) * t91 - 2 * t1 * t207 * t112 - t1 * (-t198 * t7 * t71 - t7 * t80 * t94) * t126 - t1 * (t198 * t2 * t71 + t2 * t80 * t94) * t138;
+    real_type t207 = t198 * t71 * t68 + t94 * t80 * t68;
+    result__[ 2   ] = t194 - t1 * (-t198 * t71 * t92 - t94 * t80 * t92) * t91 - 2 * t1 * t207 * t112 - t1 * (-t198 * t71 * t7 - t94 * t80 * t7) * t126 - t1 * (t198 * t71 * t2 + t94 * t80 * t2) * t138;
     real_type t225 = -t207;
     result__[ 3   ] = -t1 * t225 * t91;
     real_type t230 = t21 * t24 * t5 * t15;
@@ -428,16 +428,16 @@ namespace CNOCDefine {
     real_type t236 = t52 * t55 * t8 * t49;
     real_type t237 = t5 * t16;
     real_type t239 = t46 * t237 * t59;
-    result__[ 4   ] = -t1 * t138 * t207 + t230 - t233 + t236 + t239;
+    result__[ 4   ] = -t1 * t207 * t138 + t230 - t233 + t236 + t239;
     real_type t242 = t24 * t8;
     real_type t244 = t21 * t242 * t15;
     real_type t246 = t12 * t237 * t28;
     real_type t247 = t55 * t5;
     real_type t249 = t52 * t247 * t49;
     real_type t251 = t46 * t231 * t59;
-    result__[ 5   ] = -t1 * t126 * t225 - t244 - t246 + t249 - t251;
+    result__[ 5   ] = -t1 * t225 * t126 - t244 - t246 + t249 - t251;
     real_type t259 = t94 * t80;
-    result__[ 6   ] = t12 * t21 * t27 + t46 * t52 * t58 + t198 * t69 - (-t101 * t198 - t259 * t93) * t91 - (t119 * t198 + t169 * t94) * t112 - (-t127 * t259 - t131 * t198) * t126 - (t139 * t259 + t143 * t198) * t138;
+    result__[ 6   ] = t12 * t21 * t27 + t46 * t52 * t58 + t198 * t69 - (-t198 * t101 - t259 * t93) * t91 - (t198 * t119 + t94 * t169) * t112 - (-t259 * t127 - t198 * t131) * t126 - (t259 * t139 + t198 * t143) * t138;
     real_type t276 = t68 * t91;
     real_type t277 = t92 * t276;
     real_type t279 = t80 * t1 * t170;
@@ -452,7 +452,7 @@ namespace CNOCDefine {
     real_type t304 = t68 * t138;
     real_type t305 = t2 * t304;
     real_type t308 = t160 * t2;
-    result__[ 7   ] = -2 * t155 * t289 * t71 - 2 * t160 * t286 * t289 + 2 * t276 * t282 * t286 + 2 * t286 * t296 * t300 - 2 * t286 * t304 * t308 + 2 * t277 * t279 + 2 * t279 * t297 - 2 * t279 * t305 + t153 + t156;
+    result__[ 7   ] = -2 * t155 * t71 * t289 - 2 * t286 * t160 * t289 + 2 * t286 * t282 * t276 + 2 * t286 * t300 * t296 - 2 * t286 * t308 * t304 + 2 * t279 * t277 + 2 * t279 * t297 - 2 * t279 * t305 + t153 + t156;
     real_type t312 = ModelPars[iM_path_following_tolerance];
     real_type t313 = 1.0 / t312;
     real_type t314 = t313 * t70;
@@ -466,15 +466,15 @@ namespace CNOCDefine {
     real_type t340 = t68 * t112;
     real_type t343 = t7 * t126;
     real_type t345 = t2 * t138;
-    result__[ 9   ] = t1 * t192 * t71 + t336 * t338 - 2 * t338 * t340 + t338 * t343 - t338 * t345;
+    result__[ 9   ] = t71 * t1 * t192 + t338 * t336 - 2 * t338 * t340 + t338 * t343 - t338 * t345;
     result__[ 10  ] = t338 * t276;
     result__[ 11  ] = -t338 * t304;
     result__[ 12  ] = t338 * t296;
     real_type t348 = ALIAS_PathFollowingTolerance_D(t314);
-    result__[ 13  ] = t276 * t282 * t85 + t296 * t300 * t85 - t304 * t308 * t85 + t170 * t69 - t289 * t337 + t313 * t348;
+    result__[ 13  ] = t85 * t282 * t276 + t85 * t300 * t296 - t85 * t308 * t304 + t170 * t69 - t337 * t289 + t313 * t348;
     real_type t358 = t1 * t259;
     real_type t361 = t285 * t154;
-    result__[ 14  ] = t336 * t361 * t71 - 2 * t340 * t361 * t71 + t343 * t361 * t71 - t345 * t361 * t71 + t336 * t358 - 2 * t340 * t358 + t343 * t358 - t345 * t358 + t194;
+    result__[ 14  ] = t361 * t71 * t336 - 2 * t361 * t71 * t340 + t361 * t71 * t343 - t361 * t71 * t345 + t358 * t336 - 2 * t358 * t340 + t358 * t343 - t358 * t345 + t194;
     result__[ 15  ] = result__[9];
     real_type t374 = t92 * t92;
     real_type t375 = t113 + t374;
@@ -502,7 +502,7 @@ namespace CNOCDefine {
     real_type t408 = t392 * t402;
     real_type t414 = 2 * t396 * t402 * t407;
     real_type t416 = t1 * t94;
-    result__[ 16  ] = -2 * t112 * t416 * t71 + t113 * t382 * t386 + t113 * t390 * t393 + 2 * t113 * t399 * t402 - 2 * t113 * t407 * t408 - t398 + t414;
+    result__[ 16  ] = -2 * t416 * t71 * t112 + t113 * t386 * t382 + t113 * t393 * t390 + 2 * t402 * t113 * t399 - 2 * t113 * t408 * t407 - t398 + t414;
     real_type t424 = t68 * t378;
     result__[ 17  ] = t382 * t383 * t385 * t68 * t92 - 2 * t392 * t402 * t407 * t68 * t92 + t390 * t392 * t424 * t92 + 2 * t399 * t402 * t68 * t92 + t416 * t71 * t91;
     result__[ 18  ] = -t416 * t71 * t138;
@@ -607,10 +607,10 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_coV];
     result__[ 0   ] = t2 * L__[iL_lambda5__xo];
@@ -651,10 +651,10 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda5__xo];
     result__[ 1   ] = L__[iL_lambda6__xo];
@@ -770,10 +770,10 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -868,9 +868,9 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];

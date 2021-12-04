@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoLinkRobotArm_Methods_ODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -81,9 +81,9 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = X__[iX_x3];
@@ -144,9 +144,9 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = X__[iX_x3];
@@ -214,9 +214,9 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x3];
     real_type t2   = sin(t1);
@@ -229,7 +229,7 @@ namespace TwoLinkRobotArmDefine {
     real_type t15  = U__[iU_u2];
     real_type t20  = t2 * t2;
     real_type t23  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t20);
-    result__[ 0   ] = t23 * ((9.0 / 4.0 * t5 * t3 + 2 * t9) * t2 + 4.0 / 3.0 * t13 - 4.0 / 3.0 * t15 - 3.0 / 2.0 * t15 * t3);
+    result__[ 0   ] = t23 * ((9.0 / 4.0 * t3 * t5 + 2 * t9) * t2 + 4.0 / 3.0 * t13 - 4.0 / 3.0 * t15 - 3.0 / 2.0 * t3 * t15);
     result__[ 1   ] = -t23 * ((7.0 / 2.0 * t5 + 9.0 / 4.0 * t9 * t3) * t2 - 7.0 / 3.0 * t15 + 3.0 / 2.0 * (t13 - t15) * t3);
     result__[ 2   ] = t8 - t4;
     result__[ 3   ] = t4;
@@ -271,9 +271,9 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = X__[iX_x3];
@@ -328,9 +328,9 @@ namespace TwoLinkRobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;

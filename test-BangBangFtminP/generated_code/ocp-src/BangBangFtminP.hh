@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtminP.hh                                              |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -204,7 +204,7 @@ namespace BangBangFtminPDefine {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     BANGBANGFTMINP_API_DLL
     void
-    setup_parameters( real_type const Pars[] );
+    setup_parameters( real_const_ptr Pars );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     BANGBANGFTMINP_API_DLL

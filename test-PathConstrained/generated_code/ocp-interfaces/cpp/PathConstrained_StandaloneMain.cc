@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PathConstrained_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -52,8 +52,8 @@ main() {
     // Auxiliary values
     real_type epsi_ctrl0 = 0.01;
     real_type tol_ctrl0 = 0.01;
-    real_type epsi_ctrl = epsi_ctrl0;
     real_type tol_ctrl = tol_ctrl0;
+    real_type epsi_ctrl = epsi_ctrl0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -106,15 +106,17 @@ main() {
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
     data_Solver["tolerance"]             = 1e-09;
+
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
     data_Solver["ns_continuation_end"]   = 1;
+
     GenericContainer & data_Continuation = data_Solver["continuation"];
-    data_Continuation["initial_step"]   = 0.2;   // initial step for continuation
-    data_Continuation["min_step"]       = 0.001; // minimum accepted step for continuation
-    data_Continuation["reduce_factor"]  = 0.5;   // p fails, reduce step by this factor
-    data_Continuation["augment_factor"] = 1.5;   // if step successful in less than few_iteration augment step by this factor
-    data_Continuation["few_iterations"] = 8;
+    data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
+    data_Continuation["min_step"]        = 0.001 ; // minimum accepted step for continuation
+    data_Continuation["reduce_factor"]   = 0.5   ; // if continuation step fails, reduce step by this factor
+    data_Continuation["augment_factor"]  = 1.5   ; // if step successful in less than few_iteration augment step by this factor
+    data_Continuation["few_iterations"]  = 8     ; // if step successful in less than few_iteration augment step by this factor
 
     // Boundary Conditions
     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
@@ -175,8 +177,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 PathConstrained_data.Mesh["s0"] = 0;
-PathConstrained_data.Mesh["segments"][0]["n"] = 400;
 PathConstrained_data.Mesh["segments"][0]["length"] = 1;
+PathConstrained_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

@@ -53,79 +53,100 @@ Used threads:         15
 
 
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  1, 1] ( 2.42e-06 , 3.94e-09 ) [ 0.000240 , 6.48e-08 ] 1.00       [solverNewtonDumped]
-[  2, 1] ( 3.94e-09 , 1.39e-16 ) [ 6.48e-08 , 2.41e-15 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1, 1] ( 2.42e-06 , 3.94e-09 ) [ 0.000240 , 6.48e-08 ] 1.00       [0:0:0:0:0:0:0]
+[  2, 1] ( 3.94e-09 , 1.39e-16 ) [ 6.48e-08 , 2.41e-15 ] 1.00       [0:0:0:0:0:0:0]
 
 Continuation step N.1
 
 Continuation step N.1 s=0.20000, ds=0.20000, old_s=    0
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  3, 1] ( 3.56e-07 , 3.04e-17 ) [ 3.27e-05 , 1.93e-16 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  3, 2] ( 3.56e-07 , 3.56e-08 ) [ 3.27e-05 , 3.27e-06 ] 0.900      [1:0:0:0:0:0:0]
+[  4, 2] ( 3.56e-08 , 3.56e-09 ) [ 3.27e-06 , 3.27e-07 ] 0.900      [1:0:0:0:0:0:0]
+[  5, 1] ( 3.56e-09 , 2.82e-17 ) [ 3.27e-07 , 3.09e-16 ] 1.00       [0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.50000, ds=0.30000, old_s=  0.2
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  4, 1] ( 5.34e-07 , 3.76e-17 ) [ 4.91e-05 , 6.96e-17 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  6, 2] ( 5.34e-07 , 5.34e-08 ) [ 4.91e-05 , 4.91e-06 ] 0.900      [1:0:0:0:0:0:0]
+[  7, 1] ( 5.34e-08 , 3.31e-17 ) [ 4.91e-06 , 6.72e-17 ] 1.00       [0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.95000, ds=0.45000, old_s=  0.5
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  5, 1] ( 8.01e-07 , 2.93e-17 ) [ 7.37e-05 , 1.14e-16 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  8, 1] ( 8.01e-07 , 3.79e-17 ) [ 7.37e-05 , 7.72e-17 ] 1.00       [0:0:0:0:0:0:0]
 
 Continuation step N.1 s=1.0000, ds=0.050000, old_s=0.9500000000000001
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  6, 1] ( 8.90e-08 , 3.03e-17 ) [ 8.19e-06 , 3.66e-17 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  9, 1] ( 8.90e-08 , 3.35e-17 ) [ 8.19e-06 , 8.88e-17 ] 1.00       [0:0:0:0:0:0:0]
 
 Continuation step N.2
 
 Continuation step N.2 s=0.20000, ds=0.20000, old_s=    0
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  7, 1] ( 0.000358 , 3.75e-06 ) [  0.0217  , 0.000217 ] 1.00       [solverNewtonDumped]
-[  8, 1] ( 3.75e-06 , 1.10e-09 ) [ 0.000209 , 1.25e-07 ] 1.00       [solverNewtonDumped]
-[  9, 1] ( 1.10e-09 , 2.12e-16 ) [ 1.25e-07 , 1.21e-14 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 10, 1] ( 0.000358 , 3.75e-06 ) [  0.0217  , 0.000217 ] 1.00       [0:0:0:0:0:0:0]
+[ 11, 1] ( 3.75e-06 , 1.10e-09 ) [ 0.000209 , 1.25e-07 ] 1.00       [0:0:0:0:0:0:0]
+[ 12, 2] ( 1.10e-09 , 1.10e-10 ) [ 1.25e-07 , 1.25e-08 ] 0.900      [1:0:0:0:0:0:0]
+[ 13, 2] ( 1.10e-10 , 1.10e-11 ) [ 1.25e-08 , 1.25e-09 ] 0.900      [1:0:0:0:0:0:0]
 
 Continuation step N.2 s=0.50000, ds=0.30000, old_s=  0.2
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 10, 1] ( 0.000550 , 1.63e-05 ) [  0.0359  , 0.000806 ] 1.00       [solverNewtonDumped]
-[ 11, 1] ( 1.63e-05 , 1.43e-08 ) [ 0.000761 , 1.23e-06 ] 1.00       [solverNewtonDumped]
-[ 12, 1] ( 1.43e-08 , 2.46e-14 ) [ 1.23e-06 , 9.67e-13 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 14, 1] ( 0.000550 , 1.63e-05 ) [  0.0359  , 0.000806 ] 1.00       [0:0:0:0:0:0:0]
+[ 15, 1] ( 1.63e-05 , 1.43e-08 ) [ 0.000761 , 1.23e-06 ] 1.00       [0:0:0:0:0:0:0]
+[ 16, 2] ( 1.43e-08 , 1.43e-09 ) [ 1.23e-06 , 1.23e-07 ] 0.900      [1:0:0:0:0:0:0]
+[ 17, 2] ( 1.43e-09 , 1.43e-10 ) [ 1.23e-07 , 1.23e-08 ] 0.900      [1:0:0:0:0:0:0]
+[ 18, 2] ( 1.43e-10 , 1.43e-11 ) [ 1.23e-08 , 1.23e-09 ] 0.900      [1:0:0:0:0:0:0]
 
 Continuation step N.2 s=0.95000, ds=0.45000, old_s=  0.5
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 13, 1] ( 0.000860 , 0.000106 ) [  0.0646  , 0.00458  ] 1.00       [solverNewtonDumped]
-[ 14, 1] ( 0.000106 , 4.09e-07 ) [ 0.00427  , 2.71e-05 ] 1.00       [solverNewtonDumped]
-[ 15, 1] ( 4.09e-07 , 2.25e-11 ) [ 2.75e-05 , 5.86e-10 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 19, 1] ( 0.000860 , 0.000106 ) [  0.0646  , 0.00458  ] 1.00       [0:0:0:0:0:0:0]
+[ 20, 1] ( 0.000106 , 4.09e-07 ) [ 0.00427  , 2.71e-05 ] 1.00       [0:0:0:0:0:0:0]
+[ 21, 1] ( 4.09e-07 , 2.25e-11 ) [ 2.75e-05 , 5.86e-10 ] 1.00       [0:0:0:0:0:0:0]
 
 Continuation step N.2 s=1.0000, ds=0.050000, old_s=0.9500000000000001
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 16, 1] ( 0.000104 , 3.05e-06 ) [ 0.00926  , 0.000122 ] 1.00       [solverNewtonDumped]
-[ 17, 1] ( 3.05e-06 , 3.55e-10 ) [ 0.000121 , 2.28e-08 ] 1.00       [solverNewtonDumped]
-[ 18, 1] ( 3.55e-10 , 4.36e-17 ) [ 2.28e-08 , 4.82e-16 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 22, 1] ( 0.000104 , 3.05e-06 ) [ 0.00926  , 0.000122 ] 1.00       [0:0:0:0:0:0:0]
+[ 23, 1] ( 3.05e-06 , 3.55e-10 ) [ 0.000121 , 2.28e-08 ] 1.00       [0:0:0:0:0:0:0]
+[ 24, 1] ( 3.55e-10 , 4.51e-17 ) [ 2.28e-08 , 4.89e-16 ] 1.00       [0:0:0:0:0:0:0]
 
------------------------- STATISTIC -------------------------
-Elapsed Time   = 10.4[ms]      timeout        = 0 [ms]
-iteration      = 18            tolerance      = 1.000e-09 
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.010000      lambda_min     = 1.0000e-10
+dump_min       = 0.40000       dump_max       = 0.90000
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.010000      lambda_min     = 1.0000e-10
+dump_min       = 0.40000       dump_max       = 0.90000
+ratio ||f||_2  = 1.4000        ratio ||d||_2  = 1.4000
+ratio ||f||_1  = 1.4000        ratio ||d||_1  = 1.4000
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 13.1[ms]      timeout        = 0 [ms]
+iteration      = 24            tolerance      = 1.000e-09
 max iterations = 300           N. Equations   = 618
 max acc. iter. = 800           N. System pars = 0
 Converged      = YES           Memory Used    = 94Kb (+89bytes)
------------------------ CONTINUATION -----------------------
-Initial Step   = 0.2           Minimum Step   = 0.001     
-Reduce Factor  = 0.5           Augment Factor = 1.5       
-Few iterations = 8         
------------------------ EVALUATIONS ------------------------
-Function       = 27            Jacobian       = 18        
-Factorization  = 18            Inversion      = 36        
------------------------- USER INFO -------------------------
-last ||d||_inf = 3.0667e-15    last||d1||_inf = 1.7728e-07
-last ||f||_inf = 2.0252e-15    last||f||_1    = 4.3582e-17
-------------------------------------------------------------
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 41            Jacobian       = 24
+Factorization  = 24            Inversion      = 56
+........................... last residuals ...........................
+last ||f||_inf = 2.0252e-15    last ||d||_inf = 3.0339e-15
+last ||f||_1   = 4.5137e-17    last ||d||_1   = 4.8883e-16
+last ||f||_2   = 1.6169e-16    last ||d||_2   = 1.0721e-15
+----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             

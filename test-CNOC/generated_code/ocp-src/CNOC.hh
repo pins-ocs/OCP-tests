@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC.hh                                                        |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -213,7 +213,7 @@ namespace CNOCDefine {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     CNOC_API_DLL
     void
-    setup_parameters( real_type const Pars[] );
+    setup_parameters( real_const_ptr Pars );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     CNOC_API_DLL

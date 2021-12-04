@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -109,7 +109,7 @@ main() {
     }
     if ( gc_solution.exists("diagnosis") ) gc_solution("diagnosis").print(cout);
 
-    delete m_model; 
+    delete m_model;
   }
   catch ( std::exception const & exc ) {
     console.error(exc.what());

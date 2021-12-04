@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -166,10 +166,10 @@ namespace PointMassCarModel_1Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_V];
     real_type t2   = X__[iX_alpha];
@@ -286,10 +286,10 @@ namespace PointMassCarModel_1Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_V];
     real_type t2   = X__[iX_alpha];
@@ -378,40 +378,40 @@ namespace PointMassCarModel_1Define {
     result__[ 10  ] = result__[2];
     result__[ 11  ] = result__[7];
     real_type t220 = inv_zeta__dot_D_1_1(t1, t2, t3, t4);
-    real_type t223 = t119 * t69;
-    real_type t233 = t111 * t36;
-    real_type t238 = ALIAS_AdherenceEllipse_DD(t25);
-    real_type t239 = t238 * t36;
-    real_type t240 = t17 * t17;
-    real_type t242 = t21 * t21;
-    real_type t243 = 1.0 / t242;
-    real_type t245 = t13 * t13;
-    real_type t246 = 1.0 / t245;
-    real_type t250 = t111 * t119;
-    real_type t260 = t124 * t119;
-    real_type t263 = ALIAS_PowerLimit_DD(t54);
-    real_type t264 = t263 * t36;
-    real_type t265 = t49 * t49;
-    real_type t267 = t50 * t50;
-    real_type t268 = 1.0 / t267;
-    real_type t271 = ALIAS_LimitMinSpeed_DD(t1);
-    real_type t281 = t268 * t265 * t7 * t264 + t73 * t220 * t69 + 2 * t130 * t119 - 2 * t127 * t260 + t26 * t220 + t30 * t220 + t41 * t220 + t55 * t220 + t57 * t220 + t220 * t59 + t271 * t36;
-    result__[ 12  ] = 4 * t246 * t243 * t18 * t240 * t239 - 2 * t14 * t22 * t17 * t233 - 4 * t115 * t17 * t250 + t220 * t63 * t62 + t220 * t78 * t77 + t220 * t84 * t83 - 2 * t71 * t36 * t69 + 2 * t119 * t133 - 4 * t141 * t223 + t220 * t67 + t281;
-    result__[ 13  ] = 4 * t246 * t243 * t18 * t1 * t17 * t16 * t239 - 4 * t115 * t16 * t233 - 2 * t150 * t16 * t250 + t119 * t66;
-    real_type t298 = t154 * t239;
-    result__[ 14  ] = t6 * t268 * t265 * t1 * t264 + 4 * t114 * t17 * t246 * t298 - t52 * t124 * t36 - 2 * t155 * t250 - t159 * t260 + t223;
+    real_type t225 = t119 * t69;
+    real_type t233 = t111 * t119;
+    real_type t237 = t111 * t36;
+    real_type t242 = ALIAS_AdherenceEllipse_DD(t25);
+    real_type t243 = t242 * t36;
+    real_type t244 = t17 * t17;
+    real_type t246 = t21 * t21;
+    real_type t247 = 1.0 / t246;
+    real_type t249 = t13 * t13;
+    real_type t250 = 1.0 / t249;
+    real_type t267 = ALIAS_LimitMinSpeed_DD(t1);
+    real_type t270 = t124 * t119;
+    real_type t273 = ALIAS_PowerLimit_DD(t54);
+    real_type t274 = t273 * t36;
+    real_type t275 = t49 * t49;
+    real_type t277 = t50 * t50;
+    real_type t278 = 1.0 / t277;
+    real_type t281 = t278 * t275 * t7 * t274 + 2 * t130 * t119 - 2 * t127 * t270 + t26 * t220 + t30 * t220 + t41 * t220 + t55 * t220 + t57 * t220 + t220 * t59 + t220 * t67 + t267 * t36;
+    result__[ 12  ] = 4 * t250 * t247 * t18 * t244 * t243 - 2 * t14 * t22 * t17 * t237 - 4 * t115 * t17 * t233 + t220 * t63 * t62 + t73 * t220 * t69 + t220 * t78 * t77 + t220 * t84 * t83 - 2 * t71 * t36 * t69 + 2 * t119 * t133 - 4 * t141 * t225 + t281;
+    result__[ 13  ] = 4 * t250 * t247 * t18 * t1 * t17 * t16 * t243 - 4 * t115 * t16 * t237 - 2 * t150 * t16 * t233 + t119 * t66;
+    real_type t298 = t154 * t243;
+    result__[ 14  ] = t6 * t278 * t275 * t1 * t274 + 4 * t114 * t17 * t250 * t298 - t52 * t124 * t36 - 2 * t155 * t233 - t159 * t270 + t225;
     result__[ 15  ] = result__[3];
     result__[ 16  ] = result__[8];
     result__[ 17  ] = result__[13];
     real_type t311 = t18 * t18;
-    result__[ 18  ] = 4 * t246 * t243 * t311 * t17 * t239 - 2 * t150 * t233;
-    result__[ 19  ] = 4 * t149 * t16 * t246 * t298;
+    result__[ 18  ] = 4 * t250 * t247 * t311 * t17 * t243 - 2 * t150 * t237;
+    result__[ 19  ] = 4 * t149 * t16 * t250 * t298;
     result__[ 20  ] = result__[4];
     result__[ 21  ] = result__[9];
     result__[ 22  ] = result__[14];
     result__[ 23  ] = result__[19];
     real_type t321 = t9 * t9;
-    result__[ 24  ] = 4 * t246 / t321 * t7 * t239 - 2 * t14 * t10 * t233 + t268 * t265 * t18 * t264;
+    result__[ 24  ] = 4 * t250 / t321 * t7 * t243 - 2 * t14 * t10 * t237 + t278 * t275 * t18 * t274;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 25, i_segment );
   }
@@ -470,10 +470,10 @@ namespace PointMassCarModel_1Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t8   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     result__[ 0   ] = t8 * ModelPars[iM_v__fx__max] * L__[iL_lambda5__xo];
@@ -518,10 +518,10 @@ namespace PointMassCarModel_1Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_v__fx__max] * L__[iL_lambda5__xo];
     real_type t4   = X__[iX_V];
@@ -650,10 +650,10 @@ namespace PointMassCarModel_1Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment     = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
-    real_type const * L__ = NODE__.lambda;
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = L__[iL_lambda1__xo];
     result__[ 1   ] = L__[iL_lambda2__xo];
@@ -746,9 +746,9 @@ namespace PointMassCarModel_1Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = V__[0];
     result__[ 1   ] = V__[1];

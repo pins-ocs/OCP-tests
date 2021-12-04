@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -173,12 +173,12 @@ namespace PointMassCarModel_3Define {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[4], XM__[7], LM__[7];
     // Qvars
@@ -252,12 +252,12 @@ namespace PointMassCarModel_3Define {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[4], XM__[7], LM__[7];
     // Qvars
@@ -334,12 +334,12 @@ namespace PointMassCarModel_3Define {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[4], XM__[7], LM__[7];
     // Qvars
@@ -396,12 +396,12 @@ namespace PointMassCarModel_3Define {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[4], XM__[7], LM__[7];
     // Qvars
@@ -452,13 +452,12 @@ namespace PointMassCarModel_3Define {
     U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-    // midpoint
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[4], XM__[7], LM__[7];
     // Qvars
@@ -618,9 +617,9 @@ namespace PointMassCarModel_3Define {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_sqrt_inv_Vseg] * X__[iX_sqrt_inv_Vseg];
     real_type t3   = X__[iX_fx];
@@ -650,13 +649,13 @@ namespace PointMassCarModel_3Define {
     real_type t54  = zeta__dot(t15, t52, t28, t53);
     real_type t57  = pow(-t2 * t54 + V__[0], 2);
     real_type t59  = sin(t52);
-    real_type t63  = pow(-t2 * t59 * t15 + V__[1], 2);
+    real_type t63  = pow(-t15 * t2 * t59 + V__[1], 2);
     real_type t69  = pow(V__[2] - (-t53 * t54 + t13) * t2, 2);
     real_type t76  = pow(V__[3] - (-t16 * ModelPars[iM_kD] + t3) * t2, 2);
-    real_type t82  = pow(-t2 * ModelPars[iM_v__Omega__max] * t48 + V__[4], 2);
-    real_type t88  = pow(-t2 * ModelPars[iM_v__fx__max] * t45 + V__[5], 2);
+    real_type t82  = pow(-t2 * t48 * ModelPars[iM_v__Omega__max] + V__[4], 2);
+    real_type t88  = pow(-t2 * t45 * ModelPars[iM_v__fx__max] + V__[5], 2);
     real_type t90  = V__[6] * V__[6];
-    real_type result__ = t24 * t2 + t30 * t2 + t34 * t2 + t43 * t2 + t46 * t2 + t49 * t2 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
+    real_type result__ = t2 * t24 + t2 * t30 + t2 * t34 + t2 * t43 + t2 * t46 + t2 * t49 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -677,9 +676,9 @@ namespace PointMassCarModel_3Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_sqrt_inv_Vseg] * X__[iX_sqrt_inv_Vseg];
     real_type t3   = U__[iU_v__fx];
@@ -727,18 +726,18 @@ namespace PointMassCarModel_3Define {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_sqrt_inv_Vseg] * X__[iX_sqrt_inv_Vseg];
     real_type t4   = ALIAS_v__fxControl_D_1_1(U__[iU_v__fx], -1, 1);
     real_type t7   = ModelPars[iM_v__fx__max] * ModelPars[iM_v__fx__max];
     real_type t8   = t2 * t2;
-    result__[ 0   ] = t2 * t4 + 2 * t7 * t8;
+    result__[ 0   ] = t4 * t2 + 2 * t8 * t7;
     real_type t12  = ALIAS_v__OmegaControl_D_1_1(U__[iU_v__Omega], -1, 1);
     real_type t15  = ModelPars[iM_v__Omega__max] * ModelPars[iM_v__Omega__max];
-    result__[ 1   ] = t12 * t2 + 2 * t15 * t8;
+    result__[ 1   ] = t12 * t2 + 2 * t8 * t15;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 2, i_segment );
   }

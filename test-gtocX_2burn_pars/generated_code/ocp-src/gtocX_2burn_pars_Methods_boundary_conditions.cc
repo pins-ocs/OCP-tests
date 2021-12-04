@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,11 +70,11 @@ namespace gtocX_2burn_parsDefine {
     real_type            result__[]
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = P__[iP_p];
@@ -175,12 +175,12 @@ namespace gtocX_2burn_parsDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = P__[iP_p];
@@ -247,14 +247,14 @@ namespace gtocX_2burn_parsDefine {
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
   ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[0];
@@ -310,14 +310,14 @@ namespace gtocX_2burn_parsDefine {
     real_type t77  = x_position_D_4(t2, t33, t34, t5, t6, t35, t8);
     real_type t79  = y_position_D_4(t2, t33, t34, t5, t6, t35, t8);
     real_type t81  = z_position_D_4(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 7   ] = t71 * t1 + t73 * t11 + t75 * t14 + t77 * t32 + t79 * t38 + t81 * t41;
+    result__[ 7   ] = t1 * t71 + t11 * t73 + t14 * t75 + t32 * t77 + t38 * t79 + t41 * t81;
     real_type t83  = x_position_D_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t85  = y_position_D_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t87  = z_position_D_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t89  = x_position_D_5(t2, t33, t34, t5, t6, t35, t8);
     real_type t91  = y_position_D_5(t2, t33, t34, t5, t6, t35, t8);
     real_type t93  = z_position_D_5(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 8   ] = t83 * t1 + t85 * t11 + t87 * t14 + t89 * t32 + t91 * t38 + t93 * t41;
+    result__[ 8   ] = t1 * t83 + t11 * t85 + t14 * t87 + t32 * t89 + t38 * t91 + t41 * t93;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 9, i_segment_left, i_segment_right );
   }
@@ -414,14 +414,14 @@ namespace gtocX_2burn_parsDefine {
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
   ) const {
-    integer i_segment_left  = LEFT__.i_segment;
-    real_type const * QL__  = LEFT__.q;
-    real_type const * XL__  = LEFT__.x;
-    real_type const * LL__  = LEFT__.lambda;
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
-    real_type const * QR__  = RIGHT__.q;
-    real_type const * XR__  = RIGHT__.x;
-    real_type const * LR__  = RIGHT__.lambda;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[0];
@@ -437,23 +437,23 @@ namespace gtocX_2burn_parsDefine {
     real_type t12  = y_position_D_2_2(t2, t3, t4, t5, t6, t7, t8);
     real_type t14  = OMEGA__[2];
     real_type t15  = z_position_D_2_2(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 0   ] = t1 * t9 + t11 * t12 + t14 * t15;
+    result__[ 0   ] = t9 * t1 + t12 * t11 + t15 * t14;
     real_type t17  = x_position_D_2_3(t2, t3, t4, t5, t6, t7, t8);
     real_type t19  = y_position_D_2_3(t2, t3, t4, t5, t6, t7, t8);
     real_type t21  = z_position_D_2_3(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 1   ] = t1 * t17 + t11 * t19 + t14 * t21;
+    result__[ 1   ] = t17 * t1 + t19 * t11 + t21 * t14;
     real_type t23  = x_position_D_2_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t25  = y_position_D_2_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t27  = z_position_D_2_6(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 2   ] = t1 * t23 + t11 * t25 + t14 * t27;
+    result__[ 2   ] = t23 * t1 + t25 * t11 + t27 * t14;
     real_type t29  = x_position_D_1_2(t2, t3, t4, t5, t6, t7, t8);
     real_type t31  = y_position_D_1_2(t2, t3, t4, t5, t6, t7, t8);
     real_type t33  = z_position_D_1_2(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 3   ] = t1 * t29 + t11 * t31 + t14 * t33;
+    result__[ 3   ] = t29 * t1 + t31 * t11 + t33 * t14;
     real_type t35  = x_position_D_2_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t37  = y_position_D_2_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t39  = z_position_D_2_4(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 4   ] = t1 * t35 + t11 * t37 + t14 * t39;
+    result__[ 4   ] = t35 * t1 + t37 * t11 + t39 * t14;
     real_type t41  = x_position_D_2_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t43  = y_position_D_2_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t45  = z_position_D_2_5(t2, t3, t4, t5, t6, t7, t8);

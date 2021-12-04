@@ -83,392 +83,411 @@ Used threads:         15
 
 NewtonDumped --- start iterations ---
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.6360169152448232) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.10223996766866589) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.24806645866787141) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-1.1514634158270285) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.1700903533618241) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.3295279124122713) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  1, 5] ( 0.00957  , 0.00875  ) [  0.302   ,  0.279   ] 0.125      [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1, 5] ( 0.00957  , 0.00875  ) [  0.302   ,  0.279   ] 0.125      [0:0:0:0:0:0:0]
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-1.669346991962636) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.7232460843217741) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.9660558113541794) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0014089612562721565) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[  2, 6] ( 0.00875  , 0.00871  ) [  0.300   ,  0.299   ] 0.00442    [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.10233221872187961) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-1.115133911640114) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.7893566077449445) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.018856011344997856) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  2, 6] ( 0.00875  , 0.00876  ) [  0.300   ,  0.318   ] 0.0125     [0:0:1:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-80.61013237211874) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0004969599459592258) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[  3, 5] ( 0.00871  , 0.00870  ) [  0.717   ,  0.715   ] 0.00415    [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.14426993671346416) argument must be > 0
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-38.66535269076772) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0011787327078556231) argument must be > 0
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-1.9636704695855678) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  3, 9] ( 0.00876  , 0.00878  ) [   3.01   ,   3.08   ] 0.000800   [0:0:3:1:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-2.1918500706293744) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0658237782123764) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.9444044063501325) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0017281958248171678) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[  4, 6] ( 0.00870  , 0.00865  ) [  0.289   ,  0.287   ] 0.00806    [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0029269606893738975) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.5627866078490275) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.024422345130739827) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[  5, 5] ( 0.00865  , 0.00856  ) [  0.161   ,  0.160   ] 0.00898    [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.004304579661720195) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.3709182939779623) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0014470072613374657) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.07528078963535327) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.034495025967019546) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.01602917109073279) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.00568865361037621) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.011182730787370226) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
-[  6, 6] ( 0.00856  , 0.00860  ) [  0.405   ,  0.404   ] 0.00296    [solverNewtonDumped]
+[  4, 9] ( 0.00878  , 0.00876  ) [   1.52   ,   1.52   ] 0.00195    [0:0:0:0:0:0:0]
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0015386311392966406) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[  7, 4] ( 0.00860  , 0.00846  ) [  0.238   ,  0.236   ] 0.0109     [solverNewtonDumped]
-[  8, 3] ( 0.00846  , 0.00636  ) [  0.568   ,  0.618   ] 0.0278     [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-8.757352132018271) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-1.6332360174100324) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-1.6389070757796977) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[  9, 5] ( 0.00636  , 0.00616  ) [  0.234   ,  0.229   ] 0.0167     [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-3.1688377116043345) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[ 10, 4] ( 0.00616  , 0.00584  ) [  0.180   ,  0.175   ] 0.0258     [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-2.5622344817185603) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[ 11, 4] ( 0.00584  , 0.00551  ) [  0.131   ,  0.126   ] 0.0321     [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-1.5729117196501092) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[ 12, 4] ( 0.00551  , 0.00522  ) [  0.0974  ,  0.0935  ] 0.0359     [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-1.0543618279305331) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[ 13, 5] ( 0.00522  , 0.00366  ) [  0.0856  ,  0.0450  ] 0.137      [solverNewtonDumped]
-[ 14, 1] ( 0.00366  , 0.00138  ) [  0.0421  ,  0.0178  ] 0.740      [solverNewtonDumped]
-[ 15, 2] ( 0.00138  , 0.000476 ) [  0.0217  ,  0.0234  ] 0.800      [solverNewtonDumped]
-[ 16, 2] ( 0.000476 , 0.000415 ) [  0.194   ,  0.175   ] 0.200      [solverNewtonDumped]
-[ 17, 2] ( 0.000415 , 0.000391 ) [  0.450   ,  0.412   ] 0.179      [solverNewtonDumped]
-[ 18, 2] ( 0.000391 , 0.000420 ) [   1.12   ,   1.04   ] 0.169      [solverNewtonDumped]
-[ 19, 5] ( 0.000420 , 0.000484 ) [   1.73   ,   1.49   ] 0.149      [solverNewtonDumped]
-[ 20, 4] ( 0.000484 , 0.000564 ) [   1.48   ,   1.19   ] 0.158      [solverNewtonDumped]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 21, 2] ( 0.000564 , 0.000594 ) [  0.703   ,  0.529   ] 0.159      [solverNewtonDumped]
-[ 22, 2] ( 0.000594 , 0.000558 ) [  0.443   ,  0.486   ] 0.213      [solverNewtonDumped]
-[ 23, 2] ( 0.000558 , 0.000288 ) [   1.82   ,   1.44   ] 0.400      [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.16160072938985595) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.4695641264596564) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.023936313069795795) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-[ 24, 5] ( 0.000288 , 0.000283 ) [  0.957   ,  0.945   ] 0.0500     [solverNewtonDumped]
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.6789744274579786) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.008609439175918984) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.2895063829198602) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.01543348560015493) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.09477236065080091) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.020784429535147482) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
-[ 25, 6] ( 0.000283 , 0.000307 ) [   11.1   ,   11.4   ] 0.0112     [solverNewtonDumped]
-[ 26, 2] ( 0.000307 , 0.000322 ) [   3.29   ,   3.16   ] 0.0637     [solverNewtonDumped]
+[  5, 8] ( 0.00876  , 0.00873  ) [  0.311   ,  0.310   ] 0.00313    [0:1:0:0:0:0:0]
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.46301729645195633) argument must be > 0
-
-On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
-
-Should not happen here!
-NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.18235701302346616) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.2896343466864729) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
 NewtonDumped::compute_correction exception: 
-PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.04202687130922109) argument must be > 0
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.05855350109681806) argument must be > 0
 
 On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
 
 Should not happen here!
-[ 27, 6] ( 0.000322 , 0.000333 ) [   6.80   ,   6.90   ] 0.0126     [solverNewtonDumped]
-[ 28, 2] ( 0.000333 , 0.000492 ) [   3.86   ,   4.12   ] 0.0950     [solverNewtonDumped]
-[ 29, 1] ( 0.000492 , 0.000330 ) [  0.243   ,  0.213   ] 0.616      [solverNewtonDumped]
-[ 30, 2] ( 0.000330 , 0.000305 ) [  0.177   ,  0.133   ] 0.396      [solverNewtonDumped]
-[ 31, 2] ( 0.000305 , 0.000251 ) [  0.137   ,  0.106   ] 0.200      [solverNewtonDumped]
-[ 32, 1] ( 0.000251 , 7.80e-05 ) [  0.0894  ,  0.0206  ] 0.894      [solverNewtonDumped]
-[ 33, 1] ( 7.80e-05 , 1.28e-05 ) [  0.0233  , 0.00480  ] 1.00       [solverNewtonDumped]
-[ 34, 1] ( 1.28e-05 , 1.56e-07 ) [ 0.00460  , 2.82e-05 ] 1.00       [solverNewtonDumped]
-[ 35, 1] ( 1.56e-07 , 2.66e-11 ) [ 2.85e-05 , 2.83e-09 ] 1.00       [solverNewtonDumped]
-[ 36, 1] ( 2.66e-11 , 5.52e-17 ) [ 2.83e-09 , 5.33e-16 ] 1.00       [solverNewtonDumped]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.04650896008310835) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.006670565337049366) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  6, 9] ( 0.00873  , 0.00871  ) [  0.176   ,  0.175   ] 0.00400    [0:1:2:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.09450007914433502) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0031495902506209483) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0074238765388619475) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  7, 6] ( 0.00871  , 0.00859  ) [  0.142   ,  0.140   ] 0.0125     [0:1:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.44392583604048363) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0014734706453828766) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.01003373716279099) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.0018549616875392569) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  8, 7] ( 0.00859  , 0.00854  ) [  0.187   ,  0.186   ] 0.00625    [0:1:0:0:0:0:0]
+[  9, 5] ( 0.00854  , 0.00832  ) [  0.156   ,  0.153   ] 0.0256     [0:0:4:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.009690475643597096) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[massPositive]::D(-0.02371089425246453) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[ 10, 6] ( 0.00832  , 0.00564  ) [  0.416   ,  0.461   ] 0.0400     [2:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-30.106985599822373) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-12.305726127276774) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-3.4050963910039753) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[ 11, 6] ( 0.00564  , 0.00488  ) [  0.205   ,  0.189   ] 0.0500     [1:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-9.808726750058337) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-3.0466596760220366) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[ 12, 5] ( 0.00488  , 0.00397  ) [  0.0830  ,  0.0659  ] 0.100      [1:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.7934995325249528) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[ 13, 4] ( 0.00397  , 0.00210  ) [  0.0359  ,  0.0465  ] 0.450      [0:0:0:1:0:0:0]
+[ 14, 2] ( 0.00210  , 0.000636 ) [  0.0262  ,  0.0182  ] 0.900      [0:0:0:1:0:0:0]
+[ 15, 2] ( 0.000636 , 0.000567 ) [  0.290   ,  0.291   ] 0.400      [0:0:1:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.051559586785551614) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[ 16, 4] ( 0.000567 , 0.000684 ) [   2.09   ,   2.03   ] 0.200      [0:0:1:0:0:0:0]
+[ 17, 3] ( 0.000684 , 0.000788 ) [   3.10   ,   2.50   ] 0.160      [1:0:1:0:0:0:0]
+[ 18, 3] ( 0.000788 , 0.000816 ) [   1.30   ,   1.02   ] 0.160      [1:0:1:0:0:0:0]
+[ 19, 3] ( 0.000816 , 0.000792 ) [  0.344   ,  0.223   ] 0.160      [1:1:0:0:0:0:0]
+[ 20, 2] ( 0.000792 , 0.000645 ) [  0.997   ,  0.999   ] 0.400      [0:0:1:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 21, 4] ( 0.000645 , 0.000406 ) [   2.43   ,   1.85   ] 0.324      [0:0:3:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.24088741435581296) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[TSPositive]::D(-0.06081898499275529) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[ 22, 5] ( 0.000406 , 0.000422 ) [  0.766   ,  0.935   ] 0.100      [0:0:1:0:0:0:0]
+[ 23, 3] ( 0.000422 , 0.000556 ) [   2.66   ,   1.55   ] 0.160      [2:0:0:0:0:0:0]
+[ 24, 2] ( 0.000556 , 0.000297 ) [  0.101   ,  0.0604  ] 0.538      [0:0:0:1:0:0:0]
+[ 25, 1] ( 0.000297 , 0.000296 ) [  0.148   ,  0.120   ] 1.00       [0:0:0:0:0:0:0]
+[ 26, 4] ( 0.000296 , 0.000137 ) [  0.117   ,  0.0275  ] 0.729      [3:0:0:0:0:0:0]
+[ 27, 2] ( 0.000137 , 2.32e-05 ) [  0.0446  , 0.00524  ] 0.900      [1:0:0:0:0:0:0]
+[ 28, 1] ( 2.32e-05 , 1.28e-06 ) [ 0.00585  , 0.000176 ] 1.00       [0:0:0:0:0:0:0]
+[ 29, 1] ( 1.28e-06 , 4.02e-08 ) [ 0.000180 , 9.82e-06 ] 1.00       [0:0:0:0:0:0:0]
+[ 30, 1] ( 4.02e-08 , 8.52e-12 ) [ 1.01e-05 , 2.32e-09 ] 1.00       [0:0:0:0:0:0:0]
+[ 31, 1] ( 8.52e-12 , 5.28e-17 ) [ 2.32e-09 , 3.74e-16 ] 1.00       [0:0:0:0:0:0:0]
 
 Continuation step N.1
 
 Continuation step N.1 s=0.20000, ds=0.20000, old_s=    0
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 37, 2] ( 6.76e-05 , 4.79e-05 ) [  0.0612  ,  0.0171  ] 0.343      [solverNewtonDumped]
-[ 38, 1] ( 4.79e-05 , 3.07e-05 ) [  0.0355  , 0.00664  ] 1.00       [solverNewtonDumped]
-[ 39, 1] ( 3.07e-05 , 8.39e-07 ) [ 0.00224  , 0.000521 ] 1.00       [solverNewtonDumped]
-[ 40, 1] ( 8.39e-07 , 8.76e-09 ) [ 0.000439 , 6.08e-06 ] 1.00       [solverNewtonDumped]
-[ 41, 1] ( 8.76e-09 , 7.79e-13 ) [ 6.14e-06 , 3.87e-10 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 32, 2] ( 6.76e-05 , 5.34e-05 ) [  0.0612  ,  0.0139  ] 0.400      [0:0:1:0:0:0:0]
+[ 33, 1] ( 5.34e-05 , 3.45e-05 ) [  0.0402  , 0.00254  ] 1.00       [0:0:0:0:0:0:0]
+[ 34, 4] ( 3.45e-05 , 1.14e-05 ) [  0.0109  , 0.00117  ] 0.729      [3:0:0:0:0:0:0]
+[ 35, 1] ( 1.14e-05 , 9.26e-08 ) [ 0.000596 , 2.42e-05 ] 1.00       [0:0:0:0:0:0:0]
+[ 36, 2] ( 9.26e-08 , 9.25e-09 ) [ 3.03e-05 , 3.00e-06 ] 0.900      [1:0:0:0:0:0:0]
+[ 37, 2] ( 9.25e-09 , 9.24e-10 ) [ 2.99e-06 , 2.99e-07 ] 0.900      [1:0:0:0:0:0:0]
+[ 38, 2] ( 9.24e-10 , 9.24e-11 ) [ 2.99e-07 , 2.99e-08 ] 0.900      [1:0:0:0:0:0:0]
+[ 39, 2] ( 9.24e-11 , 9.24e-12 ) [ 2.99e-08 , 2.99e-09 ] 0.900      [1:0:0:0:0:0:0]
+[ 40, 1] ( 9.24e-12 , 6.44e-17 ) [ 2.99e-09 , 3.04e-16 ] 1.00       [0:0:0:0:0:0:0]
 
-Continuation step N.1 s=0.50000, ds=0.30000, old_s=  0.2
+Continuation step N.1 s=0.40000, ds=0.20000, old_s=  0.2
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 42, 4] ( 6.00e-05 , 7.27e-05 ) [  0.0702  ,  0.0739  ] 0.0661     [solverNewtonDumped]
-[ 43, 3] ( 7.27e-05 , 5.20e-05 ) [  0.0430  ,  0.0387  ] 0.0605     [solverNewtonDumped]
-[ 44, 1] ( 5.20e-05 , 7.73e-05 ) [  0.0237  ,  0.0276  ] 0.492      [solverNewtonDumped]
-[ 45, 2] ( 7.73e-05 , 5.29e-05 ) [  0.0429  , 0.00941  ] 0.200      [solverNewtonDumped]
-[ 46, 1] ( 5.29e-05 , 5.70e-05 ) [ 0.00808  , 0.00749  ] 0.894      [solverNewtonDumped]
-[ 47, 2] ( 5.70e-05 , 3.23e-05 ) [  0.0126  , 0.00703  ] 0.289      [solverNewtonDumped]
-[ 48, 4] ( 3.23e-05 , 2.82e-05 ) [ 0.00668  , 0.00510  ] 0.0490     [solverNewtonDumped]
-[ 49, 1] ( 2.82e-05 , 2.30e-05 ) [ 0.00195  , 0.000955 ] 0.443      [solverNewtonDumped]
-[ 50, 1] ( 2.30e-05 , 6.97e-06 ) [ 0.000758 , 0.000286 ] 1.00       [solverNewtonDumped]
-[ 51, 2] ( 6.97e-06 , 4.86e-06 ) [ 0.000254 , 9.92e-05 ] 0.385      [solverNewtonDumped]
-[ 52, 1] ( 4.86e-06 , 2.61e-08 ) [ 6.48e-05 , 3.67e-06 ] 1.00       [solverNewtonDumped]
-[ 53, 1] ( 2.61e-08 , 2.16e-12 ) [ 3.65e-06 , 3.36e-10 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 41, 6] ( 5.79e-05 , 3.94e-05 ) [  0.0687  ,  0.0173  ] 0.0230     [5:0:0:0:0:0:0]
+[ 42, 2] ( 3.94e-05 , 3.55e-05 ) [  0.0109  , 0.00318  ] 0.400      [1:0:0:0:0:0:0]
+[ 43, 2] ( 3.55e-05 , 8.52e-06 ) [ 0.00279  , 0.000223 ] 0.900      [1:0:0:0:0:0:0]
+[ 44, 2] ( 8.52e-06 , 8.94e-07 ) [ 0.000458 , 3.45e-05 ] 0.900      [1:0:0:0:0:0:0]
+[ 45, 1] ( 8.94e-07 , 6.63e-10 ) [ 2.97e-05 , 3.49e-07 ] 1.00       [0:0:0:0:0:0:0]
+[ 46, 2] ( 6.63e-10 , 6.63e-11 ) [ 3.47e-07 , 3.47e-08 ] 0.900      [1:0:0:0:0:0:0]
+[ 47, 2] ( 6.63e-11 , 6.63e-12 ) [ 3.47e-08 , 3.47e-09 ] 0.900      [1:0:0:0:0:0:0]
+[ 48, 1] ( 6.63e-12 , 6.93e-17 ) [ 3.47e-09 , 1.64e-15 ] 1.00       [0:0:0:0:0:0:0]
 
-Continuation step N.1 s=0.80000, ds=0.30000, old_s=  0.5
+Continuation step N.1 s=0.60000, ds=0.20000, old_s=  0.4
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 54,10] ( 4.90e-05 , 6.04e-05 ) [  0.0734  ,  0.0770  ] 0.00239    [solverNewtonDumped]
-[ 55, 1] ( 6.04e-05 , 7.04e-05 ) [  0.0365  ,  0.0325  ] 0.0978     [solverNewtonDumped]
-[ 56, 3] ( 7.04e-05 , 6.54e-05 ) [  0.0367  ,  0.0253  ] 0.0719     [solverNewtonDumped]
-[ 57, 2] ( 6.54e-05 , 9.20e-05 ) [  0.0241  ,  0.0182  ] 0.244      [solverNewtonDumped]
-[ 58, 4] ( 9.20e-05 , 6.89e-05 ) [  0.0223  ,  0.0149  ] 0.0653     [solverNewtonDumped]
-[ 59, 2] ( 6.89e-05 , 7.96e-05 ) [  0.0304  ,  0.0362  ] 0.102      [solverNewtonDumped]
-[ 60, 4] ( 7.96e-05 , 6.44e-05 ) [  0.0319  ,  0.0247  ] 0.0433     [solverNewtonDumped]
-[ 61, 2] ( 6.44e-05 , 6.93e-05 ) [  0.0176  , 0.00782  ] 0.0833     [solverNewtonDumped]
-[ 62, 4] ( 6.93e-05 , 6.17e-05 ) [  0.0265  ,  0.0207  ] 0.0382     [solverNewtonDumped]
-[ 63, 4] ( 6.17e-05 , 6.65e-05 ) [  0.0381  ,  0.0235  ] 0.0258     [solverNewtonDumped]
-[ 64, 2] ( 6.65e-05 , 6.66e-05 ) [  0.0160  ,  0.0139  ] 0.114      [solverNewtonDumped]
-[ 65, 3] ( 6.66e-05 , 5.80e-05 ) [  0.0132  , 0.00996  ] 0.102      [solverNewtonDumped]
-[ 66, 4] ( 5.80e-05 , 5.92e-05 ) [  0.0113  , 0.00741  ] 0.0423     [solverNewtonDumped]
-[ 67, 4] ( 5.92e-05 , 5.46e-05 ) [  0.0141  ,  0.0147  ] 0.0320     [solverNewtonDumped]
-[ 68, 4] ( 5.46e-05 , 5.37e-05 ) [  0.0176  , 0.00957  ] 0.0237     [solverNewtonDumped]
-[ 69, 1] ( 5.37e-05 , 5.72e-05 ) [ 0.00314  , 0.00362  ] 0.308      [solverNewtonDumped]
-[ 70, 6] ( 5.72e-05 , 4.92e-05 ) [  0.0160  ,  0.0122  ] 0.0232     [solverNewtonDumped]
-[ 71, 2] ( 4.92e-05 , 5.19e-05 ) [ 0.00425  , 0.00375  ] 0.0938     [solverNewtonDumped]
-[ 72, 1] ( 5.19e-05 , 6.18e-05 ) [ 0.00317  , 0.00309  ] 0.613      [solverNewtonDumped]
-[ 73, 6] ( 6.18e-05 , 5.88e-05 ) [  0.0105  , 0.00217  ] 0.0610     [solverNewtonDumped]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 74, 8] ( 5.88e-05 , 5.71e-05 ) [ 0.00193  , 0.00193  ] 0.0383     [solverNewtonDumped]
-[ 75, 5] ( 5.71e-05 , 5.29e-05 ) [ 0.00193  , 0.00223  ] 0.0707     [solverNewtonDumped]
-[ 76, 5] ( 5.29e-05 , 4.79e-05 ) [ 0.00224  , 0.00117  ] 0.0742     [solverNewtonDumped]
-[ 77, 4] ( 4.79e-05 , 4.21e-05 ) [ 0.00143  , 0.00117  ] 0.123      [solverNewtonDumped]
-[ 78, 7] ( 4.21e-05 , 4.02e-05 ) [ 0.00119  , 0.00120  ] 0.0395     [solverNewtonDumped]
-[ 79, 3] ( 4.02e-05 , 3.63e-05 ) [ 0.00115  , 0.000863 ] 0.128      [solverNewtonDumped]
-[ 80, 3] ( 3.63e-05 , 3.46e-05 ) [ 0.000813 , 0.000752 ] 0.140      [solverNewtonDumped]
-[ 81, 2] ( 3.46e-05 , 3.14e-05 ) [ 0.000701 , 0.000733 ] 0.279      [solverNewtonDumped]
-[ 82, 1] ( 3.14e-05 , 4.19e-05 ) [ 0.000640 , 0.000648 ] 1.00       [solverNewtonDumped]
-[ 83, 2] ( 4.19e-05 , 2.93e-05 ) [ 0.000634 , 0.000460 ] 0.430      [solverNewtonDumped]
-[ 84, 4] ( 2.93e-05 , 2.83e-05 ) [ 0.000538 , 0.000543 ] 0.176      [solverNewtonDumped]
-[ 85, 3] ( 2.83e-05 , 2.39e-05 ) [ 0.000246 , 0.000280 ] 0.192      [solverNewtonDumped]
-[ 86, 6] ( 2.39e-05 , 2.28e-05 ) [ 0.000616 , 0.000400 ] 0.0422     [solverNewtonDumped]
-[ 87, 1] ( 2.28e-05 , 1.80e-05 ) [ 0.000184 , 0.000217 ] 0.411      [solverNewtonDumped]
-[ 88, 2] ( 1.80e-05 , 1.43e-05 ) [ 0.000210 , 0.000226 ] 0.337      [solverNewtonDumped]
-[ 89, 2] ( 1.43e-05 , 1.11e-05 ) [ 0.000208 , 0.000250 ] 0.227      [solverNewtonDumped]
-[ 90, 3] ( 1.11e-05 , 1.05e-05 ) [ 0.000235 , 0.000209 ] 0.0930     [solverNewtonDumped]
-[ 91, 3] ( 1.05e-05 , 1.01e-05 ) [ 0.000159 , 0.000143 ] 0.0609     [solverNewtonDumped]
-[ 92, 2] ( 1.01e-05 , 9.90e-06 ) [ 0.000114 , 0.000134 ] 0.229      [solverNewtonDumped]
-[ 93, 2] ( 9.90e-06 , 8.70e-06 ) [ 0.000127 , 0.000152 ] 0.242      [solverNewtonDumped]
-solve_with_continuation() at phase 0 found: NewtonDumped[solverNewtonDumped]::solve() too many iterations!
-Iter = 41, maxIter = 40, tolerance = 1.0000e-09
-||d||_inf = 0.015581, ||f||_inf = 0.0013664
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 49, 8] ( 5.03e-05 , 3.39e-05 ) [  0.0721  ,  0.0414  ] 0.00164    [7:0:0:0:0:0:0]
+[ 50, 6] ( 3.39e-05 , 3.02e-05 ) [  0.0116  , 0.00988  ] 0.0102     [5:0:0:0:0:0:0]
+[ 51, 4] ( 3.02e-05 , 2.64e-05 ) [ 0.00387  , 0.00100  ] 0.0640     [3:0:0:0:0:0:0]
+[ 52, 2] ( 2.64e-05 , 1.76e-05 ) [ 0.00102  , 0.000595 ] 0.400      [1:0:0:0:0:0:0]
+[ 53, 2] ( 1.76e-05 , 1.91e-06 ) [ 0.000462 , 2.53e-05 ] 0.900      [1:0:0:0:0:0:0]
+[ 54, 1] ( 1.91e-06 , 1.24e-09 ) [ 3.73e-05 , 3.09e-07 ] 1.00       [0:0:0:0:0:0:0]
+[ 55, 2] ( 1.24e-09 , 1.24e-10 ) [ 3.12e-07 , 3.12e-08 ] 0.900      [1:0:0:0:0:0:0]
+[ 56, 2] ( 1.24e-10 , 1.24e-11 ) [ 3.12e-08 , 3.12e-09 ] 0.900      [1:0:0:0:0:0:0]
+[ 57, 1] ( 1.24e-11 , 9.69e-17 ) [ 3.12e-09 , 9.54e-16 ] 1.00       [0:0:0:0:0:0:0]
 
-
-Continuation step N.1 s=0.65000, ds=0.15000, old_s=  0.5
+Continuation step N.1 s=0.80000, ds=0.20000, old_s=0.6000000000000001
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[ 95, 7] ( 4.22e-05 , 4.43e-05 ) [  0.0121  ,  0.0115  ] 0.0126     [solverNewtonDumped]
-[ 96, 4] ( 4.43e-05 , 3.53e-05 ) [ 0.000560 , 0.000689 ] 0.109      [solverNewtonDumped]
-[ 97, 1] ( 3.53e-05 , 2.08e-05 ) [ 0.000535 , 0.000319 ] 0.659      [solverNewtonDumped]
-[ 98, 2] ( 2.08e-05 , 1.36e-05 ) [ 0.000511 , 0.000413 ] 0.295      [solverNewtonDumped]
-[ 99, 2] ( 1.36e-05 , 1.22e-05 ) [ 0.000404 , 0.000271 ] 0.212      [solverNewtonDumped]
-[100, 1] ( 1.22e-05 , 9.38e-07 ) [ 8.16e-05 , 9.56e-06 ] 0.921      [solverNewtonDumped]
-[101, 1] ( 9.38e-07 , 5.07e-10 ) [ 1.04e-05 , 6.67e-08 ] 1.00       [solverNewtonDumped]
-[102, 1] ( 5.07e-10 , 8.48e-15 ) [ 6.72e-08 , 6.03e-13 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 58,10] ( 4.79e-05 , 3.06e-05 ) [  0.0725  ,  0.0139  ] 0.000262   [9:0:0:0:0:0:0]
+[ 59, 8] ( 3.06e-05 , 2.85e-05 ) [ 0.00672  , 0.00602  ] 0.00164    [7:0:0:0:0:0:0]
+[ 60, 7] ( 2.85e-05 , 2.72e-05 ) [ 0.00218  , 0.00200  ] 0.00410    [6:0:0:0:0:0:0]
+[ 61, 5] ( 2.72e-05 , 2.68e-05 ) [ 0.000846 , 0.000215 ] 0.0256     [4:0:0:0:0:0:0]
+[ 62, 2] ( 2.68e-05 , 2.23e-05 ) [ 0.000267 , 0.000191 ] 0.400      [1:0:0:0:0:0:0]
+[ 63, 2] ( 2.23e-05 , 1.39e-05 ) [ 0.000136 , 0.000140 ] 0.400      [0:1:0:0:0:0:0]
+[ 64, 2] ( 1.39e-05 , 9.70e-06 ) [ 0.000130 , 7.08e-05 ] 0.400      [1:0:0:0:0:0:0]
+[ 65, 2] ( 9.70e-06 , 7.98e-06 ) [ 8.06e-05 , 3.36e-05 ] 0.400      [1:0:0:0:0:0:0]
+[ 66, 1] ( 7.98e-06 , 5.88e-08 ) [ 2.98e-05 , 1.20e-06 ] 1.00       [0:0:0:0:0:0:0]
+[ 67, 2] ( 5.88e-08 , 6.49e-09 ) [ 1.54e-06 , 1.53e-07 ] 0.900      [1:0:0:0:0:0:0]
+[ 68, 2] ( 6.49e-09 , 6.55e-10 ) [ 1.53e-07 , 1.52e-08 ] 0.900      [1:0:0:0:0:0:0]
+[ 69, 2] ( 6.55e-10 , 6.56e-11 ) [ 1.52e-08 , 1.52e-09 ] 0.900      [1:0:0:0:0:0:0]
+[ 70, 2] ( 6.56e-11 , 6.56e-12 ) [ 1.52e-09 , 1.52e-10 ] 0.900      [1:0:0:0:0:0:0]
+[ 71, 1] ( 6.56e-12 , 3.55e-16 ) [ 1.52e-10 , 6.09e-16 ] 1.00       [0:0:0:0:0:0:0]
 
-Continuation step N.1 s=0.80000, ds=0.15000, old_s= 0.65
+Continuation step N.1 s=1.0000, ds=0.20000, old_s=  0.8
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[103,11] ( 4.09e-05 , 3.14e-05 ) [  0.0119  , 0.00133  ] 0.00137    [solverNewtonDumped]
-[104, 2] ( 3.14e-05 , 2.90e-05 ) [ 0.000540 , 0.000381 ] 0.0148     [solverNewtonDumped]
-[105, 1] ( 2.90e-05 , 2.66e-05 ) [ 0.000193 , 0.000173 ] 0.244      [solverNewtonDumped]
-[106, 1] ( 2.66e-05 , 1.04e-05 ) [ 0.000116 , 9.77e-05 ] 0.987      [solverNewtonDumped]
-[107, 2] ( 1.04e-05 , 8.09e-06 ) [ 6.62e-05 , 3.10e-05 ] 0.579      [solverNewtonDumped]
-[108, 1] ( 8.09e-06 , 8.72e-06 ) [ 6.88e-05 , 6.24e-05 ] 1.00       [solverNewtonDumped]
-[109, 2] ( 8.72e-06 , 5.96e-06 ) [ 4.63e-05 , 2.22e-05 ] 0.470      [solverNewtonDumped]
-[110, 2] ( 5.96e-06 , 2.43e-06 ) [ 2.06e-05 , 8.31e-06 ] 0.465      [solverNewtonDumped]
-[111, 1] ( 2.43e-06 , 1.50e-08 ) [ 5.32e-06 , 3.47e-07 ] 1.00       [solverNewtonDumped]
-[112, 1] ( 1.50e-08 , 1.05e-11 ) [ 3.45e-07 , 6.85e-10 ] 1.00       [solverNewtonDumped]
-[113, 1] ( 1.05e-11 , 3.57e-16 ) [ 6.85e-10 , 1.60e-15 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 72,13] ( 4.71e-05 , 2.96e-05 ) [  0.0732  ,  0.0406  ] 1.68e-05   [12:0:0:0:0:0:0]
+[ 73,10] ( 2.96e-05 , 2.33e-05 ) [ 0.00941  , 0.00198  ] 0.000262   [9:0:0:0:0:0:0]
+[ 74, 8] ( 2.33e-05 , 2.21e-05 ) [ 0.000748 , 0.000625 ] 0.00164    [7:0:0:0:0:0:0]
+[ 75, 6] ( 2.21e-05 , 2.24e-05 ) [ 0.000216 , 8.26e-05 ] 0.0102     [5:0:0:0:0:0:0]
+[ 76, 2] ( 2.24e-05 , 1.74e-05 ) [ 9.24e-05 , 5.63e-05 ] 0.400      [1:0:0:0:0:0:0]
+[ 77, 2] ( 1.74e-05 , 1.11e-05 ) [ 5.87e-05 , 4.38e-05 ] 0.400      [1:0:0:0:0:0:0]
+[ 78, 4] ( 1.11e-05 , 1.11e-05 ) [ 0.000416 , 0.000146 ] 0.0640     [3:0:0:0:0:0:0]
+[ 79, 6] ( 1.11e-05 , 1.06e-05 ) [ 0.000143 , 0.000137 ] 0.0415     [5:0:0:0:0:0:0]
+[ 80, 5] ( 1.06e-05 , 1.04e-05 ) [ 0.000136 , 0.000129 ] 0.0256     [4:0:0:0:0:0:0]
+[ 81,26] ( 1.04e-05 , 1.03e-05 ) [ 9.68e-05 , 6.88e-05 ] 0.0115     [25:0:0:0:0:0:0]
+[ 82, 2] ( 1.03e-05 , 6.47e-06 ) [ 9.61e-05 , 6.15e-05 ] 0.400      [1:0:0:0:0:0:0]
+[ 83, 6] ( 6.47e-06 , 6.30e-06 ) [ 0.000122 , 7.34e-05 ] 0.0102     [5:0:0:0:0:0:0]
+[ 84, 2] ( 6.30e-06 , 6.08e-06 ) [ 5.08e-05 , 1.71e-05 ] 0.400      [1:0:0:0:0:0:0]
+[ 85, 4] ( 6.08e-06 , 3.72e-06 ) [ 2.32e-05 , 1.92e-05 ] 0.144      [3:0:0:0:0:0:0]
+[ 86, 3] ( 3.72e-06 , 3.12e-06 ) [ 2.18e-05 , 1.83e-05 ] 0.160      [2:0:0:0:0:0:0]
+[ 87, 3] ( 3.12e-06 , 2.42e-06 ) [ 1.85e-05 , 1.01e-05 ] 0.160      [2:0:0:0:0:0:0]
+[ 88, 3] ( 2.42e-06 , 1.85e-06 ) [ 6.02e-06 , 4.80e-06 ] 0.160      [1:1:0:0:0:0:0]
+[ 89, 1] ( 1.85e-06 , 3.74e-08 ) [ 4.77e-06 , 7.89e-08 ] 1.00       [0:0:0:0:0:0:0]
+[ 90, 1] ( 3.74e-08 , 2.41e-11 ) [ 8.06e-08 , 5.64e-11 ] 1.00       [0:0:0:0:0:0:0]
+[ 91, 1] ( 2.41e-11 , 2.79e-15 ) [ 5.59e-11 , 2.03e-15 ] 1.00       [0:0:0:0:0:0:0]
 
-Continuation step N.1 s=0.95000, ds=0.15000, old_s=  0.8
-NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[114,14] ( 4.02e-05 , 3.15e-05 ) [  0.0120  , 0.000743 ] 0.000261   [solverNewtonDumped]
-[115, 2] ( 3.15e-05 , 3.25e-05 ) [ 0.000424 , 0.000328 ] 0.00647    [solverNewtonDumped]
-[116, 1] ( 3.25e-05 , 2.89e-05 ) [ 7.16e-05 , 6.64e-05 ] 0.161      [solverNewtonDumped]
-[117, 1] ( 2.89e-05 , 7.69e-06 ) [ 5.76e-05 , 1.66e-05 ] 0.802      [solverNewtonDumped]
-[118, 2] ( 7.69e-06 , 4.58e-06 ) [ 1.78e-05 , 9.15e-06 ] 0.470      [solverNewtonDumped]
-[119, 2] ( 4.58e-06 , 2.31e-06 ) [ 9.36e-06 , 4.70e-06 ] 0.453      [solverNewtonDumped]
-[120, 1] ( 2.31e-06 , 7.21e-09 ) [ 4.45e-06 , 6.45e-08 ] 1.00       [solverNewtonDumped]
-[121, 1] ( 7.21e-09 , 1.84e-11 ) [ 6.74e-08 , 9.32e-11 ] 1.00       [solverNewtonDumped]
-[122, 1] ( 1.84e-11 , 1.59e-15 ) [ 9.35e-11 , 1.19e-15 ] 1.00       [solverNewtonDumped]
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.010000      lambda_min     = 1.0000e-10
+dump_min       = 0.40000       dump_max       = 0.90000
+----------------------------------------------------------------------
 
-Continuation step N.1 s=1.0000, ds=0.050000, old_s=0.9500000000000001
-NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[123, 1] ( 1.14e-05 , 4.29e-07 ) [ 1.60e-05 , 9.68e-06 ] 1.00       [solverNewtonDumped]
-[124, 1] ( 4.29e-07 , 6.17e-07 ) [ 9.17e-06 , 8.17e-06 ] 1.00       [solverNewtonDumped]
-[125, 2] ( 6.17e-07 , 8.05e-07 ) [ 1.52e-05 , 2.16e-06 ] 0.310      [solverNewtonDumped]
-[126, 1] ( 8.05e-07 , 3.99e-07 ) [ 2.24e-06 , 8.70e-06 ] 1.00       [solverNewtonDumped]
-[127, 2] ( 3.99e-07 , 3.88e-07 ) [ 9.40e-06 , 1.92e-06 ] 0.246      [solverNewtonDumped]
-[128, 1] ( 3.88e-07 , 2.80e-09 ) [ 1.01e-06 , 2.98e-08 ] 0.992      [solverNewtonDumped]
-[129, 1] ( 2.80e-09 , 1.27e-13 ) [ 3.01e-08 , 5.14e-13 ] 1.00       [solverNewtonDumped]
-
------------------------- STATISTIC -------------------------
-Elapsed Time   = 422.0[ms]     timeout        = 0 [ms]
-iteration      = 129           tolerance      = 1.000e-09 
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.010000      lambda_min     = 1.0000e-10
+dump_min       = 0.40000       dump_max       = 0.90000
+ratio ||f||_2  = 1.4000        ratio ||d||_2  = 1.4000
+ratio ||f||_1  = 1.4000        ratio ||d||_1  = 1.4000
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 210.0[ms]     timeout        = 0 [ms]
+iteration      = 91            tolerance      = 1.000e-09
 max iterations = 300           N. Equations   = 6011
 max acc. iter. = 800           N. System pars = 1000
 Converged      = YES           Memory Used    = 674Kb (+30bytes)
------------------------ CONTINUATION -----------------------
-Initial Step   = 0.2           Minimum Step   = 0.001     
-Reduce Factor  = 0.5           Augment Factor = 1.5       
-Few iterations = 8         
------------------------ EVALUATIONS ------------------------
-Function       = 369           Jacobian       = 129       
-Factorization  = 129           Inversion      = 456       
------------------------- USER INFO -------------------------
-last ||d||_inf = 3.3850e-11    last||d1||_inf = 1.5584e-06
-last ||f||_inf = 1.9293e-10    last||f||_1    = 1.2654e-13
-------------------------------------------------------------
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 354           Jacobian       = 91
+Factorization  = 91            Inversion      = 396
+........................... last residuals ...........................
+last ||f||_inf = 1.4199e-13    last ||d||_inf = 4.0377e-14
+last ||f||_1   = 2.7909e-15    last ||d||_1   = 2.0293e-15
+last ||f||_2   = 1.0689e-14    last ||d||_2   = 5.4505e-15
+----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
@@ -537,24 +556,24 @@ jac[  6, 11] =   -0.0014892 / -0.0017372   [A/FD] ---   0.00024800 / 14.276     
 
 #ERR 4 Jacobian block N. 114 type: FD [(x+l) x (2*(x+l)+p) = 6 x 13]
 
-jac[  1,  2] =       73.262 / 63.050       [A/FD] ---       10.212 / 13.940       [err/err(%)]
+jac[  1,  2] =       73.262 / 63.050       [A/FD] ---       10.213 / 13.940       [err/err(%)]
 jac[  2,  2] =      -125.18 / -107.87      [A/FD] ---       17.310 / 13.828       [err/err(%)]
 jac[  5,  2] =      -13.705 / -11.795      [A/FD] ---       1.9104 / 13.940       [err/err(%)]
 jac[  1,  4] =       391.64 / 65.362       [A/FD] ---       326.27 / 83.311       [err/err(%)]
 jac[  2,  4] =      -663.84 / -110.79      [A/FD] ---       553.05 / 83.311       [err/err(%)]
 jac[  5,  4] =      -73.262 / -12.227      [A/FD] ---       61.035 / 83.310       [err/err(%)]
-jac[  6,  4] =   0.00053313 / 0.00017052   [A/FD] ---   0.00036261 / 68.015       [err/err(%)]
+jac[  6,  4] =   0.00053312 / 0.00017052   [A/FD] ---   0.00036261 / 68.015       [err/err(%)]
 jac[  1,  5] =      -663.84 / -65.362      [A/FD] ---       598.47 / 90.154       [err/err(%)]
 jac[  2,  5] =       1125.2 / 110.79       [A/FD] ---       1014.4 / 90.154       [err/err(%)]
 jac[  5,  5] =       123.18 / 11.227       [A/FD] ---       111.95 / 90.886       [err/err(%)]
 jac[  6,  5] =   -0.0024206 / -0.0017830   [A/FD] ---   0.00063757 / 26.340       [err/err(%)]
-jac[  1,  8] =       73.262 / 63.050       [A/FD] ---       10.212 / 13.940       [err/err(%)]
+jac[  1,  8] =       73.262 / 63.050       [A/FD] ---       10.213 / 13.940       [err/err(%)]
 jac[  2,  8] =      -123.18 / -105.87      [A/FD] ---       17.310 / 14.053       [err/err(%)]
 jac[  5,  8] =      -13.705 / -11.795      [A/FD] ---       1.9104 / 13.940       [err/err(%)]
 jac[  1, 10] =       391.64 / 65.362       [A/FD] ---       326.27 / 83.311       [err/err(%)]
 jac[  2, 10] =      -663.84 / -110.79      [A/FD] ---       553.05 / 83.311       [err/err(%)]
 jac[  5, 10] =      -73.262 / -12.227      [A/FD] ---       61.035 / 83.310       [err/err(%)]
-jac[  6, 10] =   0.00053313 / 0.00017052   [A/FD] ---   0.00036261 / 68.015       [err/err(%)]
+jac[  6, 10] =   0.00053312 / 0.00017052   [A/FD] ---   0.00036261 / 68.015       [err/err(%)]
 jac[  1, 11] =      -663.84 / -65.362      [A/FD] ---       598.47 / 90.154       [err/err(%)]
 jac[  2, 11] =       1125.2 / 110.79       [A/FD] ---       1014.4 / 90.154       [err/err(%)]
 jac[  5, 11] =       125.18 / 13.227       [A/FD] ---       111.95 / 89.434       [err/err(%)]
@@ -616,5 +635,5 @@ Check Jacobian End
 target [Lagrange,Mayer]       = [ 0.000, -1.013 ]
 [Penalties/Barriers,Controls] = [ 0.007484, 7.200e-08 ]
 Optimization parameters:
-TimeSize: 0.191701316625260187
+TimeSize: 0.191701316624875412
 All Done Folks!

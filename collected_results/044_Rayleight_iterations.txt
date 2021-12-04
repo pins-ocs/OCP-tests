@@ -31,32 +31,47 @@ Used threads:         15
 
 
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda
-[  1, 3] ( 0.00250  , 0.00223  ) [   2.13   ,  0.849   ] 0.578      [solverNewtonDumped]
-[  2, 3] ( 0.00223  , 0.00252  ) [   2.09   ,  0.656   ] 0.309      [solverNewtonDumped]
-[  3, 1] ( 0.00252  , 0.000806 ) [  0.934   ,  0.174   ] 1.00       [solverNewtonDumped]
-[  4, 1] ( 0.000806 , 7.22e-05 ) [  0.152   ,  0.0296  ] 1.00       [solverNewtonDumped]
-[  5, 1] ( 7.22e-05 , 1.77e-06 ) [  0.0257  , 0.000228 ] 1.00       [solverNewtonDumped]
-[  6, 1] ( 1.77e-06 , 2.37e-10 ) [ 0.000247 , 2.44e-07 ] 1.00       [solverNewtonDumped]
-[  7, 1] ( 2.37e-10 , 2.39e-16 ) [ 2.43e-07 , 3.29e-14 ] 1.00       [solverNewtonDumped]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1, 4] ( 0.00250  , 0.00304  ) [   2.13   ,   1.08   ] 0.729      [0:0:0:0:3:0:0]
+[  2, 7] ( 0.00304  , 0.00263  ) [   1.58   ,   1.17   ] 0.145      [6:0:0:0:0:0:0]
+[  3, 1] ( 0.00263  , 0.00124  ) [  0.571   ,  0.609   ] 1.00       [0:0:0:0:0:0:0]
+[  4, 1] ( 0.00124  , 0.000187 ) [  0.252   ,  0.0231  ] 1.00       [0:0:0:0:0:0:0]
+[  5, 1] ( 0.000187 , 2.54e-06 ) [  0.0293  , 0.000475 ] 1.00       [0:0:0:0:0:0:0]
+[  6, 1] ( 2.54e-06 , 5.61e-10 ) [ 0.000477 , 6.48e-08 ] 1.00       [0:0:0:0:0:0:0]
+[  7, 1] ( 5.61e-10 , 1.24e-16 ) [ 6.48e-08 , 3.09e-15 ] 1.00       [0:0:0:0:0:0:0]
 
------------------------- STATISTIC -------------------------
-Elapsed Time   = 7.12[ms]      timeout        = 0 [ms]
-iteration      = 7             tolerance      = 1.000e-09 
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.010000      lambda_min     = 1.0000e-10
+dump_min       = 0.40000       dump_max       = 0.90000
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.010000      lambda_min     = 1.0000e-10
+dump_min       = 0.40000       dump_max       = 0.90000
+ratio ||f||_2  = 1.4000        ratio ||d||_2  = 1.4000
+ratio ||f||_1  = 1.4000        ratio ||d||_1  = 1.4000
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 8.42[ms]      timeout        = 0 [ms]
+iteration      = 7             tolerance      = 1.000e-09
 max iterations = 300           N. Equations   = 4006
 max acc. iter. = 800           N. System pars = 1000
 Converged      = YES           Memory Used    = 370Kb (+42bytes)
------------------------ CONTINUATION -----------------------
-Initial Step   = 0.2           Minimum Step   = 0.001     
-Reduce Factor  = 0.5           Augment Factor = 1.5       
-Few iterations = 8         
------------------------ EVALUATIONS ------------------------
-Function       = 12            Jacobian       = 7         
-Factorization  = 7             Inversion      = 18        
------------------------- USER INFO -------------------------
-last ||d||_inf = 2.8150e-13    last||d1||_inf = 8.9745e-07
-last ||f||_inf = 1.8249e-15    last||f||_1    = 2.3932e-16
-------------------------------------------------------------
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 17            Jacobian       = 7
+Factorization  = 7             Inversion      = 23
+........................... last residuals ...........................
+last ||f||_inf = 1.7764e-15    last ||d||_inf = 2.2358e-14
+last ||f||_1   = 1.2389e-16    last ||d||_1   = 3.0861e-15
+last ||f||_2   = 2.3577e-16    last ||d||_2   = 4.8089e-15
+----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             

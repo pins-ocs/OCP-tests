@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -158,12 +158,12 @@ namespace CNOCDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[7], LM__[7];
     // Qvars
@@ -235,12 +235,12 @@ namespace CNOCDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[7], LM__[7];
     // Qvars
@@ -311,12 +311,12 @@ namespace CNOCDefine {
     real_type            result__[]
   ) const {
     integer i_segment = LEFT__.i_segment;
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[7], LM__[7];
     // Qvars
@@ -371,12 +371,12 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[7], LM__[7];
     // Qvars
@@ -425,13 +425,12 @@ namespace CNOCDefine {
     U_const_pointer_type       UM__,
     MatrixWrapper<real_type> & DuDxlxlp
   ) const {
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-    // midpoint
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
     // midpoint
     real_type QM__[1], XM__[7], LM__[7];
     // Qvars
@@ -587,9 +586,9 @@ namespace CNOCDefine {
     U_const_pointer_type U__,
     P_const_pointer_type P__
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t2   = timePositive(t1);
@@ -610,24 +609,24 @@ namespace CNOCDefine {
     real_type t34  = ALIAS_theta(t33);
     real_type t35  = cos(t34);
     real_type t37  = sin(t34);
-    real_type t43  = ax_limit(1.0 / ModelPars[iM_ax_max] * (t35 * t21 - t37 * t27));
-    real_type t51  = ay_limit(1.0 / ModelPars[iM_ay_max] * (t37 * t21 + t35 * t27));
+    real_type t43  = ax_limit(1.0 / ModelPars[iM_ax_max] * (t21 * t35 - t27 * t37));
+    real_type t51  = ay_limit(1.0 / ModelPars[iM_ay_max] * (t21 * t37 + t27 * t35));
     real_type t53  = U__[iU_js];
     real_type t56  = jsControl(t53, ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type t58  = U__[iU_jn];
     real_type t59  = ModelPars[iM_jn_max];
     real_type t60  = jnControl(t58, -t59, t59);
     real_type t63  = ALIAS_kappa(t33);
-    real_type t66  = 1.0 / (-t63 * t15 + 1);
-    real_type t70  = pow(-t1 * t66 * t3 + V__[0], 2);
-    real_type t74  = pow(-t5 * t1 + V__[1], 2);
+    real_type t66  = 1.0 / (-t15 * t63 + 1);
+    real_type t70  = pow(-t1 * t3 * t66 + V__[0], 2);
+    real_type t74  = pow(-t1 * t5 + V__[1], 2);
     real_type t77  = t66 * t63;
-    real_type t82  = pow(V__[2] + t1 * (-t77 * t5 * t3 - t21), 2);
-    real_type t89  = pow(V__[3] + t1 * (t66 * t63 * t4 - t27), 2);
+    real_type t82  = pow(V__[2] + t1 * (-t3 * t5 * t77 - t21), 2);
+    real_type t89  = pow(V__[3] + t1 * (t4 * t63 * t66 - t27), 2);
     real_type t96  = pow(V__[4] + t1 * (-t77 * t27 * t3 - t53), 2);
     real_type t103 = pow(V__[5] + t1 * (t77 * t21 * t3 - t58), 2);
     real_type t105 = V__[6] * V__[6];
-    real_type result__ = t13 * t1 + t19 * t1 + t25 * t1 + t31 * t1 + t43 * t1 + t51 * t1 + t56 * t1 + t60 * t1 + t103 + t105 + t2 + t70 + t74 + t82 + t89 + t96;
+    real_type result__ = t1 * t13 + t1 * t19 + t1 * t25 + t1 * t31 + t1 * t43 + t1 * t51 + t1 * t56 + t1 * t60 + t103 + t105 + t2 + t70 + t74 + t82 + t89 + t96;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -648,9 +647,9 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t2   = U__[iU_js];
@@ -658,7 +657,7 @@ namespace CNOCDefine {
     real_type t8   = X__[iX_vs];
     real_type t12  = ALIAS_kappa(X__[iX_s]);
     real_type t17  = 1.0 / (-t12 * X__[iX_n] + 1) * t12;
-    result__[ 0   ] = t5 * t1 - 2 * t1 * (V__[4] + t1 * (-t17 * X__[iX_an] * t8 - t2));
+    result__[ 0   ] = t1 * t5 - 2 * t1 * (V__[4] + t1 * (-t17 * X__[iX_an] * t8 - t2));
     real_type t24  = U__[iU_jn];
     real_type t25  = ModelPars[iM_jn_max];
     real_type t26  = ALIAS_jnControl_D_1(t24, -t25, t25);
@@ -700,9 +699,9 @@ namespace CNOCDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t5   = ALIAS_jsControl_D_1_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);

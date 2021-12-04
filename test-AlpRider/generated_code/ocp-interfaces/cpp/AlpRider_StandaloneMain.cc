@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type W0 = 0;
     real_type epsi0 = 0.1;
+    real_type W0 = 0;
     real_type epsi = epsi0;
+    real_type W = W0;
     real_type tol0 = 0.1;
     real_type tol = tol0;
-    real_type W = W0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -114,11 +114,11 @@ main() {
     data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
-    data_Continuation["initial_step"]    =    0.2; // initial step for continuation
-    data_Continuation["min_step"]        =  1e-06; // minimum accepted step for continuation
-    data_Continuation["reduce_factor"]   =    0.5; // if continuation step fails, reduce step by this factor
-    data_Continuation["augment_factor"]  =    1.5; // if step successful in less than few_iteration augment step by this factor
-    data_Continuation["few_iterations"]  =         8; // if step successful in less than few_iteration augment step by this factor
+    data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
+    data_Continuation["min_step"]        = 1e-06 ; // minimum accepted step for continuation
+    data_Continuation["reduce_factor"]   = 0.5   ; // if continuation step fails, reduce step by this factor
+    data_Continuation["augment_factor"]  = 1.5   ; // if step successful in less than few_iteration augment step by this factor
+    data_Continuation["few_iterations"]  = 8     ; // if step successful in less than few_iteration augment step by this factor
 
     // Boundary Conditions
     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
@@ -187,8 +187,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 AlpRider_data.Mesh["s0"] = 0;
-AlpRider_data.Mesh["segments"][0]["n"] = 4000;
 AlpRider_data.Mesh["segments"][0]["length"] = 20;
+AlpRider_data.Mesh["segments"][0]["n"] = 4000;
 
 
     // alias for user object classes passed as pointers

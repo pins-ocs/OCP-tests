@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_ODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 17/11/2021                                       |
+ |  version: 1.0   date 4/12/2021                                        |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,9 +65,9 @@ namespace gtocX_2burnDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     real_type t3   = ModelPars[iM_time_f] - ModelPars[iM_time_i];
@@ -88,7 +88,7 @@ namespace gtocX_2burnDefine {
     result__[ 2   ] = -t20 * t17 * t10;
     result__[ 3   ] = 0;
     result__[ 4   ] = 0;
-    real_type t26  = pow(t20 * t12 + t18 * t13 + 1, 2);
+    real_type t26  = pow(t12 * t20 + t13 * t18 + 1, 2);
     result__[ 5   ] = t8 / t5 / t4 * t26 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 6, i_segment );
@@ -136,9 +136,9 @@ namespace gtocX_2burnDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_time_f] - ModelPars[iM_time_i];
     real_type t4   = X__[iX_p];
@@ -168,12 +168,12 @@ namespace gtocX_2burnDefine {
     real_type t37  = ray_D_4(t4, t13, t14, t15);
     real_type t41  = cos(t15);
     real_type t42  = t41 * t18;
-    result__[ 3   ] = t19 * t24 * t26 * t37 + t24 * t42;
+    result__[ 3   ] = t19 * t37 * t26 * t24 + t42 * t24;
     result__[ 4   ] = -t42 * t11 / 2 - t41 * t27 * t26 * t24;
     result__[ 5   ] = -t41 * t31 * t26 * t24;
     result__[ 6   ] = -t41 * t34 * t26 * t24;
-    result__[ 7   ] = -t24 * t26 * t37 * t41 + t20 * t24;
-    real_type t61  = t13 * t41 + t14 * t19 + 1;
+    result__[ 7   ] = -t41 * t37 * t26 * t24 + t20 * t24;
+    real_type t61  = t41 * t13 + t19 * t14 + 1;
     real_type t62  = t61 * t61;
     real_type t64  = t4 * t4;
     result__[ 8   ] = -3.0 / 2.0 * t9 / t5 / t64 * t62 * t3;
@@ -181,7 +181,7 @@ namespace gtocX_2burnDefine {
     real_type t73  = t9 / t5 / t4;
     result__[ 9   ] = 2 * t41 * t73 * t70;
     result__[ 10  ] = 2 * t19 * t73 * t70;
-    result__[ 11  ] = 2 * (-t13 * t19 + t14 * t41) * t73 * t70;
+    result__[ 11  ] = 2 * (-t19 * t13 + t41 * t14) * t73 * t70;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 12, i_segment );
   }
@@ -292,9 +292,9 @@ namespace gtocX_2burnDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer     i_segment = NODE__.i_segment;
-    real_type const * Q__ = NODE__.q;
-    real_type const * X__ = NODE__.x;
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
