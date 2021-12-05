@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Mex.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 11/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -293,7 +293,9 @@ public:
     CHECK_IN_OUT(3,0);
     gc_data.clear(); // clear data for rewrite it
     if ( mxIsStruct(arg_in_2) ) { // read from file
+      std::cout << "do_setup 1\n";
       mxArray_to_GenericContainer( arg_in_2, gc_data );
+      std::cout << "do_setup 2\n";
     } else if ( mxIsChar(arg_in_2) ) {
       string fname = mxArrayToString(arg_in_2);
       this->read( fname, gc_data );
@@ -311,11 +313,14 @@ public:
       gc_data.exists("Mesh"),
       "missing key: ``Mesh'' in gc_data\n"
     );
+    std::cout << "do_setup 3\n";
     mesh.setup( gc_data("Mesh") );
+    std::cout << "do_setup 4\n";
     ptrs[ "pMesh" ] = &mesh;
 
     // setup model
     MODEL_CLASS::setup( gc_data );
+    std::cout << "do_setup 5\n";
 
     this->done_setup();
 

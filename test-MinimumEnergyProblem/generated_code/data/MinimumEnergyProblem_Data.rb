@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MinimumEnergyProblem_Data.rb                                   #
 #                                                                       #
-#  version: 1.0   date 4/12/2021                                        #
+#  version: 1.0   date 9/12/2021                                        #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-maxTol  = 0.1
 maxEpsi = 0.1
+maxTol  = 0.1
 
 mechatronix do |data|
 
@@ -283,29 +283,30 @@ mechatronix do |data|
     # Constraints Parameters
   }
 
-    #                              _
-    #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
-    # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
-    # | | | | | | (_| | |_) | |_) | | | | | (_| |
-    # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
-    #                 |_|   |_|            |___/
+  #                              _
+  #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
+  # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
+  # | | | | | | (_| | |_) | |_) | | | | | (_| |
+  # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
+  #                 |_|   |_|            |___/
   # functions mapped on objects
   data.MappedObjects = {}
 
-    #                  _             _
-    #   ___ ___  _ __ | |_ _ __ ___ | |___
-    #  / __/ _ \| '_ \| __| '__/ _ \| / __|
-    # | (_| (_) | | | | |_| | | (_) | \__ \
-    #  \___\___/|_| |_|\__|_|  \___/|_|___/
+
+  #                  _             _
+  #   ___ ___  _ __ | |_ _ __ ___ | |___
+  #  / __/ _ \| '_ \| __| '__/ _ \| / __|
+  # | (_| (_) | | | | |_| | | (_) | \__ \
+  #  \___\___/|_| |_|\__|_|  \___/|_|___/
   # Controls: No penalties or barriers constraint defined
   data.Controls = {}
 
 
-    #                      _             _       _
-    #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
-    #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
-    # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
-    #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
+  #                      _             _       _
+  #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
+  #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
+  # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
+  #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
   # Constraint1D
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
@@ -320,11 +321,11 @@ mechatronix do |data|
   # Constraint2D: none defined
 
 
-   #                             _
-   #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
-   # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
-   # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
-   #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
+  #                             _
+  #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
+  # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
+  # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
+  #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
   # User defined classes initialization
   # User defined classes: M E S H
   data.Mesh =

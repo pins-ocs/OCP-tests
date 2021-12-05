@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_UserFunctions.cc                         |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 10/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -62,52 +62,6 @@ using Mechatronix::MeshStd;
 
 
 namespace BangBangFclipDefine {
-  /*\
-   |  _   _               ___             _   _
-   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-  \*/
-  // user defined functions which has a body defined in MAPLE
-  real_type
-  BangBangFclip::fun( real_type xo__x ) const {
-    real_type result__ = xo__x * xo__x;
-    if ( m_debug ) {
-      UTILS_ASSERT(
-        isRegular(result__),
-        "UserFunctions_fun( x={} ) return {}\n",
-        xo__x, result__
-      );
-    }
-    return result__;
-  }
-
-  real_type
-  BangBangFclip::fun_D( real_type xo__x ) const {
-    real_type result__ = 2 * xo__x;
-    if ( m_debug ) {
-      UTILS_ASSERT(
-        isRegular(result__),
-        "UserFunctions_fun_D( x={} ) return {}\n",
-        xo__x, result__
-      );
-    }
-    return result__;
-  }
-
-  real_type
-  BangBangFclip::fun_DD( real_type xo__x ) const {
-    real_type result__ = 2;
-    if ( m_debug ) {
-      UTILS_ASSERT(
-        isRegular(result__),
-        "UserFunctions_fun_DD( x={} ) return {}\n",
-        xo__x, result__
-      );
-    }
-    return result__;
-  }
-
 }
 
 // EOF: BangBangFclip_Methods_UserFunctions.cc

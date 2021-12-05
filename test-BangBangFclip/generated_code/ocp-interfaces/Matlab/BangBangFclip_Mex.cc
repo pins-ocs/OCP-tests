@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Mex.cc                                           |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 10/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -2348,60 +2348,6 @@ public:
     #undef CMD
   }
 
-  /*\
-   |  _   _               ___             _   _
-   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-  \*/
-  // user defined functions which has a body defined in MAPLE
-  void
-  do_fun(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('fun', obj, xo__x ): "
-    CHECK_IN_OUT( 3, 1 );
-    mwSize N0, M0;
-    real_const_ptr arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
-
-    real_ptr res = createMatrixValue( arg_out_0, N0, M0 );
-    for ( mwSize ii = 0; ii < N0*M0; ++ii )
-      res[ii] = this->fun(arg0[ii]);
-    #undef CMD
-  }
-
-  void
-  do_fun_D(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('fun_D', obj, xo__x ): "
-    CHECK_IN_OUT( 3, 1 );
-    mwSize N0, M0;
-    real_const_ptr arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
-
-    real_ptr res = createMatrixValue( arg_out_0, N0, M0 );
-    for ( mwSize ii = 0; ii < N0*M0; ++ii )
-      res[ii] = this->fun_D(arg0[ii]);
-    #undef CMD
-  }
-  void
-  do_fun_DD(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD MODEL_NAME "_Mex('fun_DD', obj, xo__x ): "
-    CHECK_IN_OUT( 3, 1 );
-    mwSize N0, M0;
-    real_const_ptr arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__x" );
-
-    real_ptr res = createMatrixValue( arg_out_0, N0, M0 );
-    for ( mwSize ii = 0; ii < N0*M0; ++ii )
-      res[ii] = this->fun_DD(arg0[ii]);
-    #undef CMD
-  }
-
 
 };
 
@@ -3439,48 +3385,6 @@ do_node_to_segment(
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_fun(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('fun',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_fun( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_fun_D(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('fun_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_fun_D( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_fun_DD(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  MEX_ASSERT2(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('fun_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_fun_DD( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"read",do_read},
   {"setup",do_setup},
@@ -3547,9 +3451,6 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"mesh_functions",do_mesh_functions},
   {"nodes",do_nodes},
   {"node_to_segment",do_node_to_segment},
-  {"fun",do_fun},
-  {"fun_D",do_fun_D},
-  {"fun_DD",do_fun_DD},
   {"new",do_new},
   {"infoLevel",do_infoLevel},
   {"set_max_threads",do_set_max_threads},

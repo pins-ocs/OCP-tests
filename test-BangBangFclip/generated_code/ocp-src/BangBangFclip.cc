@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip.cc                                               |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 10/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -101,6 +101,8 @@ namespace BangBangFclipDefine {
     "vFmax",
     "epsilon0",
     "epsilon1",
+    "tolerance0",
+    "tolerance1",
     nullptr
   };
 

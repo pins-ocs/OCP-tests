@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFclip_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 4/12/2021                                        #
+#  version: 1.0   date 10/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,9 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-vFmax    = 10
-h0       = 0.1
-epsilon0 = 0.1
+h0         = 0.01
+epsilon0   = 0.1
+tolerance0 = 0.01
+vFmax      = 10
 
 mechatronix do |data|
 
@@ -276,31 +277,34 @@ mechatronix do |data|
     # User Function Parameters
 
     # Continuation Parameters
-    :h0       => h0,
-    :h1       => 1e-10,
-    :epsilon0 => epsilon0,
-    :epsilon1 => 0.0001,
+    :h0         => h0,
+    :h1         => 1e-10,
+    :epsilon0   => epsilon0,
+    :epsilon1   => 0.0001,
+    :tolerance0 => tolerance0,
+    :tolerance1 => 0.0001,
 
     # Constraints Parameters
   }
 
-    #                              _
-    #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
-    # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
-    # | | | | | | (_| | |_) | |_) | | | | | (_| |
-    # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
-    #                 |_|   |_|            |___/
+  #                              _
+  #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
+  # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
+  # | | | | | | (_| | |_) | |_) | | | | | (_| |
+  # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
+  #                 |_|   |_|            |___/
   # functions mapped on objects
   data.MappedObjects = {}
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :h => h0, :delta => 0, :delta2 => 0 }
+  data.MappedObjects[:clip] = { :delta => 0, :delta2 => 0, :h => h0 }
 
-    #                  _             _
-    #   ___ ___  _ __ | |_ _ __ ___ | |___
-    #  / __/ _ \| '_ \| __| '__/ _ \| / __|
-    # | (_| (_) | | | | |_| | | (_) | \__ \
-    #  \___\___/|_| |_|\__|_|  \___/|_|___/
+
+  #                  _             _
+  #   ___ ___  _ __ | |_ _ __ ___ | |___
+  #  / __/ _ \| '_ \| __| '__/ _ \| / __|
+  # | (_| (_) | | | | |_| | | (_) | \__ \
+  #  \___\___/|_| |_|\__|_|  \___/|_|___/
   # Controls
   # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
@@ -308,26 +312,26 @@ mechatronix do |data|
   data.Controls[:controlForce] = {
     :type      => 'QUADRATIC',
     :epsilon   => epsilon0,
-    :tolerance => 0.001
+    :tolerance => tolerance0
   }
 
 
 
-    #                      _             _       _
-    #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
-    #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
-    # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
-    #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
+  #                      _             _       _
+  #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
+  #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
+  # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
+  #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
   # Constraint1D: none defined
   # Constraint2D: none defined
 
 
-   #                             _
-   #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
-   # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
-   # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
-   #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
+  #                             _
+  #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
+  # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
+  # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
+  #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
   # User defined classes initialization
   # User defined classes: M E S H
   data.Mesh =
@@ -335,7 +339,7 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 400,
+        :n      => 100,
         :length => 1,
       },
     ],

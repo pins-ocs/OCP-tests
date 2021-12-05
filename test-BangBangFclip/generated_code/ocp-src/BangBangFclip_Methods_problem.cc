@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 10/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,7 +73,8 @@ namespace BangBangFclipDefine {
   BangBangFclip::continuation_step_0( real_type s ) {
     real_type t2   = 1 - s;
     clip.update_h(s * ModelPars[iM_h1] + t2 * ModelPars[iM_h0]);
-    controlForce.update_epsilon(s * ModelPars[iM_epsilon1] + ModelPars[iM_epsilon0] * t2);
+    controlForce.update_epsilon(s * ModelPars[iM_epsilon1] + t2 * ModelPars[iM_epsilon0]);
+    controlForce.update_tolerance(s * ModelPars[iM_tolerance1] + t2 * ModelPars[iM_tolerance0]);
   }
 
   /*\

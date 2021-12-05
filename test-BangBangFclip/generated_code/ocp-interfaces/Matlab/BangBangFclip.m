@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: BangBangFclip.m                                                %
 %                                                                       %
-%  version: 1.0   date 4/12/2021                                        %
+%  version: 1.0   date 10/12/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -877,23 +877,6 @@ classdef BangBangFclip < handle
     % ---------------------------------------------------------------------
     function node_to_segment = get_node_to_segment( self )
       node_to_segment = BangBangFclip_Mex( 'node_to_segment', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    %  _   _               ___             _   _
-    % | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
-    % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
-    %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
-    % ---------------------------------------------------------------------
-    function res = fun( self, xo__x )
-      res = BangBangFclip_Mex('fun', self.objectHandle, xo__x );
-    end
-    % ---------------------------------------------------------------------
-    function res = fun_D( self, xo__x )
-      res = BangBangFclip_Mex('fun_D', self.objectHandle, xo__x );
-    end
-    % ---------------------------------------------------------------------
-    function res = fun_DD( self, xo__x )
-      res = BangBangFclip_Mex('fun_DD', self.objectHandle, xo__x );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

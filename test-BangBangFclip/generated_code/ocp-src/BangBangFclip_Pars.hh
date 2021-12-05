@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Pars.hh                                          |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 10/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define BANGBANGFCLIPPARS_DOT_HH
 
 #define numBc                    5
-#define numModelPars             7
+#define numModelPars             9
 #define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           1
@@ -59,6 +59,8 @@
 #define iM_vFmax       4
 #define iM_epsilon0    5
 #define iM_epsilon1    6
+#define iM_tolerance0  7
+#define iM_tolerance1  8
 
 #endif
 

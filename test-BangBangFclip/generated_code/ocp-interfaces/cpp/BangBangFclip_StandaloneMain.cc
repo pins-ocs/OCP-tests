@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 10/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,9 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type vFmax = 10;
-    real_type h0 = 0.1;
+    real_type h0 = 0.01;
     real_type epsilon0 = 0.1;
+    real_type tolerance0 = 0.01;
+    real_type vFmax = 10;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -151,6 +152,8 @@ main() {
     data_Parameters["h1"] = 1e-10;
     data_Parameters["epsilon0"] = epsilon0;
     data_Parameters["epsilon1"] = 0.0001;
+    data_Parameters["tolerance0"] = tolerance0;
+    data_Parameters["tolerance1"] = 0.0001;
 
     // Constraints Parameters
 
@@ -159,9 +162,9 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["h"] = h0;
     data_clip["delta"] = 0;
     data_clip["delta2"] = 0;
+    data_clip["h"] = h0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
@@ -170,7 +173,7 @@ main() {
     GenericContainer & data_controlForce = data_Controls["controlForce"];
     data_controlForce["type"]      = ;
     data_controlForce["epsilon"]   = epsilon0;
-    data_controlForce["tolerance"] = 0.001;
+    data_controlForce["tolerance"] = tolerance0;
 
 
 
@@ -180,7 +183,7 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFclip_data.Mesh["s0"] = 0;
-BangBangFclip_data.Mesh["segments"][0]["n"] = 400;
+BangBangFclip_data.Mesh["segments"][0]["n"] = 100;
 BangBangFclip_data.Mesh["segments"][0]["length"] = 1;
 
 

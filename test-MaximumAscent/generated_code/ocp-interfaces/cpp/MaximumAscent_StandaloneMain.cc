@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 10/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,18 +50,18 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type g0 = 9.80665;
-    real_type u0 = 0;
-    real_type Isp = 1500;
-    real_type T = 0.68;
-    real_type r0 = 6678140;
     real_type mu = 398600441800000;
-    real_type v0 = (mu/r0)^(1/2.0);
-    real_type u0_bar = u0/v0;
-    real_type mdot = T/g0/Isp;
+    real_type u0 = 0;
     real_type days = 1;
     real_type tf = 86400*days;
     real_type days1 = 30;
+    real_type T = 0.68;
+    real_type g0 = 9.80665;
+    real_type Isp = 1500;
+    real_type r0 = 6678140;
+    real_type v0 = (mu/r0)^(1/2.0);
+    real_type u0_bar = u0/v0;
+    real_type mdot = T/g0/Isp;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -180,8 +180,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 MaximumAscent_data.Mesh["s0"] = 0;
-MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
 MaximumAscent_data.Mesh["segments"][0]["n"] = 1000*days1;
+MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
