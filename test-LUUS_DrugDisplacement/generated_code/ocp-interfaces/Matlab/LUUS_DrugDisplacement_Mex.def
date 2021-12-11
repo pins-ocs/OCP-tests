@@ -1,0 +1,9 @@
+
+; mexFunction.def : Declares the module parameters for the DLL.
+
+LIBRARY      "LUUS_DrugDisplacement_Mex"
+DESCRIPTION  'Mex file for LUUS_DrugDisplacement'
+
+EXPORTS
+    ; Explicit exports can go here
+    mexFunction
