@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_Guess.cc                |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 11/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -192,11 +192,6 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
 
-
-
-
-
-
   // u_check_strings
   #define Xoptima__message_u_check_0 "-u_max <= u(zeta)"
   #define Xoptima__message_u_check_1 "u(zeta) <= u_max"
@@ -310,10 +305,13 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    // admissible region
     real_type t1   = ModelPars[iM_u_max];
     real_type t2   = U__[iU_u];
     Xoptima__check__u__le(-t1, t2, Xoptima__message_u_check_0);
     Xoptima__check__u__le(t2, t1, Xoptima__message_u_check_1);
+    // controls range check
+
     return ok;
   }
 

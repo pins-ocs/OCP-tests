@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Main.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 11/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -158,8 +158,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["s0"] = 0;
-ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
+ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

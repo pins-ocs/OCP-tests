@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_MinimumFuelOrbitRaising_Data.rb                         #
 #                                                                       #
-#  version: 1.0   date 10/12/2021                                       #
+#  version: 1.0   date 11/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -73,7 +73,7 @@ mechatronix do |data|
     # 'QN' = Quasi Newton
     # ==============================================================
     # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
-    :solver => 'LM',
+    :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
@@ -319,8 +319,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 400,
         :length => tf,
+        :n      => 400,
       },
     ],
   };

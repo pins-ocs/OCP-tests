@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Data.lua                        |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 11/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -288,8 +288,8 @@ content = {
     segments = {
       
       {
-        n      = 400,
         length = tf,
+        n      = 400,
       },
     },
   },
