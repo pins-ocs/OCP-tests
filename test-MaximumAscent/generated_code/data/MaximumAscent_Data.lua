@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,18 +20,18 @@
 -- User Header
 
 -- Auxiliary values
+Isp    = 1500
+g0     = 9.80665
+days1  = 30
 mu     = 398600441800000
 u0     = 0
+r0     = 6678140
+T      = 0.68
+mdot   = T/g0/Isp
 days   = 1
 tf     = 86400*days
-days1  = 30
-T      = 0.68
-g0     = 9.80665
-Isp    = 1500
-r0     = 6678140
 v0     = (mu/r0)**(1/2.0)
 u0_bar = u0/v0
-mdot   = T/g0/Isp
 
 content = {
 
@@ -59,7 +59,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -91,7 +93,7 @@ content = {
     solver = 'NewtonDumped',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
-    Iterative = false,
+    Iterative = true,
     InfoLevel = -1, -- suppress all messages
     -- 'LM', 'YS', 'QN'
     initialize_control_solver = 'QN',

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -100,7 +100,7 @@ namespace BangBangFtminDefine {
 
   integer
   BangBangFtmin::DboundaryConditionsDxxp_numCols() const
-  { return 6; }
+  { return 5; }
 
   integer
   BangBangFtmin::DboundaryConditionsDxxp_nnz() const
@@ -113,8 +113,8 @@ namespace BangBangFtminDefine {
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 4   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
 
   void
@@ -144,7 +144,7 @@ namespace BangBangFtminDefine {
 
   integer
   BangBangFtmin::adjointBC_numEqns() const
-  { return 6; }
+  { return 5; }
 
   void
   BangBangFtmin::adjointBC_eval(
@@ -166,23 +166,22 @@ namespace BangBangFtminDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
-    result__[ 2   ] = LL__[iL_lambda3__xo];
-    result__[ 3   ] = OMEGA__[2] - LR__[iL_lambda1__xo];
-    result__[ 4   ] = OMEGA__[3] - LR__[iL_lambda2__xo];
-    result__[ 5   ] = 1 - LR__[iL_lambda3__xo];
+    result__[ 2   ] = OMEGA__[2] - LR__[iL_lambda1__xo];
+    result__[ 3   ] = OMEGA__[3] - LR__[iL_lambda2__xo];
+    result__[ 4   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 6, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 5, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
   BangBangFtmin::DadjointBCDxxp_numRows() const
-  { return 6; }
+  { return 5; }
 
   integer
   BangBangFtmin::DadjointBCDxxp_numCols() const
-  { return 6; }
+  { return 5; }
 
   integer
   BangBangFtmin::DadjointBCDxxp_nnz() const

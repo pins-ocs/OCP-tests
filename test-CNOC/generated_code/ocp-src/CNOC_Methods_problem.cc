@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_problem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -246,7 +246,7 @@ namespace CNOCDefine {
     real_type t5   = jsControl(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type t8   = ModelPars[iM_jn_max];
     real_type t9   = jnControl(U__[iU_jn], -t8, t8);
-    real_type result__ = t5 * t1 + t9 * t1;
+    real_type result__ = t1 * t5 + t1 * t9;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
     }
@@ -431,7 +431,7 @@ namespace CNOCDefine {
     real_type t17  = t16 * t2;
     real_type t19  = t16 * t7;
     real_type t28  = 1.0 / ModelPars[iM_ay_max];
-    real_type t29  = t28 * (t8 * t2 + t5 * t7);
+    real_type t29  = t28 * (t8 * t2 + t7 * t5);
     real_type t30  = ALIAS_ay_limit_D(t29);
     real_type t31  = t30 * t1;
     result__[ 0   ] = t12 * (-t8 * t17 - t5 * t19) * t15 + t28 * (t5 * t17 - t8 * t19) * t31;
@@ -809,12 +809,12 @@ namespace CNOCDefine {
     real_type t17  = ALIAS_theta(t16);
     real_type t18  = cos(t17);
     real_type t20  = sin(t17);
-    result__[ 3   ] = t18 * t1 - t20 * t3;
-    result__[ 4   ] = t20 * t1 + t18 * t3;
+    result__[ 3   ] = t1 * t18 - t20 * t3;
+    result__[ 4   ] = t1 * t20 + t18 * t3;
     result__[ 5   ] = t18 * t6 - t20 * t8;
     result__[ 6   ] = t18 * t8 + t20 * t6;
-    result__[ 7   ] = t18 * t11 - t20 * t13;
-    result__[ 8   ] = t20 * t11 + t18 * t13;
+    result__[ 7   ] = t11 * t18 - t13 * t20;
+    result__[ 8   ] = t11 * t20 + t13 * t18;
     result__[ 9   ] = ALIAS_xPath(t16);
     result__[ 10  ] = ALIAS_yPath(t16);
     real_type t32  = X__[iX_n];

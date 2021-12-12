@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_TwoLinkRobotArm_Data.rb                                 #
 #                                                                       #
-#  version: 1.0   date 10/12/2021                                       #
+#  version: 1.0   date 14/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -49,7 +49,9 @@ mechatronix do |data|
   data.JF_threaded = true
   data.LU_threaded = true
 
-  # Enable check jacobian
+  # Enable check jacobian and controls
+  data.ControlsCheck         = true
+  data.ControlsCheck_epsilon = 1e-8
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
@@ -80,7 +82,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
-    :Iterative => false,
+    :Iterative => true,
     :InfoLevel => -1,     # suppress all messages
     # ==============================================================
     # 'LM', 'YS', 'QN'
@@ -95,7 +97,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-9,  # tolerance for stopping criteria
+      :tolerance            => 1e-12, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -267,6 +269,7 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
+    :rho => 0.01,
 
     # Guess Parameters
 
@@ -276,7 +279,7 @@ mechatronix do |data|
     :alpha_f        => 0.522,
     :alpha_i        => 0,
     :theta_f        => 0.5,
-    :theta_i        => 0.5,
+    :theta_i        => 0,
     :omega__alpha_f => 0,
     :omega__alpha_i => 0,
     :omega__beta_f  => 0,

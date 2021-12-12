@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Main.cc                                |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type theta0 = 1;
     real_type u_tol = 0.01;
-    real_type theta = theta0;
+    real_type theta0 = 1;
     real_type u_epsi = 0.01;
+    real_type theta = theta0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

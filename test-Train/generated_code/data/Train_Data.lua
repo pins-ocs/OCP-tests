@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Data.lua                                                 |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
-epsi_max = 0.01
-ubMax    = 2
 tol_max  = 0.01
+epsi_max = 0.01
 uaMax    = 10
+ubMax    = 2
 
 content = {
 
@@ -51,7 +51,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,

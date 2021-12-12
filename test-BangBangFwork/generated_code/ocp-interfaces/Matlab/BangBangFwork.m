@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: BangBangFwork.m                                                %
 %                                                                       %
-%  version: 1.0   date 4/12/2021                                        %
+%  version: 1.0   date 14/12/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -415,6 +415,24 @@ classdef BangBangFwork < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function res = post_processing_Fcontrol( self )
+      %
+      % Return the solution for the post processing variable: Fcontrol
+      %
+      res = BangBangFwork_Mex( 'get_solution', self.objectHandle, 'Fcontrol' );
+    end
+    function res = post_processing_fMax( self )
+      %
+      % Return the solution for the post processing variable: fMax
+      %
+      res = BangBangFwork_Mex( 'get_solution', self.objectHandle, 'fMax' );
+    end
+    function res = post_processing_mfMax( self )
+      %
+      % Return the solution for the post processing variable: mfMax
+      %
+      res = BangBangFwork_Mex( 'get_solution', self.objectHandle, 'mfMax' );
+    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------

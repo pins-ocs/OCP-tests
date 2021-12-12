@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -116,7 +116,7 @@ namespace RobotArmDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
-    real_type result__ = U__[iU_u_rho] * t2 * L__[iL_lambda1__xo] + U__[iU_u_theta] * t2 * L__[iL_lambda2__xo] + U__[iU_u_phi] * t2 * L__[iL_lambda3__xo] + X__[iX_rho1] * t2 * L__[iL_lambda4__xo] + X__[iX_theta1] * t2 * L__[iL_lambda5__xo] + X__[iX_phi1] * t2 * L__[iL_lambda6__xo];
+    real_type result__ = t2 * L__[iL_lambda1__xo] * U__[iU_u_rho] + t2 * L__[iL_lambda2__xo] * U__[iU_u_theta] + t2 * L__[iL_lambda3__xo] * U__[iU_u_phi] + t2 * L__[iL_lambda4__xo] * X__[iX_rho1] + t2 * L__[iL_lambda5__xo] * X__[iX_theta1] + t2 * L__[iL_lambda6__xo] * X__[iX_phi1];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -163,7 +163,7 @@ namespace RobotArmDefine {
     real_type t3   = u_rhoControl(U__[iU_u_rho], -1, 1);
     real_type t6   = u_thetaControl(U__[iU_u_theta], -1, 1);
     real_type t9   = u_phiControl(U__[iU_u_phi], -1, 1);
-    real_type result__ = t1 * t3 + t1 * t6 + t1 * t9;
+    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
     }
@@ -217,9 +217,9 @@ namespace RobotArmDefine {
     real_const_ptr     XR__ = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    real_type t1   = P__[iP_T];
-    real_type t2   = ModelPars[iM_W];
-    real_type result__ = -(t1 * (t2 - 1) - t2) * t1;
+    real_type t1   = ModelPars[iM_W];
+    real_type t3   = P__[iP_T];
+    real_type result__ = -t3 * (t3 * (t1 - 1) - t1);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
     }
@@ -372,7 +372,7 @@ namespace RobotArmDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
-    result__[ 0   ] = t1 * t3;
+    result__[ 0   ] = t3 * t1;
     real_type t5   = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
     result__[ 1   ] = t5 * t1;
     real_type t7   = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);

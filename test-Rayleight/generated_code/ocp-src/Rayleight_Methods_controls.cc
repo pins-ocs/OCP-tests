@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,6 +50,44 @@ namespace RayleightDefine {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  Rayleight::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = XM__[0];
+    real_type t3   = XM__[1];
+    real_type t5   = t3 * t3;
+    real_type t8   = UM__[0];
+    real_type t13  = t8 * t8;
+    real_type t14  = t1 * t1;
+    real_type result__ = LM__[1] * (-1.0 * t1 + 0.14e1 * t3 - 0.14e0 * t5 * t3 + 4.0 * t8) + t13 + t14 + t3 * LM__[0];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   Rayleight::g_numEqns() const

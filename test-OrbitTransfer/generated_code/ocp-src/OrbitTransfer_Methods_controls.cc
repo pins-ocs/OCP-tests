@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,6 +50,55 @@ namespace OrbitTransferDefine {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  OrbitTransfer::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[5], LM__[5];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = UM__[0];
+    real_type t3   = cos(t2);
+    real_type t4   = LM__[2];
+    real_type t6   = XM__[2];
+    real_type t7   = t6 * t6;
+    real_type t9   = ModelPars[iM_T] * t7;
+    real_type t11  = LM__[1];
+    real_type t12  = sin(t2);
+    real_type t16  = XM__[3];
+    real_type t23  = XM__[4];
+    real_type t33  = XM__[0];
+    real_type result__ = 1.0 / t33 / t7 * (t9 * t4 * t3 + t9 * t12 * t11 + t33 * (t7 * (t16 * LM__[0] - LM__[3] * ModelPars[iM_mdot]) + t6 * (t23 * t11 - t16 * t4 + LM__[4]) * t23 - ModelPars[iM_mu] * t11)) * ModelPars[iM_tf];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   OrbitTransfer::g_numEqns() const
@@ -414,9 +463,9 @@ namespace OrbitTransferDefine {
     real_type t22  = 1.0 / X__[iX_m];
     real_type t27  = pow(V__[3] - (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t1, 2);
     real_type t31  = cos(t18);
-    real_type t37  = pow(V__[4] - (-t11 * t2 * t8 + t17 * t22 * t31) * t1, 2);
+    real_type t37  = pow(V__[4] - (-t11 * t2 * t8 + t22 * t31 * t17) * t1, 2);
     real_type t42  = pow(t1 * ModelPars[iM_mdot] + V__[0], 2);
-    real_type t47  = pow(-t1 * t11 * t8 + V__[1], 2);
+    real_type t47  = pow(-t11 * t8 * t1 + V__[1], 2);
     real_type result__ = t6 + t27 + t37 + t42 + t47;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );

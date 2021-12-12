@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer.hh                                                      |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -244,6 +244,9 @@ namespace FarmerDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    FARMER_API_DLL real_type Ptot      ( real_type xo__zeta ) const;
+    FARMER_API_DLL real_type Ptot_D    ( real_type xo__zeta ) const;
+    FARMER_API_DLL real_type Ptot_DD   ( real_type xo__zeta ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

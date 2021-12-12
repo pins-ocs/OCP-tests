@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Pars.hh                                 |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define ICLOCS_TWOLINKROBOTARMPARS_DOT_HH
 
 #define numBc                    8
-#define numModelPars             14
+#define numModelPars             15
 #define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           2
@@ -60,16 +60,17 @@
 #define iM_W              1
 #define iM_alpha_f        2
 #define iM_alpha_i        3
-#define iM_theta_f        4
-#define iM_theta_i        5
-#define iM_omega__alpha_f 6
-#define iM_omega__alpha_i 7
-#define iM_omega__beta_f  8
-#define iM_omega__beta_i  9
-#define iM_u_epsilon0     10
-#define iM_u_epsilon1     11
-#define iM_u_tolerance0   12
-#define iM_u_tolerance1   13
+#define iM_rho            4
+#define iM_theta_f        5
+#define iM_theta_i        6
+#define iM_omega__alpha_f 7
+#define iM_omega__alpha_i 8
+#define iM_omega__beta_f  9
+#define iM_omega__beta_i  10
+#define iM_u_epsilon0     11
+#define iM_u_epsilon1     12
+#define iM_u_tolerance0   13
+#define iM_u_tolerance1   14
 
 #endif
 

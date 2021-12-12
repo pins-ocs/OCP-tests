@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork.cc                                               |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -81,6 +81,9 @@ namespace BangBangFworkDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "Fcontrol",
+    "fMax",
+    "mfMax",
     nullptr
   };
 

@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: ICLOCS_TwoLinkRobotArm_ffi_structs.rb                             #
 #                                                                          #
-#  version: 1.0   date 10/12/2021                                          #
+#  version: 1.0   date 14/12/2021                                          #
 #                                                                          #
 #  Copyright (C) 2021                                                      #
 #                                                                          #
@@ -47,6 +47,8 @@ module ICLOCS_TwoLinkRobotArm
       :alpha_f,        :data_t,
 
       :alpha_i,        :data_t,
+
+      :rho,            :data_t,
 
       :theta_f,        :data_t,
 

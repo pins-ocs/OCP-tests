@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Data.lua                                             |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,12 +20,12 @@
 -- User Header
 
 -- Auxiliary values
-L        = 100
 v_max    = 30
+jerk_min = -10
+L        = 100
 s_f      = L
 jerk_max = 10
 wJ       = 1/jerk_max**2
-jerk_min = -10
 
 content = {
 
@@ -53,7 +53,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,

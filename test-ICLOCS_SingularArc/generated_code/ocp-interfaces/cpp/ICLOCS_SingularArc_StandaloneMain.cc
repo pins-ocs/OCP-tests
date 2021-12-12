@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_ctrl0 = 0.01;
     real_type epsi_T = 0.01;
-    real_type tol_ctrl = tol_ctrl0;
     real_type tol_T = 0.1;
+    real_type tol_ctrl0 = 0.01;
+    real_type tol_ctrl = tol_ctrl0;
     real_type epsi_ctrl0 = 0.01;
     real_type epsi_ctrl = epsi_ctrl0;
     integer InfoLevel = 4;
@@ -186,8 +186,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_SingularArc_data.Mesh["s0"] = 0;
-ICLOCS_SingularArc_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS_SingularArc_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_SingularArc_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

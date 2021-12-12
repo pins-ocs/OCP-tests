@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-mur_max = 1
 muf_min = -1
+mur_max = 1
 mur_min = -1
 
 content = {
@@ -50,7 +50,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -278,9 +280,9 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithSinAtan
-    clipdelta2 = 0,
-    clipdelta = 0,
     cliph = 0.01,
+    clipdelta = 0,
+    clipdelta2 = 0,
   },
 
   -- Controls
@@ -320,8 +322,8 @@ content = {
     segments = {
       
       {
-        n      = 1000,
         length = 1000,
+        n      = 1000,
       },
     },
   },

@@ -1,0 +1,28 @@
+
+#
+# CONTROLS
+#
+set title "Controls"
+plot \
+  "Hager_2000_OCP_result.txt" every ::1 using 2:6 with linespoints title "u" 
+
+pause -1 "Hit any key to continue"
+
+#
+# STATES
+#
+
+set title "States"
+plot \
+  "Hager_2000_OCP_result.txt" every ::1 using 2:7 with linespoints title "x" 
+
+pause -1 "Hit any key to continue"
+
+#
+# MULTIPLIERS
+#
+set title "Multipliers"
+plot \
+  "Hager_2000_OCP_result.txt" every ::1 using 2:8 with linespoints title "lambda1__xo" 
+
+pause -1 "Hit any key to continue"

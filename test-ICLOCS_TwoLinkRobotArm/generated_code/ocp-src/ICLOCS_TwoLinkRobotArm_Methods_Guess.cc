@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_Guess.cc                        |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -216,9 +216,6 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
   }
 
 
-  // u_check_strings
-  #define Xoptima__message_u_check_0 "0 <= u1(zeta)"
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
@@ -331,7 +328,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    Xoptima__check__u__le(0, U__[iU_u1], Xoptima__message_u_check_0);
+    // controls range check
     u1Control.check_range(U__[iU_u1], -1, 1);
     u2Control.check_range(U__[iU_u2], -1, 1);
     return ok;

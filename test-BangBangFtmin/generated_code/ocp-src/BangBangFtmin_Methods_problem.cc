@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -73,7 +73,7 @@ namespace BangBangFtminDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_T];
+    real_type t2   = P__[iP_T];
     real_type result__ = X__[iX_v] * t2 * L__[iL_lambda1__xo] + U__[iU_F] * t2 * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
@@ -118,7 +118,7 @@ namespace BangBangFtminDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Fcontrol(U__[iU_F], -1, 1);
-    real_type result__ = t3 * X__[iX_T];
+    real_type result__ = t3 * P__[iP_T];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
     }
@@ -172,7 +172,7 @@ namespace BangBangFtminDefine {
     real_const_ptr     XR__ = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    real_type result__ = XR__[iX_T];
+    real_type result__ = P__[iP_T];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
     }
@@ -183,7 +183,7 @@ namespace BangBangFtminDefine {
 
   integer
   BangBangFtmin::DmayerDxxp_numEqns() const
-  { return 6; }
+  { return 5; }
 
   void
   BangBangFtmin::DmayerDxxp_eval(
@@ -204,10 +204,9 @@ namespace BangBangFtminDefine {
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
     result__[ 3   ] = 0;
-    result__[ 4   ] = 0;
-    result__[ 5   ] = 1;
+    result__[ 4   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 6, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 5, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -244,7 +243,7 @@ namespace BangBangFtminDefine {
 
   integer
   BangBangFtmin::DJDx_numEqns() const
-  { return 3; }
+  { return 2; }
 
   void
   BangBangFtmin::DJDx_eval(
@@ -259,16 +258,15 @@ namespace BangBangFtminDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
-    result__[ 2   ] = Fcontrol(U__[iU_F], -1, 1);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
   BangBangFtmin::DJDp_numEqns() const
-  { return 0; }
+  { return 1; }
 
   void
   BangBangFtmin::DJDp_eval(
@@ -277,7 +275,13 @@ namespace BangBangFtminDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = Fcontrol(U__[iU_F], -1, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJDp_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -298,7 +302,7 @@ namespace BangBangFtminDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_Fcontrol_D_1(U__[iU_F], -1, 1);
-    result__[ 0   ] = t3 * X__[iX_T];
+    result__[ 0   ] = t3 * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
   }
@@ -391,7 +395,7 @@ namespace BangBangFtminDefine {
 
   integer
   BangBangFtmin::jump_numEqns() const
-  { return 6; }
+  { return 4; }
 
   void
   BangBangFtmin::jump_eval(
@@ -412,27 +416,25 @@ namespace BangBangFtminDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
     result__[ 1   ] = XR__[iX_v] - XL__[iX_v];
-    result__[ 2   ] = XR__[iX_T] - XL__[iX_T];
-    result__[ 3   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
-    result__[ 4   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
-    result__[ 5   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
+    result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 3   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "jump_eval", 6, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "jump_eval", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
   BangBangFtmin::DjumpDxlxlp_numRows() const
-  { return 6; }
+  { return 4; }
 
   integer
   BangBangFtmin::DjumpDxlxlp_numCols() const
-  { return 12; }
+  { return 9; }
 
   integer
   BangBangFtmin::DjumpDxlxlp_nnz() const
-  { return 12; }
+  { return 8; }
 
   void
   BangBangFtmin::DjumpDxlxlp_pattern(
@@ -440,17 +442,13 @@ namespace BangBangFtminDefine {
     integer jIndex[]
   ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 7   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 5   ;
     iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 8   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 6   ;
     iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 9   ;
-    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
-    iIndex[9 ] = 4   ; jIndex[9 ] = 10  ;
-    iIndex[10] = 5   ; jIndex[10] = 5   ;
-    iIndex[11] = 5   ; jIndex[11] = 11  ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 7   ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -480,12 +478,8 @@ namespace BangBangFtminDefine {
     result__[ 5   ] = 1;
     result__[ 6   ] = -1;
     result__[ 7   ] = 1;
-    result__[ 8   ] = -1;
-    result__[ 9   ] = 1;
-    result__[ 10  ] = -1;
-    result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 8, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -498,7 +492,7 @@ namespace BangBangFtminDefine {
 
   integer
   BangBangFtmin::post_numEqns() const
-  { return 0; }
+  { return 2; }
 
   void
   BangBangFtmin::post_eval(
@@ -507,7 +501,14 @@ namespace BangBangFtminDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = Fcontrol(U__[iU_F], -1, 1);
+    result__[ 1   ] = Q__[iQ_zeta] * P__[iP_T];
+    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

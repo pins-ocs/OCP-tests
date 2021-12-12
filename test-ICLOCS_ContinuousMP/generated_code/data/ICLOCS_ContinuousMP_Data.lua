@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,13 +20,13 @@
 -- User Header
 
 -- Auxiliary values
-xy_tol0   = 0.1
-xy_eps0   = 0.1
-xy_tol    = xy_tol0
-epsi_ctrl = 0.01
 xy_bound  = 2
-xy_eps    = xy_eps0
+xy_tol0   = 0.1
 tol_ctrl  = 0.01
+xy_tol    = xy_tol0
+xy_eps0   = 0.1
+xy_eps    = xy_eps0
+epsi_ctrl = 0.01
 
 content = {
 
@@ -54,7 +54,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,

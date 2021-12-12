@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -98,7 +98,7 @@ main() {
     // ===================================
 
     // solver parameters
-    data_Solver["max_iter"]              = 120;
+    data_Solver["max_iter"]              = 300;
     data_Solver["max_step_iter"]         = 40;
     data_Solver["max_accumulated_iter"]  = 800;
     data_Solver["tolerance"]             = 1e-09;
@@ -131,10 +131,6 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
-    data_Parameters["P1"] = 0.1;
-    data_Parameters["P2"] = 0.1;
-    data_Parameters["t1"] = 0;
-    data_Parameters["t2"] = 60;
     data_Parameters["tau__1"] = 3;
     data_Parameters["tau__2"] = 25;
     data_Parameters["tau__3"] = 10;
@@ -162,6 +158,10 @@ main() {
     // Post Processing Parameters
 
     // User Function Parameters
+    data_Parameters["P1"] = 0.1;
+    data_Parameters["P2"] = 0.1;
+    data_Parameters["t1"] = 0;
+    data_Parameters["t2"] = 60;
 
     // Continuation Parameters
 

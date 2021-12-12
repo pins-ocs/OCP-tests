@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -144,6 +144,89 @@ namespace CNOCDefine {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  CNOC::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[7], LM__[7];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    XM__[6] = (XL__[6]+XR__[6])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    LM__[6] = (LL__[6]+LR__[6])/2;
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    real_type t1   = XM__[6];
+    real_type t3   = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
+    real_type t4   = t3 * t1;
+    real_type t5   = XM__[1];
+    real_type t6   = XM__[0];
+    real_type t7   = ALIAS_kappa(t6);
+    real_type t9   = t7 * t5 - 1;
+    real_type t10  = ALIAS_nominalFeed();
+    real_type t12  = XM__[2];
+    real_type t13  = t12 * t12;
+    real_type t14  = XM__[3];
+    real_type t15  = t14 * t14;
+    real_type t17  = sqrt(t13 + t15);
+    real_type t21  = vLimit(1.0 / t10 * (0.101e1 * t10 - t17));
+    real_type t24  = XM__[4];
+    real_type t25  = ALIAS_theta(t6);
+    real_type t26  = cos(t25);
+    real_type t28  = XM__[5];
+    real_type t29  = sin(t25);
+    real_type t35  = ax_limit(1.0 / ModelPars[iM_ax_max] * (t26 * t24 - t29 * t28));
+    real_type t44  = ay_limit(1.0 / ModelPars[iM_ay_max] * (t29 * t24 + t26 * t28));
+    real_type t54  = PathFollowingTolerance(1.0 / ModelPars[iM_path_following_tolerance] * t5);
+    real_type t60  = an_limit(1.0 / ModelPars[iM_an_max] * t28);
+    real_type t66  = as_limit(1.0 / ModelPars[iM_as_max] * t24);
+    real_type t70  = timePositive(t1);
+    real_type t74  = t14 * t3 * LM__[1];
+    real_type t76  = LM__[2];
+    real_type t77  = t76 * t3 * t24;
+    real_type t78  = LM__[3];
+    real_type t80  = t3 * t78 * t28;
+    real_type t81  = UM__[0];
+    real_type t83  = LM__[4];
+    real_type t84  = t83 * t3 * t81;
+    real_type t85  = UM__[1];
+    real_type t86  = LM__[5];
+    real_type t88  = t3 * t86 * t85;
+    real_type t91  = jsControl(t81, ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t92  = ModelPars[iM_jn_max];
+    real_type t93  = jnControl(t85, -t92, t92);
+    real_type t94  = -t91 - t93;
+    real_type t96  = t10 * t10;
+    real_type result__ = 1.0 / t9 / t3 * (t21 * t9 * t4 + t35 * t9 * t4 + t44 * t9 * t4 - 2 * t17 * t9 * t10 * t1 + t54 * t9 * t4 + t60 * t9 * t4 + t66 * t9 * t4 + t7 * (t70 * t5 * t3 - (t5 * (t3 * t94 - t13 - t15 - t74 - t77 - t80 - t84 - t88 - t96) + (-t12 * t78 + t14 * t76 - t86 * t24 + t83 * t28) * t12 * t3) * t1) - t3 * t70 - (t12 * t3 * LM__[0] - t3 * t94 + t13 + t15 + t74 + t77 + t80 + t84 + t88 + t96) * t1);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   CNOC::g_numEqns() const
@@ -399,7 +482,7 @@ namespace CNOCDefine {
     LM__[6] = (LL__[6]+LR__[6])/2;
     integer i_segment = LEFT__.i_segment;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    U__[ iU_js ] = jsControl.solve(-LM__[4], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    U__[ iU_js ] = jnControl.solve(-LM__[4], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type t5   = ModelPars[iM_jn_max];
     U__[ iU_jn ] = jnControl.solve(-LM__[5], -t5, t5);
     if ( m_debug )
@@ -475,7 +558,7 @@ namespace CNOCDefine {
     real_type tmp_1_9 = 0.0e0;
     real_type tmp_0_10 = 0.0e0;
     real_type tmp_1_10 = 0.0e0;
-    real_type t4   = jsControl.solve_rhs(-LM__[4], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t4   = jnControl.solve_rhs(-LM__[4], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type tmp_0_11 = -0.5e0 * t4;
     real_type tmp_1_11 = 0.0e0;
     real_type tmp_0_12 = 0.0e0;
@@ -609,24 +692,24 @@ namespace CNOCDefine {
     real_type t34  = ALIAS_theta(t33);
     real_type t35  = cos(t34);
     real_type t37  = sin(t34);
-    real_type t43  = ax_limit(1.0 / ModelPars[iM_ax_max] * (t21 * t35 - t27 * t37));
-    real_type t51  = ay_limit(1.0 / ModelPars[iM_ay_max] * (t21 * t37 + t27 * t35));
+    real_type t43  = ax_limit(1.0 / ModelPars[iM_ax_max] * (t35 * t21 - t37 * t27));
+    real_type t51  = ay_limit(1.0 / ModelPars[iM_ay_max] * (t37 * t21 + t35 * t27));
     real_type t53  = U__[iU_js];
     real_type t56  = jsControl(t53, ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type t58  = U__[iU_jn];
     real_type t59  = ModelPars[iM_jn_max];
     real_type t60  = jnControl(t58, -t59, t59);
     real_type t63  = ALIAS_kappa(t33);
-    real_type t66  = 1.0 / (-t15 * t63 + 1);
-    real_type t70  = pow(-t1 * t3 * t66 + V__[0], 2);
+    real_type t66  = 1.0 / (-t63 * t15 + 1);
+    real_type t70  = pow(-t1 * t66 * t3 + V__[0], 2);
     real_type t74  = pow(-t1 * t5 + V__[1], 2);
     real_type t77  = t66 * t63;
-    real_type t82  = pow(V__[2] + t1 * (-t3 * t5 * t77 - t21), 2);
-    real_type t89  = pow(V__[3] + t1 * (t4 * t63 * t66 - t27), 2);
+    real_type t82  = pow(V__[2] + t1 * (-t77 * t5 * t3 - t21), 2);
+    real_type t89  = pow(V__[3] + t1 * (t66 * t63 * t4 - t27), 2);
     real_type t96  = pow(V__[4] + t1 * (-t77 * t27 * t3 - t53), 2);
     real_type t103 = pow(V__[5] + t1 * (t77 * t21 * t3 - t58), 2);
     real_type t105 = V__[6] * V__[6];
-    real_type result__ = t1 * t13 + t1 * t19 + t1 * t25 + t1 * t31 + t1 * t43 + t1 * t51 + t1 * t56 + t1 * t60 + t103 + t105 + t2 + t70 + t74 + t82 + t89 + t96;
+    real_type result__ = t13 * t1 + t19 * t1 + t25 * t1 + t31 * t1 + t43 * t1 + t51 * t1 + t56 * t1 + t60 * t1 + t103 + t105 + t2 + t70 + t74 + t82 + t89 + t96;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }

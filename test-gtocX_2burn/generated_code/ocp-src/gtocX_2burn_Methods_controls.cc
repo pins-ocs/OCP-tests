@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -54,6 +54,88 @@ namespace gtocX_2burnDefine {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  gtocX_2burn::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[6], LM__[6];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = XM__[0];
+    real_type t2   = sqrt(t1);
+    real_type t3   = t2 * t1;
+    real_type t6   = ModelPars[iM_time_i];
+    real_type t7   = ModelPars[iM_time_f] - t6;
+    real_type t10  = QM__[0] * t7 + t6;
+    real_type t11  = p_guess(t10);
+    real_type t12  = t11 * t11;
+    real_type t13  = ModelPars[iM_muS];
+    real_type t14  = sqrt(t13);
+    real_type t17  = ModelPars[iM_w_guess] - 1;
+    real_type t18  = t17 * t3;
+    real_type t19  = L_guess(t10, t6);
+    real_type t20  = t19 * t19;
+    real_type t23  = t3 * t14;
+    real_type t25  = XM__[5];
+    real_type t30  = XM__[1];
+    real_type t31  = cos(t25);
+    real_type t33  = XM__[2];
+    real_type t34  = sin(t25);
+    real_type t35  = t34 * t33;
+    real_type t37  = ray_positive(t31 * t30 + t35 + 1);
+    real_type t40  = f_guess(t10);
+    real_type t41  = t40 * t40;
+    real_type t48  = g_guess(t10);
+    real_type t49  = t48 * t48;
+    real_type t56  = h_guess(t10);
+    real_type t57  = t56 * t56;
+    real_type t60  = XM__[3];
+    real_type t65  = k_guess(t10);
+    real_type t66  = t65 * t65;
+    real_type t69  = XM__[4];
+    real_type t74  = t1 * t1;
+    real_type t83  = ray(t1, t30, t33, t25);
+    real_type t84  = acceleration_r(t83, t13);
+    real_type t87  = t30 * t30;
+    real_type t88  = t33 * t33;
+    real_type t89  = t60 * t60;
+    real_type t90  = t69 * t69;
+    real_type t91  = t25 * t25;
+    real_type t97  = t31 * t31;
+    real_type t109 = -t41 * t17 * t23 + 2 * t40 * t17 * t30 * t23 - t49 * t17 * t23 + 2 * t48 * t17 * t33 * t23 - t57 * t17 * t23 + 2 * t56 * t18 * t14 * t60 - t66 * t17 * t23 + 2 * t65 * t18 * t14 * t69 - t84 * (LM__[2] * t31 - LM__[1] * t34) * t7 * ModelPars[iM_w_nonlin] * t74 - t18 * (t87 + t88 + t89 + t90 + t91 + 1) * t14 + t13 * t7 * (t97 * (t87 - t88) + t31 * (2 * t33 * t30 * t34 + 2 * t30) + 2 * t35 + t88 + 1) * LM__[5];
+    real_type result__ = 1.0 / t12 / t14 * (-t17 * t14 * t2 * t74 * t1 + 2 * t11 * t17 * t2 * t74 * t14 + 2 * t19 * t17 * t25 * t12 * t23 - t20 * t18 * t14 * t12 + t23 * t12 * t37 + t12 * t109) / t3;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   gtocX_2burn::g_numEqns() const

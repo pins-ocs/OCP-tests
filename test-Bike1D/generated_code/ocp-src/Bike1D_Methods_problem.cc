@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -147,7 +147,7 @@ namespace Bike1DDefine {
     real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
     real_type t8   = murControl(U__[iU_mur], ModelPars[iM_mur_min], t7);
     real_type t12  = mufControl(U__[iU_muf], ModelPars[iM_muf_min], 0);
-    real_type result__ = t12 * t2 + t2 * t8;
+    real_type result__ = t12 * t2 + t8 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
     }
@@ -342,7 +342,7 @@ namespace Bike1DDefine {
     real_type t5   = Tmax_normalized(t1);
     real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
     real_type t8   = ALIAS_murControl_D_1(U__[iU_mur], ModelPars[iM_mur_min], t7);
-    result__[ 0   ] = t2 * t8;
+    result__[ 0   ] = t8 * t2;
     real_type t11  = ALIAS_mufControl_D_1(U__[iU_muf], ModelPars[iM_muf_min], 0);
     result__[ 1   ] = t11 * t2;
     if ( m_debug )
@@ -530,7 +530,7 @@ namespace Bike1DDefine {
 
   integer
   Bike1D::post_numEqns() const
-  { return 1; }
+  { return 4; }
 
   void
   Bike1D::post_eval(
@@ -544,8 +544,14 @@ namespace Bike1DDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = Tmax_normalized(X__[iX_v]);
-    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
+    real_type t3   = X__[iX_v];
+    real_type t4   = Tmax_normalized(t3);
+    real_type t6   = clip(t4, 0, ModelPars[iM_mur_max]);
+    result__[ 0   ] = murControl(U__[iU_mur], ModelPars[iM_mur_min], t6);
+    result__[ 1   ] = mufControl(U__[iU_muf], ModelPars[iM_muf_min], 0);
+    result__[ 2   ] = vMinLimit(t3 - ModelPars[iM_v_min]);
+    result__[ 3   ] = t4;
+    Mechatronix::check_in_segment( result__, "post_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

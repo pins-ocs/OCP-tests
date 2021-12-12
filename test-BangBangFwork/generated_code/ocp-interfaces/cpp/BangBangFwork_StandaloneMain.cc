@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -137,8 +137,8 @@ main() {
     // Post Processing Parameters
 
     // User Function Parameters
-    data_Parameters["amp1"] = 0.1;
-    data_Parameters["amp2"] = 0.01;
+    data_Parameters["amp1"] = 0.25;
+    data_Parameters["amp2"] = 0.1;
 
     // Continuation Parameters
 
@@ -163,14 +163,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFwork_data.Mesh["s0"] = 0;
-BangBangFwork_data.Mesh["segments"][0]["length"] = 0.1;
-BangBangFwork_data.Mesh["segments"][0]["n"] = 10;
-BangBangFwork_data.Mesh["segments"][1]["length"] = 0.4;
-BangBangFwork_data.Mesh["segments"][1]["n"] = 40;
-BangBangFwork_data.Mesh["segments"][2]["length"] = 0.4;
-BangBangFwork_data.Mesh["segments"][2]["n"] = 40;
-BangBangFwork_data.Mesh["segments"][3]["length"] = 0.1;
-BangBangFwork_data.Mesh["segments"][3]["n"] = 10;
+BangBangFwork_data.Mesh["segments"][0]["n"] = 100;
+BangBangFwork_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

@@ -3,32 +3,24 @@ with(XOptima):
 with(XOptimaPlots):
 with(plots):
 #with(Optimization):;
+(*
+Ptot := zeta -> piecewise(zeta>0 and zeta <30,2,
+                          zeta>60 and zeta <90,2,
+                          zeta>120 and zeta <150,2,
+                          0.5):
+*);
+#Ptot1 := zeta -> piecewise(zeta>30,100):;
+#Ptot1 := zeta ->  1 + 1 * sin(arctan(zeta - 10)) - 1 - 1 * sin(arctan(zeta - 40));
+#plot(Ptot(zeta), zeta = 0..200);
+addUserFunction( Ptot(zeta)=(P2-P1)/(t2-t1)*zeta + P1 - (P2-P1)/(t2-t1) );
 eqn1 := diff(x1(t),t) + (x1(t) - x1__o(t))/tau__1: # PCr
 eqn2 := diff(x2(t),t) + (x2(t) - x2__o(t))/tau__2: # O2
 eqn3 := diff(x3(t),t) + (x3(t) - x3__o(t))/tau__3: # La
 eqn4 := diff(res(t),t) + (- x3(t) + x4(t))/tau__4:
 eqn5 := diff(x4(t),t) + (x4(t) - x4__o(t))/tau__5:;
-model_data := [
-  tau__1 = 3,
-  tau__2 = 25,
-  tau__3 = 10,
-  tau__4 = 60,
-  tau__5 = 120
-]:;
-xvars := [x1(t), x2(t), x3(t), res(t), x4(t)]:
-uvars := [x1__o(t), x2__o(t), x3__o(t), x4__o(t)]:;
-eqns := [eqn||(1..5)]:;
-subs_tt := [
-  x1(t)    = x1,
-  x2(t)    = x2,
-  x3(t)    = x3,
-  res(t)   = res, x4(t) = x4,
-  x1__o(t) = x1__o,
-  x2__o(t) = x2__o,
-  x3__o(t) = x2__o,
-  x4__o(t) = x4__o
-];
-vars_min := [x1, x2, x3, res, x4, x1__o, x2__o, x3__o, x4__o]:;
+eqns := [eqn||(1..5)]: <%>;
+xvars := map([x1,x2,x3,res,x4],(t));
+uvars := map([x1__o,x2__o,x3__o,x4__o],(t));
 loadDynamicSystem(
   equations = eqns,
   controls  = uvars,
@@ -58,6 +50,30 @@ setTarget(
   lagrange = lagrange_target, 
   mayer    = mayer_target
 );
+addControlBound(
+  x1__o(zeta),
+  controlType = "U_COS_LOGARITHMIC",
+  min         = -0.001, 
+  max         = 100
+):
+addControlBound(
+  x2__o(zeta),
+  controlType = "U_COS_LOGARITHMIC",
+  min         = -0.001, 
+  max         = 100
+):
+addControlBound(
+  x3__o(zeta),
+  controlType = "U_COS_LOGARITHMIC",
+  min         = -0.001, 
+  max         = 100
+):
+addControlBound(
+  x4__o(zeta),
+  controlType = "U_COS_LOGARITHMIC",
+  min         = -0.001, 
+  max         = 100
+):;
 addUnilateralConstraint(
   x2(zeta) + x4(zeta) < 0.12,
   LimitX2X4,
@@ -87,48 +103,21 @@ addUnilateralConstraint(
   barrier = false
 ):
 *);
-addControlBound(
-  x1__o(zeta),
-  controlType = "U_COS_LOGARITHMIC",
-  min         = -0.001, 
-  max         = 100
-):
-addControlBound(
-  x2__o(zeta),
-  controlType = "U_COS_LOGARITHMIC",
-  min         = -0.001, 
-  max         = 100
-):
-addControlBound(
-  x3__o(zeta),
-  controlType = "U_COS_LOGARITHMIC",
-  min         = -0.001, 
-  max         = 100
-):
-addControlBound(
-  x4__o(zeta),
-  controlType = "U_COS_LOGARITHMIC",
-  min         = -0.001, 
-  max         = 100
-):;
-post_process_outputs := [
-  [ 1/w1 * x1(zeta)
-    + 1/w2 * x2(zeta)
-    + 1/w3 * x3(zeta)
-    + 1/w4 * x4(zeta), "power_delivered"],
-  [Ptot(zeta),      "power_required"]
+model_data := [
+  tau__1 = 3,
+  tau__2 = 25,
+  tau__3 = 10,
+  tau__4 = 60,
+  tau__5 = 120
 ]:;
-(*
-Ptot := zeta -> piecewise(zeta>0 and zeta <30,2,
-                          zeta>60 and zeta <90,2,
-                          zeta>120 and zeta <150,2,
-                          0.5):
-*);
-Ptot1 := zeta -> piecewise(zeta>30,100):;
-Ptot1 := zeta ->  1 + 1 * sin(arctan(zeta - 10)) - 1 - 1 * sin(arctan(zeta - 40));
-#plot(Ptot(zeta), zeta = 0..200);
-Ptot := (zeta) -> simplify((P2-P1)/(t2-t1)* zeta + P1 - (P2-P1)/(t2-t1));
-ocp_data := [
+ICs := [
+  x10  = 0.001,
+  x20  = 0.001, 
+  x30  = 0.001, 
+  res0 = 0.001, 
+  x40  = 0.001
+]:;
+PARS := [
   wP  = 1,
   w1  = 1.3,
   w2  = 0.1,
@@ -141,98 +130,90 @@ ocp_data := [
   P1  = 0.1,
   P2  = 0.1,
   t1  = 0,
-  t2  = 60
+  t2  = 60,
+  op(ICs),
+  op(model_data)
 ]:;
-ICs := [
-  x10  = 0.001,
-  x20  = 0.001, 
-  x30  = 0.001, 
-  res0 = 0.001, 
-  x40  = 0.001
+POST := [
+  [ 1/w1 * x1(zeta)
+    + 1/w2 * x2(zeta)
+    + 1/w3 * x3(zeta)
+    + 1/w4 * x4(zeta), "power_delivered"],
+  [Ptot(zeta), "power_required"]
 ]:;
-s_guess := [
+CONT := [];
+GUESS := [
   x1  = 0.01,
   x2  = 0.01, 
   x3  = 0.01, 
   x4  = 0.01, 
   res = 0.01
 ]:;
-project_dir  := "../generated_code"; 
+UGUESS := [
+  x1__o  = 50,
+  x2__o  = 50, 
+  x3__o  = 50, 
+  x4__o  = 50
+]:;
+REGION := [
+  x1(zeta) >=0,
+  x2(zeta) >=0,
+  x3(zeta) >=0,
+  res(zeta)>=0,
+  x4(zeta) >=0
+];
+MESH_DEF := [[length=2,n=400]];
+project_dir  := "../generated_code";
 project_name := "Farmer";
 generateOCProblem(
   project_name,
-  output_directory = project_dir,
-  post_processing  = post_process_outputs,
-  mesh             = [[length=2,n=400]],
-  max_iter         = 120,
-  #mesh         = [[length=0.1,n=100],
-  #                [length=0.3,n=400],
-  #                [length=0.6,n=200]],
-  admissible_region = [
-    x1(zeta) >=0,
-    x2(zeta) >=0,
-    x3(zeta) >=0,
-    res(zeta)>=0,
-    x4(zeta) >=0
-  ],
-  parameters   = [op(ocp_data), op(model_data), op(ICs)],
-  #continuation = continuation_seq,
-  states_guess = s_guess
+  post_processing   = POST,
+  parameters        = PARS,
+  continuation      = CONT,
+  admissible_region = REGION,
+  mesh              = MESH_DEF,
+  states_guess      = GUESS,
+  controls_guess    = UGUESS
 );
-return;
-launchSolver(project_dir,project_name);
-XOptimaPlots:-loadSolution(project_dir,project_name);
-display(
-  plotSolution(
-    zeta,
-    ["res", "x1", "x2", "x3", "x4"],
-    line_opts = [
-      [color="ForestGreen"],
-      [color="Orange"],
-      [color="Blue"], 
-      [color="Red"],
-      [color="Green"]
-    ]
-  ),
-  view = -0.05..0.05,
-  axes = boxed,
-  size = [800,300]
+# if used in batch mode use the comment to quit;
+# quit;
+#launchSolver(project_dir,project_name);
+compileSolver(project_dir,project_name);
+runSolver(project_dir);
+with(plots):;
+XOptimaPlots:-loadSolution(project_dir,project_name); # load solution
+hhdrs := XOptimaPlots:-getHeaders(): nops(%);
+XOptimaPlots:-plotSolution(
+  zeta,
+  ["res", "x1", "x2", "x3", "x4"],
+  line_opts = [
+    [color="ForestGreen"],
+    [color="Orange"],
+    [color="Blue"], 
+    [color="Red"],
+    [color="Green"]
+  ]
 );
-display(
-  plotSolution(
-    zeta,
-    ["res"],
-    line_opts = [[color="Orange"]]
-  ),
-  view = 0..0.1,
-  axes = boxed,
-  size = [800,300]
+XOptimaPlots:-plotSolution(
+  zeta,
+  ["res"],
+  line_opts = [[color="Orange"]]
 );
-display(
-  plotSolution(
-    zeta,
-    ["power_required", "power_delivered"],
-    line_opts = [
-      [color="Orange"],
-      [color="Blue"]
-    ]
-  ),
-  view = 0..1,
-  axes = boxed,
-  size = [800,300]
+XOptimaPlots:-plotSolution(
+  zeta,
+  ["power_required", "power_delivered"],
+  line_opts = [
+    [color="Orange"],
+    [color="Blue"]
+  ]
 );
-display(
-  plotSolution(
-    zeta,
-    ["x1__o", "x2__o", "x3__o", "x4__o"],
-    line_opts = [
-      [color="Black"],
-      [color="Red"],
-      [color="Green"],
-      [color="Black"]
-    ]
-  ),
-  view = 0..0.1,
-  axes = boxed,
-  size = [800,300]
+XOptimaPlots:-plotSolution(
+  zeta,
+  ["x1__o", "x2__o", "x3__o", "x4__o"],
+  line_opts = [
+    [color="Black"],
+    [color="Red"],
+    [color="Green"],
+    [color="Black"]
+  ]
 );

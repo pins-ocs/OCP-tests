@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Data.lua                                            |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,11 +20,11 @@
 -- User Header
 
 -- Auxiliary values
-tol_max  = 0.01
 W0       = 1000
-cL_max   = 1.4
 epsi_max = 0.01
+tol_max  = 0.01
 W        = W0
+cL_max   = 1.4
 cL_min   = 0
 
 content = {
@@ -53,7 +53,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,

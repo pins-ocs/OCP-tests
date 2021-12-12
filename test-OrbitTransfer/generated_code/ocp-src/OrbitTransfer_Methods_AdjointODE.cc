@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -78,7 +78,7 @@ namespace OrbitTransferDefine {
     real_type t10  = 1.0 / t9;
     real_type t14  = t2 * L__[iL_lambda3__xo];
     real_type t15  = cos(t5);
-    result__[ 0   ] = -t10 * t14 * t15 * t4 - t10 * t3 * t4 * t6;
+    result__[ 0   ] = -t10 * t15 * t4 * t14 - t10 * t6 * t4 * t3;
     result__[ 1   ] = 0;
     real_type t19  = X__[iX_v];
     real_type t20  = t19 * t19;
@@ -90,8 +90,8 @@ namespace OrbitTransferDefine {
     result__[ 2   ] = (-t23 * t20 + 2 / t22 / t21 * ModelPars[iM_mu]) * t3 + t23 * t32 * t19 * t14 - t23 * t19 * t37;
     real_type t42  = 1.0 / t21;
     real_type t43  = t42 * t19;
-    result__[ 3   ] = -t14 * t43 + t2 * L__[iL_lambda1__xo];
-    result__[ 4   ] = -t14 * t32 * t42 + 2 * t3 * t43 + t37 * t42;
+    result__[ 3   ] = -t43 * t14 + t2 * L__[iL_lambda1__xo];
+    result__[ 4   ] = -t42 * t32 * t14 + 2 * t43 * t3 + t42 * t37;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }

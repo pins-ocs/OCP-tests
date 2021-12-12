@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Bike1D.m                                                       %
 %                                                                       %
-%  version: 1.0   date 4/12/2021                                        %
+%  version: 1.0   date 14/12/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -409,6 +409,24 @@ classdef Bike1D < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function res = post_processing_murControl( self )
+      %
+      % Return the solution for the post processing variable: murControl
+      %
+      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'murControl' );
+    end
+    function res = post_processing_mufControl( self )
+      %
+      % Return the solution for the post processing variable: mufControl
+      %
+      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'mufControl' );
+    end
+    function res = post_processing_vMinLimit( self )
+      %
+      % Return the solution for the post processing variable: vMinLimit
+      %
+      res = Bike1D_Mex( 'get_solution', self.objectHandle, 'vMinLimit' );
+    end
     function res = post_processing_Tmax_norma( self )
       %
       % Return the solution for the post processing variable: Tmax_norma

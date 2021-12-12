@@ -107,11 +107,11 @@ dump_min       = 0.40000       dump_max       = 0.90000
 ratio ||f||_2  = 1.4000        ratio ||d||_2  = 1.4000
 ratio ||f||_1  = 1.4000        ratio ||d||_1  = 1.4000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 40.3[ms]      timeout        = 0 [ms]
+Elapsed Time   = 42.2[ms]      timeout        = 0 [ms]
 iteration      = 26            tolerance      = 1.000e-09
 max iterations = 300           N. Equations   = 628
 max acc. iter. = 800           N. System pars = 103
-Converged      = YES           Memory Used    = 80Kb (+32bytes)
+Converged      = YES           Memory Used    = 81Kb (+98bytes)
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
@@ -162,6 +162,11 @@ jac[  1, 10] =       2.6666 / 2.6672       [A/FD] ---   0.00052643 / 0.019738   
 skipping...
 Last block: OK
 Check Jacobian End
+Check Controls Begin
+At cell 10, H = -0.032720982963060787, ||g||_inf = 4.527574397050506e-05
+At cell 51, H = -0.12984365171076376, ||g||_inf = 5.650152987483584e-06
+At cell 92, H = -0.003297595540743473, ||g||_inf = 5.726995655069916e-05
+Check Controls End
 target [Lagrange,Mayer]       = [ 0.000, 0.1437 ]
 [Penalties/Barriers,Controls] = [ 6.958e-06, 0.0001642 ]
 All Done Folks!

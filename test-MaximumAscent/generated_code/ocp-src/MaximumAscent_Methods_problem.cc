@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,12 +82,12 @@ namespace MaximumAscentDefine {
     real_type t12  = 1.0 / t11;
     real_type t14  = t11 * t11;
     real_type t18  = Tbar(t3);
-    real_type t26  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]) * t18;
+    real_type t26  = 1.0 / (-t3 * Q__[iQ_zeta] * ModelPars[iM_mdot] + ModelPars[iM_m0]) * t18;
     real_type t27  = U__[iU_alpha];
     real_type t28  = sin(t27);
     real_type t34  = t12 * t9;
     real_type t36  = cos(t27);
-    real_type result__ = t6 * t4 * L__[iL_lambda1__xo] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * L__[iL_lambda2__xo] + (-t34 * t6 * t4 + t36 * t26) * L__[iL_lambda3__xo] + t34 * t4 * L__[iL_lambda4__xo];
+    real_type result__ = t6 * t4 * L__[iL_lambda1__xo] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * L__[iL_lambda2__xo] + (-t34 * t4 * t6 + t26 * t36) * L__[iL_lambda3__xo] + t34 * t4 * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }

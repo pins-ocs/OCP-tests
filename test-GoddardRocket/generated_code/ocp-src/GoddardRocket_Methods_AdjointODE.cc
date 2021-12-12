@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -94,10 +94,10 @@ namespace GoddardRocketDefine {
     real_type t7   = X__[iX_m];
     real_type t8   = 1.0 / t7;
     real_type t10  = gg_D(t4);
-    result__[ 0   ] = (-t8 * t6 - t10) * t3;
+    result__[ 0   ] = (-t6 * t8 - t10) * t3;
     real_type t12  = ALIAS_vPositive_D(t5);
     real_type t15  = DD_D_2(t4, t5);
-    result__[ 1   ] = -t8 * t15 * t3 + t2 * L__[iL_lambda1__xo] + t12;
+    result__[ 1   ] = -t15 * t3 * t8 + t2 * L__[iL_lambda1__xo] + t12;
     real_type t18  = ALIAS_massPositive_D(t7);
     real_type t20  = DD(t4, t5);
     real_type t22  = t7 * t7;
@@ -224,9 +224,9 @@ namespace GoddardRocketDefine {
     real_type t5   = X__[iX_m];
     real_type t6   = 1.0 / t5;
     real_type t8   = gg_D(t2);
-    result__[ 0   ] = (-t6 * t4 - t8) * t1;
+    result__[ 0   ] = (-t4 * t6 - t8) * t1;
     real_type t11  = DD_D_2(t2, t3);
-    result__[ 1   ] = -t6 * t11 * t1 + L__[iL_lambda1__xo];
+    result__[ 1   ] = -t1 * t11 * t6 + L__[iL_lambda1__xo];
     real_type t15  = DD(t2, t3);
     real_type t18  = t5 * t5;
     result__[ 2   ] = -1.0 / t18 * (U__[iU_T] - t15) * t1;

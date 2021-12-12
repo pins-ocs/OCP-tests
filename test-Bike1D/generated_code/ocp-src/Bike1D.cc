@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D.cc                                                      |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,6 +79,9 @@ namespace Bike1DDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "murControl",
+    "mufControl",
+    "vMinLimit",
     "Tmax_norma",
     nullptr
   };

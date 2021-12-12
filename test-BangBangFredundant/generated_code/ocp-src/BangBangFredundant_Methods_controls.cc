@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -41,6 +41,15 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
+#define ALIAS_clip_D_3(__t1, __t2, __t3) clip.D_3( __t1, __t2, __t3)
+#define ALIAS_clip_D_2(__t1, __t2, __t3) clip.D_2( __t1, __t2, __t3)
+#define ALIAS_clip_D_1(__t1, __t2, __t3) clip.D_1( __t1, __t2, __t3)
+#define ALIAS_clip_D_3_3(__t1, __t2, __t3) clip.D_3_3( __t1, __t2, __t3)
+#define ALIAS_clip_D_2_3(__t1, __t2, __t3) clip.D_2_3( __t1, __t2, __t3)
+#define ALIAS_clip_D_2_2(__t1, __t2, __t3) clip.D_2_2( __t1, __t2, __t3)
+#define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
+#define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
+#define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
 #define ALIAS_Flim_DD(__t1) Flim.DD( __t1)
 #define ALIAS_Flim_D(__t1) Flim.D( __t1)
 #define ALIAS_aF2Control_D_3(__t1, __t2, __t3) aF2Control.D_3( __t1, __t2, __t3)
@@ -72,6 +81,53 @@ namespace BangBangFredundantDefine {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  BangBangFredundant::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[6], LM__[6];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t4   = XM__[2] + XM__[3];
+    real_type t5   = Flim(t4);
+    real_type t19  = UM__[0];
+    real_type t22  = UM__[1];
+    real_type t24  = ModelPars[iM_maxAF];
+    real_type t25  = aF1Control(t19, -t24, t24);
+    real_type t26  = aF2Control(t22, -t24, t24);
+    real_type result__ = t19 * LM__[4] + t22 * LM__[5] + t4 * LM__[1] + t5 * ModelPars[iM_w_F] + LM__[0] * XM__[1] + LM__[2] * XM__[4] + LM__[3] * XM__[5] + t25 + t26;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   BangBangFredundant::g_numEqns() const
@@ -305,7 +361,7 @@ namespace BangBangFredundantDefine {
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_maxAF];
-    U__[ iU_aF1 ] = aF1Control.solve(-LM__[4], -t2, t2);
+    U__[ iU_aF1 ] = aF2Control.solve(-LM__[4], -t2, t2);
     U__[ iU_aF2 ] = aF2Control.solve(-LM__[5], -t2, t2);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
@@ -377,7 +433,7 @@ namespace BangBangFredundantDefine {
     real_type tmp_0_9 = 0.0e0;
     real_type tmp_1_9 = 0.0e0;
     real_type t2   = ModelPars[iM_maxAF];
-    real_type t3   = aF1Control.solve_rhs(-LM__[4], -t2, t2);
+    real_type t3   = aF2Control.solve_rhs(-LM__[4], -t2, t2);
     real_type tmp_0_10 = -0.5e0 * t3;
     real_type tmp_1_10 = 0.0e0;
     real_type tmp_0_11 = 0.0e0;

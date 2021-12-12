@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -47,7 +47,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -157,7 +159,7 @@ content = {
       -- "MERIT_LOG_D2", "MERIT_LOG_F2"
       -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
       merit                = "MERIT_F2_and_D2",
-      max_iter             = 120,
+      max_iter             = 300,
       max_step_iter        = 40,
       max_accumulated_iter = 800,
       continuation = {
@@ -200,7 +202,7 @@ content = {
     },
 
     Hyness = {
-      max_iter             = 120,
+      max_iter             = 300,
       max_step_iter        = 40,
       max_accumulated_iter = 800,
       tolerance            = 1e-09,
@@ -251,10 +253,6 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    P1     = 0.1,
-    P2     = 0.1,
-    t1     = 0,
-    t2     = 60,
     tau__1 = 3,
     tau__2 = 25,
     tau__3 = 10,
@@ -282,6 +280,10 @@ content = {
     -- Post Processing Parameters
 
     -- User Function Parameters
+    P1 = 0.1,
+    P2 = 0.1,
+    t1 = 0,
+    t2 = 60,
 
     -- Continuation Parameters
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 5/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,7 +82,7 @@ namespace ICLOCS2_AlyChanDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda3__xo];
     result__[ 0   ] = -X__[iX_x1] * t1;
-    result__[ 1   ] = X__[iX_x2] * t1 + L__[iL_lambda1__xo];
+    result__[ 1   ] = t1 * X__[iX_x2] + L__[iL_lambda1__xo];
     result__[ 2   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );

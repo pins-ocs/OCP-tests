@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -465,7 +465,7 @@ namespace PointMassCarModel_1Define {
     real_type t50  = LimitMinSpeed(t1);
     real_type t53  = v__fxControl(U__[iU_v__fx], -1, 1);
     real_type t56  = v__OmegaControl(U__[iU_v__Omega], -1, 1);
-    result__[ 0   ] = t26 * t5 + t30 * t5 - t33 * t32 + t39 * t32 + t37 * t5 + t48 * t5 + t50 * t5 + t53 * t5 + t56 * t5;
+    result__[ 0   ] = t26 * t5 + t30 * t5 - t33 * t32 + t39 * t32 + t37 * t5 + t48 * t5 + t50 * t5 + t5 * t53 + t56 * t5;
     real_type t58  = inv_zeta__dot_D_2(t1, t2, t3, t4);
     result__[ 1   ] = t26 * t58 + t30 * t58 + t37 * t58 + t48 * t58 + t50 * t58 + t53 * t58 + t56 * t58;
     real_type t66  = inv_zeta__dot_D_1(t1, t2, t3, t4);

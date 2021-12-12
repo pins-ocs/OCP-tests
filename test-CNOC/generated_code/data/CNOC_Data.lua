@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Data.lua                                                  |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,14 +20,14 @@
 -- User Header
 
 -- Auxiliary values
-js_max                   = 30
-path_following_tolerance = 1.0e-05
-js_min                   = -50
-v_nom                    = 0.173
-deltaFeed                = v_nom
 jn_max                   = 65
-pf_error                 = path_following_tolerance
+v_nom                    = 0.173
+path_following_tolerance = 1.0e-05
 mesh_segments            = 100
+deltaFeed                = v_nom
+js_min                   = -50
+js_max                   = 30
+pf_error                 = path_following_tolerance
 
 content = {
 
@@ -55,7 +55,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,

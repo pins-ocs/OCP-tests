@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Data.lua                                |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -51,7 +51,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -83,7 +85,7 @@ content = {
     solver = 'NewtonDumped',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
-    Iterative = false,
+    Iterative = true,
     InfoLevel = -1, -- suppress all messages
     -- 'LM', 'YS', 'QN'
     initialize_control_solver = 'QN',
@@ -258,6 +260,7 @@ content = {
   Parameters = {
 
     -- Model Parameters
+    rho = 0.01,
 
     -- Guess Parameters
 
@@ -267,7 +270,7 @@ content = {
     alpha_f        = 0.522,
     alpha_i        = 0,
     theta_f        = 0.5,
-    theta_i        = 0.5,
+    theta_i        = 0,
     omega__alpha_f = 0,
     omega__alpha_i = 0,
     omega__beta_f  = 0,

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -306,11 +306,11 @@ namespace CrossroadDefine {
     real_type t12  = t11 * t11;
     real_type t15  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
     real_type t16  = 1.0 / t15;
-    real_type t19  = ALIAS_AccBound_D(-t16 * t12 * t9 - t5 * t2 + 1);
+    real_type t19  = ALIAS_AccBound_D(-t12 * t16 * t9 - t2 * t5 + 1);
     real_type t22  = kappa_D(t10);
     result__[ 0   ] = -2 * t22 * t16 * t11 * t9 * t19;
     real_type t31  = ALIAS_VelBound_D(t7);
-    result__[ 1   ] = -4 * t16 * t12 * t8 * t7 * t19 + t31;
+    result__[ 1   ] = -4 * t12 * t16 * t19 * t7 * t8 + t31;
     result__[ 2   ] = -2 * t5 * t1 * t19;
     result__[ 3   ] = ALIAS_Tpositive_D(X__[iX_Ts]);
     if ( m_debug )

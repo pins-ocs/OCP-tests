@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -159,6 +159,80 @@ namespace PointMassCarModel_3Define {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  PointMassCarModel_3::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[4], XM__[7], LM__[7];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    QM__[1] = (QL__[1]+QR__[1])/2;
+    QM__[2] = (QL__[2]+QR__[2])/2;
+    QM__[3] = (QL__[3]+QR__[3])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    XM__[5] = (XL__[5]+XR__[5])/2;
+    XM__[6] = (XL__[6]+XR__[6])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    LM__[5] = (LL__[5]+LR__[5])/2;
+    LM__[6] = (LL__[6]+LR__[6])/2;
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    real_type t2   = XM__[6] * XM__[6];
+    real_type t3   = XM__[3];
+    real_type t4   = t3 * t3;
+    real_type t5   = XM__[4];
+    real_type t6   = t5 * t5;
+    real_type t9   = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
+    real_type t12  = ModelPars[iM_g] * ModelPars[iM_g];
+    real_type t15  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
+    real_type t17  = XM__[5];
+    real_type t18  = t17 * t17;
+    real_type t27  = AdherenceEllipse(1.0 / t15 / t12 / t9 * (t12 * t15 * t9 - t4 * t6 * t9 - t15 * t18));
+    real_type t31  = ModelPars[iM_Pmax];
+    real_type t35  = PowerLimit(1.0 / t31 * (-t17 * t3 * ModelPars[iM_m] + t31));
+    real_type t36  = XM__[0];
+    real_type t37  = ALIAS_leftWidth(t36);
+    real_type t38  = XM__[1];
+    real_type t40  = RoadLeftBorder(t37 - t38);
+    real_type t41  = LM__[2];
+    real_type t42  = ALIAS_Kappa(t36);
+    real_type t46  = XM__[2];
+    real_type t47  = zeta__dot(t3, t46, t38, t42);
+    real_type t49  = ALIAS_rightWidth(t36);
+    real_type t51  = RoadRightBorder(t49 + t38);
+    real_type t54  = sin(t46);
+    real_type t63  = UM__[0];
+    real_type t68  = UM__[1];
+    real_type t73  = v__fxControl(t63, -1, 1);
+    real_type t74  = v__OmegaControl(t68, -1, 1);
+    real_type t75  = t27 + t35 + t40 + t47 * (-t41 * t42 + LM__[0]) + t51 + t54 * t3 * LM__[1] + t5 * t41 + LM__[3] * (-t4 * ModelPars[iM_kD] + t17) + ModelPars[iM_v__fx__max] * t63 * LM__[5] + ModelPars[iM_v__Omega__max] * t68 * LM__[4] + ModelPars[iM_wT] + t73 + t74;
+    real_type result__ = t75 * t2;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   PointMassCarModel_3::g_numEqns() const
@@ -427,7 +501,7 @@ namespace PointMassCarModel_3Define {
     LM__[6] = (LL__[6]+LR__[6])/2;
     integer i_segment = LEFT__.i_segment;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    U__[ iU_v__fx    ] = v__fxControl.solve(-LM__[5] * ModelPars[iM_v__fx__max], -1, 1);
+    U__[ iU_v__fx    ] = v__OmegaControl.solve(-LM__[5] * ModelPars[iM_v__fx__max], -1, 1);
     U__[ iU_v__Omega ] = v__OmegaControl.solve(-LM__[4] * ModelPars[iM_v__Omega__max], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
@@ -510,7 +584,7 @@ namespace PointMassCarModel_3Define {
     real_type t4   = v__OmegaControl.solve_rhs(-t2 * LM__[4], -1, 1);
     real_type tmp_1_11 = -0.5e0 * t2 * t4;
     real_type t8   = ModelPars[iM_v__fx__max];
-    real_type t10  = v__fxControl.solve_rhs(-t8 * LM__[5], -1, 1);
+    real_type t10  = v__OmegaControl.solve_rhs(-t8 * LM__[5], -1, 1);
     real_type tmp_0_12 = -0.5e0 * t8 * t10;
     real_type tmp_1_12 = 0.0e0;
     real_type tmp_0_13 = 0.0e0;
@@ -649,13 +723,13 @@ namespace PointMassCarModel_3Define {
     real_type t54  = zeta__dot(t15, t52, t28, t53);
     real_type t57  = pow(-t2 * t54 + V__[0], 2);
     real_type t59  = sin(t52);
-    real_type t63  = pow(-t15 * t2 * t59 + V__[1], 2);
+    real_type t63  = pow(-t2 * t59 * t15 + V__[1], 2);
     real_type t69  = pow(V__[2] - (-t53 * t54 + t13) * t2, 2);
     real_type t76  = pow(V__[3] - (-t16 * ModelPars[iM_kD] + t3) * t2, 2);
-    real_type t82  = pow(-t2 * t48 * ModelPars[iM_v__Omega__max] + V__[4], 2);
-    real_type t88  = pow(-t2 * t45 * ModelPars[iM_v__fx__max] + V__[5], 2);
+    real_type t82  = pow(-t2 * ModelPars[iM_v__Omega__max] * t48 + V__[4], 2);
+    real_type t88  = pow(-t2 * ModelPars[iM_v__fx__max] * t45 + V__[5], 2);
     real_type t90  = V__[6] * V__[6];
-    real_type result__ = t2 * t24 + t2 * t30 + t2 * t34 + t2 * t43 + t2 * t46 + t2 * t49 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
+    real_type result__ = t24 * t2 + t30 * t2 + t34 * t2 + t43 * t2 + t46 * t2 + t49 * t2 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }

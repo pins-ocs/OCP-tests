@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -111,23 +111,21 @@ namespace FarmerDefine {
     real_type t13  = ModelPars[iM_w3];
     real_type t15  = X__[iX_x3];
     real_type t17  = ModelPars[iM_w4];
-    real_type t20  = ModelPars[iM_t1];
-    real_type t21  = ModelPars[iM_t2];
-    real_type t22  = Q__[iQ_zeta];
-    real_type t34  = pow(t8 / t6 + t1 / t10 + t15 / t13 + t2 / t17 - 1.0 / (-t21 + t20) * (ModelPars[iM_P1] * (t20 - t21 + t22 - 1) - (t22 - 1) * ModelPars[iM_P2]), 2);
-    real_type t36  = t8 * t8;
-    real_type t38  = t1 * t1;
-    real_type t40  = t15 * t15;
-    real_type t42  = t2 * t2;
-    real_type t46  = -t8 + U__[iU_x1__o];
-    real_type t47  = t46 * t46;
-    real_type t51  = -t1 + U__[iU_x2__o];
-    real_type t52  = t51 * t51;
-    real_type t56  = -t15 + U__[iU_x3__o];
-    real_type t57  = t56 * t56;
-    real_type t61  = -t2 + U__[iU_x4__o];
-    real_type t62  = t61 * t61;
-    real_type result__ = t4 + t34 * ModelPars[iM_wP] + t36 * t6 + t10 * t38 + t40 * t13 + t42 * t17 + t47 * ModelPars[iM_wJ1] + t52 * ModelPars[iM_wJ2] + t57 * ModelPars[iM_wJ3] + t62 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t46 * L__[iL_lambda1__xo] + 1.0 / ModelPars[iM_tau__2] * t51 * L__[iL_lambda2__xo] + 1.0 / ModelPars[iM_tau__3] * t56 * L__[iL_lambda3__xo] - 1.0 / ModelPars[iM_tau__4] * (-t15 + t2) * L__[iL_lambda4__xo] + 1.0 / ModelPars[iM_tau__5] * t61 * L__[iL_lambda5__xo];
+    real_type t21  = Ptot(Q__[iQ_zeta]);
+    real_type t23  = pow(t8 / t6 + t1 / t10 + t15 / t13 + t2 / t17 - t21, 2);
+    real_type t25  = t8 * t8;
+    real_type t27  = t1 * t1;
+    real_type t29  = t15 * t15;
+    real_type t31  = t2 * t2;
+    real_type t35  = -t8 + U__[iU_x1__o];
+    real_type t36  = t35 * t35;
+    real_type t40  = -t1 + U__[iU_x2__o];
+    real_type t41  = t40 * t40;
+    real_type t45  = -t15 + U__[iU_x3__o];
+    real_type t46  = t45 * t45;
+    real_type t50  = -t2 + U__[iU_x4__o];
+    real_type t51  = t50 * t50;
+    real_type result__ = t4 + t23 * ModelPars[iM_wP] + t25 * t6 + t27 * t10 + t29 * t13 + t31 * t17 + t36 * ModelPars[iM_wJ1] + t41 * ModelPars[iM_wJ2] + t46 * ModelPars[iM_wJ3] + t51 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t35 * L__[iL_lambda1__xo] + 1.0 / ModelPars[iM_tau__2] * t40 * L__[iL_lambda2__xo] + 1.0 / ModelPars[iM_tau__3] * t45 * L__[iL_lambda3__xo] - 1.0 / ModelPars[iM_tau__4] * (-t15 + t2) * L__[iL_lambda4__xo] + 1.0 / ModelPars[iM_tau__5] * t50 * L__[iL_lambda5__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -207,19 +205,17 @@ namespace FarmerDefine {
     real_type t12  = X__[iX_x3];
     real_type t14  = ModelPars[iM_w4];
     real_type t16  = X__[iX_x4];
-    real_type t18  = ModelPars[iM_t1];
-    real_type t19  = ModelPars[iM_t2];
-    real_type t20  = Q__[iQ_zeta];
-    real_type t32  = pow(t4 / t2 + t8 / t6 + t12 / t10 + t16 / t14 - 1.0 / (-t19 + t18) * (ModelPars[iM_P1] * (t18 - t19 + t20 - 1) - (t20 - 1) * ModelPars[iM_P2]), 2);
-    real_type t34  = t4 * t4;
-    real_type t36  = t8 * t8;
-    real_type t38  = t12 * t12;
-    real_type t40  = t16 * t16;
-    real_type t45  = pow(-t4 + U__[iU_x1__o], 2);
-    real_type t50  = pow(-t8 + U__[iU_x2__o], 2);
-    real_type t55  = pow(-t12 + U__[iU_x3__o], 2);
-    real_type t60  = pow(-t16 + U__[iU_x4__o], 2);
-    real_type result__ = t10 * t38 + t14 * t40 + t2 * t34 + t32 * ModelPars[iM_wP] + t36 * t6 + t45 * ModelPars[iM_wJ1] + t50 * ModelPars[iM_wJ2] + t55 * ModelPars[iM_wJ3] + t60 * ModelPars[iM_wJ4];
+    real_type t19  = Ptot(Q__[iQ_zeta]);
+    real_type t21  = pow(t4 / t2 + t8 / t6 + t12 / t10 + t16 / t14 - t19, 2);
+    real_type t23  = t4 * t4;
+    real_type t25  = t8 * t8;
+    real_type t27  = t12 * t12;
+    real_type t29  = t16 * t16;
+    real_type t34  = pow(-t4 + U__[iU_x1__o], 2);
+    real_type t39  = pow(-t8 + U__[iU_x2__o], 2);
+    real_type t44  = pow(-t12 + U__[iU_x3__o], 2);
+    real_type t49  = pow(-t16 + U__[iU_x4__o], 2);
+    real_type result__ = t27 * t10 + t29 * t14 + t23 * t2 + t21 * ModelPars[iM_wP] + t25 * t6 + t34 * ModelPars[iM_wJ1] + t39 * ModelPars[iM_wJ2] + t44 * ModelPars[iM_wJ3] + t49 * ModelPars[iM_wJ4];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
     }
@@ -326,23 +322,21 @@ namespace FarmerDefine {
     real_type t14  = ModelPars[iM_w4];
     real_type t15  = 1.0 / t14;
     real_type t16  = X__[iX_x4];
-    real_type t18  = ModelPars[iM_t1];
-    real_type t19  = ModelPars[iM_t2];
-    real_type t20  = Q__[iQ_zeta];
-    real_type t32  = (t4 * t3 + t8 * t7 + t12 * t11 + t16 * t15 - 1.0 / (-t19 + t18) * (ModelPars[iM_P1] * (t18 - t19 + t20 - 1) - (t20 - 1) * ModelPars[iM_P2])) * ModelPars[iM_wP];
-    real_type t38  = (-t4 + U__[iU_x1__o]) * ModelPars[iM_wJ1];
-    result__[ 0   ] = 2 * t4 * t2 + 2 * t3 * t32 - 2 * t38;
-    real_type t45  = (-t8 + U__[iU_x2__o]) * ModelPars[iM_wJ2];
-    result__[ 1   ] = 2 * t7 * t32 + 2 * t8 * t6 - 2 * t45;
-    real_type t52  = (-t12 + U__[iU_x3__o]) * ModelPars[iM_wJ3];
-    result__[ 2   ] = 2 * t12 * t10 + 2 * t11 * t32 - 2 * t52;
+    real_type t19  = Ptot(Q__[iQ_zeta]);
+    real_type t21  = (t12 * t11 + t16 * t15 + t4 * t3 + t8 * t7 - t19) * ModelPars[iM_wP];
+    real_type t27  = (-t4 + U__[iU_x1__o]) * ModelPars[iM_wJ1];
+    result__[ 0   ] = 2 * t4 * t2 + 2 * t3 * t21 - 2 * t27;
+    real_type t34  = (-t8 + U__[iU_x2__o]) * ModelPars[iM_wJ2];
+    result__[ 1   ] = 2 * t7 * t21 + 2 * t8 * t6 - 2 * t34;
+    real_type t41  = (-t12 + U__[iU_x3__o]) * ModelPars[iM_wJ3];
+    result__[ 2   ] = 2 * t12 * t10 + 2 * t11 * t21 - 2 * t41;
     result__[ 3   ] = 0;
-    real_type t59  = (-t16 + U__[iU_x4__o]) * ModelPars[iM_wJ4];
-    result__[ 4   ] = 2 * t16 * t14 + 2 * t15 * t32 - 2 * t59;
-    result__[ 5   ] = 2 * t38;
-    result__[ 6   ] = 2 * t45;
-    result__[ 7   ] = 2 * t52;
-    result__[ 8   ] = 2 * t59;
+    real_type t48  = (-t16 + U__[iU_x4__o]) * ModelPars[iM_wJ4];
+    result__[ 4   ] = 2 * t16 * t14 + 2 * t15 * t21 - 2 * t48;
+    result__[ 5   ] = 2 * t27;
+    result__[ 6   ] = 2 * t34;
+    result__[ 7   ] = 2 * t41;
+    result__[ 8   ] = 2 * t48;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 9, i_segment );
   }
@@ -643,10 +637,7 @@ namespace FarmerDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1.0 / ModelPars[iM_w1] * X__[iX_x1] + 1.0 / ModelPars[iM_w2] * X__[iX_x2] + 1.0 / ModelPars[iM_w3] * X__[iX_x3] + 1.0 / ModelPars[iM_w4] * X__[iX_x4];
-    real_type t17  = ModelPars[iM_t1];
-    real_type t18  = ModelPars[iM_t2];
-    real_type t19  = Q__[iQ_zeta];
-    result__[ 1   ] = 1.0 / (-t18 + t17) * (ModelPars[iM_P1] * (t17 - t18 + t19 - 1) - (t19 - 1) * ModelPars[iM_P2]);
+    result__[ 1   ] = Ptot(Q__[iQ_zeta]);
     Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,23 +20,23 @@
 -- User Header
 
 -- Auxiliary values
-tol_TS    = 0.01
-tol_v     = 0.01
-tol_mass  = 0.01
-epsi_TS   = 0.01
-epsi_mass = 0.01
-epsi_T    = 0.01
-epsi_v    = 0.01
-h_i       = 1
 tol_T     = 0.01
+h_i       = 1
+epsi_T    = 0.01
 m_i       = 1
-vc        = 620
+g0        = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
+epsi_v    = 0.01
+tol_v     = 0.01
 mc        = 0.6
 m_f       = mc*m_i
-g0        = 1
-Tmax      = 3.5*g0*m_i
+epsi_TS   = 0.01
+vc        = 620
 Dc        = 0.5*vc*m_i/g0
-c         = 0.5*(g0*h_i)**(1/2.0)
+tol_TS    = 0.01
+tol_mass  = 0.01
+epsi_mass = 0.01
+Tmax      = 3.5*g0*m_i
 
 content = {
 
@@ -64,7 +64,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -346,8 +348,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 1000,
+        length = 1,
       },
     },
   },

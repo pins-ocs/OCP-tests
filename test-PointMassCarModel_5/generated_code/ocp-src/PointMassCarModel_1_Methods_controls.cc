@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -152,6 +152,82 @@ namespace PointMassCarModel_1Define {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  PointMassCarModel_1::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[11], XM__[5], LM__[5];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    QM__[1] = (QL__[1]+QR__[1])/2;
+    QM__[2] = (QL__[2]+QR__[2])/2;
+    QM__[3] = (QL__[3]+QR__[3])/2;
+    QM__[4] = (QL__[4]+QR__[4])/2;
+    QM__[5] = (QL__[5]+QR__[5])/2;
+    QM__[6] = (QL__[6]+QR__[6])/2;
+    QM__[7] = (QL__[7]+QR__[7])/2;
+    QM__[8] = (QL__[8]+QR__[8])/2;
+    QM__[9] = (QL__[9]+QR__[9])/2;
+    QM__[10] = (QL__[10]+QR__[10])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    real_type t1   = XM__[2];
+    real_type t2   = XM__[1];
+    real_type t3   = XM__[0];
+    real_type t4   = QM__[0];
+    real_type t5   = ALIAS_Kappa(t4);
+    real_type t6   = inv_zeta__dot(t1, t2, t3, t5);
+    real_type t7   = t1 * t1;
+    real_type t8   = XM__[3];
+    real_type t9   = t8 * t8;
+    real_type t12  = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
+    real_type t15  = ModelPars[iM_g] * ModelPars[iM_g];
+    real_type t18  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
+    real_type t20  = XM__[4];
+    real_type t21  = t20 * t20;
+    real_type t30  = AdherenceEllipse(1.0 / t18 / t15 / t12 * (t18 * t12 * t15 - t12 * t9 * t7 - t18 * t21));
+    real_type t35  = ModelPars[iM_Pmax];
+    real_type t39  = PowerLimit(1.0 / t35 * (-ModelPars[iM_m] * t20 * t1 + t35));
+    real_type t41  = ALIAS_leftWidth(t4);
+    real_type t43  = RoadLeftBorder(t41 - t3);
+    real_type t45  = ALIAS_rightWidth(t4);
+    real_type t47  = RoadRightBorder(t45 + t3);
+    real_type t48  = LimitMinSpeed(t1);
+    real_type t51  = sin(t2);
+    real_type t53  = LM__[1];
+    real_type t61  = UM__[0];
+    real_type t66  = UM__[1];
+    real_type t71  = v__fxControl(t61, -1, 1);
+    real_type t72  = v__OmegaControl(t66, -1, 1);
+    real_type result__ = t30 * t6 + t39 * t6 + t43 * t6 + t6 * (t47 + t48 + t51 * LM__[0] * t1 + t53 * t8 + LM__[2] * (-ModelPars[iM_kD] * t7 + t20) + LM__[4] * t61 * ModelPars[iM_v__fx__max] + LM__[3] * t66 * ModelPars[iM_v__Omega__max] + ModelPars[iM_wT] + t71 + t72) - t5 * t53;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   PointMassCarModel_1::g_numEqns() const
@@ -458,7 +534,7 @@ namespace PointMassCarModel_1Define {
     LM__[4] = (LL__[4]+LR__[4])/2;
     integer i_segment = LEFT__.i_segment;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    U__[ iU_v__fx    ] = v__fxControl.solve(-LM__[4] * ModelPars[iM_v__fx__max], -1, 1);
+    U__[ iU_v__fx    ] = v__OmegaControl.solve(-LM__[4] * ModelPars[iM_v__fx__max], -1, 1);
     U__[ iU_v__Omega ] = v__OmegaControl.solve(-LM__[3] * ModelPars[iM_v__Omega__max], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
@@ -538,7 +614,7 @@ namespace PointMassCarModel_1Define {
     real_type t4   = v__OmegaControl.solve_rhs(-t2 * LM__[3], -1, 1);
     real_type tmp_1_8 = -0.5e0 * t2 * t4;
     real_type t8   = ModelPars[iM_v__fx__max];
-    real_type t10  = v__fxControl.solve_rhs(-t8 * LM__[4], -1, 1);
+    real_type t10  = v__OmegaControl.solve_rhs(-t8 * LM__[4], -1, 1);
     real_type tmp_0_9 = -0.5e0 * t8 * t10;
     real_type tmp_1_9 = 0.0e0;
     real_type tmp_0_10 = 0.0e0;
@@ -647,12 +723,12 @@ namespace PointMassCarModel_1Define {
     real_type t50  = U__[iU_v__Omega];
     real_type t51  = v__OmegaControl(t50, -1, 1);
     real_type t54  = sin(t2);
-    real_type t58  = pow(-t5 * t54 * t1 + V__[0], 2);
-    real_type t62  = pow(-t5 * t16 + t4 + V__[1], 2);
+    real_type t58  = pow(-t1 * t5 * t54 + V__[0], 2);
+    real_type t62  = pow(-t16 * t5 + t4 + V__[1], 2);
     real_type t69  = pow(V__[2] - (-t18 * ModelPars[iM_kD] + t6) * t5, 2);
-    real_type t75  = pow(-t5 * ModelPars[iM_v__Omega__max] * t50 + V__[3], 2);
-    real_type t81  = pow(-t5 * ModelPars[iM_v__fx__max] * t47 + V__[4], 2);
-    real_type result__ = t26 * t5 + t30 * t5 + t34 * t5 + t43 * t5 + t45 * t5 + t48 * t5 + t51 * t5 + t58 + t62 + t69 + t75 + t81;
+    real_type t75  = pow(-t5 * t50 * ModelPars[iM_v__Omega__max] + V__[3], 2);
+    real_type t81  = pow(-t47 * t5 * ModelPars[iM_v__fx__max] + V__[4], 2);
+    real_type result__ = t26 * t5 + t30 * t5 + t34 * t5 + t43 * t5 + t45 * t5 + t48 * t5 + t5 * t51 + t58 + t62 + t69 + t75 + t81;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -731,7 +807,7 @@ namespace PointMassCarModel_1Define {
     real_type t7   = ALIAS_v__fxControl_D_1_1(U__[iU_v__fx], -1, 1);
     real_type t10  = ModelPars[iM_v__fx__max] * ModelPars[iM_v__fx__max];
     real_type t11  = t5 * t5;
-    result__[ 0   ] = 2 * t10 * t11 + t5 * t7;
+    result__[ 0   ] = 2 * t11 * t10 + t7 * t5;
     real_type t15  = ALIAS_v__OmegaControl_D_1_1(U__[iU_v__Omega], -1, 1);
     real_type t18  = ModelPars[iM_v__Omega__max] * ModelPars[iM_v__Omega__max];
     result__[ 1   ] = 2 * t11 * t18 + t15 * t5;

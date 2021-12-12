@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -466,7 +466,7 @@ namespace PointMassCarModel_3Define {
     real_type t295 = RoadLeftBorder(t6);
     real_type t296 = RoadRightBorder(t17);
     real_type t297 = PowerLimit(t192);
-    real_type t317 = t294 + t295 + t296 + t297 + ModelPars[iM_wT] + t50 * t27 + t126 * t125 + (-t30 * t50 + t158) * t42 + (-t160 * t208 + t148) * t206 + L__[iL_lambda5__xo] * U__[iU_v__Omega] * ModelPars[iM_v__Omega__max] + L__[iL_lambda6__xo] * U__[iU_v__fx] * ModelPars[iM_v__fx__max];
+    real_type t317 = t294 + t295 + t296 + t297 + ModelPars[iM_wT] + t50 * t27 + t126 * t125 + (-t30 * t50 + t158) * t42 + t206 * (-t160 * t208 + t148) + L__[iL_lambda5__xo] * U__[iU_v__Omega] * ModelPars[iM_v__Omega__max] + L__[iL_lambda6__xo] * U__[iU_v__fx] * ModelPars[iM_v__fx__max];
     result__[ 36  ] = 2 * t317;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 37, i_segment );

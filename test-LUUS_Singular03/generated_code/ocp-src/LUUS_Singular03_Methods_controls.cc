@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular03_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -62,6 +62,45 @@ namespace LUUS_Singular03Define {
    |   |___/
   \*/
 
+  real_type
+  LUUS_Singular03::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = UM__[0];
+    real_type t2   = uControl(t1, -1, 1);
+    real_type t3   = t2 + 1;
+    real_type t4   = XM__[1];
+    real_type t5   = t4 * t4;
+    real_type t10  = XM__[0] * XM__[0];
+    real_type t13  = ModelPars[iM_epsi_x] * ModelPars[iM_epsi_x];
+    real_type result__ = t1 * LM__[1] + t10 * t3 + t13 * t2 + t3 * t5 + t4 * LM__[0];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
   integer
   LUUS_Singular03::g_numEqns() const
   { return 1; }
@@ -92,11 +131,11 @@ namespace LUUS_Singular03Define {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = XM__[0] * XM__[0];
-    real_type t5   = XM__[1] * XM__[1];
-    real_type t7   = ModelPars[iM_epsi_x] * ModelPars[iM_epsi_x];
-    real_type t10  = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = LM__[1] + t10 * (t3 + t5 + t7);
+    real_type t2   = XM__[0] * XM__[0];
+    real_type t4   = ALIAS_uControl_D_1(UM__[0], -1, 1);
+    real_type t7   = XM__[1] * XM__[1];
+    real_type t10  = ModelPars[iM_epsi_x] * ModelPars[iM_epsi_x];
+    result__[ 0   ] = t4 * t10 + t4 * t2 + t4 * t7 + LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -218,10 +257,10 @@ namespace LUUS_Singular03Define {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = XM__[0] * XM__[0];
-    real_type t4   = XM__[1] * XM__[1];
-    real_type t6   = ModelPars[iM_epsi_x] * ModelPars[iM_epsi_x];
-    real_type t9   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = t9 * (t2 + t4 + t6);
+    real_type t4   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
+    real_type t7   = XM__[1] * XM__[1];
+    real_type t10  = ModelPars[iM_epsi_x] * ModelPars[iM_epsi_x];
+    result__[ 0   ] = t4 * t10 + t4 * t2 + t4 * t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

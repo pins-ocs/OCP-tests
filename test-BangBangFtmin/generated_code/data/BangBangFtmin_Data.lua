@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -47,7 +47,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -292,23 +294,8 @@ content = {
     segments = {
       
       {
-        n      = 10,
-        length = 0.1,
-      },
-      
-      {
-        n      = 40,
-        length = 0.4,
-      },
-      
-      {
-        n      = 40,
-        length = 0.4,
-      },
-      
-      {
-        n      = 10,
-        length = 0.1,
+        length = 1,
+        n      = 100,
       },
     },
   },

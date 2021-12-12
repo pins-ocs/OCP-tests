@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Main.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -64,7 +64,7 @@ main() {
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
     data_ControlSolver["MaxIter"]   = 50;
     data_ControlSolver["Tolerance"] = 1e-9;
-    data_ControlSolver["Iterative"] = false;
+    data_ControlSolver["Iterative"] = true;
     data_ControlSolver["InfoLevel"] = 1;
 
     // Enable doctor
@@ -138,6 +138,7 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
+    data_Parameters["rho"] = 0.01;
 
     // Guess Parameters
 
@@ -147,7 +148,7 @@ main() {
     data_Parameters["alpha_f"] = 0.522;
     data_Parameters["alpha_i"] = 0;
     data_Parameters["theta_f"] = 0.5;
-    data_Parameters["theta_i"] = 0.5;
+    data_Parameters["theta_i"] = 0;
     data_Parameters["omega__alpha_f"] = 0;
     data_Parameters["omega__alpha_i"] = 0;
     data_Parameters["omega__beta_f"] = 0;

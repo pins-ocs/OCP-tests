@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Pars.hh                                          |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -23,25 +23,23 @@
 #define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           1
-#define numXvars                 3
-#define numLvars                 3
+#define numXvars                 2
+#define numLvars                 2
 #define numUvars                 1
 #define numOMEGAvars             4
 #define numQvars                 1
-#define numPvars                 0
-#define numPostProcess           0
+#define numPvars                 1
+#define numPostProcess           2
 #define numIntegratedPostProcess 0
 #define numContinuationSteps     0
 
 // Xvars
 #define iX_x           0
 #define iX_v           1
-#define iX_T           2
 
 // Lvars
 #define iL_lambda1__xo 0
 #define iL_lambda2__xo 1
-#define iL_lambda3__xo 2
 
 // Uvars
 #define iU_F           0
@@ -50,6 +48,7 @@
 #define iQ_zeta        0
 
 // Pvars
+#define iP_T           0
 
 // ModelPars Maps
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,13 +50,13 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type xy_tol0 = 0.1;
-    real_type xy_eps0 = 0.1;
-    real_type xy_tol = xy_tol0;
-    real_type epsi_ctrl = 0.01;
     real_type xy_bound = 2;
-    real_type xy_eps = xy_eps0;
+    real_type xy_tol0 = 0.1;
     real_type tol_ctrl = 0.01;
+    real_type xy_tol = xy_tol0;
+    real_type xy_eps0 = 0.1;
+    real_type xy_eps = xy_eps0;
+    real_type epsi_ctrl = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

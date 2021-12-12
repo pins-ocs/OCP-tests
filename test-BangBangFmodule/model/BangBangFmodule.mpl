@@ -15,6 +15,7 @@ addBoundaryConditions(
   final   = [x=1,v=0]
 );
 infoBoundaryConditions();
+setTarget( lagrange = Fp(zeta)+Fm(zeta) );
 addControlBound(
   Fp,
   label       = "controlP",
@@ -29,21 +30,47 @@ addControlBound(
   max         = FmMax,
   controlType = "U_CUBIC"
 );
-setTarget( lagrange = Fp(zeta)+Fm(zeta) );
+PARS := [FmMax = 10, FpMax = 10];
 POST := [
   [controlP(Fp(zeta),0,FpMax),"ForceP"],
   [controlM(Fm(zeta),0,FmMax),"ForceM"],
   [Fp(zeta)-Fm(zeta),"F"]
 ];
-PARS := [FmMax = 10, FpMax = 10];
-UGUESS := [Fm = FmMax/2, Fp = FpMax/2 ];
+CONT := [];
+UGUESS := [ Fm = FmMax/2, Fp = FpMax/2 ];
+GUESS  := [ x = zeta ];
+MESH_DEF := [ length=1, n=100 ];
+project_dir  := "../generated_code";
+project_name := "BangBangFmodule";
 generateOCProblem(
-  "BangBangFmodule",
+  project_name,
   post_processing = POST,
   parameters      = PARS,
-  mesh            = [ length=1, n=100 ],
-  controls_guess  = UGUESS, # uncomment to force iterative control computation
-  states_guess    = [ x = zeta ],
-  controls_guess  = [ Fm = FmMax/2, Fp = FpMax/2 ]
+  continuation    = CONT,
+  mesh            = MESH_DEF,
+  states_guess    = GUESS,
+  controls_guess  = UGUESS
 );
+# if used in batch mode use the comment to quit;
+# quit;
+#launchSolver(project_dir,project_name);
+compileSolver(project_dir,project_name);
+runSolver(project_dir);
+with(plots):;
+XOptimaPlots:-loadSolution(project_dir,project_name); # load solution
+hhdrs := XOptimaPlots:-getHeaders(): nops(%);
+hhdrs;
+XOptimaPlots:-plotSolution(
+  zeta,[x,v],
+  line_opts  = [[color="Blue",thickness=3], [color="Red",thickness=3]],
+  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
+  plot_title = "Bang Bang"
+);
+XOptimaPlots:-plotSolution(
+  zeta,[Fp,Fm,F],
+  line_opts  = [[color="Green",thickness=1,style=pointline],[color="Red",thickness=1,style=pointline],[color="Blue",thickness=2]],
+  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
+  plot_title = "Bang Bang"
+);
+;
 ;

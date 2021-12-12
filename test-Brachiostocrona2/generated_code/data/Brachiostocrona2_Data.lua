@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -21,13 +21,13 @@
 
 -- Auxiliary values
 g      = 9.81
-xf     = 5
 yf     = -2
-theta0 = arctan(yf,xf)
 Tf     = (-2.0*yf/g)**(1/2.0)
-Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 epsi0  = 1
 epsi   = epsi0
+xf     = 5
+Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+theta0 = arctan(yf,xf)
 
 content = {
 
@@ -55,7 +55,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -310,8 +312,8 @@ content = {
     segments = {
       
       {
-        n      = 500,
         length = 1,
+        n      = 500,
       },
     },
   },

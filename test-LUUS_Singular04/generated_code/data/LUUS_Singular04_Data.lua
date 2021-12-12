@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,11 +20,11 @@
 -- User Header
 
 -- Auxiliary values
-u_epsilon0   = 0.01
-epsi_x0      = 0.01
 u_tolerance0 = 0.01
-epsi_x       = epsi_x0
+epsi_x0      = 0.01
 Tf           = 6
+epsi_x       = epsi_x0
+u_epsilon0   = 0.01
 
 content = {
 
@@ -52,7 +52,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -306,8 +308,8 @@ content = {
     segments = {
       
       {
-        length = Tf,
         n      = 1000,
+        length = Tf,
       },
     },
   },

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Farmer.m                                                       %
 %                                                                       %
-%  version: 1.0   date 4/12/2021                                        %
+%  version: 1.0   date 13/12/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -925,6 +925,23 @@ classdef Farmer < handle
     % ---------------------------------------------------------------------
     function node_to_segment = get_node_to_segment( self )
       node_to_segment = Farmer_Mex( 'node_to_segment', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    %  _   _               ___             _   _
+    % | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+    % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+    %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+    % ---------------------------------------------------------------------
+    function res = Ptot( self, xo__zeta )
+      res = Farmer_Mex('Ptot', self.objectHandle, xo__zeta );
+    end
+    % ---------------------------------------------------------------------
+    function res = Ptot_D( self, xo__zeta )
+      res = Farmer_Mex('Ptot_D', self.objectHandle, xo__zeta );
+    end
+    % ---------------------------------------------------------------------
+    function res = Ptot_DD( self, xo__zeta )
+      res = Farmer_Mex('Ptot_DD', self.objectHandle, xo__zeta );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

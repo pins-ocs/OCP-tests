@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -788,9 +788,9 @@ namespace PointMassCarModel_2Define {
     real_type t7   = LL__[iL_lambda1__xo];
     result__[ 10  ] = -t7 * t6;
     real_type t9   = zeta__dot_D_2(t1, t2, t3, t5);
-    result__[ 11  ] = -t7 * t9;
+    result__[ 11  ] = -t9 * t7;
     real_type t11  = zeta__dot_D_1(t1, t2, t3, t5);
-    result__[ 12  ] = -t7 * t11;
+    result__[ 12  ] = -t11 * t7;
     real_type t13  = zeta__dot(t1, t2, t3, t5);
     result__[ 13  ] = -t13;
     real_type t14  = XR__[iX_V];

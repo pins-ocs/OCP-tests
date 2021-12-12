@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -483,7 +483,7 @@ namespace BangBangFworkDefine {
 
   integer
   BangBangFwork::post_numEqns() const
-  { return 0; }
+  { return 3; }
 
   void
   BangBangFwork::post_eval(
@@ -492,7 +492,16 @@ namespace BangBangFworkDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t3   = fMax(Q__[iQ_zeta]);
+    result__[ 0   ] = Fcontrol(U__[iU_F], -t3, t3);
+    result__[ 1   ] = t3;
+    result__[ 2   ] = -t3;
+    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

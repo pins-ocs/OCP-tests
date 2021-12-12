@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -132,7 +132,7 @@ namespace ICLOCS_SingularArcDefine {
     real_type t4   = X__[iX_x1];
     real_type t5   = cos(t4);
     real_type t9   = sin(t4);
-    result__[ 0   ] = -t2 * t5 * L__[iL_lambda2__xo] - t2 * t9 * L__[iL_lambda3__xo];
+    result__[ 0   ] = -t5 * t2 * L__[iL_lambda2__xo] - t9 * t2 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
   }

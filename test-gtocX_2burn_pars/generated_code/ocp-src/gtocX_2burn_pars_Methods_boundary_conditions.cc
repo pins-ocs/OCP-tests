@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -310,14 +310,14 @@ namespace gtocX_2burn_parsDefine {
     real_type t77  = x_position_D_4(t2, t33, t34, t5, t6, t35, t8);
     real_type t79  = y_position_D_4(t2, t33, t34, t5, t6, t35, t8);
     real_type t81  = z_position_D_4(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 7   ] = t1 * t71 + t11 * t73 + t14 * t75 + t32 * t77 + t38 * t79 + t41 * t81;
+    result__[ 7   ] = t71 * t1 + t73 * t11 + t75 * t14 + t77 * t32 + t79 * t38 + t81 * t41;
     real_type t83  = x_position_D_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t85  = y_position_D_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t87  = z_position_D_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t89  = x_position_D_5(t2, t33, t34, t5, t6, t35, t8);
     real_type t91  = y_position_D_5(t2, t33, t34, t5, t6, t35, t8);
     real_type t93  = z_position_D_5(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 8   ] = t1 * t83 + t11 * t85 + t14 * t87 + t32 * t89 + t38 * t91 + t41 * t93;
+    result__[ 8   ] = t83 * t1 + t85 * t11 + t87 * t14 + t89 * t32 + t91 * t38 + t93 * t41;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 9, i_segment_left, i_segment_right );
   }
@@ -449,11 +449,11 @@ namespace gtocX_2burn_parsDefine {
     real_type t29  = x_position_D_1_2(t2, t3, t4, t5, t6, t7, t8);
     real_type t31  = y_position_D_1_2(t2, t3, t4, t5, t6, t7, t8);
     real_type t33  = z_position_D_1_2(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 3   ] = t29 * t1 + t31 * t11 + t33 * t14;
+    result__[ 3   ] = t1 * t29 + t11 * t31 + t14 * t33;
     real_type t35  = x_position_D_2_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t37  = y_position_D_2_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t39  = z_position_D_2_4(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 4   ] = t35 * t1 + t37 * t11 + t39 * t14;
+    result__[ 4   ] = t1 * t35 + t11 * t37 + t14 * t39;
     real_type t41  = x_position_D_2_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t43  = y_position_D_2_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t45  = z_position_D_2_5(t2, t3, t4, t5, t6, t7, t8);

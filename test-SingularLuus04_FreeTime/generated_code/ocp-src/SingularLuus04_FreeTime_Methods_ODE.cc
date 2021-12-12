@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_ODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -77,8 +77,8 @@ namespace SingularLuus04_FreeTimeDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
-    result__[ 0   ] = t1 * X__[iX_y];
-    result__[ 1   ] = t1 * X__[iX_z];
+    result__[ 0   ] = X__[iX_y] * t1;
+    result__[ 1   ] = X__[iX_z] * t1;
     result__[ 2   ] = U__[iU_u] * t1;
     result__[ 3   ] = 0;
     if ( m_debug )

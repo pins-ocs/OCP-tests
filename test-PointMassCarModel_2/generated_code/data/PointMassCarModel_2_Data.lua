@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-wT0       = 0.01
-wT        = wT0
-up_tol0   = 0.01
 m         = 700
 kD        = 0.2500000000/m
-p_epsi0   = 0.1
 road_tol0 = 0.01
-p_tol0    = 0.1
+up_tol0   = 0.01
+wT0       = 0.01
+wT        = wT0
 up_epsi0  = 0.1
+p_tol0    = 0.1
+p_epsi0   = 0.1
 
 content = {
 
@@ -56,7 +56,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -360,83 +362,83 @@ content = {
     segments = {
       
       {
-        gridSize   = 1,
         rightWidth = 60,
         length     = 190,
-        leftWidth  = 15/2.0,
         curvature  = 0,
+        gridSize   = 1,
+        leftWidth  = 15/2.0,
       },
       
       {
-        gridSize   = 1,
         rightWidth = 30,
         length     = 973.8937227,
-        leftWidth  = 60,
         curvature  = 0.003225806452,
+        gridSize   = 1,
+        leftWidth  = 60,
       },
       
       {
-        gridSize   = 1,
         rightWidth = 30,
         length     = 180,
-        leftWidth  = 30,
         curvature  = 0,
+        gridSize   = 1,
+        leftWidth  = 30,
       },
       
       {
-        gridSize   = 1,
         rightWidth = 15,
         length     = 235.619449,
-        leftWidth  = 20,
         curvature  = 0.006666666667,
+        gridSize   = 1,
+        leftWidth  = 20,
       },
       
       {
-        gridSize   = 1,
         rightWidth = 30,
         length     = 240,
-        leftWidth  = 30,
         curvature  = 0,
+        gridSize   = 1,
+        leftWidth  = 30,
       },
       
       {
-        gridSize   = 1,
         rightWidth = 30,
         length     = 235.619449,
-        leftWidth  = 30,
         curvature  = -1/150.0,
+        gridSize   = 1,
+        leftWidth  = 30,
       },
       
       {
-        gridSize   = 1,
         rightWidth = 30,
         length     = 200,
-        leftWidth  = 30,
         curvature  = 0,
+        gridSize   = 1,
+        leftWidth  = 30,
       },
       
       {
-        gridSize   = 1,
         rightWidth = 30,
         length     = 125.6637062,
-        leftWidth  = 30,
         curvature  = 0.025,
+        gridSize   = 1,
+        leftWidth  = 30,
       },
       
       {
-        gridSize   = 1,
         rightWidth = 30,
         length     = 480,
-        leftWidth  = 30,
         curvature  = 0,
+        gridSize   = 1,
+        leftWidth  = 30,
       },
       
       {
-        gridSize   = 0.1,
         rightWidth = 30,
         length     = 10,
-        leftWidth  = 30,
         curvature  = 0,
+        gridSize   = 0.1,
+        leftWidth  = 30,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Pars.hh                                          |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -29,7 +29,7 @@
 #define numOMEGAvars             3
 #define numQvars                 1
 #define numPvars                 0
-#define numPostProcess           0
+#define numPostProcess           3
 #define numIntegratedPostProcess 0
 #define numContinuationSteps     0
 

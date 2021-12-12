@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -68,6 +68,58 @@ namespace CrossroadDefine {
    |   |___/
   \*/
 
+  real_type
+  Crossroad::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[4], LM__[4];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = XM__[2];
+    real_type t2   = t1 * t1;
+    real_type t4   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
+    real_type t7   = XM__[1];
+    real_type t8   = t7 * t7;
+    real_type t9   = t8 * t8;
+    real_type t11  = kappa(XM__[0]);
+    real_type t12  = t11 * t11;
+    real_type t15  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
+    real_type t19  = AccBound(1 - 1.0 / t4 * t2 - 1.0 / t15 * t12 * t9);
+    real_type t20  = XM__[3];
+    real_type t21  = Tpositive(t20);
+    real_type t22  = VelBound(t7);
+    real_type t23  = UM__[0];
+    real_type t24  = t23 * t23;
+    real_type t38  = jerkControl(t23, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    real_type result__ = t19 + t21 + t22 + t20 * (t1 * LM__[1] + t23 * LM__[2] + ModelPars[iM_wJ] * t24 + t7 * LM__[0] + ModelPars[iM_wT]) + t38;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
   integer
   Crossroad::g_numEqns() const
   { return 1; }
@@ -103,8 +155,8 @@ namespace CrossroadDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
-    real_type t4   = ALIAS_jerkControl_D_1(t1, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
-    result__[ 0   ] = t4 + XM__[3] * (2 * ModelPars[iM_wJ] * t1 + LM__[2]);
+    real_type t11  = ALIAS_jerkControl_D_1(t1, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    result__[ 0   ] = XM__[3] * (2 * ModelPars[iM_wJ] * t1 + LM__[2]) + t11;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -228,8 +280,8 @@ namespace CrossroadDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = ALIAS_jerkControl_D_1_1(UM__[0], ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
-    result__[ 0   ] = 2 * ModelPars[iM_wJ] * XM__[3] + t4;
+    real_type t8   = ALIAS_jerkControl_D_1_1(UM__[0], ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    result__[ 0   ] = 2 * ModelPars[iM_wJ] * XM__[3] + t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -257,28 +309,6 @@ namespace CrossroadDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
-    integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     UTILS_ERROR(
       "Crossroad::u_eval_analytic\n"
       "no analytic control available, use iterative!\n"

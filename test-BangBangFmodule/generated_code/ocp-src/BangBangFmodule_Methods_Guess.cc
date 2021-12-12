@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -97,11 +97,11 @@ namespace BangBangFmoduleDefine {
 
   #define Xoptima__check__node__lt(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
-        ipos,i_segment,MSG,a-b                                        \
+        "Failed check on node={} segment={}: {}\nfail {} < {}\n",     \
+        ipos, i_segment, MSG, a, b                                    \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -109,11 +109,11 @@ namespace BangBangFmoduleDefine {
 
   #define Xoptima__check__node__le(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
-        ipos,i_segment,MSG,a-b                                        \
+        "Failed check on node={} segment={}: {}\nfail {} <= {}\n",    \
+        ipos, i_segment, MSG, a, b                                    \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -121,11 +121,11 @@ namespace BangBangFmoduleDefine {
 
   #define Xoptima__check__cell__lt(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
-        icell,i_segment,MSG,a-b                                       \
+        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
+        icell, i_segment, MSG, a, b                                   \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -133,11 +133,11 @@ namespace BangBangFmoduleDefine {
 
   #define Xoptima__check__cell__le(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
-        icell,i_segment,MSG,a-b                                       \
+        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
+        icell, i_segment, MSG, a, b                                   \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -145,10 +145,10 @@ namespace BangBangFmoduleDefine {
 
   #define Xoptima__check__pars__lt(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+        "Failed check on parameter: {}\nfail {} < {}\n", MSG, a, b    \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -156,10 +156,10 @@ namespace BangBangFmoduleDefine {
 
   #define Xoptima__check__pars__le(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+        "Failed check on parameter: {}\nfail {} <= {}\n", MSG, a, b   \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -167,10 +167,10 @@ namespace BangBangFmoduleDefine {
 
   #define Xoptima__check__params__lt(A,B,MSG)                         \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+        "Failed check on params: {}\nfail {} < {}\n", MSG, a, b       \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -178,18 +178,36 @@ namespace BangBangFmoduleDefine {
 
   #define Xoptima__check__params__le(A,B,MSG)                         \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+        "Failed check on params: {}\nfail {} <= {}\n", MSG, a, b      \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
   }
 
+  #define Xoptima__check__u__lt(A,B,MSG)                              \
+  {                                                                   \
+    real_type a = A, b = B;                                           \
+    if ( a >= b ) {                                                   \
+      m_U_console.yellow(fmt::format(                                 \
+        "Failed check on control: {}\nfail {} < {}\n", MSG, a, b      \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
 
-
-
+  #define Xoptima__check__u__le(A,B,MSG)                              \
+  {                                                                   \
+    real_type a = A, b = B;                                           \
+    if ( a > b ) {                                                    \
+      m_U_console.yellow(fmt::format(                                 \
+        "Failed check on control: {}\nfail {} <= {}\n", MSG, a, b     \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -244,7 +262,7 @@ namespace BangBangFmoduleDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-      MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 2, 0 );
     UGUESS__[ iU_Fp ] = ModelPars[iM_FpMax] / 2;
     UGUESS__[ iU_Fm ] = ModelPars[iM_FmMax] / 2;
@@ -300,6 +318,7 @@ namespace BangBangFmoduleDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    // controls range check
     controlM.check_range(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
     controlP.check_range(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
     return ok;

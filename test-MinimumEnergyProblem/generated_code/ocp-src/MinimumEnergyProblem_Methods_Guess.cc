@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_Guess.cc                          |
  |                                                                       |
- |  version: 1.0   date 9/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -175,7 +175,7 @@ namespace MinimumEnergyProblemDefine {
   {                                                                   \
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
-      m_console->yellow(fmt::format(                                  \
+      m_U_console.yellow(fmt::format(                                 \
         "Failed check on control: {}\nfail {} < {}\n", MSG, a, b      \
       ),3);                                                           \
       return false;                                                   \
@@ -186,17 +186,12 @@ namespace MinimumEnergyProblemDefine {
   {                                                                   \
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
-      m_console->yellow(fmt::format(                                  \
+      m_U_console.yellow(fmt::format(                                 \
         "Failed check on control: {}\nfail {} <= {}\n", MSG, a, b     \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
   }
-
-
-
-
-
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -251,7 +246,7 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-      MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_u ] = 0;
     if ( m_debug )
@@ -305,7 +300,9 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    // no controls to check
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    // controls range check
+
     return ok;
   }
 

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_1_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 4/12/2021                                        #
+#  version: 1.0   date 13/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,12 +20,12 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+up_epsi0  = 0.1
+up_tol0   = 0.01
+p_epsi0   = 0.1
+road_tol0 = 0.01
 m         = 700
 p_tol0    = 0.1
-p_epsi0   = 0.1
-up_epsi0  = 0.1
-road_tol0 = 0.01
-up_tol0   = 0.01
 kD        = 0.2500000000/m
 wT0       = 0.01
 wT        = wT0
@@ -54,7 +54,9 @@ mechatronix do |data|
   data.JF_threaded = true
   data.LU_threaded = true
 
-  # Enable check jacobian
+  # Enable check jacobian and controls
+  data.ControlsCheck         = true
+  data.ControlsCheck_epsilon = 1e-8
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
@@ -100,7 +102,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-9,  # tolerance for stopping criteria
+      :tolerance            => 1e-12, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -300,20 +302,21 @@ mechatronix do |data|
     # Constraints Parameters
   }
 
-    #                              _
-    #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
-    # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
-    # | | | | | | (_| | |_) | |_) | | | | | (_| |
-    # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
-    #                 |_|   |_|            |___/
+  #                              _
+  #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
+  # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
+  # | | | | | | (_| | |_) | |_) | | | | | (_| |
+  # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
+  #                 |_|   |_|            |___/
   # functions mapped on objects
   data.MappedObjects = {}
 
-    #                  _             _
-    #   ___ ___  _ __ | |_ _ __ ___ | |___
-    #  / __/ _ \| '_ \| __| '__/ _ \| / __|
-    # | (_| (_) | | | | |_| | | (_) | \__ \
-    #  \___\___/|_| |_|\__|_|  \___/|_|___/
+
+  #                  _             _
+  #   ___ ___  _ __ | |_ _ __ ___ | |___
+  #  / __/ _ \| '_ \| __| '__/ _ \| / __|
+  # | (_| (_) | | | | |_| | | (_) | \__ \
+  #  \___\___/|_| |_|\__|_|  \___/|_|___/
   # Controls
   # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
@@ -332,11 +335,11 @@ mechatronix do |data|
 
 
 
-    #                      _             _       _
-    #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
-    #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
-    # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
-    #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
+  #                      _             _       _
+  #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
+  #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
+  # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
+  #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
   # Constraint1D
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
@@ -379,11 +382,11 @@ mechatronix do |data|
   # Constraint2D: none defined
 
 
-   #                             _
-   #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
-   # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
-   # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
-   #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
+  #                             _
+  #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
+  # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
+  # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
+  #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
   # User defined classes initialization
   # User defined classes: R O A D
   data.Road =
@@ -396,73 +399,73 @@ mechatronix do |data|
     :segments => [
       {
         :rightWidth => 60,
+        :gridSize   => 1,
         :length     => 190,
         :leftWidth  => 15/2.0,
         :curvature  => 0,
-        :gridSize   => 1,
       },
       {
         :rightWidth => 30,
+        :gridSize   => 1,
         :length     => 973.8937227,
         :leftWidth  => 60,
         :curvature  => 0.003225806452,
-        :gridSize   => 1,
       },
       {
         :rightWidth => 30,
+        :gridSize   => 1,
         :length     => 180,
         :leftWidth  => 30,
         :curvature  => 0,
-        :gridSize   => 1,
       },
       {
         :rightWidth => 15,
+        :gridSize   => 1,
         :length     => 235.619449,
         :leftWidth  => 20,
         :curvature  => 0.006666666667,
-        :gridSize   => 1,
       },
       {
         :rightWidth => 30,
+        :gridSize   => 1,
         :length     => 240,
         :leftWidth  => 30,
         :curvature  => 0,
-        :gridSize   => 1,
       },
       {
         :rightWidth => 30,
+        :gridSize   => 1,
         :length     => 235.619449,
         :leftWidth  => 30,
         :curvature  => -1/150.0,
-        :gridSize   => 1,
       },
       {
         :rightWidth => 30,
+        :gridSize   => 1,
         :length     => 200,
         :leftWidth  => 30,
         :curvature  => 0,
-        :gridSize   => 1,
       },
       {
         :rightWidth => 30,
+        :gridSize   => 1,
         :length     => 125.6637062,
         :leftWidth  => 30,
         :curvature  => 0.025,
-        :gridSize   => 1,
       },
       {
         :rightWidth => 30,
+        :gridSize   => 1,
         :length     => 480,
         :leftWidth  => 30,
         :curvature  => 0,
-        :gridSize   => 1,
       },
       {
         :rightWidth => 30,
+        :gridSize   => 0.1,
         :length     => 10,
         :leftWidth  => 30,
         :curvature  => 0,
-        :gridSize   => 0.1,
       },
     ],
   };

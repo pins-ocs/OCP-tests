@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 10/12/2021                                       #
+#  version: 1.0   date 13/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,18 +20,18 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+Isp    = 1500
+g0     = 9.80665
+days1  = 30
 mu     = 398600441800000
 u0     = 0
+r0     = 6678140
+T      = 0.68
+mdot   = T/g0/Isp
 days   = 1
 tf     = 86400*days
-days1  = 30
-T      = 0.68
-g0     = 9.80665
-Isp    = 1500
-r0     = 6678140
 v0     = (mu/r0)**(1/2.0)
 u0_bar = u0/v0
-mdot   = T/g0/Isp
 
 mechatronix do |data|
 
@@ -57,7 +57,9 @@ mechatronix do |data|
   data.JF_threaded = true
   data.LU_threaded = true
 
-  # Enable check jacobian
+  # Enable check jacobian and controls
+  data.ControlsCheck         = true
+  data.ControlsCheck_epsilon = 1e-8
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
@@ -88,7 +90,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
-    :Iterative => false,
+    :Iterative => true,
     :InfoLevel => -1,     # suppress all messages
     # ==============================================================
     # 'LM', 'YS', 'QN'
@@ -103,7 +105,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-9,  # tolerance for stopping criteria
+      :tolerance            => 1e-12, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch

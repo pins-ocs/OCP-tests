@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: ICLOCS_Speyer_ffi_structs.rb                                      #
 #                                                                          #
-#  version: 1.0   date 8/12/2021                                           #
+#  version: 1.0   date 13/12/2021                                          #
 #                                                                          #
 #  Copyright (C) 2021                                                      #
 #                                                                          #

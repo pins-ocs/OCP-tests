@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin.cc                                               |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,14 +50,12 @@ namespace BangBangFtminDefine {
   char const *namesXvars[numXvars+1] = {
     "x",
     "v",
-    "T",
     nullptr
   };
 
   char const *namesLvars[numLvars+1] = {
     "lambda1__xo",
     "lambda2__xo",
-    "lambda3__xo",
     nullptr
   };
 
@@ -72,6 +70,7 @@ namespace BangBangFtminDefine {
   };
 
   char const *namesPvars[numPvars+1] = {
+    "T",
     nullptr
   };
 
@@ -84,6 +83,8 @@ namespace BangBangFtminDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "Fcontrol",
+    "time",
     nullptr
   };
 

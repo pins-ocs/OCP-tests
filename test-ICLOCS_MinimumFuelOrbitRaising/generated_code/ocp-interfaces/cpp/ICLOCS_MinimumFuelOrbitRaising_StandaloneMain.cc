@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Main.cc                         |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -61,7 +61,7 @@ main() {
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
     data_ControlSolver["MaxIter"]   = 50;
     data_ControlSolver["Tolerance"] = 1e-9;
-    data_ControlSolver["Iterative"] = true;
+    data_ControlSolver["Iterative"] = false;
     data_ControlSolver["InfoLevel"] = 1;
 
     // Enable doctor
@@ -117,11 +117,11 @@ main() {
 
     // Boundary Conditions
     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
-    data_BoundaryConditions["initial_x1"] = SET;
-    data_BoundaryConditions["initial_x2"] = SET;
-    data_BoundaryConditions["initial_x3"] = SET;
-    data_BoundaryConditions["final_x2"] = SET;
-    data_BoundaryConditions["x3x1"] = SET;
+    data_BoundaryConditions["initial_r"] = SET;
+    data_BoundaryConditions["initial_vr"] = SET;
+    data_BoundaryConditions["initial_vt"] = SET;
+    data_BoundaryConditions["final_vr"] = SET;
+    data_BoundaryConditions["rvt"] = SET;
 
     // Guess
     GenericContainer & data_Guess = gc_data["Guess"];
@@ -133,8 +133,7 @@ main() {
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
     data_Parameters["T"] = 0.1405;
-    data_Parameters["md"] = 0.0749;
-    data_Parameters["u_max"] = Mechatronix::m_pi;
+    data_Parameters["theta_max"] = Mechatronix::m_pi;
 
     // Guess Parameters
 
@@ -143,6 +142,7 @@ main() {
     // Post Processing Parameters
 
     // User Function Parameters
+    data_Parameters["md"] = 0.0749;
 
     // Continuation Parameters
 
@@ -158,8 +158,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["s0"] = 0;
-ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["n"] = 400;
+ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
 
 
     // alias for user object classes passed as pointers

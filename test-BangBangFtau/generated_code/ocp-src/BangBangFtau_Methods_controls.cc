@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -69,6 +69,53 @@ namespace BangBangFtauDefine {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  BangBangFtau::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[4], LM__[4];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = UM__[0];
+    real_type t2   = vsTpositive(t1);
+    real_type t3   = UM__[1];
+    real_type t4   = vsBpositive(t3);
+    real_type t7   = vsTmax(ModelPars[iM_maxT] - t1);
+    real_type t9   = vsTBInterval(t1 - t3);
+    real_type t11  = t1 * t1;
+    real_type t12  = t3 * t3;
+    real_type t19  = XM__[2];
+    real_type t20  = XM__[3];
+    real_type t24  = clip(t19 - t20, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    real_type result__ = t2 + t4 + t7 + t9 + (t11 + t12) * ModelPars[iM_epsiTB] + LM__[0] * XM__[1] + t24 * LM__[1] - 1.0 / ModelPars[iM_tauT] * (t19 - t1) * LM__[2] - 1.0 / ModelPars[iM_tauB] * (t20 - t3) * LM__[3];
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   BangBangFtau::g_numEqns() const
@@ -277,28 +324,6 @@ namespace BangBangFtauDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
-    integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     UTILS_ERROR(
       "BangBangFtau::u_eval_analytic\n"
       "no analytic control available, use iterative!\n"

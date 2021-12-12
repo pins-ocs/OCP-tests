@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_controls.cc                       |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -63,6 +63,49 @@ namespace EconomicGrowthModel2Define {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  EconomicGrowthModel2::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[5], LM__[5];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    XM__[4] = (XL__[4]+XR__[4])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    LM__[4] = (LL__[4]+LR__[4])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = XM__[4];
+    real_type t2   = UM__[0];
+    real_type t12  = Q(XM__[0], XM__[1]);
+    real_type t14  = Tpositive(t1);
+    real_type t21  = uControl(t2, 0, 1);
+    real_type result__ = t12 * (LM__[3] * (1 - t2) + t2 * LM__[1]) * t1 + t14 + t1 * (LM__[0] * XM__[2] + LM__[2] * XM__[3] + t21);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   EconomicGrowthModel2::g_numEqns() const
@@ -303,8 +346,8 @@ namespace EconomicGrowthModel2Define {
     LM__[4] = (LL__[4]+LR__[4])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t6   = Q(XM__[0], XM__[1]);
-    U__[ iU_u ] = uControl.solve(-t6 * (LM__[1] - LM__[3]), 0, 1);
+    real_type t3   = Q(XM__[0], XM__[1]);
+    U__[ iU_u ] = uControl.solve(-LM__[1] * t3 + LM__[3] * t3, 0, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
@@ -352,24 +395,24 @@ namespace EconomicGrowthModel2Define {
     LM__[4] = (LL__[4]+LR__[4])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = LM__[1] - LM__[3];
-    real_type t4   = XM__[0];
-    real_type t5   = XM__[1];
-    real_type t6   = Q(t4, t5);
-    real_type t8   = uControl.solve_rhs(-t6 * t3, 0, 1);
-    real_type t9   = t8 * t3;
-    real_type t10  = Q_D_1(t4, t5);
-    real_type tmp_0_0 = -0.5e0 * t10 * t9;
-    real_type t13  = Q_D_2(t4, t5);
-    real_type tmp_0_1 = -0.5e0 * t13 * t9;
+    real_type t1   = XM__[0];
+    real_type t2   = XM__[1];
+    real_type t3   = Q(t1, t2);
+    real_type t4   = LM__[1];
+    real_type t6   = LM__[3];
+    real_type t9   = uControl.solve_rhs(-t4 * t3 + t6 * t3, 0, 1);
+    real_type t10  = Q_D_1(t1, t2);
+    real_type tmp_0_0 = 0.5e0 * (-t4 * t10 + t6 * t10) * t9;
+    real_type t15  = Q_D_2(t1, t2);
+    real_type tmp_0_1 = 0.5e0 * (-t4 * t15 + t6 * t15) * t9;
     real_type tmp_0_2 = 0.0e0;
     real_type tmp_0_3 = 0.0e0;
     real_type tmp_0_4 = 0.0e0;
     real_type tmp_0_5 = 0.0e0;
-    real_type t17  = 0.5e0 * t6 * t8;
-    real_type tmp_0_6 = -t17;
+    real_type t21  = 0.5e0 * t3 * t9;
+    real_type tmp_0_6 = -t21;
     real_type tmp_0_7 = 0.0e0;
-    real_type tmp_0_8 = t17;
+    real_type tmp_0_8 = t21;
     real_type tmp_0_9 = 0.0e0;
     real_type tmp_0_10 = tmp_0_0;
     real_type tmp_0_11 = tmp_0_1;
@@ -433,7 +476,7 @@ namespace EconomicGrowthModel2Define {
     real_type t23  = pow(-t1 * X__[iX_y2] + V__[1], 2);
     real_type t29  = pow(V__[3] - t1 * t14 * (1 - t3), 2);
     real_type t31  = V__[4] * V__[4];
-    real_type result__ = t4 * t1 + t10 + t18 + t2 + t23 + t29 + t31;
+    real_type result__ = t1 * t4 + t10 + t18 + t2 + t23 + t29 + t31;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }

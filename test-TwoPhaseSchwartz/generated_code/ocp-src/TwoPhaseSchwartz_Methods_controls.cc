@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -65,6 +65,56 @@ namespace TwoPhaseSchwartzDefine {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  TwoPhaseSchwartz::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[4], LM__[4];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    XM__[3] = (XL__[3]+XR__[3])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    LM__[3] = (LL__[3]+LR__[3])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = XM__[0];
+    real_type t3   = pow(t1 - 1, 2);
+    real_type t5   = XM__[1];
+    real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
+    real_type t10  = bound1(-1 + 9 * t3 + t8);
+    real_type t12  = bound2(0.8e0 + t5);
+    real_type t13  = t1 * t1;
+    real_type t17  = UM__[0];
+    real_type t21  = ModelPars[iM_T2];
+    real_type t23  = XM__[2] * XM__[2];
+    real_type t28  = XM__[3];
+    real_type t30  = UM__[1];
+    real_type t39  = t30 * t30;
+    real_type t43  = u1Control(t17, -1, 1);
+    real_type result__ = t10 + t12 + LM__[1] * (t5 * (-0.1e0 - 0.2e0 * t13) + t17) + LM__[3] * (t28 * (-0.2e0 * t23 * t21 - 0.1e0 * t21) + t30 * t21) + t28 * t21 * LM__[2] + t39 * ModelPars[iM_epsilon] + t5 * LM__[0] + t43;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   TwoPhaseSchwartz::g_numEqns() const
@@ -256,28 +306,6 @@ namespace TwoPhaseSchwartzDefine {
     P_const_pointer_type P__,
     U_pointer_type       U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
-    integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     UTILS_ERROR(
       "TwoPhaseSchwartz::u_eval_analytic\n"
       "no analytic control available, use iterative!\n"
@@ -424,7 +452,7 @@ namespace TwoPhaseSchwartzDefine {
     real_type t25  = pow(V__[1] - t13 + 0.1e0 * t5 * (2 * t19 + 1), 2);
     real_type t26  = ModelPars[iM_T2];
     real_type t27  = X__[iX_x4];
-    real_type t31  = pow(-t26 * t27 + V__[2], 2);
+    real_type t31  = pow(-t27 * t26 + V__[2], 2);
     real_type t35  = X__[iX_x3] * X__[iX_x3];
     real_type t43  = pow(V__[3] - (U__[iU_u2] - 0.1e0 * t27 * (2 * t35 + 1)) * t26, 2);
     real_type result__ = t10 + t12 + t14 + t17 + t25 + t31 + t43;

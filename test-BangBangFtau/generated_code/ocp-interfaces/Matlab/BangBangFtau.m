@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: BangBangFtau.m                                                 %
 %                                                                       %
-%  version: 1.0   date 4/12/2021                                        %
+%  version: 1.0   date 14/12/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -445,6 +445,30 @@ classdef BangBangFtau < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function res = post_processing_vsTpositive( self )
+      %
+      % Return the solution for the post processing variable: vsTpositive
+      %
+      res = BangBangFtau_Mex( 'get_solution', self.objectHandle, 'vsTpositive' );
+    end
+    function res = post_processing_vsBpositive( self )
+      %
+      % Return the solution for the post processing variable: vsBpositive
+      %
+      res = BangBangFtau_Mex( 'get_solution', self.objectHandle, 'vsBpositive' );
+    end
+    function res = post_processing_vsTmax( self )
+      %
+      % Return the solution for the post processing variable: vsTmax
+      %
+      res = BangBangFtau_Mex( 'get_solution', self.objectHandle, 'vsTmax' );
+    end
+    function res = post_processing_vsTBInterval( self )
+      %
+      % Return the solution for the post processing variable: vsTBInterval
+      %
+      res = BangBangFtau_Mex( 'get_solution', self.objectHandle, 'vsTBInterval' );
+    end
     function res = post_processing_F( self )
       %
       % Return the solution for the post processing variable: F

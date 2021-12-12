@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -162,14 +162,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFtmin_data.Mesh["s0"] = 0;
-BangBangFtmin_data.Mesh["segments"][0]["n"] = 10;
-BangBangFtmin_data.Mesh["segments"][0]["length"] = 0.1;
-BangBangFtmin_data.Mesh["segments"][1]["n"] = 40;
-BangBangFtmin_data.Mesh["segments"][1]["length"] = 0.4;
-BangBangFtmin_data.Mesh["segments"][2]["n"] = 40;
-BangBangFtmin_data.Mesh["segments"][2]["length"] = 0.4;
-BangBangFtmin_data.Mesh["segments"][3]["n"] = 10;
-BangBangFtmin_data.Mesh["segments"][3]["length"] = 0.1;
+BangBangFtmin_data.Mesh["segments"][0]["length"] = 1;
+BangBangFtmin_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

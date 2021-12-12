@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_UserFunctions.cc                                |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -82,6 +82,54 @@ using Mechatronix::MeshStd;
 
 
 namespace FarmerDefine {
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  real_type
+  Farmer::Ptot( real_type xo__zeta ) const {
+    real_type t2   = ModelPars[iM_P1];
+    real_type t8   = 1.0 / (ModelPars[iM_t2] - ModelPars[iM_t1]) * (ModelPars[iM_P2] - t2);
+    real_type result__ = xo__zeta * t8 + t2 - t8;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Ptot( zeta={} ) return {}\n",
+        xo__zeta, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Farmer::Ptot_D( real_type xo__zeta ) const {
+    real_type result__ = (ModelPars[iM_P2] - ModelPars[iM_P1]) / (ModelPars[iM_t2] - ModelPars[iM_t1]);
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Ptot_D( zeta={} ) return {}\n",
+        xo__zeta, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Farmer::Ptot_DD( real_type xo__zeta ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Ptot_DD( zeta={} ) return {}\n",
+        xo__zeta, result__
+      );
+    }
+    return result__;
+  }
+
 }
 
 // EOF: Farmer_Methods_UserFunctions.cc

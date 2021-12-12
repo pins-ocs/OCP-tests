@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -154,8 +154,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 FlowInAchannel_data.Mesh["s0"] = 0;
-FlowInAchannel_data.Mesh["segments"][0]["length"] = 1;
 FlowInAchannel_data.Mesh["segments"][0]["n"] = 100;
+FlowInAchannel_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

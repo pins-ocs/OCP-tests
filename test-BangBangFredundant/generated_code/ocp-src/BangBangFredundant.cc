@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant.cc                                          |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -291,6 +291,19 @@ namespace BangBangFredundantDefine {
   */
   void
   BangBangFredundant::setup_user_mapped_functions( GenericContainer const & gc_data ) {
+    UTILS_ASSERT0(
+      gc_data.exists("MappedObjects"),
+      "BangBangFredundant::setup_classes: Missing key `MappedObjects` in data\n"
+    );
+    GenericContainer const & gc = gc_data("MappedObjects");
+
+    // Initialize user mapped functions
+
+    UTILS_ASSERT0(
+      gc.exists("clip"),
+      "in BangBangFredundant::setup_user_mapped_functions(gc) missing key: ``clip''\n"
+    );
+    clip.setup( gc("clip") );
   }
   /* --------------------------------------------------------------------------
   //            _                ____            _             _
@@ -367,6 +380,12 @@ namespace BangBangFredundantDefine {
     mstr.str("");
     mstr << "\nUser function `pMesh`\n";
     pMesh->info(mstr);
+    m_console->message(mstr.str(),msg_level);
+
+    m_console->message("\nUser mapped functions\n",msg_level);
+    mstr.str("");
+    mstr << "User function ``clip'' mapped with: ";
+    clip.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);

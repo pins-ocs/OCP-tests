@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -70,6 +70,42 @@ namespace BangBangFmoduleDefine {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  BangBangFmodule::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[2], LM__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = UM__[0];
+    real_type t2   = UM__[1];
+    real_type t10  = controlP(t1, 0, ModelPars[iM_FpMax]);
+    real_type t12  = controlM(t2, 0, ModelPars[iM_FmMax]);
+    real_type result__ = t1 + t2 + LM__[0] * XM__[1] + (t1 - t2) * LM__[1] + t10 + t12;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   BangBangFmodule::g_numEqns() const
@@ -270,7 +306,7 @@ namespace BangBangFmoduleDefine {
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = LM__[1];
-    U__[ iU_Fp ] = controlP.solve(-1 - t1, 0, ModelPars[iM_FpMax]);
+    U__[ iU_Fp ] = controlM.solve(-1 - t1, 0, ModelPars[iM_FpMax]);
     U__[ iU_Fm ] = controlM.solve(-1 + t1, 0, ModelPars[iM_FmMax]);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
@@ -320,7 +356,7 @@ namespace BangBangFmoduleDefine {
     real_type tmp_0_2 = 0.0e0;
     real_type tmp_1_2 = 0.0e0;
     real_type t1   = LM__[1];
-    real_type t4   = controlP.solve_rhs(-1 - t1, 0, ModelPars[iM_FpMax]);
+    real_type t4   = controlM.solve_rhs(-1 - t1, 0, ModelPars[iM_FpMax]);
     real_type tmp_0_3 = -0.5e0 * t4;
     real_type t8   = controlM.solve_rhs(-1 + t1, 0, ModelPars[iM_FmMax]);
     real_type tmp_1_3 = 0.5e0 * t8;

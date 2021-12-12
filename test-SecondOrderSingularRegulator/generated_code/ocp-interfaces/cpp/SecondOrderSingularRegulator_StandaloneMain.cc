@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SecondOrderSingularRegulator_Main.cc                           |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -161,8 +161,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SecondOrderSingularRegulator_data.Mesh["s0"] = 0;
-SecondOrderSingularRegulator_data.Mesh["segments"][0]["n"] = 500;
 SecondOrderSingularRegulator_data.Mesh["segments"][0]["length"] = L;
+SecondOrderSingularRegulator_data.Mesh["segments"][0]["n"] = 500;
 
 
     // alias for user object classes passed as pointers

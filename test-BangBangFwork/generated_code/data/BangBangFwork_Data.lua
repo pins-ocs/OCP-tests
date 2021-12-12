@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -47,7 +47,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -257,8 +259,8 @@ content = {
     -- Post Processing Parameters
 
     -- User Function Parameters
-    amp1 = 0.1,
-    amp2 = 0.01,
+    amp1 = 0.25,
+    amp2 = 0.1,
 
     -- Continuation Parameters
 
@@ -293,23 +295,8 @@ content = {
     segments = {
       
       {
-        length = 0.1,
-        n      = 10,
-      },
-      
-      {
-        length = 0.4,
-        n      = 40,
-      },
-      
-      {
-        length = 0.4,
-        n      = 40,
-      },
-      
-      {
-        length = 0.1,
-        n      = 10,
+        n      = 100,
+        length = 1,
       },
     },
   },

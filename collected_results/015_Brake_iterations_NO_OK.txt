@@ -384,11 +384,11 @@ dump_min       = 0.40000       dump_max       = 0.90000
 ratio ||f||_2  = 1.4000        ratio ||d||_2  = 1.4000
 ratio ||f||_1  = 1.4000        ratio ||d||_1  = 1.4000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 0.678[sec]    timeout        = 0 [ms]
+Elapsed Time   = 1.05[sec]     timeout        = 0 [ms]
 iteration      = 301           tolerance      = 1.000e-09
 max iterations = 300           N. Equations   = 1608
 max acc. iter. = 800           N. System pars = 400
-Converged      = NO            Memory Used    = 200Kb (+4bytes)
+Converged      = NO            Memory Used    = 201Kb (+42bytes)
 Convergence failed due to:
 NewtonDumped[solverNewtonDumped]::solve() too many iterations!
 Iter = 301, maxIter = 300, tolerance = 1.0000e-09
@@ -412,6 +412,8 @@ last ||f||_2   = 6.4781e-05    last ||d||_2   = 0.23957
 Check Jacobian Begin
 Last block: OK
 Check Jacobian End
+Check Controls Begin
+Check Controls End
 NewtonDumped[solverNewtonDumped]::solve() too many iterations!
 Iter = 301, maxIter = 300, tolerance = 1.0000e-09
 ||d||_inf = 0.35719, ||f||_inf = 0.0018636

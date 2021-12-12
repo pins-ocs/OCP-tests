@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: BangBangFtmin.m                                                %
 %                                                                       %
-%  version: 1.0   date 4/12/2021                                        %
+%  version: 1.0   date 14/12/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -379,12 +379,6 @@ classdef BangBangFtmin < handle
       %
       res = BangBangFtmin_Mex( 'get_solution', self.objectHandle, 'v' );
     end
-    function res = T( self )
-      %
-      % Return the solution for the state: T
-      %
-      res = BangBangFtmin_Mex( 'get_solution', self.objectHandle, 'T' );
-    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -402,12 +396,6 @@ classdef BangBangFtmin < handle
       % Return the solution for the multiplier: lambda2
       %
       res = BangBangFtmin_Mex( 'get_solution', self.objectHandle, 'lambda2__xo' );
-    end
-    function res = lambda3( self )
-      %
-      % Return the solution for the multiplier: lambda3
-      %
-      res = BangBangFtmin_Mex( 'get_solution', self.objectHandle, 'lambda3__xo' );
     end
 
     % ---------------------------------------------------------------------
@@ -427,6 +415,18 @@ classdef BangBangFtmin < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function res = post_processing_Fcontrol( self )
+      %
+      % Return the solution for the post processing variable: Fcontrol
+      %
+      res = BangBangFtmin_Mex( 'get_solution', self.objectHandle, 'Fcontrol' );
+    end
+    function res = post_processing_time( self )
+      %
+      % Return the solution for the post processing variable: time
+      %
+      res = BangBangFtmin_Mex( 'get_solution', self.objectHandle, 'time' );
+    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -879,22 +879,20 @@ classdef BangBangFtmin < handle
       plot(...
         self.zeta(), self.x(), ...
         self.zeta(), self.v(), ...
-        self.zeta(), self.T(), ...
         'Linewidth', 2 ...
       );
       title('states');
-      legend( 'x', 'v', 'T' );
+      legend( 'x', 'v' );
     end
     % ---------------------------------------------------------------------
     function plot_multipliers( self )
       plot(...
         self.zeta(), self.lambda1(), ...
         self.zeta(), self.lambda2(), ...
-        self.zeta(), self.lambda3(), ...
         'Linewidth', 2 ...
       );
       title('multipliers');
-      legend( '\lambda1', '\lambda2', '\lambda3' );
+      legend( '\lambda1', '\lambda2' );
     end
     % ---------------------------------------------------------------------
     function plot_controls( self )

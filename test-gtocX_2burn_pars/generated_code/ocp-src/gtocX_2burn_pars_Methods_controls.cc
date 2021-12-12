@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -54,6 +54,83 @@ namespace gtocX_2burn_parsDefine {
    |   \__, |
    |   |___/
   \*/
+
+  real_type
+  gtocX_2burn_pars::g_fun_eval(
+    NodeType2 const &    LEFT__,
+    NodeType2 const &    RIGHT__,
+    U_const_pointer_type UM__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    // midpoint
+    real_type QM__[1], XM__[3], LM__[3];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    XM__[2] = (XL__[2]+XR__[2])/2;
+    // Lvars
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    LM__[2] = (LL__[2]+LR__[2])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_muS];
+    real_type t2   = sqrt(t1);
+    real_type t4   = p_guess(0);
+    real_type t5   = t4 * t4;
+    real_type t6   = t2 * t5;
+    real_type t7   = P__[iP_p];
+    real_type t8   = sqrt(t7);
+    real_type t9   = t8 * t7;
+    real_type t11  = ModelPars[iM_w_guess] - 1;
+    real_type t12  = t11 * t9;
+    real_type t14  = ModelPars[iM_time_i];
+    real_type t15  = ModelPars[iM_time_f] - t14;
+    real_type t18  = QM__[0] * t15 + t14;
+    real_type t19  = L_guess(t18, t14);
+    real_type t20  = t19 * t19;
+    real_type t23  = XM__[2];
+    real_type t26  = t11 * t5;
+    real_type t30  = XM__[0];
+    real_type t31  = cos(t23);
+    real_type t33  = XM__[1];
+    real_type t34  = sin(t23);
+    real_type t35  = t34 * t33;
+    real_type t37  = ray_positive(t31 * t30 + t35 + 1);
+    real_type t41  = f_guess(t18);
+    real_type t42  = t41 * t41;
+    real_type t50  = g_guess(t18);
+    real_type t51  = t50 * t50;
+    real_type t59  = t7 * t7;
+    real_type t69  = ray(t7, t30, t33, t23);
+    real_type t70  = acceleration_r(t69, t1);
+    real_type t73  = P__[iP_h];
+    real_type t74  = t73 * t73;
+    real_type t75  = h_guess(0);
+    real_type t78  = t23 * t23;
+    real_type t79  = t30 * t30;
+    real_type t80  = t33 * t33;
+    real_type t81  = t75 * t75;
+    real_type t82  = P__[iP_k];
+    real_type t83  = t82 * t82;
+    real_type t84  = k_guess(0);
+    real_type t87  = t84 * t84;
+    real_type t102 = t31 * t31;
+    real_type t116 = t20 * t12 * t6 - 2 * t19 * t26 * t2 * t23 * t9 - t9 * t2 * t5 * t37 + t42 * t12 * t6 - 2 * t41 * t26 * t2 * t30 * t9 + t51 * t12 * t6 - 2 * t50 * t26 * t2 * t33 * t9 + t70 * (LM__[1] * t31 - LM__[0] * t34) * t15 * ModelPars[iM_w_nonlin] * t59 * t5 + t9 * t11 * (-2 * t75 * t73 - 2 * t84 * t82 + t74 + t78 + t79 + t80 + t81 + t83 + t87 + 1) * t6 - 2 * t8 * t59 * t11 * t4 * t2 + t8 * t59 * t7 * t11 * t2 - t1 * t5 * LM__[2] * t15 * (t102 * (t79 - t80) + t31 * (2 * t34 * t33 * t30 + 2 * t30) + t80 + 2 * t35 + 1);
+    real_type result__ = -1.0 / t5 / t9 * t116 / t2;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
 
   integer
   gtocX_2burn_pars::g_numEqns() const

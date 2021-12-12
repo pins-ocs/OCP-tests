@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Farmer_Data.rb                                                 #
 #                                                                       #
-#  version: 1.0   date 4/12/2021                                        #
+#  version: 1.0   date 13/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -45,7 +45,9 @@ mechatronix do |data|
   data.JF_threaded = true
   data.LU_threaded = true
 
-  # Enable check jacobian
+  # Enable check jacobian and controls
+  data.ControlsCheck         = true
+  data.ControlsCheck_epsilon = 1e-8
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
@@ -91,7 +93,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-9,  # tolerance for stopping criteria
+      :tolerance            => 1e-12, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -167,7 +169,7 @@ mechatronix do |data|
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
       # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
       :merit                => "MERIT_F2_and_D2",
-      :max_iter             => 120,
+      :max_iter             => 300,
       :max_step_iter        => 40,
       :max_accumulated_iter => 800,
 
@@ -211,7 +213,7 @@ mechatronix do |data|
     },
 
     :Hyness => {
-      :max_iter             => 120,
+      :max_iter             => 300,
       :max_step_iter        => 40,
       :max_accumulated_iter => 800,
       :tolerance            => 1e-09,
@@ -260,10 +262,6 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
-    :P1     => 0.1,
-    :P2     => 0.1,
-    :t1     => 0,
-    :t2     => 60,
     :tau__1 => 3,
     :tau__2 => 25,
     :tau__3 => 10,
@@ -291,26 +289,31 @@ mechatronix do |data|
     # Post Processing Parameters
 
     # User Function Parameters
+    :P1 => 0.1,
+    :P2 => 0.1,
+    :t1 => 0,
+    :t2 => 60,
 
     # Continuation Parameters
 
     # Constraints Parameters
   }
 
-    #                              _
-    #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
-    # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
-    # | | | | | | (_| | |_) | |_) | | | | | (_| |
-    # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
-    #                 |_|   |_|            |___/
+  #                              _
+  #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
+  # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
+  # | | | | | | (_| | |_) | |_) | | | | | (_| |
+  # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
+  #                 |_|   |_|            |___/
   # functions mapped on objects
   data.MappedObjects = {}
 
-    #                  _             _
-    #   ___ ___  _ __ | |_ _ __ ___ | |___
-    #  / __/ _ \| '_ \| __| '__/ _ \| / __|
-    # | (_| (_) | | | | |_| | | (_) | \__ \
-    #  \___\___/|_| |_|\__|_|  \___/|_|___/
+
+  #                  _             _
+  #   ___ ___  _ __ | |_ _ __ ___ | |___
+  #  / __/ _ \| '_ \| __| '__/ _ \| / __|
+  # | (_| (_) | | | | |_| | | (_) | \__ \
+  #  \___\___/|_| |_|\__|_|  \___/|_|___/
   # Controls
   # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
@@ -341,11 +344,11 @@ mechatronix do |data|
 
 
 
-    #                      _             _       _
-    #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
-    #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
-    # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
-    #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
+  #                      _             _       _
+  #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
+  #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
+  # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
+  #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
   # Constraint1D
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
@@ -360,11 +363,11 @@ mechatronix do |data|
   # Constraint2D: none defined
 
 
-   #                             _
-   #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
-   # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
-   # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
-   #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
+  #                             _
+  #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
+  # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
+  # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
+  #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
   # User defined classes initialization
   # User defined classes: M E S H
   data.Mesh =

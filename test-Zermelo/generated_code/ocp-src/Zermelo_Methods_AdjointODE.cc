@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_AdjointODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -156,20 +156,20 @@ namespace ZermeloDefine {
     real_type t8   = L__[iL_lambda2__xo];
     real_type t9   = t2 * t8;
     real_type t10  = velY_D_1_1(t4, t5);
-    result__[ 0   ] = t10 * t9 + t6 * t3;
+    result__[ 0   ] = t10 * t9 + t3 * t6;
     real_type t12  = velX_D_1_2(t4, t5);
     real_type t14  = velY_D_1_2(t4, t5);
     result__[ 1   ] = t12 * t3 + t14 * t9;
     real_type t16  = velX_D_1(t4, t5);
     real_type t18  = velY_D_1(t4, t5);
-    result__[ 2   ] = t16 * t1 + t18 * t8;
+    result__[ 2   ] = t1 * t16 + t18 * t8;
     result__[ 3   ] = result__[1];
     real_type t20  = velX_D_2_2(t4, t5);
     real_type t22  = velY_D_2_2(t4, t5);
     result__[ 4   ] = t20 * t3 + t22 * t9;
     real_type t24  = velX_D_2(t4, t5);
     real_type t26  = velY_D_2(t4, t5);
-    result__[ 5   ] = t24 * t1 + t26 * t8;
+    result__[ 5   ] = t1 * t24 + t26 * t8;
     result__[ 6   ] = t1;
     result__[ 7   ] = t8;
     result__[ 8   ] = result__[2];
@@ -245,7 +245,7 @@ namespace ZermeloDefine {
     real_type t5   = U__[iU_u];
     real_type t6   = sin(t5);
     real_type t11  = cos(t5);
-    result__[ 0   ] = t11 * t4 * t2 * L__[iL_lambda4__xo] - t6 * t4 * t2 * L__[iL_lambda3__xo];
+    result__[ 0   ] = t11 * t2 * t4 * L__[iL_lambda4__xo] - t2 * t4 * t6 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -290,7 +290,7 @@ namespace ZermeloDefine {
     real_type t4   = U__[iU_u];
     real_type t5   = sin(t4);
     real_type t9   = cos(t4);
-    result__[ 0   ] = -t2 * t5 * L__[iL_lambda3__xo] + t2 * t9 * L__[iL_lambda4__xo];
+    result__[ 0   ] = -t5 * t2 * L__[iL_lambda3__xo] + t9 * t2 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
   }

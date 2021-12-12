@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -545,7 +545,7 @@ namespace BangBangFtauDefine {
 
   integer
   BangBangFtau::post_numEqns() const
-  { return 2; }
+  { return 6; }
 
   void
   BangBangFtau::post_eval(
@@ -559,9 +559,15 @@ namespace BangBangFtauDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_sT] - X__[iX_sB];
-    result__[ 1   ] = clip(result__[0], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
+    real_type t1   = U__[iU_vsT];
+    result__[ 0   ] = vsTpositive(t1);
+    real_type t2   = U__[iU_vsB];
+    result__[ 1   ] = vsBpositive(t2);
+    result__[ 2   ] = vsTmax(ModelPars[iM_maxT] - t1);
+    result__[ 3   ] = vsTBInterval(t1 - t2);
+    result__[ 4   ] = X__[iX_sT] - X__[iX_sB];
+    result__[ 5   ] = clip(result__[4], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    Mechatronix::check_in_segment( result__, "post_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

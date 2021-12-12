@@ -224,7 +224,7 @@ dump_min       = 0.40000       dump_max       = 0.90000
 ratio ||f||_2  = 1.4000        ratio ||d||_2  = 1.4000
 ratio ||f||_1  = 1.4000        ratio ||d||_1  = 1.4000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 0.685[sec]    timeout        = 0 [ms]
+Elapsed Time   = 0.664[sec]    timeout        = 0 [ms]
 iteration      = 50            tolerance      = 1.000e-09
 max iterations = 300           N. Equations   = 28292
 max acc. iter. = 800           N. System pars = 4038
@@ -237,9 +237,9 @@ Few iterations = 8
 Function       = 275           Jacobian       = 50
 Factorization  = 50            Inversion      = 324
 ........................... last residuals ...........................
-last ||f||_inf = 4.2749e-10    last ||d||_inf = 2.2386e-08
-last ||f||_1   = 1.4142e-13    last ||d||_1   = 3.5810e-11
-last ||f||_2   = 6.1019e-12    last ||d||_2   = 6.4782e-10
+last ||f||_inf = 4.2750e-10    last ||d||_inf = 2.2392e-08
+last ||f||_1   = 1.4084e-13    last ||d||_1   = 3.5814e-11
+last ||f||_2   = 6.0914e-12    last ||d||_2   = 6.4787e-10
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
@@ -309,6 +309,15 @@ jac[  5, 26] =       1199.7 / 1197.9       [A/FD] ---       1.7768 / 0.14810    
 skipping...
 Last block: OK
 Check Jacobian End
+Check Controls Begin
+At cell 100, H = -45.59977317348042, ||g||_inf = 0.1223643172106082
+At cell 201, H = -23.715984608423117, ||g||_inf = 0.10996385355402392
+At cell 302, H = -30.13627811304358, ||g||_inf = 0.15964390686741903
+At cell 403, H = -43.330972342908986, ||g||_inf = 0.11684206140239382
+At cell 504, H = 6.444978134074444, ||g||_inf = 0.18284522428843972
+At cell 605, H = 5.32815392332661, ||g||_inf = 0.20161527859852388
+skipping...
+Check Controls End
 target [Lagrange,Mayer]       = [ 1.093, 0.000 ]
 [Penalties/Barriers,Controls] = [ 0.02715, 0.02843 ]
 All Done Folks!

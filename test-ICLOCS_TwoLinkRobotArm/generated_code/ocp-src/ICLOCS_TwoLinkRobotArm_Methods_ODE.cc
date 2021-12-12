@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_ODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -89,18 +89,19 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t2   = X__[iX_theta];
     real_type t3   = sin(t2);
     real_type t4   = cos(t2);
-    real_type t5   = X__[iX_omega__alpha];
-    real_type t6   = t5 * t5;
-    real_type t9   = X__[iX_omega__beta];
-    real_type t10  = t9 * t9;
-    real_type t14  = U__[iU_u1];
-    real_type t16  = U__[iU_u2];
-    real_type t22  = t3 * t3;
-    real_type t25  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t22);
-    result__[ 0   ] = t25 * ((9.0 / 4.0 * t6 * t4 + 2 * t10) * t3 + 4.0 / 3.0 * t14 - 4.0 / 3.0 * t16 - 3.0 / 2.0 * t16 * t4) * t1;
-    result__[ 1   ] = -t25 * ((9.0 / 4.0 * t10 * t4 + 7.0 / 2.0 * t6) * t3 - 7.0 / 3.0 * t16 + 3.0 / 2.0 * (t14 - t16) * t4) * t1;
-    result__[ 2   ] = (t5 - t9) * t1;
-    result__[ 3   ] = t5 * t1;
+    real_type t5   = t4 * t3;
+    real_type t6   = X__[iX_omega__alpha];
+    real_type t7   = t6 * t6;
+    real_type t10  = X__[iX_omega__beta];
+    real_type t11  = t10 * t10;
+    real_type t13  = U__[iU_u1];
+    real_type t15  = U__[iU_u2];
+    real_type t21  = t3 * t3;
+    real_type t24  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t21);
+    result__[ 0   ] = t24 * (9.0 / 4.0 * t7 * t5 + 2 * t11 + 4.0 / 3.0 * t13 - 4.0 / 3.0 * t15 - 3.0 / 2.0 * t15 * t4) * t1;
+    result__[ 1   ] = -t24 * (9.0 / 4.0 * t11 * t5 + 7.0 / 2.0 * t7 - 7.0 / 3.0 * t15 + 3.0 / 2.0 * (t13 - t15) * t4) * t1;
+    result__[ 2   ] = (t10 - t6) * t1;
+    result__[ 3   ] = t6 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
   }
@@ -159,23 +160,23 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t11  = 1.0 / t10;
     result__[ 0   ] = 9.0 / 2.0 * t11 * t6 * t5 * t4;
     real_type t14  = X__[iX_omega__beta];
-    result__[ 1   ] = 4 * t11 * t14 * t4;
-    real_type t17  = t6 * t6;
-    real_type t20  = t14 * t14;
-    real_type t22  = 9.0 / 4.0 * t17 * t5 + 2 * t20;
-    real_type t26  = U__[iU_u2];
-    real_type t33  = U__[iU_u1];
-    real_type t40  = t10 * t10;
-    real_type t43  = t5 * t3 / t40;
-    result__[ 2   ] = t11 * (t22 * t5 - 9.0 / 4.0 * t17 * t8 + 3.0 / 2.0 * t26 * t3) * t1 - 9.0 / 2.0 * t43 * (t22 * t3 + 4.0 / 3.0 * t33 - 4.0 / 3.0 * t26 - 3.0 / 2.0 * t5 * t26) * t1;
-    result__[ 3   ] = -7 * t11 * t6 * t4;
+    result__[ 1   ] = 4 * t11 * t14 * t1;
+    real_type t17  = t5 * t5;
+    real_type t18  = t6 * t6;
+    real_type t23  = U__[iU_u2];
+    real_type t29  = t5 * t3;
+    real_type t32  = t14 * t14;
+    real_type t34  = U__[iU_u1];
+    real_type t41  = t10 * t10;
+    real_type t44  = t5 * t3 / t41;
+    result__[ 2   ] = t11 * (9.0 / 4.0 * t18 * t17 - 9.0 / 4.0 * t18 * t8 + 3.0 / 2.0 * t23 * t3) * t1 - 9.0 / 2.0 * t44 * (9.0 / 4.0 * t18 * t29 + 2 * t32 + 4.0 / 3.0 * t34 - 4.0 / 3.0 * t23 - 3.0 / 2.0 * t23 * t5) * t1;
+    result__[ 3   ] = -7 * t11 * t6 * t1;
     result__[ 4   ] = -9.0 / 2.0 * t11 * t14 * t5 * t4;
-    real_type t56  = 9.0 / 4.0 * t20 * t5 + 7.0 / 2.0 * t17;
-    real_type t60  = t33 - t26;
-    result__[ 5   ] = -t11 * (t56 * t5 - 9.0 / 4.0 * t20 * t8 - 3.0 / 2.0 * t60 * t3) * t1 + 9.0 / 2.0 * t43 * (t56 * t3 - 7.0 / 3.0 * t26 + 3.0 / 2.0 * t60 * t5) * t1;
-    result__[ 6   ] = t1;
-    result__[ 7   ] = -result__[6];
-    result__[ 8   ] = result__[6];
+    real_type t58  = t34 - t23;
+    result__[ 5   ] = -t11 * (9.0 / 4.0 * t32 * t17 - 9.0 / 4.0 * t32 * t8 - 3.0 / 2.0 * t58 * t3) * t1 + 9.0 / 2.0 * t44 * (9.0 / 4.0 * t32 * t29 + 7.0 / 2.0 * t18 - 7.0 / 3.0 * t23 + 3.0 / 2.0 * t58 * t5) * t1;
+    result__[ 6   ] = -t1;
+    result__[ 7   ] = t1;
+    result__[ 8   ] = result__[7];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 9, i_segment );
   }
@@ -221,18 +222,19 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t1   = X__[iX_theta];
     real_type t2   = sin(t1);
     real_type t3   = cos(t1);
-    real_type t4   = X__[iX_omega__alpha];
-    real_type t5   = t4 * t4;
-    real_type t8   = X__[iX_omega__beta];
-    real_type t9   = t8 * t8;
-    real_type t13  = U__[iU_u1];
-    real_type t15  = U__[iU_u2];
-    real_type t20  = t2 * t2;
-    real_type t23  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t20);
-    result__[ 0   ] = t23 * ((9.0 / 4.0 * t5 * t3 + 2 * t9) * t2 + 4.0 / 3.0 * t13 - 4.0 / 3.0 * t15 - 3.0 / 2.0 * t15 * t3);
-    result__[ 1   ] = -t23 * ((9.0 / 4.0 * t9 * t3 + 7.0 / 2.0 * t5) * t2 - 7.0 / 3.0 * t15 + 3.0 / 2.0 * (t13 - t15) * t3);
-    result__[ 2   ] = t4 - t8;
-    result__[ 3   ] = t4;
+    real_type t4   = t3 * t2;
+    real_type t5   = X__[iX_omega__alpha];
+    real_type t6   = t5 * t5;
+    real_type t9   = X__[iX_omega__beta];
+    real_type t10  = t9 * t9;
+    real_type t12  = U__[iU_u1];
+    real_type t14  = U__[iU_u2];
+    real_type t19  = t2 * t2;
+    real_type t22  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t19);
+    result__[ 0   ] = t22 * (9.0 / 4.0 * t6 * t4 + 2 * t10 + 4.0 / 3.0 * t12 - 4.0 / 3.0 * t14 - 3.0 / 2.0 * t14 * t3);
+    result__[ 1   ] = -t22 * (9.0 / 4.0 * t10 * t4 + 7.0 / 2.0 * t6 - 7.0 / 3.0 * t14 + 3.0 / 2.0 * (t12 - t14) * t3);
+    result__[ 2   ] = t9 - t5;
+    result__[ 3   ] = t5;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 4, i_segment );
   }

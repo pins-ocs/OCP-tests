@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,7 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type maxAF = 10;
+    real_type h0 = 0.01;
+    real_type maxAF = 100;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -146,6 +147,13 @@ main() {
     // Constraints Parameters
 
     // functions mapped on objects
+    GenericContainer & gc_MappedObjects = gc_data["MappedObjects"];
+
+    // ClipIntervalWithErf
+    GenericContainer & data_clip = gc_MappedObjects["clip"];
+    data_clip["delta"] = 0;
+    data_clip["delta2"] = 0;
+    data_clip["h"] = h0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER

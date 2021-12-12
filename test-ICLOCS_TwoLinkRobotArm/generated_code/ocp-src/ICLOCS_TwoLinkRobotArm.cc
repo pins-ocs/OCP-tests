@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm.cc                                      |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -105,6 +105,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     "W",
     "alpha_f",
     "alpha_i",
+    "rho",
     "theta_f",
     "theta_i",
     "omega__alpha_f",
@@ -163,7 +164,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
   // Constraints 2D
   // User classes
   {
-    m_U_solve_iterative = false;
+    m_U_solve_iterative = true;
 
     // continuation
     this->ns_continuation_begin = 0;

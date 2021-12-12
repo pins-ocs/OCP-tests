@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Train_Data.rb                                                  #
 #                                                                       #
-#  version: 1.0   date 11/12/2021                                       #
+#  version: 1.0   date 13/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_max = 0.01
-ubMax    = 2
 tol_max  = 0.01
+epsi_max = 0.01
 uaMax    = 10
+ubMax    = 2
 
 mechatronix do |data|
 
@@ -49,7 +49,9 @@ mechatronix do |data|
   data.JF_threaded = true
   data.LU_threaded = true
 
-  # Enable check jacobian
+  # Enable check jacobian and controls
+  data.ControlsCheck         = true
+  data.ControlsCheck_epsilon = 1e-8
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
@@ -95,7 +97,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-9,  # tolerance for stopping criteria
+      :tolerance            => 1e-12, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch

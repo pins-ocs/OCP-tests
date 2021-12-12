@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_problem.cc                      |
  |                                                                       |
- |  version: 1.0   date 10/12/2021                                       |
+ |  version: 1.0   date 14/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -115,18 +115,21 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
-    real_type t4   = X__[iX_theta];
-    real_type t5   = sin(t4);
-    real_type t6   = cos(t4);
-    real_type t7   = X__[iX_omega__alpha];
-    real_type t8   = t7 * t7;
-    real_type t11  = X__[iX_omega__beta];
-    real_type t12  = t11 * t11;
-    real_type t16  = U__[iU_u1];
-    real_type t18  = U__[iU_u2];
-    real_type t23  = t5 * t5;
-    real_type t26  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t23);
-    real_type result__ = t26 * ((9.0 / 4.0 * t8 * t6 + 2 * t12) * t5 + 4.0 / 3.0 * t16 - 4.0 / 3.0 * t18 - 3.0 / 2.0 * t18 * t6) * t2 * L__[iL_lambda1__xo] - t26 * ((9.0 / 4.0 * t12 * t6 + 7.0 / 2.0 * t8) * t5 - 7.0 / 3.0 * t18 + 3.0 / 2.0 * (t16 - t18) * t6) * t2 * L__[iL_lambda2__xo] + (t7 - t11) * t2 * L__[iL_lambda3__xo] + t7 * t2 * L__[iL_lambda4__xo];
+    real_type t4   = U__[iU_u1];
+    real_type t5   = t4 * t4;
+    real_type t6   = U__[iU_u2];
+    real_type t7   = t6 * t6;
+    real_type t12  = X__[iX_theta];
+    real_type t13  = sin(t12);
+    real_type t14  = cos(t12);
+    real_type t15  = t14 * t13;
+    real_type t16  = X__[iX_omega__alpha];
+    real_type t17  = t16 * t16;
+    real_type t20  = X__[iX_omega__beta];
+    real_type t21  = t20 * t20;
+    real_type t28  = t13 * t13;
+    real_type t31  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t28);
+    real_type result__ = (t5 + t7) * t2 * ModelPars[iM_rho] + t31 * (9.0 / 4.0 * t17 * t15 + 2 * t21 + 4.0 / 3.0 * t4 - 4.0 / 3.0 * t6 - 3.0 / 2.0 * t6 * t14) * t2 * L__[iL_lambda1__xo] - t31 * (9.0 / 4.0 * t21 * t15 + 7.0 / 2.0 * t17 - 7.0 / 3.0 * t6 + 3.0 / 2.0 * (t4 - t6) * t14) * t2 * L__[iL_lambda2__xo] + (t20 - t16) * t2 * L__[iL_lambda3__xo] + t16 * t2 * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -197,7 +200,9 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
+    real_type t5   = U__[iU_u1] * U__[iU_u1];
+    real_type t7   = U__[iU_u2] * U__[iU_u2];
+    real_type result__ = (t5 + t7) * P__[iP_T] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
     }
@@ -305,9 +310,15 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
     result__[ 3   ] = 0;
-    result__[ 4   ] = 0;
-    result__[ 5   ] = 0;
-    result__[ 6   ] = 0;
+    real_type t1   = ModelPars[iM_rho];
+    real_type t3   = P__[iP_T] * t1;
+    real_type t4   = U__[iU_u1];
+    result__[ 4   ] = 2 * t4 * t3;
+    real_type t6   = U__[iU_u2];
+    result__[ 5   ] = 2 * t6 * t3;
+    real_type t8   = t4 * t4;
+    real_type t9   = t6 * t6;
+    result__[ 6   ] = (t8 + t9) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 7, i_segment );
   }

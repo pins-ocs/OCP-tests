@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: FlowInAchannel_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 4/12/2021                                        #
+#  version: 1.0   date 13/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -45,7 +45,9 @@ mechatronix do |data|
   data.JF_threaded = true
   data.LU_threaded = true
 
-  # Enable check jacobian
+  # Enable check jacobian and controls
+  data.ControlsCheck         = true
+  data.ControlsCheck_epsilon = 1e-8
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
@@ -91,7 +93,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-9,  # tolerance for stopping criteria
+      :tolerance            => 1e-12, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -274,39 +276,40 @@ mechatronix do |data|
     # Constraints Parameters
   }
 
-    #                              _
-    #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
-    # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
-    # | | | | | | (_| | |_) | |_) | | | | | (_| |
-    # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
-    #                 |_|   |_|            |___/
+  #                              _
+  #  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _
+  # | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
+  # | | | | | | (_| | |_) | |_) | | | | | (_| |
+  # |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
+  #                 |_|   |_|            |___/
   # functions mapped on objects
   data.MappedObjects = {}
 
-    #                  _             _
-    #   ___ ___  _ __ | |_ _ __ ___ | |___
-    #  / __/ _ \| '_ \| __| '__/ _ \| / __|
-    # | (_| (_) | | | | |_| | | (_) | \__ \
-    #  \___\___/|_| |_|\__|_|  \___/|_|___/
+
+  #                  _             _
+  #   ___ ___  _ __ | |_ _ __ ___ | |___
+  #  / __/ _ \| '_ \| __| '__/ _ \| / __|
+  # | (_| (_) | | | | |_| | | (_) | \__ \
+  #  \___\___/|_| |_|\__|_|  \___/|_|___/
   # Controls: No penalties or barriers constraint defined
   data.Controls = {}
 
 
-    #                      _             _       _
-    #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
-    #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
-    # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
-    #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
+  #                      _             _       _
+  #   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___
+  #  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
+  # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
+  #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
   # Constraint1D: none defined
   # Constraint2D: none defined
 
 
-   #                             _
-   #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
-   # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
-   # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
-   #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
+  #                             _
+  #  _   _ ___  ___ _ __    ___| | __ _ ___ ___
+  # | | | / __|/ _ \ '__|  / __| |/ _` / __/ __|
+  # | |_| \__ \  __/ |    | (__| | (_| \__ \__ \
+  #  \__,_|___/\___|_|     \___|_|\__,_|___/___/
   # User defined classes initialization
   # User defined classes: M E S H
   data.Mesh =
@@ -314,8 +317,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 100,
+        :length => 1,
       },
     ],
   };

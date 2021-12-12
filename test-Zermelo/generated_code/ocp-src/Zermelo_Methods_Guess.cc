@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_Guess.cc                                       |
  |                                                                       |
- |  version: 1.0   date 4/12/2021                                        |
+ |  version: 1.0   date 13/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,11 +84,11 @@ namespace ZermeloDefine {
 
   #define Xoptima__check__node__lt(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
-        ipos,i_segment,MSG,a-b                                        \
+        "Failed check on node={} segment={}: {}\nfail {} < {}\n",     \
+        ipos, i_segment, MSG, a, b                                    \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -96,11 +96,11 @@ namespace ZermeloDefine {
 
   #define Xoptima__check__node__le(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on node={} segment={}: {}\nerr (lhs-rhs)={}\n", \
-        ipos,i_segment,MSG,a-b                                        \
+        "Failed check on node={} segment={}: {}\nfail {} <= {}\n",    \
+        ipos, i_segment, MSG, a, b                                    \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -108,11 +108,11 @@ namespace ZermeloDefine {
 
   #define Xoptima__check__cell__lt(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
-        icell,i_segment,MSG,a-b                                       \
+        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
+        icell, i_segment, MSG, a, b                                   \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -120,11 +120,11 @@ namespace ZermeloDefine {
 
   #define Xoptima__check__cell__le(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nerr (lhs-rhs)={}\n", \
-        icell,i_segment,MSG,a-b                                       \
+        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
+        icell, i_segment, MSG, a, b                                   \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -132,10 +132,10 @@ namespace ZermeloDefine {
 
   #define Xoptima__check__pars__lt(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+        "Failed check on parameter: {}\nfail {} < {}\n", MSG, a, b    \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -143,10 +143,10 @@ namespace ZermeloDefine {
 
   #define Xoptima__check__pars__le(A,B,MSG)                           \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on parameter: {}\nerr (lhs-rhs)={}\n", MSG, a-b \
+        "Failed check on parameter: {}\nfail {} <= {}\n", MSG, a, b   \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -154,10 +154,10 @@ namespace ZermeloDefine {
 
   #define Xoptima__check__params__lt(A,B,MSG)                         \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+        "Failed check on params: {}\nfail {} < {}\n", MSG, a, b       \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -165,18 +165,36 @@ namespace ZermeloDefine {
 
   #define Xoptima__check__params__le(A,B,MSG)                         \
   {                                                                   \
-    real_type a = A, b=B;                                             \
+    real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on params: {}\nerr (lhs-rhs)={}\n", MSG, a-b    \
+        "Failed check on params: {}\nfail {} <= {}\n", MSG, a, b      \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
   }
 
+  #define Xoptima__check__u__lt(A,B,MSG)                              \
+  {                                                                   \
+    real_type a = A, b = B;                                           \
+    if ( a >= b ) {                                                   \
+      m_U_console.yellow(fmt::format(                                 \
+        "Failed check on control: {}\nfail {} < {}\n", MSG, a, b      \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
 
-
-
+  #define Xoptima__check__u__le(A,B,MSG)                              \
+  {                                                                   \
+    real_type a = A, b = B;                                           \
+    if ( a > b ) {                                                    \
+      m_U_console.yellow(fmt::format(                                 \
+        "Failed check on control: {}\nfail {} <= {}\n", MSG, a, b     \
+      ),3);                                                           \
+      return false;                                                   \
+    }                                                                 \
+  }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -231,7 +249,7 @@ namespace ZermeloDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-      MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_u ] = arctan2(-L__[iL_lambda4__xo], -L__[iL_lambda3__xo]);
     if ( m_debug )
@@ -291,7 +309,9 @@ namespace ZermeloDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    // no controls to check
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    // controls range check
+
     return ok;
   }
 
