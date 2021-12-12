@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising.hh                              |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 12/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -107,7 +107,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   class ICLOCS_MinimumFuelOrbitRaising : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[3];
+    real_type ModelPars[6];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -127,6 +127,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     ICLOCS_MinimumFuelOrbitRaising const & operator = ( ICLOCS_MinimumFuelOrbitRaising const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
+    void continuation_step_0( real_type s );
 
   public:
 
@@ -239,6 +240,9 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    ICLOCS_MINIMUMFUELORBITRAISING_API_DLL real_type mass      ( real_type xo__t ) const;
+    ICLOCS_MINIMUMFUELORBITRAISING_API_DLL real_type mass_D    ( real_type xo__t ) const;
+    ICLOCS_MINIMUMFUELORBITRAISING_API_DLL real_type mass_DD   ( real_type xo__t ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

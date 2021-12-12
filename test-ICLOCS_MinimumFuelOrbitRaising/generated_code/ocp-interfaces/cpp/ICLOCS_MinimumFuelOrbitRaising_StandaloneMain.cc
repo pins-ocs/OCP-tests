@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Main.cc                         |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 12/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,6 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type u_epsi0 = 0.1;
+    real_type u_epsi = u_epsi0;
     real_type tf = 3.32;
     integer InfoLevel = 4;
 
@@ -106,7 +108,7 @@ main() {
 
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
-    data_Solver["ns_continuation_end"]   = 0;
+    data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
     data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
@@ -117,11 +119,11 @@ main() {
 
     // Boundary Conditions
     GenericContainer & data_BoundaryConditions = gc_data["BoundaryConditions"];
-    data_BoundaryConditions["initial_x1"] = SET;
-    data_BoundaryConditions["initial_x2"] = SET;
-    data_BoundaryConditions["initial_x3"] = SET;
-    data_BoundaryConditions["final_x2"] = SET;
-    data_BoundaryConditions["x3x1"] = SET;
+    data_BoundaryConditions["initial_r"] = SET;
+    data_BoundaryConditions["initial_vr"] = SET;
+    data_BoundaryConditions["initial_vt"] = SET;
+    data_BoundaryConditions["final_vr"] = SET;
+    data_BoundaryConditions["rvt"] = SET;
 
     // Guess
     GenericContainer & data_Guess = gc_data["Guess"];
@@ -133,8 +135,8 @@ main() {
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
     data_Parameters["T"] = 0.1405;
-    data_Parameters["md"] = 0.0749;
-    data_Parameters["u_max"] = Mechatronix::m_pi;
+    data_Parameters["u_epsi"] = u_epsi;
+    data_Parameters["theta_max"] = Mechatronix::m_pi;
 
     // Guess Parameters
 
@@ -143,8 +145,11 @@ main() {
     // Post Processing Parameters
 
     // User Function Parameters
+    data_Parameters["md"] = 0.0749;
 
     // Continuation Parameters
+    data_Parameters["u_epsi0"] = u_epsi0;
+    data_Parameters["u_epsi1"] = 0;
 
     // Constraints Parameters
 
@@ -158,8 +163,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["s0"] = 0;
-ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["n"] = 400;
+ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
 
 
     // alias for user object classes passed as pointers

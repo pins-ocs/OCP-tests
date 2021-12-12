@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising.cc                              |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 12/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -48,9 +48,9 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   */
 
   char const *namesXvars[numXvars+1] = {
-    "x1",
-    "x2",
-    "x3",
+    "r",
+    "vr",
+    "vt",
     nullptr
   };
 
@@ -62,7 +62,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   };
 
   char const *namesUvars[numUvars+1] = {
-    "u",
+    "theta",
     nullptr
   };
 
@@ -85,6 +85,8 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "THETA",
+    "MASS",
     nullptr
   };
 
@@ -95,7 +97,10 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   char const *namesModelPars[numModelPars+1] = {
     "T",
     "md",
-    "u_max",
+    "u_epsi",
+    "u_epsi0",
+    "u_epsi1",
+    "theta_max",
     nullptr
   };
 
@@ -112,11 +117,11 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   };
 
   char const *namesBc[numBc+1] = {
-    "initial_x1",
-    "initial_x2",
-    "initial_x3",
-    "final_x2",
-    "x3x1",
+    "initial_r",
+    "initial_vr",
+    "initial_vt",
+    "final_vr",
+    "rvt",
     nullptr
   };
 
@@ -139,6 +144,9 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   {
     m_U_solve_iterative = true;
 
+    // continuation
+    this->ns_continuation_begin = 0;
+    this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
@@ -190,6 +198,21 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
       ),
       msg_level
     );
+    UTILS_ASSERT(
+      0 <= old_s && old_s < s && s <= 1,
+      "ICLOCS_MinimumFuelOrbitRaising::update_continuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
+    );
+    switch ( phase ) {
+      case 0: continuation_step_0( s ); break;
+      default:
+        UTILS_ERROR(
+          "ICLOCS_MinimumFuelOrbitRaising::update_continuation( phase number={}, old_s={}, s={} )"
+          " phase N.{} is not defined\n",
+          phase, old_s, s, phase
+        );
+    }
   }
 
   /* --------------------------------------------------------------------------

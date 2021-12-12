@@ -4,7 +4,7 @@
 #
 set title "Controls"
 plot \
-  "ICLOCS_MinimumFuelOrbitRaising_OCP_result.txt" every ::1 using 2:6 with linespoints title "u" 
+  "ICLOCS_MinimumFuelOrbitRaising_OCP_result.txt" every ::1 using 2:6 with linespoints title "theta" 
 
 pause -1 "Hit any key to continue"
 
@@ -14,9 +14,9 @@ pause -1 "Hit any key to continue"
 
 set title "States"
 plot \
-  "ICLOCS_MinimumFuelOrbitRaising_OCP_result.txt" every ::1 using 2:7 with linespoints title "x1" , \
-  "ICLOCS_MinimumFuelOrbitRaising_OCP_result.txt" every ::1 using 2:8 with linespoints title "x2" , \
-  "ICLOCS_MinimumFuelOrbitRaising_OCP_result.txt" every ::1 using 2:9 with linespoints title "x3" 
+  "ICLOCS_MinimumFuelOrbitRaising_OCP_result.txt" every ::1 using 2:7 with linespoints title "r" , \
+  "ICLOCS_MinimumFuelOrbitRaising_OCP_result.txt" every ::1 using 2:8 with linespoints title "vr" , \
+  "ICLOCS_MinimumFuelOrbitRaising_OCP_result.txt" every ::1 using 2:9 with linespoints title "vt" 
 
 pause -1 "Hit any key to continue"
 

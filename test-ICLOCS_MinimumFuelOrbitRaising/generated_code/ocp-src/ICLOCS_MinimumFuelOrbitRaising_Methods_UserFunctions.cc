@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_UserFunctions.cc        |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 12/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -42,6 +42,52 @@ using Mechatronix::MeshStd;
 
 
 namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  real_type
+  ICLOCS_MinimumFuelOrbitRaising::mass( real_type xo__t ) const {
+    real_type result__ = -xo__t * ModelPars[iM_md] + 1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_mass( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  ICLOCS_MinimumFuelOrbitRaising::mass_D( real_type xo__t ) const {
+    real_type result__ = -ModelPars[iM_md];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_mass_D( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  ICLOCS_MinimumFuelOrbitRaising::mass_DD( real_type xo__t ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_mass_DD( t={} ) return {}\n",
+        xo__t, result__
+      );
+    }
+    return result__;
+  }
+
 }
 
 // EOF: ICLOCS_MinimumFuelOrbitRaising_Methods_UserFunctions.cc

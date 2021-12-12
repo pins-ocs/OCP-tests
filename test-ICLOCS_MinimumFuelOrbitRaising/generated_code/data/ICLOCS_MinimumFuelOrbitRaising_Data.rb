@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_MinimumFuelOrbitRaising_Data.rb                         #
 #                                                                       #
-#  version: 1.0   date 11/12/2021                                       #
+#  version: 1.0   date 12/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,7 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tf = 3.32
+u_epsi0 = 0.1
+u_epsi  = u_epsi0
+tf      = 3.32
 
 mechatronix do |data|
 
@@ -46,7 +48,9 @@ mechatronix do |data|
   data.JF_threaded = true
   data.LU_threaded = true
 
-  # Enable check jacobian
+  # Enable check jacobian and controls
+  data.ControlsCheck         = true
+  data.ControlsCheck_epsilon = 1e-8
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
@@ -227,7 +231,7 @@ mechatronix do |data|
 
     # continuation parameters
     :ns_continuation_begin => 0,
-    :ns_continuation_end   => 0,
+    :ns_continuation_end   => 1,
   }
 
   #                                       _
@@ -239,11 +243,11 @@ mechatronix do |data|
 
   # Boundary Conditions
   data.BoundaryConditions = {
-    :initial_x1 => SET,
-    :initial_x2 => SET,
-    :initial_x3 => SET,
-    :final_x2   => SET,
-    :x3x1       => SET,
+    :initial_r  => SET,
+    :initial_vr => SET,
+    :initial_vt => SET,
+    :final_vr   => SET,
+    :rvt        => SET,
   }
 
   # Guess
@@ -261,9 +265,9 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
-    :T     => 0.1405,
-    :md    => 0.0749,
-    :u_max => Math::PI,
+    :T         => 0.1405,
+    :u_epsi    => u_epsi,
+    :theta_max => Math::PI,
 
     # Guess Parameters
 
@@ -272,8 +276,11 @@ mechatronix do |data|
     # Post Processing Parameters
 
     # User Function Parameters
+    :md => 0.0749,
 
     # Continuation Parameters
+    :u_epsi0 => u_epsi0,
+    :u_epsi1 => 0,
 
     # Constraints Parameters
   }
@@ -319,8 +326,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => tf,
         :n      => 400,
+        :length => tf,
       },
     ],
   };

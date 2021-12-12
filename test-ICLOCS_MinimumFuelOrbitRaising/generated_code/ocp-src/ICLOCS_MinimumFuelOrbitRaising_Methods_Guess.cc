@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_Guess.cc                |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 12/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -59,9 +59,9 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     L_pointer_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    X__[ iX_x1 ] = 1;
-    X__[ iX_x2 ] = 0;
-    X__[ iX_x3 ] = 1;
+    X__[ iX_r  ] = 1;
+    X__[ iX_vr ] = 0;
+    X__[ iX_vt ] = 1;
     L__[ iL_lambda3__xo ] = -0.1e-9;
     if ( m_debug )
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 3 );
@@ -193,8 +193,8 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
 
   // u_check_strings
-  #define Xoptima__message_u_check_0 "-u_max <= u(zeta)"
-  #define Xoptima__message_u_check_1 "u(zeta) <= u_max"
+  #define Xoptima__message_u_check_0 "-theta_max <= theta(zeta)"
+  #define Xoptima__message_u_check_1 "theta(zeta) <= theta_max"
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -250,7 +250,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_u ] = atan2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
+    UGUESS__[ iU_theta ] = atan2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
@@ -306,8 +306,8 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // admissible region
-    real_type t1   = ModelPars[iM_u_max];
-    real_type t2   = U__[iU_u];
+    real_type t1   = ModelPars[iM_theta_max];
+    real_type t2   = U__[iU_theta];
     Xoptima__check__u__le(-t1, t2, Xoptima__message_u_check_0);
     Xoptima__check__u__le(t2, t1, Xoptima__message_u_check_1);
     // controls range check

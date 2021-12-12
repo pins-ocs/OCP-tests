@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Mex.cc                          |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 12/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -2348,6 +2348,60 @@ public:
     #undef CMD
   }
 
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  void
+  do_mass(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('mass', obj, xo__t ): "
+    CHECK_IN_OUT( 3, 1 );
+    mwSize N0, M0;
+    real_const_ptr arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_ptr res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->mass(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_mass_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('mass_D', obj, xo__t ): "
+    CHECK_IN_OUT( 3, 1 );
+    mwSize N0, M0;
+    real_const_ptr arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_ptr res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->mass_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_mass_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('mass_DD', obj, xo__t ): "
+    CHECK_IN_OUT( 3, 1 );
+    mwSize N0, M0;
+    real_const_ptr arg0 = getMatrixPointer( arg_in_2, N0, M0, CMD " xo__t" );
+
+    real_ptr res = createMatrixValue( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->mass_DD(arg0[ii]);
+    #undef CMD
+  }
+
 
 };
 
@@ -3385,6 +3439,48 @@ do_node_to_segment(
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_mass(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('mass',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_mass( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_mass_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('mass_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_mass_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_mass_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  MEX_ASSERT2(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('mass_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  convertMat2Ptr<ProblemStorage>(arg_in_1)->do_mass_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"read",do_read},
   {"setup",do_setup},
@@ -3451,6 +3547,9 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"mesh_functions",do_mesh_functions},
   {"nodes",do_nodes},
   {"node_to_segment",do_node_to_segment},
+  {"mass",do_mass},
+  {"mass_D",do_mass_D},
+  {"mass_DD",do_mass_DD},
   {"new",do_new},
   {"infoLevel",do_infoLevel},
   {"set_max_threads",do_set_max_threads},

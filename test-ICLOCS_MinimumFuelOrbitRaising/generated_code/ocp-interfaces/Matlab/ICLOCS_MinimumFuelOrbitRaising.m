@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_MinimumFuelOrbitRaising.m                               %
 %                                                                       %
-%  version: 1.0   date 11/12/2021                                       %
+%  version: 1.0   date 12/12/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %
@@ -367,23 +367,23 @@ classdef ICLOCS_MinimumFuelOrbitRaising < handle
     % STATES
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function res = x1( self )
+    function res = r( self )
       %
-      % Return the solution for the state: x1
+      % Return the solution for the state: r
       %
-      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'x1' );
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'r' );
     end
-    function res = x2( self )
+    function res = vr( self )
       %
-      % Return the solution for the state: x2
+      % Return the solution for the state: vr
       %
-      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'x2' );
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'vr' );
     end
-    function res = x3( self )
+    function res = vt( self )
       %
-      % Return the solution for the state: x3
+      % Return the solution for the state: vt
       %
-      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'x3' );
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'vt' );
     end
 
     % ---------------------------------------------------------------------
@@ -415,11 +415,11 @@ classdef ICLOCS_MinimumFuelOrbitRaising < handle
     % CONTROLS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function res = u( self )
+    function res = theta( self )
       %
-      % Return the solution for the control: u
+      % Return the solution for the control: theta
       %
-      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'u' );
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'theta' );
     end
 
     % ---------------------------------------------------------------------
@@ -427,6 +427,18 @@ classdef ICLOCS_MinimumFuelOrbitRaising < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function res = post_processing_THETA( self )
+      %
+      % Return the solution for the post processing variable: THETA
+      %
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'THETA' );
+    end
+    function res = post_processing_MASS( self )
+      %
+      % Return the solution for the post processing variable: MASS
+      %
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'MASS' );
+    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -873,17 +885,34 @@ classdef ICLOCS_MinimumFuelOrbitRaising < handle
       node_to_segment = ICLOCS_MinimumFuelOrbitRaising_Mex( 'node_to_segment', self.objectHandle );
     end
     % ---------------------------------------------------------------------
+    %  _   _               ___             _   _
+    % | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+    % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+    %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+    % ---------------------------------------------------------------------
+    function res = mass( self, xo__t )
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex('mass', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = mass_D( self, xo__t )
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex('mass_D', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
+    function res = mass_DD( self, xo__t )
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex('mass_DD', self.objectHandle, xo__t );
+    end
+    % ---------------------------------------------------------------------
     % PLOT SOLUTION
     % ---------------------------------------------------------------------
     function plot_states( self )
       plot(...
-        self.zeta(), self.x1(), ...
-        self.zeta(), self.x2(), ...
-        self.zeta(), self.x3(), ...
+        self.zeta(), self.r(), ...
+        self.zeta(), self.vr(), ...
+        self.zeta(), self.vt(), ...
         'Linewidth', 2 ...
       );
       title('states');
-      legend( 'x1', 'x2', 'x3' );
+      legend( 'r', 'vr', 'vt' );
     end
     % ---------------------------------------------------------------------
     function plot_multipliers( self )
@@ -899,11 +928,11 @@ classdef ICLOCS_MinimumFuelOrbitRaising < handle
     % ---------------------------------------------------------------------
     function plot_controls( self )
       plot(...
-        self.zeta(), self.u(), ...
+        self.zeta(), self.theta(), ...
         'Linewidth', 2 ...
       );
       title('controls');
-      legend( 'u' );
+      legend( 'th\eta' );
     end
   end
 end

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Data.lua                        |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 12/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,7 +20,9 @@
 -- User Header
 
 -- Auxiliary values
-tf = 3.32
+u_epsi0 = 0.1
+u_epsi  = u_epsi0
+tf      = 3.32
 
 content = {
 
@@ -48,7 +50,9 @@ content = {
   JF_threaded = true,
   LU_threaded = true,
 
-  -- Enable check jacobian
+  -- Enable check jacobian and controls
+  ControlsCheck         = true,
+  ControlsCheck_epsilon = 1e-8,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
@@ -216,7 +220,7 @@ content = {
 
     -- continuation parameters
     ns_continuation_begin = 0,
-    ns_continuation_end   = 0,
+    ns_continuation_end   = 1,
   },
 
   --[[
@@ -230,11 +234,11 @@ content = {
 
   -- Boundary Conditions (SET/FREE)
   BoundaryConditions = {
-    initial_x1 = SET,
-    initial_x2 = SET,
-    initial_x3 = SET,
-    final_x2   = SET,
-    x3x1       = SET,
+    initial_r  = SET,
+    initial_vr = SET,
+    initial_vt = SET,
+    final_vr   = SET,
+    rvt        = SET,
   },
 
   -- Guess
@@ -252,9 +256,9 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    T     = 0.1405,
-    md    = 0.0749,
-    u_max = Pi,
+    T         = 0.1405,
+    u_epsi    = u_epsi,
+    theta_max = Pi,
 
     -- Guess Parameters
 
@@ -263,8 +267,11 @@ content = {
     -- Post Processing Parameters
 
     -- User Function Parameters
+    md = 0.0749,
 
     -- Continuation Parameters
+    u_epsi0 = u_epsi0,
+    u_epsi1 = 0,
 
     -- Constraints Parameters
   },
@@ -288,8 +295,8 @@ content = {
     segments = {
       
       {
-        length = tf,
         n      = 400,
+        length = tf,
       },
     },
   },

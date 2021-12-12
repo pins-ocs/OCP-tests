@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Pars.hh                         |
  |                                                                       |
- |  version: 1.0   date 11/12/2021                                       |
+ |  version: 1.0   date 12/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define ICLOCS_MINIMUMFUELORBITRAISINGPARS_DOT_HH
 
 #define numBc                    5
-#define numModelPars             3
+#define numModelPars             6
 #define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           0
@@ -29,14 +29,14 @@
 #define numOMEGAvars             5
 #define numQvars                 1
 #define numPvars                 0
-#define numPostProcess           0
+#define numPostProcess           2
 #define numIntegratedPostProcess 0
-#define numContinuationSteps     0
+#define numContinuationSteps     1
 
 // Xvars
-#define iX_x1          0
-#define iX_x2          1
-#define iX_x3          2
+#define iX_r           0
+#define iX_vr          1
+#define iX_vt          2
 
 // Lvars
 #define iL_lambda1__xo 0
@@ -44,7 +44,7 @@
 #define iL_lambda3__xo 2
 
 // Uvars
-#define iU_u           0
+#define iU_theta       0
 
 // Qvars
 #define iQ_zeta        0
@@ -54,7 +54,10 @@
 // ModelPars Maps
 #define iM_T           0
 #define iM_md          1
-#define iM_u_max       2
+#define iM_u_epsi      2
+#define iM_u_epsi0     3
+#define iM_u_epsi1     4
+#define iM_theta_max   5
 
 #endif
 
