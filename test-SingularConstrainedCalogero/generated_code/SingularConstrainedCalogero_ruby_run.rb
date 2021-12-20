@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularConstrainedCalogero_ruby_run.rb                        #
 #                                                                       #
-#  version: 1.0   date 13/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #

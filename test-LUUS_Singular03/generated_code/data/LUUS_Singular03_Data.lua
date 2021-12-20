@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular03_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -23,8 +23,8 @@
 epsi_x0      = 0.0001
 u_tolerance0 = 0.01
 u_epsilon0   = 0.01
-epsi_x       = epsi_x0
 Tf           = 5
+epsi_x       = epsi_x0
 
 content = {
 
@@ -306,8 +306,8 @@ content = {
     segments = {
       
       {
-        length = Tf,
         n      = 1000,
+        length = Tf,
       },
     },
   },

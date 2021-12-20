@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Main.cc                                 |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_ctrl0 = 0.01;
     real_type tol_ctrl0 = 0.01;
+    real_type epsi_ctrl0 = 0.01;
     real_type tol_ctrl = tol_ctrl0;
     real_type epsi_ctrl = epsi_ctrl0;
     integer InfoLevel = 4;

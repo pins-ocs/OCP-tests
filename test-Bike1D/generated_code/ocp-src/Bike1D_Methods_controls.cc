@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 14/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -482,7 +482,7 @@ namespace Bike1DDefine {
     real_type t12  = ModelPars[iM_g];
     real_type t13  = U__[iU_muf];
     real_type t18  = 2 * t12 * (V__[0] * t1 - (t3 + t13) * t12);
-    result__[ 0   ] = t8 * t2 - t18;
+    result__[ 0   ] = t2 * t8 - t18;
     real_type t20  = ALIAS_mufControl_D_1(t13, ModelPars[iM_muf_min], 0);
     result__[ 1   ] = t20 * t2 - t18;
     if ( m_debug )

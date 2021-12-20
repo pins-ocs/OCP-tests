@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
-u_tol_max  = 1e-06
-u_tol      = u_tol_max
 u_epsi_max = 1e-06
 u_epsi     = u_epsi_max
+u_tol_max  = 1e-06
+u_tol      = u_tol_max
 
 content = {
 

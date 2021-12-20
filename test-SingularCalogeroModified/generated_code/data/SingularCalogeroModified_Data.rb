@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularCalogeroModified_Data.rb                               #
 #                                                                       #
-#  version: 1.0   date 13/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-C       = 0.25
 epsilon = 0.01
+C       = 0.25
 
 mechatronix do |data|
 
@@ -329,8 +329,8 @@ mechatronix do |data|
     :s0       => -1,
     :segments => [
       {
-        :n      => 100,
         :length => 2,
+        :n      => 100,
       },
     ],
   };

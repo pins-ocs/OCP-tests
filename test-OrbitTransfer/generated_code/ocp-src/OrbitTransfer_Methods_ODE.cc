@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -79,7 +79,7 @@ namespace OrbitTransferDefine {
     real_type t17  = 1.0 / X__[iX_m];
     result__[ 1   ] = (t6 * t4 - 1.0 / t9 * ModelPars[iM_mu] + t17 * t14 * t12) * t1;
     real_type t22  = cos(t13);
-    result__[ 2   ] = (t12 * t17 * t22 - t6 * t2 * t3) * t1;
+    result__[ 2   ] = (t12 * t17 * t22 - t2 * t3 * t6) * t1;
     result__[ 3   ] = -t1 * ModelPars[iM_mdot];
     result__[ 4   ] = t6 * t3 * t1;
     if ( m_debug )

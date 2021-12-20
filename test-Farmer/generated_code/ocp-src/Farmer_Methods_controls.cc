@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -130,17 +130,17 @@ namespace FarmerDefine {
     real_type t8   = ModelPars[iM_w3];
     real_type t9   = ModelPars[iM_w4];
     real_type t10  = t9 * t8;
-    real_type t12  = ModelPars[iM_w1];
-    real_type t14  = XM__[2];
-    real_type t17  = Ptot(QM__[0]);
-    real_type t26  = pow(-t10 * t6 * t5 + (-t1 * t10 + t6 * (-t14 * t9 + (t17 * t9 - t2) * t8)) * t12, 2);
-    real_type t29  = t12 * t12;
+    real_type t13  = XM__[2];
+    real_type t16  = Ptot(QM__[0]);
+    real_type t23  = ModelPars[iM_w1];
+    real_type t26  = pow(-t10 * t6 * t5 + t23 * (-t1 * t10 + t6 * (-t13 * t9 + (t16 * t9 - t2) * t8)), 2);
+    real_type t29  = t23 * t23;
     real_type t32  = t6 * t6;
     real_type t34  = t8 * t8;
     real_type t37  = t9 * t9;
     real_type t41  = t5 * t5;
     real_type t43  = t1 * t1;
-    real_type t45  = t14 * t14;
+    real_type t45  = t13 * t13;
     real_type t47  = t2 * t2;
     real_type t50  = UM__[0];
     real_type t51  = -t5 + t50;
@@ -149,7 +149,7 @@ namespace FarmerDefine {
     real_type t56  = -t1 + t55;
     real_type t57  = t56 * t56;
     real_type t60  = UM__[2];
-    real_type t61  = -t14 + t60;
+    real_type t61  = -t13 + t60;
     real_type t62  = t61 * t61;
     real_type t65  = UM__[3];
     real_type t66  = -t2 + t65;
@@ -158,7 +158,7 @@ namespace FarmerDefine {
     real_type t100 = x2__oControl(t55, -0.1e-2, 100);
     real_type t101 = x3__oControl(t60, -0.1e-2, 100);
     real_type t102 = x4__oControl(t65, -0.1e-2, 100);
-    real_type result__ = t4 + 1.0 / t37 / t34 / t32 / t29 * ModelPars[iM_wP] * t26 + t41 * t12 + t43 * t6 + t45 * t8 + t47 * t9 + t52 * ModelPars[iM_wJ1] + t57 * ModelPars[iM_wJ2] + t62 * ModelPars[iM_wJ3] + t67 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t51 * LM__[0] + 1.0 / ModelPars[iM_tau__2] * t56 * LM__[1] + 1.0 / ModelPars[iM_tau__3] * t61 * LM__[2] + 1.0 / ModelPars[iM_tau__4] * (t14 - t2) * LM__[3] + 1.0 / ModelPars[iM_tau__5] * t66 * LM__[4] + t99 + t100 + t101 + t102;
+    real_type result__ = t4 + 1.0 / t37 / t34 / t32 / t29 * ModelPars[iM_wP] * t26 + t41 * t23 + t43 * t6 + t45 * t8 + t47 * t9 + t52 * ModelPars[iM_wJ1] + t57 * ModelPars[iM_wJ2] + t62 * ModelPars[iM_wJ3] + t67 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t51 * LM__[0] + 1.0 / ModelPars[iM_tau__2] * t56 * LM__[1] + 1.0 / ModelPars[iM_tau__3] * t61 * LM__[2] + 1.0 / ModelPars[iM_tau__4] * (t13 - t2) * LM__[3] + 1.0 / ModelPars[iM_tau__5] * t66 * LM__[4] + t99 + t100 + t101 + t102;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

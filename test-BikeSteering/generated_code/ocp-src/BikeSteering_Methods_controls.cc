@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -410,9 +410,9 @@ namespace BikeSteeringDefine {
     real_type t3   = U__[iU_Fy];
     real_type t4   = ModelPars[iM_Fmax];
     real_type t5   = FyControl(t3, -t4, t4);
-    real_type t11  = pow(-X__[iX_omega] * t1 + V__[1], 2);
+    real_type t11  = pow(-t1 * X__[iX_omega] + V__[1], 2);
     real_type t15  = ModelPars[iM_h];
-    real_type t26  = pow(-X__[iX_phi] * t15 * ModelPars[iM_g] * ModelPars[iM_m] * t1 + t3 * t15 * t1 + ModelPars[iM_Ix] * V__[0], 2);
+    real_type t26  = pow(-t1 * t15 * X__[iX_phi] * ModelPars[iM_g] * ModelPars[iM_m] + t1 * t15 * t3 + V__[0] * ModelPars[iM_Ix], 2);
     real_type t28  = V__[2] * V__[2];
     real_type result__ = t5 * t1 + t11 + t2 + t26 + t28;
     if ( m_debug ) {
@@ -444,7 +444,7 @@ namespace BikeSteeringDefine {
     real_type t3   = ModelPars[iM_Fmax];
     real_type t4   = ALIAS_FyControl_D_1(t2, -t3, t3);
     real_type t9   = ModelPars[iM_h];
-    result__[ 0   ] = t4 * t1 + 2 * t9 * t1 * (-X__[iX_phi] * t9 * ModelPars[iM_g] * ModelPars[iM_m] * t1 + t2 * t9 * t1 + ModelPars[iM_Ix] * V__[0]);
+    result__[ 0   ] = t4 * t1 + 2 * t9 * t1 * (-X__[iX_phi] * t9 * ModelPars[iM_g] * ModelPars[iM_m] * t1 + t2 * t9 * t1 + V__[0] * ModelPars[iM_Ix]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

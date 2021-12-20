@@ -1,5 +1,5 @@
-# Date:             16:14:45 2021-12-13
-# MX Version:       1.5.0-d077dirty-osx_12.0.1 hash: 9eccea9d Mon Dec 13 01:39:25 2021
+# Date:             12:18:27 2021-12-20
+# MX Version:       1.5.0-d078dirty-osx_12.0.1 hash: da2367a2 Mon Dec 20 09:54:16 2021
 # Computation type: Optimal control solution
 # Model name:       Underwater
 #
@@ -14,7 +14,7 @@
 # max_accumulated_iter = 800
 # tolerance            = 9.999999999999999e-10
 # iterations           = 430
-# cpu_time             = 2.000516 s
+# cpu_time             = 2.005123 s
 # solver_type          = CyclicReduction+LU and LastBlock LUPQ
 # lapack version       = Accelerate
 #

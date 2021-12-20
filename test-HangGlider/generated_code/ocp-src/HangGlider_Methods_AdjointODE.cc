@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_AdjointODE.cc                               |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -192,17 +192,17 @@ namespace HangGliderDefine {
     real_type t23  = Lfun(t7, t8, t9);
     real_type t24  = t23 * t15;
     real_type t25  = w(t7, t9);
-    real_type t27  = -t8 * t21 - t25 * t24;
+    real_type t27  = -t21 * t8 - t24 * t25;
     real_type t28  = t27 * t13;
     real_type t29  = v_D_1(t7, t8, t9);
     real_type t30  = t29 * t29;
     real_type t34  = 1.0 / t11;
     real_type t35  = Dfun_D_1(t7, t8, t9);
-    real_type t36  = t19 * t35;
+    real_type t36  = t35 * t19;
     real_type t38  = Lfun_D_1(t7, t8, t9);
     real_type t39  = t38 * t15;
     real_type t41  = w_D_1(t7, t9);
-    real_type t44  = (-t24 * t41 - t25 * t39 - t8 * t36) * t34;
+    real_type t44  = (-t24 * t41 - t25 * t39 - t36 * t8) * t34;
     real_type t48  = t27 * t34;
     real_type t49  = v_D_1_1(t7, t8, t9);
     real_type t52  = 1.0 / t10;
@@ -214,17 +214,17 @@ namespace HangGliderDefine {
     real_type t62  = w_D_1_1(t7, t9);
     real_type t67  = L__[iL_lambda4__xo];
     real_type t68  = t5 * t2;
-    real_type t71  = -t25 * t21 + t8 * t24;
+    real_type t71  = -t21 * t25 + t24 * t8;
     real_type t72  = t71 * t13;
-    real_type t80  = (-t41 * t21 - t25 * t36 + t8 * t39) * t34;
+    real_type t80  = (-t21 * t41 - t25 * t36 + t39 * t8) * t34;
     real_type t84  = t71 * t34;
-    result__[ 0   ] = 2 * t30 * t28 * t6 - 2 * t29 * t44 * t6 - t49 * t48 * t6 + (-t62 * t24 - t25 * t58 - 2 * t41 * t39 - t8 * t55) * t53 * t3 + (2 * t30 * t72 * t68 - 2 * t29 * t80 * t68 - t49 * t84 * t68 + (-t62 * t21 - t25 * t55 - 2 * t41 * t36 + t8 * t58) * t52 * t68) * t67;
+    result__[ 0   ] = 2 * t30 * t28 * t6 - 2 * t29 * t44 * t6 - t49 * t48 * t6 + (-t24 * t62 - t25 * t58 - 2 * t39 * t41 - t55 * t8) * t53 * t3 + (2 * t30 * t72 * t68 - 2 * t29 * t80 * t68 - t49 * t84 * t68 + (-t21 * t62 - t25 * t55 - 2 * t36 * t41 + t58 * t8) * t52 * t68) * t67;
     real_type t97  = v_D_2(t7, t8, t9);
     real_type t102 = Dfun_D_2(t7, t8, t9);
     real_type t103 = t102 * t19;
     real_type t105 = Lfun_D_2(t7, t8, t9);
     real_type t106 = t105 * t15;
-    real_type t109 = (-t8 * t103 - t25 * t106 - t21) * t34;
+    real_type t109 = (-t103 * t8 - t106 * t25 - t21) * t34;
     real_type t112 = v_D_1_2(t7, t8, t9);
     real_type t117 = Dfun_D_1_2(t7, t8, t9);
     real_type t118 = t117 * t19;
@@ -232,23 +232,23 @@ namespace HangGliderDefine {
     real_type t121 = t120 * t15;
     real_type t127 = t13 * t68;
     real_type t128 = t29 * t71;
-    real_type t135 = (-t25 * t103 + t8 * t106 + t24) * t34;
-    result__[ 1   ] = 2 * t97 * t29 * t28 * t6 - t29 * t109 * t6 - t112 * t48 * t6 - t97 * t44 * t6 + (-t41 * t106 - t8 * t118 - t25 * t121 - t36) * t53 * t3 + (2 * t97 * t128 * t127 - t29 * t135 * t68 - t112 * t84 * t68 - t97 * t80 * t68 + (-t41 * t103 - t25 * t118 + t8 * t121 + t39) * t52 * t68) * t67;
+    real_type t135 = (-t103 * t25 + t106 * t8 + t24) * t34;
+    result__[ 1   ] = 2 * t97 * t29 * t28 * t6 - t29 * t109 * t6 - t112 * t48 * t6 - t97 * t44 * t6 + (-t106 * t41 - t118 * t8 - t121 * t25 - t36) * t53 * t3 + (2 * t97 * t128 * t127 - t29 * t135 * t68 - t112 * t84 * t68 - t97 * t80 * t68 + (-t103 * t41 - t118 * t25 + t121 * t8 + t39) * t52 * t68) * t67;
     real_type t150 = v_D_3(t7, t8, t9);
     real_type t155 = Dfun_D_3(t7, t8, t9);
     real_type t156 = t155 * t19;
     real_type t158 = Lfun_D_3(t7, t8, t9);
     real_type t159 = t158 * t15;
     real_type t161 = w_D_2(t7, t9);
-    real_type t164 = (-t8 * t156 - t25 * t159 - t161 * t24) * t34;
+    real_type t164 = (-t156 * t8 - t159 * t25 - t161 * t24) * t34;
     real_type t167 = v_D_1_3(t7, t8, t9);
     real_type t172 = Dfun_D_1_3(t7, t8, t9);
     real_type t173 = t172 * t19;
     real_type t175 = Lfun_D_1_3(t7, t8, t9);
     real_type t176 = t175 * t15;
     real_type t180 = w_D_1_2(t7, t9);
-    real_type t192 = (-t25 * t156 + t8 * t159 - t161 * t21) * t34;
-    result__[ 2   ] = 2 * t150 * t29 * t28 * t6 - t29 * t164 * t6 - t167 * t48 * t6 - t150 * t44 * t6 + (-t41 * t159 - t161 * t39 - t8 * t173 - t25 * t176 - t180 * t24) * t53 * t3 + (2 * t150 * t128 * t127 - t29 * t192 * t68 - t167 * t84 * t68 - t150 * t80 * t68 + (-t41 * t156 - t161 * t36 - t25 * t173 + t8 * t176 - t180 * t21) * t52 * t68) * t67;
+    real_type t192 = (-t156 * t25 + t159 * t8 - t161 * t21) * t34;
+    result__[ 2   ] = 2 * t150 * t29 * t28 * t6 - t29 * t164 * t6 - t167 * t48 * t6 - t150 * t44 * t6 + (-t159 * t41 - t161 * t39 - t173 * t8 - t176 * t25 - t180 * t24) * t53 * t3 + (2 * t150 * t128 * t127 - t29 * t192 * t68 - t167 * t84 * t68 - t150 * t80 * t68 + (-t156 * t41 - t161 * t36 - t173 * t25 + t176 * t8 - t180 * t21) * t52 * t68) * t67;
     result__[ 3   ] = result__[1];
     real_type t209 = t97 * t97;
     real_type t216 = v_D_2_2(t7, t8, t9);
@@ -256,13 +256,13 @@ namespace HangGliderDefine {
     real_type t220 = t219 * t19;
     real_type t223 = Lfun_D_2_2(t7, t8, t9);
     real_type t224 = t223 * t15;
-    result__[ 4   ] = 2 * t209 * t28 * t6 - 2 * t97 * t109 * t6 - t216 * t48 * t6 + (-t8 * t220 - t25 * t224 - 2 * t103) * t53 * t3 + (2 * t209 * t72 * t68 - 2 * t97 * t135 * t68 - t216 * t84 * t68 + (-t25 * t220 + t8 * t224 + 2 * t106) * t52 * t68) * t67;
+    result__[ 4   ] = 2 * t209 * t28 * t6 - 2 * t97 * t109 * t6 - t216 * t48 * t6 + (-t220 * t8 - t224 * t25 - 2 * t103) * t53 * t3 + (2 * t209 * t72 * t68 - 2 * t97 * t135 * t68 - t216 * t84 * t68 + (-t220 * t25 + t224 * t8 + 2 * t106) * t52 * t68) * t67;
     real_type t251 = v_D_2_3(t7, t8, t9);
     real_type t256 = Dfun_D_2_3(t7, t8, t9);
     real_type t257 = t256 * t19;
     real_type t259 = Lfun_D_2_3(t7, t8, t9);
     real_type t260 = t259 * t15;
-    result__[ 5   ] = 2 * t150 * t97 * t28 * t6 - t97 * t164 * t6 - t251 * t48 * t6 - t150 * t109 * t6 + (-t161 * t106 - t25 * t260 - t8 * t257 - t156) * t53 * t3 + (2 * t150 * t97 * t71 * t127 - t97 * t192 * t68 - t251 * t84 * t68 - t150 * t135 * t68 + (-t161 * t103 - t25 * t257 + t8 * t260 + t159) * t52 * t68) * t67;
+    result__[ 5   ] = 2 * t150 * t97 * t28 * t6 - t97 * t164 * t6 - t251 * t48 * t6 - t150 * t109 * t6 + (-t106 * t161 - t25 * t260 - t257 * t8 - t156) * t53 * t3 + (2 * t150 * t97 * t71 * t127 - t97 * t192 * t68 - t251 * t84 * t68 - t150 * t135 * t68 + (-t103 * t161 - t25 * t257 + t260 * t8 + t159) * t52 * t68) * t67;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
     real_type t284 = t150 * t150;
@@ -272,7 +272,7 @@ namespace HangGliderDefine {
     real_type t297 = Lfun_D_3_3(t7, t8, t9);
     real_type t298 = t297 * t15;
     real_type t302 = w_D_2_2(t7, t9);
-    result__[ 8   ] = 2 * t284 * t28 * t6 - 2 * t150 * t164 * t6 - t291 * t48 * t6 + (-2 * t161 * t159 - t302 * t24 - t25 * t298 - t8 * t295) * t53 * t3 + (2 * t284 * t72 * t68 - 2 * t150 * t192 * t68 - t291 * t84 * t68 + (-2 * t161 * t156 - t302 * t21 - t25 * t295 + t8 * t298) * t52 * t68) * t67;
+    result__[ 8   ] = 2 * t284 * t28 * t6 - 2 * t150 * t164 * t6 - t291 * t48 * t6 + (-2 * t159 * t161 - t24 * t302 - t25 * t298 - t295 * t8) * t53 * t3 + (2 * t284 * t72 * t68 - 2 * t150 * t192 * t68 - t291 * t84 * t68 + (-2 * t161 * t156 - t302 * t21 - t25 * t295 + t8 * t298) * t52 * t68) * t67;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
   }
@@ -332,7 +332,7 @@ namespace HangGliderDefine {
     real_type t20  = Lfun(t5, t6, t7);
     real_type t21  = t20 * t12;
     real_type t22  = w(t5, t7);
-    real_type t25  = (-t18 * t6 - t22 * t21) * t10;
+    real_type t25  = (-t6 * t18 - t22 * t21) * t10;
     real_type t26  = v_D_1(t5, t6, t7);
     real_type t29  = 1.0 / t8;
     real_type t30  = Dfun_D_1(t5, t6, t7);
@@ -342,9 +342,9 @@ namespace HangGliderDefine {
     real_type t36  = w_D_1(t5, t7);
     real_type t41  = L__[iL_lambda4__xo];
     real_type t42  = t10 * t3;
-    real_type t45  = -t18 * t22 + t21 * t6;
+    real_type t45  = -t22 * t18 + t6 * t21;
     real_type t48  = t29 * t3;
-    result__[ 0   ] = -t26 * t25 * t4 + (-t21 * t36 - t22 * t34 - t31 * t6) * t29 * t4 + (-t26 * t45 * t42 + (-t18 * t36 - t22 * t31 + t34 * t6) * t48) * t41;
+    result__[ 0   ] = -t26 * t25 * t4 + (-t36 * t21 - t22 * t34 - t6 * t31) * t29 * t4 + (-t26 * t45 * t42 + (-t36 * t18 - t22 * t31 + t6 * t34) * t48) * t41;
     real_type t57  = v_D_2(t5, t6, t7);
     real_type t60  = Dfun_D_2(t5, t6, t7);
     real_type t61  = t60 * t16;
@@ -357,7 +357,7 @@ namespace HangGliderDefine {
     real_type t84  = Lfun_D_3(t5, t6, t7);
     real_type t85  = t84 * t12;
     real_type t87  = w_D_2(t5, t7);
-    result__[ 2   ] = L__[iL_lambda2__xo] - t78 * t25 * t4 + (-t21 * t87 - t22 * t85 - t6 * t82) * t29 * t4 + (-t78 * t45 * t42 + (-t87 * t18 - t22 * t82 + t6 * t85) * t48) * t41;
+    result__[ 2   ] = L__[iL_lambda2__xo] - t78 * t25 * t4 + (-t87 * t21 - t22 * t85 - t6 * t82) * t29 * t4 + (-t78 * t45 * t42 + (-t87 * t18 - t22 * t82 + t6 * t85) * t48) * t41;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }
@@ -398,7 +398,7 @@ namespace HangGliderDefine {
     real_type t19  = Dfun(t11, t12, t13);
     real_type t23  = Lfun(t11, t12, t13);
     real_type t24  = w(t11, t13);
-    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[iM_W] + (-2 * t12 * t19 * t18 - t24 * t23) * t16 * t7 * L__[iL_lambda3__xo] + (-2 * t24 * t19 * t18 + t12 * t23) * t16 * t7 * L__[iL_lambda4__xo];
+    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[iM_W] + (-2 * t12 * t18 * t19 - t23 * t24) * t16 * t7 * L__[iL_lambda3__xo] + (-2 * t24 * t19 * t18 + t12 * t23) * t16 * t7 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
@@ -569,7 +569,7 @@ namespace HangGliderDefine {
     real_type t25  = Lfun(t13, t4, t7);
     real_type t26  = t25 * t17;
     real_type t27  = w(t13, t7);
-    result__[ 0   ] = t2 + t4 * L__[iL_lambda1__xo] + t7 * L__[iL_lambda2__xo] + (-t23 * t4 - t26 * t27) * t15 * t11 * L__[iL_lambda3__xo] + ((-t27 * t23 + t4 * t26) * t15 * t11 - ModelPars[iM_g]) * L__[iL_lambda4__xo];
+    result__[ 0   ] = t2 + t4 * L__[iL_lambda1__xo] + t7 * L__[iL_lambda2__xo] + (-t4 * t23 - t27 * t26) * t15 * t11 * L__[iL_lambda3__xo] + ((-t27 * t23 + t4 * t26) * t15 * t11 - ModelPars[iM_g]) * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }

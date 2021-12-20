@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_PathConstrained_Data.rb                                 #
 #                                                                       #
-#  version: 1.0   date 13/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_ctrl0 = 0.01
 tol_ctrl0  = 0.01
+epsi_ctrl0 = 0.01
 tol_ctrl   = tol_ctrl0
 epsi_ctrl  = epsi_ctrl0
 

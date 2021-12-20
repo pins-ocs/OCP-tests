@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_AdjointODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -514,8 +514,8 @@ namespace CNOCDefine {
     result__[ 21  ] = t276 * t361 * t71 + t276 * t358;
     result__[ 22  ] = result__[10];
     result__[ 23  ] = result__[17];
-    result__[ 24  ] = t374 * t382 * t386 + t374 * t390 * t393 + 2 * t374 * t399 * t402 - 2 * t374 * t407 * t408 - t398 + t414;
-    result__[ 25  ] = -t378 * t441 * t92 + 2 * t396 * t443 * t92 + t276 * t448 + L__[iL_lambda2__xo];
+    result__[ 24  ] = t374 * t382 * t386 + t374 * t390 * t393 + 2 * t374 * t399 * t402 - 2 * t374 * t408 * t407 - t398 + t414;
+    result__[ 25  ] = -t92 * t378 * t441 + 2 * t396 * t443 * t92 + t276 * t448 + L__[iL_lambda2__xo];
     result__[ 26  ] = -t304 * t361 * t71 - t304 * t358 + t230 - t233 + t236 + t239;
     result__[ 27  ] = result__[11];
     result__[ 28  ] = result__[18];
@@ -541,7 +541,7 @@ namespace CNOCDefine {
     real_type t510 = t505 * t505;
     result__[ 36  ] = 1.0 / t510 * t508 * t1 + t24 * t488 * t15 + t55 * t485 * t49;
     real_type t517 = ALIAS_an_limit_D(t507);
-    result__[ 37  ] = -t12 * t27 * t8 + t46 * t5 * t58 + t296 * t448 + t506 * t517 + t112;
+    result__[ 37  ] = -t12 * t27 * t8 + t46 * t5 * t58 + t448 * t296 + t506 * t517 + t112;
     result__[ 38  ] = result__[6];
     result__[ 39  ] = result__[13];
     result__[ 40  ] = result__[20];

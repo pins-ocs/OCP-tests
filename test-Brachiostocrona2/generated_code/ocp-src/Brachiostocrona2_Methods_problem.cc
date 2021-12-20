@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,7 +84,7 @@ namespace Brachiostocrona2Define {
     real_type t11  = X__[iX_v];
     real_type t12  = cos(t4);
     real_type t17  = sin(t4);
-    real_type result__ = t1 * t11 * t12 * L__[iL_lambda1__xo] + t1 * t11 * t17 * L__[iL_lambda2__xo] - t1 * t17 * L__[iL_lambda3__xo] * ModelPars[iM_g] + t7 * ModelPars[iM_epsi] + t2;
+    real_type result__ = t12 * t11 * t1 * L__[iL_lambda1__xo] + t17 * t11 * t1 * L__[iL_lambda2__xo] - t17 * ModelPars[iM_g] * t1 * L__[iL_lambda3__xo] + t7 * ModelPars[iM_epsi] + t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }

@@ -90,6 +90,7 @@ task :maple do
           next unless check_maple_input( link )
           line = link.content.strip
           line += ';' if line[-1] != ';' # add missing ;
+          break if line =~ /\#\s*quit\s*;?$/ 
           f.puts line
         end
       end

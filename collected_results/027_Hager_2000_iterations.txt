@@ -1,0 +1,79 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+
+
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 101
+Segment N.0: s0 = 0 length = 1 npts = 101 no data set
+END Mesh[mesh]
+INFO CLASS = Hager_2000
+  #nodes      = 101
+  dim         = u = 1, q = 1, x = 1, p = 0, omega = 1, bc = 1, full_bc = 3
+  BC          = Inital = 2, Final = 1, Cyclic = 0
+  OMEGA       = Inital = 1, Final = 0, Cyclic = 0
+  total       = nZ = 203, UC = 100, Q = 101
+  index start = omega = 202, p = 203
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1, 1] (  0.0222  , 2.08e-16 ) [  0.905   , 3.83e-15 ] 1          [0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
+ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 1.19[ms]      timeout        = 0 [ms]
+iteration      = 1             tolerance      = 1e-09
+max iterations = 300           N. Equations   = 203
+max acc. iter. = 800           N. System pars = 100
+Converged      = YES           Memory Used    = 32Kb (+53bytes)
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 2             Jacobian       = 1
+Factorization  = 1             Inversion      = 2
+........................... last residuals ...........................
+last ||f||_inf = 2.2204e-15    last ||d||_inf = 1.8016e-14
+last ||f||_1   = 2.079e-16     last ||d||_1   = 3.8283e-15
+last ||f||_2   = 3.5975e-16    last ||d||_2   = 5.0211e-15
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+Check Controls End
+target [Lagrange,Mayer]       = [ 1.728, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+All Done Folks!

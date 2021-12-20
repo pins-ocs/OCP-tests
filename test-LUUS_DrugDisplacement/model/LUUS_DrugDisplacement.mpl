@@ -78,33 +78,3 @@ generateOCProblem(
   states_guess            = GUESS
 );
 # if used in batch mode use the comment to quit;
-# quit;
-#launchSolver(project_dir,project_name);
-compileSolver(project_dir,project_name);
-runSolver(project_dir);
-with(plots):;
-#Describe(XOptimaPlots);
-XOptimaPlots:-loadSolution(project_dir,project_name); # load solution
-hhdrs := XOptimaPlots:-getHeaders(): nops(%);
-XOptimaPlots:-getPars();
-sol_T := XOptimaPlots:-getSolution("time"):
-sol_T[-1];
-XOptimaPlots:-plotSolution(
-  time,[x1,x2],
-  line_opts  = [[color=c_set[1],thickness=3], [color=c_set[2],thickness=3]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Drug displacement - states"
-);
-XOptimaPlots:-plotSolution(
-  time,[x1],
-  line_opts  = [[color=c_set[1],thickness=3]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Drug displacement - states"
-);
-XOptimaPlots:-plotSolution(
-  time,[u],
-  line_opts  = [[color=c_set[1],thickness=3,style=pointline]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Drug displacement - control"
-);
-;

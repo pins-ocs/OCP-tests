@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -85,7 +85,7 @@ namespace gtocX_2burn_parsDefine {
     result__[ 0   ] = t18 * t17 * t10;
     real_type t20  = cos(t14);
     result__[ 1   ] = -t20 * t17 * t10;
-    real_type t26  = pow(t12 * t20 + t13 * t18 + 1, 2);
+    real_type t26  = pow(t20 * t12 + t18 * t13 + 1, 2);
     result__[ 2   ] = t8 / t5 / t4 * t26 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
@@ -156,15 +156,15 @@ namespace gtocX_2burn_parsDefine {
     real_type t29  = acceleration_r(t15, t7);
     real_type t30  = t29 * t11;
     real_type t31  = cos(t14);
-    result__[ 2   ] = t10 * t17 * t19 * t25 + t10 * t30 * t31;
+    result__[ 2   ] = t19 * t25 * t17 * t10 + t31 * t30 * t10;
     result__[ 3   ] = -t31 * t18 * t17 * t10;
     result__[ 4   ] = -t31 * t22 * t17 * t10;
-    result__[ 5   ] = -t10 * t17 * t25 * t31 + t10 * t19 * t30;
-    real_type t48  = (t12 * t31 + t13 * t19 + 1) * t3;
+    result__[ 5   ] = -t31 * t25 * t17 * t10 + t19 * t30 * t10;
+    real_type t48  = (t31 * t12 + t19 * t13 + 1) * t3;
     real_type t51  = t8 / t5 / t4;
     result__[ 6   ] = 2 * t31 * t51 * t48;
     result__[ 7   ] = 2 * t19 * t51 * t48;
-    result__[ 8   ] = 2 * (-t12 * t19 + t13 * t31) * t51 * t48;
+    result__[ 8   ] = 2 * (-t19 * t12 + t31 * t13) * t51 * t48;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 9, i_segment );
   }
@@ -228,7 +228,7 @@ namespace gtocX_2burn_parsDefine {
     result__[ 0   ] = t19 * t18 * t11 / 2 + t19 * t27 * t26 * t24;
     real_type t31  = cos(t15);
     result__[ 1   ] = -t31 * t18 * t11 / 2 - t31 * t27 * t26 * t24;
-    real_type t41  = pow(t13 * t31 + t19 * t14 + 1, 2);
+    real_type t41  = pow(t31 * t13 + t19 * t14 + 1, 2);
     real_type t43  = t4 * t4;
     result__[ 2   ] = -3.0 / 2.0 * t9 / t5 / t43 * t41 * t3;
     if ( m_debug )

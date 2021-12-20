@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -198,36 +198,36 @@ namespace PointMassCarModel_4Define {
     LM__[5] = (LL__[5]+LR__[5])/2;
     LM__[6] = (LL__[6]+LR__[6])/2;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    real_type t1   = XM__[3];
-    real_type t2   = t1 * t1;
-    real_type t3   = XM__[4];
+    real_type t2   = exp(XM__[6]);
+    real_type t3   = XM__[3];
     real_type t4   = t3 * t3;
-    real_type t7   = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
-    real_type t10  = ModelPars[iM_g] * ModelPars[iM_g];
-    real_type t13  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
-    real_type t15  = XM__[5];
-    real_type t16  = t15 * t15;
-    real_type t25  = AdherenceEllipse(1.0 / t13 / t10 / t7 * (t13 * t7 * t10 - t7 * t4 * t2 - t13 * t16));
-    real_type t29  = ModelPars[iM_Pmax];
-    real_type t33  = PowerLimit(1.0 / t29 * (-ModelPars[iM_m] * t15 * t1 + t29));
-    real_type t34  = XM__[0];
-    real_type t35  = ALIAS_leftWidth(t34);
-    real_type t36  = XM__[1];
-    real_type t38  = RoadLeftBorder(t35 - t36);
-    real_type t39  = LM__[2];
-    real_type t40  = ALIAS_Kappa(t34);
-    real_type t44  = XM__[2];
-    real_type t45  = zeta__dot(t1, t44, t36, t40);
-    real_type t47  = ALIAS_rightWidth(t34);
-    real_type t49  = RoadRightBorder(t47 + t36);
-    real_type t52  = sin(t44);
-    real_type t61  = UM__[0];
-    real_type t66  = UM__[1];
-    real_type t71  = v__fxControl(t61, -1, 1);
-    real_type t72  = v__OmegaControl(t66, -1, 1);
-    real_type t73  = t25 + t33 + t38 + t45 * (-t40 * t39 + LM__[0]) + t49 + t52 * t1 * LM__[1] + t3 * t39 + LM__[3] * (-ModelPars[iM_kD] * t2 + t15) + ModelPars[iM_v__fx__max] * t61 * LM__[5] + ModelPars[iM_v__Omega__max] * t66 * LM__[4] + ModelPars[iM_wT] + t71 + t72;
-    real_type t75  = exp(XM__[6]);
-    real_type result__ = t75 * t73;
+    real_type t5   = XM__[4];
+    real_type t6   = t5 * t5;
+    real_type t9   = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
+    real_type t12  = ModelPars[iM_g] * ModelPars[iM_g];
+    real_type t15  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
+    real_type t17  = XM__[5];
+    real_type t18  = t17 * t17;
+    real_type t27  = AdherenceEllipse(1.0 / t15 / t12 / t9 * (t15 * t9 * t12 - t9 * t6 * t4 - t15 * t18));
+    real_type t31  = ModelPars[iM_Pmax];
+    real_type t35  = PowerLimit(1.0 / t31 * (-ModelPars[iM_m] * t17 * t3 + t31));
+    real_type t36  = XM__[0];
+    real_type t37  = ALIAS_leftWidth(t36);
+    real_type t38  = XM__[1];
+    real_type t40  = RoadLeftBorder(t37 - t38);
+    real_type t41  = LM__[2];
+    real_type t42  = ALIAS_Kappa(t36);
+    real_type t46  = XM__[2];
+    real_type t47  = zeta__dot(t3, t46, t38, t42);
+    real_type t49  = ALIAS_rightWidth(t36);
+    real_type t51  = RoadRightBorder(t49 + t38);
+    real_type t54  = sin(t46);
+    real_type t63  = UM__[0];
+    real_type t68  = UM__[1];
+    real_type t73  = v__fxControl(t63, -1, 1);
+    real_type t74  = v__OmegaControl(t68, -1, 1);
+    real_type t75  = t27 + t35 + t40 + t47 * (-t42 * t41 + LM__[0]) + t51 + t54 * t3 * LM__[1] + t5 * t41 + LM__[3] * (-ModelPars[iM_kD] * t4 + t17) + ModelPars[iM_v__fx__max] * t63 * LM__[5] + ModelPars[iM_v__Omega__max] * t68 * LM__[4] + ModelPars[iM_wT] + t73 + t74;
+    real_type result__ = t75 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -726,7 +726,7 @@ namespace PointMassCarModel_4Define {
     real_type t69  = pow(V__[2] + t2 * (t53 * t54 - t13), 2);
     real_type t76  = pow(V__[3] - t2 * (-t16 * ModelPars[iM_kD] + t3), 2);
     real_type t82  = pow(-t2 * t48 * ModelPars[iM_v__Omega__max] + V__[4], 2);
-    real_type t88  = pow(-t2 * t45 * ModelPars[iM_v__fx__max] + V__[5], 2);
+    real_type t88  = pow(-ModelPars[iM_v__fx__max] * t45 * t2 + V__[5], 2);
     real_type t90  = V__[6] * V__[6];
     real_type result__ = t2 * t24 + t2 * t30 + t2 * t34 + t2 * t43 + t2 * t46 + t2 * t49 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
     if ( m_debug ) {

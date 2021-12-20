@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,14 +20,14 @@
 -- User Header
 
 -- Auxiliary values
-u_epsi0 = 0.1
-u_tol0  = 0.1
-u_tol   = u_tol0
 x1_i    = 1
+u_epsi0 = 0.1
 u_epsi  = u_epsi0
 x2_i    = 2
-t0      = -ln(x1_i/x2_i)/x2_i
 l1_i    = -1/x1_i/x2_i
+t0      = -ln(x1_i/x2_i)/x2_i
+u_tol0  = 0.1
+u_tol   = u_tol0
 l2_i    = l1_i*(x1_i*t0+exp(-t0*x2_i))
 
 content = {

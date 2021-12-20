@@ -1,10 +1,18 @@
 restart:;
 with(XOptima):;
 DEN := 31/36+9/4*sin(theta)^2;
-RHS1 := sin(theta)*((9/4)*cos(theta)*omega__alpha^2+2*omega__beta^2)
-      + (4/3)*(u1-u2) - (3/2)*cos(theta)*u2;
-RHS2 := sin(theta)*((9/4)*cos(theta)*omega__beta^2 + (7/2)*omega__alpha^2)
+if true then
+  # wrong equations in ICLOCS?
+  RHS1 := sin(theta)*((9/4)*cos(theta)*omega__alpha^2) +2*omega__beta^2 ####)
+        + (4/3)*(u1-u2) - (3/2)*cos(theta)*u2;
+  RHS2 := sin(theta)*((9/4)*cos(theta)*omega__beta^2) + (7/2)*omega__alpha^2####)
       - (7/3)*u2 + (3/2)*cos(theta)*(u1-u2);
+else
+  RHS1 := sin(theta)*((9/4)*cos(theta)*omega__alpha^2 + 2*omega__beta^2 )
+        + (4/3)*(u1-u2) - (3/2)*cos(theta)*u2;
+  RHS2 := sin(theta)*((9/4)*cos(theta)*omega__beta^2 + (7/2)*omega__alpha^2 )
+      - (7/3)*u2 + (3/2)*cos(theta)*(u1-u2);
+end;
 SUBS := theta        = theta(t),
         omega__alpha = omega__alpha(t),
         omega__beta  = omega__beta(t),
@@ -12,7 +20,7 @@ SUBS := theta        = theta(t),
         u2           = u2(t);
 EQ1    := diff(omega__alpha(t),t) = T*subs(SUBS,RHS1/DEN):
 EQ2    := diff(omega__beta(t),t)  = T*subs(SUBS,-RHS2/DEN):
-EQ3    := diff(theta(t),t)        = T*(omega__alpha(t)-omega__beta(t)):
+EQ3    := diff(theta(t),t)        = T*(omega__beta(t)-omega__alpha(t)):
 EQ4    := diff(alpha(t),t)        = T*omega__alpha(t):
 EQNS_T := [ EQ||(1..4)]: <%>;
 qvars := [omega__alpha(t),omega__beta(t),theta(t),alpha(t)];
@@ -29,7 +37,7 @@ addBoundaryConditions(
 infoBoundaryConditions();
 setTarget(
   mayer    = W*T+(1-W)*(T-T_guess)^2/T,
-  lagrange = 0 # u1(zeta)^2+u2(zeta)^2
+  lagrange = rho*T*(u1(zeta)^2+u2(zeta)^2)
 );
 addControlBound(
   u1,
@@ -57,10 +65,15 @@ PARS := [
   u_tolerance    = u_tolerance0,
   T_guess        = 3,
   W              = 0,
+
+  rho            = 0.01,
+
   omega__alpha_i = 0,
   omega__beta_i  = 0,
-  theta_i        = 0.5,
+  theta_i        = 0,
   alpha_i        = 0,
+
+
   omega__alpha_f = 0,
   omega__beta_f  = 0,
   theta_f        = 0.5,
@@ -89,48 +102,9 @@ generateOCProblem(
   parameters              = PARS,
   post_processing         = POST,
   mesh                    = MESH_DEF,
+  controls_iterative      = true,
   continuation            = CONT,
   states_guess            = GUESS,
   optimization_parameters = PGUESS
 );
 # if used in batch mode use the comment to quit;
-# quit;
-#launchSolver(project_dir,project_name);
-compileSolver(project_dir,project_name);
-runSolver(project_dir);
-with(plots):;
-XOptimaPlots:-loadSolution(project_dir,project_name); # load solution
-hhdrs := XOptimaPlots:-getHeaders(): nops(%);
-#XOptimaPlots:-getPars();
-#XOptimaPlots:-getHeaders();
-interface(rtablesize=50):;
-z_sol := XOptimaPlots:-getSolution(zeta):;
-XOptimaPlots:-plotSolution(
-  time,[omega__alpha,omega__beta,theta,alpha],
-  line_opts  = [[color="Red",thickness=3],
-                [color="Blue",thickness=3],
-                [color="Brown",thickness=3],
-                [color="Green",thickness=3]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Two Link Robot Arm"
-);
-XOptimaPlots:-plotSolution(
-  time,[u1,u2],
-  line_opts  = [[color="Blue",thickness=3],
-                [color="Green",thickness=3]],
-  plot_opts  = [gridlines=true, axes=boxed,
-                labels=["Time","Control"],
-                scaling=unconstrained],
-  plot_title = "Two Link Robot Arm"
-);
-XOptimaPlots:-plotSolution(
-  time,[lambda1__xo,lambda2__xo,lambda3__xo,lambda4__xo],
-  line_opts  = [[color="Red",thickness=3],
-                [color="Blue",thickness=3],
-                [color="Brown",thickness=3],
-                [color="Green",thickness=3]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Two Link Robot Arm"
-);
-;
-;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -341,10 +341,10 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = cos(t2);
     real_type t5   = X__[iX_g];
     real_type t6   = sin(t2);
-    real_type t9   = ALIAS_ray_positive_D(t1 * t3 + t5 * t6 + 1);
+    real_type t9   = ALIAS_ray_positive_D(t3 * t1 + t6 * t5 + 1);
     result__[ 0   ] = t3 * t9;
     result__[ 1   ] = t6 * t9;
-    result__[ 2   ] = (-t1 * t6 + t3 * t5) * t9;
+    result__[ 2   ] = (-t6 * t1 + t3 * t5) * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJDx_eval", 3, i_segment );
   }

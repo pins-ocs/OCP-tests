@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 14/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -156,8 +156,8 @@ main() {
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
     data_clip["h"] = 0.1;
-    data_clip["delta2"] = 0;
     data_clip["delta"] = 0;
+    data_clip["delta2"] = 0;
 
     // Controls: No penalties or barriers constraint defined
 
@@ -196,8 +196,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFtau_data.Mesh["s0"] = 0;
-BangBangFtau_data.Mesh["segments"][0]["length"] = 1;
 BangBangFtau_data.Mesh["segments"][0]["n"] = 400;
+BangBangFtau_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

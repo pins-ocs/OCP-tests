@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFtau_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 14/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -292,7 +292,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :h => 0.1, :delta2 => 0, :delta => 0 }
+  data.MappedObjects[:clip] = { :h => 0.1, :delta => 0, :delta2 => 0 }
 
 
   #                  _             _
@@ -358,8 +358,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 400,
+        :length => 1,
       },
     ],
   };

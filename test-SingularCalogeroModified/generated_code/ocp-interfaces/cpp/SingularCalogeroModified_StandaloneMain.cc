@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Main.cc                               |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type C = 0.25;
     real_type epsilon = 0.01;
+    real_type C = 0.25;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -167,8 +167,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularCalogeroModified_data.Mesh["s0"] = -1;
-SingularCalogeroModified_data.Mesh["segments"][0]["n"] = 100;
 SingularCalogeroModified_data.Mesh["segments"][0]["length"] = 2;
+SingularCalogeroModified_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -21,10 +21,10 @@
 
 -- Auxiliary values
 u_tolerance0 = 0.01
-epsi_x0      = 0.01
-Tf           = 6
-epsi_x       = epsi_x0
 u_epsilon0   = 0.01
+epsi_x0      = 0.01
+epsi_x       = epsi_x0
+Tf           = 6
 
 content = {
 
@@ -308,8 +308,8 @@ content = {
     segments = {
       
       {
-        n      = 1000,
         length = Tf,
+        n      = 1000,
       },
     },
   },

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: TwoPhaseSchwartz_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 13/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,11 +21,11 @@ include Mechatronix
 
 # Auxiliary values
 epsi0    = 0.1
-tol0     = 0.1
 epsilon0 = 0.001
 epsilon  = epsilon0
-tol      = tol0
 epsi     = epsi0
+tol0     = 0.1
+tol      = tol0
 
 mechatronix do |data|
 

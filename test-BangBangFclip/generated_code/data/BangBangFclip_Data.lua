@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 14/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
-vFmax      = 10
-tolerance0 = 0.01
 epsilon0   = 0.1
 h0         = 0.01
+vFmax      = 10
+tolerance0 = 0.01
 
 content = {
 
@@ -283,9 +283,9 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithErf
-    cliph = h0,
-    clipdelta = 0,
     clipdelta2 = 0,
+    clipdelta = 0,
+    cliph = h0,
   },
 
   -- Controls
@@ -312,8 +312,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 100,
+        length = 1,
       },
     },
   },

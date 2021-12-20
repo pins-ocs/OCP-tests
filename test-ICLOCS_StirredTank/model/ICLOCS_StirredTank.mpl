@@ -138,34 +138,3 @@ generateOCProblem(
   admissible_region       = REGION
 );
 # if used in batch mode use the comment to quit;
-# quit;
-#launchSolver(project_dir,project_name);
-compileSolver(project_dir,project_name);
-runSolver(project_dir);
-with(plots):;
-XOptimaPlots:-loadSolution(project_dir,project_name); # load solution
-hhdrs := XOptimaPlots:-getHeaders(): nops(%);
-XOptimaPlots:-plotSolution(
-  time,[x1,x2],
-  line_opts  = [[color="Red",thickness=1],
-                [color="Blue",thickness=1]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Continuously-stirred tank reactor"
-);
-XOptimaPlots:-plotSolution(
-  time,[u],
-  line_opts  = [[color="Blue",thickness=1]],
-  plot_opts  = [gridlines=true, axes=boxed,
-                labels=["Time","Control"],
-                scaling=unconstrained],
-  plot_title = "Continuously-stirred tank reactor"
-);
-XOptimaPlots:-plotSolution(
-  time,[lambda1__xo,lambda2__xo],
-  line_opts  = [[color="Red",thickness=1],
-                [color="Blue",thickness=1]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Continuously-stirred tank reactor"
-);
-;
-;

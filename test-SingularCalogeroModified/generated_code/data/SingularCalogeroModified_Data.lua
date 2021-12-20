@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Data.lua                              |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-C       = 0.25
 epsilon = 0.01
+C       = 0.25
 
 content = {
 
@@ -299,8 +299,8 @@ content = {
     segments = {
       
       {
-        n      = 100,
         length = 2,
+        n      = 100,
       },
     },
   },

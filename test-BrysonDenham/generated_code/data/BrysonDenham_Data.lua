@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-epsi = 0.0001
 tol  = 0.0001
+epsi = 0.0001
 
 content = {
 

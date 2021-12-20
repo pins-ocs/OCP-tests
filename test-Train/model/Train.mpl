@@ -87,23 +87,3 @@ generateOCProblem(
   clean           = true
 );
 # if used in batch mode use the comment to quit;
-# quit;
-#launchSolver(project_dir,project_name);
-compileSolver(project_dir,project_name);
-runSolver(project_dir);
-with(plots):;
-XOptimaPlots:-loadSolution(project_dir,project_name); # load solution
-hhdrs := XOptimaPlots:-getHeaders(): nops(%);
-XOptimaPlots:-plotSolution(
-  zeta,[v],
-  line_opts  = [[color="Blue",thickness=3]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Train"
-);
-XOptimaPlots:-plotSolution(
-  zeta,[ua,ub],
-  line_opts  = [[color="Blue",thickness=3],[color="Red",thickness=3]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Train"
-);
-;

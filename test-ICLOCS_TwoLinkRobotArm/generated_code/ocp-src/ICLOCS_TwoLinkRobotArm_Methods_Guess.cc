@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_Guess.cc                        |
  |                                                                       |
- |  version: 1.0   date 14/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -84,8 +84,8 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = Q__[iQ_zeta];
     real_type t2   = 1 - t1;
-    X__[ iX_omega__alpha ] = ModelPars[iM_omega__alpha_f] * t1 + ModelPars[iM_omega__alpha_i] * t2;
-    X__[ iX_omega__beta  ] = ModelPars[iM_omega__beta_f] * t1 + ModelPars[iM_omega__beta_i] * t2;
+    X__[ iX_omega__alpha ] = t1 * ModelPars[iM_omega__alpha_f] + t2 * ModelPars[iM_omega__alpha_i];
+    X__[ iX_omega__beta  ] = t1 * ModelPars[iM_omega__beta_f] + t2 * ModelPars[iM_omega__beta_i];
 
     if ( m_debug )
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 4 );

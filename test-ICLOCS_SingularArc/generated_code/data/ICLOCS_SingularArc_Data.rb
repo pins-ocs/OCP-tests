@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_SingularArc_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 13/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -21,11 +21,11 @@ include Mechatronix
 
 # Auxiliary values
 epsi_T     = 0.01
-tol_T      = 0.1
 tol_ctrl0  = 0.01
-tol_ctrl   = tol_ctrl0
 epsi_ctrl0 = 0.01
 epsi_ctrl  = epsi_ctrl0
+tol_ctrl   = tol_ctrl0
+tol_T      = 0.1
 
 mechatronix do |data|
 
@@ -348,8 +348,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 400,
+        :length => 1,
       },
     ],
   };

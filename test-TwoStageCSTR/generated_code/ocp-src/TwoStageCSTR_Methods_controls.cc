@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -100,11 +100,11 @@ namespace TwoStageCSTRDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = LM__[2];
-    real_type t2   = ModelPars[iM_tau];
-    real_type t4   = LM__[3];
-    real_type t7   = LM__[0];
-    real_type t9   = LM__[1];
+    real_type t1   = LM__[0];
+    real_type t3   = LM__[1];
+    real_type t4   = LM__[2];
+    real_type t5   = ModelPars[iM_tau];
+    real_type t7   = LM__[3];
     real_type t11  = XM__[0];
     real_type t12  = XM__[1];
     real_type t13  = R1(t11, t12);
@@ -112,18 +112,18 @@ namespace TwoStageCSTRDefine {
     real_type t18  = XM__[3];
     real_type t19  = R2(t17, t18);
     real_type t21  = UM__[0];
-    real_type t22  = t21 * t2;
+    real_type t22  = t21 * t5;
     real_type t29  = UM__[1];
     real_type t41  = t12 * t12;
-    real_type t49  = t11 * t11;
-    real_type t50  = t17 * t17;
-    real_type t51  = t18 * t18;
-    real_type t52  = t21 * t21;
-    real_type t53  = ModelPars[iM_W];
-    real_type t55  = t29 * t29;
-    real_type t59  = u1Control(t21, -0.5e0, 0.5e0);
-    real_type t60  = u2Control(t29, -0.5e0, 0.5e0);
-    real_type result__ = t13 * (t2 * t1 - 1.0 * t2 * t4 - 1.0 * t7 + t9) + t19 * (-1.0 * t1 + t4) + t4 * (t12 * (t22 + 2.0 * t2 + 1.0) + 0.25e0 * t22 + t29 * (-1.0 * t18 - 0.25e0) - 2.0 * t18 + 0.50e0 * t2 - 0.25e0) + t1 * (t11 * (t2 + 1.0) - 1.0 * t17 - 0.5e0 * t2 + 0.25e0) + t41 + t12 * t9 * (-1.0 * t21 - 2.0) + t9 * (-0.25e0 * t21 - 0.50e0) + t49 + t50 + t51 + t53 * t52 + t53 * t55 - 1.0 * t11 * t7 + t59 + t60 + 0.5e0 * t7;
+    real_type t49  = t21 * t21;
+    real_type t50  = ModelPars[iM_W];
+    real_type t52  = t29 * t29;
+    real_type t54  = t17 * t17;
+    real_type t55  = t18 * t18;
+    real_type t59  = t11 * t11;
+    real_type t60  = u1Control(t21, -0.5e0, 0.5e0);
+    real_type t61  = u2Control(t29, -0.5e0, 0.5e0);
+    real_type result__ = t13 * (-1.0 * t1 + t3 + t5 * t4 - 1.0 * t5 * t7) + t19 * (-1.0 * t4 + t7) + t7 * (t12 * (1.0 + t22 + 2.0 * t5) + 0.25e0 * t22 + t29 * (-0.25e0 - 1.0 * t18) - 2.0 * t18 + 0.50e0 * t5 - 0.25e0) + t4 * (t11 * (1.0 + t5) - 0.5e0 * t5 + 0.25e0 - 1.0 * t17) + t41 + t12 * t3 * (-2.0 - 1.0 * t21) + t3 * (-0.50e0 - 0.25e0 * t21) + t50 * t49 + t50 * t52 + t54 + t55 + 0.5e0 * t1 - 1.0 * t11 * t1 + t59 + t60 + t61;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

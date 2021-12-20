@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -310,7 +310,7 @@ namespace CatalystDefine {
     real_type t2   = XM__[0];
     real_type t4   = XM__[1];
     real_type t7   = LM__[1];
-    U__[ iU_u ] = uControl.solve(t1 * t2 - 10 * t1 * t4 - t2 * t7 + 9 * t4 * t7, 0, 1);
+    U__[ iU_u ] = uControl.solve(t2 * t1 - 10 * t4 * t1 - t7 * t2 + 9 * t4 * t7, 0, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -789,7 +789,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t89  = OMEGA__[5];
     result__[ 44  ] = -t89 - t9 + LL__[iL_lambda45__xo];
     real_type t91  = OMEGA__[6];
-    result__[ 45  ] = -t91 - t11 + LL__[iL_lambda46__xo];
+    result__[ 45  ] = -t11 - t91 + LL__[iL_lambda46__xo];
     real_type t93  = OMEGA__[7];
     result__[ 46  ] = -t93 - t13 + LL__[iL_lambda47__xo];
     real_type t95  = OMEGA__[8];
@@ -803,7 +803,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t103 = OMEGA__[12];
     result__[ 51  ] = -t103 - t23 + LL__[iL_lambda52__xo];
     real_type t105 = OMEGA__[13];
-    result__[ 52  ] = -t25 - t105 + LL__[iL_lambda53__xo];
+    result__[ 52  ] = -t105 - t25 + LL__[iL_lambda53__xo];
     real_type t107 = OMEGA__[14];
     result__[ 53  ] = -t107 - t27 + LL__[iL_lambda54__xo];
     real_type t109 = OMEGA__[15];

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type mu = 1;
-    real_type m0 = 1;
     real_type r0 = 1;
+    real_type mu = 1;
     real_type tf = 16.60*(r0^3/mu)^(1/2.0);
     real_type v0 = (mu/r0)^(1/2.0);
+    real_type m0 = 1;
     real_type T = 0.1405e-1*m0*mu/r0^2;
     real_type mdot = 0.533*T*(mu/r0)^(1/2.0);
     integer InfoLevel = 4;
@@ -170,8 +170,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 OrbitTransfer_data.Mesh["s0"] = 0;
-OrbitTransfer_data.Mesh["segments"][0]["n"] = 1000;
 OrbitTransfer_data.Mesh["segments"][0]["length"] = 1;
+OrbitTransfer_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

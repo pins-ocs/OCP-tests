@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_StirredTank_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 13/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,16 +20,16 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-x_tol      = 0.01
-x_epsi     = 0.01
-epsi_T     = 0.01
 tol_ctrl0  = 0.1
-w_time_max = 1
-w_time     = w_time_max
-tol_T      = 1
-tol_ctrl   = tol_ctrl0
 epsi_ctrl0 = 0.1
 epsi_ctrl  = epsi_ctrl0
+x_epsi     = 0.01
+tol_T      = 1
+tol_ctrl   = tol_ctrl0
+w_time_max = 1
+x_tol      = 0.01
+w_time     = w_time_max
+epsi_T     = 0.01
 
 mechatronix do |data|
 
@@ -103,7 +103,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-14, # tolerance for stopping criteria
+      :tolerance            => 1e-12, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -296,11 +296,11 @@ mechatronix do |data|
 
     # Continuation Parameters
     :epsi_ctrl0 => epsi_ctrl0,
-    :epsi_ctrl1 => 0.01,
+    :epsi_ctrl1 => 0.001,
     :tol_ctrl0  => tol_ctrl0,
-    :tol_ctrl1  => 0.01,
+    :tol_ctrl1  => 0.001,
     :w_time_max => w_time_max,
-    :w_time_min => 0,
+    :w_time_min => 0.01,
 
     # Constraints Parameters
   }
@@ -325,7 +325,7 @@ mechatronix do |data|
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:uControl] = {
-    :type      => 'TAN2',
+    :type      => 'LOGARITHMIC',
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl
   }
@@ -343,14 +343,14 @@ mechatronix do |data|
   # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DGreaterThan
   data.Constraints[:tfbound] = {
-    :subType   => "BARRIER_LOG0",
+    :subType   => "BARRIER_LOG",
     :epsilon   => epsi_T,
     :tolerance => tol_T,
     :active    => true
   }
   # PenaltyBarrier1DInterval
   data.Constraints[:x1bound] = {
-    :subType   => "BARRIER_LOG0",
+    :subType   => "BARRIER_LOG",
     :epsilon   => x_epsi,
     :tolerance => x_tol,
     :min       => 0,
@@ -359,7 +359,7 @@ mechatronix do |data|
   }
   # PenaltyBarrier1DInterval
   data.Constraints[:x2bound] = {
-    :subType   => "BARRIER_LOG0",
+    :subType   => "BARRIER_LOG",
     :epsilon   => x_epsi,
     :tolerance => x_tol,
     :min       => 0,
@@ -381,8 +381,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 400,
+        :length => 1,
       },
     ],
   };

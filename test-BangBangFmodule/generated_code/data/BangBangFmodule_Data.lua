@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 14/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-FpMax = 10
 FmMax = 10
+FpMax = 10
 
 content = {
 
@@ -303,8 +303,8 @@ content = {
     segments = {
       
       {
-        n      = 100,
         length = 1,
+        n      = 100,
       },
     },
   },

@@ -1,0 +1,172 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_omega
+[ 1] initial_phi
+[ 2] final_omega
+[ 3] final_phi
+
+
+
+Controls
+FyControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+
+Constraints 1D
+minimumTimeSize = {
+  Type      = GREATER THAN
+  SubType   = WallRegular, h=0.001, epsilon=0.001
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 4
+num. nodes = 104
+Segment N.0: s0 = 0 length = 0.1 npts = 11 no data set
+Segment N.1: s0 = 0.1 length = 0.4 npts = 41 no data set
+Segment N.2: s0 = 0.5 length = 0.4 npts = 41 no data set
+Segment N.3: s0 = 0.9 length = 0.1 npts = 11 no data set
+END Mesh[mesh]
+
+Model Parameters
+....................................Fmax = 2452.5
+......................................Ix = 40
+.......................................g = 9.81
+.......................................h = 0.6
+.......................................m = 250
+.................................omega_f = 0
+.................................omega_i = 0
+...................................phi_f = 0.1745329252
+...................................phi_i = 0
+INFO CLASS = BikeSteering
+  #nodes      = 104
+  dim         = u = 1, q = 1, x = 3, p = 0, omega = 4, bc = 4, full_bc = 10
+  BC          = Inital = 5, Final = 5, Cyclic = 0
+  OMEGA       = Inital = 2, Final = 2, Cyclic = 0
+  total       = nZ = 628, UC = 103, Q = 104
+  index start = omega = 624, p = 628
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1,16] ( 0.00187  , 0.00187  ) [ 8.28e+04 , 8.28e+04 ] 1.07e-06   [15:0:0:0:0:0:0]
+[  2,14] ( 0.00187  , 0.00187  ) [ 8.23e+03 , 8.22e+03 ] 6.71e-06   [13:0:0:0:0:0:0]
+[  3,11] ( 0.00187  ,  0.0019  ) [   181    ,   181    ] 0.000105   [10:0:0:0:0:0:0]
+[  4,16] (  0.0019  , 0.00258  ) [   2.3    ,   2.3    ] 0.00159    [0:0:6:0:9:0:0]
+[  5,17] ( 0.00258  , 0.00345  ) [   2.84   ,   2.84   ] 0.00143    [5:0:1:0:10:0:0]
+[  6,26] ( 0.00345  , 0.00466  ) [   3.27   ,   3.26   ] 0.00124    [5:0:8:0:12:0:0]
+[  7,27] ( 0.00466  , 0.00627  ) [   3.6    ,   3.59   ] 0.00112    [5:0:9:0:12:0:0]
+[  8, 9] ( 0.00627  , 0.00714  ) [   3.82   ,   3.82   ] 0.000655   [4:0:3:0:1:0:0]
+[  9, 9] ( 0.00714  , 0.00801  ) [   3.87   ,   3.87   ] 0.000655   [2:0:5:0:1:0:0]
+[ 10, 8] ( 0.00801  ,  0.0106  ) [   3.76   ,   3.75   ] 0.00164    [3:0:3:0:1:0:0]
+[ 11, 7] (  0.0106  ,  0.0125  ) [   2.91   ,   2.9    ] 0.0041     [3:0:2:0:1:0:0]
+[ 12, 5] (  0.0125  ,  0.0141  ) [   1.63   ,   1.56   ] 0.0256     [2:0:1:0:1:0:0]
+[ 13, 2] (  0.0141  ,  0.0197  ) [  0.644   ,  0.224   ] 0.4        [1:0:0:0:0:0:0]
+[ 14,13] (  0.0197  ,  0.0171  ) [  0.101   ,  0.0727  ] 0.282      [0:0:12:0:0:0:0]
+[ 15,16] (  0.0171  ,  0.0173  ) [  0.0646  ,  0.0623  ] 0.0335     [0:0:15:0:0:0:0]
+[ 16,20] (  0.0173  ,  0.019   ) [  0.0679  ,  0.0594  ] 0.135      [0:0:19:0:0:0:0]
+[ 17, 3] (  0.019   ,  0.0105  ) [  0.0618  ,  0.0123  ] 0.81       [0:0:2:0:0:0:0]
+[ 18, 4] (  0.0105  ,  0.0136  ) [  0.0103  ,   0.01   ] 0.17       [0:0:1:0:2:0:0]
+[ 19, 5] (  0.0136  ,  0.0133  ) [  0.0132  ,  0.0126  ] 0.0256     [4:0:0:0:0:0:0]
+[ 20, 1] (  0.0133  ,  0.0101  ) [  0.0097  , 0.00444  ] 1          [0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 21, 4] (  0.0101  , 0.00339  ) [  0.0139  , 0.00468  ] 0.064      [3:0:0:0:0:0:0]
+[ 22, 5] ( 0.00339  , 0.00214  ) [  0.0101  ,  0.0063  ] 0.0308     [4:0:0:0:0:0:0]
+[ 23, 3] ( 0.00214  , 0.00172  ) [ 8.46e-05 , 2.59e-05 ] 0.81       [2:0:0:0:0:0:0]
+[ 24, 2] ( 0.00172  , 0.000531 ) [ 1.61e-05 , 6.95e-06 ] 0.82       [1:0:0:0:0:0:0]
+[ 25, 2] ( 0.000531 , 3.32e-05 ) [ 4.68e-06 , 3.76e-07 ] 0.9        [1:0:0:0:0:0:0]
+[ 26, 1] ( 3.32e-05 , 8.6e-09  ) [ 3.66e-07 , 6.26e-11 ] 1          [0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
+ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 41.5[ms]      timeout        = 0 [ms]
+iteration      = 26            tolerance      = 1e-09
+max iterations = 300           N. Equations   = 628
+max acc. iter. = 800           N. System pars = 103
+Converged      = YES           Memory Used    = 81Kb (+98bytes)
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 247           Jacobian       = 26
+Factorization  = 26            Inversion      = 272
+........................... last residuals ...........................
+last ||f||_inf = 5.3986e-06    last ||d||_inf = 6.4324e-10
+last ||f||_1   = 8.5988e-09    last ||d||_1   = 6.2565e-11
+last ||f||_2   = 2.1543e-07    last ||d||_2   = 1.2977e-10
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+#ERR 1 Jacobian block N. 27 type: FD [(x+l) x (2*(x+l)+p) = 6 x 12]
+
+jac[  1,  4] =       1.4418 / 1.4419       [A/FD] ---   0.00014853 / 0.010301     [err/err(%)]
+jac[  1, 10] =       1.4418 / 1.4419       [A/FD] ---   0.00014853 / 0.010301     [err/err(%)]
+
+#ERR 2 Jacobian block N. 28 type: FD [(x+l) x (2*(x+l)+p) = 6 x 12]
+
+jac[  1,  4] =       1.6079 / 1.6081       [A/FD] ---   0.00018603 / 0.011568     [err/err(%)]
+jac[  1, 10] =       1.6079 / 1.6081       [A/FD] ---   0.00018603 / 0.011568     [err/err(%)]
+
+#ERR 3 Jacobian block N. 29 type: FD [(x+l) x (2*(x+l)+p) = 6 x 12]
+
+jac[  1,  4] =       1.8043 / 1.8045       [A/FD] ---   0.00023588 / 0.013072     [err/err(%)]
+jac[  1, 10] =       1.8043 / 1.8045       [A/FD] ---   0.00023588 / 0.013072     [err/err(%)]
+
+#ERR 4 Jacobian block N. 30 type: FD [(x+l) x (2*(x+l)+p) = 6 x 12]
+
+jac[  1,  4] =       2.0385 / 2.0388       [A/FD] ---   0.00030326 / 0.014874     [err/err(%)]
+jac[  1, 10] =       2.0385 / 2.0388       [A/FD] ---   0.00030326 / 0.014874     [err/err(%)]
+
+#ERR 5 Jacobian block N. 31 type: FD [(x+l) x (2*(x+l)+p) = 6 x 12]
+
+jac[  1,  4] =       2.3212 / 2.3216       [A/FD] ---   0.00039602 / 0.017058     [err/err(%)]
+jac[  1, 10] =       2.3212 / 2.3216       [A/FD] ---   0.00039602 / 0.017058     [err/err(%)]
+
+#ERR 6 Jacobian block N. 32 type: FD [(x+l) x (2*(x+l)+p) = 6 x 12]
+
+jac[  1,  4] =       2.6666 / 2.6672       [A/FD] ---   0.00052643 / 0.019738     [err/err(%)]
+jac[  1, 10] =       2.6666 / 2.6672       [A/FD] ---   0.00052643 / 0.019738     [err/err(%)]
+
+skipping...
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+At cell 10, H = -0.032720982963060787, ||g||_inf = 4.527574397050506e-05
+At cell 51, H = -0.12984365171076376, ||g||_inf = 5.650152987483584e-06
+At cell 92, H = -0.003297595540743473, ||g||_inf = 5.726995655069916e-05
+Check Controls End
+target [Lagrange,Mayer]       = [ 0, 0.1437 ]
+[Penalties/Barriers,Controls] = [ 6.958e-06, 0.0001642 ]
+All Done Folks!

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 14/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -277,8 +277,8 @@ content = {
   MappedObjects = {
   -- ClipIntervalWithErf
     cliph = 0.1,
-    clipdelta2 = 0,
     clipdelta = 0,
+    clipdelta2 = 0,
   },
 
   -- Controls: No penalties or barriers constraint defined
@@ -324,8 +324,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

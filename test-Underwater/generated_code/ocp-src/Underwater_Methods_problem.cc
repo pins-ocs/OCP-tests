@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_problem.cc                                  |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -128,7 +128,7 @@ namespace UnderwaterDefine {
     real_type t30  = ModelPars[iM_m3];
     real_type t38  = 1.0 / t30;
     real_type t49  = 1.0 / ModelPars[iM_inertia];
-    real_type result__ = (t6 * t4 + t9 * t8) * t2 * L__[iL_lambda1__xo] + (-t9 * t4 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + (-t27 * t30 * t21 * t8 + t27 * U__[iU_u1]) * t2 * L__[iL_lambda4__xo] + (t38 * t26 * t21 * t4 + t38 * U__[iU_u2]) * t2 * L__[iL_lambda5__xo] + (t49 * U__[iU_u3] + t49 * (t30 - t26) * t8 * t4) * t2 * L__[iL_lambda6__xo];
+    real_type result__ = (t4 * t6 + t8 * t9) * t2 * L__[iL_lambda1__xo] + (-t4 * t9 + t6 * t8) * t2 * L__[iL_lambda2__xo] + t21 * t2 * L__[iL_lambda3__xo] + (-t21 * t27 * t30 * t8 + t27 * U__[iU_u1]) * t2 * L__[iL_lambda4__xo] + (t21 * t26 * t38 * t4 + t38 * U__[iU_u2]) * t2 * L__[iL_lambda5__xo] + (t49 * U__[iU_u3] + t49 * (t30 - t26) * t8 * t4) * t2 * L__[iL_lambda6__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }

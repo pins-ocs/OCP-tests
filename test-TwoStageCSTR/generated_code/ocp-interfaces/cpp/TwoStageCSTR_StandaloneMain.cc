@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol = 0.0001;
     real_type epsi = 0.0001;
+    real_type tol = 0.0001;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -176,8 +176,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 TwoStageCSTR_data.Mesh["s0"] = 0;
-TwoStageCSTR_data.Mesh["segments"][0]["length"] = 2;
 TwoStageCSTR_data.Mesh["segments"][0]["n"] = 400;
+TwoStageCSTR_data.Mesh["segments"][0]["length"] = 2;
 
 
     // alias for user object classes passed as pointers

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -496,7 +496,7 @@ namespace Brachiostocrona2Define {
     real_type t18  = t12 * t12;
     real_type t26  = ModelPars[iM_g];
     real_type t27  = t26 * t26;
-    result__[ 0   ] = 2 * t8 * t5 + 2 * t12 * t3 * t1 * (-t12 * t11 + V__[0]) + 2 * t18 * t5 + 2 * t7 * t3 * t1 * (-t7 * t11 + V__[1]) + 2 * t18 * t27 * t2 - 2 * t7 * t26 * t1 * (t7 * t26 * t1 + ModelPars[iM_mass] * V__[2]);
+    result__[ 0   ] = 2 * t8 * t5 + 2 * t12 * t3 * t1 * (-t11 * t12 + V__[0]) + 2 * t18 * t5 + 2 * t7 * t3 * t1 * (-t11 * t7 + V__[1]) + 2 * t18 * t27 * t2 - 2 * t7 * t26 * t1 * (t7 * t26 * t1 + ModelPars[iM_mass] * V__[2]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

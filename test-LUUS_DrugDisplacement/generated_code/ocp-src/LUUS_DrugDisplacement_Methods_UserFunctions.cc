@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_UserFunctions.cc                 |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -270,7 +270,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g2(xo__x1, xo__x2);
     real_type t4   = g2_D_1_1(xo__x1, xo__x2);
-    real_type result__ = 2 * t4 * t3 + 2 * t2;
+    real_type result__ = 2 * t3 * t4 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -319,7 +319,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g2(xo__x1, xo__x2);
     real_type t4   = g2_D_2_2(xo__x1, xo__x2);
-    real_type result__ = 2 * t4 * t3 + 2 * t2;
+    real_type result__ = 2 * t3 * t4 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -336,7 +336,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type result__ = 1.0 / (t4 * t3 - 0.215296e4 * xo__x1 * xo__x2) * t2;
+    real_type result__ = 1.0 / (t3 * t4 - 0.215296e4 * xo__x1 * xo__x2) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -375,7 +375,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type t8   = t4 * t3 - 0.215296e4 * xo__x1 * xo__x2;
+    real_type t8   = t3 * t4 - 0.215296e4 * xo__x1 * xo__x2;
     real_type t9   = 1.0 / t8;
     real_type t12  = g2(xo__x1, xo__x2);
     real_type t13  = t8 * t8;
@@ -460,7 +460,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type t8   = t4 * t3 - 0.215296e4 * xo__x1 * xo__x2;
+    real_type t8   = t3 * t4 - 0.215296e4 * xo__x1 * xo__x2;
     real_type t9   = 1.0 / t8;
     real_type t12  = g2(xo__x1, xo__x2);
     real_type t13  = t8 * t8;

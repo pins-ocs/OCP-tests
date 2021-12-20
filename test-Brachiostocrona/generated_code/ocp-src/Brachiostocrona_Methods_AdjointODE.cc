@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -138,10 +138,10 @@ namespace BrachiostocronaDefine {
     real_type t5   = sin(t4);
     real_type t8   = t2 * L__[iL_lambda2__xo];
     real_type t9   = cos(t4);
-    result__[ 0   ] = -t3 * t5 + t8 * t9;
+    result__[ 0   ] = -t5 * t3 + t9 * t8;
     result__[ 1   ] = result__[0];
     real_type t11  = X__[iX_v];
-    result__[ 2   ] = t2 * t5 * L__[iL_lambda3__xo] * ModelPars[iM_g] - t11 * t3 * t9 - t11 * t5 * t8;
+    result__[ 2   ] = t5 * ModelPars[iM_g] * t2 * L__[iL_lambda3__xo] - t9 * t11 * t3 - t5 * t11 * t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDx_sparse", 3, i_segment );
   }

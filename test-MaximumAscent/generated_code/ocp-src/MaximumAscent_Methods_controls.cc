@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -80,20 +80,20 @@ namespace MaximumAscentDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = XM__[0];
-    real_type t3   = t2 * t2;
-    real_type t5   = XM__[1];
-    real_type t7   = XM__[2];
-    real_type t8   = LM__[1];
-    real_type t10  = LM__[2];
-    real_type t18  = tf(ModelPars[iM_days]);
-    real_type t24  = -QM__[0] * ModelPars[iM_mdot] * t18 + ModelPars[iM_m0];
-    real_type t26  = eta(t18);
-    real_type t28  = Tbar(t18);
+    real_type t2   = tf(ModelPars[iM_days]);
+    real_type t8   = -QM__[0] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0];
+    real_type t10  = XM__[0];
+    real_type t11  = t10 * t10;
+    real_type t13  = XM__[1];
+    real_type t15  = XM__[2];
+    real_type t16  = LM__[1];
+    real_type t18  = LM__[2];
+    real_type t26  = eta(t2);
+    real_type t28  = Tbar(t2);
     real_type t30  = UM__[0];
     real_type t31  = sin(t30);
     real_type t33  = cos(t30);
-    real_type result__ = 1.0 / t24 / t3 * (t26 * t24 * (t5 * t3 * LM__[0] + t2 * (-t5 * t10 + t7 * t8 + LM__[3]) * t7 - t8) + (t33 * t10 + t31 * t8) * t3 * t28);
+    real_type result__ = 1.0 / t8 / t11 * (t26 * (t13 * t11 * LM__[0] + t10 * (-t13 * t18 + t15 * t16 + LM__[3]) * t15 - t16) * t8 + (t31 * t16 + t33 * t18) * t11 * t28);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

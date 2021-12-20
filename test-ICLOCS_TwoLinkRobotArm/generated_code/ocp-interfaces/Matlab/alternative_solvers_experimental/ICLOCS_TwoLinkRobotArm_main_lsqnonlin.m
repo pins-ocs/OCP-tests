@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_TwoLinkRobotArm_fsolve_main.m                           %
 %                                                                       %
-%  version: 1.0   date 14/12/2021                                       %
+%  version: 1.0   date 20/12/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %

@@ -1,0 +1,147 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x1
+[ 1] initial_x2
+[ 2] initial_x3
+[ 3] initial_res
+[ 4] initial_x4
+
+
+
+Controls
+x1__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+x2__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+x3__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+x4__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}
+
+Constraints 1D
+LimitX2X4 = {
+  Type      = GREATER THAN
+  SubType   = WallRegular, h=0.001, epsilon=0.001
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
+Segment N.0: s0 = 0 length = 2 npts = 401 no data set
+END Mesh[mesh]
+
+Model Parameters
+......................................P1 = 0.1
+......................................P2 = 0.1
+....................................res0 = 0.001
+......................................t1 = 0
+......................................t2 = 60
+..................................tau__1 = 3
+..................................tau__2 = 25
+..................................tau__3 = 10
+..................................tau__4 = 60
+..................................tau__5 = 120
+......................................w1 = 1.3
+......................................w2 = 0.1
+......................................w3 = 1.2
+......................................w4 = 0.9
+.....................................wJ1 = 1
+.....................................wJ2 = 1
+.....................................wJ3 = 1
+.....................................wJ4 = 1
+......................................wP = 1
+.....................................x10 = 0.001
+.....................................x20 = 0.001
+.....................................x30 = 0.001
+.....................................x40 = 0.001
+INFO CLASS = Farmer
+  #nodes      = 401
+  dim         = u = 4, q = 1, x = 5, p = 0, omega = 5, bc = 5, full_bc = 15
+  BC          = Inital = 10, Final = 5, Cyclic = 0
+  OMEGA       = Inital = 5, Final = 0, Cyclic = 0
+  total       = nZ = 4015, UC = 1600, Q = 401
+  index start = omega = 4010, p = 4015
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1, 2] ( 0.000372 , 3.4e-05  ) [  0.165   ,  0.0133  ] 0.9        [1:0:0:0:0:0:0]
+[  2, 2] ( 3.4e-05  , 3.38e-06 ) [  0.0129  , 0.00129  ] 0.9        [1:0:0:0:0:0:0]
+[  3, 2] ( 3.38e-06 , 3.38e-07 ) [ 0.00129  , 0.000129 ] 0.9        [1:0:0:0:0:0:0]
+[  4, 2] ( 3.38e-07 , 3.38e-08 ) [ 0.000129 , 1.29e-05 ] 0.9        [1:0:0:0:0:0:0]
+[  5, 2] ( 3.38e-08 , 3.38e-09 ) [ 1.29e-05 , 1.29e-06 ] 0.9        [1:0:0:0:0:0:0]
+[  6, 2] ( 3.38e-09 , 3.38e-10 ) [ 1.29e-06 , 1.29e-07 ] 0.9        [1:0:0:0:0:0:0]
+[  7, 2] ( 3.38e-10 , 3.38e-11 ) [ 1.29e-07 , 1.29e-08 ] 0.9        [1:0:0:0:0:0:0]
+[  8, 2] ( 3.38e-11 , 3.38e-12 ) [ 1.29e-08 , 1.29e-09 ] 0.9        [1:0:0:0:0:0:0]
+[  9, 1] ( 3.38e-12 , 1.22e-17 ) [ 1.29e-09 , 8.77e-16 ] 1          [0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
+ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 22.1[ms]      timeout        = 0 [ms]
+iteration      = 9             tolerance      = 1e-09
+max iterations = 300           N. Equations   = 4015
+max acc. iter. = 800           N. System pars = 1600
+Converged      = YES           Memory Used    = 680Kb (+65bytes)
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 18            Jacobian       = 9
+Factorization  = 9             Inversion      = 26
+........................... last residuals ...........................
+last ||f||_inf = 2.3523e-15    last ||d||_inf = 6.9902e-15
+last ||f||_1   = 1.217e-17     last ||d||_1   = 8.7688e-16
+last ||f||_2   = 7.364e-17     last ||d||_2   = 1.7754e-15
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+Check Controls End
+target [Lagrange,Mayer]       = [ 0.0122, 0 ]
+[Penalties/Barriers,Controls] = [ 1.717e-05, 0.009284 ]
+All Done Folks!

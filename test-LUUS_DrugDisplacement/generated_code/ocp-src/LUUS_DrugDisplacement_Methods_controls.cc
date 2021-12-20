@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_controls.cc                      |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -87,16 +87,16 @@ namespace LUUS_DrugDisplacementDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
-    real_type t2   = XM__[1];
-    real_type t5   = LM__[1];
-    real_type t7   = XM__[0];
-    real_type t8   = g3(t7, t2);
-    real_type t12  = LM__[0];
-    real_type t14  = g4(t7, t2);
-    real_type t25  = g1(t7, t2);
-    real_type t27  = uControl(t1, 0, 8);
-    real_type result__ = P__[iP_T] * (t25 * (t8 * t5 * (t1 - 2.0 * t2) + t14 * t12 * (0.2e-1 - 1.0 * t7) + t12 * t7 * (0.464e2 * t1 - 0.928e2 * t2) + t5 * (0.928e0 - 0.464e2 * t7)) + t27);
+    real_type t2   = UM__[0];
+    real_type t3   = XM__[1];
+    real_type t6   = LM__[1];
+    real_type t8   = XM__[0];
+    real_type t9   = g3(t8, t3);
+    real_type t13  = LM__[0];
+    real_type t15  = g4(t8, t3);
+    real_type t26  = g1(t8, t3);
+    real_type t28  = uControl(t2, 0, 8);
+    real_type result__ = (t26 * (t9 * t6 * (t2 - 2.0 * t3) + t15 * t13 * (0.2e-1 - 1.0 * t8) + t13 * t8 * (0.464e2 * t2 - 0.928e2 * t3) + t6 * (0.928e0 - 0.464e2 * t8)) + t28) * P__[iP_T];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

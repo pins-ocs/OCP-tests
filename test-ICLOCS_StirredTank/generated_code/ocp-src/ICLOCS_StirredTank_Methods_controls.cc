@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -116,7 +116,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type t72  = t43 * t43;
     real_type t73  = t54 * t54;
     real_type t76  = uControl(t26, 0, 2);
-    real_type t79  = -t15 * (t7 - t8) * ModelPars[iM_k] * t4 * t2 * t1 + t1 * t20 + t1 * t22 + t1 * t24 - t8 * (t12 * (t1 * t27 * t26 + 1) - ModelPars[iM_Tc] * t26 * t1 * t27 - ModelPars[iM_Tf]) * t2 + t2 * t1 * t40 - 2 * t4 * t2 * (t43 * t1 + t7 / 2) + t2 * t1 * t50 - 2 * t2 * t54 * t1 * t12 + t2 * t1 * t58 - 2 * t2 * t62 * t1 * t26 + t2 * t7 + (t69 * t2 * ModelPars[iM_w_time] + t2 * (t71 + t72 + t73) + t76) * t1;
+    real_type t79  = -t15 * (t7 - t8) * ModelPars[iM_k] * t4 * t2 * t1 + t1 * t20 + t1 * t22 + t1 * t24 - t8 * t2 * (t12 * (t1 * t27 * t26 + 1) - ModelPars[iM_Tc] * t26 * t1 * t27 - ModelPars[iM_Tf]) + t2 * t1 * t40 - 2 * t4 * t2 * (t43 * t1 + t7 / 2) + t2 * t1 * t50 - 2 * t2 * t54 * t1 * t12 + t2 * t1 * t58 - 2 * t2 * t62 * t1 * t26 + t2 * t7 + (t69 * t2 * ModelPars[iM_w_time] + t2 * (t71 + t72 + t73) + t76) * t1;
     real_type result__ = 1.0 / t1 * t79;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );

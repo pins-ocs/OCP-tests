@@ -1,0 +1,464 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_omega__alpha
+[ 1] initial_omega__beta
+[ 2] initial_theta
+[ 3] initial_alpha
+[ 4] final_omega__alpha
+[ 5] final_omega__beta
+[ 6] final_theta
+[ 7] final_alpha
+
+
+
+Controls
+u1Control = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.01,
+  size    = 0.01
+}
+u2Control = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.01,
+  size    = 0.01
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 801
+Segment N.0: s0 = 0 length = 1 npts = 801 no data set
+END Mesh[mesh]
+
+Model Parameters
+.................................T_guess = 3
+.......................................W = 0
+.................................alpha_f = 0.522
+.................................alpha_i = 0
+.....................................rho = 0.01
+.................................theta_f = 0.5
+.................................theta_i = 0
+..........................omega__alpha_f = 0
+..........................omega__alpha_i = 0
+...........................omega__beta_f = 0
+...........................omega__beta_i = 0
+..............................u_epsilon0 = 0.01
+..............................u_epsilon1 = 1e-05
+............................u_tolerance0 = 0.01
+............................u_tolerance1 = 1e-05
+INFO CLASS = ICLOCS_TwoLinkRobotArm
+  #nodes      = 801
+  dim         = u = 2, q = 1, x = 4, p = 1, omega = 8, bc = 8, full_bc = 16
+  BC          = Inital = 8, Final = 8, Cyclic = 0
+  OMEGA       = Inital = 4, Final = 4, Cyclic = 0
+  total       = nZ = 6417, UC = 1600, Q = 801
+  index start = omega = 6408, p = 6416
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1,15] ( 0.000159 , 0.000151 ) [   0.25   ,  0.305   ] 0.0706     [0:0:0:12:0:0:2]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[  2,12] ( 0.000151 , 0.000225 ) [   4.01   ,   4.09   ] 0.0103     [0:0:0:1:6:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[  3, 6] ( 0.000225 , 0.000255 ) [   1.05   ,  0.991   ] 0.04       [0:0:0:0:2:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[  4, 6] ( 0.000255 , 0.000287 ) [  0.584   ,  0.535   ] 0.072      [0:0:0:0:3:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[  5, 5] ( 0.000287 , 0.000291 ) [  0.439   ,  0.404   ] 0.08       [0:0:0:0:2:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[  6, 5] ( 0.000291 , 0.000366 ) [  0.611   ,  0.585   ] 0.1        [0:0:0:0:1:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[  7, 4] ( 0.000366 , 0.000504 ) [   0.19   ,  0.104   ] 0.45       [1:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[  8, 3] ( 0.000504 , 0.000362 ) [  0.0964  ,  0.0553  ] 0.5        [0:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[  9, 3] ( 0.000362 , 0.000256 ) [  0.0884  ,  0.0515  ] 0.5        [0:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[ 10, 3] ( 0.000256 , 0.000172 ) [  0.0771  ,  0.042   ] 0.5        [0:0:0:0:0:0:0]
+[ 11, 1] ( 0.000172 , 7.7e-05  ) [  0.0456  , 0.00288  ] 1          [0:0:0:0:0:0:0]
+[ 12, 1] ( 7.7e-05  , 6.84e-07 ) [ 0.00476  , 0.000435 ] 1          [0:0:0:0:0:0:0]
+[ 13, 1] ( 6.84e-07 , 8.47e-09 ) [ 0.000442 , 1.29e-06 ] 1          [0:0:0:0:0:0:0]
+[ 14, 1] ( 8.47e-09 , 3.71e-14 ) [ 1.29e-06 , 2.39e-12 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.2, ds=0.2, old_s=    0
+NewtonDumped --- start iterations ---
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 15, 3] ( 2.6e-05  , 3.25e-05 ) [  0.0824  ,  0.0459  ] 0.45       [0:0:0:0:1:0:1]
+[ 16, 1] ( 3.25e-05 ,  2e-05   ) [  0.0474  , 0.00274  ] 1          [0:0:0:0:0:0:0]
+[ 17, 1] (  2e-05   , 1.75e-07 ) [ 0.00323  , 2.67e-05 ] 1          [0:0:0:0:0:0:0]
+[ 18, 1] ( 1.75e-07 , 2.88e-11 ) [ 2.68e-05 , 2.32e-09 ] 1          [0:0:0:0:0:0:0]
+[ 19, 2] ( 2.88e-11 , 2.88e-12 ) [ 2.32e-09 , 2.32e-10 ] 0.9        [1:0:0:0:0:0:0]
+[ 20, 2] ( 2.88e-12 , 2.88e-13 ) [ 2.32e-10 , 2.32e-11 ] 0.9        [1:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
+NewtonDumped --- start iterations ---
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 21, 3] ( 4.05e-05 , 4.62e-05 ) [  0.139   ,  0.0689  ] 0.5        [0:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[ 22, 3] ( 4.62e-05 , 2.66e-05 ) [  0.0679  ,  0.0339  ] 0.5        [0:0:0:0:0:0:0]
+[ 23, 1] ( 2.66e-05 , 2.34e-06 ) [  0.0338  , 0.000355 ] 1          [0:0:0:0:0:0:0]
+[ 24, 1] ( 2.34e-06 , 5.2e-09  ) [ 0.000376 , 8.26e-07 ] 1          [0:0:0:0:0:0:0]
+[ 25, 1] ( 5.2e-09  , 2.9e-14  ) [ 8.26e-07 , 1.83e-12 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
+NewtonDumped --- start iterations ---
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 26, 5] ( 6.2e-05  , 5.63e-05 ) [  0.211   ,  0.187   ] 0.113      [1:0:0:0:0:0:3]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[ 27, 3] ( 5.63e-05 , 4.43e-05 ) [  0.186   ,  0.0922  ] 0.5        [0:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[ 28, 3] ( 4.43e-05 , 2.45e-05 ) [  0.0907  ,  0.0452  ] 0.5        [0:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Should not happen here!
+[ 29, 3] ( 2.45e-05 , 1.27e-05 ) [  0.0451  ,  0.0225  ] 0.5        [0:0:0:0:0:0:0]
+[ 30, 1] ( 1.27e-05 , 3.23e-07 ) [  0.0225  , 4.81e-05 ] 1          [0:0:0:0:0:0:0]
+[ 31, 1] ( 3.23e-07 , 1.41e-10 ) [ 4.97e-05 , 2.19e-08 ] 1          [0:0:0:0:0:0:0]
+[ 32, 1] ( 1.41e-10 , 1.21e-16 ) [ 2.19e-08 , 2.65e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 33, 1] ( 6.96e-06 , 4.94e-07 ) [  0.023   , 2.6e-05  ] 1          [0:0:0:0:0:0:0]
+[ 34, 1] ( 4.94e-07 , 7.44e-11 ) [ 2.51e-05 , 1.26e-08 ] 1          [0:0:0:0:0:0:0]
+[ 35, 1] ( 7.44e-11 , 5.41e-17 ) [ 1.26e-08 , 1.06e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2
+
+Continuation step N.2 s=0.2, ds=0.2, old_s=    0
+NewtonDumped --- start iterations ---
+
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Continuation step N.2 s=0.1, ds=0.1, old_s=    0
+NewtonDumped --- start iterations ---
+
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Continuation step N.2 s=0.05, ds=0.05, old_s=    0
+NewtonDumped --- start iterations ---
+
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Continuation step N.2 s=0.025, ds=0.025, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 45, 2] ( 1.56e-05 , 1.55e-06 ) [  0.0024  , 0.000237 ] 0.9        [1:0:0:0:0:0:0]
+[ 46, 2] ( 1.55e-06 , 1.55e-07 ) [ 0.000237 , 2.36e-05 ] 0.9        [1:0:0:0:0:0:0]
+[ 47, 2] ( 1.55e-07 , 1.55e-08 ) [ 2.36e-05 , 2.36e-06 ] 0.9        [1:0:0:0:0:0:0]
+[ 48, 2] ( 1.55e-08 , 1.55e-09 ) [ 2.36e-06 , 2.36e-07 ] 0.9        [1:0:0:0:0:0:0]
+[ 49, 2] ( 1.55e-09 , 1.55e-10 ) [ 2.36e-07 , 2.36e-08 ] 0.9        [1:0:0:0:0:0:0]
+[ 50, 1] ( 1.55e-10 , 3.67e-16 ) [ 2.36e-08 , 1.53e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.0625, ds=0.0375, old_s=0.025
+NewtonDumped --- start iterations ---
+
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Continuation step N.2 s=0.04375, ds=0.01875, old_s=0.025
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 57, 2] ( 1.04e-05 , 1.03e-06 ) [ 0.00155  , 0.000154 ] 0.9        [1:0:0:0:0:0:0]
+[ 58, 2] ( 1.03e-06 , 1.03e-07 ) [ 0.000153 , 1.53e-05 ] 0.9        [1:0:0:0:0:0:0]
+[ 59, 2] ( 1.03e-07 , 1.03e-08 ) [ 1.53e-05 , 1.53e-06 ] 0.9        [1:0:0:0:0:0:0]
+[ 60, 2] ( 1.03e-08 , 1.03e-09 ) [ 1.53e-06 , 1.53e-07 ] 0.9        [1:0:0:0:0:0:0]
+[ 61, 1] ( 1.03e-09 , 5.04e-16 ) [ 1.53e-07 , 3.19e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.071875, ds=0.028125, old_s=0.043750000000000004
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 62, 2] ( 1.37e-05 , 1.36e-06 ) [ 0.00198  , 0.000196 ] 0.9        [1:0:0:0:0:0:0]
+[ 63, 2] ( 1.36e-06 , 1.36e-07 ) [ 0.000196 , 1.95e-05 ] 0.9        [1:0:0:0:0:0:0]
+[ 64, 2] ( 1.36e-07 , 1.36e-08 ) [ 1.95e-05 , 1.95e-06 ] 0.9        [1:0:0:0:0:0:0]
+[ 65, 2] ( 1.36e-08 , 1.36e-09 ) [ 1.95e-06 , 1.95e-07 ] 0.9        [1:0:0:0:0:0:0]
+[ 66, 2] ( 1.36e-09 , 1.36e-10 ) [ 1.95e-07 , 1.95e-08 ] 0.9        [1:0:0:0:0:0:0]
+[ 67, 1] ( 1.36e-10 , 2.74e-16 ) [ 1.95e-08 , 1.13e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.11406, ds=0.042188, old_s=0.07187500000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 68, 2] ( 1.68e-05 , 1.67e-06 ) [ 0.00234  , 0.000231 ] 0.9        [1:0:0:0:0:0:0]
+[ 69, 2] ( 1.67e-06 , 1.67e-07 ) [ 0.00023  , 2.3e-05  ] 0.9        [1:0:0:0:0:0:0]
+[ 70, 2] ( 1.67e-07 , 1.67e-08 ) [ 2.3e-05  , 2.3e-06  ] 0.9        [1:0:0:0:0:0:0]
+[ 71, 2] ( 1.67e-08 , 1.67e-09 ) [ 2.3e-06  , 2.3e-07  ] 0.9        [1:0:0:0:0:0:0]
+[ 72, 2] ( 1.67e-09 , 1.67e-10 ) [ 2.3e-07  , 2.3e-08  ] 0.9        [1:0:0:0:0:0:0]
+[ 73, 1] ( 1.67e-10 , 3.73e-16 ) [ 2.3e-08  , 1.44e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.17734, ds=0.063281, old_s=0.11406250000000001
+NewtonDumped --- start iterations ---
+
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Continuation step N.2 s=0.1457, ds=0.031641, old_s=0.11406250000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 80, 2] ( 1.01e-05 ,  1e-06   ) [ 0.00136  , 0.000135 ] 0.9        [1:0:0:0:0:0:0]
+[ 81, 2] (  1e-06   ,  1e-07   ) [ 0.000134 , 1.34e-05 ] 0.9        [1:0:0:0:0:0:0]
+[ 82, 2] (  1e-07   ,  1e-08   ) [ 1.34e-05 , 1.34e-06 ] 0.9        [1:0:0:0:0:0:0]
+[ 83, 2] (  1e-08   ,  1e-09   ) [ 1.34e-06 , 1.34e-07 ] 0.9        [1:0:0:0:0:0:0]
+[ 84, 1] (  1e-09   , 4.73e-16 ) [ 1.34e-07 , 2.85e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.19316, ds=0.047461, old_s=0.14570312500000002
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 85, 1] ( 1.18e-05 , 4.48e-08 ) [ 0.00155  , 2.91e-06 ] 1          [0:0:0:0:0:0:0]
+[ 86, 1] ( 4.48e-08 , 6.21e-13 ) [ 2.93e-06 , 4.61e-11 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.26436, ds=0.071191, old_s=0.1931640625
+NewtonDumped --- start iterations ---
+
+g_fun_eval(...) return -nan
+
+On File:./ocp-src/ICLOCS_TwoLinkRobotArm_Methods_controls.cc:128
+
+Continuation step N.2 s=0.22876, ds=0.035596, old_s=0.1931640625
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 89, 1] ( 6.78e-06 , 1.44e-08 ) [ 0.000868 , 9.31e-07 ] 1          [0:0:0:0:0:0:0]
+[ 90, 1] ( 1.44e-08 , 6.7e-14  ) [ 9.33e-07 , 5.53e-12 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.28215, ds=0.053394, old_s=0.228759765625
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 91, 1] ( 7.61e-06 , 1.8e-08  ) [ 0.000956 , 1.17e-06 ] 1          [0:0:0:0:0:0:0]
+[ 92, 1] ( 1.8e-08  , 1.11e-13 ) [ 1.17e-06 , 1.05e-11 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.36224, ds=0.08009, old_s=0.2821533203125
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 93, 1] ( 7.31e-06 , 1.71e-08 ) [ 0.000904 , 1.1e-06  ] 1          [0:0:0:0:0:0:0]
+[ 94, 1] ( 1.71e-08 , 1.02e-13 ) [ 1.1e-06  , 1.17e-11 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.48238, ds=0.12014, old_s=0.36224365234375
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 95, 1] ( 5.55e-06 , 1.05e-08 ) [ 0.00068  , 6.63e-07 ] 1          [0:0:0:0:0:0:0]
+[ 96, 1] ( 1.05e-08 , 3.93e-14 ) [ 6.61e-07 , 5.23e-12 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.66258, ds=0.1802, old_s=0.482379150390625
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 97, 1] ( 2.98e-06 , 3.39e-09 ) [ 0.000366 , 2.27e-07 ] 1          [0:0:0:0:0:0:0]
+[ 98, 1] ( 3.39e-09 , 5.64e-15 ) [ 2.27e-07 , 6.79e-13 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.93289, ds=0.2703, old_s=0.6625823974609375
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 99, 1] ( 9.81e-07 , 5.71e-10 ) [ 0.000122 , 5.01e-08 ] 1          [0:0:0:0:0:0:0]
+[100, 1] ( 5.71e-10 , 7.47e-16 ) [  5e-08   , 6.95e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.2 s=1, ds=0.067113, old_s=0.9328872680664062
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[101, 1] ( 6.56e-08 , 3.69e-12 ) [ 8.25e-06 , 3.35e-10 ] 1          [0:0:0:0:0:0:0]
+[102, 1] ( 3.69e-12 , 1.06e-16 ) [ 3.35e-10 , 7.31e-15 ] 1          [0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
+ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 0.758[sec]    timeout        = 0 [ms]
+iteration      = 102           tolerance      = 1e-09
+max iterations = 300           N. Equations   = 6417
+max acc. iter. = 800           N. System pars = 1600
+Converged      = YES           Memory Used    = 872Kb (+33bytes)
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 166           Jacobian       = 79
+Factorization  = 79            Inversion      = 227
+........................... last residuals ...........................
+last ||f||_inf = 9.5722e-15    last ||d||_inf = 6.0356e-14
+last ||f||_1   = 1.0576e-16    last ||d||_1   = 7.3083e-15
+last ||f||_2   = 4.5481e-16    last ||d||_2   = 1.0879e-14
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+#ERR 1 Jacobian block N. 794 type: FD [(x+l) x (2*(x+l)+p) = 8 x 17]
+
+jac[  0,  4] =     0.086818 / 0.086963     [A/FD] ---   0.00014488 / 0.1666       [err/err(%)]
+jac[  1,  4] =      -0.1196 / -0.1198      [A/FD] ---   0.00019958 / 0.1666       [err/err(%)]
+jac[  0,  5] =      -0.1196 / -0.1198      [A/FD] ---   0.00019843 / 0.16564      [err/err(%)]
+jac[  1,  5] =      0.16475 / 0.16503      [A/FD] ---   0.00027335 / 0.16564      [err/err(%)]
+jac[  0, 12] =     0.086818 / 0.086964     [A/FD] ---   0.00014537 / 0.16717      [err/err(%)]
+jac[  1, 12] =      -0.1196 / -0.1198      [A/FD] ---   0.00020026 / 0.16717      [err/err(%)]
+jac[  0, 13] =      -0.1196 / -0.1198      [A/FD] ---   0.00019902 / 0.16614      [err/err(%)]
+jac[  1, 13] =      0.16475 / 0.16503      [A/FD] ---   0.00027417 / 0.16614      [err/err(%)]
+
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+Check Controls End
+target [Lagrange,Mayer]       = [ 0.05525, 3.157 ]
+[Penalties/Barriers,Controls] = [ 0, 5.453e-05 ]
+Optimization parameters:
+T: 3.15687695737181517
+All Done Folks!

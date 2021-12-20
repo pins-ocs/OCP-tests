@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_controls.cc                     |
  |                                                                       |
- |  version: 1.0   date 14/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -100,30 +100,30 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = LM__[2];
-    real_type t3   = -t1 + LM__[3];
-    real_type t4   = XM__[0];
-    real_type t6   = UM__[0];
-    real_type t7   = t6 * t6;
-    real_type t8   = ModelPars[iM_rho];
-    real_type t9   = t8 * t7;
-    real_type t10  = UM__[1];
-    real_type t11  = t10 * t10;
-    real_type t12  = t8 * t11;
-    real_type t13  = XM__[1];
-    real_type t14  = t13 * t1;
-    real_type t15  = u1Control(t6, -1, 1);
-    real_type t16  = u2Control(t10, -1, 1);
-    real_type t18  = XM__[2];
-    real_type t19  = cos(t18);
-    real_type t20  = t19 * t19;
-    real_type t22  = LM__[0];
-    real_type t23  = t4 * t4;
-    real_type t25  = LM__[1];
-    real_type t26  = t13 * t13;
-    real_type t29  = sin(t18);
-    real_type t56  = t20 * (t4 * t3 + t12 + t14 + t15 + t16 + t9) + t19 * (t29 * (-t23 * t22 + t26 * t25) + t10 * (-2.0 / 3.0 * t25 + 2.0 / 3.0 * t22) + 2.0 / 3.0 * t6 * t25) + 0.14e2 / 9.0 * t23 * t25 - 0.112e3 / 0.81e2 * t4 * t3 - 0.112e3 / 0.81e2 * t12 + t10 * (-0.28e2 / 0.27e2 * t25 + 0.16e2 / 0.27e2 * t22) + t22 * (-8.0 / 9.0 * t26 - 0.16e2 / 0.27e2 * t6) - 0.112e3 / 0.81e2 * t9 - 0.112e3 / 0.81e2 * t14 - 0.112e3 / 0.81e2 * t15 - 0.112e3 / 0.81e2 * t16;
-    real_type result__ = 81 / (81 * t20 - 112) * P__[iP_T] * t56;
+    real_type t2   = LM__[2];
+    real_type t4   = -t2 + LM__[3];
+    real_type t5   = XM__[0];
+    real_type t7   = UM__[0];
+    real_type t8   = t7 * t7;
+    real_type t9   = ModelPars[iM_rho];
+    real_type t10  = t9 * t8;
+    real_type t11  = UM__[1];
+    real_type t12  = t11 * t11;
+    real_type t13  = t9 * t12;
+    real_type t14  = XM__[1];
+    real_type t15  = t14 * t2;
+    real_type t16  = u1Control(t7, -1, 1);
+    real_type t17  = u2Control(t11, -1, 1);
+    real_type t19  = XM__[2];
+    real_type t20  = cos(t19);
+    real_type t21  = t20 * t20;
+    real_type t23  = LM__[0];
+    real_type t24  = t5 * t5;
+    real_type t26  = LM__[1];
+    real_type t27  = t14 * t14;
+    real_type t30  = sin(t19);
+    real_type t57  = t21 * (t5 * t4 + t10 + t13 + t15 + t16 + t17) + t20 * (t30 * (-t24 * t23 + t27 * t26) + t11 * (-2.0 / 3.0 * t26 + 2.0 / 3.0 * t23) + 2.0 / 3.0 * t7 * t26) + 0.14e2 / 9.0 * t24 * t26 - 0.112e3 / 0.81e2 * t5 * t4 - 0.112e3 / 0.81e2 * t13 + t11 * (-0.28e2 / 0.27e2 * t26 + 0.16e2 / 0.27e2 * t23) + t23 * (-8.0 / 9.0 * t27 - 0.16e2 / 0.27e2 * t7) - 0.112e3 / 0.81e2 * t10 - 0.112e3 / 0.81e2 * t15 - 0.112e3 / 0.81e2 * t16 - 0.112e3 / 0.81e2 * t17;
+    real_type result__ = 81 / (81 * t21 - 112) * t57 * P__[iP_T];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -178,7 +178,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     result__[ 0   ] = t25 * (162 * t7 * t5 * t4 + 81 * t10 * t4 - 224 * t5 * t7 - 112 * t10 + t15 - t19) * t1;
     real_type t26  = UM__[1];
     real_type t30  = ALIAS_u2Control_D_1(t26, -1, 1);
-    result__[ 1   ] = t25 * (162 * t7 * t26 * t4 + 54 * t3 * t18 - 224 * t26 * t7 + 81 * t30 * t4 - 84 * t13 - t15 + t19 - 112 * t30) * t1;
+    result__[ 1   ] = t25 * (162 * t7 * t26 * t4 + 54 * t3 * t18 - 224 * t7 * t26 + 81 * t30 * t4 - 84 * t13 - t15 + t19 - 112 * t30) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }

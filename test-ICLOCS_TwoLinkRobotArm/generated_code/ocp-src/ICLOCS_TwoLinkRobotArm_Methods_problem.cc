@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_problem.cc                      |
  |                                                                       |
- |  version: 1.0   date 14/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -236,7 +236,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t4   = t3 * t3;
     real_type t6   = P__[iP_T];
     real_type t11  = t6 * t6;
-    real_type result__ = 1.0 / t6 * (-2 * t2 * t3 * t6 + t2 * t4 + t11);
+    real_type result__ = 1.0 / t6 * (-2 * t3 * t2 * t6 + t4 * t2 + t11);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
     }

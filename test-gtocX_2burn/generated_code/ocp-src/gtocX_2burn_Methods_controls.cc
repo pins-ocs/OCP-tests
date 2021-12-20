@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -88,49 +88,49 @@ namespace gtocX_2burnDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
+    real_type t1   = ModelPars[iM_muS];
     real_type t2   = sqrt(t1);
-    real_type t3   = t2 * t1;
-    real_type t6   = ModelPars[iM_time_i];
-    real_type t7   = ModelPars[iM_time_f] - t6;
-    real_type t10  = QM__[0] * t7 + t6;
-    real_type t11  = p_guess(t10);
-    real_type t12  = t11 * t11;
-    real_type t13  = ModelPars[iM_muS];
-    real_type t14  = sqrt(t13);
-    real_type t17  = ModelPars[iM_w_guess] - 1;
-    real_type t18  = t17 * t3;
-    real_type t19  = L_guess(t10, t6);
-    real_type t20  = t19 * t19;
-    real_type t23  = t3 * t14;
-    real_type t25  = XM__[5];
-    real_type t30  = XM__[1];
-    real_type t31  = cos(t25);
-    real_type t33  = XM__[2];
-    real_type t34  = sin(t25);
-    real_type t35  = t34 * t33;
-    real_type t37  = ray_positive(t31 * t30 + t35 + 1);
-    real_type t40  = f_guess(t10);
-    real_type t41  = t40 * t40;
-    real_type t48  = g_guess(t10);
-    real_type t49  = t48 * t48;
-    real_type t56  = h_guess(t10);
-    real_type t57  = t56 * t56;
-    real_type t60  = XM__[3];
-    real_type t65  = k_guess(t10);
-    real_type t66  = t65 * t65;
-    real_type t69  = XM__[4];
-    real_type t74  = t1 * t1;
-    real_type t83  = ray(t1, t30, t33, t25);
-    real_type t84  = acceleration_r(t83, t13);
-    real_type t87  = t30 * t30;
-    real_type t88  = t33 * t33;
-    real_type t89  = t60 * t60;
-    real_type t90  = t69 * t69;
-    real_type t91  = t25 * t25;
-    real_type t97  = t31 * t31;
-    real_type t109 = -t41 * t17 * t23 + 2 * t40 * t17 * t30 * t23 - t49 * t17 * t23 + 2 * t48 * t17 * t33 * t23 - t57 * t17 * t23 + 2 * t56 * t18 * t14 * t60 - t66 * t17 * t23 + 2 * t65 * t18 * t14 * t69 - t84 * (LM__[2] * t31 - LM__[1] * t34) * t7 * ModelPars[iM_w_nonlin] * t74 - t18 * (t87 + t88 + t89 + t90 + t91 + 1) * t14 + t13 * t7 * (t97 * (t87 - t88) + t31 * (2 * t33 * t30 * t34 + 2 * t30) + 2 * t35 + t88 + 1) * LM__[5];
-    real_type result__ = 1.0 / t12 / t14 * (-t17 * t14 * t2 * t74 * t1 + 2 * t11 * t17 * t2 * t74 * t14 + 2 * t19 * t17 * t25 * t12 * t23 - t20 * t18 * t14 * t12 + t23 * t12 * t37 + t12 * t109) / t3;
+    real_type t4   = XM__[0];
+    real_type t5   = sqrt(t4);
+    real_type t6   = t5 * t4;
+    real_type t10  = ModelPars[iM_time_i];
+    real_type t11  = ModelPars[iM_time_f] - t10;
+    real_type t14  = QM__[0] * t11 + t10;
+    real_type t15  = p_guess(t14);
+    real_type t16  = t15 * t15;
+    real_type t19  = -1 + ModelPars[iM_w_guess];
+    real_type t20  = t19 * t6;
+    real_type t21  = L_guess(t14, t10);
+    real_type t22  = t21 * t21;
+    real_type t25  = t6 * t2;
+    real_type t27  = XM__[5];
+    real_type t32  = XM__[1];
+    real_type t33  = cos(t27);
+    real_type t35  = XM__[2];
+    real_type t36  = sin(t27);
+    real_type t37  = t36 * t35;
+    real_type t39  = ray_positive(t33 * t32 + t37 + 1);
+    real_type t42  = f_guess(t14);
+    real_type t43  = t42 * t42;
+    real_type t50  = g_guess(t14);
+    real_type t51  = t50 * t50;
+    real_type t58  = h_guess(t14);
+    real_type t59  = t58 * t58;
+    real_type t62  = XM__[3];
+    real_type t67  = k_guess(t14);
+    real_type t68  = t67 * t67;
+    real_type t71  = XM__[4];
+    real_type t76  = t4 * t4;
+    real_type t85  = ray(t4, t32, t35, t27);
+    real_type t86  = acceleration_r(t85, t1);
+    real_type t89  = t32 * t32;
+    real_type t90  = t35 * t35;
+    real_type t91  = t62 * t62;
+    real_type t92  = t71 * t71;
+    real_type t93  = t27 * t27;
+    real_type t100 = t33 * t33;
+    real_type t111 = -t43 * t19 * t25 + 2 * t42 * t19 * t32 * t25 - t51 * t19 * t25 + 2 * t50 * t19 * t35 * t25 - t59 * t19 * t25 + 2 * t58 * t20 * t2 * t62 - t68 * t19 * t25 + 2 * t67 * t20 * t2 * t71 - t86 * (LM__[2] * t33 - LM__[1] * t36) * t11 * ModelPars[iM_w_nonlin] * t76 - t20 * (t89 + t90 + t91 + t92 + t93 + 1) * t2 + (t100 * (t89 - t90) + t33 * (2 * t35 * t32 * t36 + 2 * t32) + 2 * t37 + t90 + 1) * t11 * LM__[5] * t1;
+    real_type result__ = 1.0 / t16 * (2 * t15 * t19 * t5 * t76 * t2 + 2 * t21 * t19 * t27 * t16 * t25 - t19 * t2 * t5 * t76 * t4 - t22 * t20 * t2 * t16 + t25 * t16 * t39 + t16 * t111) / t6 / t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 14/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -147,7 +147,7 @@ namespace Bike1DDefine {
     real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
     real_type t8   = murControl(U__[iU_mur], ModelPars[iM_mur_min], t7);
     real_type t12  = mufControl(U__[iU_muf], ModelPars[iM_muf_min], 0);
-    real_type result__ = t12 * t2 + t8 * t2;
+    real_type result__ = t12 * t2 + t2 * t8;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
     }
@@ -342,7 +342,7 @@ namespace Bike1DDefine {
     real_type t5   = Tmax_normalized(t1);
     real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
     real_type t8   = ALIAS_murControl_D_1(U__[iU_mur], ModelPars[iM_mur_min], t7);
-    result__[ 0   ] = t8 * t2;
+    result__[ 0   ] = t2 * t8;
     real_type t11  = ALIAS_mufControl_D_1(U__[iU_muf], ModelPars[iM_muf_min], 0);
     result__[ 1   ] = t11 * t2;
     if ( m_debug )

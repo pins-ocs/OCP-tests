@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -314,7 +314,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t103 = ray_D_1_4(t6, t15, t16, t17);
     real_type t108 = t14 * t11;
     real_type t109 = acceleration_r(t18, t9);
-    result__[ 2   ] = t22 * t94 * t20 * t13 / 2 + t22 * t99 * t30 * t28 + t22 * t103 * t20 * t28 + t43 * t109 * t108 * t8 * t5 / 2 + t43 * t31 * t20 * t28 - t43 * t94 * t20 * t42 / 2 - t43 * t99 * t30 * t48 - t43 * t103 * t20 * t48 + t22 * t109 * t108 * t8 * t41 / 2 + t22 * t31 * t20 * t48 - 3 * (-t22 * t15 + t43 * t16) * t64 * t60;
+    result__[ 2   ] = t22 * t94 * t20 * t13 / 2 + t22 * t99 * t30 * t28 + t22 * t103 * t20 * t28 + t43 * t109 * t108 * t8 * t5 / 2 + t43 * t31 * t20 * t28 - t43 * t94 * t20 * t42 / 2 - t43 * t99 * t30 * t48 - t43 * t103 * t20 * t48 + t22 * t109 * t108 * t8 * t41 / 2 + t22 * t31 * t20 * t48 - 3 * (-t15 * t22 + t16 * t43) * t64 * t60;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDp_sparse", 3, i_segment );
   }

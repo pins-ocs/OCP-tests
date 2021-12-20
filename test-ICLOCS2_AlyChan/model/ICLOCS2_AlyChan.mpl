@@ -55,34 +55,3 @@ generateOCProblem(
   continuation = CONT
 );
 # if used in batch mode use the comment to quit;
-# quit;
-#launchSolver(project_dir,project_name);
-compileSolver(project_dir,project_name);
-runSolver(project_dir);
-with(plots):;
-XOptimaPlots:-loadSolution(project_dir,project_name);
-hhdrs := XOptimaPlots:-getHeaders(): nops(%);
-interface(rtablesize=50):;
-z_sol       := XOptimaPlots:-getSolution(zeta):
-u_sol       := XOptimaPlots:-getSolution(u):
-x1_sol      := XOptimaPlots:-getSolution(x1):
-x2_sol      := XOptimaPlots:-getSolution(x2):
-x3_sol      := XOptimaPlots:-getSolution(x3):
-lambda1_sol := XOptimaPlots:-getSolution(lambda1__xo):
-lambda2_sol := XOptimaPlots:-getSolution(lambda2__xo):
-lambda3_sol := XOptimaPlots:-getSolution(lambda3__xo):;
-XOptimaPlots:-plotSolution(
-  zeta,[x1,x2,x3],
-  line_opts  = [[color="Red",thickness=1],[color="Green",thickness=1],[color="Blue",thickness=1]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=constrained],
-  plot_title = "Aly Chan problem"
-);
-XOptimaPlots:-plotSolution(
-  zeta,[u],
-  line_opts  = [[color="Blue",thickness=1]],
-
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","Control"],scaling=constrained],
-  plot_title = "Aly Chan problem"
-);
-;
-;

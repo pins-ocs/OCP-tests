@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -113,29 +113,29 @@ namespace UnderwaterDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_m1];
-    real_type t2   = ModelPars[iM_m3];
-    real_type t3   = t2 * t1;
-    real_type t4   = ModelPars[iM_inertia];
-    real_type t5   = XM__[3];
-    real_type t6   = LM__[0];
-    real_type t8   = XM__[4];
-    real_type t9   = LM__[1];
-    real_type t13  = XM__[2];
-    real_type t14  = cos(t13);
-    real_type t21  = sin(t13);
-    real_type t24  = LM__[5];
-    real_type t29  = XM__[5];
-    real_type t31  = LM__[4];
-    real_type t37  = LM__[3];
-    real_type t40  = t2 * t2;
-    real_type t43  = UM__[2];
-    real_type t50  = UM__[0];
-    real_type t53  = UM__[1];
-    real_type t55  = u1Control(t50, -1, 1);
-    real_type t56  = u2Control(t53, -1, 1);
-    real_type t57  = u3Control(t43, -1, 1);
-    real_type result__ = 1.0 / t4 / t2 / t1 * P__[iP_T] * (t14 * (t6 * t5 + t9 * t8) * t4 * t3 - t21 * (t9 * t5 - t6 * t8) * t4 * t3 - t5 * (t8 * (t1 - t2) * t2 * t24 - t4 * t31 * t1 * t29) * t1 - t40 * t4 * t29 * t8 * t37 + t3 * t43 * t24 + (t29 * t2 * t1 * LM__[2] + t37 * t50 * t2 + (t31 * t53 + (t55 + t56 + t57) * t2) * t1) * t4);
+    real_type t2   = ModelPars[iM_m1];
+    real_type t3   = ModelPars[iM_m3];
+    real_type t4   = t3 * t2;
+    real_type t5   = ModelPars[iM_inertia];
+    real_type t6   = XM__[3];
+    real_type t7   = LM__[0];
+    real_type t9   = XM__[4];
+    real_type t10  = LM__[1];
+    real_type t14  = XM__[2];
+    real_type t15  = cos(t14);
+    real_type t22  = sin(t14);
+    real_type t25  = LM__[5];
+    real_type t30  = XM__[5];
+    real_type t32  = LM__[4];
+    real_type t38  = LM__[3];
+    real_type t41  = t3 * t3;
+    real_type t44  = UM__[2];
+    real_type t51  = UM__[0];
+    real_type t54  = UM__[1];
+    real_type t56  = u1Control(t51, -1, 1);
+    real_type t57  = u2Control(t54, -1, 1);
+    real_type t58  = u3Control(t44, -1, 1);
+    real_type result__ = 1.0 / t5 / t3 / t2 * (t15 * (t10 * t9 + t7 * t6) * t5 * t4 - t22 * (t10 * t6 - t7 * t9) * t5 * t4 - t6 * t2 * (t9 * (-t3 + t2) * t3 * t25 - t5 * t32 * t2 * t30) - t41 * t5 * t30 * t9 * t38 + t4 * t44 * t25 + t5 * (t30 * t3 * t2 * LM__[2] + t38 * t51 * t3 + (t32 * t54 + (t56 + t57 + t58) * t3) * t2)) * P__[iP_T];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -266,19 +266,19 @@ namespace UnderwaterDefine {
     result__[ 0   ] = 0.5e0 * t3 * t1;
     result__[ 1   ] = result__[0];
     real_type t6   = ALIAS_u1Control_D_1(UM__[0], -1, 1);
-    result__[ 2   ] = t3 * (t2 * t6 + LM__[3]);
+    result__[ 2   ] = t3 * (t6 * t2 + LM__[3]);
     real_type t10  = ModelPars[iM_m3];
     real_type t11  = 1.0 / t10;
     result__[ 3   ] = 0.5e0 * t11 * t1;
     result__[ 4   ] = result__[3];
     real_type t14  = ALIAS_u2Control_D_1(UM__[1], -1, 1);
-    result__[ 5   ] = t11 * (t10 * t14 + LM__[4]);
+    result__[ 5   ] = t11 * (t14 * t10 + LM__[4]);
     real_type t18  = ModelPars[iM_inertia];
     real_type t19  = 1.0 / t18;
     result__[ 6   ] = 0.5e0 * t19 * t1;
     result__[ 7   ] = result__[6];
     real_type t22  = ALIAS_u3Control_D_1(UM__[2], -1, 1);
-    result__[ 8   ] = t19 * (t18 * t22 + LM__[5]);
+    result__[ 8   ] = t19 * (t22 * t18 + LM__[5]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 9, i_segment );
   }

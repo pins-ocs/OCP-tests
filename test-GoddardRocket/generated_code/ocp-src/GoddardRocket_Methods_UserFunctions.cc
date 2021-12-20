@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_UserFunctions.cc                         |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -260,7 +260,7 @@ namespace GoddardRocketDefine {
     real_type t2   = 1 - xo__s;
     real_type t3   = log(xo__a);
     real_type t5   = log(xo__b);
-    real_type t8   = exp(t3 * t2 + t5 * xo__s);
+    real_type t8   = exp(t2 * t3 + t5 * xo__s);
     real_type t9   = t8 / xo__a;
     real_type result__ = -t9 + t9 * t2 * (-t3 + t5);
     if ( m_debug ) {

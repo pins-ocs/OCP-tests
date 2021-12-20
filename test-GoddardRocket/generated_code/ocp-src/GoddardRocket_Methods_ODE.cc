@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -140,7 +140,7 @@ namespace GoddardRocketDefine {
     real_type t4   = X__[iX_m];
     real_type t5   = 1.0 / t4;
     real_type t7   = gg_D(t1);
-    result__[ 1   ] = (-t5 * t3 - t7) * result__[0];
+    result__[ 1   ] = (-t3 * t5 - t7) * result__[0];
     real_type t9   = DD_D_2(t1, t2);
     result__[ 2   ] = -t5 * t9 * result__[0];
     real_type t13  = DD(t1, t2);

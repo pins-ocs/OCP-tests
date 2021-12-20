@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -113,13 +113,13 @@ namespace RobotArmDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = UM__[1];
-    real_type t6   = UM__[2];
-    real_type t9   = UM__[0];
-    real_type t20  = u_rhoControl(t9, -1, 1);
-    real_type t21  = u_thetaControl(t3, -1, 1);
-    real_type t22  = u_phiControl(t6, -1, 1);
-    real_type result__ = (t3 * LM__[1] + t6 * LM__[2] + t9 * LM__[0] + LM__[3] * XM__[3] + LM__[4] * XM__[4] + LM__[5] * XM__[5] + t20 + t21 + t22) * P__[iP_T];
+    real_type t3   = UM__[0];
+    real_type t6   = UM__[1];
+    real_type t9   = UM__[2];
+    real_type t20  = u_rhoControl(t3, -1, 1);
+    real_type t21  = u_thetaControl(t6, -1, 1);
+    real_type t22  = u_phiControl(t9, -1, 1);
+    real_type result__ = (t3 * LM__[0] + t6 * LM__[1] + t9 * LM__[2] + LM__[3] * XM__[3] + LM__[4] * XM__[4] + LM__[5] * XM__[5] + t20 + t21 + t22) * P__[iP_T];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -620,7 +620,7 @@ namespace RobotArmDefine {
     real_type t35  = pow(-X__[iX_rho1] * t1 + V__[0], 2);
     real_type t40  = pow(-X__[iX_theta1] * t1 + V__[1], 2);
     real_type t45  = pow(-X__[iX_phi1] * t1 + V__[2], 2);
-    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1 + t16 + t24 + t30 + t35 + t40 + t45;
+    real_type result__ = t1 * t3 + t1 * t6 + t1 * t9 + t16 + t24 + t30 + t35 + t40 + t45;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -648,7 +648,7 @@ namespace RobotArmDefine {
     real_type t1   = P__[iP_T];
     real_type t2   = U__[iU_u_rho];
     real_type t3   = ALIAS_u_rhoControl_D_1(t2, -1, 1);
-    result__[ 0   ] = t3 * t1 - 2 * t1 * (-t2 * t1 + ModelPars[iM_L] * V__[3]);
+    result__[ 0   ] = t1 * t3 - 2 * t1 * (-t2 * t1 + ModelPars[iM_L] * V__[3]);
     real_type t12  = U__[iU_u_theta];
     real_type t13  = ALIAS_u_thetaControl_D_1(t12, -1, 1);
     real_type t15  = X__[iX_rho];

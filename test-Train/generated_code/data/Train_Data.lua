@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Data.lua                                                 |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
+uaMax    = 10
 tol_max  = 0.01
 epsi_max = 0.01
-uaMax    = 10
 ubMax    = 2
 
 content = {

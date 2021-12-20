@@ -1,0 +1,759 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_xx1
+[ 1] initial_yy1
+[ 2] X1_continuity
+[ 3] X2_continuity
+[ 4] X3_continuity
+[ 5] X4_continuity
+[ 6] X5_continuity
+[ 7] X6_continuity
+[ 8] X7_continuity
+[ 9] X8_continuity
+[10] X9_continuity
+[11] X10_continuity
+[12] X11_continuity
+[13] X12_continuity
+[14] X13_continuity
+[15] X14_continuity
+[16] X15_continuity
+[17] X16_continuity
+[18] X17_continuity
+[19] X18_continuity
+[20] X19_continuity
+[21] Y1_continuity
+[22] Y2_continuity
+[23] Y3_continuity
+[24] Y4_continuity
+[25] Y5_continuity
+[26] Y6_continuity
+[27] Y7_continuity
+[28] Y8_continuity
+[29] Y9_continuity
+[30] Y10_continuity
+[31] Y11_continuity
+[32] Y12_continuity
+[33] Y13_continuity
+[34] Y14_continuity
+[35] Y15_continuity
+[36] Y16_continuity
+[37] Y17_continuity
+[38] Y18_continuity
+[39] Y19_continuity
+[40] X1_initial
+[41] X2_initial
+[42] X3_initial
+[43] X4_initial
+[44] X5_initial
+[45] X6_initial
+[46] X7_initial
+[47] X8_initial
+[48] X9_initial
+[49] X10_initial
+[50] X11_initial
+[51] X12_initial
+[52] X13_initial
+[53] X14_initial
+[54] X15_initial
+[55] X16_initial
+[56] X17_initial
+[57] X18_initial
+[58] X19_initial
+[59] X20_initial
+[60] Y1_initial
+[61] Y2_initial
+[62] Y3_initial
+[63] Y4_initial
+[64] Y5_initial
+[65] Y6_initial
+[66] Y7_initial
+[67] Y8_initial
+[68] Y9_initial
+[69] Y10_initial
+[70] Y11_initial
+[71] Y12_initial
+[72] Y13_initial
+[73] Y14_initial
+[74] Y15_initial
+[75] Y16_initial
+[76] Y17_initial
+[77] Y18_initial
+[78] Y19_initial
+[79] Y20_initial
+
+
+
+Constraints 1D
+u1Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u2Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u3Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u4Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u5Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u6Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u7Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u8Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u9Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u10Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u11Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u12Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u13Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u14Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u15Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u16Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u17Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u18Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u19Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+u20Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  MinValue  = -10
+  MaxValue  = 10
+  Active    = YES
+}
+xx1Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy1Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx2Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy2Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx3Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy3Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx4Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy4Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx5Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy5Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx6Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy6Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx7Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy7Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx8Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy8Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx9Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy9Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx10Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy10Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx11Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy11Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx12Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy12Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx13Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy13Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx14Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy14Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx15Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy15Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx16Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy16Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx17Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy17Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx18Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy18Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx19Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy19Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+xx20Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+yy20Limitation = {
+  Type      = INTERVAL
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  MinValue  = -2
+  MaxValue  = 2
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 51
+Segment N.0: s0 = 0 length = 1 npts = 51 no data set
+END Mesh[mesh]
+
+Model Parameters
+.................................xy_eps0 = 0.1
+.................................xy_eps1 = 0.001
+.................................xy_tol0 = 0.1
+.................................xy_tol1 = 0.001
+INFO CLASS = ICLOCS_ContinuousMP
+  #nodes      = 51
+  dim         = u = 0, q = 1, x = 80, p = 20, omega = 80, bc = 80, full_bc = 240
+  BC          = Inital = 122, Final = 80, Cyclic = 38
+  OMEGA       = Inital = 42, Final = 0, Cyclic = 38
+  total       = nZ = 8260, UC = 0, Q = 51
+  index start = omega = 8160, p = 8240
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1, 1] (  0.0957  , 0.00292  ) [   1.35   ,   0.92   ] 1          [0:0:0:0:0:0:0]
+[  2, 2] ( 0.00292  , 0.000282 ) [  0.789   ,  0.0783  ] 0.9        [1:0:0:0:0:0:0]
+[  3, 1] ( 0.000282 , 1.28e-07 ) [  0.0782  , 4.75e-06 ] 1          [0:0:0:0:0:0:0]
+[  4, 1] ( 1.28e-07 , 1.2e-15  ) [ 4.75e-06 , 9.25e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.2, ds=0.2, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  5, 1] ( 1.25e-06 , 5.04e-13 ) [ 6.47e-05 , 3.2e-11  ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  6, 1] ( 1.41e-06 , 6.15e-13 ) [ 7.25e-05 , 3.89e-11 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  7, 1] ( 9.82e-07 , 3.02e-13 ) [ 5.05e-05 , 1.91e-11 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  8, 1] ( 1.47e-08 , 9.36e-17 ) [ 7.58e-07 , 4.64e-15 ] 1          [0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
+ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 0.963[sec]    timeout        = 0 [ms]
+iteration      = 8             tolerance      = 1e-09
+max iterations = 300           N. Equations   = 8260
+max acc. iter. = 800           N. System pars = 0
+Converged      = YES           Memory Used    = 11Mb (+57Kb)
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 14            Jacobian       = 8
+Factorization  = 8             Inversion      = 17
+........................... last residuals ...........................
+last ||f||_inf = 1.954e-14     last ||d||_inf = 2.8157e-13
+last ||f||_1   = 9.3617e-17    last ||d||_1   = 4.6357e-15
+last ||f||_2   = 7.2953e-16    last ||d||_2   = 2.2269e-14
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+At cell 0, H = 51.325000541285135, ||g||_inf = 0.7599148049455015
+At cell 1, H = 51.358223488872866, ||g||_inf = 0.7599148049455015
+At cell 2, H = 51.39095920561241, ||g||_inf = 0.7599148049455015
+At cell 3, H = 51.42320141883, ||g||_inf = 0.7599148049455015
+At cell 4, H = 51.45494377278402, ||g||_inf = 0.7599148049455015
+At cell 5, H = 51.486179836669514, ||g||_inf = 0.7599148049455015
+skipping...
+Check Controls End
+target [Lagrange,Mayer]       = [ 48.23, 0 ]
+[Penalties/Barriers,Controls] = [ 0.0004427, 0 ]
+Optimization parameters:
+u1: -2.69083316196644295
+u10: 0.0460080332976258999
+u11: 0.0654321875767639866
+u12: 0.0252278388579779654
+u13: -0.0378878741249791193
+u14: -0.0665773937708141889
+u15: -0.0351604848433265602
+u16: 0.0274936004692297765
+u17: 0.0649263580608995944
+u18: 0.0452468533682406013
+u19: -0.00916379617075888803
+u2: 1.57297732557997838
+u20: -0.0283994862580495416
+u3: -0.204859485239890698
+u4: 0.106878197240835263
+u5: 0.0498173947632239988
+u6: 0.00729766950738999082
+u7: -0.0529933650672837833
+u8: -0.0626586160536906217
+u9: -0.0154074346069726122
+All Done Folks!

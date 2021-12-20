@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,12 +20,12 @@
 -- User Header
 
 -- Auxiliary values
+W0    = 0
 epsi0 = 0.1
+epsi  = epsi0
+W     = W0
 tol0  = 0.1
 tol   = tol0
-W0    = 0
-W     = W0
-epsi  = epsi0
 
 content = {
 

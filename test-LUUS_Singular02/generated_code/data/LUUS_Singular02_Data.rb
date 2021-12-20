@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: LUUS_Singular02_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 13/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,9 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-u_epsilon0   = 0.01
 u_tolerance0 = 0.01
 epsi_x1      = 0.0001
+u_epsilon0   = 0.01
 Tf           = 5
 
 mechatronix do |data|
@@ -333,8 +333,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 1000,
         :length => Tf,
+        :n      => 1000,
       },
     ],
   };

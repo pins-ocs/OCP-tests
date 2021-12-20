@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -20,23 +20,23 @@
 -- User Header
 
 -- Auxiliary values
-tol_T     = 0.01
-h_i       = 1
-epsi_T    = 0.01
-m_i       = 1
-g0        = 1
-c         = 0.5*(g0*h_i)**(1/2.0)
-epsi_v    = 0.01
-tol_v     = 0.01
 mc        = 0.6
-m_f       = mc*m_i
+tol_TS    = 0.01
 epsi_TS   = 0.01
 vc        = 620
-Dc        = 0.5*vc*m_i/g0
-tol_TS    = 0.01
+tol_v     = 0.01
 tol_mass  = 0.01
 epsi_mass = 0.01
+h_i       = 1
+tol_T     = 0.01
+epsi_T    = 0.01
+m_i       = 1
+m_f       = mc*m_i
+g0        = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
 Tmax      = 3.5*g0*m_i
+Dc        = 0.5*vc*m_i/g0
+epsi_v    = 0.01
 
 content = {
 

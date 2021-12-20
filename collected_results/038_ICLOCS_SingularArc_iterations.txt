@@ -1,0 +1,255 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x1
+[ 1] initial_x2
+[ 2] initial_x3
+[ 3] final_x2
+[ 4] final_x3
+
+
+
+Controls
+uControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.01,
+  size    = 0.01
+}
+
+Constraints 1D
+tfbound = {
+  Type      = GREATER THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.01
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
+Segment N.0: s0 = 0 length = 1 npts = 401 no data set
+END Mesh[mesh]
+
+Model Parameters
+..................................T_init = 100
+....................................x1_i = 1.5707963267948966
+....................................x2_i = 4
+....................................x3_i = 0
+..............................epsi_ctrl0 = 0.01
+..............................epsi_ctrl1 = 0.0001
+...............................tol_ctrl0 = 0.01
+...............................tol_ctrl1 = 0.0001
+INFO CLASS = ICLOCS_SingularArc
+  #nodes      = 401
+  dim         = u = 1, q = 1, x = 3, p = 1, omega = 5, bc = 5, full_bc = 11
+  BC          = Inital = 6, Final = 5, Cyclic = 0
+  OMEGA       = Inital = 3, Final = 2, Cyclic = 0
+  total       = nZ = 2412, UC = 400, Q = 401
+  index start = omega = 2406, p = 2411
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-17.86280623030798) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[  1,14] (  0.0825  ,  0.078   ) [   2.29   ,   1.7    ] 0.0558     [1:0:0:10:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-11.785360230898107) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  2, 3] (  0.078   ,  0.0392  ) [   1.4    ,  0.213   ] 0.5        [0:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-3.4740905538581757) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  3, 3] (  0.0392  ,  0.0197  ) [  0.639   ,  0.376   ] 0.5        [0:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-2.708654575896631) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  4, 3] (  0.0197  , 0.00992  ) [  0.516   ,  0.293   ] 0.5        [0:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-2.3291775725514423) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  5, 3] ( 0.00992  ,  0.0054  ) [  0.452   ,  0.298   ] 0.5        [0:0:0:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-1.6021280736649413) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  6, 4] (  0.0054  , 0.00441  ) [  0.777   ,  0.675   ] 0.261      [0:0:1:0:0:0:0]
+NewtonDumped::compute_correction exception: 
+PenaltyBarrier1DGreaterThan[tfbound]::D(-0.318992811224011) argument must be > 0
+
+On File:/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/src/MechatronixCore/PenaltyBarrier1D.cc:381
+
+Should not happen here!
+[  7, 4] ( 0.00441  , 0.00402  ) [   1.59   ,   1.36   ] 0.24       [0:0:1:0:0:0:0]
+[  8, 5] ( 0.00402  , 0.00377  ) [   1.64   ,   1.33   ] 0.292      [0:0:4:0:0:0:0]
+[  9, 2] ( 0.00377  , 0.00268  ) [  0.944   ,  0.368   ] 0.4        [1:0:0:0:0:0:0]
+[ 10, 1] ( 0.00268  , 0.00256  ) [  0.191   ,  0.0487  ] 1          [0:0:0:0:0:0:0]
+[ 11, 1] ( 0.00256  , 0.00254  ) [  0.0427  ,  0.0148  ] 1          [0:0:0:0:0:0:0]
+[ 12, 3] ( 0.00254  , 0.00235  ) [  0.0522  ,  0.0424  ] 0.16       [2:0:0:0:0:0:0]
+[ 13,13] ( 0.00235  , 0.00223  ) [  0.053   ,  0.0496  ] 0.0321     [12:0:0:0:0:0:0]
+[ 14, 4] ( 0.00223  , 0.00161  ) [  0.0129  ,  0.0176  ] 0.219      [3:0:0:0:0:0:0]
+[ 15, 7] ( 0.00161  , 0.00146  ) [  0.0129  ,  0.0116  ] 0.0521     [6:0:0:0:0:0:0]
+[ 16, 1] ( 0.00146  , 0.00125  ) [ 0.00658  , 0.00392  ] 1          [0:0:0:0:0:0:0]
+[ 17, 5] ( 0.00125  , 0.00116  ) [  0.0231  ,  0.0211  ] 0.0409     [4:0:0:0:0:0:0]
+[ 18, 4] ( 0.00116  , 0.000993 ) [ 0.00422  , 0.00343  ] 0.0805     [3:0:0:0:0:0:0]
+[ 19, 2] ( 0.000993 , 0.000428 ) [ 0.00167  ,  0.0015  ] 0.4        [0:1:0:0:0:0:0]
+[ 20, 1] ( 0.000428 , 0.000114 ) [ 0.000989 , 0.000108 ] 1          [0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 21, 2] ( 0.000114 , 4.97e-06 ) [ 7.53e-05 , 7.89e-06 ] 0.9        [1:0:0:0:0:0:0]
+[ 22, 1] ( 4.97e-06 , 8.6e-10  ) [ 7.72e-06 , 7.18e-09 ] 1          [0:0:0:0:0:0:0]
+[ 23, 1] ( 8.6e-10  , 5.42e-15 ) [ 7.22e-09 , 5.26e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.2, ds=0.2, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 24, 2] ( 2.02e-05 , 5.54e-06 ) [ 0.000457 , 0.000187 ] 0.507      [1:0:0:0:0:0:0]
+[ 25, 2] ( 5.54e-06 , 7.18e-07 ) [ 0.000164 , 1.29e-05 ] 0.9        [1:0:0:0:0:0:0]
+[ 26, 1] ( 7.18e-07 , 5.76e-10 ) [ 1.29e-05 , 3.91e-09 ] 1          [0:0:0:0:0:0:0]
+[ 27, 1] ( 5.76e-10 , 7.88e-15 ) [ 3.91e-09 , 3.96e-14 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 28, 2] ( 1.58e-05 , 6.43e-06 ) [ 0.000219 , 0.000109 ] 0.4        [1:0:0:0:0:0:0]
+[ 29, 2] ( 6.43e-06 , 1.31e-06 ) [ 9.53e-05 , 5.83e-06 ] 0.9        [1:0:0:0:0:0:0]
+[ 30, 1] ( 1.31e-06 , 3.26e-08 ) [ 6.63e-06 , 7.1e-08  ] 1          [0:0:0:0:0:0:0]
+[ 31, 1] ( 3.26e-08 , 6.64e-11 ) [ 7.77e-08 , 1.68e-10 ] 1          [0:0:0:0:0:0:0]
+[ 32, 1] ( 6.64e-11 , 3.27e-16 ) [ 1.69e-10 , 1.3e-15  ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 33, 2] ( 5.33e-06 , 2.7e-06  ) [ 6.77e-05 , 3.65e-05 ] 0.4        [1:0:0:0:0:0:0]
+[ 34, 2] ( 2.7e-06  , 1.03e-06 ) [ 2.71e-05 , 1.47e-05 ] 0.4        [0:0:1:0:0:0:0]
+[ 35, 1] ( 1.03e-06 , 4.4e-07  ) [ 1.39e-05 , 4.62e-07 ] 1          [0:0:0:0:0:0:0]
+[ 36, 1] ( 4.4e-07  , 2.82e-08 ) [ 2.52e-07 , 1.6e-08  ] 1          [0:0:0:0:0:0:0]
+[ 37, 1] ( 2.82e-08 , 1.32e-10 ) [ 1.83e-08 , 8.55e-11 ] 1          [0:0:0:0:0:0:0]
+[ 38, 1] ( 1.32e-10 , 2.94e-15 ) [ 8.63e-11 , 2.33e-15 ] 1          [0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
+[ 39, 2] ( 2.44e-06 , 1.88e-07 ) [ 2.13e-06 , 1.35e-07 ] 0.9        [1:0:0:0:0:0:0]
+[ 40, 2] ( 1.88e-07 , 1.87e-08 ) [ 1.39e-07 , 1.37e-08 ] 0.9        [1:0:0:0:0:0:0]
+[ 41, 2] ( 1.87e-08 , 1.87e-09 ) [ 1.37e-08 , 1.37e-09 ] 0.9        [1:0:0:0:0:0:0]
+[ 42, 2] ( 1.87e-09 , 1.87e-10 ) [ 1.37e-09 , 1.37e-10 ] 0.9        [1:0:0:0:0:0:0]
+[ 43, 1] ( 1.87e-10 , 3.9e-16  ) [ 1.37e-10 , 1.55e-15 ] 1          [0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
+ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 47.6[ms]      timeout        = 0 [ms]
+iteration      = 43            tolerance      = 1e-09
+max iterations = 300           N. Equations   = 2412
+max acc. iter. = 800           N. System pars = 400
+Converged      = YES           Memory Used    = 288Kb (+53bytes)
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 122           Jacobian       = 43
+Factorization  = 43            Inversion      = 153
+........................... last residuals ...........................
+last ||f||_inf = 4.2952e-13    last ||d||_inf = 6.4099e-14
+last ||f||_1   = 3.8994e-16    last ||d||_1   = 1.554e-15
+last ||f||_2   = 1.1187e-14    last ||d||_2   = 3.6338e-15
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+#ERR 1 Jacobian block N. 78 type: FD [(x+l) x (2*(x+l)+p) = 6 x 13]
+
+jac[  0,  3] =       1.1695 / 1.1703       [A/FD] ---      0.00088 / 0.075192     [err/err(%)]
+jac[  0,  9] =       1.1695 / 1.1703       [A/FD] ---      0.00088 / 0.075192     [err/err(%)]
+
+#ERR 2 Jacobian block N. 79 type: FD [(x+l) x (2*(x+l)+p) = 6 x 13]
+
+jac[  0,  3] =       1310.6 / 1629.3       [A/FD] ---       318.71 / 19.562       [err/err(%)]
+jac[  6,  3] =    0.0021958 / 0.0017605    [A/FD] ---   0.00043539 / 19.828       [err/err(%)]
+jac[  0,  9] =       1310.6 / 1629.3       [A/FD] ---       318.71 / 19.562       [err/err(%)]
+jac[  6,  9] =    0.0021958 / 0.0017605    [A/FD] ---   0.00043539 / 19.828       [err/err(%)]
+
+#ERR 3 Jacobian block N. 80 type: FD [(x+l) x (2*(x+l)+p) = 6 x 13]
+
+jac[  0,  3] =       2464.8 / 2082.2       [A/FD] ---       382.58 / 15.522       [err/err(%)]
+jac[  6,  3] =   -0.0015397 / -0.00090455  [A/FD] ---   0.00063514 / 41.251       [err/err(%)]
+jac[  0,  9] =       2464.8 / 2082.2       [A/FD] ---       382.58 / 15.522       [err/err(%)]
+jac[  6,  9] =   -0.0015397 / -0.00090455  [A/FD] ---   0.00063514 / 41.251       [err/err(%)]
+
+#ERR 4 Jacobian block N. 81 type: FD [(x+l) x (2*(x+l)+p) = 6 x 13]
+
+jac[  0,  3] =       2977.5 / 2164.4       [A/FD] ---       813.06 / 27.307       [err/err(%)]
+jac[  6,  3] =   0.00099707 / 0.00052411   [A/FD] ---   0.00047296 / 47.435       [err/err(%)]
+jac[  0,  9] =       2977.5 / 2164.4       [A/FD] ---       813.06 / 27.307       [err/err(%)]
+jac[  6,  9] =   0.00099707 / 0.00052411   [A/FD] ---   0.00047296 / 47.435       [err/err(%)]
+
+#ERR 5 Jacobian block N. 82 type: FD [(x+l) x (2*(x+l)+p) = 6 x 13]
+
+jac[  0,  3] =       3183.9 / 2189.3       [A/FD] ---        994.6 / 31.239       [err/err(%)]
+jac[  6,  3] =  -0.00062696 / -0.00031635  [A/FD] ---   0.00031061 / 49.543       [err/err(%)]
+jac[  0,  9] =       3183.9 / 2189.3       [A/FD] ---        994.6 / 31.239       [err/err(%)]
+jac[  6,  9] =  -0.00062696 / -0.00031635  [A/FD] ---   0.00031061 / 49.543       [err/err(%)]
+
+#ERR 6 Jacobian block N. 83 type: FD [(x+l) x (2*(x+l)+p) = 6 x 13]
+
+jac[  0,  3] =       3264.2 / 2198         [A/FD] ---       1066.2 / 32.663       [err/err(%)]
+jac[  6,  3] =   0.00038988 / 0.00019372   [A/FD] ---   0.00019616 / 50.314       [err/err(%)]
+jac[  0,  9] =       3264.2 / 2198         [A/FD] ---       1066.2 / 32.663       [err/err(%)]
+jac[  6,  9] =   0.00038988 / 0.00019372   [A/FD] ---   0.00019616 / 50.314       [err/err(%)]
+
+skipping...
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+Check Controls End
+target [Lagrange,Mayer]       = [ 0, 4.321 ]
+[Penalties/Barriers,Controls] = [ 0.0002263, 2.426e-05 ]
+Optimization parameters:
+T: 4.32116624585939668
+All Done Folks!

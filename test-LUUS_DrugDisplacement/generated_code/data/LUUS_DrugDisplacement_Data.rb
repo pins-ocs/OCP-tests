@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: LUUS_DrugDisplacement_Data.rb                                  #
 #                                                                       #
-#  version: 1.0   date 13/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-pen_u_epsi0 = 0.1
 pen_u_tol0  = 0.1
+pen_u_epsi0 = 0.1
 
 mechatronix do |data|
 

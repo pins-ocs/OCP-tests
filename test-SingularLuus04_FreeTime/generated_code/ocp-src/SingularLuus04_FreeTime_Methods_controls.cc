@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_controls.cc                    |
  |                                                                       |
- |  version: 1.0   date 13/12/2021                                       |
+ |  version: 1.0   date 20/12/2021                                       |
  |                                                                       |
  |  Copyright (C) 2021                                                   |
  |                                                                       |
@@ -92,10 +92,10 @@ namespace SingularLuus04_FreeTimeDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[3];
-    real_type t9   = UM__[0];
+    real_type t6   = UM__[0];
     real_type t14  = XM__[0] * XM__[0];
-    real_type t15  = uControl(t9, -1, 1);
-    real_type result__ = (ModelPars[iM_theta] * t1 + t9 * LM__[2] + LM__[0] * XM__[1] + LM__[1] * XM__[2] + t14 + t15) * t1;
+    real_type t15  = uControl(t6, -1, 1);
+    real_type result__ = (ModelPars[iM_theta] * t1 + t6 * LM__[2] + LM__[0] * XM__[1] + LM__[1] * XM__[2] + t14 + t15) * t1;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

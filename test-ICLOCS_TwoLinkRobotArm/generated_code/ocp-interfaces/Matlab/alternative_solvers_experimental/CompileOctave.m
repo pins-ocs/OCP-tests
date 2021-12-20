@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_TwoLinkRobotArm_Data.rb                                 %
 %                                                                       %
-%  version: 1.0   date 14/12/2021                                       %
+%  version: 1.0   date 20/12/2021                                       %
 %                                                                       %
 %  Copyright (C) 2021                                                   %
 %                                                                       %

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BikeSteering_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 13/12/2021                                       #
+#  version: 1.0   date 20/12/2021                                       #
 #                                                                       #
 #  Copyright (C) 2021                                                   #
 #                                                                       #
@@ -20,9 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-g    = 9.81
-m    = 250
 mu   = 1
+m    = 250
+g    = 9.81
 Fmax = m*g*mu
 
 mechatronix do |data|
@@ -346,20 +346,20 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 0.1,
         :n      => 10,
-      },
-      {
-        :length => 0.4,
-        :n      => 40,
-      },
-      {
-        :length => 0.4,
-        :n      => 40,
-      },
-      {
         :length => 0.1,
+      },
+      {
+        :n      => 40,
+        :length => 0.4,
+      },
+      {
+        :n      => 40,
+        :length => 0.4,
+      },
+      {
         :n      => 10,
+        :length => 0.1,
       },
     ],
   };
