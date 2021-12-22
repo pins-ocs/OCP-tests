@@ -95,47 +95,51 @@ classdef OCP_tyre_Dynamic_1D_Direct < OCP_NLP
       setup@OCP_NLP( self, nodes ) ;
     end 
     
-    function [x_lb,x_ub,u_lb,u_ub] = bounds(self, varargin)
-      % bounds()
-      % define bounds for all states and controls
-      
-      oneN      = ones(1,self.N);
-      oneN_1    = ones(1,(self.N-1));
+    function [x_lb,x_ub,u_lb,u_ub] = bounds(self, varargin) 
+	    % bounds()
+	    % define bounds for all states and controls
+    
+	    oneN      = ones(1,self.N);
+	    oneN_1    = ones(1,(self.N-1));
+	    v__ub      = oneN * double( self.pins_data.Parameters.v__ub ) ;
+	    v__lb      = oneN * double( self.pins_data.Parameters.v__lb ) ;
+	    omega__ub  = oneN * double( self.pins_data.Parameters.omega__ub );
+	    omega__lb  = oneN * double( self.pins_data.Parameters.omega__lb );
+	    lambda__ub = oneN * double( self.pins_data.Parameters.lambda__ub );
+	    lambda__lb = oneN * double( self.pins_data.Parameters.lambda__lb );
+	    p__ub      = oneN * double( self.pins_data.Parameters.p__ub );
+	    p__lb      = oneN * double( self.pins_data.Parameters.p__lb );
+	    b__ub      = oneN * double( self.pins_data.Parameters.b__ub );
+	    b__lb      = oneN * double( self.pins_data.Parameters.b__lb );
+	    p__o__ub   = oneN_1 * double( self.pins_data.Parameters.p__o__ub );
+	    p__o__lb   = oneN_1 * double( self.pins_data.Parameters.p__o__lb );
+	    b__o__ub   = oneN_1 * double( self.pins_data.Parameters.b__o__ub );
+	    b__o__lb   = oneN_1 * double( self.pins_data.Parameters.b__o__lb );
+    
+	    x_ub = reshape([ v__ub; omega__ub; lambda__ub; p__ub; b__ub;  ], 1, self.N*self.nx );
+	    x_lb = reshape([ v__lb; omega__lb; lambda__lb; p__lb; b__lb;  ], 1, self.N*self.nx );
+	    u_ub = reshape([ p__o__ub; b__o__ub;  ], 1, (self.N-1)*self.nu );
+	    u_lb = reshape([ p__o__lb; b__o__lb;  ], 1, (self.N-1)*self.nu );
+    end 
 
-      x_ub     = +inf * oneN;
-      x_lb     =    0 * oneN; %%% -inf * oneN;
-      v_ub     = +inf * oneN;
-      v_lb     =    0 * oneN; %%% -inf * oneN;
-
-
-      F_lb     = -1 * oneN_1;
-      F_ub     = +1 * oneN_1;
-
-      x_lb = reshape([x_lb; v_lb], 1, self.N*self.nx );
-      x_ub = reshape([x_ub; v_ub], 1, self.N*self.nx );
-
-      u_lb = F_lb;
-      u_ub = F_ub;
-    end
-
-    function x0 = standard_Guess(self)
-      % Define the guess
-      zeta = self.nodes / self.nodes(end);
-
-      x_g = zeta*0;
-
-      v_g = zeta.*(1-zeta);
-
-      oneN      = ones(1,self.N);
-      oneN_1    = ones(1,(self.N-1));
-      
-
-      F_g      = 0 * oneN_1;
-
-      XGUESS = reshape([x_g; v_g], 1, self.N*self.nx );
-      UGUESS = reshape([F_g], 1,(self.N-1)*self.nu); 
-      x0 = [  XGUESS , UGUESS ] ;
-    end
+    function x0 = standard_Guess(self) 
+	    % bounds()
+	    % Define guess for all states and controls
+    
+	    oneN      = ones(1,self.N);
+	    oneN_1    = ones(1,(self.N-1));
+	    v__g       = oneN * double( self.pins_data.Parameters.v__ss );
+	    omega__g   = oneN * double( self.pins_data.Parameters.omega__ss );
+	    lambda__g  = oneN * double( self.pins_data.Parameters.lambda__ss );
+	    p__g       = oneN * double( self.pins_data.Parameters.p__ss );
+	    b__g       = oneN * double( self.pins_data.Parameters.b__ss );
+	    p__o__g    = oneN_1 * 0 ;
+	    b__o__g    = oneN_1 * 0 ;
+    
+	    x_g = reshape([ v__g; omega__g; lambda__g; p__g; b__g;  ], 1, self.N*self.nx );
+	    u_g = reshape([ p__o__g; b__o__g;  ], 1, (self.N-1)*self.nu );
+	    x0 = [ x_g , u_g ] ;
+    end 
 
     function [c_lb,c_ub] = Constraint_bounds(self, varargin)
       % Constraint_bounds()
