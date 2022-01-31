@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 31/1/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -135,7 +135,7 @@ namespace UnderwaterDefine {
     real_type t56  = u1Control(t51, -1, 1);
     real_type t57  = u2Control(t54, -1, 1);
     real_type t58  = u3Control(t44, -1, 1);
-    real_type result__ = 1.0 / t5 / t3 / t2 * (t15 * (t10 * t9 + t7 * t6) * t5 * t4 - t22 * (t10 * t6 - t7 * t9) * t5 * t4 - t6 * t2 * (t9 * (-t3 + t2) * t3 * t25 - t5 * t32 * t2 * t30) - t41 * t5 * t30 * t9 * t38 + t4 * t44 * t25 + t5 * (t30 * t3 * t2 * LM__[2] + t38 * t51 * t3 + (t32 * t54 + (t56 + t57 + t58) * t3) * t2)) * P__[iP_T];
+    real_type result__ = 1.0 / t5 / t3 / t2 * (t15 * (t10 * t9 + t7 * t6) * t5 * t4 - t22 * (t10 * t6 - t7 * t9) * t5 * t4 - t6 * t2 * (t9 * (t2 - t3) * t3 * t25 - t5 * t32 * t2 * t30) - t41 * t5 * t30 * t9 * t38 + t4 * t44 * t25 + t5 * (t30 * t3 * t2 * LM__[2] + t38 * t51 * t3 + t2 * (t32 * t54 + (t56 + t57 + t58) * t3))) * P__[iP_T];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -690,12 +690,12 @@ namespace UnderwaterDefine {
     real_type t9   = X__[iX_vz];
     real_type t10  = X__[iX_Omega];
     real_type t12  = ModelPars[iM_m3];
-    result__[ 0   ] = t3 * t1 - 2 * t7 * t1 * (V__[3] - (-t7 * t12 * t10 * t9 + t7 * t2) * t1);
+    result__[ 0   ] = t3 * t1 - 2 * t7 * t1 * (V__[3] - (-t10 * t12 * t7 * t9 + t2 * t7) * t1);
     real_type t21  = U__[iU_u2];
     real_type t22  = ALIAS_u2Control_D_1(t21, -1, 1);
     real_type t25  = 1.0 / t12;
     real_type t27  = X__[iX_vx];
-    result__[ 1   ] = t22 * t1 - 2 * t25 * t1 * (V__[4] - (t25 * t6 * t10 * t27 + t25 * t21) * t1);
+    result__[ 1   ] = t22 * t1 - 2 * t25 * t1 * (V__[4] - (t10 * t25 * t27 * t6 + t21 * t25) * t1);
     real_type t37  = U__[iU_u3];
     real_type t38  = ALIAS_u3Control_D_1(t37, -1, 1);
     real_type t42  = 1.0 / ModelPars[iM_inertia];

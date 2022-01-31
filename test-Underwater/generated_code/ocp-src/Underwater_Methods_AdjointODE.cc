@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_AdjointODE.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 31/1/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -408,7 +408,7 @@ namespace UnderwaterDefine {
     real_type t25  = ModelPars[iM_m3];
     real_type t32  = 1.0 / t25;
     real_type t42  = 1.0 / ModelPars[iM_inertia];
-    result__[ 0   ] = (t4 * t2 + t7 * t6) * L__[iL_lambda1__xo] + (-t7 * t2 + t4 * t6) * L__[iL_lambda2__xo] + t17 * L__[iL_lambda3__xo] + (-t22 * t25 * t17 * t6 + t22 * U__[iU_u1]) * L__[iL_lambda4__xo] + (t32 * t21 * t17 * t2 + t32 * U__[iU_u2]) * L__[iL_lambda5__xo] + (t42 * U__[iU_u3] + t42 * (t25 - t21) * t6 * t2) * L__[iL_lambda6__xo];
+    result__[ 0   ] = (t4 * t2 + t7 * t6) * L__[iL_lambda1__xo] + (-t2 * t7 + t4 * t6) * L__[iL_lambda2__xo] + t17 * L__[iL_lambda3__xo] + (-t22 * t25 * t17 * t6 + t22 * U__[iU_u1]) * L__[iL_lambda4__xo] + (t32 * t21 * t17 * t2 + t32 * U__[iU_u2]) * L__[iL_lambda5__xo] + (t42 * U__[iU_u3] + t42 * (t25 - t21) * t6 * t2) * L__[iL_lambda6__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }

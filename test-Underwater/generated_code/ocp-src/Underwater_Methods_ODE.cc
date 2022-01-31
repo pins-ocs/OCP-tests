@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 31/1/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -101,7 +101,7 @@ namespace UnderwaterDefine {
     real_type t6   = X__[iX_vz];
     real_type t7   = sin(t3);
     result__[ 0   ] = (t4 * t2 + t7 * t6) * t1;
-    result__[ 1   ] = (-t7 * t2 + t4 * t6) * t1;
+    result__[ 1   ] = (-t2 * t7 + t4 * t6) * t1;
     real_type t13  = X__[iX_Omega];
     result__[ 2   ] = t13 * t1;
     real_type t15  = ModelPars[iM_m1];
