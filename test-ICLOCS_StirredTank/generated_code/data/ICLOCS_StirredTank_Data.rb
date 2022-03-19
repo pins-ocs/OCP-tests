@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_StirredTank_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 20/12/2021                                       #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
-#  Copyright (C) 2021                                                   #
+#  Copyright (C) 2022                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -20,27 +20,29 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+w_time_max = 1
 tol_ctrl0  = 0.1
+tol_ctrl   = tol_ctrl0
+epsi_T     = 0.01
+tol_T      = 1
+x_epsi     = 0.01
+w_time     = w_time_max
+x_tol      = 0.01
 epsi_ctrl0 = 0.1
 epsi_ctrl  = epsi_ctrl0
-x_epsi     = 0.01
-tol_T      = 1
-tol_ctrl   = tol_ctrl0
-w_time_max = 1
-x_tol      = 0.01
-w_time     = w_time_max
-epsi_T     = 0.01
 
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = true
+  data.Debug = false
 
   # Enable doctor
   data.Doctor = false
 
   # Level of message
   data.InfoLevel = 4
+
+  data.Use_control_penalties_in_adjoint_equations = false
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -321,7 +323,7 @@ mechatronix do |data|
   # | (_| (_) | | | | |_| | | (_) | \__ \
   #  \___\___/|_| |_|\__|_|  \___/|_|___/
   # Controls
-  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:uControl] = {
@@ -338,34 +340,45 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
-  # Constraint1D
+  # ConstraintLT
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-  # PenaltyBarrier1DGreaterThan
+  # PenaltyBarrier1DLessThan
   data.Constraints[:tfbound] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_T,
     :tolerance => tol_T,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:x1bound] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:x1bound_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => x_epsi,
     :tolerance => x_tol,
-    :min       => 0,
-    :max       => 1,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:x2bound] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:x1bound_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => x_epsi,
     :tolerance => x_tol,
-    :min       => 0,
-    :max       => 1,
     :active    => true
   }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:x2bound_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => x_epsi,
+    :tolerance => x_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:x2bound_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => x_epsi,
+    :tolerance => x_tol,
+    :active    => true
+  }
+  # Constraint1D: none defined
   # Constraint2D: none defined
 
 
@@ -381,8 +394,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 400,
         :length => 1,
+        :n      => 400,
       },
     ],
   };

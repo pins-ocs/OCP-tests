@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_boundary_conditions.cc         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -65,9 +65,7 @@ namespace SingularLuus04_FreeTimeDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer
-  SingularLuus04_FreeTime::boundaryConditions_numEqns() const
-  { return 6; }
+  integer SingularLuus04_FreeTime::boundaryConditions_numEqns() const { return 6; }
 
   void
   SingularLuus04_FreeTime::boundaryConditions_eval(
@@ -95,24 +93,12 @@ namespace SingularLuus04_FreeTimeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DboundaryConditionsDxxp_numRows() const
-  { return 6; }
-
-  integer
-  SingularLuus04_FreeTime::DboundaryConditionsDxxp_numCols() const
-  { return 8; }
-
-  integer
-  SingularLuus04_FreeTime::DboundaryConditionsDxxp_nnz() const
-  { return 6; }
+  integer SingularLuus04_FreeTime::DboundaryConditionsDxxp_numRows() const { return 6; }
+  integer SingularLuus04_FreeTime::DboundaryConditionsDxxp_numCols() const { return 8; }
+  integer SingularLuus04_FreeTime::DboundaryConditionsDxxp_nnz()     const { return 6; }
 
   void
-  SingularLuus04_FreeTime::DboundaryConditionsDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularLuus04_FreeTime::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -120,6 +106,7 @@ namespace SingularLuus04_FreeTimeDefine {
     iIndex[4 ] = 4   ; jIndex[4 ] = 5   ;
     iIndex[5 ] = 5   ; jIndex[5 ] = 6   ;
   }
+
 
   void
   SingularLuus04_FreeTime::DboundaryConditionsDxxp_sparse(
@@ -148,14 +135,12 @@ namespace SingularLuus04_FreeTimeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularLuus04_FreeTime::adjointBC_numEqns() const
-  { return 8; }
+  integer SingularLuus04_FreeTime::adjointBC_numEqns() const { return 8; }
 
   void
   SingularLuus04_FreeTime::adjointBC_eval(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
@@ -163,50 +148,38 @@ namespace SingularLuus04_FreeTimeDefine {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
     real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
-    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
-    result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
-    result__[ 3   ] = LL__[iL_lambda4__xo];
-    result__[ 4   ] = OMEGA__[3] - LR__[iL_lambda1__xo];
-    result__[ 5   ] = OMEGA__[4] - LR__[iL_lambda2__xo];
-    result__[ 6   ] = OMEGA__[5] - LR__[iL_lambda3__xo];
-    result__[ 7   ] = -LR__[iL_lambda4__xo];
+    result__[ 0   ] = OMEGA__[0];
+    result__[ 1   ] = OMEGA__[1];
+    result__[ 2   ] = OMEGA__[2];
+    result__[ 3   ] = 0;
+    result__[ 4   ] = OMEGA__[3];
+    result__[ 5   ] = OMEGA__[4];
+    result__[ 6   ] = OMEGA__[5];
+    result__[ 7   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DadjointBCDxxp_numRows() const
-  { return 8; }
-
-  integer
-  SingularLuus04_FreeTime::DadjointBCDxxp_numCols() const
-  { return 8; }
-
-  integer
-  SingularLuus04_FreeTime::DadjointBCDxxp_nnz() const
-  { return 0; }
+  integer SingularLuus04_FreeTime::DadjointBCDxxp_numRows() const { return 8; }
+  integer SingularLuus04_FreeTime::DadjointBCDxxp_numCols() const { return 8; }
+  integer SingularLuus04_FreeTime::DadjointBCDxxp_nnz()     const { return 0; }
 
   void
-  SingularLuus04_FreeTime::DadjointBCDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularLuus04_FreeTime::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   void
   SingularLuus04_FreeTime::DadjointBCDxxp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]

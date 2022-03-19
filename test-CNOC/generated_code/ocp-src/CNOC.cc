@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC.cc                                                        |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -150,14 +150,23 @@ namespace CNOCDefine {
     nullptr
   };
 
-  char const *namesConstraint1D[numConstraint1D+1] = {
+  char const *namesConstraintLT[numConstraintLT+1] = {
     "timePositive",
     "vLimit",
-    "PathFollowingTolerance",
-    "as_limit",
-    "an_limit",
-    "ax_limit",
-    "ay_limit",
+    "PathFollowingTolerance_min",
+    "PathFollowingTolerance_max",
+    "as_limit_min",
+    "as_limit_max",
+    "an_limit_min",
+    "an_limit_max",
+    "ax_limit_min",
+    "ax_limit_max",
+    "ay_limit_min",
+    "ay_limit_max",
+    nullptr
+  };
+
+  char const *namesConstraint1D[numConstraint1D+1] = {
     nullptr
   };
 
@@ -194,22 +203,28 @@ namespace CNOCDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   CNOC::CNOC(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
   , jsControl("jsControl")
   , jnControl("jnControl")
-  // Constraints 1D
+  // Constraints LT
   , timePositive("timePositive")
   , vLimit("vLimit")
-  , PathFollowingTolerance("PathFollowingTolerance")
-  , as_limit("as_limit")
-  , an_limit("an_limit")
-  , ax_limit("ax_limit")
-  , ay_limit("ay_limit")
+  , PathFollowingTolerance_min("PathFollowingTolerance_min")
+  , PathFollowingTolerance_max("PathFollowingTolerance_max")
+  , as_limit_min("as_limit_min")
+  , as_limit_max("as_limit_max")
+  , an_limit_min("an_limit_min")
+  , an_limit_max("an_limit_max")
+  , ax_limit_min("ax_limit_min")
+  , ax_limit_max("ax_limit_max")
+  , ay_limit_min("ay_limit_min")
+  , ay_limit_max("ay_limit_max")
+  // Constraints 1D
   // Constraints 2D
   // User classes
   {
@@ -334,34 +349,64 @@ namespace CNOCDefine {
     vLimit.setup( gc("vLimit") );
 
     UTILS_ASSERT0(
-      gc.exists("PathFollowingTolerance"),
-      "in CNOC::setup_classes(gc) missing key: ``PathFollowingTolerance''\n"
+      gc.exists("PathFollowingTolerance_min"),
+      "in CNOC::setup_classes(gc) missing key: ``PathFollowingTolerance_min''\n"
     );
-    PathFollowingTolerance.setup( gc("PathFollowingTolerance") );
+    PathFollowingTolerance_min.setup( gc("PathFollowingTolerance_min") );
 
     UTILS_ASSERT0(
-      gc.exists("as_limit"),
-      "in CNOC::setup_classes(gc) missing key: ``as_limit''\n"
+      gc.exists("PathFollowingTolerance_max"),
+      "in CNOC::setup_classes(gc) missing key: ``PathFollowingTolerance_max''\n"
     );
-    as_limit.setup( gc("as_limit") );
+    PathFollowingTolerance_max.setup( gc("PathFollowingTolerance_max") );
 
     UTILS_ASSERT0(
-      gc.exists("an_limit"),
-      "in CNOC::setup_classes(gc) missing key: ``an_limit''\n"
+      gc.exists("as_limit_min"),
+      "in CNOC::setup_classes(gc) missing key: ``as_limit_min''\n"
     );
-    an_limit.setup( gc("an_limit") );
+    as_limit_min.setup( gc("as_limit_min") );
 
     UTILS_ASSERT0(
-      gc.exists("ax_limit"),
-      "in CNOC::setup_classes(gc) missing key: ``ax_limit''\n"
+      gc.exists("as_limit_max"),
+      "in CNOC::setup_classes(gc) missing key: ``as_limit_max''\n"
     );
-    ax_limit.setup( gc("ax_limit") );
+    as_limit_max.setup( gc("as_limit_max") );
 
     UTILS_ASSERT0(
-      gc.exists("ay_limit"),
-      "in CNOC::setup_classes(gc) missing key: ``ay_limit''\n"
+      gc.exists("an_limit_min"),
+      "in CNOC::setup_classes(gc) missing key: ``an_limit_min''\n"
     );
-    ay_limit.setup( gc("ay_limit") );
+    an_limit_min.setup( gc("an_limit_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("an_limit_max"),
+      "in CNOC::setup_classes(gc) missing key: ``an_limit_max''\n"
+    );
+    an_limit_max.setup( gc("an_limit_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("ax_limit_min"),
+      "in CNOC::setup_classes(gc) missing key: ``ax_limit_min''\n"
+    );
+    ax_limit_min.setup( gc("ax_limit_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("ax_limit_max"),
+      "in CNOC::setup_classes(gc) missing key: ``ax_limit_max''\n"
+    );
+    ax_limit_max.setup( gc("ax_limit_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("ay_limit_min"),
+      "in CNOC::setup_classes(gc) missing key: ``ay_limit_min''\n"
+    );
+    ay_limit_min.setup( gc("ay_limit_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("ay_limit_max"),
+      "in CNOC::setup_classes(gc) missing key: ``ay_limit_max''\n"
+    );
+    ay_limit_max.setup( gc("ay_limit_max") );
 
   }
 
@@ -458,15 +503,20 @@ namespace CNOCDefine {
     jnControl.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
-    m_console->message("\nConstraints 1D\n",msg_level);
+    m_console->message("\nConstraints LT\n",msg_level);
     mstr.str("");
-    timePositive          .info(mstr);
-    vLimit                .info(mstr);
-    PathFollowingTolerance.info(mstr);
-    as_limit              .info(mstr);
-    an_limit              .info(mstr);
-    ax_limit              .info(mstr);
-    ay_limit              .info(mstr);
+    timePositive.info(mstr);
+    vLimit.info(mstr);
+    PathFollowingTolerance_min.info(mstr);
+    PathFollowingTolerance_max.info(mstr);
+    as_limit_min.info(mstr);
+    as_limit_max.info(mstr);
+    an_limit_min.info(mstr);
+    an_limit_max.info(mstr);
+    ax_limit_min.info(mstr);
+    ax_limit_max.info(mstr);
+    ay_limit_min.info(mstr);
+    ay_limit_max.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);

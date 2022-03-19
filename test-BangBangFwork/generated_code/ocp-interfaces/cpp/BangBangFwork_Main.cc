@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -34,12 +34,12 @@ int
 main() {
 
   // model cen be large and do not fit in stack, use new
-  GenericContainer        gc_data, gc_solution;
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  GenericContainer     gc_data, gc_solution;
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
-    BangBangFwork * m_model = new BangBangFwork("BangBangFwork",&TP,&console);
+    BangBangFwork * m_model = new BangBangFwork("BangBangFwork",n_threads,&console);
 
     // user defined Object instances (external)
     MeshStd          mesh( "mesh" );

@@ -3,9 +3,9 @@
 #                                                                          #
 #  file: CNOC_ffi_structs.rb                                               #
 #                                                                          #
-#  version: 1.0   date 20/12/2021                                          #
+#  version: 1.0   date 19/3/2022                                           #
 #                                                                          #
-#  Copyright (C) 2021                                                      #
+#  Copyright (C) 2022                                                      #
 #                                                                          #
 #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                              #
@@ -127,38 +127,45 @@ module CNOC
 
   class CNOC_constraints_params < FFI::Struct
     layout(
+      # LT constraints
+      :timePositiveSubType, :index_t,
+      :timePositiveEpsilon, :data_t,
+      :timePositiveTolerance, :data_t,
+      :vLimitSubType, :index_t,
+      :vLimitEpsilon, :data_t,
+      :vLimitTolerance, :data_t,
+      :PathFollowingTolerance_minSubType, :index_t,
+      :PathFollowingTolerance_minEpsilon, :data_t,
+      :PathFollowingTolerance_minTolerance, :data_t,
+      :PathFollowingTolerance_maxSubType, :index_t,
+      :PathFollowingTolerance_maxEpsilon, :data_t,
+      :PathFollowingTolerance_maxTolerance, :data_t,
+      :as_limit_minSubType, :index_t,
+      :as_limit_minEpsilon, :data_t,
+      :as_limit_minTolerance, :data_t,
+      :as_limit_maxSubType, :index_t,
+      :as_limit_maxEpsilon, :data_t,
+      :as_limit_maxTolerance, :data_t,
+      :an_limit_minSubType, :index_t,
+      :an_limit_minEpsilon, :data_t,
+      :an_limit_minTolerance, :data_t,
+      :an_limit_maxSubType, :index_t,
+      :an_limit_maxEpsilon, :data_t,
+      :an_limit_maxTolerance, :data_t,
+      :ax_limit_minSubType, :index_t,
+      :ax_limit_minEpsilon, :data_t,
+      :ax_limit_minTolerance, :data_t,
+      :ax_limit_maxSubType, :index_t,
+      :ax_limit_maxEpsilon, :data_t,
+      :ax_limit_maxTolerance, :data_t,
+      :ay_limit_minSubType, :index_t,
+      :ay_limit_minEpsilon, :data_t,
+      :ay_limit_minTolerance, :data_t,
+      :ay_limit_maxSubType, :index_t,
+      :ay_limit_maxEpsilon, :data_t,
+      :ay_limit_maxTolerance, :data_t,
+
       # 1D constraints
-      :timePositiveSubType,             :index_t,
-      :timePositiveEpsilon,             :data_t,
-      :timePositiveTolerance,           :data_t,
-      :vLimitSubType,                   :index_t,
-      :vLimitEpsilon,                   :data_t,
-      :vLimitTolerance,                 :data_t,
-      :PathFollowingToleranceSubType,   :index_t,
-      :PathFollowingToleranceEpsilon,   :data_t,
-      :PathFollowingToleranceTolerance, :data_t,
-      :PathFollowingToleranceMinValue,  :data_t,
-      :PathFollowingToleranceMaxValue,  :data_t,
-      :as_limitSubType,                 :index_t,
-      :as_limitEpsilon,                 :data_t,
-      :as_limitTolerance,               :data_t,
-      :as_limitMinValue,                :data_t,
-      :as_limitMaxValue,                :data_t,
-      :an_limitSubType,                 :index_t,
-      :an_limitEpsilon,                 :data_t,
-      :an_limitTolerance,               :data_t,
-      :an_limitMinValue,                :data_t,
-      :an_limitMaxValue,                :data_t,
-      :ax_limitSubType,                 :index_t,
-      :ax_limitEpsilon,                 :data_t,
-      :ax_limitTolerance,               :data_t,
-      :ax_limitMinValue,                :data_t,
-      :ax_limitMaxValue,                :data_t,
-      :ay_limitSubType,                 :index_t,
-      :ay_limitEpsilon,                 :data_t,
-      :ay_limitTolerance,               :data_t,
-      :ay_limitMinValue,                :data_t,
-      :ay_limitMaxValue,                :data_t,
 
       # 2D constraints
 

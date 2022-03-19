@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -163,9 +163,7 @@ namespace PointMassCarModel_4Define {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer
-  PointMassCarModel_4::boundaryConditions_numEqns() const
-  { return 8; }
+  integer PointMassCarModel_4::boundaryConditions_numEqns() const { return 8; }
 
   void
   PointMassCarModel_4::boundaryConditions_eval(
@@ -196,24 +194,12 @@ namespace PointMassCarModel_4Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_4::DboundaryConditionsDxxp_numRows() const
-  { return 8; }
-
-  integer
-  PointMassCarModel_4::DboundaryConditionsDxxp_numCols() const
-  { return 14; }
-
-  integer
-  PointMassCarModel_4::DboundaryConditionsDxxp_nnz() const
-  { return 13; }
+  integer PointMassCarModel_4::DboundaryConditionsDxxp_numRows() const { return 8; }
+  integer PointMassCarModel_4::DboundaryConditionsDxxp_numCols() const { return 14; }
+  integer PointMassCarModel_4::DboundaryConditionsDxxp_nnz()     const { return 13; }
 
   void
-  PointMassCarModel_4::DboundaryConditionsDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  PointMassCarModel_4::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 7   ;
@@ -228,6 +214,7 @@ namespace PointMassCarModel_4Define {
     iIndex[11] = 7   ; jIndex[11] = 4   ;
     iIndex[12] = 7   ; jIndex[12] = 11  ;
   }
+
 
   void
   PointMassCarModel_4::DboundaryConditionsDxxp_sparse(
@@ -263,14 +250,12 @@ namespace PointMassCarModel_4Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  PointMassCarModel_4::adjointBC_numEqns() const
-  { return 14; }
+  integer PointMassCarModel_4::adjointBC_numEqns() const { return 14; }
 
   void
   PointMassCarModel_4::adjointBC_eval(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
@@ -278,61 +263,49 @@ namespace PointMassCarModel_4Define {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
     real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
     Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[1] + LL__[iL_lambda1__xo];
-    real_type t3   = OMEGA__[3];
-    result__[ 1   ] = -t3 + LL__[iL_lambda2__xo];
-    real_type t5   = OMEGA__[4];
-    result__[ 2   ] = -t5 + LL__[iL_lambda3__xo];
-    real_type t8   = OMEGA__[5];
-    result__[ 3   ] = OMEGA__[0] - t8 + LL__[iL_lambda4__xo];
-    real_type t10  = OMEGA__[7];
-    result__[ 4   ] = -t10 + LL__[iL_lambda5__xo];
-    real_type t12  = OMEGA__[6];
-    result__[ 5   ] = -t12 + LL__[iL_lambda6__xo];
-    result__[ 6   ] = LL__[iL_lambda7__xo];
-    result__[ 7   ] = OMEGA__[2] - LR__[iL_lambda1__xo];
-    result__[ 8   ] = t3 - LR__[iL_lambda2__xo];
-    result__[ 9   ] = t5 - LR__[iL_lambda3__xo];
-    result__[ 10  ] = t8 - LR__[iL_lambda4__xo];
-    result__[ 11  ] = t10 - LR__[iL_lambda5__xo];
-    result__[ 12  ] = t12 - LR__[iL_lambda6__xo];
-    result__[ 13  ] = -LR__[iL_lambda7__xo];
+    result__[ 0   ] = OMEGA__[1];
+    real_type t1   = OMEGA__[3];
+    result__[ 1   ] = -t1;
+    real_type t2   = OMEGA__[4];
+    result__[ 2   ] = -t2;
+    real_type t4   = OMEGA__[5];
+    result__[ 3   ] = OMEGA__[0] - t4;
+    real_type t5   = OMEGA__[7];
+    result__[ 4   ] = -t5;
+    real_type t6   = OMEGA__[6];
+    result__[ 5   ] = -t6;
+    result__[ 6   ] = 0;
+    result__[ 7   ] = OMEGA__[2];
+    result__[ 8   ] = t1;
+    result__[ 9   ] = t2;
+    result__[ 10  ] = t4;
+    result__[ 11  ] = t5;
+    result__[ 12  ] = t6;
+    result__[ 13  ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 14, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_4::DadjointBCDxxp_numRows() const
-  { return 14; }
-
-  integer
-  PointMassCarModel_4::DadjointBCDxxp_numCols() const
-  { return 14; }
-
-  integer
-  PointMassCarModel_4::DadjointBCDxxp_nnz() const
-  { return 0; }
+  integer PointMassCarModel_4::DadjointBCDxxp_numRows() const { return 14; }
+  integer PointMassCarModel_4::DadjointBCDxxp_numCols() const { return 14; }
+  integer PointMassCarModel_4::DadjointBCDxxp_nnz()     const { return 0; }
 
   void
-  PointMassCarModel_4::DadjointBCDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  PointMassCarModel_4::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   void
   PointMassCarModel_4::DadjointBCDxxp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]

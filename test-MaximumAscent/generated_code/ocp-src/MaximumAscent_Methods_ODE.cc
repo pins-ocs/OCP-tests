@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,9 +50,7 @@ namespace MaximumAscentDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  MaximumAscent::rhs_ode_numEqns() const
-  { return 4; }
+  integer MaximumAscent::rhs_ode_numEqns() const { return 4; }
 
   void
   MaximumAscent::rhs_ode_eval(
@@ -86,38 +84,29 @@ namespace MaximumAscentDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::Drhs_odeDx_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::Drhs_odeDx_numCols() const
-  { return 4; }
-
-  integer
-  MaximumAscent::Drhs_odeDx_nnz() const
-  { return 8; }
+  integer MaximumAscent::Drhs_odeDxup_numRows() const { return 4; }
+  integer MaximumAscent::Drhs_odeDxup_numCols() const { return 5; }
+  integer MaximumAscent::Drhs_odeDxup_nnz()     const { return 10; }
 
   void
-  MaximumAscent::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  MaximumAscent::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 1   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 2   ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 0   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 4   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 0   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 1   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 4   ;
+    iIndex[8 ] = 3   ; jIndex[8 ] = 0   ;
+    iIndex[9 ] = 3   ; jIndex[9 ] = 2   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  MaximumAscent::Drhs_odeDx_sparse(
+  MaximumAscent::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -139,95 +128,21 @@ namespace MaximumAscentDefine {
     real_type t14  = 1.0 / t5;
     real_type t15  = t14 * t13;
     result__[ 2   ] = 2 * t15;
-    real_type t17  = X__[iX_u] * result__[0];
-    result__[ 3   ] = t7 * t3 * t17;
-    result__[ 4   ] = -t15;
-    result__[ 5   ] = -t14 * t17;
-    result__[ 6   ] = -t7 * t13;
-    result__[ 7   ] = t14 * result__[0];
+    real_type t16  = Tbar(t2);
+    real_type t24  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0]) * t16;
+    real_type t25  = U__[iU_alpha];
+    real_type t26  = cos(t25);
+    result__[ 3   ] = t26 * t24;
+    real_type t28  = X__[iX_u] * result__[0];
+    result__[ 4   ] = t7 * t3 * t28;
+    result__[ 5   ] = -t15;
+    result__[ 6   ] = -t14 * t28;
+    real_type t31  = sin(t25);
+    result__[ 7   ] = -t31 * t24;
+    result__[ 8   ] = -t7 * t13;
+    result__[ 9   ] = t14 * result__[0];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 8, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::Drhs_odeDp_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  MaximumAscent::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  MaximumAscent::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MaximumAscent::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::Drhs_odeDu_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::Drhs_odeDu_numCols() const
-  { return 1; }
-
-  integer
-  MaximumAscent::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  MaximumAscent::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 2   ; jIndex[1 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MaximumAscent::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = tf(ModelPars[iM_days]);
-    real_type t3   = Tbar(t2);
-    real_type t11  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0]) * t3;
-    real_type t12  = U__[iU_alpha];
-    real_type t13  = cos(t12);
-    result__[ 0   ] = t13 * t11;
-    real_type t14  = sin(t12);
-    result__[ 1   ] = -t14 * t11;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 10, i_segment );
   }
 
   /*\
@@ -237,28 +152,19 @@ namespace MaximumAscentDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  MaximumAscent::A_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::A_numCols() const
-  { return 4; }
-
-  integer
-  MaximumAscent::A_nnz() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::A_numRows() const { return 4; }
+  integer MaximumAscent::A_numCols() const { return 4; }
+  integer MaximumAscent::A_nnz()     const { return 4; }
 
   void
-  MaximumAscent::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  MaximumAscent::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    EconomicGrowthModel model("EconomicGrowthModel",&TP,&console);
+    EconomicGrowthModel model("EconomicGrowthModel",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,14 +50,14 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type x1_i = 1;
+    real_type u_tol0 = 0.1;
+    real_type u_tol = u_tol0;
     real_type u_epsi0 = 0.1;
     real_type u_epsi = u_epsi0;
     real_type x2_i = 2;
+    real_type x1_i = 1;
     real_type l1_i = -1/x1_i/x2_i;
     real_type t0 = -ln(x1_i/x2_i)/x2_i;
-    real_type u_tol0 = 0.1;
-    real_type u_tol = u_tol0;
     real_type l2_i = l1_i*(x1_i*t0+exp(-t0*x2_i));
     integer InfoLevel = 4;
 
@@ -164,7 +164,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
@@ -174,16 +174,17 @@ main() {
 
 
 
-    // Constraint1D
+    // ConstraintLT
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_Tpositive = data_Constraints["Tpositive"];
     data_Tpositive["subType"]   = "PENALTY_REGULAR";
     data_Tpositive["epsilon"]   = 0.001;
     data_Tpositive["tolerance"] = 0.001;
     data_Tpositive["active"]    = true;
+    // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization

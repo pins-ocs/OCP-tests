@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -92,22 +92,22 @@ namespace ICLOCS_SingularArcDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    real_type t2   = tfbound(t1);
+    real_type t2   = tfbound(-t1);
     real_type t5   = UM__[0];
     real_type t9   = XM__[0];
     real_type t10  = cos(t9);
     real_type t14  = sin(t9);
     real_type t16  = uControl(t5, -2, 2);
-    real_type result__ = t1 * t10 * LM__[1] + t1 * t14 * LM__[2] + t1 * t5 * LM__[0] + t16 + t2;
+    real_type result__ = t10 * t1 * LM__[1] + t14 * t1 * LM__[2] + t5 * t1 * LM__[0] + t16 + t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  ICLOCS_SingularArc::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_SingularArc::g_numEqns() const { return 1; }
 
   void
   ICLOCS_SingularArc::g_eval(
@@ -144,28 +144,17 @@ namespace ICLOCS_SingularArcDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_SingularArc::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_SingularArc::DgDxlxlp_numCols() const
-  { return 13; }
-
-  integer
-  ICLOCS_SingularArc::DgDxlxlp_nnz() const
-  { return 3; }
+  integer ICLOCS_SingularArc::DgDxlxlp_numRows() const { return 1; }
+  integer ICLOCS_SingularArc::DgDxlxlp_numCols() const { return 13; }
+  integer ICLOCS_SingularArc::DgDxlxlp_nnz()     const { return 3; }
 
   void
-  ICLOCS_SingularArc::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_SingularArc::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 9   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 12  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -205,26 +194,15 @@ namespace ICLOCS_SingularArcDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_SingularArc::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_SingularArc::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_SingularArc::DgDu_nnz() const
-  { return 1; }
+  integer ICLOCS_SingularArc::DgDu_numRows() const { return 1; }
+  integer ICLOCS_SingularArc::DgDu_numCols() const { return 1; }
+  integer ICLOCS_SingularArc::DgDu_nnz()     const { return 1; }
 
   void
-  ICLOCS_SingularArc::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_SingularArc::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -363,7 +341,7 @@ namespace ICLOCS_SingularArcDefine {
     real_type tmp_0_9 = tmp_0_3;
     real_type tmp_0_10 = 0.0e0;
     real_type tmp_0_11 = 0.0e0;
-    real_type tmp_0_12 = -t4 * t1;
+    real_type tmp_0_12 = -t1 * t4;
     DuDxlxlp(0, 0) = tmp_0_0;
     DuDxlxlp(0, 1) = tmp_0_1;
     DuDxlxlp(0, 2) = tmp_0_2;
@@ -399,16 +377,16 @@ namespace ICLOCS_SingularArcDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = tfbound(t1);
-    real_type t3   = U__[iU_u];
-    real_type t4   = uControl(t3, -2, 2);
-    real_type t8   = pow(-t3 * t1 + V__[0], 2);
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, -2, 2);
+    real_type t3   = P__[iP_T];
+    real_type t4   = tfbound(-t3);
+    real_type t8   = pow(-t1 * t3 + V__[0], 2);
     real_type t10  = X__[iX_x1];
     real_type t11  = cos(t10);
-    real_type t14  = pow(-t11 * t1 + V__[1], 2);
+    real_type t14  = pow(-t11 * t3 + V__[1], 2);
     real_type t16  = sin(t10);
-    real_type t19  = pow(-t16 * t1 + V__[2], 2);
+    real_type t19  = pow(-t16 * t3 + V__[2], 2);
     real_type result__ = t2 + t4 + t8 + t14 + t19;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
@@ -418,9 +396,7 @@ namespace ICLOCS_SingularArcDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_SingularArc::DmDu_numEqns() const
-  { return 1; }
+  integer ICLOCS_SingularArc::DmDu_numEqns() const { return 1; }
 
   void
   ICLOCS_SingularArc::DmDu_eval(
@@ -443,28 +419,15 @@ namespace ICLOCS_SingularArcDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_SingularArc::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_SingularArc::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_SingularArc::DmDuu_nnz() const
-  { return 1; }
+  integer ICLOCS_SingularArc::DmDuu_numRows() const { return 1; }
+  integer ICLOCS_SingularArc::DmDuu_numCols() const { return 1; }
+  integer ICLOCS_SingularArc::DmDuu_nnz()     const { return 1; }
 
   void
-  ICLOCS_SingularArc::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_SingularArc::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ICLOCS_SingularArc::DmDuu_sparse(

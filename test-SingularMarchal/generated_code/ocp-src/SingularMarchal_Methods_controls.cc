@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -87,19 +87,20 @@ namespace SingularMarchalDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
-    real_type t2   = uControl(t1, -1, 1);
-    real_type t5   = XM__[0] * XM__[0];
-    real_type result__ = t5 * (t2 + 1) / 2 + ModelPars[iM_epsilon] * t2 + t1 * LM__[1] + LM__[0] * XM__[1];
+    real_type t2   = XM__[0] * XM__[0];
+    real_type t3   = t2 / 2;
+    real_type t8   = UM__[0];
+    real_type t12  = uControl(t8, -1, 1);
+    real_type result__ = t3 + LM__[0] * XM__[1] + t8 * LM__[1] + t12 * (t3 + ModelPars[iM_epsilon]);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  SingularMarchal::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SingularMarchal::g_numEqns() const { return 1; }
 
   void
   SingularMarchal::g_eval(
@@ -127,37 +128,26 @@ namespace SingularMarchalDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    real_type t5   = XM__[0] * XM__[0];
-    result__[ 0   ] = LM__[1] + t5 * t3 / 2 + ModelPars[iM_epsilon] * t3;
+    real_type t3   = XM__[0] * XM__[0];
+    real_type t8   = ALIAS_uControl_D_1(UM__[0], -1, 1);
+    result__[ 0   ] = LM__[1] + t8 * (t3 / 2 + ModelPars[iM_epsilon]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularMarchal::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  SingularMarchal::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  SingularMarchal::DgDxlxlp_nnz() const
-  { return 4; }
+  integer SingularMarchal::DgDxlxlp_numRows() const { return 1; }
+  integer SingularMarchal::DgDxlxlp_numCols() const { return 8; }
+  integer SingularMarchal::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  SingularMarchal::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularMarchal::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -187,8 +177,8 @@ namespace SingularMarchalDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = 0.5e0 * XM__[0] * t2;
+    real_type t3   = ALIAS_uControl_D_1(UM__[0], -1, 1);
+    result__[ 0   ] = 0.5e0 * t3 * XM__[0];
     result__[ 1   ] = 0.5e0;
     result__[ 2   ] = result__[0];
     result__[ 3   ] = 0.5e0;
@@ -197,26 +187,15 @@ namespace SingularMarchalDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularMarchal::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  SingularMarchal::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  SingularMarchal::DgDu_nnz() const
-  { return 1; }
+  integer SingularMarchal::DgDu_numRows() const { return 1; }
+  integer SingularMarchal::DgDu_numCols() const { return 1; }
+  integer SingularMarchal::DgDu_nnz()     const { return 1; }
 
   void
-  SingularMarchal::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularMarchal::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -246,9 +225,9 @@ namespace SingularMarchalDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
-    real_type t4   = XM__[0] * XM__[0];
-    result__[ 0   ] = t4 * t2 / 2 + ModelPars[iM_epsilon] * t2;
+    real_type t2   = XM__[0] * XM__[0];
+    real_type t7   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
+    result__[ 0   ] = t7 * (t2 / 2 + ModelPars[iM_epsilon]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -396,9 +375,7 @@ namespace SingularMarchalDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularMarchal::DmDu_numEqns() const
-  { return 1; }
+  integer SingularMarchal::DmDu_numEqns() const { return 1; }
 
   void
   SingularMarchal::DmDu_eval(
@@ -421,28 +398,15 @@ namespace SingularMarchalDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularMarchal::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  SingularMarchal::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  SingularMarchal::DmDuu_nnz() const
-  { return 1; }
+  integer SingularMarchal::DmDuu_numRows() const { return 1; }
+  integer SingularMarchal::DmDuu_numCols() const { return 1; }
+  integer SingularMarchal::DmDuu_nnz()     const { return 1; }
 
   void
-  SingularMarchal::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularMarchal::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   SingularMarchal::DmDuu_sparse(

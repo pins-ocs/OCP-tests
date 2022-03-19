@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained.cc                                      |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -95,8 +95,12 @@ namespace ICLOCS_PathConstrainedDefine {
     nullptr
   };
 
-  char const *namesConstraint1D[numConstraint1D+1] = {
+  char const *namesConstraintLT[numConstraintLT+1] = {
     "x2bound",
+    nullptr
+  };
+
+  char const *namesConstraint1D[numConstraint1D+1] = {
     nullptr
   };
 
@@ -122,15 +126,16 @@ namespace ICLOCS_PathConstrainedDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   ICLOCS_PathConstrained::ICLOCS_PathConstrained(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
   , uControl("uControl")
-  // Constraints 1D
+  // Constraints LT
   , x2bound("x2bound")
+  // Constraints 1D
   // Constraints 2D
   // User classes
   {
@@ -359,7 +364,7 @@ namespace ICLOCS_PathConstrainedDefine {
     uControl.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
-    m_console->message("\nConstraints 1D\n",msg_level);
+    m_console->message("\nConstraints LT\n",msg_level);
     mstr.str("");
     x2bound.info(mstr);
     m_console->message(mstr.str(),msg_level);

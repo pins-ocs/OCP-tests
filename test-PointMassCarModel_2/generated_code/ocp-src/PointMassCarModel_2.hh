@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2.hh                                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,6 +76,7 @@ namespace PointMassCarModel_2Define {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -113,12 +114,14 @@ namespace PointMassCarModel_2Define {
     Mechatronix::PenaltyBarrierU v__fxControl;
     Mechatronix::PenaltyBarrierU v__OmegaControl;
 
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DLessThan AdherenceEllipse;
+    Mechatronix::PenaltyBarrier1DLessThan RoadLeftBorder;
+    Mechatronix::PenaltyBarrier1DLessThan RoadRightBorder;
+    Mechatronix::PenaltyBarrier1DLessThan PowerLimit;
+    Mechatronix::PenaltyBarrier1DLessThan LimitMinSpeed;
+
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrier1DGreaterThan AdherenceEllipse;
-    Mechatronix::PenaltyBarrier1DGreaterThan RoadLeftBorder;
-    Mechatronix::PenaltyBarrier1DGreaterThan RoadRightBorder;
-    Mechatronix::PenaltyBarrier1DGreaterThan PowerLimit;
-    Mechatronix::PenaltyBarrier1DGreaterThan LimitMinSpeed;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -184,9 +187,9 @@ namespace PointMassCarModel_2Define {
     POINTMASSCARMODEL_2_API_DLL
     explicit
     PointMassCarModel_2(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~PointMassCarModel_2() override;

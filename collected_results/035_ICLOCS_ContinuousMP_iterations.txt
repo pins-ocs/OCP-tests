@@ -84,545 +84,845 @@ Boundary Conditions activation status
 
 
 
-Constraints 1D
-u1Limitation = {
-  Type      = INTERVAL
+Constraints LT
+u1Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u2Limitation = {
-  Type      = INTERVAL
+u1Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u3Limitation = {
-  Type      = INTERVAL
+u2Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u4Limitation = {
-  Type      = INTERVAL
+u2Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u5Limitation = {
-  Type      = INTERVAL
+u3Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u6Limitation = {
-  Type      = INTERVAL
+u3Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u7Limitation = {
-  Type      = INTERVAL
+u4Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u8Limitation = {
-  Type      = INTERVAL
+u4Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u9Limitation = {
-  Type      = INTERVAL
+u5Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u10Limitation = {
-  Type      = INTERVAL
+u5Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u11Limitation = {
-  Type      = INTERVAL
+u6Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u12Limitation = {
-  Type      = INTERVAL
+u6Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u13Limitation = {
-  Type      = INTERVAL
+u7Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u14Limitation = {
-  Type      = INTERVAL
+u7Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u15Limitation = {
-  Type      = INTERVAL
+u8Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u16Limitation = {
-  Type      = INTERVAL
+u8Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u17Limitation = {
-  Type      = INTERVAL
+u9Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u18Limitation = {
-  Type      = INTERVAL
+u9Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u19Limitation = {
-  Type      = INTERVAL
+u10Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-u20Limitation = {
-  Type      = INTERVAL
+u10Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.01
   Tolerance = 0.01
   Epsilon   = 0.01
-  MinValue  = -10
-  MaxValue  = 10
   Active    = YES
 }
-xx1Limitation = {
-  Type      = INTERVAL
+u11Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u11Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u12Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u12Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u13Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u13Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u14Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u14Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u15Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u15Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u16Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u16Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u17Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u17Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u18Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u18Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u19Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u19Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u20Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+u20Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}
+xx1Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy1Limitation = {
-  Type      = INTERVAL
+xx1Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx2Limitation = {
-  Type      = INTERVAL
+yy1Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy2Limitation = {
-  Type      = INTERVAL
+yy1Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx3Limitation = {
-  Type      = INTERVAL
+xx2Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy3Limitation = {
-  Type      = INTERVAL
+xx2Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx4Limitation = {
-  Type      = INTERVAL
+yy2Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy4Limitation = {
-  Type      = INTERVAL
+yy2Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx5Limitation = {
-  Type      = INTERVAL
+xx3Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy5Limitation = {
-  Type      = INTERVAL
+xx3Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx6Limitation = {
-  Type      = INTERVAL
+yy3Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy6Limitation = {
-  Type      = INTERVAL
+yy3Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx7Limitation = {
-  Type      = INTERVAL
+xx4Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy7Limitation = {
-  Type      = INTERVAL
+xx4Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx8Limitation = {
-  Type      = INTERVAL
+yy4Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy8Limitation = {
-  Type      = INTERVAL
+yy4Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx9Limitation = {
-  Type      = INTERVAL
+xx5Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy9Limitation = {
-  Type      = INTERVAL
+xx5Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx10Limitation = {
-  Type      = INTERVAL
+yy5Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy10Limitation = {
-  Type      = INTERVAL
+yy5Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx11Limitation = {
-  Type      = INTERVAL
+xx6Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy11Limitation = {
-  Type      = INTERVAL
+xx6Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx12Limitation = {
-  Type      = INTERVAL
+yy6Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy12Limitation = {
-  Type      = INTERVAL
+yy6Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx13Limitation = {
-  Type      = INTERVAL
+xx7Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy13Limitation = {
-  Type      = INTERVAL
+xx7Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx14Limitation = {
-  Type      = INTERVAL
+yy7Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy14Limitation = {
-  Type      = INTERVAL
+yy7Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx15Limitation = {
-  Type      = INTERVAL
+xx8Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy15Limitation = {
-  Type      = INTERVAL
+xx8Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx16Limitation = {
-  Type      = INTERVAL
+yy8Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy16Limitation = {
-  Type      = INTERVAL
+yy8Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx17Limitation = {
-  Type      = INTERVAL
+xx9Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy17Limitation = {
-  Type      = INTERVAL
+xx9Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx18Limitation = {
-  Type      = INTERVAL
+yy9Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy18Limitation = {
-  Type      = INTERVAL
+yy9Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx19Limitation = {
-  Type      = INTERVAL
+xx10Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy19Limitation = {
-  Type      = INTERVAL
+xx10Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-xx20Limitation = {
-  Type      = INTERVAL
+yy10Limitation_min = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
   Active    = YES
 }
-yy20Limitation = {
-  Type      = INTERVAL
+yy10Limitation_max = {
+  Type      = LESS THAN
   SubType   = BarrierLog, h = 0.1
   Tolerance = 0.1
   Epsilon   = 0.1
-  MinValue  = -2
-  MaxValue  = 2
+  Active    = YES
+}
+xx11Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx11Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy11Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy11Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx12Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx12Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy12Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy12Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx13Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx13Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy13Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy13Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx14Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx14Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy14Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy14Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx15Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx15Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy15Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy15Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx16Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx16Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy16Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy16Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx17Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx17Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy17Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy17Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx18Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx18Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy18Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy18Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx19Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx19Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy19Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy19Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx20Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+xx20Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy20Limitation_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
+  Active    = YES
+}
+yy20Limitation_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.1
+  Tolerance = 0.1
+  Epsilon   = 0.1
   Active    = YES
 }
 
@@ -640,13 +940,14 @@ Model Parameters
 .................................xy_eps1 = 0.001
 .................................xy_tol0 = 0.1
 .................................xy_tol1 = 0.001
+................................xy_bound = 2
 INFO CLASS = ICLOCS_ContinuousMP
   #nodes      = 51
-  dim         = u = 0, q = 1, x = 80, p = 20, omega = 80, bc = 80, full_bc = 240
-  BC          = Inital = 122, Final = 80, Cyclic = 38
-  OMEGA       = Inital = 42, Final = 0, Cyclic = 38
-  total       = nZ = 8260, UC = 0, Q = 51
-  index start = omega = 8160, p = 8240
+  dim         = u=0, q=1, x=80, p=20, omega=80, bc=80, full_bc=240
+  BC          = Inital=122, Final=80, Cyclic=38
+  OMEGA       = Inital=42, Final=0, Cyclic=38
+  total       = nZ=8260, UC=0, Q=51
+  index start = omega=8160, p=8240
   FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
@@ -657,33 +958,58 @@ Used threads:         15
 
 
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
-[  1, 1] (  0.0957  , 0.00292  ) [   1.35   ,   0.92   ] 1          [0:0:0:0:0:0:0]
-[  2, 2] ( 0.00292  , 0.000282 ) [  0.789   ,  0.0783  ] 0.9        [1:0:0:0:0:0:0]
-[  3, 1] ( 0.000282 , 1.28e-07 ) [  0.0782  , 4.75e-06 ] 1          [0:0:0:0:0:0:0]
-[  4, 1] ( 1.28e-07 , 1.2e-15  ) [ 4.75e-06 , 9.25e-14 ] 1          [0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 1] (  0.0957  , 0.00298  ) [   1.36   ,  0.923   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 2] ( 0.00298  , 0.000303 ) [  0.794   ,  0.0772  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  3, 2] ( 0.000303 , 3.18e-05 ) [  0.0771  , 0.00757  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 2] ( 3.18e-05 , 3.31e-06 ) [ 0.00757  , 0.000746 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 2] ( 3.31e-06 , 3.42e-07 ) [ 0.000746 , 7.37e-05 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 2] ( 3.42e-07 , 3.51e-08 ) [ 7.37e-05 , 7.3e-06  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  7, 2] ( 3.51e-08 , 3.58e-09 ) [ 7.3e-06  , 7.24e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  8, 2] ( 3.58e-09 , 3.64e-10 ) [ 7.24e-07 , 7.19e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 2] ( 3.64e-10 , 3.69e-11 ) [ 7.19e-08 , 7.15e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 10, 2] ( 3.69e-11 , 3.72e-12 ) [ 7.15e-09 , 7.12e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 11, 2] ( 3.72e-12 , 3.76e-13 ) [ 7.12e-10 , 7.09e-11 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1
 
 Continuation step N.1 s=0.2, ds=0.2, old_s=    0
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
-[  5, 1] ( 1.25e-06 , 5.04e-13 ) [ 6.47e-05 , 3.2e-11  ] 1          [0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 12, 2] ( 1.25e-06 , 1.29e-07 ) [ 6.5e-05  , 6.22e-06 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 13, 2] ( 1.29e-07 , 1.32e-08 ) [ 6.22e-06 , 6.01e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 14, 2] ( 1.32e-08 , 1.34e-09 ) [ 6.01e-07 , 5.85e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 15, 2] ( 1.34e-09 , 1.36e-10 ) [ 5.85e-08 , 5.72e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 16, 2] ( 1.36e-10 , 1.38e-11 ) [ 5.72e-09 , 5.63e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 17, 1] ( 1.38e-11 , 2.03e-14 ) [ 5.63e-10 , 2.77e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
-[  6, 1] ( 1.41e-06 , 6.15e-13 ) [ 7.25e-05 , 3.89e-11 ] 1          [0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 18, 2] ( 1.41e-06 , 1.45e-07 ) [ 7.28e-05 , 6.97e-06 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 19, 2] ( 1.45e-07 , 1.48e-08 ) [ 6.97e-06 , 6.74e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 20, 2] ( 1.48e-08 , 1.51e-09 ) [ 6.74e-07 , 6.56e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 21, 2] ( 1.51e-09 , 1.53e-10 ) [ 6.56e-08 , 6.42e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 22, 2] ( 1.53e-10 , 1.55e-11 ) [ 6.42e-09 , 6.31e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 23, 1] ( 1.55e-11 , 2.27e-14 ) [ 6.31e-10 , 3.1e-12  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
-[  7, 1] ( 9.82e-07 , 3.02e-13 ) [ 5.05e-05 , 1.91e-11 ] 1          [0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 24, 2] ( 9.82e-07 , 1.01e-07 ) [ 5.07e-05 , 4.86e-06 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 25, 2] ( 1.01e-07 , 1.03e-08 ) [ 4.86e-06 , 4.69e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 26, 2] ( 1.03e-08 , 1.05e-09 ) [ 4.69e-07 , 4.57e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 27, 2] ( 1.05e-09 , 1.07e-10 ) [ 4.57e-08 , 4.47e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 28, 2] ( 1.07e-10 , 1.08e-11 ) [ 4.47e-09 , 4.39e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 29, 1] ( 1.08e-11 , 1.59e-14 ) [ 4.39e-10 , 2.17e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
-[  8, 1] ( 1.47e-08 , 9.36e-17 ) [ 7.58e-07 , 4.64e-15 ] 1          [0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 30, 2] ( 1.47e-08 , 1.51e-09 ) [ 7.61e-07 , 7.29e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 31, 2] ( 1.51e-09 , 1.54e-10 ) [ 7.29e-08 , 7.04e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 32, 2] ( 1.54e-10 , 1.57e-11 ) [ 7.04e-09 , 6.85e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 33, 2] ( 1.57e-11 , 1.6e-12  ) [ 6.85e-10 , 6.7e-11  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -700,22 +1026,22 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
 ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 0.963[sec]    timeout        = 0 [ms]
-iteration      = 8             tolerance      = 1e-09
+Elapsed Time   = 4.03[sec]     timeout        = 0 [ms]
+iteration      = 33            tolerance      = 1e-09
 max iterations = 300           N. Equations   = 8260
 max acc. iter. = 800           N. System pars = 0
-Converged      = YES           Memory Used    = 11Mb (+57Kb)
+Converged      = YES           Memory Used    = 11Mb (+61Kb)
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 14            Jacobian       = 8
-Factorization  = 8             Inversion      = 17
+Function       = 67            Jacobian       = 33
+Factorization  = 33            Inversion      = 95
 ........................... last residuals ...........................
-last ||f||_inf = 1.954e-14     last ||d||_inf = 2.8157e-13
-last ||f||_1   = 9.3617e-17    last ||d||_1   = 4.6357e-15
-last ||f||_2   = 7.2953e-16    last ||d||_2   = 2.2269e-14
+last ||f||_inf = 6.8081e-10    last ||d||_inf = 5.9146e-09
+last ||f||_1   = 1.5993e-12    last ||d||_1   = 6.6974e-11
+last ||f||_2   = 1.3712e-11    last ||d||_2   = 3.37e-10
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
@@ -725,35 +1051,35 @@ Check Jacobian Begin
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-At cell 0, H = 51.325000541285135, ||g||_inf = 0.7599148049455015
-At cell 1, H = 51.358223488872866, ||g||_inf = 0.7599148049455015
-At cell 2, H = 51.39095920561241, ||g||_inf = 0.7599148049455015
-At cell 3, H = 51.42320141883, ||g||_inf = 0.7599148049455015
-At cell 4, H = 51.45494377278402, ||g||_inf = 0.7599148049455015
-At cell 5, H = 51.486179836669514, ||g||_inf = 0.7599148049455015
+At cell 0, H = 51.325000539494134, ||g||_inf = 0.7599148049363557
+At cell 1, H = 51.35822348762602, ||g||_inf = 0.7599148049363557
+At cell 2, H = 51.39095920483851, ||g||_inf = 0.7599148049363557
+At cell 3, H = 51.42320141846919, ||g||_inf = 0.7599148049363557
+At cell 4, H = 51.45494377278549, ||g||_inf = 0.7599148049363557
+At cell 5, H = 51.48617983698993, ||g||_inf = 0.7599148049363557
 skipping...
 Check Controls End
 target [Lagrange,Mayer]       = [ 48.23, 0 ]
-[Penalties/Barriers,Controls] = [ 0.0004427, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
 Optimization parameters:
-u1: -2.69083316196644295
-u10: 0.0460080332976258999
-u11: 0.0654321875767639866
-u12: 0.0252278388579779654
-u13: -0.0378878741249791193
-u14: -0.0665773937708141889
-u15: -0.0351604848433265602
-u16: 0.0274936004692297765
-u17: 0.0649263580608995944
-u18: 0.0452468533682406013
-u19: -0.00916379617075888803
-u2: 1.57297732557997838
-u20: -0.0283994862580495416
-u3: -0.204859485239890698
-u4: 0.106878197240835263
-u5: 0.0498173947632239988
-u6: 0.00729766950738999082
-u7: -0.0529933650672837833
-u8: -0.0626586160536906217
-u9: -0.0154074346069726122
+u1: -2.69083316195780053
+u10: 0.0460080332978840059
+u11: 0.0654321875737357284
+u12: 0.0252278388539053655
+u13: -0.0378878741263272284
+u14: -0.0665773937673536237
+u15: -0.0351604848368704884
+u16: 0.0274936004736741069
+u17: 0.0649263580577564697
+u18: 0.0452468533587353436
+u19: -0.0091637961910613179
+u2: 1.57297732557084746
+u20: -0.0283994862607791776
+u3: -0.204859485255248636
+u4: 0.106878197257561494
+u5: 0.0498173947560220445
+u6: 0.00729766950718819911
+u7: -0.0529933650675162779
+u8: -0.0626586160509194079
+u9: -0.0154074346042441003
 All Done Folks!

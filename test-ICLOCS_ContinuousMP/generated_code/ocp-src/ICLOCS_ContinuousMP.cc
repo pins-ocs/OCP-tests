@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP.cc                                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -345,70 +345,135 @@ namespace ICLOCS_ContinuousMPDefine {
     "xy_eps1",
     "xy_tol0",
     "xy_tol1",
+    "xy_bound",
+    nullptr
+  };
+
+  char const *namesConstraintLT[numConstraintLT+1] = {
+    "u1Limitation_min",
+    "u1Limitation_max",
+    "u2Limitation_min",
+    "u2Limitation_max",
+    "u3Limitation_min",
+    "u3Limitation_max",
+    "u4Limitation_min",
+    "u4Limitation_max",
+    "u5Limitation_min",
+    "u5Limitation_max",
+    "u6Limitation_min",
+    "u6Limitation_max",
+    "u7Limitation_min",
+    "u7Limitation_max",
+    "u8Limitation_min",
+    "u8Limitation_max",
+    "u9Limitation_min",
+    "u9Limitation_max",
+    "u10Limitation_min",
+    "u10Limitation_max",
+    "u11Limitation_min",
+    "u11Limitation_max",
+    "u12Limitation_min",
+    "u12Limitation_max",
+    "u13Limitation_min",
+    "u13Limitation_max",
+    "u14Limitation_min",
+    "u14Limitation_max",
+    "u15Limitation_min",
+    "u15Limitation_max",
+    "u16Limitation_min",
+    "u16Limitation_max",
+    "u17Limitation_min",
+    "u17Limitation_max",
+    "u18Limitation_min",
+    "u18Limitation_max",
+    "u19Limitation_min",
+    "u19Limitation_max",
+    "u20Limitation_min",
+    "u20Limitation_max",
+    "xx1Limitation_min",
+    "xx1Limitation_max",
+    "yy1Limitation_min",
+    "yy1Limitation_max",
+    "xx2Limitation_min",
+    "xx2Limitation_max",
+    "yy2Limitation_min",
+    "yy2Limitation_max",
+    "xx3Limitation_min",
+    "xx3Limitation_max",
+    "yy3Limitation_min",
+    "yy3Limitation_max",
+    "xx4Limitation_min",
+    "xx4Limitation_max",
+    "yy4Limitation_min",
+    "yy4Limitation_max",
+    "xx5Limitation_min",
+    "xx5Limitation_max",
+    "yy5Limitation_min",
+    "yy5Limitation_max",
+    "xx6Limitation_min",
+    "xx6Limitation_max",
+    "yy6Limitation_min",
+    "yy6Limitation_max",
+    "xx7Limitation_min",
+    "xx7Limitation_max",
+    "yy7Limitation_min",
+    "yy7Limitation_max",
+    "xx8Limitation_min",
+    "xx8Limitation_max",
+    "yy8Limitation_min",
+    "yy8Limitation_max",
+    "xx9Limitation_min",
+    "xx9Limitation_max",
+    "yy9Limitation_min",
+    "yy9Limitation_max",
+    "xx10Limitation_min",
+    "xx10Limitation_max",
+    "yy10Limitation_min",
+    "yy10Limitation_max",
+    "xx11Limitation_min",
+    "xx11Limitation_max",
+    "yy11Limitation_min",
+    "yy11Limitation_max",
+    "xx12Limitation_min",
+    "xx12Limitation_max",
+    "yy12Limitation_min",
+    "yy12Limitation_max",
+    "xx13Limitation_min",
+    "xx13Limitation_max",
+    "yy13Limitation_min",
+    "yy13Limitation_max",
+    "xx14Limitation_min",
+    "xx14Limitation_max",
+    "yy14Limitation_min",
+    "yy14Limitation_max",
+    "xx15Limitation_min",
+    "xx15Limitation_max",
+    "yy15Limitation_min",
+    "yy15Limitation_max",
+    "xx16Limitation_min",
+    "xx16Limitation_max",
+    "yy16Limitation_min",
+    "yy16Limitation_max",
+    "xx17Limitation_min",
+    "xx17Limitation_max",
+    "yy17Limitation_min",
+    "yy17Limitation_max",
+    "xx18Limitation_min",
+    "xx18Limitation_max",
+    "yy18Limitation_min",
+    "yy18Limitation_max",
+    "xx19Limitation_min",
+    "xx19Limitation_max",
+    "yy19Limitation_min",
+    "yy19Limitation_max",
+    "xx20Limitation_min",
+    "xx20Limitation_max",
+    "yy20Limitation_min",
+    "yy20Limitation_max",
     nullptr
   };
 
   char const *namesConstraint1D[numConstraint1D+1] = {
-    "u1Limitation",
-    "u2Limitation",
-    "u3Limitation",
-    "u4Limitation",
-    "u5Limitation",
-    "u6Limitation",
-    "u7Limitation",
-    "u8Limitation",
-    "u9Limitation",
-    "u10Limitation",
-    "u11Limitation",
-    "u12Limitation",
-    "u13Limitation",
-    "u14Limitation",
-    "u15Limitation",
-    "u16Limitation",
-    "u17Limitation",
-    "u18Limitation",
-    "u19Limitation",
-    "u20Limitation",
-    "xx1Limitation",
-    "yy1Limitation",
-    "xx2Limitation",
-    "yy2Limitation",
-    "xx3Limitation",
-    "yy3Limitation",
-    "xx4Limitation",
-    "yy4Limitation",
-    "xx5Limitation",
-    "yy5Limitation",
-    "xx6Limitation",
-    "yy6Limitation",
-    "xx7Limitation",
-    "yy7Limitation",
-    "xx8Limitation",
-    "yy8Limitation",
-    "xx9Limitation",
-    "yy9Limitation",
-    "xx10Limitation",
-    "yy10Limitation",
-    "xx11Limitation",
-    "yy11Limitation",
-    "xx12Limitation",
-    "yy12Limitation",
-    "xx13Limitation",
-    "yy13Limitation",
-    "xx14Limitation",
-    "yy14Limitation",
-    "xx15Limitation",
-    "yy15Limitation",
-    "xx16Limitation",
-    "yy16Limitation",
-    "xx17Limitation",
-    "yy17Limitation",
-    "xx18Limitation",
-    "yy18Limitation",
-    "xx19Limitation",
-    "yy19Limitation",
-    "xx20Limitation",
-    "yy20Limitation",
     nullptr
   };
 
@@ -511,73 +576,134 @@ namespace ICLOCS_ContinuousMPDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   ICLOCS_ContinuousMP::ICLOCS_ContinuousMP(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
+  // Constraints LT
+  , u1Limitation_min("u1Limitation_min")
+  , u1Limitation_max("u1Limitation_max")
+  , u2Limitation_min("u2Limitation_min")
+  , u2Limitation_max("u2Limitation_max")
+  , u3Limitation_min("u3Limitation_min")
+  , u3Limitation_max("u3Limitation_max")
+  , u4Limitation_min("u4Limitation_min")
+  , u4Limitation_max("u4Limitation_max")
+  , u5Limitation_min("u5Limitation_min")
+  , u5Limitation_max("u5Limitation_max")
+  , u6Limitation_min("u6Limitation_min")
+  , u6Limitation_max("u6Limitation_max")
+  , u7Limitation_min("u7Limitation_min")
+  , u7Limitation_max("u7Limitation_max")
+  , u8Limitation_min("u8Limitation_min")
+  , u8Limitation_max("u8Limitation_max")
+  , u9Limitation_min("u9Limitation_min")
+  , u9Limitation_max("u9Limitation_max")
+  , u10Limitation_min("u10Limitation_min")
+  , u10Limitation_max("u10Limitation_max")
+  , u11Limitation_min("u11Limitation_min")
+  , u11Limitation_max("u11Limitation_max")
+  , u12Limitation_min("u12Limitation_min")
+  , u12Limitation_max("u12Limitation_max")
+  , u13Limitation_min("u13Limitation_min")
+  , u13Limitation_max("u13Limitation_max")
+  , u14Limitation_min("u14Limitation_min")
+  , u14Limitation_max("u14Limitation_max")
+  , u15Limitation_min("u15Limitation_min")
+  , u15Limitation_max("u15Limitation_max")
+  , u16Limitation_min("u16Limitation_min")
+  , u16Limitation_max("u16Limitation_max")
+  , u17Limitation_min("u17Limitation_min")
+  , u17Limitation_max("u17Limitation_max")
+  , u18Limitation_min("u18Limitation_min")
+  , u18Limitation_max("u18Limitation_max")
+  , u19Limitation_min("u19Limitation_min")
+  , u19Limitation_max("u19Limitation_max")
+  , u20Limitation_min("u20Limitation_min")
+  , u20Limitation_max("u20Limitation_max")
+  , xx1Limitation_min("xx1Limitation_min")
+  , xx1Limitation_max("xx1Limitation_max")
+  , yy1Limitation_min("yy1Limitation_min")
+  , yy1Limitation_max("yy1Limitation_max")
+  , xx2Limitation_min("xx2Limitation_min")
+  , xx2Limitation_max("xx2Limitation_max")
+  , yy2Limitation_min("yy2Limitation_min")
+  , yy2Limitation_max("yy2Limitation_max")
+  , xx3Limitation_min("xx3Limitation_min")
+  , xx3Limitation_max("xx3Limitation_max")
+  , yy3Limitation_min("yy3Limitation_min")
+  , yy3Limitation_max("yy3Limitation_max")
+  , xx4Limitation_min("xx4Limitation_min")
+  , xx4Limitation_max("xx4Limitation_max")
+  , yy4Limitation_min("yy4Limitation_min")
+  , yy4Limitation_max("yy4Limitation_max")
+  , xx5Limitation_min("xx5Limitation_min")
+  , xx5Limitation_max("xx5Limitation_max")
+  , yy5Limitation_min("yy5Limitation_min")
+  , yy5Limitation_max("yy5Limitation_max")
+  , xx6Limitation_min("xx6Limitation_min")
+  , xx6Limitation_max("xx6Limitation_max")
+  , yy6Limitation_min("yy6Limitation_min")
+  , yy6Limitation_max("yy6Limitation_max")
+  , xx7Limitation_min("xx7Limitation_min")
+  , xx7Limitation_max("xx7Limitation_max")
+  , yy7Limitation_min("yy7Limitation_min")
+  , yy7Limitation_max("yy7Limitation_max")
+  , xx8Limitation_min("xx8Limitation_min")
+  , xx8Limitation_max("xx8Limitation_max")
+  , yy8Limitation_min("yy8Limitation_min")
+  , yy8Limitation_max("yy8Limitation_max")
+  , xx9Limitation_min("xx9Limitation_min")
+  , xx9Limitation_max("xx9Limitation_max")
+  , yy9Limitation_min("yy9Limitation_min")
+  , yy9Limitation_max("yy9Limitation_max")
+  , xx10Limitation_min("xx10Limitation_min")
+  , xx10Limitation_max("xx10Limitation_max")
+  , yy10Limitation_min("yy10Limitation_min")
+  , yy10Limitation_max("yy10Limitation_max")
+  , xx11Limitation_min("xx11Limitation_min")
+  , xx11Limitation_max("xx11Limitation_max")
+  , yy11Limitation_min("yy11Limitation_min")
+  , yy11Limitation_max("yy11Limitation_max")
+  , xx12Limitation_min("xx12Limitation_min")
+  , xx12Limitation_max("xx12Limitation_max")
+  , yy12Limitation_min("yy12Limitation_min")
+  , yy12Limitation_max("yy12Limitation_max")
+  , xx13Limitation_min("xx13Limitation_min")
+  , xx13Limitation_max("xx13Limitation_max")
+  , yy13Limitation_min("yy13Limitation_min")
+  , yy13Limitation_max("yy13Limitation_max")
+  , xx14Limitation_min("xx14Limitation_min")
+  , xx14Limitation_max("xx14Limitation_max")
+  , yy14Limitation_min("yy14Limitation_min")
+  , yy14Limitation_max("yy14Limitation_max")
+  , xx15Limitation_min("xx15Limitation_min")
+  , xx15Limitation_max("xx15Limitation_max")
+  , yy15Limitation_min("yy15Limitation_min")
+  , yy15Limitation_max("yy15Limitation_max")
+  , xx16Limitation_min("xx16Limitation_min")
+  , xx16Limitation_max("xx16Limitation_max")
+  , yy16Limitation_min("yy16Limitation_min")
+  , yy16Limitation_max("yy16Limitation_max")
+  , xx17Limitation_min("xx17Limitation_min")
+  , xx17Limitation_max("xx17Limitation_max")
+  , yy17Limitation_min("yy17Limitation_min")
+  , yy17Limitation_max("yy17Limitation_max")
+  , xx18Limitation_min("xx18Limitation_min")
+  , xx18Limitation_max("xx18Limitation_max")
+  , yy18Limitation_min("yy18Limitation_min")
+  , yy18Limitation_max("yy18Limitation_max")
+  , xx19Limitation_min("xx19Limitation_min")
+  , xx19Limitation_max("xx19Limitation_max")
+  , yy19Limitation_min("yy19Limitation_min")
+  , yy19Limitation_max("yy19Limitation_max")
+  , xx20Limitation_min("xx20Limitation_min")
+  , xx20Limitation_max("xx20Limitation_max")
+  , yy20Limitation_min("yy20Limitation_min")
+  , yy20Limitation_max("yy20Limitation_max")
   // Constraints 1D
-  , u1Limitation("u1Limitation")
-  , u2Limitation("u2Limitation")
-  , u3Limitation("u3Limitation")
-  , u4Limitation("u4Limitation")
-  , u5Limitation("u5Limitation")
-  , u6Limitation("u6Limitation")
-  , u7Limitation("u7Limitation")
-  , u8Limitation("u8Limitation")
-  , u9Limitation("u9Limitation")
-  , u10Limitation("u10Limitation")
-  , u11Limitation("u11Limitation")
-  , u12Limitation("u12Limitation")
-  , u13Limitation("u13Limitation")
-  , u14Limitation("u14Limitation")
-  , u15Limitation("u15Limitation")
-  , u16Limitation("u16Limitation")
-  , u17Limitation("u17Limitation")
-  , u18Limitation("u18Limitation")
-  , u19Limitation("u19Limitation")
-  , u20Limitation("u20Limitation")
-  , xx1Limitation("xx1Limitation")
-  , yy1Limitation("yy1Limitation")
-  , xx2Limitation("xx2Limitation")
-  , yy2Limitation("yy2Limitation")
-  , xx3Limitation("xx3Limitation")
-  , yy3Limitation("yy3Limitation")
-  , xx4Limitation("xx4Limitation")
-  , yy4Limitation("yy4Limitation")
-  , xx5Limitation("xx5Limitation")
-  , yy5Limitation("yy5Limitation")
-  , xx6Limitation("xx6Limitation")
-  , yy6Limitation("yy6Limitation")
-  , xx7Limitation("xx7Limitation")
-  , yy7Limitation("yy7Limitation")
-  , xx8Limitation("xx8Limitation")
-  , yy8Limitation("yy8Limitation")
-  , xx9Limitation("xx9Limitation")
-  , yy9Limitation("yy9Limitation")
-  , xx10Limitation("xx10Limitation")
-  , yy10Limitation("yy10Limitation")
-  , xx11Limitation("xx11Limitation")
-  , yy11Limitation("yy11Limitation")
-  , xx12Limitation("xx12Limitation")
-  , yy12Limitation("yy12Limitation")
-  , xx13Limitation("xx13Limitation")
-  , yy13Limitation("yy13Limitation")
-  , xx14Limitation("xx14Limitation")
-  , yy14Limitation("yy14Limitation")
-  , xx15Limitation("xx15Limitation")
-  , yy15Limitation("yy15Limitation")
-  , xx16Limitation("xx16Limitation")
-  , yy16Limitation("yy16Limitation")
-  , xx17Limitation("xx17Limitation")
-  , yy17Limitation("yy17Limitation")
-  , xx18Limitation("xx18Limitation")
-  , yy18Limitation("yy18Limitation")
-  , xx19Limitation("xx19Limitation")
-  , yy19Limitation("yy19Limitation")
-  , xx20Limitation("xx20Limitation")
-  , yy20Limitation("yy20Limitation")
   // Constraints 2D
   // User classes
   {
@@ -708,364 +834,724 @@ namespace ICLOCS_ContinuousMPDefine {
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
     UTILS_ASSERT0(
-      gc.exists("u1Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u1Limitation''\n"
+      gc.exists("u1Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u1Limitation_min''\n"
     );
-    u1Limitation.setup( gc("u1Limitation") );
+    u1Limitation_min.setup( gc("u1Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u2Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u2Limitation''\n"
+      gc.exists("u1Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u1Limitation_max''\n"
     );
-    u2Limitation.setup( gc("u2Limitation") );
+    u1Limitation_max.setup( gc("u1Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("u3Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u3Limitation''\n"
+      gc.exists("u2Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u2Limitation_min''\n"
     );
-    u3Limitation.setup( gc("u3Limitation") );
+    u2Limitation_min.setup( gc("u2Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u4Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u4Limitation''\n"
+      gc.exists("u2Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u2Limitation_max''\n"
     );
-    u4Limitation.setup( gc("u4Limitation") );
+    u2Limitation_max.setup( gc("u2Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("u5Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u5Limitation''\n"
+      gc.exists("u3Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u3Limitation_min''\n"
     );
-    u5Limitation.setup( gc("u5Limitation") );
+    u3Limitation_min.setup( gc("u3Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u6Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u6Limitation''\n"
+      gc.exists("u3Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u3Limitation_max''\n"
     );
-    u6Limitation.setup( gc("u6Limitation") );
+    u3Limitation_max.setup( gc("u3Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("u7Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u7Limitation''\n"
+      gc.exists("u4Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u4Limitation_min''\n"
     );
-    u7Limitation.setup( gc("u7Limitation") );
+    u4Limitation_min.setup( gc("u4Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u8Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u8Limitation''\n"
+      gc.exists("u4Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u4Limitation_max''\n"
     );
-    u8Limitation.setup( gc("u8Limitation") );
+    u4Limitation_max.setup( gc("u4Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("u9Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u9Limitation''\n"
+      gc.exists("u5Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u5Limitation_min''\n"
     );
-    u9Limitation.setup( gc("u9Limitation") );
+    u5Limitation_min.setup( gc("u5Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u10Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u10Limitation''\n"
+      gc.exists("u5Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u5Limitation_max''\n"
     );
-    u10Limitation.setup( gc("u10Limitation") );
+    u5Limitation_max.setup( gc("u5Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("u11Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u11Limitation''\n"
+      gc.exists("u6Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u6Limitation_min''\n"
     );
-    u11Limitation.setup( gc("u11Limitation") );
+    u6Limitation_min.setup( gc("u6Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u12Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u12Limitation''\n"
+      gc.exists("u6Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u6Limitation_max''\n"
     );
-    u12Limitation.setup( gc("u12Limitation") );
+    u6Limitation_max.setup( gc("u6Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("u13Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u13Limitation''\n"
+      gc.exists("u7Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u7Limitation_min''\n"
     );
-    u13Limitation.setup( gc("u13Limitation") );
+    u7Limitation_min.setup( gc("u7Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u14Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u14Limitation''\n"
+      gc.exists("u7Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u7Limitation_max''\n"
     );
-    u14Limitation.setup( gc("u14Limitation") );
+    u7Limitation_max.setup( gc("u7Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("u15Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u15Limitation''\n"
+      gc.exists("u8Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u8Limitation_min''\n"
     );
-    u15Limitation.setup( gc("u15Limitation") );
+    u8Limitation_min.setup( gc("u8Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u16Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u16Limitation''\n"
+      gc.exists("u8Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u8Limitation_max''\n"
     );
-    u16Limitation.setup( gc("u16Limitation") );
+    u8Limitation_max.setup( gc("u8Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("u17Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u17Limitation''\n"
+      gc.exists("u9Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u9Limitation_min''\n"
     );
-    u17Limitation.setup( gc("u17Limitation") );
+    u9Limitation_min.setup( gc("u9Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u18Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u18Limitation''\n"
+      gc.exists("u9Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u9Limitation_max''\n"
     );
-    u18Limitation.setup( gc("u18Limitation") );
+    u9Limitation_max.setup( gc("u9Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("u19Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u19Limitation''\n"
+      gc.exists("u10Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u10Limitation_min''\n"
     );
-    u19Limitation.setup( gc("u19Limitation") );
+    u10Limitation_min.setup( gc("u10Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("u20Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u20Limitation''\n"
+      gc.exists("u10Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u10Limitation_max''\n"
     );
-    u20Limitation.setup( gc("u20Limitation") );
+    u10Limitation_max.setup( gc("u10Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx1Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx1Limitation''\n"
+      gc.exists("u11Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u11Limitation_min''\n"
     );
-    xx1Limitation.setup( gc("xx1Limitation") );
+    u11Limitation_min.setup( gc("u11Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy1Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy1Limitation''\n"
+      gc.exists("u11Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u11Limitation_max''\n"
     );
-    yy1Limitation.setup( gc("yy1Limitation") );
+    u11Limitation_max.setup( gc("u11Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx2Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx2Limitation''\n"
+      gc.exists("u12Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u12Limitation_min''\n"
     );
-    xx2Limitation.setup( gc("xx2Limitation") );
+    u12Limitation_min.setup( gc("u12Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy2Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy2Limitation''\n"
+      gc.exists("u12Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u12Limitation_max''\n"
     );
-    yy2Limitation.setup( gc("yy2Limitation") );
+    u12Limitation_max.setup( gc("u12Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx3Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx3Limitation''\n"
+      gc.exists("u13Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u13Limitation_min''\n"
     );
-    xx3Limitation.setup( gc("xx3Limitation") );
+    u13Limitation_min.setup( gc("u13Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy3Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy3Limitation''\n"
+      gc.exists("u13Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u13Limitation_max''\n"
     );
-    yy3Limitation.setup( gc("yy3Limitation") );
+    u13Limitation_max.setup( gc("u13Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx4Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx4Limitation''\n"
+      gc.exists("u14Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u14Limitation_min''\n"
     );
-    xx4Limitation.setup( gc("xx4Limitation") );
+    u14Limitation_min.setup( gc("u14Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy4Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy4Limitation''\n"
+      gc.exists("u14Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u14Limitation_max''\n"
     );
-    yy4Limitation.setup( gc("yy4Limitation") );
+    u14Limitation_max.setup( gc("u14Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx5Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx5Limitation''\n"
+      gc.exists("u15Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u15Limitation_min''\n"
     );
-    xx5Limitation.setup( gc("xx5Limitation") );
+    u15Limitation_min.setup( gc("u15Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy5Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy5Limitation''\n"
+      gc.exists("u15Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u15Limitation_max''\n"
     );
-    yy5Limitation.setup( gc("yy5Limitation") );
+    u15Limitation_max.setup( gc("u15Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx6Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx6Limitation''\n"
+      gc.exists("u16Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u16Limitation_min''\n"
     );
-    xx6Limitation.setup( gc("xx6Limitation") );
+    u16Limitation_min.setup( gc("u16Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy6Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy6Limitation''\n"
+      gc.exists("u16Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u16Limitation_max''\n"
     );
-    yy6Limitation.setup( gc("yy6Limitation") );
+    u16Limitation_max.setup( gc("u16Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx7Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx7Limitation''\n"
+      gc.exists("u17Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u17Limitation_min''\n"
     );
-    xx7Limitation.setup( gc("xx7Limitation") );
+    u17Limitation_min.setup( gc("u17Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy7Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy7Limitation''\n"
+      gc.exists("u17Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u17Limitation_max''\n"
     );
-    yy7Limitation.setup( gc("yy7Limitation") );
+    u17Limitation_max.setup( gc("u17Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx8Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx8Limitation''\n"
+      gc.exists("u18Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u18Limitation_min''\n"
     );
-    xx8Limitation.setup( gc("xx8Limitation") );
+    u18Limitation_min.setup( gc("u18Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy8Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy8Limitation''\n"
+      gc.exists("u18Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u18Limitation_max''\n"
     );
-    yy8Limitation.setup( gc("yy8Limitation") );
+    u18Limitation_max.setup( gc("u18Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx9Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx9Limitation''\n"
+      gc.exists("u19Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u19Limitation_min''\n"
     );
-    xx9Limitation.setup( gc("xx9Limitation") );
+    u19Limitation_min.setup( gc("u19Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy9Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy9Limitation''\n"
+      gc.exists("u19Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u19Limitation_max''\n"
     );
-    yy9Limitation.setup( gc("yy9Limitation") );
+    u19Limitation_max.setup( gc("u19Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx10Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx10Limitation''\n"
+      gc.exists("u20Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u20Limitation_min''\n"
     );
-    xx10Limitation.setup( gc("xx10Limitation") );
+    u20Limitation_min.setup( gc("u20Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy10Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy10Limitation''\n"
+      gc.exists("u20Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``u20Limitation_max''\n"
     );
-    yy10Limitation.setup( gc("yy10Limitation") );
+    u20Limitation_max.setup( gc("u20Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx11Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx11Limitation''\n"
+      gc.exists("xx1Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx1Limitation_min''\n"
     );
-    xx11Limitation.setup( gc("xx11Limitation") );
+    xx1Limitation_min.setup( gc("xx1Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy11Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy11Limitation''\n"
+      gc.exists("xx1Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx1Limitation_max''\n"
     );
-    yy11Limitation.setup( gc("yy11Limitation") );
+    xx1Limitation_max.setup( gc("xx1Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx12Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx12Limitation''\n"
+      gc.exists("yy1Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy1Limitation_min''\n"
     );
-    xx12Limitation.setup( gc("xx12Limitation") );
+    yy1Limitation_min.setup( gc("yy1Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy12Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy12Limitation''\n"
+      gc.exists("yy1Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy1Limitation_max''\n"
     );
-    yy12Limitation.setup( gc("yy12Limitation") );
+    yy1Limitation_max.setup( gc("yy1Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx13Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx13Limitation''\n"
+      gc.exists("xx2Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx2Limitation_min''\n"
     );
-    xx13Limitation.setup( gc("xx13Limitation") );
+    xx2Limitation_min.setup( gc("xx2Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy13Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy13Limitation''\n"
+      gc.exists("xx2Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx2Limitation_max''\n"
     );
-    yy13Limitation.setup( gc("yy13Limitation") );
+    xx2Limitation_max.setup( gc("xx2Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx14Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx14Limitation''\n"
+      gc.exists("yy2Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy2Limitation_min''\n"
     );
-    xx14Limitation.setup( gc("xx14Limitation") );
+    yy2Limitation_min.setup( gc("yy2Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy14Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy14Limitation''\n"
+      gc.exists("yy2Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy2Limitation_max''\n"
     );
-    yy14Limitation.setup( gc("yy14Limitation") );
+    yy2Limitation_max.setup( gc("yy2Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx15Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx15Limitation''\n"
+      gc.exists("xx3Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx3Limitation_min''\n"
     );
-    xx15Limitation.setup( gc("xx15Limitation") );
+    xx3Limitation_min.setup( gc("xx3Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy15Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy15Limitation''\n"
+      gc.exists("xx3Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx3Limitation_max''\n"
     );
-    yy15Limitation.setup( gc("yy15Limitation") );
+    xx3Limitation_max.setup( gc("xx3Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx16Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx16Limitation''\n"
+      gc.exists("yy3Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy3Limitation_min''\n"
     );
-    xx16Limitation.setup( gc("xx16Limitation") );
+    yy3Limitation_min.setup( gc("yy3Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy16Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy16Limitation''\n"
+      gc.exists("yy3Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy3Limitation_max''\n"
     );
-    yy16Limitation.setup( gc("yy16Limitation") );
+    yy3Limitation_max.setup( gc("yy3Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx17Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx17Limitation''\n"
+      gc.exists("xx4Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx4Limitation_min''\n"
     );
-    xx17Limitation.setup( gc("xx17Limitation") );
+    xx4Limitation_min.setup( gc("xx4Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy17Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy17Limitation''\n"
+      gc.exists("xx4Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx4Limitation_max''\n"
     );
-    yy17Limitation.setup( gc("yy17Limitation") );
+    xx4Limitation_max.setup( gc("xx4Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx18Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx18Limitation''\n"
+      gc.exists("yy4Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy4Limitation_min''\n"
     );
-    xx18Limitation.setup( gc("xx18Limitation") );
+    yy4Limitation_min.setup( gc("yy4Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy18Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy18Limitation''\n"
+      gc.exists("yy4Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy4Limitation_max''\n"
     );
-    yy18Limitation.setup( gc("yy18Limitation") );
+    yy4Limitation_max.setup( gc("yy4Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx19Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx19Limitation''\n"
+      gc.exists("xx5Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx5Limitation_min''\n"
     );
-    xx19Limitation.setup( gc("xx19Limitation") );
+    xx5Limitation_min.setup( gc("xx5Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy19Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy19Limitation''\n"
+      gc.exists("xx5Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx5Limitation_max''\n"
     );
-    yy19Limitation.setup( gc("yy19Limitation") );
+    xx5Limitation_max.setup( gc("xx5Limitation_max") );
 
     UTILS_ASSERT0(
-      gc.exists("xx20Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx20Limitation''\n"
+      gc.exists("yy5Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy5Limitation_min''\n"
     );
-    xx20Limitation.setup( gc("xx20Limitation") );
+    yy5Limitation_min.setup( gc("yy5Limitation_min") );
 
     UTILS_ASSERT0(
-      gc.exists("yy20Limitation"),
-      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy20Limitation''\n"
+      gc.exists("yy5Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy5Limitation_max''\n"
     );
-    yy20Limitation.setup( gc("yy20Limitation") );
+    yy5Limitation_max.setup( gc("yy5Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx6Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx6Limitation_min''\n"
+    );
+    xx6Limitation_min.setup( gc("xx6Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx6Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx6Limitation_max''\n"
+    );
+    xx6Limitation_max.setup( gc("xx6Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy6Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy6Limitation_min''\n"
+    );
+    yy6Limitation_min.setup( gc("yy6Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy6Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy6Limitation_max''\n"
+    );
+    yy6Limitation_max.setup( gc("yy6Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx7Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx7Limitation_min''\n"
+    );
+    xx7Limitation_min.setup( gc("xx7Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx7Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx7Limitation_max''\n"
+    );
+    xx7Limitation_max.setup( gc("xx7Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy7Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy7Limitation_min''\n"
+    );
+    yy7Limitation_min.setup( gc("yy7Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy7Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy7Limitation_max''\n"
+    );
+    yy7Limitation_max.setup( gc("yy7Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx8Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx8Limitation_min''\n"
+    );
+    xx8Limitation_min.setup( gc("xx8Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx8Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx8Limitation_max''\n"
+    );
+    xx8Limitation_max.setup( gc("xx8Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy8Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy8Limitation_min''\n"
+    );
+    yy8Limitation_min.setup( gc("yy8Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy8Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy8Limitation_max''\n"
+    );
+    yy8Limitation_max.setup( gc("yy8Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx9Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx9Limitation_min''\n"
+    );
+    xx9Limitation_min.setup( gc("xx9Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx9Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx9Limitation_max''\n"
+    );
+    xx9Limitation_max.setup( gc("xx9Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy9Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy9Limitation_min''\n"
+    );
+    yy9Limitation_min.setup( gc("yy9Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy9Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy9Limitation_max''\n"
+    );
+    yy9Limitation_max.setup( gc("yy9Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx10Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx10Limitation_min''\n"
+    );
+    xx10Limitation_min.setup( gc("xx10Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx10Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx10Limitation_max''\n"
+    );
+    xx10Limitation_max.setup( gc("xx10Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy10Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy10Limitation_min''\n"
+    );
+    yy10Limitation_min.setup( gc("yy10Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy10Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy10Limitation_max''\n"
+    );
+    yy10Limitation_max.setup( gc("yy10Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx11Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx11Limitation_min''\n"
+    );
+    xx11Limitation_min.setup( gc("xx11Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx11Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx11Limitation_max''\n"
+    );
+    xx11Limitation_max.setup( gc("xx11Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy11Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy11Limitation_min''\n"
+    );
+    yy11Limitation_min.setup( gc("yy11Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy11Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy11Limitation_max''\n"
+    );
+    yy11Limitation_max.setup( gc("yy11Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx12Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx12Limitation_min''\n"
+    );
+    xx12Limitation_min.setup( gc("xx12Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx12Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx12Limitation_max''\n"
+    );
+    xx12Limitation_max.setup( gc("xx12Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy12Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy12Limitation_min''\n"
+    );
+    yy12Limitation_min.setup( gc("yy12Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy12Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy12Limitation_max''\n"
+    );
+    yy12Limitation_max.setup( gc("yy12Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx13Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx13Limitation_min''\n"
+    );
+    xx13Limitation_min.setup( gc("xx13Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx13Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx13Limitation_max''\n"
+    );
+    xx13Limitation_max.setup( gc("xx13Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy13Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy13Limitation_min''\n"
+    );
+    yy13Limitation_min.setup( gc("yy13Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy13Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy13Limitation_max''\n"
+    );
+    yy13Limitation_max.setup( gc("yy13Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx14Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx14Limitation_min''\n"
+    );
+    xx14Limitation_min.setup( gc("xx14Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx14Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx14Limitation_max''\n"
+    );
+    xx14Limitation_max.setup( gc("xx14Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy14Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy14Limitation_min''\n"
+    );
+    yy14Limitation_min.setup( gc("yy14Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy14Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy14Limitation_max''\n"
+    );
+    yy14Limitation_max.setup( gc("yy14Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx15Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx15Limitation_min''\n"
+    );
+    xx15Limitation_min.setup( gc("xx15Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx15Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx15Limitation_max''\n"
+    );
+    xx15Limitation_max.setup( gc("xx15Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy15Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy15Limitation_min''\n"
+    );
+    yy15Limitation_min.setup( gc("yy15Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy15Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy15Limitation_max''\n"
+    );
+    yy15Limitation_max.setup( gc("yy15Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx16Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx16Limitation_min''\n"
+    );
+    xx16Limitation_min.setup( gc("xx16Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx16Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx16Limitation_max''\n"
+    );
+    xx16Limitation_max.setup( gc("xx16Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy16Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy16Limitation_min''\n"
+    );
+    yy16Limitation_min.setup( gc("yy16Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy16Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy16Limitation_max''\n"
+    );
+    yy16Limitation_max.setup( gc("yy16Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx17Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx17Limitation_min''\n"
+    );
+    xx17Limitation_min.setup( gc("xx17Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx17Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx17Limitation_max''\n"
+    );
+    xx17Limitation_max.setup( gc("xx17Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy17Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy17Limitation_min''\n"
+    );
+    yy17Limitation_min.setup( gc("yy17Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy17Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy17Limitation_max''\n"
+    );
+    yy17Limitation_max.setup( gc("yy17Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx18Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx18Limitation_min''\n"
+    );
+    xx18Limitation_min.setup( gc("xx18Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx18Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx18Limitation_max''\n"
+    );
+    xx18Limitation_max.setup( gc("xx18Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy18Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy18Limitation_min''\n"
+    );
+    yy18Limitation_min.setup( gc("yy18Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy18Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy18Limitation_max''\n"
+    );
+    yy18Limitation_max.setup( gc("yy18Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx19Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx19Limitation_min''\n"
+    );
+    xx19Limitation_min.setup( gc("xx19Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx19Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx19Limitation_max''\n"
+    );
+    xx19Limitation_max.setup( gc("xx19Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy19Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy19Limitation_min''\n"
+    );
+    yy19Limitation_min.setup( gc("yy19Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy19Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy19Limitation_max''\n"
+    );
+    yy19Limitation_max.setup( gc("yy19Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx20Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx20Limitation_min''\n"
+    );
+    xx20Limitation_min.setup( gc("xx20Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("xx20Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``xx20Limitation_max''\n"
+    );
+    xx20Limitation_max.setup( gc("xx20Limitation_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy20Limitation_min"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy20Limitation_min''\n"
+    );
+    yy20Limitation_min.setup( gc("yy20Limitation_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("yy20Limitation_max"),
+      "in ICLOCS_ContinuousMP::setup_classes(gc) missing key: ``yy20Limitation_max''\n"
+    );
+    yy20Limitation_max.setup( gc("yy20Limitation_max") );
 
   }
 
@@ -1148,68 +1634,128 @@ namespace ICLOCS_ContinuousMPDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    m_console->message("\nConstraints 1D\n",msg_level);
+    m_console->message("\nConstraints LT\n",msg_level);
     mstr.str("");
-    u1Limitation  .info(mstr);
-    u2Limitation  .info(mstr);
-    u3Limitation  .info(mstr);
-    u4Limitation  .info(mstr);
-    u5Limitation  .info(mstr);
-    u6Limitation  .info(mstr);
-    u7Limitation  .info(mstr);
-    u8Limitation  .info(mstr);
-    u9Limitation  .info(mstr);
-    u10Limitation .info(mstr);
-    u11Limitation .info(mstr);
-    u12Limitation .info(mstr);
-    u13Limitation .info(mstr);
-    u14Limitation .info(mstr);
-    u15Limitation .info(mstr);
-    u16Limitation .info(mstr);
-    u17Limitation .info(mstr);
-    u18Limitation .info(mstr);
-    u19Limitation .info(mstr);
-    u20Limitation .info(mstr);
-    xx1Limitation .info(mstr);
-    yy1Limitation .info(mstr);
-    xx2Limitation .info(mstr);
-    yy2Limitation .info(mstr);
-    xx3Limitation .info(mstr);
-    yy3Limitation .info(mstr);
-    xx4Limitation .info(mstr);
-    yy4Limitation .info(mstr);
-    xx5Limitation .info(mstr);
-    yy5Limitation .info(mstr);
-    xx6Limitation .info(mstr);
-    yy6Limitation .info(mstr);
-    xx7Limitation .info(mstr);
-    yy7Limitation .info(mstr);
-    xx8Limitation .info(mstr);
-    yy8Limitation .info(mstr);
-    xx9Limitation .info(mstr);
-    yy9Limitation .info(mstr);
-    xx10Limitation.info(mstr);
-    yy10Limitation.info(mstr);
-    xx11Limitation.info(mstr);
-    yy11Limitation.info(mstr);
-    xx12Limitation.info(mstr);
-    yy12Limitation.info(mstr);
-    xx13Limitation.info(mstr);
-    yy13Limitation.info(mstr);
-    xx14Limitation.info(mstr);
-    yy14Limitation.info(mstr);
-    xx15Limitation.info(mstr);
-    yy15Limitation.info(mstr);
-    xx16Limitation.info(mstr);
-    yy16Limitation.info(mstr);
-    xx17Limitation.info(mstr);
-    yy17Limitation.info(mstr);
-    xx18Limitation.info(mstr);
-    yy18Limitation.info(mstr);
-    xx19Limitation.info(mstr);
-    yy19Limitation.info(mstr);
-    xx20Limitation.info(mstr);
-    yy20Limitation.info(mstr);
+    u1Limitation_min.info(mstr);
+    u1Limitation_max.info(mstr);
+    u2Limitation_min.info(mstr);
+    u2Limitation_max.info(mstr);
+    u3Limitation_min.info(mstr);
+    u3Limitation_max.info(mstr);
+    u4Limitation_min.info(mstr);
+    u4Limitation_max.info(mstr);
+    u5Limitation_min.info(mstr);
+    u5Limitation_max.info(mstr);
+    u6Limitation_min.info(mstr);
+    u6Limitation_max.info(mstr);
+    u7Limitation_min.info(mstr);
+    u7Limitation_max.info(mstr);
+    u8Limitation_min.info(mstr);
+    u8Limitation_max.info(mstr);
+    u9Limitation_min.info(mstr);
+    u9Limitation_max.info(mstr);
+    u10Limitation_min.info(mstr);
+    u10Limitation_max.info(mstr);
+    u11Limitation_min.info(mstr);
+    u11Limitation_max.info(mstr);
+    u12Limitation_min.info(mstr);
+    u12Limitation_max.info(mstr);
+    u13Limitation_min.info(mstr);
+    u13Limitation_max.info(mstr);
+    u14Limitation_min.info(mstr);
+    u14Limitation_max.info(mstr);
+    u15Limitation_min.info(mstr);
+    u15Limitation_max.info(mstr);
+    u16Limitation_min.info(mstr);
+    u16Limitation_max.info(mstr);
+    u17Limitation_min.info(mstr);
+    u17Limitation_max.info(mstr);
+    u18Limitation_min.info(mstr);
+    u18Limitation_max.info(mstr);
+    u19Limitation_min.info(mstr);
+    u19Limitation_max.info(mstr);
+    u20Limitation_min.info(mstr);
+    u20Limitation_max.info(mstr);
+    xx1Limitation_min.info(mstr);
+    xx1Limitation_max.info(mstr);
+    yy1Limitation_min.info(mstr);
+    yy1Limitation_max.info(mstr);
+    xx2Limitation_min.info(mstr);
+    xx2Limitation_max.info(mstr);
+    yy2Limitation_min.info(mstr);
+    yy2Limitation_max.info(mstr);
+    xx3Limitation_min.info(mstr);
+    xx3Limitation_max.info(mstr);
+    yy3Limitation_min.info(mstr);
+    yy3Limitation_max.info(mstr);
+    xx4Limitation_min.info(mstr);
+    xx4Limitation_max.info(mstr);
+    yy4Limitation_min.info(mstr);
+    yy4Limitation_max.info(mstr);
+    xx5Limitation_min.info(mstr);
+    xx5Limitation_max.info(mstr);
+    yy5Limitation_min.info(mstr);
+    yy5Limitation_max.info(mstr);
+    xx6Limitation_min.info(mstr);
+    xx6Limitation_max.info(mstr);
+    yy6Limitation_min.info(mstr);
+    yy6Limitation_max.info(mstr);
+    xx7Limitation_min.info(mstr);
+    xx7Limitation_max.info(mstr);
+    yy7Limitation_min.info(mstr);
+    yy7Limitation_max.info(mstr);
+    xx8Limitation_min.info(mstr);
+    xx8Limitation_max.info(mstr);
+    yy8Limitation_min.info(mstr);
+    yy8Limitation_max.info(mstr);
+    xx9Limitation_min.info(mstr);
+    xx9Limitation_max.info(mstr);
+    yy9Limitation_min.info(mstr);
+    yy9Limitation_max.info(mstr);
+    xx10Limitation_min.info(mstr);
+    xx10Limitation_max.info(mstr);
+    yy10Limitation_min.info(mstr);
+    yy10Limitation_max.info(mstr);
+    xx11Limitation_min.info(mstr);
+    xx11Limitation_max.info(mstr);
+    yy11Limitation_min.info(mstr);
+    yy11Limitation_max.info(mstr);
+    xx12Limitation_min.info(mstr);
+    xx12Limitation_max.info(mstr);
+    yy12Limitation_min.info(mstr);
+    yy12Limitation_max.info(mstr);
+    xx13Limitation_min.info(mstr);
+    xx13Limitation_max.info(mstr);
+    yy13Limitation_min.info(mstr);
+    yy13Limitation_max.info(mstr);
+    xx14Limitation_min.info(mstr);
+    xx14Limitation_max.info(mstr);
+    yy14Limitation_min.info(mstr);
+    yy14Limitation_max.info(mstr);
+    xx15Limitation_min.info(mstr);
+    xx15Limitation_max.info(mstr);
+    yy15Limitation_min.info(mstr);
+    yy15Limitation_max.info(mstr);
+    xx16Limitation_min.info(mstr);
+    xx16Limitation_max.info(mstr);
+    yy16Limitation_min.info(mstr);
+    yy16Limitation_max.info(mstr);
+    xx17Limitation_min.info(mstr);
+    xx17Limitation_max.info(mstr);
+    yy17Limitation_min.info(mstr);
+    yy17Limitation_max.info(mstr);
+    xx18Limitation_min.info(mstr);
+    xx18Limitation_max.info(mstr);
+    yy18Limitation_min.info(mstr);
+    yy18Limitation_max.info(mstr);
+    xx19Limitation_min.info(mstr);
+    xx19Limitation_max.info(mstr);
+    yy19Limitation_min.info(mstr);
+    yy19Limitation_max.info(mstr);
+    xx20Limitation_min.info(mstr);
+    xx20Limitation_max.info(mstr);
+    yy20Limitation_min.info(mstr);
+    yy20Limitation_max.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime.hh                                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,6 +76,7 @@ namespace SingularLuus04_FreeTimeDefine {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -111,6 +112,8 @@ namespace SingularLuus04_FreeTimeDefine {
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU uControl;
+
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -177,9 +180,9 @@ namespace SingularLuus04_FreeTimeDefine {
     SINGULARLUUS04_FREETIME_API_DLL
     explicit
     SingularLuus04_FreeTime(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~SingularLuus04_FreeTime() override;

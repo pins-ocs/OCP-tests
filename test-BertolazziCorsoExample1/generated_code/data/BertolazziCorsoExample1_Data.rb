@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: BertolazziCorsoExample1_Data.rb                                #
 #                                                                       #
-#  version: 1.0   date 20/12/2021                                       #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
-#  Copyright (C) 2021                                                   #
+#  Copyright (C) 2022                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -24,13 +24,15 @@ include Mechatronix
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = true
+  data.Debug = false
 
   # Enable doctor
   data.Doctor = false
 
   # Level of message
   data.InfoLevel = 4
+
+  data.Use_control_penalties_in_adjoint_equations = false
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -301,6 +303,7 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
+  # ConstraintLT: none defined
   # Constraint1D: none defined
   # Constraint2D: none defined
 
@@ -317,8 +320,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 100,
         :length => 1,
+        :n      => 100,
       },
     ],
   };

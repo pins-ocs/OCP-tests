@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -89,7 +89,7 @@ namespace SingularMarchalDefine {
   \*/
 
   real_type
-  SingularMarchal::penalties_eval(
+  SingularMarchal::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -100,7 +100,7 @@ namespace SingularMarchalDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -108,7 +108,7 @@ namespace SingularMarchalDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  SingularMarchal::control_penalties_eval(
+  SingularMarchal::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -121,10 +121,31 @@ namespace SingularMarchalDefine {
     real_type t7   = uControl(U__[iU_u], -1, 1);
     real_type result__ = t7 * (t2 / 2 + ModelPars[iM_epsilon]);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  SingularMarchal::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -183,9 +204,7 @@ namespace SingularMarchalDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularMarchal::DmayerDxxp_numEqns() const
-  { return 4; }
+  integer SingularMarchal::DmayerDxxp_numEqns() const { return 4; }
 
   void
   SingularMarchal::DmayerDxxp_eval(
@@ -219,9 +238,7 @@ namespace SingularMarchalDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  SingularMarchal::DlagrangeDxup_numEqns() const
-  { return 3; }
+  integer SingularMarchal::DlagrangeDxup_numEqns() const { return 3; }
 
   void
   SingularMarchal::DlagrangeDxup_eval(
@@ -241,66 +258,45 @@ namespace SingularMarchalDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
   }
 
-  integer
-  SingularMarchal::DJDx_numEqns() const
-  { return 2; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SingularMarchal::IPOPT_hess_numRows() const { return 3; }
+  integer SingularMarchal::IPOPT_hess_numCols() const { return 3; }
+  integer SingularMarchal::IPOPT_hess_nnz()     const { return 1; }
 
   void
-  SingularMarchal::DJDx_eval(
-    NodeType const     & NODE__,
+  SingularMarchal::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  SingularMarchal::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = uControl(U__[iU_u], -1, 1);
-    result__[ 0   ] = t3 * X__[iX_x];
-    result__[ 1   ] = 0;
+    result__[ 0   ] = sigma__;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularMarchal::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  SingularMarchal::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularMarchal::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  SingularMarchal::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_x] * X__[iX_x];
-    real_type t7   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
-    result__[ 0   ] = t7 * (t2 / 2 + ModelPars[iM_epsilon]);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 1, i_segment );
   }
 
   /*\
@@ -333,9 +329,7 @@ namespace SingularMarchalDefine {
    |              |___/
   \*/
 
-  integer
-  SingularMarchal::segmentLink_numEqns() const
-  { return 0; }
+  integer SingularMarchal::segmentLink_numEqns() const { return 0; }
 
   void
   SingularMarchal::segmentLink_eval(
@@ -349,17 +343,9 @@ namespace SingularMarchalDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularMarchal::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  SingularMarchal::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  SingularMarchal::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer SingularMarchal::DsegmentLinkDxp_numRows() const { return 0; }
+  integer SingularMarchal::DsegmentLinkDxp_numCols() const { return 0; }
+  integer SingularMarchal::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   SingularMarchal::DsegmentLinkDxp_pattern(
@@ -389,9 +375,7 @@ namespace SingularMarchalDefine {
    |                 |_|
   \*/
 
-  integer
-  SingularMarchal::jump_numEqns() const
-  { return 4; }
+  integer SingularMarchal::jump_numEqns() const { return 4; }
 
   void
   SingularMarchal::jump_eval(
@@ -419,24 +403,12 @@ namespace SingularMarchalDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularMarchal::DjumpDxlxlp_numRows() const
-  { return 4; }
-
-  integer
-  SingularMarchal::DjumpDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  SingularMarchal::DjumpDxlxlp_nnz() const
-  { return 8; }
+  integer SingularMarchal::DjumpDxlxlp_numRows() const { return 4; }
+  integer SingularMarchal::DjumpDxlxlp_numCols() const { return 8; }
+  integer SingularMarchal::DjumpDxlxlp_nnz()     const { return 8; }
 
   void
-  SingularMarchal::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularMarchal::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -446,6 +418,7 @@ namespace SingularMarchalDefine {
     iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
     iIndex[7 ] = 3   ; jIndex[7 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -486,9 +459,7 @@ namespace SingularMarchalDefine {
    |                                                    |___/
   \*/
 
-  integer
-  SingularMarchal::post_numEqns() const
-  { return 0; }
+  integer SingularMarchal::post_numEqns() const { return 0; }
 
   void
   SingularMarchal::post_eval(
@@ -502,9 +473,7 @@ namespace SingularMarchalDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularMarchal::integrated_post_numEqns() const
-  { return 0; }
+  integer SingularMarchal::integrated_post_numEqns() const { return 0; }
 
   void
   SingularMarchal::integrated_post_eval(

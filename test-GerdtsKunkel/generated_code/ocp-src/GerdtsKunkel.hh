@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel.hh                                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,6 +76,7 @@ namespace GerdtsKunkelDefine {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -111,8 +112,10 @@ namespace GerdtsKunkelDefine {
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DLessThan x1Limitation;
+
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrier1DGreaterThan x1Limitation;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -176,9 +179,9 @@ namespace GerdtsKunkelDefine {
     GERDTSKUNKEL_API_DLL
     explicit
     GerdtsKunkel(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~GerdtsKunkel() override;

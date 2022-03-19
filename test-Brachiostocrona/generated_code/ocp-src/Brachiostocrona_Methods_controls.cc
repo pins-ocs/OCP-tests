@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -91,23 +91,23 @@ namespace BrachiostocronaDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t3   = XM__[2];
-    real_type t10  = XM__[3];
-    real_type t11  = sin(t10);
-    real_type t15  = cos(t10);
-    real_type t18  = UM__[0];
-    real_type t19  = vthetaControl(t18, -10, 10);
-    real_type result__ = -t11 * (-t3 * LM__[1] + LM__[2] * ModelPars[iM_g]) * t1 + t15 * t3 * t1 * LM__[0] + t19 * t1 + t18 * LM__[3];
+    real_type t2   = P__[iP_T];
+    real_type t4   = XM__[2];
+    real_type t5   = XM__[3];
+    real_type t6   = cos(t5);
+    real_type t11  = sin(t5);
+    real_type t20  = UM__[0];
+    real_type t22  = vthetaControl(t20, -10, 10);
+    real_type result__ = t11 * t4 * t2 * LM__[1] - t11 * ModelPars[iM_g] * t2 * LM__[2] + t6 * t4 * t2 * LM__[0] + t22 * t2 + t20 * LM__[3];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  Brachiostocrona::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Brachiostocrona::g_numEqns() const { return 1; }
 
   void
   Brachiostocrona::g_eval(
@@ -146,28 +146,17 @@ namespace BrachiostocronaDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  Brachiostocrona::DgDxlxlp_numCols() const
-  { return 17; }
-
-  integer
-  Brachiostocrona::DgDxlxlp_nnz() const
-  { return 3; }
+  integer Brachiostocrona::DgDxlxlp_numRows() const { return 1; }
+  integer Brachiostocrona::DgDxlxlp_numCols() const { return 17; }
+  integer Brachiostocrona::DgDxlxlp_nnz()     const { return 3; }
 
   void
-  Brachiostocrona::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brachiostocrona::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 7   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 15  ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 16  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -209,26 +198,15 @@ namespace BrachiostocronaDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  Brachiostocrona::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  Brachiostocrona::DgDu_nnz() const
-  { return 1; }
+  integer Brachiostocrona::DgDu_numRows() const { return 1; }
+  integer Brachiostocrona::DgDu_numCols() const { return 1; }
+  integer Brachiostocrona::DgDu_nnz()     const { return 1; }
 
   void
-  Brachiostocrona::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brachiostocrona::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -370,7 +348,7 @@ namespace BrachiostocronaDefine {
     real_type t2   = P__[iP_T];
     real_type t3   = 1.0 / t2;
     real_type t5   = vthetaControl.solve_rhs(-t3 * t1, -10, 10);
-    real_type tmp_0_7 = -0.5e0 * t5 * t3;
+    real_type tmp_0_7 = -0.5e0 * t3 * t5;
     real_type tmp_0_8 = 0.0e0;
     real_type tmp_0_9 = 0.0e0;
     real_type tmp_0_10 = 0.0e0;
@@ -440,9 +418,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Brachiostocrona::DmDu_numEqns() const
-  { return 1; }
+  integer Brachiostocrona::DmDu_numEqns() const { return 1; }
 
   void
   Brachiostocrona::DmDu_eval(
@@ -464,28 +440,15 @@ namespace BrachiostocronaDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  Brachiostocrona::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  Brachiostocrona::DmDuu_nnz() const
-  { return 1; }
+  integer Brachiostocrona::DmDuu_numRows() const { return 1; }
+  integer Brachiostocrona::DmDuu_numCols() const { return 1; }
+  integer Brachiostocrona::DmDuu_nnz()     const { return 1; }
 
   void
-  Brachiostocrona::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brachiostocrona::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Brachiostocrona::DmDuu_sparse(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_ODE.cc                                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -101,16 +101,26 @@ using Mechatronix::ToolPath2D;
 #define ALIAS_lenSeg_R(___dummy___) segmentRight.ss_length()
 #define ALIAS_lenSeg_L(___dummy___) segmentLeft.ss_length()
 #define ALIAS_lenSeg(___dummy___) segment.ss_length()
-#define ALIAS_ay_limit_DD(__t1) ay_limit.DD( __t1)
-#define ALIAS_ay_limit_D(__t1) ay_limit.D( __t1)
-#define ALIAS_ax_limit_DD(__t1) ax_limit.DD( __t1)
-#define ALIAS_ax_limit_D(__t1) ax_limit.D( __t1)
-#define ALIAS_an_limit_DD(__t1) an_limit.DD( __t1)
-#define ALIAS_an_limit_D(__t1) an_limit.D( __t1)
-#define ALIAS_as_limit_DD(__t1) as_limit.DD( __t1)
-#define ALIAS_as_limit_D(__t1) as_limit.D( __t1)
-#define ALIAS_PathFollowingTolerance_DD(__t1) PathFollowingTolerance.DD( __t1)
-#define ALIAS_PathFollowingTolerance_D(__t1) PathFollowingTolerance.D( __t1)
+#define ALIAS_ay_limit_max_DD(__t1) ay_limit_max.DD( __t1)
+#define ALIAS_ay_limit_max_D(__t1) ay_limit_max.D( __t1)
+#define ALIAS_ay_limit_min_DD(__t1) ay_limit_min.DD( __t1)
+#define ALIAS_ay_limit_min_D(__t1) ay_limit_min.D( __t1)
+#define ALIAS_ax_limit_max_DD(__t1) ax_limit_max.DD( __t1)
+#define ALIAS_ax_limit_max_D(__t1) ax_limit_max.D( __t1)
+#define ALIAS_ax_limit_min_DD(__t1) ax_limit_min.DD( __t1)
+#define ALIAS_ax_limit_min_D(__t1) ax_limit_min.D( __t1)
+#define ALIAS_an_limit_max_DD(__t1) an_limit_max.DD( __t1)
+#define ALIAS_an_limit_max_D(__t1) an_limit_max.D( __t1)
+#define ALIAS_an_limit_min_DD(__t1) an_limit_min.DD( __t1)
+#define ALIAS_an_limit_min_D(__t1) an_limit_min.D( __t1)
+#define ALIAS_as_limit_max_DD(__t1) as_limit_max.DD( __t1)
+#define ALIAS_as_limit_max_D(__t1) as_limit_max.D( __t1)
+#define ALIAS_as_limit_min_DD(__t1) as_limit_min.DD( __t1)
+#define ALIAS_as_limit_min_D(__t1) as_limit_min.D( __t1)
+#define ALIAS_PathFollowingTolerance_max_DD(__t1) PathFollowingTolerance_max.DD( __t1)
+#define ALIAS_PathFollowingTolerance_max_D(__t1) PathFollowingTolerance_max.D( __t1)
+#define ALIAS_PathFollowingTolerance_min_DD(__t1) PathFollowingTolerance_min.DD( __t1)
+#define ALIAS_PathFollowingTolerance_min_D(__t1) PathFollowingTolerance_min.D( __t1)
 #define ALIAS_vLimit_DD(__t1) vLimit.DD( __t1)
 #define ALIAS_vLimit_D(__t1) vLimit.D( __t1)
 #define ALIAS_timePositive_DD(__t1) timePositive.DD( __t1)
@@ -144,9 +154,7 @@ namespace CNOCDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  CNOC::rhs_ode_numEqns() const
-  { return 7; }
+  integer CNOC::rhs_ode_numEqns() const { return 7; }
 
   void
   CNOC::rhs_ode_eval(
@@ -180,24 +188,12 @@ namespace CNOCDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::Drhs_odeDx_numRows() const
-  { return 7; }
-
-  integer
-  CNOC::Drhs_odeDx_numCols() const
-  { return 7; }
-
-  integer
-  CNOC::Drhs_odeDx_nnz() const
-  { return 27; }
+  integer CNOC::Drhs_odeDxup_numRows() const { return 7; }
+  integer CNOC::Drhs_odeDxup_numCols() const { return 9; }
+  integer CNOC::Drhs_odeDxup_nnz()     const { return 29; }
 
   void
-  CNOC::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  CNOC::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -220,17 +216,20 @@ namespace CNOCDefine {
     iIndex[19] = 4   ; jIndex[19] = 2   ;
     iIndex[20] = 4   ; jIndex[20] = 5   ;
     iIndex[21] = 4   ; jIndex[21] = 6   ;
-    iIndex[22] = 5   ; jIndex[22] = 0   ;
-    iIndex[23] = 5   ; jIndex[23] = 1   ;
-    iIndex[24] = 5   ; jIndex[24] = 2   ;
-    iIndex[25] = 5   ; jIndex[25] = 4   ;
-    iIndex[26] = 5   ; jIndex[26] = 6   ;
+    iIndex[22] = 4   ; jIndex[22] = 7   ;
+    iIndex[23] = 5   ; jIndex[23] = 0   ;
+    iIndex[24] = 5   ; jIndex[24] = 1   ;
+    iIndex[25] = 5   ; jIndex[25] = 2   ;
+    iIndex[26] = 5   ; jIndex[26] = 4   ;
+    iIndex[27] = 5   ; jIndex[27] = 6   ;
+    iIndex[28] = 5   ; jIndex[28] = 8   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CNOC::Drhs_odeDx_sparse(
+  CNOC::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -284,89 +283,16 @@ namespace CNOCDefine {
     result__[ 19  ] = result__[2] * t4 * t44;
     result__[ 20  ] = result__[9];
     result__[ 21  ] = t31 * t46 + U__[iU_js];
+    result__[ 22  ] = result__[15];
     real_type t55  = t30 * t1;
-    result__[ 22  ] = -result__[15] * (t21 * t4 * t55 + t17 * t55);
-    result__[ 23  ] = -t27 * t55;
-    result__[ 24  ] = -result__[2] * t4 * t30;
-    result__[ 25  ] = -result__[20];
-    result__[ 26  ] = -t31 * t55 + U__[iU_jn];
+    result__[ 23  ] = -result__[22] * (t21 * t4 * t55 + t17 * t55);
+    result__[ 24  ] = -t27 * t55;
+    result__[ 25  ] = -result__[2] * t4 * t30;
+    result__[ 26  ] = -result__[20];
+    result__[ 27  ] = -t31 * t55 + U__[iU_jn];
+    result__[ 28  ] = result__[22];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 27, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::Drhs_odeDp_numRows() const
-  { return 7; }
-
-  integer
-  CNOC::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  CNOC::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  CNOC::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  CNOC::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::Drhs_odeDu_numRows() const
-  { return 7; }
-
-  integer
-  CNOC::Drhs_odeDu_numCols() const
-  { return 2; }
-
-  integer
-  CNOC::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  CNOC::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 4   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 5   ; jIndex[1 ] = 1   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  CNOC::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_coV];
-    result__[ 1   ] = result__[0];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 29, i_segment );
   }
 
   /*\
@@ -376,23 +302,13 @@ namespace CNOCDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  CNOC::A_numRows() const
-  { return 7; }
-
-  integer
-  CNOC::A_numCols() const
-  { return 7; }
-
-  integer
-  CNOC::A_nnz() const
-  { return 7; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer CNOC::A_numRows() const { return 7; }
+  integer CNOC::A_numCols() const { return 7; }
+  integer CNOC::A_nnz()     const { return 7; }
 
   void
-  CNOC::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  CNOC::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -401,6 +317,7 @@ namespace CNOCDefine {
     iIndex[5 ] = 5   ; jIndex[5 ] = 5   ;
     iIndex[6 ] = 6   ; jIndex[6 ] = 6   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

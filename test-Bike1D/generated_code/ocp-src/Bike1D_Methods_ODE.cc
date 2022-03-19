@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_ODE.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -81,9 +81,7 @@ namespace Bike1DDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  Bike1D::rhs_ode_numEqns() const
-  { return 1; }
+  integer Bike1D::rhs_ode_numEqns() const { return 1; }
 
   void
   Bike1D::rhs_ode_eval(
@@ -102,98 +100,21 @@ namespace Bike1DDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Bike1D::Drhs_odeDx_numRows() const
-  { return 1; }
-
-  integer
-  Bike1D::Drhs_odeDx_numCols() const
-  { return 1; }
-
-  integer
-  Bike1D::Drhs_odeDx_nnz() const
-  { return 0; }
+  integer Bike1D::Drhs_odeDxup_numRows() const { return 1; }
+  integer Bike1D::Drhs_odeDxup_numCols() const { return 3; }
+  integer Bike1D::Drhs_odeDxup_nnz()     const { return 2; }
 
   void
-  Bike1D::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Bike1D::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Bike1D::Drhs_odeDx_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Bike1D::Drhs_odeDp_numRows() const
-  { return 1; }
-
-  integer
-  Bike1D::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  Bike1D::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  Bike1D::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Bike1D::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Bike1D::Drhs_odeDu_numRows() const
-  { return 1; }
-
-  integer
-  Bike1D::Drhs_odeDu_numCols() const
-  { return 2; }
-
-  integer
-  Bike1D::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  Bike1D::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Bike1D::Drhs_odeDu_sparse(
+  Bike1D::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -206,7 +127,7 @@ namespace Bike1DDefine {
     result__[ 0   ] = ModelPars[iM_g];
     result__[ 1   ] = result__[0];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 2, i_segment );
   }
 
   /*\
@@ -216,25 +137,16 @@ namespace Bike1DDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  Bike1D::A_numRows() const
-  { return 1; }
-
-  integer
-  Bike1D::A_numCols() const
-  { return 1; }
-
-  integer
-  Bike1D::A_nnz() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Bike1D::A_numRows() const { return 1; }
+  integer Bike1D::A_numCols() const { return 1; }
+  integer Bike1D::A_nnz()     const { return 1; }
 
   void
-  Bike1D::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Bike1D::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

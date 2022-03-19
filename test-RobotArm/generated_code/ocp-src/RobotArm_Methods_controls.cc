@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -113,22 +113,23 @@ namespace RobotArmDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = UM__[0];
-    real_type t6   = UM__[1];
-    real_type t9   = UM__[2];
-    real_type t20  = u_rhoControl(t3, -1, 1);
-    real_type t21  = u_thetaControl(t6, -1, 1);
-    real_type t22  = u_phiControl(t9, -1, 1);
-    real_type result__ = (t3 * LM__[0] + t6 * LM__[1] + t9 * LM__[2] + LM__[3] * XM__[3] + LM__[4] * XM__[4] + LM__[5] * XM__[5] + t20 + t21 + t22) * P__[iP_T];
+    real_type t2   = P__[iP_T];
+    real_type t4   = UM__[0];
+    real_type t8   = UM__[1];
+    real_type t12  = UM__[2];
+    real_type t26  = u_rhoControl(t4, -1, 1);
+    real_type t28  = u_thetaControl(t8, -1, 1);
+    real_type t30  = u_phiControl(t12, -1, 1);
+    real_type result__ = t12 * t2 * LM__[2] + t4 * t2 * LM__[0] + t8 * t2 * LM__[1] + XM__[3] * t2 * LM__[3] + XM__[4] * t2 * LM__[4] + XM__[5] * t2 * LM__[5] + t26 * t2 + t28 * t2 + t30 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  RobotArm::g_numEqns() const
-  { return 3; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer RobotArm::g_numEqns() const { return 3; }
 
   void
   RobotArm::g_eval(
@@ -164,36 +165,24 @@ namespace RobotArmDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t4   = ALIAS_u_rhoControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = (LM__[0] + t4) * t1;
-    real_type t8   = ALIAS_u_thetaControl_D_1(UM__[1], -1, 1);
-    result__[ 1   ] = (LM__[1] + t8) * t1;
-    real_type t12  = ALIAS_u_phiControl_D_1(UM__[2], -1, 1);
-    result__[ 2   ] = (LM__[2] + t12) * t1;
+    real_type t2   = P__[iP_T];
+    real_type t5   = ALIAS_u_rhoControl_D_1(UM__[0], -1, 1);
+    result__[ 0   ] = t5 * t2 + t2 * LM__[0];
+    real_type t10  = ALIAS_u_thetaControl_D_1(UM__[1], -1, 1);
+    result__[ 1   ] = t10 * t2 + t2 * LM__[1];
+    real_type t15  = ALIAS_u_phiControl_D_1(UM__[2], -1, 1);
+    result__[ 2   ] = t15 * t2 + t2 * LM__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::DgDxlxlp_numRows() const
-  { return 3; }
-
-  integer
-  RobotArm::DgDxlxlp_numCols() const
-  { return 25; }
-
-  integer
-  RobotArm::DgDxlxlp_nnz() const
-  { return 9; }
+  integer RobotArm::DgDxlxlp_numRows() const { return 3; }
+  integer RobotArm::DgDxlxlp_numCols() const { return 25; }
+  integer RobotArm::DgDxlxlp_nnz()     const { return 9; }
 
   void
-  RobotArm::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  RobotArm::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 6   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 18  ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 24  ;
@@ -204,6 +193,7 @@ namespace RobotArmDefine {
     iIndex[7 ] = 2   ; jIndex[7 ] = 20  ;
     iIndex[8 ] = 2   ; jIndex[8 ] = 24  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -258,28 +248,17 @@ namespace RobotArmDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::DgDu_numRows() const
-  { return 3; }
-
-  integer
-  RobotArm::DgDu_numCols() const
-  { return 3; }
-
-  integer
-  RobotArm::DgDu_nnz() const
-  { return 3; }
+  integer RobotArm::DgDu_numRows() const { return 3; }
+  integer RobotArm::DgDu_numCols() const { return 3; }
+  integer RobotArm::DgDu_nnz()     const { return 3; }
 
   void
-  RobotArm::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  RobotArm::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -620,7 +599,7 @@ namespace RobotArmDefine {
     real_type t35  = pow(-X__[iX_rho1] * t1 + V__[0], 2);
     real_type t40  = pow(-X__[iX_theta1] * t1 + V__[1], 2);
     real_type t45  = pow(-X__[iX_phi1] * t1 + V__[2], 2);
-    real_type result__ = t1 * t3 + t1 * t6 + t1 * t9 + t16 + t24 + t30 + t35 + t40 + t45;
+    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1 + t16 + t24 + t30 + t35 + t40 + t45;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -629,9 +608,7 @@ namespace RobotArmDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  RobotArm::DmDu_numEqns() const
-  { return 3; }
+  integer RobotArm::DmDu_numEqns() const { return 3; }
 
   void
   RobotArm::DmDu_eval(
@@ -648,7 +625,7 @@ namespace RobotArmDefine {
     real_type t1   = P__[iP_T];
     real_type t2   = U__[iU_u_rho];
     real_type t3   = ALIAS_u_rhoControl_D_1(t2, -1, 1);
-    result__[ 0   ] = t1 * t3 - 2 * t1 * (-t2 * t1 + ModelPars[iM_L] * V__[3]);
+    result__[ 0   ] = t3 * t1 - 2 * t1 * (-t2 * t1 + ModelPars[iM_L] * V__[3]);
     real_type t12  = U__[iU_u_theta];
     real_type t13  = ALIAS_u_thetaControl_D_1(t12, -1, 1);
     real_type t15  = X__[iX_rho];
@@ -663,30 +640,17 @@ namespace RobotArmDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::DmDuu_numRows() const
-  { return 3; }
-
-  integer
-  RobotArm::DmDuu_numCols() const
-  { return 3; }
-
-  integer
-  RobotArm::DmDuu_nnz() const
-  { return 3; }
+  integer RobotArm::DmDuu_numRows() const { return 3; }
+  integer RobotArm::DmDuu_numCols() const { return 3; }
+  integer RobotArm::DmDuu_nnz()     const { return 3; }
 
   void
-  RobotArm::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  RobotArm::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   RobotArm::DmDuu_sparse(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -80,19 +80,19 @@ namespace FlowInAchannelDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = XM__[3];
-    real_type t5   = XM__[1];
-    real_type t6   = XM__[2];
-    real_type result__ = -LM__[3] * (t3 * XM__[0] - t6 * t5) * ModelPars[iM_R] + t5 * LM__[0] + t6 * LM__[1] + t3 * LM__[2];
+    real_type t2   = XM__[1];
+    real_type t5   = XM__[2];
+    real_type t8   = XM__[3];
+    real_type result__ = t2 * LM__[0] + t5 * LM__[1] + t8 * LM__[2] + (t5 * t2 - t8 * XM__[0]) * ModelPars[iM_R] * LM__[3];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  FlowInAchannel::g_numEqns() const
-  { return 0; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer FlowInAchannel::g_numEqns() const { return 0; }
 
   void
   FlowInAchannel::g_eval(
@@ -130,25 +130,15 @@ namespace FlowInAchannelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  FlowInAchannel::DgDxlxlp_numRows() const
-  { return 0; }
-
-  integer
-  FlowInAchannel::DgDxlxlp_numCols() const
-  { return 16; }
-
-  integer
-  FlowInAchannel::DgDxlxlp_nnz() const
-  { return 0; }
+  integer FlowInAchannel::DgDxlxlp_numRows() const { return 0; }
+  integer FlowInAchannel::DgDxlxlp_numCols() const { return 16; }
+  integer FlowInAchannel::DgDxlxlp_nnz()     const { return 0; }
 
   void
-  FlowInAchannel::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  FlowInAchannel::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -164,25 +154,15 @@ namespace FlowInAchannelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  FlowInAchannel::DgDu_numRows() const
-  { return 0; }
-
-  integer
-  FlowInAchannel::DgDu_numCols() const
-  { return 0; }
-
-  integer
-  FlowInAchannel::DgDu_nnz() const
-  { return 0; }
+  integer FlowInAchannel::DgDu_numRows() const { return 0; }
+  integer FlowInAchannel::DgDu_numCols() const { return 0; }
+  integer FlowInAchannel::DgDu_nnz()     const { return 0; }
 
   void
-  FlowInAchannel::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  FlowInAchannel::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -279,9 +259,7 @@ namespace FlowInAchannelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  FlowInAchannel::DmDu_numEqns() const
-  { return 0; }
+  integer FlowInAchannel::DmDu_numEqns() const { return 0; }
 
   void
   FlowInAchannel::DmDu_eval(
@@ -301,27 +279,15 @@ namespace FlowInAchannelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  FlowInAchannel::DmDuu_numRows() const
-  { return 0; }
-
-  integer
-  FlowInAchannel::DmDuu_numCols() const
-  { return 0; }
-
-  integer
-  FlowInAchannel::DmDuu_nnz() const
-  { return 0; }
+  integer FlowInAchannel::DmDuu_numRows() const { return 0; }
+  integer FlowInAchannel::DmDuu_numCols() const { return 0; }
+  integer FlowInAchannel::DmDuu_nnz()     const { return 0; }
 
   void
-  FlowInAchannel::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  FlowInAchannel::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   FlowInAchannel::DmDuu_sparse(

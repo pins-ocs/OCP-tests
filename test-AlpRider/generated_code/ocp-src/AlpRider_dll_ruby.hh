@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_dll_ruby.hh                                           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -105,8 +105,8 @@ namespace AlpRiderDefine {
   public:
 
     ALPRIDER_API_DLL
-    AlpRider_Problem( ThreadPool * TP, Console const * console )
-    : model("AlpRider",TP,console)
+    AlpRider_Problem( integer n_threads, Console const * console )
+    : model("AlpRider",n_threads,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

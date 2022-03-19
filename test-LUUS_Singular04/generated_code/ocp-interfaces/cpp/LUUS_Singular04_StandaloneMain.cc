@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    LUUS_Singular04  model("LUUS_Singular04",&TP,&console);
+    LUUS_Singular04  model("LUUS_Singular04",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_tolerance0 = 0.01;
     real_type u_epsilon0 = 0.01;
+    real_type Tf = 6;
+    real_type u_tolerance0 = 0.01;
     real_type epsi_x0 = 0.01;
     real_type epsi_x = epsi_x0;
-    real_type Tf = 6;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -160,7 +160,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
@@ -170,6 +170,7 @@ main() {
 
 
 
+    // ConstraintLT: none defined
     // Constraint1D: none defined
     // Constraint2D: none defined
 

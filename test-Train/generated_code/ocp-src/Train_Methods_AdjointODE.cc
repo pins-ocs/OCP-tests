@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_AdjointODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -64,17 +64,418 @@ using Mechatronix::MeshStd;
 namespace TrainDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  Train::Hx_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::JPx_numEqns() const { return 2; }
+
+  void
+  Train::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::LTx_numEqns() const { return 2; }
+
+  void
+  Train::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::JUx_numEqns() const { return 2; }
+
+  void
+  Train::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::JPp_numEqns() const { return 0; }
+
+  void
+  Train::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::LTp_numEqns() const { return 0; }
+
+  void
+  Train::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::JUp_numEqns() const { return 0; }
+
+  void
+  Train::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::JPu_numEqns() const { return 2; }
+
+  void
+  Train::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::LTu_numEqns() const { return 2; }
+
+  void
+  Train::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::JUu_numEqns() const { return 2; }
+
+  void
+  Train::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_uaControl_D_1(U__[iU_ua], 0, ModelPars[iM_uaMax]);
+    result__[ 1   ] = ALIAS_ubControl_D_1(U__[iU_ub], 0, ModelPars[iM_ubMax]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::LTargs_numEqns() const { return 0; }
+
+  void
+  Train::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DJPxDxp_numRows() const { return 2; }
+  integer Train::DJPxDxp_numCols() const { return 2; }
+  integer Train::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  Train::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DLTxDxp_numRows() const { return 2; }
+  integer Train::DLTxDxp_numCols() const { return 2; }
+  integer Train::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  Train::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DJUxDxp_numRows() const { return 2; }
+  integer Train::DJUxDxp_numCols() const { return 2; }
+  integer Train::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  Train::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DJPuDxp_numRows() const { return 2; }
+  integer Train::DJPuDxp_numCols() const { return 2; }
+  integer Train::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  Train::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DLTuDxp_numRows() const { return 2; }
+  integer Train::DLTuDxp_numCols() const { return 2; }
+  integer Train::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  Train::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DJUuDxp_numRows() const { return 2; }
+  integer Train::DJUuDxp_numCols() const { return 2; }
+  integer Train::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  Train::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DJPpDp_numRows() const { return 0; }
+  integer Train::DJPpDp_numCols() const { return 0; }
+  integer Train::DJPpDp_nnz()     const { return 0; }
+
+  void
+  Train::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DLTpDp_numRows() const { return 0; }
+  integer Train::DLTpDp_numCols() const { return 0; }
+  integer Train::DLTpDp_nnz()     const { return 0; }
+
+  void
+  Train::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DJUpDp_numRows() const { return 0; }
+  integer Train::DJUpDp_numCols() const { return 0; }
+  integer Train::DJUpDp_nnz()     const { return 0; }
+
+  void
+  Train::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DLTargsDxup_numRows() const { return 0; }
+  integer Train::DLTargsDxup_numCols() const { return 4; }
+  integer Train::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  Train::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Train::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::Hx_numEqns() const { return 2; }
 
   void
   Train::Hx_eval(
@@ -102,31 +503,36 @@ namespace TrainDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Train::DHxDx_numRows() const
-  { return 2; }
-
-  integer
-  Train::DHxDx_numCols() const
-  { return 2; }
-
-  integer
-  Train::DHxDx_nnz() const
-  { return 4; }
+  integer Train::Hp_numEqns() const { return 0; }
 
   void
-  Train::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  Train::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Train::DHxDxp_numRows() const { return 2; }
+  integer Train::DHxDxp_numCols() const { return 2; }
+  integer Train::DHxDxp_nnz()     const { return 4; }
+
+  void
+  Train::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
+
   void
-  Train::DHxDx_sparse(
+  Train::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -149,34 +555,22 @@ namespace TrainDefine {
     real_type t6   = acc_D_2_2(t2, t3);
     result__[ 3   ] = t6 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DHxDp_numRows() const
-  { return 2; }
-
-  integer
-  Train::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  Train::DHxDp_nnz() const
-  { return 0; }
+  integer Train::DHpDp_numRows() const { return 0; }
+  integer Train::DHpDp_numCols() const { return 0; }
+  integer Train::DHpDp_nnz()     const { return 0; }
 
   void
-  Train::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Train::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Train::DHxDp_sparse(
+  Train::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -195,9 +589,9 @@ namespace TrainDefine {
    |
   \*/
 
-  integer
-  Train::Hu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::Hu_numEqns() const { return 2; }
 
   void
   Train::Hu_eval(
@@ -219,31 +613,18 @@ namespace TrainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DHuDx_numRows() const
-  { return 2; }
-
-  integer
-  Train::DHuDx_numCols() const
-  { return 2; }
-
-  integer
-  Train::DHuDx_nnz() const
-  { return 1; }
+  integer Train::DHuDxp_numRows() const { return 2; }
+  integer Train::DHuDxp_numCols() const { return 2; }
+  integer Train::DHuDxp_nnz()     const { return 1; }
 
   void
-  Train::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Train::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Train::DHuDx_sparse(
+  Train::DHuDxp_sparse(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -256,98 +637,7 @@ namespace TrainDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DHuDp_numRows() const
-  { return 2; }
-
-  integer
-  Train::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  Train::DHuDp_nnz() const
-  { return 0; }
-
-  void
-  Train::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Train::DHuDp_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  Train::Hp_numEqns() const
-  { return 0; }
-
-  void
-  Train::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  Train::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  Train::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  Train::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Train::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__,"DHuDxp_sparse", 1, i_segment );
   }
 
   /*\
@@ -357,9 +647,10 @@ namespace TrainDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  Train::eta_numEqns() const
-  { return 2; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::eta_numEqns() const { return 2; }
 
   void
   Train::eta_eval(
@@ -379,62 +670,18 @@ namespace TrainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DetaDx_numRows() const
-  { return 2; }
-
-  integer
-  Train::DetaDx_numCols() const
-  { return 2; }
-
-  integer
-  Train::DetaDx_nnz() const
-  { return 0; }
+  integer Train::DetaDxp_numRows() const { return 2; }
+  integer Train::DetaDxp_numCols() const { return 2; }
+  integer Train::DetaDxp_nnz()     const { return 0; }
 
   void
-  Train::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Train::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  Train::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DetaDp_numRows() const
-  { return 2; }
-
-  integer
-  Train::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  Train::DetaDp_nnz() const
-  { return 0; }
 
   void
-  Train::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Train::DetaDp_sparse(
+  Train::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -449,9 +696,9 @@ namespace TrainDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  Train::nu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::nu_numEqns() const { return 2; }
 
   void
   Train::nu_eval(
@@ -471,63 +718,18 @@ namespace TrainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DnuDx_numRows() const
-  { return 2; }
-
-  integer
-  Train::DnuDx_numCols() const
-  { return 2; }
-
-  integer
-  Train::DnuDx_nnz() const
-  { return 0; }
+  integer Train::DnuDxp_numRows() const { return 2; }
+  integer Train::DnuDxp_numCols() const { return 2; }
+  integer Train::DnuDxp_nnz()     const { return 0; }
 
   void
-  Train::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Train::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  Train::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DnuDp_numRows() const
-  { return 2; }
-
-  integer
-  Train::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  Train::DnuDp_nnz() const
-  { return 0; }
 
   void
-  Train::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Train::DnuDp_sparse(
+  Train::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: Underwater_ffi_structs.rb                                         #
 #                                                                          #
-#  version: 1.0   date 31/1/2022                                           #
+#  version: 1.0   date 19/3/2022                                           #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #
@@ -115,6 +115,8 @@ module Underwater
 
   class Underwater_constraints_params < FFI::Struct
     layout(
+      # LT constraints
+
       # 1D constraints
 
       # 2D constraints

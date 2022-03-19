@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -88,58 +88,48 @@ namespace gtocX_2burnDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_muS];
-    real_type t2   = sqrt(t1);
-    real_type t4   = XM__[0];
-    real_type t5   = sqrt(t4);
-    real_type t6   = t5 * t4;
-    real_type t10  = ModelPars[iM_time_i];
-    real_type t11  = ModelPars[iM_time_f] - t10;
-    real_type t14  = QM__[0] * t11 + t10;
-    real_type t15  = p_guess(t14);
-    real_type t16  = t15 * t15;
-    real_type t19  = -1 + ModelPars[iM_w_guess];
-    real_type t20  = t19 * t6;
-    real_type t21  = L_guess(t14, t10);
-    real_type t22  = t21 * t21;
-    real_type t25  = t6 * t2;
-    real_type t27  = XM__[5];
-    real_type t32  = XM__[1];
-    real_type t33  = cos(t27);
-    real_type t35  = XM__[2];
-    real_type t36  = sin(t27);
-    real_type t37  = t36 * t35;
-    real_type t39  = ray_positive(t33 * t32 + t37 + 1);
-    real_type t42  = f_guess(t14);
-    real_type t43  = t42 * t42;
-    real_type t50  = g_guess(t14);
-    real_type t51  = t50 * t50;
-    real_type t58  = h_guess(t14);
-    real_type t59  = t58 * t58;
-    real_type t62  = XM__[3];
-    real_type t67  = k_guess(t14);
-    real_type t68  = t67 * t67;
-    real_type t71  = XM__[4];
-    real_type t76  = t4 * t4;
-    real_type t85  = ray(t4, t32, t35, t27);
-    real_type t86  = acceleration_r(t85, t1);
-    real_type t89  = t32 * t32;
-    real_type t90  = t35 * t35;
-    real_type t91  = t62 * t62;
-    real_type t92  = t71 * t71;
-    real_type t93  = t27 * t27;
-    real_type t100 = t33 * t33;
-    real_type t111 = -t43 * t19 * t25 + 2 * t42 * t19 * t32 * t25 - t51 * t19 * t25 + 2 * t50 * t19 * t35 * t25 - t59 * t19 * t25 + 2 * t58 * t20 * t2 * t62 - t68 * t19 * t25 + 2 * t67 * t20 * t2 * t71 - t86 * (LM__[2] * t33 - LM__[1] * t36) * t11 * ModelPars[iM_w_nonlin] * t76 - t20 * (t89 + t90 + t91 + t92 + t93 + 1) * t2 + (t100 * (t89 - t90) + t33 * (2 * t35 * t32 * t36 + 2 * t32) + 2 * t37 + t90 + 1) * t11 * LM__[5] * t1;
-    real_type result__ = 1.0 / t16 * (2 * t15 * t19 * t5 * t76 * t2 + 2 * t21 * t19 * t27 * t16 * t25 - t19 * t2 * t5 * t76 * t4 - t22 * t20 * t2 * t16 + t25 * t16 * t39 + t16 * t111) / t6 / t2;
+    real_type t1   = XM__[1];
+    real_type t2   = XM__[5];
+    real_type t3   = cos(t2);
+    real_type t5   = XM__[2];
+    real_type t6   = sin(t2);
+    real_type t8   = -t3 * t1 - t6 * t5 - 1;
+    real_type t9   = ray_positive(t8);
+    real_type t12  = XM__[0];
+    real_type t13  = QM__[0];
+    real_type t15  = ModelPars[iM_time_i];
+    real_type t17  = ModelPars[iM_time_f];
+    real_type t19  = t15 * (1 - t13) + t17 * t13;
+    real_type t20  = p_guess(t19);
+    real_type t24  = pow(1.0 / t20 * t12 - 1, 2);
+    real_type t25  = f_guess(t19);
+    real_type t27  = pow(t1 - t25, 2);
+    real_type t28  = g_guess(t19);
+    real_type t30  = pow(t5 - t28, 2);
+    real_type t32  = h_guess(t19);
+    real_type t34  = pow(XM__[3] - t32, 2);
+    real_type t36  = k_guess(t19);
+    real_type t38  = pow(XM__[4] - t36, 2);
+    real_type t39  = L_guess(t19, t15);
+    real_type t41  = pow(t2 - t39, 2);
+    real_type t45  = t17 - t15;
+    real_type t47  = sqrt(t12);
+    real_type t49  = ModelPars[iM_muS];
+    real_type t50  = sqrt(t49);
+    real_type t53  = ModelPars[iM_w_nonlin] / t50;
+    real_type t54  = ray(t12, t1, t5, t2);
+    real_type t55  = acceleration_r(t54, t49);
+    real_type t68  = t8 * t8;
+    real_type result__ = t9 + (t24 + t27 + t30 + t34 + t38 + t41) * (1 - ModelPars[iM_w_guess]) + t6 * t55 * t53 * t47 * t45 * LM__[1] - t3 * t55 * t53 * t47 * t45 * LM__[2] + t50 / t47 / t12 * t68 * t45 * LM__[5];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  gtocX_2burn::g_numEqns() const
-  { return 0; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer gtocX_2burn::g_numEqns() const { return 0; }
 
   void
   gtocX_2burn::g_eval(
@@ -181,25 +171,15 @@ namespace gtocX_2burnDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  gtocX_2burn::DgDxlxlp_numRows() const
-  { return 0; }
-
-  integer
-  gtocX_2burn::DgDxlxlp_numCols() const
-  { return 24; }
-
-  integer
-  gtocX_2burn::DgDxlxlp_nnz() const
-  { return 0; }
+  integer gtocX_2burn::DgDxlxlp_numRows() const { return 0; }
+  integer gtocX_2burn::DgDxlxlp_numCols() const { return 24; }
+  integer gtocX_2burn::DgDxlxlp_nnz()     const { return 0; }
 
   void
-  gtocX_2burn::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  gtocX_2burn::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -215,25 +195,15 @@ namespace gtocX_2burnDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  gtocX_2burn::DgDu_numRows() const
-  { return 0; }
-
-  integer
-  gtocX_2burn::DgDu_numCols() const
-  { return 0; }
-
-  integer
-  gtocX_2burn::DgDu_nnz() const
-  { return 0; }
+  integer gtocX_2burn::DgDu_numRows() const { return 0; }
+  integer gtocX_2burn::DgDu_numCols() const { return 0; }
+  integer gtocX_2burn::DgDu_nnz()     const { return 0; }
 
   void
-  gtocX_2burn::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  gtocX_2burn::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -319,7 +289,7 @@ namespace gtocX_2burnDefine {
     real_type t3   = cos(t2);
     real_type t5   = X__[iX_g];
     real_type t6   = sin(t2);
-    real_type t8   = t3 * t1 + t6 * t5 + 1;
+    real_type t8   = -t3 * t1 - t6 * t5 - 1;
     real_type t9   = ray_positive(t8);
     real_type t11  = V__[0] * V__[0];
     real_type t15  = ModelPars[iM_time_f] - ModelPars[iM_time_i];
@@ -335,9 +305,9 @@ namespace gtocX_2burnDefine {
     real_type t35  = pow(t3 * t26 * t22 + V__[2], 2);
     real_type t37  = V__[3] * V__[3];
     real_type t39  = V__[4] * V__[4];
-    real_type t41  = t8 * t8;
-    real_type t48  = pow(V__[5] - t20 / t17 / t16 * t41 * t15, 2);
-    real_type result__ = t9 + t11 + t30 + t35 + t37 + t39 + t48;
+    real_type t42  = t8 * t8;
+    real_type t49  = pow(V__[5] - t20 / t17 / t16 * t42 * t15, 2);
+    real_type result__ = t9 + t11 + t30 + t35 + t37 + t39 + t49;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -346,9 +316,7 @@ namespace gtocX_2burnDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  gtocX_2burn::DmDu_numEqns() const
-  { return 0; }
+  integer gtocX_2burn::DmDu_numEqns() const { return 0; }
 
   void
   gtocX_2burn::DmDu_eval(
@@ -368,27 +336,15 @@ namespace gtocX_2burnDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  gtocX_2burn::DmDuu_numRows() const
-  { return 0; }
-
-  integer
-  gtocX_2burn::DmDuu_numCols() const
-  { return 0; }
-
-  integer
-  gtocX_2burn::DmDuu_nnz() const
-  { return 0; }
+  integer gtocX_2burn::DmDuu_numRows() const { return 0; }
+  integer gtocX_2burn::DmDuu_numCols() const { return 0; }
+  integer gtocX_2burn::DmDuu_nnz()     const { return 0; }
 
   void
-  gtocX_2burn::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  gtocX_2burn::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   gtocX_2burn::DmDuu_sparse(

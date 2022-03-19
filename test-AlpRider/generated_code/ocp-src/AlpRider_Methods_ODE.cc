@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_ODE.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -54,9 +54,7 @@ namespace AlpRiderDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  AlpRider::rhs_ode_numEqns() const
-  { return 4; }
+  integer AlpRider::rhs_ode_numEqns() const { return 4; }
 
   void
   AlpRider::rhs_ode_eval(
@@ -82,36 +80,33 @@ namespace AlpRiderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AlpRider::Drhs_odeDx_numRows() const
-  { return 4; }
-
-  integer
-  AlpRider::Drhs_odeDx_numCols() const
-  { return 4; }
-
-  integer
-  AlpRider::Drhs_odeDx_nnz() const
-  { return 6; }
+  integer AlpRider::Drhs_odeDxup_numRows() const { return 4; }
+  integer AlpRider::Drhs_odeDxup_numCols() const { return 6; }
+  integer AlpRider::Drhs_odeDxup_nnz()     const { return 14; }
 
   void
-  AlpRider::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  AlpRider::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 3   ;
-    iIndex[4 ] = 3   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 3   ; jIndex[5 ] = 3   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 5   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 3   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 2   ; jIndex[9 ] = 5   ;
+    iIndex[10] = 3   ; jIndex[10] = 2   ;
+    iIndex[11] = 3   ; jIndex[11] = 3   ;
+    iIndex[12] = 3   ; jIndex[12] = 4   ;
+    iIndex[13] = 3   ; jIndex[13] = 5   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  AlpRider::Drhs_odeDx_sparse(
+  AlpRider::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -122,100 +117,21 @@ namespace AlpRiderDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -10;
-    result__[ 1   ] = -2;
-    result__[ 2   ] = -3;
-    result__[ 3   ] = 5;
-    result__[ 4   ] = 5;
-    result__[ 5   ] = -3;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 6, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AlpRider::Drhs_odeDp_numRows() const
-  { return 4; }
-
-  integer
-  AlpRider::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  AlpRider::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  AlpRider::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  AlpRider::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AlpRider::Drhs_odeDu_numRows() const
-  { return 4; }
-
-  integer
-  AlpRider::Drhs_odeDu_numCols() const
-  { return 2; }
-
-  integer
-  AlpRider::Drhs_odeDu_nnz() const
-  { return 8; }
-
-  void
-  AlpRider::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 0   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 1   ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 0   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 1   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  AlpRider::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
-    result__[ 3   ] = 2;
+    result__[ 3   ] = -2;
     result__[ 4   ] = 1;
-    result__[ 5   ] = -1;
-    result__[ 6   ] = 1;
-    result__[ 7   ] = 3;
+    result__[ 5   ] = 2;
+    result__[ 6   ] = -3;
+    result__[ 7   ] = 5;
+    result__[ 8   ] = 1;
+    result__[ 9   ] = -1;
+    result__[ 10  ] = 5;
+    result__[ 11  ] = -3;
+    result__[ 12  ] = 1;
+    result__[ 13  ] = 3;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 8, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 14, i_segment );
   }
 
   /*\
@@ -225,28 +141,19 @@ namespace AlpRiderDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  AlpRider::A_numRows() const
-  { return 4; }
-
-  integer
-  AlpRider::A_numCols() const
-  { return 4; }
-
-  integer
-  AlpRider::A_nnz() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer AlpRider::A_numRows() const { return 4; }
+  integer AlpRider::A_numCols() const { return 4; }
+  integer AlpRider::A_nnz()     const { return 4; }
 
   void
-  AlpRider::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  AlpRider::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

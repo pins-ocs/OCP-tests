@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_Methods_problem.cc                                  |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -81,7 +81,7 @@ namespace Hager_2000Define {
   \*/
 
   real_type
-  Hager_2000::penalties_eval(
+  Hager_2000::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -92,7 +92,7 @@ namespace Hager_2000Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -100,7 +100,7 @@ namespace Hager_2000Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Hager_2000::control_penalties_eval(
+  Hager_2000::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -111,10 +111,31 @@ namespace Hager_2000Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Hager_2000::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -174,9 +195,7 @@ namespace Hager_2000Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Hager_2000::DmayerDxxp_numEqns() const
-  { return 2; }
+  integer Hager_2000::DmayerDxxp_numEqns() const { return 2; }
 
   void
   Hager_2000::DmayerDxxp_eval(
@@ -208,9 +227,7 @@ namespace Hager_2000Define {
    |              |___/                 |___/
   \*/
 
-  integer
-  Hager_2000::DlagrangeDxup_numEqns() const
-  { return 2; }
+  integer Hager_2000::DlagrangeDxup_numEqns() const { return 2; }
 
   void
   Hager_2000::DlagrangeDxup_eval(
@@ -229,62 +246,47 @@ namespace Hager_2000Define {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 2, i_segment );
   }
 
-  integer
-  Hager_2000::DJDx_numEqns() const
-  { return 1; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Hager_2000::IPOPT_hess_numRows() const { return 2; }
+  integer Hager_2000::IPOPT_hess_numCols() const { return 2; }
+  integer Hager_2000::IPOPT_hess_nnz()     const { return 2; }
 
   void
-  Hager_2000::DJDx_eval(
-    NodeType const     & NODE__,
+  Hager_2000::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Hager_2000::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
+    result__[ 0   ] = 4 * sigma__;
+    result__[ 1   ] = 2 * sigma__;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Hager_2000::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  Hager_2000::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Hager_2000::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  Hager_2000::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 2, i_segment );
   }
 
   /*\
@@ -317,9 +319,7 @@ namespace Hager_2000Define {
    |              |___/
   \*/
 
-  integer
-  Hager_2000::segmentLink_numEqns() const
-  { return 0; }
+  integer Hager_2000::segmentLink_numEqns() const { return 0; }
 
   void
   Hager_2000::segmentLink_eval(
@@ -333,17 +333,9 @@ namespace Hager_2000Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Hager_2000::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  Hager_2000::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  Hager_2000::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer Hager_2000::DsegmentLinkDxp_numRows() const { return 0; }
+  integer Hager_2000::DsegmentLinkDxp_numCols() const { return 0; }
+  integer Hager_2000::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   Hager_2000::DsegmentLinkDxp_pattern(
@@ -373,9 +365,7 @@ namespace Hager_2000Define {
    |                 |_|
   \*/
 
-  integer
-  Hager_2000::jump_numEqns() const
-  { return 2; }
+  integer Hager_2000::jump_numEqns() const { return 2; }
 
   void
   Hager_2000::jump_eval(
@@ -401,29 +391,18 @@ namespace Hager_2000Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Hager_2000::DjumpDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  Hager_2000::DjumpDxlxlp_numCols() const
-  { return 4; }
-
-  integer
-  Hager_2000::DjumpDxlxlp_nnz() const
-  { return 4; }
+  integer Hager_2000::DjumpDxlxlp_numRows() const { return 2; }
+  integer Hager_2000::DjumpDxlxlp_numCols() const { return 4; }
+  integer Hager_2000::DjumpDxlxlp_nnz()     const { return 4; }
 
   void
-  Hager_2000::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Hager_2000::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -460,9 +439,7 @@ namespace Hager_2000Define {
    |                                                    |___/
   \*/
 
-  integer
-  Hager_2000::post_numEqns() const
-  { return 2; }
+  integer Hager_2000::post_numEqns() const { return 2; }
 
   void
   Hager_2000::post_eval(
@@ -484,9 +461,7 @@ namespace Hager_2000Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Hager_2000::integrated_post_numEqns() const
-  { return 0; }
+  integer Hager_2000::integrated_post_numEqns() const { return 0; }
 
   void
   Hager_2000::integrated_post_eval(

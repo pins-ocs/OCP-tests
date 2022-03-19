@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods_problem.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -88,7 +88,7 @@ namespace WorstCaseScenarioDefine {
   \*/
 
   real_type
-  WorstCaseScenario::penalties_eval(
+  WorstCaseScenario::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -99,7 +99,7 @@ namespace WorstCaseScenarioDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -107,7 +107,7 @@ namespace WorstCaseScenarioDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  WorstCaseScenario::control_penalties_eval(
+  WorstCaseScenario::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -118,10 +118,31 @@ namespace WorstCaseScenarioDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = uControl(U__[iU_u], 0, 1);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  WorstCaseScenario::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -179,9 +200,7 @@ namespace WorstCaseScenarioDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  WorstCaseScenario::DmayerDxxp_numEqns() const
-  { return 2; }
+  integer WorstCaseScenario::DmayerDxxp_numEqns() const { return 2; }
 
   void
   WorstCaseScenario::DmayerDxxp_eval(
@@ -213,9 +232,7 @@ namespace WorstCaseScenarioDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  WorstCaseScenario::DlagrangeDxup_numEqns() const
-  { return 2; }
+  integer WorstCaseScenario::DlagrangeDxup_numEqns() const { return 2; }
 
   void
   WorstCaseScenario::DlagrangeDxup_eval(
@@ -234,62 +251,38 @@ namespace WorstCaseScenarioDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 2, i_segment );
   }
 
-  integer
-  WorstCaseScenario::DJDx_numEqns() const
-  { return 1; }
-
-  void
-  WorstCaseScenario::DJDx_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 1, i_segment );
-  }
-
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  WorstCaseScenario::DJDp_numEqns() const
-  { return 0; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::IPOPT_hess_numRows() const { return 2; }
+  integer WorstCaseScenario::IPOPT_hess_numCols() const { return 2; }
+  integer WorstCaseScenario::IPOPT_hess_nnz()     const { return 0; }
 
   void
-  WorstCaseScenario::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  WorstCaseScenario::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  WorstCaseScenario::DJDu_numEqns() const
-  { return 1; }
-
   void
-  WorstCaseScenario::DJDu_eval(
-    NodeType const     & NODE__,
+  WorstCaseScenario::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+    // EMPTY!
   }
 
   /*\
@@ -322,9 +315,7 @@ namespace WorstCaseScenarioDefine {
    |              |___/
   \*/
 
-  integer
-  WorstCaseScenario::segmentLink_numEqns() const
-  { return 0; }
+  integer WorstCaseScenario::segmentLink_numEqns() const { return 0; }
 
   void
   WorstCaseScenario::segmentLink_eval(
@@ -338,17 +329,9 @@ namespace WorstCaseScenarioDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  WorstCaseScenario::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer WorstCaseScenario::DsegmentLinkDxp_numRows() const { return 0; }
+  integer WorstCaseScenario::DsegmentLinkDxp_numCols() const { return 0; }
+  integer WorstCaseScenario::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   WorstCaseScenario::DsegmentLinkDxp_pattern(
@@ -378,9 +361,7 @@ namespace WorstCaseScenarioDefine {
    |                 |_|
   \*/
 
-  integer
-  WorstCaseScenario::jump_numEqns() const
-  { return 2; }
+  integer WorstCaseScenario::jump_numEqns() const { return 2; }
 
   void
   WorstCaseScenario::jump_eval(
@@ -406,29 +387,18 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DjumpDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  WorstCaseScenario::DjumpDxlxlp_numCols() const
-  { return 4; }
-
-  integer
-  WorstCaseScenario::DjumpDxlxlp_nnz() const
-  { return 4; }
+  integer WorstCaseScenario::DjumpDxlxlp_numRows() const { return 2; }
+  integer WorstCaseScenario::DjumpDxlxlp_numCols() const { return 4; }
+  integer WorstCaseScenario::DjumpDxlxlp_nnz()     const { return 4; }
 
   void
-  WorstCaseScenario::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  WorstCaseScenario::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -465,9 +435,7 @@ namespace WorstCaseScenarioDefine {
    |                                                    |___/
   \*/
 
-  integer
-  WorstCaseScenario::post_numEqns() const
-  { return 0; }
+  integer WorstCaseScenario::post_numEqns() const { return 0; }
 
   void
   WorstCaseScenario::post_eval(
@@ -481,9 +449,7 @@ namespace WorstCaseScenarioDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  WorstCaseScenario::integrated_post_numEqns() const
-  { return 0; }
+  integer WorstCaseScenario::integrated_post_numEqns() const { return 0; }
 
   void
   WorstCaseScenario::integrated_post_eval(

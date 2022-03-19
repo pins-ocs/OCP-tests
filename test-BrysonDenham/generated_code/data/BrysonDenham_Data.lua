@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -33,6 +33,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -275,15 +277,16 @@ content = {
   -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     X1boundsubType   = "PENALTY_REGULAR",
     X1boundepsilon   = epsi,
     X1boundtolerance = tol,
     X1boundactive    = true
 
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 
@@ -295,8 +298,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

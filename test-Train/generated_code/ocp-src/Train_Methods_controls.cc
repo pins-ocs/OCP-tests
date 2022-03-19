@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_controls.cc                                      |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -109,9 +109,9 @@ namespace TrainDefine {
     return result__;
   }
 
-  integer
-  Train::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Train::g_numEqns() const { return 2; }
 
   void
   Train::g_eval(
@@ -149,24 +149,12 @@ namespace TrainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  Train::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  Train::DgDxlxlp_nnz() const
-  { return 6; }
+  integer Train::DgDxlxlp_numRows() const { return 2; }
+  integer Train::DgDxlxlp_numCols() const { return 8; }
+  integer Train::DgDxlxlp_nnz()     const { return 6; }
 
   void
-  Train::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Train::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
@@ -174,6 +162,7 @@ namespace TrainDefine {
     iIndex[4 ] = 1   ; jIndex[4 ] = 3   ;
     iIndex[5 ] = 1   ; jIndex[5 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -214,27 +203,16 @@ namespace TrainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  Train::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  Train::DgDu_nnz() const
-  { return 2; }
+  integer Train::DgDu_numRows() const { return 2; }
+  integer Train::DgDu_numCols() const { return 2; }
+  integer Train::DgDu_nnz()     const { return 2; }
 
   void
-  Train::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Train::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -429,9 +407,7 @@ namespace TrainDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Train::DmDu_numEqns() const
-  { return 2; }
+  integer Train::DmDu_numEqns() const { return 2; }
 
   void
   Train::DmDu_eval(
@@ -461,31 +437,18 @@ namespace TrainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Train::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  Train::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  Train::DmDuu_nnz() const
-  { return 4; }
+  integer Train::DmDuu_numRows() const { return 2; }
+  integer Train::DmDuu_numCols() const { return 2; }
+  integer Train::DmDuu_nnz()     const { return 4; }
 
   void
-  Train::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Train::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Train::DmDuu_sparse(

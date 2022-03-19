@@ -3,9 +3,9 @@
 #                                                                          #
 #  file: ICLOCS_StirredTank_ffi_structs.rb                                 #
 #                                                                          #
-#  version: 1.0   date 20/12/2021                                          #
+#  version: 1.0   date 19/3/2022                                           #
 #                                                                          #
-#  Copyright (C) 2021                                                      #
+#  Copyright (C) 2022                                                      #
 #                                                                          #
 #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                              #
@@ -111,20 +111,24 @@ module ICLOCS_StirredTank
 
   class ICLOCS_StirredTank_constraints_params < FFI::Struct
     layout(
-      # 1D constraints
-      :tfboundSubType,   :index_t,
-      :tfboundEpsilon,   :data_t,
+      # LT constraints
+      :tfboundSubType, :index_t,
+      :tfboundEpsilon, :data_t,
       :tfboundTolerance, :data_t,
-      :x1boundSubType,   :index_t,
-      :x1boundEpsilon,   :data_t,
-      :x1boundTolerance, :data_t,
-      :x1boundMinValue,  :data_t,
-      :x1boundMaxValue,  :data_t,
-      :x2boundSubType,   :index_t,
-      :x2boundEpsilon,   :data_t,
-      :x2boundTolerance, :data_t,
-      :x2boundMinValue,  :data_t,
-      :x2boundMaxValue,  :data_t,
+      :x1bound_minSubType, :index_t,
+      :x1bound_minEpsilon, :data_t,
+      :x1bound_minTolerance, :data_t,
+      :x1bound_maxSubType, :index_t,
+      :x1bound_maxEpsilon, :data_t,
+      :x1bound_maxTolerance, :data_t,
+      :x2bound_minSubType, :index_t,
+      :x2bound_minEpsilon, :data_t,
+      :x2bound_minTolerance, :data_t,
+      :x2bound_maxSubType, :index_t,
+      :x2bound_maxEpsilon, :data_t,
+      :x2bound_maxTolerance, :data_t,
+
+      # 1D constraints
 
       # 2D constraints
 

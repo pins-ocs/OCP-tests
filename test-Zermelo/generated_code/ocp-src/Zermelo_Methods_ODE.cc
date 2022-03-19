@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_ODE.cc                                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -54,9 +54,7 @@ namespace ZermeloDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  Zermelo::rhs_ode_numEqns() const
-  { return 5; }
+  integer Zermelo::rhs_ode_numEqns() const { return 5; }
 
   void
   Zermelo::rhs_ode_eval(
@@ -88,24 +86,12 @@ namespace ZermeloDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::Drhs_odeDx_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::Drhs_odeDx_numCols() const
-  { return 5; }
-
-  integer
-  Zermelo::Drhs_odeDx_nnz() const
-  { return 10; }
+  integer Zermelo::Drhs_odeDxup_numRows() const { return 5; }
+  integer Zermelo::Drhs_odeDxup_numCols() const { return 6; }
+  integer Zermelo::Drhs_odeDxup_nnz()     const { return 12; }
 
   void
-  Zermelo::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Zermelo::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -115,13 +101,16 @@ namespace ZermeloDefine {
     iIndex[6 ] = 1   ; jIndex[6 ] = 3   ;
     iIndex[7 ] = 1   ; jIndex[7 ] = 4   ;
     iIndex[8 ] = 2   ; jIndex[8 ] = 4   ;
-    iIndex[9 ] = 3   ; jIndex[9 ] = 4   ;
+    iIndex[9 ] = 2   ; jIndex[9 ] = 5   ;
+    iIndex[10] = 3   ; jIndex[10] = 4   ;
+    iIndex[11] = 3   ; jIndex[11] = 5   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Zermelo::Drhs_odeDx_sparse(
+  Zermelo::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -152,89 +141,13 @@ namespace ZermeloDefine {
     real_type t13  = U__[iU_u];
     real_type t14  = cos(t13);
     result__[ 8   ] = t14 * t12;
-    real_type t15  = sin(t13);
-    result__[ 9   ] = t15 * t12;
+    real_type t15  = t12 * result__[6];
+    real_type t16  = sin(t13);
+    result__[ 9   ] = -t16 * t15;
+    result__[ 10  ] = t16 * t12;
+    result__[ 11  ] = t14 * t15;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 10, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::Drhs_odeDp_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  Zermelo::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  Zermelo::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Zermelo::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::Drhs_odeDu_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::Drhs_odeDu_numCols() const
-  { return 1; }
-
-  integer
-  Zermelo::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  Zermelo::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 2   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 3   ; jIndex[1 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Zermelo::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ModelPars[iM_S] * X__[iX_T];
-    real_type t4   = U__[iU_u];
-    real_type t5   = sin(t4);
-    result__[ 0   ] = -t5 * t3;
-    real_type t7   = cos(t4);
-    result__[ 1   ] = t7 * t3;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 12, i_segment );
   }
 
   /*\
@@ -244,29 +157,20 @@ namespace ZermeloDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  Zermelo::A_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::A_numCols() const
-  { return 5; }
-
-  integer
-  Zermelo::A_nnz() const
-  { return 5; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::A_numRows() const { return 5; }
+  integer Zermelo::A_numCols() const { return 5; }
+  integer Zermelo::A_nnz()     const { return 5; }
 
   void
-  Zermelo::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Zermelo::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
     iIndex[4 ] = 4   ; jIndex[4 ] = 4   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

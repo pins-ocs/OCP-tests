@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Main.cc                                 |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    ICLOCS_TwoLinkRobotArm model("ICLOCS_TwoLinkRobotArm",&TP,&console);
+    ICLOCS_TwoLinkRobotArm model("ICLOCS_TwoLinkRobotArm",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type u_epsilon0 = 0.01;
     real_type u_tolerance0 = 0.01;
     real_type u_tolerance = u_tolerance0;
-    real_type u_epsilon0 = 0.01;
     real_type u_epsilon = u_epsilon0;
     integer InfoLevel = 4;
 
@@ -138,13 +138,13 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
+    data_Parameters["T_guess"] = 3;
+    data_Parameters["W"] = 0;
     data_Parameters["rho"] = 0.01;
 
     // Guess Parameters
 
     // Boundary Conditions
-    data_Parameters["T_guess"] = 3;
-    data_Parameters["W"] = 0;
     data_Parameters["alpha_f"] = 0.522;
     data_Parameters["alpha_i"] = 0;
     data_Parameters["theta_f"] = 0.5;
@@ -169,7 +169,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u1Control = data_Controls["u1Control"];
@@ -185,14 +185,15 @@ main() {
 
 
 
+    // ConstraintLT: none defined
     // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_TwoLinkRobotArm_data.Mesh["s0"] = 0;
-ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 800;
 ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 800;
 
 
     // alias for user object classes passed as pointers

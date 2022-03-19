@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_ODE.cc                  |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,9 +50,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::rhs_ode_numEqns() const
-  { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::rhs_ode_numEqns() const { return 3; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::rhs_ode_eval(
@@ -84,36 +82,27 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDx_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDx_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDx_nnz() const
-  { return 6; }
+  integer ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDxup_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDxup_numCols() const { return 4; }
+  integer ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDxup_nnz()     const { return 8; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 1   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 0   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 1   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDx_sparse(
+  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -133,93 +122,20 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t10  = 1.0 / t3;
     real_type t11  = t10 * t1;
     result__[ 2   ] = 2 * t11;
-    real_type t12  = X__[iX_vr];
-    result__[ 3   ] = t5 * t1 * t12;
-    result__[ 4   ] = -t11;
-    result__[ 5   ] = -t10 * t12;
+    real_type t12  = ModelPars[iM_T];
+    real_type t13  = U__[iU_theta];
+    real_type t14  = cos(t13);
+    real_type t17  = mass(Q__[iQ_zeta]);
+    real_type t18  = 1.0 / t17;
+    result__[ 3   ] = t18 * t14 * t12;
+    real_type t19  = X__[iX_vr];
+    result__[ 4   ] = t5 * t1 * t19;
+    result__[ 5   ] = -t11;
+    result__[ 6   ] = -t10 * t19;
+    real_type t22  = sin(t13);
+    result__[ 7   ] = -t18 * t22 * t12;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 6, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDp_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDu_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 2   ; jIndex[1 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_T];
-    real_type t2   = U__[iU_theta];
-    real_type t3   = cos(t2);
-    real_type t6   = mass(Q__[iQ_zeta]);
-    real_type t7   = 1.0 / t6;
-    result__[ 0   ] = t7 * t3 * t1;
-    real_type t8   = sin(t2);
-    result__[ 1   ] = -t7 * t8 * t1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 8, i_segment );
   }
 
   /*\
@@ -229,27 +145,18 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::A_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::A_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::A_nnz() const
-  { return 3; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::A_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::A_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::A_nnz()     const { return 3; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

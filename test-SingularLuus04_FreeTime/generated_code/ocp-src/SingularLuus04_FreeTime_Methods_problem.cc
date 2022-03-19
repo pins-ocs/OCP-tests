@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_problem.cc                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -103,7 +103,7 @@ namespace SingularLuus04_FreeTimeDefine {
   \*/
 
   real_type
-  SingularLuus04_FreeTime::penalties_eval(
+  SingularLuus04_FreeTime::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -114,7 +114,7 @@ namespace SingularLuus04_FreeTimeDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -122,7 +122,7 @@ namespace SingularLuus04_FreeTimeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  SingularLuus04_FreeTime::control_penalties_eval(
+  SingularLuus04_FreeTime::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -134,10 +134,31 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t3   = uControl(U__[iU_u], -1, 1);
     real_type result__ = t3 * X__[iX_T];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  SingularLuus04_FreeTime::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -197,9 +218,7 @@ namespace SingularLuus04_FreeTimeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularLuus04_FreeTime::DmayerDxxp_numEqns() const
-  { return 8; }
+  integer SingularLuus04_FreeTime::DmayerDxxp_numEqns() const { return 8; }
 
   void
   SingularLuus04_FreeTime::DmayerDxxp_eval(
@@ -237,9 +256,7 @@ namespace SingularLuus04_FreeTimeDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  SingularLuus04_FreeTime::DlagrangeDxup_numEqns() const
-  { return 5; }
+  integer SingularLuus04_FreeTime::DlagrangeDxup_numEqns() const { return 5; }
 
   void
   SingularLuus04_FreeTime::DlagrangeDxup_eval(
@@ -254,7 +271,7 @@ namespace SingularLuus04_FreeTimeDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t2   = X__[iX_x];
-    result__[ 0   ] = 2 * t1 * t2;
+    result__[ 0   ] = 2 * t2 * t1;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
     real_type t4   = t2 * t2;
@@ -264,66 +281,63 @@ namespace SingularLuus04_FreeTimeDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 5, i_segment );
   }
 
-  integer
-  SingularLuus04_FreeTime::DJDx_numEqns() const
-  { return 4; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SingularLuus04_FreeTime::IPOPT_hess_numRows() const { return 5; }
+  integer SingularLuus04_FreeTime::IPOPT_hess_numCols() const { return 5; }
+  integer SingularLuus04_FreeTime::IPOPT_hess_nnz()     const { return 10; }
 
   void
-  SingularLuus04_FreeTime::DJDx_eval(
-    NodeType const     & NODE__,
+  SingularLuus04_FreeTime::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 3   ;
+    iIndex[3 ] = 2   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 3   ; jIndex[4 ] = 0   ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 1   ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 3   ;
+    iIndex[8 ] = 3   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 4   ; jIndex[9 ] = 3   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  SingularLuus04_FreeTime::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    result__[ 2   ] = 0;
-    result__[ 3   ] = uControl(U__[iU_u], -1, 1);
+    result__[ 0   ] = 2 * sigma__ * X__[iX_T];
+    result__[ 1   ] = 2 * sigma__ * X__[iX_x];
+    result__[ 2   ] = L__[iL_lambda1__xo];
+    result__[ 3   ] = L__[iL_lambda2__xo];
+    result__[ 4   ] = result__[1];
+    result__[ 5   ] = result__[2];
+    result__[ 6   ] = result__[3];
+    result__[ 7   ] = 2 * sigma__ * ModelPars[iM_theta];
+    result__[ 8   ] = L__[iL_lambda3__xo];
+    result__[ 9   ] = result__[8];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  SingularLuus04_FreeTime::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  SingularLuus04_FreeTime::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
-    result__[ 0   ] = t3 * X__[iX_T];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 10, i_segment );
   }
 
   /*\
@@ -356,9 +370,7 @@ namespace SingularLuus04_FreeTimeDefine {
    |              |___/
   \*/
 
-  integer
-  SingularLuus04_FreeTime::segmentLink_numEqns() const
-  { return 0; }
+  integer SingularLuus04_FreeTime::segmentLink_numEqns() const { return 0; }
 
   void
   SingularLuus04_FreeTime::segmentLink_eval(
@@ -372,17 +384,9 @@ namespace SingularLuus04_FreeTimeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularLuus04_FreeTime::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  SingularLuus04_FreeTime::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  SingularLuus04_FreeTime::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer SingularLuus04_FreeTime::DsegmentLinkDxp_numRows() const { return 0; }
+  integer SingularLuus04_FreeTime::DsegmentLinkDxp_numCols() const { return 0; }
+  integer SingularLuus04_FreeTime::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   SingularLuus04_FreeTime::DsegmentLinkDxp_pattern(
@@ -412,9 +416,7 @@ namespace SingularLuus04_FreeTimeDefine {
    |                 |_|
   \*/
 
-  integer
-  SingularLuus04_FreeTime::jump_numEqns() const
-  { return 8; }
+  integer SingularLuus04_FreeTime::jump_numEqns() const { return 8; }
 
   void
   SingularLuus04_FreeTime::jump_eval(
@@ -446,24 +448,12 @@ namespace SingularLuus04_FreeTimeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DjumpDxlxlp_numRows() const
-  { return 8; }
-
-  integer
-  SingularLuus04_FreeTime::DjumpDxlxlp_numCols() const
-  { return 16; }
-
-  integer
-  SingularLuus04_FreeTime::DjumpDxlxlp_nnz() const
-  { return 16; }
+  integer SingularLuus04_FreeTime::DjumpDxlxlp_numRows() const { return 8; }
+  integer SingularLuus04_FreeTime::DjumpDxlxlp_numCols() const { return 16; }
+  integer SingularLuus04_FreeTime::DjumpDxlxlp_nnz()     const { return 16; }
 
   void
-  SingularLuus04_FreeTime::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularLuus04_FreeTime::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 8   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -481,6 +471,7 @@ namespace SingularLuus04_FreeTimeDefine {
     iIndex[14] = 7   ; jIndex[14] = 7   ;
     iIndex[15] = 7   ; jIndex[15] = 15  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -529,9 +520,7 @@ namespace SingularLuus04_FreeTimeDefine {
    |                                                    |___/
   \*/
 
-  integer
-  SingularLuus04_FreeTime::post_numEqns() const
-  { return 1; }
+  integer SingularLuus04_FreeTime::post_numEqns() const { return 1; }
 
   void
   SingularLuus04_FreeTime::post_eval(
@@ -551,9 +540,7 @@ namespace SingularLuus04_FreeTimeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularLuus04_FreeTime::integrated_post_numEqns() const
-  { return 0; }
+  integer SingularLuus04_FreeTime::integrated_post_numEqns() const { return 0; }
 
   void
   SingularLuus04_FreeTime::integrated_post_eval(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -83,25 +83,22 @@ namespace Brachiostocrona2Define {
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    real_type t3   = XM__[2];
-    real_type t10  = UM__[0];
-    real_type t11  = sin(t10);
-    real_type t15  = cos(t10);
-    real_type t18  = ModelPars[iM_epsi];
-    real_type t19  = ModelPars[iM_theta0];
-    real_type t20  = t19 * t19;
-    real_type t25  = t10 * t10;
-    real_type t27  = TimePositive(t1);
-    real_type result__ = t11 * (t3 * LM__[1] - LM__[2] * ModelPars[iM_g]) * t1 + t15 * t3 * t1 * LM__[0] + t20 * t18 - 2 * t19 * t18 * t10 + t18 * t25 + t27;
+    real_type t2   = TimePositive(-t1);
+    real_type t4   = UM__[0];
+    real_type t7   = pow(t4 - ModelPars[iM_theta0], 2);
+    real_type t11  = XM__[2];
+    real_type t12  = cos(t4);
+    real_type t17  = sin(t4);
+    real_type result__ = t12 * t11 * t1 * LM__[0] + t17 * t11 * t1 * LM__[1] - t17 * ModelPars[iM_g] * t1 * LM__[2] + t7 * ModelPars[iM_epsi] + t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  Brachiostocrona2::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Brachiostocrona2::g_numEqns() const { return 1; }
 
   void
   Brachiostocrona2::g_eval(
@@ -131,35 +128,23 @@ namespace Brachiostocrona2Define {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t3   = XM__[2];
-    real_type t10  = UM__[0];
-    real_type t11  = cos(t10);
-    real_type t15  = sin(t10);
-    result__[ 0   ] = -t11 * (-t3 * LM__[1] + LM__[2] * ModelPars[iM_g]) * t1 - t15 * t3 * t1 * LM__[0] - 2 * (ModelPars[iM_theta0] - t10) * ModelPars[iM_epsi];
+    real_type t2   = UM__[0];
+    real_type t8   = P__[iP_T];
+    real_type t10  = XM__[2];
+    real_type t11  = sin(t2);
+    real_type t16  = cos(t2);
+    result__[ 0   ] = 2 * (t2 - ModelPars[iM_theta0]) * ModelPars[iM_epsi] - t11 * t10 * t8 * LM__[0] + t16 * t10 * t8 * LM__[1] - t16 * ModelPars[iM_g] * t8 * LM__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona2::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  Brachiostocrona2::DgDxlxlp_numCols() const
-  { return 13; }
-
-  integer
-  Brachiostocrona2::DgDxlxlp_nnz() const
-  { return 9; }
+  integer Brachiostocrona2::DgDxlxlp_numRows() const { return 1; }
+  integer Brachiostocrona2::DgDxlxlp_numCols() const { return 13; }
+  integer Brachiostocrona2::DgDxlxlp_nnz()     const { return 9; }
 
   void
-  Brachiostocrona2::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brachiostocrona2::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -170,6 +155,7 @@ namespace Brachiostocrona2Define {
     iIndex[7 ] = 0   ; jIndex[7 ] = 11  ;
     iIndex[8 ] = 0   ; jIndex[8 ] = 12  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -201,49 +187,38 @@ namespace Brachiostocrona2Define {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = LM__[1];
+    real_type t1   = LM__[0];
+    real_type t2   = P__[iP_T];
     real_type t4   = UM__[0];
-    real_type t5   = cos(t4);
-    real_type t8   = LM__[0];
-    real_type t10  = sin(t4);
-    result__[ 0   ] = 0.5e0 * t5 * t2 * t1 - 0.5e0 * t10 * t1 * t8;
+    real_type t5   = sin(t4);
+    real_type t8   = LM__[1];
+    real_type t10  = cos(t4);
+    result__[ 0   ] = -0.5e0 * t5 * t2 * t1 + 0.5e0 * t10 * t2 * t8;
     real_type t13  = XM__[2];
-    real_type t14  = t13 * t1;
-    result__[ 1   ] = -0.5e0 * t10 * t14;
-    result__[ 2   ] = 0.5e0 * t5 * t14;
+    real_type t14  = t13 * t2;
+    result__[ 1   ] = -0.5e0 * t5 * t14;
+    result__[ 2   ] = 0.5e0 * t10 * t14;
     real_type t18  = ModelPars[iM_g];
-    result__[ 3   ] = -0.5e0 * t5 * t18 * t1;
+    result__[ 3   ] = -0.5e0 * t10 * t18 * t2;
     result__[ 4   ] = result__[0];
     result__[ 5   ] = result__[1];
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[3];
-    result__[ 8   ] = -t5 * (-t13 * t2 + t18 * LM__[2]) - t10 * t13 * t8;
+    result__[ 8   ] = -t5 * t13 * t1 + t10 * t13 * t8 - t10 * t18 * LM__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona2::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  Brachiostocrona2::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  Brachiostocrona2::DgDu_nnz() const
-  { return 1; }
+  integer Brachiostocrona2::DgDu_numRows() const { return 1; }
+  integer Brachiostocrona2::DgDu_numCols() const { return 1; }
+  integer Brachiostocrona2::DgDu_nnz()     const { return 1; }
 
   void
-  Brachiostocrona2::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brachiostocrona2::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -275,12 +250,12 @@ namespace Brachiostocrona2Define {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t3   = XM__[2];
-    real_type t10  = UM__[0];
-    real_type t11  = sin(t10);
-    real_type t15  = cos(t10);
-    result__[ 0   ] = t11 * (-t3 * LM__[1] + LM__[2] * ModelPars[iM_g]) * t1 - t15 * t3 * t1 * LM__[0] + 2 * ModelPars[iM_epsi];
+    real_type t4   = P__[iP_T];
+    real_type t6   = XM__[2];
+    real_type t7   = UM__[0];
+    real_type t8   = cos(t7);
+    real_type t13  = sin(t7);
+    result__[ 0   ] = -t13 * t6 * t4 * LM__[1] + t13 * ModelPars[iM_g] * t4 * LM__[2] - t8 * t6 * t4 * LM__[0] + 2 * ModelPars[iM_epsi];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -402,7 +377,7 @@ namespace Brachiostocrona2Define {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    real_type t2   = TimePositive(t1);
+    real_type t2   = TimePositive(-t1);
     real_type t5   = X__[iX_v] * t1;
     real_type t6   = U__[iU_theta];
     real_type t7   = cos(t6);
@@ -419,9 +394,7 @@ namespace Brachiostocrona2Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Brachiostocrona2::DmDu_numEqns() const
-  { return 1; }
+  integer Brachiostocrona2::DmDu_numEqns() const { return 1; }
 
   void
   Brachiostocrona2::DmDu_eval(
@@ -448,28 +421,15 @@ namespace Brachiostocrona2Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona2::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  Brachiostocrona2::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  Brachiostocrona2::DmDuu_nnz() const
-  { return 1; }
+  integer Brachiostocrona2::DmDuu_numRows() const { return 1; }
+  integer Brachiostocrona2::DmDuu_numCols() const { return 1; }
+  integer Brachiostocrona2::DmDuu_nnz()     const { return 1; }
 
   void
-  Brachiostocrona2::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brachiostocrona2::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Brachiostocrona2::DmDuu_sparse(
@@ -496,7 +456,7 @@ namespace Brachiostocrona2Define {
     real_type t18  = t12 * t12;
     real_type t26  = ModelPars[iM_g];
     real_type t27  = t26 * t26;
-    result__[ 0   ] = 2 * t8 * t5 + 2 * t12 * t3 * t1 * (-t11 * t12 + V__[0]) + 2 * t18 * t5 + 2 * t7 * t3 * t1 * (-t11 * t7 + V__[1]) + 2 * t18 * t27 * t2 - 2 * t7 * t26 * t1 * (t7 * t26 * t1 + ModelPars[iM_mass] * V__[2]);
+    result__[ 0   ] = 2 * t8 * t5 + 2 * t12 * t3 * t1 * (-t12 * t11 + V__[0]) + 2 * t18 * t5 + 2 * t7 * t3 * t1 * (-t7 * t11 + V__[1]) + 2 * t18 * t27 * t2 - 2 * t7 * t26 * t1 * (t7 * t26 * t1 + ModelPars[iM_mass] * V__[2]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

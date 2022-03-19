@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,14 +20,14 @@
 -- User Header
 
 -- Auxiliary values
-yf     = -2
-xf     = 5
-theta0 = arctan(yf,xf)
-epsi0  = 1
-epsi   = epsi0
 g      = 9.81
-Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+xf     = 5
+epsi0  = 1
+yf     = -2
 Tf     = (-2.0*yf/g)**(1/2.0)
+Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+theta0 = arctan(yf,xf)
+epsi   = epsi0
 
 content = {
 
@@ -39,6 +39,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -292,15 +294,16 @@ content = {
   -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     TimePositivesubType   = "PENALTY_REGULAR",
     TimePositiveepsilon   = 0.1,
     TimePositivetolerance = 0.01,
     TimePositiveactive    = true
 
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 

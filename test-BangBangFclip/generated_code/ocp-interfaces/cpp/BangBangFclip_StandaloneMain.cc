@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    BangBangFclip    model("BangBangFclip",&TP,&console);
+    BangBangFclip    model("BangBangFclip",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsilon0 = 0.1;
-    real_type h0 = 0.01;
     real_type vFmax = 10;
+    real_type h0 = 0.01;
     real_type tolerance0 = 0.01;
+    real_type epsilon0 = 0.1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -167,7 +167,7 @@ main() {
     data_clip["h"] = h0;
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_controlForce = data_Controls["controlForce"];
@@ -177,14 +177,15 @@ main() {
 
 
 
+    // ConstraintLT: none defined
     // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFclip_data.Mesh["s0"] = 0;
-BangBangFclip_data.Mesh["segments"][0]["n"] = 100;
 BangBangFclip_data.Mesh["segments"][0]["length"] = 1;
+BangBangFclip_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 31/1/2022                                        |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -79,9 +79,7 @@ namespace UnderwaterDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  Underwater::rhs_ode_numEqns() const
-  { return 6; }
+  integer Underwater::rhs_ode_numEqns() const { return 6; }
 
   void
   Underwater::rhs_ode_eval(
@@ -101,7 +99,7 @@ namespace UnderwaterDefine {
     real_type t6   = X__[iX_vz];
     real_type t7   = sin(t3);
     result__[ 0   ] = (t4 * t2 + t7 * t6) * t1;
-    result__[ 1   ] = (-t2 * t7 + t4 * t6) * t1;
+    result__[ 1   ] = (-t7 * t2 + t4 * t6) * t1;
     real_type t13  = X__[iX_Omega];
     result__[ 2   ] = t13 * t1;
     real_type t15  = ModelPars[iM_m1];
@@ -117,43 +115,41 @@ namespace UnderwaterDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Underwater::Drhs_odeDx_numRows() const
-  { return 6; }
-
-  integer
-  Underwater::Drhs_odeDx_numCols() const
-  { return 6; }
-
-  integer
-  Underwater::Drhs_odeDx_nnz() const
-  { return 13; }
+  integer Underwater::Drhs_odeDxup_numRows() const { return 6; }
+  integer Underwater::Drhs_odeDxup_numCols() const { return 10; }
+  integer Underwater::Drhs_odeDxup_nnz()     const { return 22; }
 
   void
-  Underwater::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Underwater::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 3   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 4   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 5   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 4   ;
-    iIndex[8 ] = 3   ; jIndex[8 ] = 5   ;
-    iIndex[9 ] = 4   ; jIndex[9 ] = 3   ;
-    iIndex[10] = 4   ; jIndex[10] = 5   ;
-    iIndex[11] = 5   ; jIndex[11] = 3   ;
-    iIndex[12] = 5   ; jIndex[12] = 4   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 9   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 3   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 4   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 9   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 5   ;
+    iIndex[9 ] = 2   ; jIndex[9 ] = 9   ;
+    iIndex[10] = 3   ; jIndex[10] = 4   ;
+    iIndex[11] = 3   ; jIndex[11] = 5   ;
+    iIndex[12] = 3   ; jIndex[12] = 6   ;
+    iIndex[13] = 3   ; jIndex[13] = 9   ;
+    iIndex[14] = 4   ; jIndex[14] = 3   ;
+    iIndex[15] = 4   ; jIndex[15] = 5   ;
+    iIndex[16] = 4   ; jIndex[16] = 7   ;
+    iIndex[17] = 4   ; jIndex[17] = 9   ;
+    iIndex[18] = 5   ; jIndex[18] = 3   ;
+    iIndex[19] = 5   ; jIndex[19] = 4   ;
+    iIndex[20] = 5   ; jIndex[20] = 8   ;
+    iIndex[21] = 5   ; jIndex[21] = 9   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Underwater::Drhs_odeDx_sparse(
+  Underwater::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -169,134 +165,42 @@ namespace UnderwaterDefine {
     real_type t4   = cos(t3);
     real_type t6   = X__[iX_vx];
     real_type t7   = sin(t3);
-    result__[ 0   ] = (t4 * t2 - t7 * t6) * t1;
+    real_type t9   = t4 * t2 - t7 * t6;
+    result__[ 0   ] = t1 * t9;
     result__[ 1   ] = t4 * t1;
     result__[ 2   ] = t7 * t1;
-    result__[ 3   ] = (-t7 * t2 - t6 * t4) * t1;
-    result__[ 4   ] = -result__[2];
-    result__[ 5   ] = result__[1];
-    result__[ 6   ] = t1;
-    real_type t14  = X__[iX_Omega] * result__[6];
-    real_type t15  = ModelPars[iM_m3];
-    real_type t16  = ModelPars[iM_m1];
-    real_type t18  = 1.0 / t16 * t15;
-    result__[ 7   ] = -t18 * t14;
-    real_type t20  = t2 * result__[6];
-    result__[ 8   ] = -t18 * t20;
-    real_type t23  = 1.0 / t15 * t16;
-    result__[ 9   ] = t23 * t14;
-    real_type t24  = t6 * result__[6];
-    result__[ 10  ] = t23 * t24;
-    real_type t28  = 1.0 / ModelPars[iM_inertia] * (t15 - t16);
-    result__[ 11  ] = t28 * t20;
-    result__[ 12  ] = t28 * t24;
+    result__[ 3   ] = t7 * t2 + t4 * t6;
+    result__[ 4   ] = -result__[3] * t1;
+    result__[ 5   ] = -result__[2];
+    result__[ 6   ] = result__[1];
+    result__[ 7   ] = t9;
+    result__[ 8   ] = t1;
+    result__[ 9   ] = X__[iX_Omega];
+    real_type t13  = result__[9] * result__[8];
+    real_type t14  = ModelPars[iM_m3];
+    real_type t15  = ModelPars[iM_m1];
+    real_type t16  = 1.0 / t15;
+    real_type t17  = t16 * t14;
+    result__[ 10  ] = -t17 * t13;
+    real_type t19  = t2 * result__[8];
+    result__[ 11  ] = -t17 * t19;
+    result__[ 12  ] = t16 * result__[8];
+    result__[ 13  ] = -t17 * result__[9] * t2 + t16 * U__[iU_u1];
+    real_type t25  = 1.0 / t14;
+    real_type t26  = t25 * t15;
+    result__[ 14  ] = t26 * t13;
+    real_type t27  = t6 * result__[8];
+    result__[ 15  ] = t26 * t27;
+    result__[ 16  ] = t25 * result__[8];
+    result__[ 17  ] = t26 * result__[9] * t6 + t25 * U__[iU_u2];
+    real_type t34  = 1.0 / ModelPars[iM_inertia];
+    real_type t35  = t34 * (t14 - t15);
+    result__[ 18  ] = t35 * t19;
+    result__[ 19  ] = t35 * t27;
+    result__[ 20  ] = t34 * result__[8];
+    result__[ 21  ] = t35 * t2 * t6 + t34 * U__[iU_u3];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 13, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Underwater::Drhs_odeDp_numRows() const
-  { return 6; }
-
-  integer
-  Underwater::Drhs_odeDp_numCols() const
-  { return 1; }
-
-  integer
-  Underwater::Drhs_odeDp_nnz() const
-  { return 6; }
-
-  void
-  Underwater::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 4   ; jIndex[4 ] = 0   ;
-    iIndex[5 ] = 5   ; jIndex[5 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Underwater::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_vx];
-    real_type t2   = X__[iX_theta];
-    real_type t3   = cos(t2);
-    real_type t5   = X__[iX_vz];
-    real_type t6   = sin(t2);
-    result__[ 0   ] = t3 * t1 + t6 * t5;
-    result__[ 1   ] = -t6 * t1 + t3 * t5;
-    result__[ 2   ] = X__[iX_Omega];
-    real_type t11  = ModelPars[iM_m1];
-    real_type t12  = 1.0 / t11;
-    real_type t15  = ModelPars[iM_m3];
-    result__[ 3   ] = -t12 * t15 * result__[2] * t5 + t12 * U__[iU_u1];
-    real_type t19  = 1.0 / t15;
-    result__[ 4   ] = t19 * t11 * result__[2] * t1 + t19 * U__[iU_u2];
-    real_type t26  = 1.0 / ModelPars[iM_inertia];
-    result__[ 5   ] = t26 * U__[iU_u3] + t26 * (t15 - t11) * t5 * t1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 6, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Underwater::Drhs_odeDu_numRows() const
-  { return 6; }
-
-  integer
-  Underwater::Drhs_odeDu_numCols() const
-  { return 3; }
-
-  integer
-  Underwater::Drhs_odeDu_nnz() const
-  { return 3; }
-
-  void
-  Underwater::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 3   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 4   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 5   ; jIndex[2 ] = 2   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Underwater::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    result__[ 0   ] = 1.0 / ModelPars[iM_m1] * t1;
-    result__[ 1   ] = 1.0 / ModelPars[iM_m3] * t1;
-    result__[ 2   ] = 1.0 / ModelPars[iM_inertia] * t1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 22, i_segment );
   }
 
   /*\
@@ -306,23 +210,13 @@ namespace UnderwaterDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  Underwater::A_numRows() const
-  { return 6; }
-
-  integer
-  Underwater::A_numCols() const
-  { return 6; }
-
-  integer
-  Underwater::A_nnz() const
-  { return 6; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Underwater::A_numRows() const { return 6; }
+  integer Underwater::A_numCols() const { return 6; }
+  integer Underwater::A_nnz()     const { return 6; }
 
   void
-  Underwater::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Underwater::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -330,6 +224,7 @@ namespace UnderwaterDefine {
     iIndex[4 ] = 4   ; jIndex[4 ] = 4   ;
     iIndex[5 ] = 5   ; jIndex[5 ] = 5   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

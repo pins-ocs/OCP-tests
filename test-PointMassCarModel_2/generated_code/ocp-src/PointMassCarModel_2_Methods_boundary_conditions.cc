@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -156,9 +156,7 @@ namespace PointMassCarModel_2Define {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer
-  PointMassCarModel_2::boundaryConditions_numEqns() const
-  { return 6; }
+  integer PointMassCarModel_2::boundaryConditions_numEqns() const { return 6; }
 
   void
   PointMassCarModel_2::boundaryConditions_eval(
@@ -187,24 +185,12 @@ namespace PointMassCarModel_2Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_2::DboundaryConditionsDxxp_numRows() const
-  { return 6; }
-
-  integer
-  PointMassCarModel_2::DboundaryConditionsDxxp_numCols() const
-  { return 10; }
-
-  integer
-  PointMassCarModel_2::DboundaryConditionsDxxp_nnz() const
-  { return 11; }
+  integer PointMassCarModel_2::DboundaryConditionsDxxp_numRows() const { return 6; }
+  integer PointMassCarModel_2::DboundaryConditionsDxxp_numCols() const { return 10; }
+  integer PointMassCarModel_2::DboundaryConditionsDxxp_nnz()     const { return 11; }
 
   void
-  PointMassCarModel_2::DboundaryConditionsDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  PointMassCarModel_2::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 5   ;
@@ -217,6 +203,7 @@ namespace PointMassCarModel_2Define {
     iIndex[9 ] = 5   ; jIndex[9 ] = 3   ;
     iIndex[10] = 5   ; jIndex[10] = 8   ;
   }
+
 
   void
   PointMassCarModel_2::DboundaryConditionsDxxp_sparse(
@@ -250,14 +237,12 @@ namespace PointMassCarModel_2Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  PointMassCarModel_2::adjointBC_numEqns() const
-  { return 10; }
+  integer PointMassCarModel_2::adjointBC_numEqns() const { return 10; }
 
   void
   PointMassCarModel_2::adjointBC_eval(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
@@ -265,161 +250,50 @@ namespace PointMassCarModel_2Define {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
     real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
     Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
     Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[1];
-    real_type t6   = ALIAS_Kappa_L(QL__[iQ_zeta]);
-    real_type t7   = zeta__dot(XL__[iX_V], XL__[iX_alpha], XL__[iX_n], t6);
-    result__[ 0   ] = LL__[iL_lambda1__xo] * t7 - t1;
-    real_type t10  = OMEGA__[2];
-    result__[ 1   ] = LL__[iL_lambda2__xo] * t7 - t10;
-    real_type t14  = OMEGA__[3];
-    result__[ 2   ] = LL__[iL_lambda3__xo] * t7 - t14 + OMEGA__[0];
-    real_type t17  = OMEGA__[5];
-    result__[ 3   ] = LL__[iL_lambda5__xo] * t7 - t17;
-    real_type t20  = OMEGA__[4];
-    result__[ 4   ] = LL__[iL_lambda4__xo] * t7 - t20;
-    real_type t27  = ALIAS_Kappa_R(QR__[iQ_zeta]);
-    real_type t28  = zeta__dot(XR__[iX_V], XR__[iX_alpha], XR__[iX_n], t27);
-    result__[ 5   ] = -LR__[iL_lambda1__xo] * t28 + t1;
-    result__[ 6   ] = -LR__[iL_lambda2__xo] * t28 + t10;
-    result__[ 7   ] = -LR__[iL_lambda3__xo] * t28 + t14;
-    result__[ 8   ] = -LR__[iL_lambda5__xo] * t28 + t17;
-    result__[ 9   ] = -LR__[iL_lambda4__xo] * t28 + t20;
+    result__[ 0   ] = -t1;
+    real_type t2   = OMEGA__[2];
+    result__[ 1   ] = -t2;
+    real_type t4   = OMEGA__[3];
+    result__[ 2   ] = OMEGA__[0] - t4;
+    real_type t5   = OMEGA__[5];
+    result__[ 3   ] = -t5;
+    real_type t6   = OMEGA__[4];
+    result__[ 4   ] = -t6;
+    result__[ 5   ] = t1;
+    result__[ 6   ] = t2;
+    result__[ 7   ] = t4;
+    result__[ 8   ] = t5;
+    result__[ 9   ] = t6;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 10, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_2::DadjointBCDxxp_numRows() const
-  { return 10; }
-
-  integer
-  PointMassCarModel_2::DadjointBCDxxp_numCols() const
-  { return 10; }
-
-  integer
-  PointMassCarModel_2::DadjointBCDxxp_nnz() const
-  { return 30; }
+  integer PointMassCarModel_2::DadjointBCDxxp_numRows() const { return 10; }
+  integer PointMassCarModel_2::DadjointBCDxxp_numCols() const { return 10; }
+  integer PointMassCarModel_2::DadjointBCDxxp_nnz()     const { return 0; }
 
   void
-  PointMassCarModel_2::DadjointBCDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 0   ;
-    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
-    iIndex[8 ] = 2   ; jIndex[8 ] = 2   ;
-    iIndex[9 ] = 3   ; jIndex[9 ] = 0   ;
-    iIndex[10] = 3   ; jIndex[10] = 1   ;
-    iIndex[11] = 3   ; jIndex[11] = 2   ;
-    iIndex[12] = 4   ; jIndex[12] = 0   ;
-    iIndex[13] = 4   ; jIndex[13] = 1   ;
-    iIndex[14] = 4   ; jIndex[14] = 2   ;
-    iIndex[15] = 5   ; jIndex[15] = 5   ;
-    iIndex[16] = 5   ; jIndex[16] = 6   ;
-    iIndex[17] = 5   ; jIndex[17] = 7   ;
-    iIndex[18] = 6   ; jIndex[18] = 5   ;
-    iIndex[19] = 6   ; jIndex[19] = 6   ;
-    iIndex[20] = 6   ; jIndex[20] = 7   ;
-    iIndex[21] = 7   ; jIndex[21] = 5   ;
-    iIndex[22] = 7   ; jIndex[22] = 6   ;
-    iIndex[23] = 7   ; jIndex[23] = 7   ;
-    iIndex[24] = 8   ; jIndex[24] = 5   ;
-    iIndex[25] = 8   ; jIndex[25] = 6   ;
-    iIndex[26] = 8   ; jIndex[26] = 7   ;
-    iIndex[27] = 9   ; jIndex[27] = 5   ;
-    iIndex[28] = 9   ; jIndex[28] = 6   ;
-    iIndex[29] = 9   ; jIndex[29] = 7   ;
+  PointMassCarModel_2::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   void
   PointMassCarModel_2::DadjointBCDxxp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
   ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
-    real_type t1   = XL__[iX_V];
-    real_type t2   = XL__[iX_alpha];
-    real_type t3   = XL__[iX_n];
-    real_type t5   = ALIAS_Kappa_L(QL__[iQ_zeta]);
-    real_type t6   = zeta__dot_D_3(t1, t2, t3, t5);
-    real_type t7   = LL__[iL_lambda1__xo];
-    result__[ 0   ] = t7 * t6;
-    real_type t8   = zeta__dot_D_2(t1, t2, t3, t5);
-    result__[ 1   ] = t7 * t8;
-    real_type t9   = zeta__dot_D_1(t1, t2, t3, t5);
-    result__[ 2   ] = t9 * t7;
-    real_type t10  = LL__[iL_lambda2__xo];
-    result__[ 3   ] = t10 * t6;
-    result__[ 4   ] = t10 * t8;
-    result__[ 5   ] = t10 * t9;
-    real_type t11  = LL__[iL_lambda3__xo];
-    result__[ 6   ] = t11 * t6;
-    result__[ 7   ] = t11 * t8;
-    result__[ 8   ] = t11 * t9;
-    real_type t12  = LL__[iL_lambda5__xo];
-    result__[ 9   ] = t12 * t6;
-    result__[ 10  ] = t12 * t8;
-    result__[ 11  ] = t12 * t9;
-    real_type t13  = LL__[iL_lambda4__xo];
-    result__[ 12  ] = t13 * t6;
-    result__[ 13  ] = t13 * t8;
-    result__[ 14  ] = t13 * t9;
-    real_type t14  = XR__[iX_V];
-    real_type t15  = XR__[iX_alpha];
-    real_type t16  = XR__[iX_n];
-    real_type t18  = ALIAS_Kappa_R(QR__[iQ_zeta]);
-    real_type t19  = zeta__dot_D_3(t14, t15, t16, t18);
-    real_type t20  = LR__[iL_lambda1__xo];
-    result__[ 15  ] = -t20 * t19;
-    real_type t22  = zeta__dot_D_2(t14, t15, t16, t18);
-    result__[ 16  ] = -t20 * t22;
-    real_type t24  = zeta__dot_D_1(t14, t15, t16, t18);
-    result__[ 17  ] = -t20 * t24;
-    real_type t26  = LR__[iL_lambda2__xo];
-    result__[ 18  ] = -t26 * t19;
-    result__[ 19  ] = -t26 * t22;
-    result__[ 20  ] = -t26 * t24;
-    real_type t30  = LR__[iL_lambda3__xo];
-    result__[ 21  ] = -t30 * t19;
-    result__[ 22  ] = -t30 * t22;
-    result__[ 23  ] = -t30 * t24;
-    real_type t34  = LR__[iL_lambda5__xo];
-    result__[ 24  ] = -t34 * t19;
-    result__[ 25  ] = -t34 * t22;
-    result__[ 26  ] = -t34 * t24;
-    real_type t38  = LR__[iL_lambda4__xo];
-    result__[ 27  ] = -t38 * t19;
-    result__[ 28  ] = -t38 * t22;
-    result__[ 29  ] = -t38 * t24;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 30, i_segment_left, i_segment_right );
+    // EMPTY!
   }
 }
 

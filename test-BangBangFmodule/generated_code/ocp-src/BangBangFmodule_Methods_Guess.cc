@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -81,10 +81,10 @@ namespace BangBangFmoduleDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     X__[ iX_x ] = Q__[iQ_zeta];
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 2 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 2 );
+    }
   }
 
   /*\
@@ -124,8 +124,8 @@ namespace BangBangFmoduleDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -136,8 +136,8 @@ namespace BangBangFmoduleDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -248,9 +248,7 @@ namespace BangBangFmoduleDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  BangBangFmodule::u_guess_numEqns() const
-  { return 2; }
+  integer BangBangFmodule::u_guess_numEqns() const { return 2; }
 
   void
   BangBangFmodule::u_guess_eval(

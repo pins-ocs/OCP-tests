@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -78,16 +78,16 @@ namespace Hager_2000Define {
     real_type t2   = t1 * t1;
     real_type t3   = XM__[0];
     real_type t4   = t3 * t3;
-    real_type result__ = t2 + 2 * t4 + (t3 + 2 * t1) * LM__[0] / 2;
+    real_type result__ = t2 + 2 * t4 + (t3 / 2 + t1) * LM__[0];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  Hager_2000::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Hager_2000::g_numEqns() const { return 1; }
 
   void
   Hager_2000::g_eval(
@@ -119,27 +119,16 @@ namespace Hager_2000Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Hager_2000::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  Hager_2000::DgDxlxlp_numCols() const
-  { return 4; }
-
-  integer
-  Hager_2000::DgDxlxlp_nnz() const
-  { return 2; }
+  integer Hager_2000::DgDxlxlp_numRows() const { return 1; }
+  integer Hager_2000::DgDxlxlp_numCols() const { return 4; }
+  integer Hager_2000::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  Hager_2000::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Hager_2000::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -174,26 +163,15 @@ namespace Hager_2000Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Hager_2000::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  Hager_2000::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  Hager_2000::DgDu_nnz() const
-  { return 1; }
+  integer Hager_2000::DgDu_numRows() const { return 1; }
+  integer Hager_2000::DgDu_numCols() const { return 1; }
+  integer Hager_2000::DgDu_nnz()     const { return 1; }
 
   void
-  Hager_2000::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Hager_2000::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -344,9 +322,7 @@ namespace Hager_2000Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Hager_2000::DmDu_numEqns() const
-  { return 1; }
+  integer Hager_2000::DmDu_numEqns() const { return 1; }
 
   void
   Hager_2000::DmDu_eval(
@@ -366,28 +342,15 @@ namespace Hager_2000Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Hager_2000::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  Hager_2000::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  Hager_2000::DmDuu_nnz() const
-  { return 1; }
+  integer Hager_2000::DmDuu_numRows() const { return 1; }
+  integer Hager_2000::DmDuu_numCols() const { return 1; }
+  integer Hager_2000::DmDuu_nnz()     const { return 1; }
 
   void
-  Hager_2000::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Hager_2000::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Hager_2000::DmDuu_sparse(

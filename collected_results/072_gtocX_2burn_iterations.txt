@@ -1,0 +1,171 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_y
+[ 2] initial_z
+[ 3] final_x
+[ 4] final_y
+[ 5] final_z
+
+
+
+Constraints LT
+ray_positive = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.001
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 51
+Segment N.0: s0 = 0 length = 1 npts = 51 no data set
+END Mesh[mesh]
+
+Model Parameters
+.....................................muS = 0.575874
+..................................time_f = 27
+..................................time_i = 0
+.................................w_guess = 0
+...............................epsi_norm = 0.01
+..............................retrograde = -1
+................................w_nonlin = 0
+INFO CLASS = gtocX_2burn
+  #nodes      = 51
+  dim         = u=0, q=1, x=6, p=0, omega=6, bc=6, full_bc=18
+  BC          = Inital=9, Final=9, Cyclic=0
+  OMEGA       = Inital=3, Final=3, Cyclic=0
+  total       = nZ=618, UC=0, Q=51
+  index start = omega=612, p=618
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 1] ( 2.42e-06 , 3.94e-09 ) [ 0.00024  , 6.48e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 1] ( 3.94e-09 , 1.38e-16 ) [ 6.48e-08 , 2.46e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.2, ds=0.2, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  3, 2] ( 3.56e-07 , 3.56e-08 ) [ 3.27e-05 , 3.27e-06 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 2] ( 3.56e-08 , 3.56e-09 ) [ 3.27e-06 , 3.27e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 2] ( 3.56e-09 , 3.56e-10 ) [ 3.27e-07 , 3.27e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 1] ( 3.56e-10 , 3.52e-17 ) [ 3.27e-08 , 7.21e-17 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  7, 1] ( 5.34e-07 , 2.72e-17 ) [ 4.91e-05 , 9.23e-17 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  8, 1] ( 8.01e-07 , 3.38e-17 ) [ 7.37e-05 , 9.84e-17 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  9, 1] ( 8.9e-08  , 3.26e-17 ) [ 8.19e-06 , 7.92e-17 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2
+
+Continuation step N.2 s=0.2, ds=0.2, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 10, 1] ( 0.000358 , 3.75e-06 ) [  0.0217  , 0.000217 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 11, 1] ( 3.75e-06 , 1.1e-09  ) [ 0.000209 , 1.25e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 2] ( 1.1e-09  , 1.1e-10  ) [ 1.25e-07 , 1.25e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 13, 2] ( 1.1e-10  , 1.1e-11  ) [ 1.25e-08 , 1.25e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 14, 1] ( 1.1e-11  , 3.22e-17 ) [ 1.25e-09 , 3.7e-17  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.5, ds=0.3, old_s=  0.2
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 15, 1] ( 0.00055  , 1.63e-05 ) [  0.0359  , 0.000806 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 16, 1] ( 1.63e-05 , 1.43e-08 ) [ 0.000761 , 1.23e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 17, 2] ( 1.43e-08 , 1.43e-09 ) [ 1.23e-06 , 1.23e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 18, 2] ( 1.43e-09 , 1.43e-10 ) [ 1.23e-07 , 1.23e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 19, 2] ( 1.43e-10 , 1.43e-11 ) [ 1.23e-08 , 1.23e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 20, 2] ( 1.43e-11 , 1.43e-12 ) [ 1.23e-09 , 1.23e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 21, 2] ( 1.43e-12 , 1.43e-13 ) [ 1.23e-10 , 1.23e-11 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.95, ds=0.45, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 22, 1] ( 0.00086  , 0.000106 ) [  0.0646  , 0.00458  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 23, 1] ( 0.000106 , 4.09e-07 ) [ 0.00427  , 2.71e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 24, 1] ( 4.09e-07 , 2.25e-11 ) [ 2.75e-05 , 5.86e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=1, ds=0.05, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 25, 1] ( 0.000104 , 3.05e-06 ) [ 0.00926  , 0.000122 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 26, 1] ( 3.05e-06 , 3.55e-10 ) [ 0.000121 , 2.28e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 27, 1] ( 3.55e-10 , 4.73e-17 ) [ 2.28e-08 , 5.4e-16  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
+ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 16.8[ms]      timeout        = 0 [ms]
+iteration      = 27            tolerance      = 1e-09
+max iterations = 300           N. Equations   = 618
+max acc. iter. = 800           N. System pars = 0
+Converged      = YES           Memory Used    = 95Kb (+94bytes)
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 46            Jacobian       = 27
+Factorization  = 27            Inversion      = 64
+........................... last residuals ...........................
+last ||f||_inf = 2.0252e-15    last ||d||_inf = 3.6072e-15
+last ||f||_1   = 4.7287e-17    last ||d||_1   = 5.4031e-16
+last ||f||_2   = 1.6765e-16    last ||d||_2   = 1.2191e-15
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+At cell 0, H = 5.7577304342687e-06, ||g||_inf = 27
+At cell 1, H = 5.757718346586127e-06, ||g||_inf = 27
+At cell 2, H = 5.757705642510428e-06, ||g||_inf = 27
+At cell 3, H = 5.75769226561156e-06, ||g||_inf = 27
+At cell 4, H = 5.757678161334419e-06, ||g||_inf = 27
+At cell 5, H = 5.7576632811287524e-06, ||g||_inf = 27
+skipping...
+Check Controls End
+target [Lagrange,Mayer]       = [ 0, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+All Done Folks!

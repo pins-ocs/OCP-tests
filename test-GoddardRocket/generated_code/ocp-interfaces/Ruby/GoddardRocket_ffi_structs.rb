@@ -3,9 +3,9 @@
 #                                                                          #
 #  file: GoddardRocket_ffi_structs.rb                                      #
 #                                                                          #
-#  version: 1.0   date 20/12/2021                                          #
+#  version: 1.0   date 19/3/2022                                           #
 #                                                                          #
-#  Copyright (C) 2021                                                      #
+#  Copyright (C) 2022                                                      #
 #                                                                          #
 #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                              #
@@ -105,16 +105,18 @@ module GoddardRocket
 
   class GoddardRocket_constraints_params < FFI::Struct
     layout(
-      # 1D constraints
-      :massPositiveSubType,   :index_t,
-      :massPositiveEpsilon,   :data_t,
+      # LT constraints
+      :massPositiveSubType, :index_t,
+      :massPositiveEpsilon, :data_t,
       :massPositiveTolerance, :data_t,
-      :vPositiveSubType,      :index_t,
-      :vPositiveEpsilon,      :data_t,
-      :vPositiveTolerance,    :data_t,
-      :TSPositiveSubType,     :index_t,
-      :TSPositiveEpsilon,     :data_t,
-      :TSPositiveTolerance,   :data_t,
+      :vPositiveSubType, :index_t,
+      :vPositiveEpsilon, :data_t,
+      :vPositiveTolerance, :data_t,
+      :TSPositiveSubType, :index_t,
+      :TSPositiveEpsilon, :data_t,
+      :TSPositiveTolerance, :data_t,
+
+      # 1D constraints
 
       # 2D constraints
 

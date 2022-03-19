@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -64,17 +64,424 @@ using Mechatronix::MeshStd;
 namespace TwoStageCSTRDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  TwoStageCSTR::Hx_numEqns() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::JPx_numEqns() const { return 4; }
+
+  void
+  TwoStageCSTR::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::LTx_numEqns() const { return 4; }
+
+  void
+  TwoStageCSTR::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::JUx_numEqns() const { return 4; }
+
+  void
+  TwoStageCSTR::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::JPp_numEqns() const { return 0; }
+
+  void
+  TwoStageCSTR::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::LTp_numEqns() const { return 0; }
+
+  void
+  TwoStageCSTR::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::JUp_numEqns() const { return 0; }
+
+  void
+  TwoStageCSTR::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::JPu_numEqns() const { return 2; }
+
+  void
+  TwoStageCSTR::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::LTu_numEqns() const { return 2; }
+
+  void
+  TwoStageCSTR::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::JUu_numEqns() const { return 2; }
+
+  void
+  TwoStageCSTR::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_u1Control_D_1(U__[iU_u1], -0.5e0, 0.5e0);
+    result__[ 1   ] = ALIAS_u2Control_D_1(U__[iU_u2], -0.5e0, 0.5e0);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::LTargs_numEqns() const { return 0; }
+
+  void
+  TwoStageCSTR::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DJPxDxp_numRows() const { return 4; }
+  integer TwoStageCSTR::DJPxDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DLTxDxp_numRows() const { return 4; }
+  integer TwoStageCSTR::DLTxDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DJUxDxp_numRows() const { return 4; }
+  integer TwoStageCSTR::DJUxDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DJPuDxp_numRows() const { return 2; }
+  integer TwoStageCSTR::DJPuDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DLTuDxp_numRows() const { return 2; }
+  integer TwoStageCSTR::DLTuDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DJUuDxp_numRows() const { return 2; }
+  integer TwoStageCSTR::DJUuDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DJPpDp_numRows() const { return 0; }
+  integer TwoStageCSTR::DJPpDp_numCols() const { return 0; }
+  integer TwoStageCSTR::DJPpDp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DLTpDp_numRows() const { return 0; }
+  integer TwoStageCSTR::DLTpDp_numCols() const { return 0; }
+  integer TwoStageCSTR::DLTpDp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DJUpDp_numRows() const { return 0; }
+  integer TwoStageCSTR::DJUpDp_numCols() const { return 0; }
+  integer TwoStageCSTR::DJUpDp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DLTargsDxup_numRows() const { return 0; }
+  integer TwoStageCSTR::DLTargsDxup_numCols() const { return 6; }
+  integer TwoStageCSTR::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::Hx_numEqns() const { return 4; }
 
   void
   TwoStageCSTR::Hx_eval(
@@ -114,23 +521,27 @@ namespace TwoStageCSTRDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  TwoStageCSTR::DHxDx_numRows() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DHxDx_numCols() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DHxDx_nnz() const
-  { return 8; }
+  integer TwoStageCSTR::Hp_numEqns() const { return 0; }
 
   void
-  TwoStageCSTR::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  TwoStageCSTR::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::DHxDxp_numRows() const { return 4; }
+  integer TwoStageCSTR::DHxDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DHxDxp_nnz()     const { return 8; }
+
+  void
+  TwoStageCSTR::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
@@ -141,8 +552,9 @@ namespace TwoStageCSTRDefine {
     iIndex[7 ] = 3   ; jIndex[7 ] = 3   ;
   }
 
+
   void
-  TwoStageCSTR::DHxDx_sparse(
+  TwoStageCSTR::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -180,34 +592,22 @@ namespace TwoStageCSTRDefine {
     real_type t33  = R2_D_2_2(t25, t26);
     result__[ 7   ] = t33 * t12 - t33 * t8 + 2;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 8, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DHxDp_numRows() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoStageCSTR::DHxDp_nnz() const
-  { return 0; }
+  integer TwoStageCSTR::DHpDp_numRows() const { return 0; }
+  integer TwoStageCSTR::DHpDp_numCols() const { return 0; }
+  integer TwoStageCSTR::DHpDp_nnz()     const { return 0; }
 
   void
-  TwoStageCSTR::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoStageCSTR::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TwoStageCSTR::DHxDp_sparse(
+  TwoStageCSTR::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -226,9 +626,9 @@ namespace TwoStageCSTRDefine {
    |
   \*/
 
-  integer
-  TwoStageCSTR::Hu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::Hu_numEqns() const { return 2; }
 
   void
   TwoStageCSTR::Hu_eval(
@@ -252,32 +652,19 @@ namespace TwoStageCSTRDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DHuDx_numRows() const
-  { return 2; }
-
-  integer
-  TwoStageCSTR::DHuDx_numCols() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DHuDx_nnz() const
-  { return 2; }
+  integer TwoStageCSTR::DHuDxp_numRows() const { return 2; }
+  integer TwoStageCSTR::DHuDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DHuDxp_nnz()     const { return 2; }
 
   void
-  TwoStageCSTR::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoStageCSTR::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 3   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TwoStageCSTR::DHuDx_sparse(
+  TwoStageCSTR::DHuDxp_sparse(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -292,98 +679,7 @@ namespace TwoStageCSTRDefine {
     result__[ 0   ] = ModelPars[iM_tau] * t1 - L__[iL_lambda2__xo];
     result__[ 1   ] = -t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DHuDp_numRows() const
-  { return 2; }
-
-  integer
-  TwoStageCSTR::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoStageCSTR::DHuDp_nnz() const
-  { return 0; }
-
-  void
-  TwoStageCSTR::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  TwoStageCSTR::DHuDp_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  TwoStageCSTR::Hp_numEqns() const
-  { return 0; }
-
-  void
-  TwoStageCSTR::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  TwoStageCSTR::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoStageCSTR::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  TwoStageCSTR::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  TwoStageCSTR::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__,"DHuDxp_sparse", 2, i_segment );
   }
 
   /*\
@@ -393,9 +689,10 @@ namespace TwoStageCSTRDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  TwoStageCSTR::eta_numEqns() const
-  { return 4; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::eta_numEqns() const { return 4; }
 
   void
   TwoStageCSTR::eta_eval(
@@ -417,62 +714,18 @@ namespace TwoStageCSTRDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DetaDx_numRows() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DetaDx_numCols() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DetaDx_nnz() const
-  { return 0; }
+  integer TwoStageCSTR::DetaDxp_numRows() const { return 4; }
+  integer TwoStageCSTR::DetaDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DetaDxp_nnz()     const { return 0; }
 
   void
-  TwoStageCSTR::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  TwoStageCSTR::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  TwoStageCSTR::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DetaDp_numRows() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoStageCSTR::DetaDp_nnz() const
-  { return 0; }
 
   void
-  TwoStageCSTR::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  TwoStageCSTR::DetaDp_sparse(
+  TwoStageCSTR::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -487,9 +740,9 @@ namespace TwoStageCSTRDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  TwoStageCSTR::nu_numEqns() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::nu_numEqns() const { return 4; }
 
   void
   TwoStageCSTR::nu_eval(
@@ -511,63 +764,18 @@ namespace TwoStageCSTRDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DnuDx_numRows() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DnuDx_numCols() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DnuDx_nnz() const
-  { return 0; }
+  integer TwoStageCSTR::DnuDxp_numRows() const { return 4; }
+  integer TwoStageCSTR::DnuDxp_numCols() const { return 4; }
+  integer TwoStageCSTR::DnuDxp_nnz()     const { return 0; }
 
   void
-  TwoStageCSTR::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  TwoStageCSTR::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  TwoStageCSTR::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DnuDp_numRows() const
-  { return 4; }
-
-  integer
-  TwoStageCSTR::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoStageCSTR::DnuDp_nnz() const
-  { return 0; }
 
   void
-  TwoStageCSTR::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  TwoStageCSTR::DnuDp_sparse(
+  TwoStageCSTR::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    CNOC             model("CNOC",&TP,&console);
+    CNOC             model("CNOC",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,13 +50,13 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
-    real_type path_following_tolerance = 1.0e-05;
-    real_type jn_max = 65;
     real_type js_max = 30;
     real_type js_min = -50;
     real_type mesh_segments = 100;
-    real_type pf_error = path_following_tolerance;
     real_type v_nom = 0.173;
+    real_type path_following_tolerance = 1.0e-05;
+    real_type pf_error = path_following_tolerance;
+    real_type jn_max = 65;
     real_type deltaFeed = v_nom;
     integer InfoLevel = 4;
 
@@ -146,15 +146,10 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
-    data_Parameters["an_max"] = 1.2;
-    data_Parameters["as_max"] = 2.1;
-    data_Parameters["ax_max"] = 2.1;
-    data_Parameters["ay_max"] = 2.1;
     data_Parameters["jn_max"] = jn_max;
     data_Parameters["js_max"] = js_max;
     data_Parameters["js_min"] = js_min;
     data_Parameters["deltaFeed"] = deltaFeed;
-    data_Parameters["path_following_tolerance"] = path_following_tolerance;
 
     // Guess Parameters
 
@@ -178,11 +173,16 @@ main() {
     // Continuation Parameters
 
     // Constraints Parameters
+    data_Parameters["an_max"] = 1.2;
+    data_Parameters["as_max"] = 2.1;
+    data_Parameters["ax_max"] = 2.1;
+    data_Parameters["ay_max"] = 2.1;
+    data_Parameters["path_following_tolerance"] = path_following_tolerance;
 
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_jsControl = data_Controls["jsControl"];
@@ -198,62 +198,83 @@ main() {
 
 
 
-    // Constraint1D
+    // ConstraintLT
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_timePositive = data_Constraints["timePositive"];
     data_timePositive["subType"]   = "BARRIER_LOG";
     data_timePositive["epsilon"]   = 0.01;
     data_timePositive["tolerance"] = 0.01;
     data_timePositive["active"]    = true;
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_vLimit = data_Constraints["vLimit"];
     data_vLimit["subType"]   = "PENALTY_PIECEWISE";
     data_vLimit["epsilon"]   = 0.01;
     data_vLimit["tolerance"] = 0.01;
     data_vLimit["active"]    = true;
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_PathFollowingTolerance = data_Constraints["PathFollowingTolerance"];
-    data_PathFollowingTolerance["subType"]   = "PENALTY_REGULAR";
-    data_PathFollowingTolerance["epsilon"]   = 0.01;
-    data_PathFollowingTolerance["tolerance"] = 0.1;
-    data_PathFollowingTolerance["min"]       = -1;
-    data_PathFollowingTolerance["max"]       = 1;
-    data_PathFollowingTolerance["active"]    = true;
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_as_limit = data_Constraints["as_limit"];
-    data_as_limit["subType"]   = "PENALTY_REGULAR";
-    data_as_limit["epsilon"]   = 0.01;
-    data_as_limit["tolerance"] = 0.01;
-    data_as_limit["min"]       = -1;
-    data_as_limit["max"]       = 1;
-    data_as_limit["active"]    = true;
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_an_limit = data_Constraints["an_limit"];
-    data_an_limit["subType"]   = "PENALTY_REGULAR";
-    data_an_limit["epsilon"]   = 0.01;
-    data_an_limit["tolerance"] = 0.01;
-    data_an_limit["min"]       = -1;
-    data_an_limit["max"]       = 1;
-    data_an_limit["active"]    = true;
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_ax_limit = data_Constraints["ax_limit"];
-    data_ax_limit["subType"]   = "PENALTY_REGULAR";
-    data_ax_limit["epsilon"]   = 0.01;
-    data_ax_limit["tolerance"] = 0.01;
-    data_ax_limit["min"]       = -1;
-    data_ax_limit["max"]       = 1;
-    data_ax_limit["active"]    = true;
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_ay_limit = data_Constraints["ay_limit"];
-    data_ay_limit["subType"]   = "PENALTY_REGULAR";
-    data_ay_limit["epsilon"]   = 0.01;
-    data_ay_limit["tolerance"] = 0.01;
-    data_ay_limit["min"]       = -1;
-    data_ay_limit["max"]       = 1;
-    data_ay_limit["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_PathFollowingTolerance_min = data_Constraints["PathFollowingTolerance_min"];
+    data_PathFollowingTolerance_min["subType"]   = "PENALTY_REGULAR";
+    data_PathFollowingTolerance_min["epsilon"]   = 0.01;
+    data_PathFollowingTolerance_min["tolerance"] = 0.1;
+    data_PathFollowingTolerance_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_PathFollowingTolerance_max = data_Constraints["PathFollowingTolerance_max"];
+    data_PathFollowingTolerance_max["subType"]   = "PENALTY_REGULAR";
+    data_PathFollowingTolerance_max["epsilon"]   = 0.01;
+    data_PathFollowingTolerance_max["tolerance"] = 0.1;
+    data_PathFollowingTolerance_max["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_as_limit_min = data_Constraints["as_limit_min"];
+    data_as_limit_min["subType"]   = "PENALTY_REGULAR";
+    data_as_limit_min["epsilon"]   = 0.01;
+    data_as_limit_min["tolerance"] = 0.01;
+    data_as_limit_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_as_limit_max = data_Constraints["as_limit_max"];
+    data_as_limit_max["subType"]   = "PENALTY_REGULAR";
+    data_as_limit_max["epsilon"]   = 0.01;
+    data_as_limit_max["tolerance"] = 0.01;
+    data_as_limit_max["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_an_limit_min = data_Constraints["an_limit_min"];
+    data_an_limit_min["subType"]   = "PENALTY_REGULAR";
+    data_an_limit_min["epsilon"]   = 0.01;
+    data_an_limit_min["tolerance"] = 0.01;
+    data_an_limit_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_an_limit_max = data_Constraints["an_limit_max"];
+    data_an_limit_max["subType"]   = "PENALTY_REGULAR";
+    data_an_limit_max["epsilon"]   = 0.01;
+    data_an_limit_max["tolerance"] = 0.01;
+    data_an_limit_max["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_ax_limit_min = data_Constraints["ax_limit_min"];
+    data_ax_limit_min["subType"]   = "PENALTY_REGULAR";
+    data_ax_limit_min["epsilon"]   = 0.01;
+    data_ax_limit_min["tolerance"] = 0.01;
+    data_ax_limit_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_ax_limit_max = data_Constraints["ax_limit_max"];
+    data_ax_limit_max["subType"]   = "PENALTY_REGULAR";
+    data_ax_limit_max["epsilon"]   = 0.01;
+    data_ax_limit_max["tolerance"] = 0.01;
+    data_ax_limit_max["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_ay_limit_min = data_Constraints["ay_limit_min"];
+    data_ay_limit_min["subType"]   = "PENALTY_REGULAR";
+    data_ay_limit_min["epsilon"]   = 0.01;
+    data_ay_limit_min["tolerance"] = 0.01;
+    data_ay_limit_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_ay_limit_max = data_Constraints["ay_limit_max"];
+    data_ay_limit_max["subType"]   = "PENALTY_REGULAR";
+    data_ay_limit_max["epsilon"]   = 0.01;
+    data_ay_limit_max["tolerance"] = 0.01;
+    data_ay_limit_max["active"]    = true;
+    // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization

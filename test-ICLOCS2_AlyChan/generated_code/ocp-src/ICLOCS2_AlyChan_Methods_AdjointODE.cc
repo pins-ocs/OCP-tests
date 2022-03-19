@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -55,17 +55,418 @@ using Mechatronix::MeshStd;
 namespace ICLOCS2_AlyChanDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  ICLOCS2_AlyChan::Hx_numEqns() const
-  { return 3; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::JPx_numEqns() const { return 3; }
+
+  void
+  ICLOCS2_AlyChan::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::LTx_numEqns() const { return 3; }
+
+  void
+  ICLOCS2_AlyChan::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::JUx_numEqns() const { return 3; }
+
+  void
+  ICLOCS2_AlyChan::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::JPp_numEqns() const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::LTp_numEqns() const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::JUp_numEqns() const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::JPu_numEqns() const { return 1; }
+
+  void
+  ICLOCS2_AlyChan::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::LTu_numEqns() const { return 1; }
+
+  void
+  ICLOCS2_AlyChan::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::JUu_numEqns() const { return 1; }
+
+  void
+  ICLOCS2_AlyChan::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::LTargs_numEqns() const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DJPxDxp_numRows() const { return 3; }
+  integer ICLOCS2_AlyChan::DJPxDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DLTxDxp_numRows() const { return 3; }
+  integer ICLOCS2_AlyChan::DLTxDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DJUxDxp_numRows() const { return 3; }
+  integer ICLOCS2_AlyChan::DJUxDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DJPuDxp_numRows() const { return 1; }
+  integer ICLOCS2_AlyChan::DJPuDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DLTuDxp_numRows() const { return 1; }
+  integer ICLOCS2_AlyChan::DLTuDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DJUuDxp_numRows() const { return 1; }
+  integer ICLOCS2_AlyChan::DJUuDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DJPpDp_numRows() const { return 0; }
+  integer ICLOCS2_AlyChan::DJPpDp_numCols() const { return 0; }
+  integer ICLOCS2_AlyChan::DJPpDp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DLTpDp_numRows() const { return 0; }
+  integer ICLOCS2_AlyChan::DLTpDp_numCols() const { return 0; }
+  integer ICLOCS2_AlyChan::DLTpDp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DJUpDp_numRows() const { return 0; }
+  integer ICLOCS2_AlyChan::DJUpDp_numCols() const { return 0; }
+  integer ICLOCS2_AlyChan::DJUpDp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DLTargsDxup_numRows() const { return 0; }
+  integer ICLOCS2_AlyChan::DLTargsDxup_numCols() const { return 4; }
+  integer ICLOCS2_AlyChan::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::Hx_numEqns() const { return 3; }
 
   void
   ICLOCS2_AlyChan::Hx_eval(
@@ -82,7 +483,7 @@ namespace ICLOCS2_AlyChanDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda3__xo];
     result__[ 0   ] = -X__[iX_x1] * t1;
-    result__[ 1   ] = t1 * X__[iX_x2] + L__[iL_lambda1__xo];
+    result__[ 1   ] = X__[iX_x2] * t1 + L__[iL_lambda1__xo];
     result__[ 2   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
@@ -90,29 +491,34 @@ namespace ICLOCS2_AlyChanDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS2_AlyChan::DHxDx_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DHxDx_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DHxDx_nnz() const
-  { return 2; }
+  integer ICLOCS2_AlyChan::Hp_numEqns() const { return 0; }
 
   void
-  ICLOCS2_AlyChan::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  ICLOCS2_AlyChan::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::DHxDxp_numRows() const { return 3; }
+  integer ICLOCS2_AlyChan::DHxDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DHxDxp_nnz()     const { return 2; }
+
+  void
+  ICLOCS2_AlyChan::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
+
   void
-  ICLOCS2_AlyChan::DHxDx_sparse(
+  ICLOCS2_AlyChan::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -128,34 +534,22 @@ namespace ICLOCS2_AlyChanDefine {
     result__[ 0   ] = -t1;
     result__[ 1   ] = t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DHxDp_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS2_AlyChan::DHxDp_nnz() const
-  { return 0; }
+  integer ICLOCS2_AlyChan::DHpDp_numRows() const { return 0; }
+  integer ICLOCS2_AlyChan::DHpDp_numCols() const { return 0; }
+  integer ICLOCS2_AlyChan::DHpDp_nnz()     const { return 0; }
 
   void
-  ICLOCS2_AlyChan::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS2_AlyChan::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS2_AlyChan::DHxDp_sparse(
+  ICLOCS2_AlyChan::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -174,9 +568,9 @@ namespace ICLOCS2_AlyChanDefine {
    |
   \*/
 
-  integer
-  ICLOCS2_AlyChan::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::Hu_numEqns() const { return 1; }
 
   void
   ICLOCS2_AlyChan::Hu_eval(
@@ -196,122 +590,19 @@ namespace ICLOCS2_AlyChanDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS2_AlyChan::DHuDx_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DHuDx_nnz() const
-  { return 0; }
+  integer ICLOCS2_AlyChan::DHuDxp_numRows() const { return 1; }
+  integer ICLOCS2_AlyChan::DHuDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DHuDxp_nnz()     const { return 0; }
 
   void
-  ICLOCS2_AlyChan::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS2_AlyChan::DHuDx_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  ICLOCS2_AlyChan::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS2_AlyChan::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS2_AlyChan::DHuDp_nnz() const
-  { return 0; }
 
   void
-  ICLOCS2_AlyChan::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS2_AlyChan::DHuDp_sparse(
+  ICLOCS2_AlyChan::DHuDxp_sparse(
     NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  ICLOCS2_AlyChan::Hp_numEqns() const
-  { return 0; }
-
-  void
-  ICLOCS2_AlyChan::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  ICLOCS2_AlyChan::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS2_AlyChan::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  ICLOCS2_AlyChan::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS2_AlyChan::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -326,9 +617,10 @@ namespace ICLOCS2_AlyChanDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  ICLOCS2_AlyChan::eta_numEqns() const
-  { return 3; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::eta_numEqns() const { return 3; }
 
   void
   ICLOCS2_AlyChan::eta_eval(
@@ -349,62 +641,18 @@ namespace ICLOCS2_AlyChanDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DetaDx_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DetaDx_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DetaDx_nnz() const
-  { return 0; }
+  integer ICLOCS2_AlyChan::DetaDxp_numRows() const { return 3; }
+  integer ICLOCS2_AlyChan::DetaDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DetaDxp_nnz()     const { return 0; }
 
   void
-  ICLOCS2_AlyChan::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS2_AlyChan::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  ICLOCS2_AlyChan::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DetaDp_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS2_AlyChan::DetaDp_nnz() const
-  { return 0; }
 
   void
-  ICLOCS2_AlyChan::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS2_AlyChan::DetaDp_sparse(
+  ICLOCS2_AlyChan::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -419,9 +667,9 @@ namespace ICLOCS2_AlyChanDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  ICLOCS2_AlyChan::nu_numEqns() const
-  { return 3; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::nu_numEqns() const { return 3; }
 
   void
   ICLOCS2_AlyChan::nu_eval(
@@ -442,63 +690,18 @@ namespace ICLOCS2_AlyChanDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DnuDx_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DnuDx_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DnuDx_nnz() const
-  { return 0; }
+  integer ICLOCS2_AlyChan::DnuDxp_numRows() const { return 3; }
+  integer ICLOCS2_AlyChan::DnuDxp_numCols() const { return 3; }
+  integer ICLOCS2_AlyChan::DnuDxp_nnz()     const { return 0; }
 
   void
-  ICLOCS2_AlyChan::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS2_AlyChan::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  ICLOCS2_AlyChan::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DnuDp_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS2_AlyChan::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS2_AlyChan::DnuDp_nnz() const
-  { return 0; }
 
   void
-  ICLOCS2_AlyChan::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS2_AlyChan::DnuDp_sparse(
+  ICLOCS2_AlyChan::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

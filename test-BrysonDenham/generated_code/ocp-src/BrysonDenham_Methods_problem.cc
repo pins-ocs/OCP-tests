@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -66,7 +66,7 @@ namespace BrysonDenhamDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = X1bound(1.0 / 9.0 - X__[iX_x]);
+    real_type t3   = X1bound(X__[iX_x] - 1.0 / 9.0);
     real_type t4   = U__[iU_u];
     real_type t5   = t4 * t4;
     real_type result__ = t3 + t5 / 2 + L__[iL_lambda1__xo] * X__[iX_v] + t4 * L__[iL_lambda2__xo];
@@ -84,26 +84,7 @@ namespace BrysonDenhamDefine {
   \*/
 
   real_type
-  BrysonDenham::penalties_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = X1bound(1.0 / 9.0 - X__[iX_x]);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  BrysonDenham::control_penalties_eval(
+  BrysonDenham::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -114,10 +95,50 @@ namespace BrysonDenhamDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  BrysonDenham::JU_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  BrysonDenham::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = X1bound(X__[iX_x] - 1.0 / 9.0);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -176,9 +197,7 @@ namespace BrysonDenhamDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BrysonDenham::DmayerDxxp_numEqns() const
-  { return 4; }
+  integer BrysonDenham::DmayerDxxp_numEqns() const { return 4; }
 
   void
   BrysonDenham::DmayerDxxp_eval(
@@ -212,9 +231,7 @@ namespace BrysonDenhamDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  BrysonDenham::DlagrangeDxup_numEqns() const
-  { return 3; }
+  integer BrysonDenham::DlagrangeDxup_numEqns() const { return 3; }
 
   void
   BrysonDenham::DlagrangeDxup_eval(
@@ -234,64 +251,45 @@ namespace BrysonDenhamDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
   }
 
-  integer
-  BrysonDenham::DJDx_numEqns() const
-  { return 2; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::IPOPT_hess_numRows() const { return 3; }
+  integer BrysonDenham::IPOPT_hess_numCols() const { return 3; }
+  integer BrysonDenham::IPOPT_hess_nnz()     const { return 1; }
 
   void
-  BrysonDenham::DJDx_eval(
-    NodeType const     & NODE__,
+  BrysonDenham::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  BrysonDenham::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_X1bound_D(1.0 / 9.0 - X__[iX_x]);
-    result__[ 0   ] = -t3;
-    result__[ 1   ] = 0;
+    result__[ 0   ] = sigma__;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  BrysonDenham::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  BrysonDenham::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 1, i_segment );
   }
 
   /*\
@@ -324,9 +322,7 @@ namespace BrysonDenhamDefine {
    |              |___/
   \*/
 
-  integer
-  BrysonDenham::segmentLink_numEqns() const
-  { return 0; }
+  integer BrysonDenham::segmentLink_numEqns() const { return 0; }
 
   void
   BrysonDenham::segmentLink_eval(
@@ -340,17 +336,9 @@ namespace BrysonDenhamDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BrysonDenham::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer BrysonDenham::DsegmentLinkDxp_numRows() const { return 0; }
+  integer BrysonDenham::DsegmentLinkDxp_numCols() const { return 0; }
+  integer BrysonDenham::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   BrysonDenham::DsegmentLinkDxp_pattern(
@@ -380,9 +368,7 @@ namespace BrysonDenhamDefine {
    |                 |_|
   \*/
 
-  integer
-  BrysonDenham::jump_numEqns() const
-  { return 4; }
+  integer BrysonDenham::jump_numEqns() const { return 4; }
 
   void
   BrysonDenham::jump_eval(
@@ -410,24 +396,12 @@ namespace BrysonDenhamDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DjumpDxlxlp_numRows() const
-  { return 4; }
-
-  integer
-  BrysonDenham::DjumpDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  BrysonDenham::DjumpDxlxlp_nnz() const
-  { return 8; }
+  integer BrysonDenham::DjumpDxlxlp_numRows() const { return 4; }
+  integer BrysonDenham::DjumpDxlxlp_numCols() const { return 8; }
+  integer BrysonDenham::DjumpDxlxlp_nnz()     const { return 8; }
 
   void
-  BrysonDenham::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BrysonDenham::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -437,6 +411,7 @@ namespace BrysonDenhamDefine {
     iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
     iIndex[7 ] = 3   ; jIndex[7 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -477,9 +452,7 @@ namespace BrysonDenhamDefine {
    |                                                    |___/
   \*/
 
-  integer
-  BrysonDenham::post_numEqns() const
-  { return 0; }
+  integer BrysonDenham::post_numEqns() const { return 0; }
 
   void
   BrysonDenham::post_eval(
@@ -493,9 +466,7 @@ namespace BrysonDenhamDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BrysonDenham::integrated_post_numEqns() const
-  { return 0; }
+  integer BrysonDenham::integrated_post_numEqns() const { return 0; }
 
   void
   BrysonDenham::integrated_post_eval(

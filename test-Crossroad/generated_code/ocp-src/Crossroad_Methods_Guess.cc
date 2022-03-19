@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_Guess.cc                                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -34,8 +34,10 @@
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_VelBound_DD(__t1) VelBound.DD( __t1)
-#define ALIAS_VelBound_D(__t1) VelBound.D( __t1)
+#define ALIAS_VelBound_max_DD(__t1) VelBound_max.DD( __t1)
+#define ALIAS_VelBound_max_D(__t1) VelBound_max.D( __t1)
+#define ALIAS_VelBound_min_DD(__t1) VelBound_min.DD( __t1)
+#define ALIAS_VelBound_min_D(__t1) VelBound_min.D( __t1)
 #define ALIAS_AccBound_DD(__t1) AccBound.DD( __t1)
 #define ALIAS_AccBound_D(__t1) AccBound.D( __t1)
 #define ALIAS_Tpositive_DD(__t1) Tpositive.DD( __t1)
@@ -82,10 +84,10 @@ namespace CrossroadDefine {
     X__[ iX_a  ] = 0;
     X__[ iX_Ts ] = 1.0 / X__[1] * t2 / 2;
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 4 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 4 );
+    }
   }
 
   /*\
@@ -125,8 +127,8 @@ namespace CrossroadDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -137,8 +139,8 @@ namespace CrossroadDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -249,9 +251,7 @@ namespace CrossroadDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  Crossroad::u_guess_numEqns() const
-  { return 1; }
+  integer Crossroad::u_guess_numEqns() const { return 1; }
 
   void
   Crossroad::u_guess_eval(

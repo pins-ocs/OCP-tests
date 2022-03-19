@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau.hh                                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,6 +76,7 @@ namespace BangBangFtauDefine {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -111,11 +112,14 @@ namespace BangBangFtauDefine {
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DLessThan vsTpositive;
+    Mechatronix::PenaltyBarrier1DLessThan vsBpositive;
+    Mechatronix::PenaltyBarrier1DLessThan vsTmax;
+    Mechatronix::PenaltyBarrier1DLessThan vsTBInterval_min;
+    Mechatronix::PenaltyBarrier1DLessThan vsTBInterval_max;
+
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrier1DGreaterThan vsTpositive;
-    Mechatronix::PenaltyBarrier1DGreaterThan vsBpositive;
-    Mechatronix::PenaltyBarrier1DGreaterThan vsTmax;
-    Mechatronix::PenaltyBarrier1DInterval vsTBInterval;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -180,9 +184,9 @@ namespace BangBangFtauDefine {
     BANGBANGFTAU_API_DLL
     explicit
     BangBangFtau(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~BangBangFtau() override;
@@ -244,6 +248,9 @@ namespace BangBangFtauDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    BANGBANGFTAU_API_DLL real_type vsTBInterval      ( real_type xo___V ) const;
+    BANGBANGFTAU_API_DLL real_type vsTBInterval_D    ( real_type xo___V ) const;
+    BANGBANGFTAU_API_DLL real_type vsTBInterval_DD   ( real_type xo___V ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

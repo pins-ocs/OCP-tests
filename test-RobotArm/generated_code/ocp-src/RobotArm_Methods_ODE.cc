@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_ODE.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -79,9 +79,7 @@ namespace RobotArmDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  RobotArm::rhs_ode_numEqns() const
-  { return 6; }
+  integer RobotArm::rhs_ode_numEqns() const { return 6; }
 
   void
   RobotArm::rhs_ode_eval(
@@ -106,33 +104,31 @@ namespace RobotArmDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::Drhs_odeDx_numRows() const
-  { return 6; }
-
-  integer
-  RobotArm::Drhs_odeDx_numCols() const
-  { return 6; }
-
-  integer
-  RobotArm::Drhs_odeDx_nnz() const
-  { return 3; }
+  integer RobotArm::Drhs_odeDxup_numRows() const { return 6; }
+  integer RobotArm::Drhs_odeDxup_numCols() const { return 10; }
+  integer RobotArm::Drhs_odeDxup_nnz()     const { return 12; }
 
   void
-  RobotArm::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 3   ; jIndex[0 ] = 3   ;
-    iIndex[1 ] = 4   ; jIndex[1 ] = 4   ;
-    iIndex[2 ] = 5   ; jIndex[2 ] = 5   ;
+  RobotArm::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 6   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 9   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 7   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 9   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 8   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 9   ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 9   ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 4   ; jIndex[9 ] = 9   ;
+    iIndex[10] = 5   ; jIndex[10] = 5   ;
+    iIndex[11] = 5   ; jIndex[11] = 9   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  RobotArm::Drhs_odeDx_sparse(
+  RobotArm::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -143,104 +139,19 @@ namespace RobotArmDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = P__[iP_T];
-    result__[ 1   ] = result__[0];
-    result__[ 2   ] = result__[1];
+    result__[ 1   ] = U__[iU_u_rho];
+    result__[ 2   ] = result__[0];
+    result__[ 3   ] = U__[iU_u_theta];
+    result__[ 4   ] = result__[2];
+    result__[ 5   ] = U__[iU_u_phi];
+    result__[ 6   ] = result__[4];
+    result__[ 7   ] = X__[iX_rho1];
+    result__[ 8   ] = result__[6];
+    result__[ 9   ] = X__[iX_theta1];
+    result__[ 10  ] = result__[8];
+    result__[ 11  ] = X__[iX_phi1];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::Drhs_odeDp_numRows() const
-  { return 6; }
-
-  integer
-  RobotArm::Drhs_odeDp_numCols() const
-  { return 1; }
-
-  integer
-  RobotArm::Drhs_odeDp_nnz() const
-  { return 6; }
-
-  void
-  RobotArm::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 4   ; jIndex[4 ] = 0   ;
-    iIndex[5 ] = 5   ; jIndex[5 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  RobotArm::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = U__[iU_u_rho];
-    result__[ 1   ] = U__[iU_u_theta];
-    result__[ 2   ] = U__[iU_u_phi];
-    result__[ 3   ] = X__[iX_rho1];
-    result__[ 4   ] = X__[iX_theta1];
-    result__[ 5   ] = X__[iX_phi1];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 6, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::Drhs_odeDu_numRows() const
-  { return 6; }
-
-  integer
-  RobotArm::Drhs_odeDu_numCols() const
-  { return 3; }
-
-  integer
-  RobotArm::Drhs_odeDu_nnz() const
-  { return 3; }
-
-  void
-  RobotArm::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  RobotArm::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = P__[iP_T];
-    result__[ 1   ] = result__[0];
-    result__[ 2   ] = result__[1];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 12, i_segment );
   }
 
   /*\
@@ -250,23 +161,13 @@ namespace RobotArmDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  RobotArm::A_numRows() const
-  { return 6; }
-
-  integer
-  RobotArm::A_numCols() const
-  { return 6; }
-
-  integer
-  RobotArm::A_nnz() const
-  { return 6; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer RobotArm::A_numRows() const { return 6; }
+  integer RobotArm::A_numCols() const { return 6; }
+  integer RobotArm::A_nnz()     const { return 6; }
 
   void
-  RobotArm::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  RobotArm::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 5   ;
@@ -274,6 +175,7 @@ namespace RobotArmDefine {
     iIndex[4 ] = 4   ; jIndex[4 ] = 1   ;
     iIndex[5 ] = 5   ; jIndex[5 ] = 2   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

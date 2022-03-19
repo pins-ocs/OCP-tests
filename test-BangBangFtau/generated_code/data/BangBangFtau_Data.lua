@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -31,6 +31,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -276,43 +278,48 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithErf
-    cliph = 0.1,
-    clipdelta = 0,
     clipdelta2 = 0,
+    clipdelta = 0,
+    cliph = 0.1,
   },
 
   -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     vsTpositivesubType   = "PENALTY_REGULAR",
     vsTpositiveepsilon   = 0.001,
     vsTpositivetolerance = 0.001,
     vsTpositiveactive    = true
 
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     vsBpositivesubType   = "PENALTY_REGULAR",
     vsBpositiveepsilon   = 0.001,
     vsBpositivetolerance = 0.001,
     vsBpositiveactive    = true
 
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     vsTmaxsubType   = "PENALTY_REGULAR",
     vsTmaxepsilon   = 0.001,
     vsTmaxtolerance = 0.001,
     vsTmaxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    vsTBIntervalsubType   = "PENALTY_REGULAR",
-    vsTBIntervalepsilon   = 0.001,
-    vsTBIntervaltolerance = 0.001,
-    vsTBIntervalmin       = -1,
-    vsTBIntervalmax       = 1,
-    vsTBIntervalactive    = true
+    -- PenaltyBarrier1DLessThan
+    vsTBInterval_minsubType   = "PENALTY_REGULAR",
+    vsTBInterval_minepsilon   = 0.001,
+    vsTBInterval_mintolerance = 0.001,
+    vsTBInterval_minactive    = true
 
+    -- PenaltyBarrier1DLessThan
+    vsTBInterval_maxsubType   = "PENALTY_REGULAR",
+    vsTBInterval_maxepsilon   = 0.001,
+    vsTBInterval_maxtolerance = 0.001,
+    vsTBInterval_maxactive    = true
+
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 

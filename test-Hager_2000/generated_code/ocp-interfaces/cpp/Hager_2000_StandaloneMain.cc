@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    Hager_2000       model("Hager_2000",&TP,&console);
+    Hager_2000       model("Hager_2000",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -144,14 +144,15 @@ main() {
 
     // Controls: No penalties or barriers constraint defined
 
+    // ConstraintLT: none defined
     // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization
     // User defined classes: M E S H
 Hager_2000_data.Mesh["s0"] = 0;
-Hager_2000_data.Mesh["segments"][0]["length"] = 1;
 Hager_2000_data.Mesh["segments"][0]["n"] = 100;
+Hager_2000_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

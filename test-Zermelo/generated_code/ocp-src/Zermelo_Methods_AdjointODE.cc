@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_AdjointODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -48,17 +48,443 @@ using Mechatronix::MeshStd;
 namespace ZermeloDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  Zermelo::Hx_numEqns() const
-  { return 5; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::JPx_numEqns() const { return 5; }
+
+  void
+  Zermelo::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::LTx_numEqns() const { return 5; }
+
+  void
+  Zermelo::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    real_type t2   = ALIAS_Tpositive_D(-X__[iX_T]);
+    result__[ 4   ] = -t2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::JUx_numEqns() const { return 5; }
+
+  void
+  Zermelo::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::JPp_numEqns() const { return 0; }
+
+  void
+  Zermelo::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::LTp_numEqns() const { return 0; }
+
+  void
+  Zermelo::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::JUp_numEqns() const { return 0; }
+
+  void
+  Zermelo::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::JPu_numEqns() const { return 1; }
+
+  void
+  Zermelo::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::LTu_numEqns() const { return 1; }
+
+  void
+  Zermelo::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::JUu_numEqns() const { return 1; }
+
+  void
+  Zermelo::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::LTargs_numEqns() const { return 1; }
+
+  void
+  Zermelo::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -X__[iX_T];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTargs_eval", 1, i_segment );
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DJPxDxp_numRows() const { return 5; }
+  integer Zermelo::DJPxDxp_numCols() const { return 5; }
+  integer Zermelo::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  Zermelo::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DLTxDxp_numRows() const { return 5; }
+  integer Zermelo::DLTxDxp_numCols() const { return 5; }
+  integer Zermelo::DLTxDxp_nnz()     const { return 1; }
+
+  void
+  Zermelo::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
+  }
+
+
+  void
+  Zermelo::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_Tpositive_DD(-X__[iX_T]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTxDxp_sparse", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DJUxDxp_numRows() const { return 5; }
+  integer Zermelo::DJUxDxp_numCols() const { return 5; }
+  integer Zermelo::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  Zermelo::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DJPuDxp_numRows() const { return 1; }
+  integer Zermelo::DJPuDxp_numCols() const { return 5; }
+  integer Zermelo::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  Zermelo::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DLTuDxp_numRows() const { return 1; }
+  integer Zermelo::DLTuDxp_numCols() const { return 5; }
+  integer Zermelo::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  Zermelo::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DJUuDxp_numRows() const { return 1; }
+  integer Zermelo::DJUuDxp_numCols() const { return 5; }
+  integer Zermelo::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  Zermelo::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DJPpDp_numRows() const { return 0; }
+  integer Zermelo::DJPpDp_numCols() const { return 0; }
+  integer Zermelo::DJPpDp_nnz()     const { return 0; }
+
+  void
+  Zermelo::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DLTpDp_numRows() const { return 0; }
+  integer Zermelo::DLTpDp_numCols() const { return 0; }
+  integer Zermelo::DLTpDp_nnz()     const { return 0; }
+
+  void
+  Zermelo::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DJUpDp_numRows() const { return 0; }
+  integer Zermelo::DJUpDp_numCols() const { return 0; }
+  integer Zermelo::DJUpDp_nnz()     const { return 0; }
+
+  void
+  Zermelo::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DLTargsDxup_numRows() const { return 1; }
+  integer Zermelo::DLTargsDxup_numCols() const { return 6; }
+  integer Zermelo::DLTargsDxup_nnz()     const { return 1; }
+
+  void
+  Zermelo::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
+  }
+
+
+  void
+  Zermelo::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::Hx_numEqns() const { return 5; }
 
   void
   Zermelo::Hx_eval(
@@ -88,37 +514,40 @@ namespace ZermeloDefine {
     result__[ 1   ] = t12 * t3 + t14 * t9;
     result__[ 2   ] = t2 * t1;
     result__[ 3   ] = t2 * t8;
-    real_type t16  = ALIAS_Tpositive_D(t2);
-    real_type t18  = velX(t4, t5);
-    real_type t22  = velY(t4, t5);
-    real_type t26  = ModelPars[iM_S];
-    real_type t28  = U__[iU_u];
-    real_type t29  = cos(t28);
-    real_type t33  = sin(t28);
-    result__[ 4   ] = t16 + (X__[iX_vx] + t18) * t1 + (X__[iX_vy] + t22) * t8 + t29 * t26 * L__[iL_lambda3__xo] + t33 * t26 * L__[iL_lambda4__xo];
+    real_type t17  = velX(t4, t5);
+    real_type t21  = velY(t4, t5);
+    real_type t25  = ModelPars[iM_S];
+    real_type t27  = U__[iU_u];
+    real_type t28  = cos(t27);
+    real_type t32  = sin(t27);
+    result__[ 4   ] = (X__[iX_vx] + t17) * t1 + (X__[iX_vy] + t21) * t8 + t28 * t25 * L__[iL_lambda3__xo] + t32 * t25 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Zermelo::DHxDx_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::DHxDx_numCols() const
-  { return 5; }
-
-  integer
-  Zermelo::DHxDx_nnz() const
-  { return 13; }
+  integer Zermelo::Hp_numEqns() const { return 0; }
 
   void
-  Zermelo::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  Zermelo::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::DHxDxp_numRows() const { return 5; }
+  integer Zermelo::DHxDxp_numCols() const { return 5; }
+  integer Zermelo::DHxDxp_nnz()     const { return 12; }
+
+  void
+  Zermelo::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -131,11 +560,11 @@ namespace ZermeloDefine {
     iIndex[9 ] = 4   ; jIndex[9 ] = 1   ;
     iIndex[10] = 4   ; jIndex[10] = 2   ;
     iIndex[11] = 4   ; jIndex[11] = 3   ;
-    iIndex[12] = 4   ; jIndex[12] = 4   ;
   }
 
+
   void
-  Zermelo::DHxDx_sparse(
+  Zermelo::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -156,56 +585,43 @@ namespace ZermeloDefine {
     real_type t8   = L__[iL_lambda2__xo];
     real_type t9   = t2 * t8;
     real_type t10  = velY_D_1_1(t4, t5);
-    result__[ 0   ] = t10 * t9 + t3 * t6;
+    result__[ 0   ] = t10 * t9 + t6 * t3;
     real_type t12  = velX_D_1_2(t4, t5);
     real_type t14  = velY_D_1_2(t4, t5);
     result__[ 1   ] = t12 * t3 + t14 * t9;
     real_type t16  = velX_D_1(t4, t5);
     real_type t18  = velY_D_1(t4, t5);
-    result__[ 2   ] = t1 * t16 + t18 * t8;
+    result__[ 2   ] = t16 * t1 + t18 * t8;
     result__[ 3   ] = result__[1];
     real_type t20  = velX_D_2_2(t4, t5);
     real_type t22  = velY_D_2_2(t4, t5);
     result__[ 4   ] = t20 * t3 + t22 * t9;
     real_type t24  = velX_D_2(t4, t5);
     real_type t26  = velY_D_2(t4, t5);
-    result__[ 5   ] = t1 * t24 + t26 * t8;
+    result__[ 5   ] = t24 * t1 + t26 * t8;
     result__[ 6   ] = t1;
     result__[ 7   ] = t8;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[5];
     result__[ 10  ] = result__[6];
     result__[ 11  ] = result__[7];
-    result__[ 12  ] = ALIAS_Tpositive_DD(t2);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 13, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 12, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DHxDp_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  Zermelo::DHxDp_nnz() const
-  { return 0; }
+  integer Zermelo::DHpDp_numRows() const { return 0; }
+  integer Zermelo::DHpDp_numCols() const { return 0; }
+  integer Zermelo::DHpDp_nnz()     const { return 0; }
 
   void
-  Zermelo::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Zermelo::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Zermelo::DHxDp_sparse(
+  Zermelo::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -224,9 +640,9 @@ namespace ZermeloDefine {
    |
   \*/
 
-  integer
-  Zermelo::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::Hu_numEqns() const { return 1; }
 
   void
   Zermelo::Hu_eval(
@@ -245,37 +661,24 @@ namespace ZermeloDefine {
     real_type t5   = U__[iU_u];
     real_type t6   = sin(t5);
     real_type t11  = cos(t5);
-    result__[ 0   ] = t11 * t2 * t4 * L__[iL_lambda4__xo] - t2 * t4 * t6 * L__[iL_lambda3__xo];
+    result__[ 0   ] = t11 * t4 * t2 * L__[iL_lambda4__xo] - t6 * t4 * t2 * L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  Zermelo::DHuDx_numCols() const
-  { return 5; }
-
-  integer
-  Zermelo::DHuDx_nnz() const
-  { return 1; }
+  integer Zermelo::DHuDxp_numRows() const { return 1; }
+  integer Zermelo::DHuDxp_numCols() const { return 5; }
+  integer Zermelo::DHuDxp_nnz()     const { return 1; }
 
   void
-  Zermelo::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Zermelo::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Zermelo::DHuDx_sparse(
+  Zermelo::DHuDxp_sparse(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -292,98 +695,7 @@ namespace ZermeloDefine {
     real_type t9   = cos(t4);
     result__[ 0   ] = -t5 * t2 * L__[iL_lambda3__xo] + t9 * t2 * L__[iL_lambda4__xo];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  Zermelo::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  Zermelo::DHuDp_nnz() const
-  { return 0; }
-
-  void
-  Zermelo::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Zermelo::DHuDp_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  Zermelo::Hp_numEqns() const
-  { return 0; }
-
-  void
-  Zermelo::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  Zermelo::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  Zermelo::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  Zermelo::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Zermelo::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__,"DHuDxp_sparse", 1, i_segment );
   }
 
   /*\
@@ -393,9 +705,10 @@ namespace ZermeloDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  Zermelo::eta_numEqns() const
-  { return 5; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::eta_numEqns() const { return 5; }
 
   void
   Zermelo::eta_eval(
@@ -418,62 +731,18 @@ namespace ZermeloDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DetaDx_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::DetaDx_numCols() const
-  { return 5; }
-
-  integer
-  Zermelo::DetaDx_nnz() const
-  { return 0; }
+  integer Zermelo::DetaDxp_numRows() const { return 5; }
+  integer Zermelo::DetaDxp_numCols() const { return 5; }
+  integer Zermelo::DetaDxp_nnz()     const { return 0; }
 
   void
-  Zermelo::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Zermelo::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  Zermelo::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DetaDp_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  Zermelo::DetaDp_nnz() const
-  { return 0; }
 
   void
-  Zermelo::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Zermelo::DetaDp_sparse(
+  Zermelo::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -488,9 +757,9 @@ namespace ZermeloDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  Zermelo::nu_numEqns() const
-  { return 5; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::nu_numEqns() const { return 5; }
 
   void
   Zermelo::nu_eval(
@@ -513,63 +782,18 @@ namespace ZermeloDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DnuDx_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::DnuDx_numCols() const
-  { return 5; }
-
-  integer
-  Zermelo::DnuDx_nnz() const
-  { return 0; }
+  integer Zermelo::DnuDxp_numRows() const { return 5; }
+  integer Zermelo::DnuDxp_numCols() const { return 5; }
+  integer Zermelo::DnuDxp_nnz()     const { return 0; }
 
   void
-  Zermelo::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Zermelo::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  Zermelo::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DnuDp_numRows() const
-  { return 5; }
-
-  integer
-  Zermelo::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  Zermelo::DnuDp_nnz() const
-  { return 0; }
 
   void
-  Zermelo::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Zermelo::DnuDp_sparse(
+  Zermelo::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

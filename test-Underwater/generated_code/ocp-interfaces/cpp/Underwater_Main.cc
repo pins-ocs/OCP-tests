@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 31/1/2022                                        |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -34,12 +34,12 @@ int
 main() {
 
   // model cen be large and do not fit in stack, use new
-  GenericContainer        gc_data, gc_solution;
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  GenericContainer     gc_data, gc_solution;
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
-    Underwater * m_model = new Underwater("Underwater",&TP,&console);
+    Underwater * m_model = new Underwater("Underwater",n_threads,&console);
 
     // user defined Object instances (external)
     MeshStd          mesh( "mesh" );

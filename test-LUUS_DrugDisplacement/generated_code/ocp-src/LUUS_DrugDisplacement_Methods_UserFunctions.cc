@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_UserFunctions.cc                 |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,6 +17,7 @@
 
 #include "LUUS_DrugDisplacement.hh"
 #include "LUUS_DrugDisplacement_Pars.hh"
+#include <cmath>
 
 using namespace std;
 using namespace MechatronixLoad;
@@ -53,6 +54,37 @@ using Mechatronix::MeshStd;
 
 
 namespace LUUS_DrugDisplacementDefine {
+  using std::acos;
+  using std::acosh;
+  using std::asin;
+  using std::asinh;
+  using std::atan;
+  using std::atan2;
+  using std::atanh;
+  using std::cbrt;
+  using std::ceil;
+  using std::abs;
+  using std::cos;
+  using std::cosh;
+  using std::exp;
+  using std::exp2;
+  using std::expm1;
+  using std::floor;
+  using std::log;
+  using std::log10;
+  using std::log1p;
+  using std::log2;
+  using std::logb;
+  using std::pow;
+  using std::hypot;
+  using std::floor;
+  using std::round;
+  using std::sin;
+  using std::sinh;
+  using std::sqrt;
+  using std::tan;
+  using std::tanh;
+  using std::trunc;
   /*\
    |  _   _               ___             _   _
    | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
@@ -270,7 +302,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g2(xo__x1, xo__x2);
     real_type t4   = g2_D_1_1(xo__x1, xo__x2);
-    real_type result__ = 2 * t3 * t4 + 2 * t2;
+    real_type result__ = 2 * t4 * t3 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -319,7 +351,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g2(xo__x1, xo__x2);
     real_type t4   = g2_D_2_2(xo__x1, xo__x2);
-    real_type result__ = 2 * t3 * t4 + 2 * t2;
+    real_type result__ = 2 * t4 * t3 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -336,7 +368,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type result__ = 1.0 / (t3 * t4 - 0.215296e4 * xo__x1 * xo__x2) * t2;
+    real_type result__ = 1.0 / (t4 * t3 - 0.215296e4 * xo__x1 * xo__x2) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -375,7 +407,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type t8   = t3 * t4 - 0.215296e4 * xo__x1 * xo__x2;
+    real_type t8   = t4 * t3 - 0.215296e4 * xo__x1 * xo__x2;
     real_type t9   = 1.0 / t8;
     real_type t12  = g2(xo__x1, xo__x2);
     real_type t13  = t8 * t8;
@@ -460,7 +492,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type t8   = t3 * t4 - 0.215296e4 * xo__x1 * xo__x2;
+    real_type t8   = t4 * t3 - 0.215296e4 * xo__x1 * xo__x2;
     real_type t9   = 1.0 / t8;
     real_type t12  = g2(xo__x1, xo__x2);
     real_type t13  = t8 * t8;

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    Crossroad        model("Crossroad",&TP,&console);
+    Crossroad        model("Crossroad",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,11 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type v_max = 30;
-    real_type jerk_min = -10;
     real_type L = 100;
-    real_type s_f = L;
+    real_type jerk_min = -10;
     real_type jerk_max = 10;
+    real_type s_f = L;
     real_type wJ = 1/jerk_max^2;
     integer InfoLevel = 4;
 
@@ -141,8 +140,6 @@ main() {
     data_Parameters["L"] = L;
     data_Parameters["wJ"] = wJ;
     data_Parameters["wT"] = 10;
-    data_Parameters["alat_max"] = 4;
-    data_Parameters["along_max"] = 4;
     data_Parameters["jerk_max"] = jerk_max;
     data_Parameters["jerk_min"] = jerk_min;
 
@@ -158,11 +155,14 @@ main() {
     data_Parameters["v_i"] = 0;
 
     // Post Processing Parameters
+    data_Parameters["alat_max"] = 4;
+    data_Parameters["along_max"] = 4;
 
     // User Function Parameters
     data_Parameters["kappa0"] = 0;
     data_Parameters["kappa1"] = 1/10.00;
     data_Parameters["kappa2"] = 1/10.00;
+    data_Parameters["v_max"] = 30;
 
     // Continuation Parameters
 
@@ -171,7 +171,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_jerkControl = data_Controls["jerkControl"];
@@ -181,30 +181,35 @@ main() {
 
 
 
-    // Constraint1D
+    // ConstraintLT
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_Tpositive = data_Constraints["Tpositive"];
     data_Tpositive["subType"]   = "PENALTY_REGULAR";
     data_Tpositive["epsilon"]   = 0.01;
     data_Tpositive["tolerance"] = 0.01;
     data_Tpositive["active"]    = true;
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_AccBound = data_Constraints["AccBound"];
     data_AccBound["subType"]   = "PENALTY_REGULAR";
     data_AccBound["epsilon"]   = 0.01;
     data_AccBound["tolerance"] = 0.01;
     data_AccBound["active"]    = true;
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_VelBound = data_Constraints["VelBound"];
-    data_VelBound["subType"]   = "PENALTY_REGULAR";
-    data_VelBound["epsilon"]   = 0.01;
-    data_VelBound["tolerance"] = 0.01;
-    data_VelBound["min"]       = 0;
-    data_VelBound["max"]       = v_max;
-    data_VelBound["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_VelBound_min = data_Constraints["VelBound_min"];
+    data_VelBound_min["subType"]   = "PENALTY_REGULAR";
+    data_VelBound_min["epsilon"]   = 0.01;
+    data_VelBound_min["tolerance"] = 0.01;
+    data_VelBound_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_VelBound_max = data_Constraints["VelBound_max"];
+    data_VelBound_max["subType"]   = "PENALTY_REGULAR";
+    data_VelBound_max["epsilon"]   = 0.01;
+    data_VelBound_max["tolerance"] = 0.01;
+    data_VelBound_max["active"]    = true;
+    // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization

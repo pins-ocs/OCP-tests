@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_boundary_conditions.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -67,9 +67,7 @@ namespace BrakeDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer
-  Brake::boundaryConditions_numEqns() const
-  { return 3; }
+  integer Brake::boundaryConditions_numEqns() const { return 3; }
 
   void
   Brake::boundaryConditions_eval(
@@ -94,28 +92,17 @@ namespace BrakeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brake::DboundaryConditionsDxxp_numRows() const
-  { return 3; }
-
-  integer
-  Brake::DboundaryConditionsDxxp_numCols() const
-  { return 5; }
-
-  integer
-  Brake::DboundaryConditionsDxxp_nnz() const
-  { return 3; }
+  integer Brake::DboundaryConditionsDxxp_numRows() const { return 3; }
+  integer Brake::DboundaryConditionsDxxp_numCols() const { return 5; }
+  integer Brake::DboundaryConditionsDxxp_nnz()     const { return 3; }
 
   void
-  Brake::DboundaryConditionsDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brake::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
   }
+
 
   void
   Brake::DboundaryConditionsDxxp_sparse(
@@ -141,14 +128,12 @@ namespace BrakeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Brake::adjointBC_numEqns() const
-  { return 5; }
+  integer Brake::adjointBC_numEqns() const { return 5; }
 
   void
   Brake::adjointBC_eval(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
@@ -156,47 +141,35 @@ namespace BrakeDefine {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
     real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
-    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
-    result__[ 2   ] = 1 - LR__[iL_lambda1__xo];
-    result__[ 3   ] = OMEGA__[2] - LR__[iL_lambda2__xo];
+    result__[ 0   ] = OMEGA__[0];
+    result__[ 1   ] = OMEGA__[1];
+    result__[ 2   ] = 1;
+    result__[ 3   ] = OMEGA__[2];
     result__[ 4   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 5, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brake::DadjointBCDxxp_numRows() const
-  { return 5; }
-
-  integer
-  Brake::DadjointBCDxxp_numCols() const
-  { return 5; }
-
-  integer
-  Brake::DadjointBCDxxp_nnz() const
-  { return 0; }
+  integer Brake::DadjointBCDxxp_numRows() const { return 5; }
+  integer Brake::DadjointBCDxxp_numCols() const { return 5; }
+  integer Brake::DadjointBCDxxp_nnz()     const { return 0; }
 
   void
-  Brake::DadjointBCDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brake::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   void
   Brake::DadjointBCDxxp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]

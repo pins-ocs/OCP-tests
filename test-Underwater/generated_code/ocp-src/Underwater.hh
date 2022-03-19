@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater.hh                                                  |
  |                                                                       |
- |  version: 1.0   date 31/1/2022                                        |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -76,6 +76,7 @@ namespace UnderwaterDefine {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -113,6 +114,8 @@ namespace UnderwaterDefine {
     Mechatronix::PenaltyBarrierU u1Control;
     Mechatronix::PenaltyBarrierU u2Control;
     Mechatronix::PenaltyBarrierU u3Control;
+
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -180,9 +183,9 @@ namespace UnderwaterDefine {
     UNDERWATER_API_DLL
     explicit
     Underwater(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~Underwater() override;

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -77,21 +77,21 @@ namespace RayleightDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[0];
-    real_type t3   = XM__[1];
-    real_type t5   = t3 * t3;
-    real_type t8   = UM__[0];
-    real_type t13  = t8 * t8;
-    real_type t14  = t1 * t1;
-    real_type result__ = LM__[1] * (-1.0 * t1 + 0.14e1 * t3 - 0.14e0 * t5 * t3 + 4.0 * t8) + t13 + t14 + t3 * LM__[0];
+    real_type t2   = t1 * t1;
+    real_type t3   = UM__[0];
+    real_type t4   = t3 * t3;
+    real_type t6   = XM__[1];
+    real_type t9   = t6 * t6;
+    real_type result__ = t2 + t4 + t6 * LM__[0] + (-t1 + t6 * (0.14e1 - 0.14e0 * t9) + 4 * t3) * LM__[1];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  Rayleight::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Rayleight::g_numEqns() const { return 1; }
 
   void
   Rayleight::g_eval(
@@ -125,27 +125,16 @@ namespace RayleightDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Rayleight::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  Rayleight::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  Rayleight::DgDxlxlp_nnz() const
-  { return 2; }
+  integer Rayleight::DgDxlxlp_numRows() const { return 1; }
+  integer Rayleight::DgDxlxlp_numCols() const { return 8; }
+  integer Rayleight::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  Rayleight::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Rayleight::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -182,26 +171,15 @@ namespace RayleightDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Rayleight::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  Rayleight::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  Rayleight::DgDu_nnz() const
-  { return 1; }
+  integer Rayleight::DgDu_numRows() const { return 1; }
+  integer Rayleight::DgDu_numCols() const { return 1; }
+  integer Rayleight::DgDu_nnz()     const { return 1; }
 
   void
-  Rayleight::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Rayleight::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -370,9 +348,7 @@ namespace RayleightDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Rayleight::DmDu_numEqns() const
-  { return 1; }
+  integer Rayleight::DmDu_numEqns() const { return 1; }
 
   void
   Rayleight::DmDu_eval(
@@ -394,28 +370,15 @@ namespace RayleightDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Rayleight::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  Rayleight::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  Rayleight::DmDuu_nnz() const
-  { return 1; }
+  integer Rayleight::DmDuu_numRows() const { return 1; }
+  integer Rayleight::DmDuu_numCols() const { return 1; }
+  integer Rayleight::DmDuu_nnz()     const { return 1; }
 
   void
-  Rayleight::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Rayleight::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Rayleight::DmDuu_sparse(

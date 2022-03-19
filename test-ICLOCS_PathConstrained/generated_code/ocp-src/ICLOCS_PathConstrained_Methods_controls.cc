@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Methods_controls.cc                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -91,23 +91,22 @@ namespace ICLOCS_PathConstrainedDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = pow(QM__[0] - 0.5e0, 2);
     real_type t5   = XM__[1];
-    real_type t7   = x2bound(8.0 * t3 - 0.5e0 - t5);
-    real_type t8   = t5 * t5;
-    real_type t10  = LM__[1];
-    real_type t14  = UM__[0];
-    real_type t15  = t14 * t14;
-    real_type t18  = XM__[0] * XM__[0];
-    real_type t20  = uControl(t14, -20, 20);
-    real_type result__ = t7 + t8 + t5 * (LM__[0] - 1.0 * t10) + 0.5e-2 * t15 + t18 + t14 * t10 + t20;
+    real_type t7   = x2bound(0.5e0 - 8 * t3 + t5);
+    real_type t8   = UM__[0];
+    real_type t9   = t8 * t8;
+    real_type t12  = XM__[0] * XM__[0];
+    real_type t13  = t5 * t5;
+    real_type t19  = uControl(t8, -20, 20);
+    real_type result__ = t7 + 0.5e-2 * t9 + t12 + t13 + t5 * LM__[0] + (-t5 + t8) * LM__[1] + t19;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  ICLOCS_PathConstrained::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_PathConstrained::g_numEqns() const { return 1; }
 
   void
   ICLOCS_PathConstrained::g_eval(
@@ -143,27 +142,16 @@ namespace ICLOCS_PathConstrainedDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_PathConstrained::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_PathConstrained::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  ICLOCS_PathConstrained::DgDxlxlp_nnz() const
-  { return 2; }
+  integer ICLOCS_PathConstrained::DgDxlxlp_numRows() const { return 1; }
+  integer ICLOCS_PathConstrained::DgDxlxlp_numCols() const { return 8; }
+  integer ICLOCS_PathConstrained::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  ICLOCS_PathConstrained::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_PathConstrained::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -200,26 +188,15 @@ namespace ICLOCS_PathConstrainedDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_PathConstrained::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_PathConstrained::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_PathConstrained::DgDu_nnz() const
-  { return 1; }
+  integer ICLOCS_PathConstrained::DgDu_numRows() const { return 1; }
+  integer ICLOCS_PathConstrained::DgDu_numCols() const { return 1; }
+  integer ICLOCS_PathConstrained::DgDu_nnz()     const { return 1; }
 
   void
-  ICLOCS_PathConstrained::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_PathConstrained::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -359,14 +336,14 @@ namespace ICLOCS_PathConstrainedDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = pow(Q__[iQ_zeta] - 0.5e0, 2);
-    real_type t5   = X__[iX_x2];
-    real_type t7   = x2bound(8 * t3 - 0.5e0 - t5);
-    real_type t8   = U__[iU_u];
-    real_type t9   = uControl(t8, -20, 20);
-    real_type t12  = pow(V__[0] - t5, 2);
-    real_type t15  = pow(V__[1] + t5 - t8, 2);
-    real_type result__ = t7 + t9 + t12 + t15;
+    real_type t1   = U__[iU_u];
+    real_type t2   = uControl(t1, -20, 20);
+    real_type t5   = pow(Q__[iQ_zeta] - 0.5e0, 2);
+    real_type t7   = X__[iX_x2];
+    real_type t9   = x2bound(0.5e0 - 8 * t5 + t7);
+    real_type t12  = pow(V__[0] - t7, 2);
+    real_type t15  = pow(V__[1] + t7 - t1, 2);
+    real_type result__ = t2 + t9 + t12 + t15;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -375,9 +352,7 @@ namespace ICLOCS_PathConstrainedDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_PathConstrained::DmDu_numEqns() const
-  { return 1; }
+  integer ICLOCS_PathConstrained::DmDu_numEqns() const { return 1; }
 
   void
   ICLOCS_PathConstrained::DmDu_eval(
@@ -399,28 +374,15 @@ namespace ICLOCS_PathConstrainedDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_PathConstrained::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_PathConstrained::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_PathConstrained::DmDuu_nnz() const
-  { return 1; }
+  integer ICLOCS_PathConstrained::DmDuu_numRows() const { return 1; }
+  integer ICLOCS_PathConstrained::DmDuu_numCols() const { return 1; }
+  integer ICLOCS_PathConstrained::DmDuu_nnz()     const { return 1; }
 
   void
-  ICLOCS_PathConstrained::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_PathConstrained::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ICLOCS_PathConstrained::DmDuu_sparse(

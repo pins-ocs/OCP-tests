@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    BangBangFredundant model("BangBangFredundant",&TP,&console);
+    BangBangFredundant model("BangBangFredundant",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type maxAF = 100;
     real_type h0 = 0.01;
+    real_type maxAF = 100;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -132,7 +132,6 @@ main() {
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
     data_Parameters["maxAF"] = maxAF;
-    data_Parameters["w_F"] = 10;
 
     // Guess Parameters
 
@@ -145,18 +144,19 @@ main() {
     // Continuation Parameters
 
     // Constraints Parameters
+    data_Parameters["w_F"] = 10;
 
     // functions mapped on objects
     GenericContainer & gc_MappedObjects = gc_data["MappedObjects"];
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["h"] = h0;
     data_clip["delta"] = 0;
     data_clip["delta2"] = 0;
+    data_clip["h"] = h0;
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_aF1Control = data_Controls["aF1Control"];
@@ -172,18 +172,23 @@ main() {
 
 
 
-    // Constraint1D
+    // ConstraintLT
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_Flim = data_Constraints["Flim"];
-    data_Flim["subType"]   = "PENALTY_REGULAR";
-    data_Flim["epsilon"]   = 0.001;
-    data_Flim["tolerance"] = 0.001;
-    data_Flim["min"]       = -1;
-    data_Flim["max"]       = 1;
-    data_Flim["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_Flim_min = data_Constraints["Flim_min"];
+    data_Flim_min["subType"]   = "PENALTY_REGULAR";
+    data_Flim_min["epsilon"]   = 0.001;
+    data_Flim_min["tolerance"] = 0.001;
+    data_Flim_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_Flim_max = data_Constraints["Flim_max"];
+    data_Flim_max["subType"]   = "PENALTY_REGULAR";
+    data_Flim_max["epsilon"]   = 0.001;
+    data_Flim_max["tolerance"] = 0.001;
+    data_Flim_max["active"]    = true;
+    // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization

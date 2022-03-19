@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_dll_ruby.hh                                 |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -105,8 +105,8 @@ namespace ICLOCS_SingularArcDefine {
   public:
 
     ICLOCS_SINGULARARC_API_DLL
-    ICLOCS_SingularArc_Problem( ThreadPool * TP, Console const * console )
-    : model("ICLOCS_SingularArc",TP,console)
+    ICLOCS_SingularArc_Problem( integer n_threads, Console const * console )
+    : model("ICLOCS_SingularArc",n_threads,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

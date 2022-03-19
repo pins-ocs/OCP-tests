@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods_problem.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -81,7 +81,7 @@ namespace HyperSensitiveDefine {
   \*/
 
   real_type
-  HyperSensitive::penalties_eval(
+  HyperSensitive::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -92,7 +92,7 @@ namespace HyperSensitiveDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -100,7 +100,7 @@ namespace HyperSensitiveDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  HyperSensitive::control_penalties_eval(
+  HyperSensitive::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -111,10 +111,31 @@ namespace HyperSensitiveDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  HyperSensitive::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -174,9 +195,7 @@ namespace HyperSensitiveDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  HyperSensitive::DmayerDxxp_numEqns() const
-  { return 2; }
+  integer HyperSensitive::DmayerDxxp_numEqns() const { return 2; }
 
   void
   HyperSensitive::DmayerDxxp_eval(
@@ -208,9 +227,7 @@ namespace HyperSensitiveDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  HyperSensitive::DlagrangeDxup_numEqns() const
-  { return 2; }
+  integer HyperSensitive::DlagrangeDxup_numEqns() const { return 2; }
 
   void
   HyperSensitive::DlagrangeDxup_eval(
@@ -229,62 +246,48 @@ namespace HyperSensitiveDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 2, i_segment );
   }
 
-  integer
-  HyperSensitive::DJDx_numEqns() const
-  { return 1; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer HyperSensitive::IPOPT_hess_numRows() const { return 2; }
+  integer HyperSensitive::IPOPT_hess_numCols() const { return 2; }
+  integer HyperSensitive::IPOPT_hess_nnz()     const { return 2; }
 
   void
-  HyperSensitive::DJDx_eval(
-    NodeType const     & NODE__,
+  HyperSensitive::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  HyperSensitive::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
+    real_type t5   = 2 * sigma__;
+    result__[ 0   ] = -6 * L__[iL_lambda1__xo] * X__[iX_y] + t5;
+    result__[ 1   ] = t5;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HyperSensitive::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  HyperSensitive::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HyperSensitive::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  HyperSensitive::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 2, i_segment );
   }
 
   /*\
@@ -317,9 +320,7 @@ namespace HyperSensitiveDefine {
    |              |___/
   \*/
 
-  integer
-  HyperSensitive::segmentLink_numEqns() const
-  { return 0; }
+  integer HyperSensitive::segmentLink_numEqns() const { return 0; }
 
   void
   HyperSensitive::segmentLink_eval(
@@ -333,17 +334,9 @@ namespace HyperSensitiveDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  HyperSensitive::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  HyperSensitive::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  HyperSensitive::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer HyperSensitive::DsegmentLinkDxp_numRows() const { return 0; }
+  integer HyperSensitive::DsegmentLinkDxp_numCols() const { return 0; }
+  integer HyperSensitive::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   HyperSensitive::DsegmentLinkDxp_pattern(
@@ -373,9 +366,7 @@ namespace HyperSensitiveDefine {
    |                 |_|
   \*/
 
-  integer
-  HyperSensitive::jump_numEqns() const
-  { return 2; }
+  integer HyperSensitive::jump_numEqns() const { return 2; }
 
   void
   HyperSensitive::jump_eval(
@@ -401,29 +392,18 @@ namespace HyperSensitiveDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HyperSensitive::DjumpDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  HyperSensitive::DjumpDxlxlp_numCols() const
-  { return 4; }
-
-  integer
-  HyperSensitive::DjumpDxlxlp_nnz() const
-  { return 4; }
+  integer HyperSensitive::DjumpDxlxlp_numRows() const { return 2; }
+  integer HyperSensitive::DjumpDxlxlp_numCols() const { return 4; }
+  integer HyperSensitive::DjumpDxlxlp_nnz()     const { return 4; }
 
   void
-  HyperSensitive::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  HyperSensitive::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -460,9 +440,7 @@ namespace HyperSensitiveDefine {
    |                                                    |___/
   \*/
 
-  integer
-  HyperSensitive::post_numEqns() const
-  { return 0; }
+  integer HyperSensitive::post_numEqns() const { return 0; }
 
   void
   HyperSensitive::post_eval(
@@ -476,9 +454,7 @@ namespace HyperSensitiveDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  HyperSensitive::integrated_post_numEqns() const
-  { return 0; }
+  integer HyperSensitive::integrated_post_numEqns() const { return 0; }
 
   void
   HyperSensitive::integrated_post_eval(

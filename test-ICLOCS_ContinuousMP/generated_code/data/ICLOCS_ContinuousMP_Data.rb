@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_ContinuousMP_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 20/12/2021                                       #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
-#  Copyright (C) 2021                                                   #
+#  Copyright (C) 2022                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -20,24 +20,25 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-xy_tol0   = 0.1
 tol_ctrl  = 0.01
-epsi_ctrl = 0.01
-xy_bound  = 2
-xy_tol    = xy_tol0
 xy_eps0   = 0.1
 xy_eps    = xy_eps0
+epsi_ctrl = 0.01
+xy_tol0   = 0.1
+xy_tol    = xy_tol0
 
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = true
+  data.Debug = false
 
   # Enable doctor
   data.Doctor = false
 
   # Level of message
   data.InfoLevel = 4
+
+  data.Use_control_penalties_in_adjoint_equations = false
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -352,6 +353,7 @@ mechatronix do |data|
     # Post Processing Parameters
 
     # User Function Parameters
+    :xy_bound => 2,
 
     # Continuation Parameters
     :xy_eps0 => xy_eps0,
@@ -387,549 +389,850 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
-  # Constraint1D
+  # ConstraintLT
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u1Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u1Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u2Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u1Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u3Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u2Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u4Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u2Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u5Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u3Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u6Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u3Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u7Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u4Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u8Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u4Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u9Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u5Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u10Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u5Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u11Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u6Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u12Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u6Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u13Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u7Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u14Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u7Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u15Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u8Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u16Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u8Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u17Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u9Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u18Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u9Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u19Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u10Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:u20Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u10Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
-    :min       => -10,
-    :max       => 10,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx1Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u11Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u11Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u12Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u12Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u13Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u13Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u14Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u14Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u15Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u15Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u16Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u16Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u17Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u17Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u18Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u18Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u19Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u19Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u20Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:u20Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => epsi_ctrl,
+    :tolerance => tol_ctrl,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx1Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy1Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx1Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx2Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy1Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy2Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy1Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx3Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx2Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy3Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx2Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx4Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy2Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy4Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy2Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx5Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx3Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy5Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx3Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx6Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy3Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy6Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy3Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx7Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx4Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy7Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx4Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx8Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy4Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy8Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy4Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx9Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx5Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy9Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx5Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx10Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy5Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy10Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy5Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx11Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx6Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy11Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx6Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx12Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy6Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy12Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy6Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx13Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx7Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy13Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx7Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx14Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy7Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy14Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy7Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx15Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx8Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy15Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx8Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx16Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy8Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy16Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy8Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx17Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx9Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy17Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx9Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx18Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy9Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy18Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy9Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx19Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx10Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy19Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx10Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:xx20Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy10Limitation_min] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
-  # PenaltyBarrier1DInterval
-  data.Constraints[:yy20Limitation] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy10Limitation_max] = {
     :subType   => "BARRIER_LOG",
     :epsilon   => xy_eps,
     :tolerance => xy_tol,
-    :min       => -xy_bound,
-    :max       => xy_bound,
     :active    => true
   }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx11Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx11Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy11Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy11Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx12Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx12Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy12Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy12Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx13Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx13Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy13Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy13Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx14Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx14Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy14Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy14Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx15Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx15Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy15Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy15Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx16Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx16Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy16Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy16Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx17Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx17Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy17Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy17Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx18Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx18Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy18Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy18Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx19Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx19Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy19Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy19Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx20Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:xx20Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy20Limitation_min] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:yy20Limitation_max] = {
+    :subType   => "BARRIER_LOG",
+    :epsilon   => xy_eps,
+    :tolerance => xy_tol,
+    :active    => true
+  }
+  # Constraint1D: none defined
   # Constraint2D: none defined
 
 

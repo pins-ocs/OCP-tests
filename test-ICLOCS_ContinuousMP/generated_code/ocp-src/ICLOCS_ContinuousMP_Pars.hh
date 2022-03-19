@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Pars.hh                                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -19,8 +19,9 @@
 #define ICLOCS_CONTINUOUSMPPARS_DOT_HH
 
 #define numBc                    80
-#define numModelPars             4
-#define numConstraint1D          60
+#define numModelPars             5
+#define numConstraintLT          120
+#define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           0
 #define numXvars                 80
@@ -229,6 +230,7 @@
 #define iM_xy_eps1      1
 #define iM_xy_tol0      2
 #define iM_xy_tol1      3
+#define iM_xy_bound     4
 
 #endif
 

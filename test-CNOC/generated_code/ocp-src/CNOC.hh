@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC.hh                                                        |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,6 +76,7 @@ namespace CNOCDefine {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -113,14 +114,21 @@ namespace CNOCDefine {
     Mechatronix::PenaltyBarrierU jsControl;
     Mechatronix::PenaltyBarrierU jnControl;
 
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DLessThan timePositive;
+    Mechatronix::PenaltyBarrier1DLessThan vLimit;
+    Mechatronix::PenaltyBarrier1DLessThan PathFollowingTolerance_min;
+    Mechatronix::PenaltyBarrier1DLessThan PathFollowingTolerance_max;
+    Mechatronix::PenaltyBarrier1DLessThan as_limit_min;
+    Mechatronix::PenaltyBarrier1DLessThan as_limit_max;
+    Mechatronix::PenaltyBarrier1DLessThan an_limit_min;
+    Mechatronix::PenaltyBarrier1DLessThan an_limit_max;
+    Mechatronix::PenaltyBarrier1DLessThan ax_limit_min;
+    Mechatronix::PenaltyBarrier1DLessThan ax_limit_max;
+    Mechatronix::PenaltyBarrier1DLessThan ay_limit_min;
+    Mechatronix::PenaltyBarrier1DLessThan ay_limit_max;
+
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrier1DGreaterThan timePositive;
-    Mechatronix::PenaltyBarrier1DGreaterThan vLimit;
-    Mechatronix::PenaltyBarrier1DInterval PathFollowingTolerance;
-    Mechatronix::PenaltyBarrier1DInterval as_limit;
-    Mechatronix::PenaltyBarrier1DInterval an_limit;
-    Mechatronix::PenaltyBarrier1DInterval ax_limit;
-    Mechatronix::PenaltyBarrier1DInterval ay_limit;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -184,9 +192,9 @@ namespace CNOCDefine {
     CNOC_API_DLL
     explicit
     CNOC(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~CNOC() override;
@@ -248,6 +256,21 @@ namespace CNOCDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    CNOC_API_DLL real_type PathFollowingTolerance      ( real_type xo___V ) const;
+    CNOC_API_DLL real_type PathFollowingTolerance_D    ( real_type xo___V ) const;
+    CNOC_API_DLL real_type PathFollowingTolerance_DD   ( real_type xo___V ) const;
+    CNOC_API_DLL real_type as_limit                    ( real_type xo___V ) const;
+    CNOC_API_DLL real_type as_limit_D                  ( real_type xo___V ) const;
+    CNOC_API_DLL real_type as_limit_DD                 ( real_type xo___V ) const;
+    CNOC_API_DLL real_type an_limit                    ( real_type xo___V ) const;
+    CNOC_API_DLL real_type an_limit_D                  ( real_type xo___V ) const;
+    CNOC_API_DLL real_type an_limit_DD                 ( real_type xo___V ) const;
+    CNOC_API_DLL real_type ax_limit                    ( real_type xo___V ) const;
+    CNOC_API_DLL real_type ax_limit_D                  ( real_type xo___V ) const;
+    CNOC_API_DLL real_type ax_limit_DD                 ( real_type xo___V ) const;
+    CNOC_API_DLL real_type ay_limit                    ( real_type xo___V ) const;
+    CNOC_API_DLL real_type ay_limit_D                  ( real_type xo___V ) const;
+    CNOC_API_DLL real_type ay_limit_DD                 ( real_type xo___V ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

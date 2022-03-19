@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    ICLOCS_StirredTank model("ICLOCS_StirredTank",&TP,&console);
+    ICLOCS_StirredTank model("ICLOCS_StirredTank",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,16 +50,16 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type w_time_max = 1;
     real_type tol_ctrl0 = 0.1;
+    real_type tol_ctrl = tol_ctrl0;
+    real_type epsi_T = 0.01;
+    real_type tol_T = 1;
+    real_type x_epsi = 0.01;
+    real_type w_time = w_time_max;
+    real_type x_tol = 0.01;
     real_type epsi_ctrl0 = 0.1;
     real_type epsi_ctrl = epsi_ctrl0;
-    real_type x_epsi = 0.01;
-    real_type tol_T = 1;
-    real_type tol_ctrl = tol_ctrl0;
-    real_type w_time_max = 1;
-    real_type x_tol = 0.01;
-    real_type w_time = w_time_max;
-    real_type epsi_T = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -176,7 +176,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
@@ -186,39 +186,48 @@ main() {
 
 
 
-    // Constraint1D
+    // ConstraintLT
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_tfbound = data_Constraints["tfbound"];
     data_tfbound["subType"]   = "BARRIER_LOG";
     data_tfbound["epsilon"]   = epsi_T;
     data_tfbound["tolerance"] = tol_T;
     data_tfbound["active"]    = true;
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_x1bound = data_Constraints["x1bound"];
-    data_x1bound["subType"]   = "BARRIER_LOG";
-    data_x1bound["epsilon"]   = x_epsi;
-    data_x1bound["tolerance"] = x_tol;
-    data_x1bound["min"]       = 0;
-    data_x1bound["max"]       = 1;
-    data_x1bound["active"]    = true;
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_x2bound = data_Constraints["x2bound"];
-    data_x2bound["subType"]   = "BARRIER_LOG";
-    data_x2bound["epsilon"]   = x_epsi;
-    data_x2bound["tolerance"] = x_tol;
-    data_x2bound["min"]       = 0;
-    data_x2bound["max"]       = 1;
-    data_x2bound["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_x1bound_min = data_Constraints["x1bound_min"];
+    data_x1bound_min["subType"]   = "BARRIER_LOG";
+    data_x1bound_min["epsilon"]   = x_epsi;
+    data_x1bound_min["tolerance"] = x_tol;
+    data_x1bound_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_x1bound_max = data_Constraints["x1bound_max"];
+    data_x1bound_max["subType"]   = "BARRIER_LOG";
+    data_x1bound_max["epsilon"]   = x_epsi;
+    data_x1bound_max["tolerance"] = x_tol;
+    data_x1bound_max["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_x2bound_min = data_Constraints["x2bound_min"];
+    data_x2bound_min["subType"]   = "BARRIER_LOG";
+    data_x2bound_min["epsilon"]   = x_epsi;
+    data_x2bound_min["tolerance"] = x_tol;
+    data_x2bound_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_x2bound_max = data_Constraints["x2bound_max"];
+    data_x2bound_max["subType"]   = "BARRIER_LOG";
+    data_x2bound_max["epsilon"]   = x_epsi;
+    data_x2bound_max["tolerance"] = x_tol;
+    data_x2bound_max["active"]    = true;
+    // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_StirredTank_data.Mesh["s0"] = 0;
-ICLOCS_StirredTank_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS_StirredTank_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_StirredTank_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

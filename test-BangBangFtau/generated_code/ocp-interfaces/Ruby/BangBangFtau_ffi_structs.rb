@@ -3,9 +3,9 @@
 #                                                                          #
 #  file: BangBangFtau_ffi_structs.rb                                       #
 #                                                                          #
-#  version: 1.0   date 20/12/2021                                          #
+#  version: 1.0   date 19/3/2022                                           #
 #                                                                          #
-#  Copyright (C) 2021                                                      #
+#  Copyright (C) 2022                                                      #
 #                                                                          #
 #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                              #
@@ -85,21 +85,24 @@ module BangBangFtau
 
   class BangBangFtau_constraints_params < FFI::Struct
     layout(
+      # LT constraints
+      :vsTpositiveSubType, :index_t,
+      :vsTpositiveEpsilon, :data_t,
+      :vsTpositiveTolerance, :data_t,
+      :vsBpositiveSubType, :index_t,
+      :vsBpositiveEpsilon, :data_t,
+      :vsBpositiveTolerance, :data_t,
+      :vsTmaxSubType, :index_t,
+      :vsTmaxEpsilon, :data_t,
+      :vsTmaxTolerance, :data_t,
+      :vsTBInterval_minSubType, :index_t,
+      :vsTBInterval_minEpsilon, :data_t,
+      :vsTBInterval_minTolerance, :data_t,
+      :vsTBInterval_maxSubType, :index_t,
+      :vsTBInterval_maxEpsilon, :data_t,
+      :vsTBInterval_maxTolerance, :data_t,
+
       # 1D constraints
-      :vsTpositiveSubType,    :index_t,
-      :vsTpositiveEpsilon,    :data_t,
-      :vsTpositiveTolerance,  :data_t,
-      :vsBpositiveSubType,    :index_t,
-      :vsBpositiveEpsilon,    :data_t,
-      :vsBpositiveTolerance,  :data_t,
-      :vsTmaxSubType,         :index_t,
-      :vsTmaxEpsilon,         :data_t,
-      :vsTmaxTolerance,       :data_t,
-      :vsTBIntervalSubType,   :index_t,
-      :vsTBIntervalEpsilon,   :data_t,
-      :vsTBIntervalTolerance, :data_t,
-      :vsTBIntervalMinValue,  :data_t,
-      :vsTBIntervalMaxValue,  :data_t,
 
       # 2D constraints
 

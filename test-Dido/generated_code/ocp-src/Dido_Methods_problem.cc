@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido_Methods_problem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -80,7 +80,7 @@ namespace DidoDefine {
   \*/
 
   real_type
-  Dido::penalties_eval(
+  Dido::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -91,7 +91,7 @@ namespace DidoDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -99,7 +99,7 @@ namespace DidoDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Dido::control_penalties_eval(
+  Dido::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -110,10 +110,31 @@ namespace DidoDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Dido::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -172,9 +193,7 @@ namespace DidoDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Dido::DmayerDxxp_numEqns() const
-  { return 4; }
+  integer Dido::DmayerDxxp_numEqns() const { return 4; }
 
   void
   Dido::DmayerDxxp_eval(
@@ -208,9 +227,7 @@ namespace DidoDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  Dido::DlagrangeDxup_numEqns() const
-  { return 3; }
+  integer Dido::DlagrangeDxup_numEqns() const { return 3; }
 
   void
   Dido::DlagrangeDxup_eval(
@@ -233,63 +250,52 @@ namespace DidoDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
   }
 
-  integer
-  Dido::DJDx_numEqns() const
-  { return 2; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Dido::IPOPT_hess_numRows() const { return 3; }
+  integer Dido::IPOPT_hess_numCols() const { return 3; }
+  integer Dido::IPOPT_hess_nnz()     const { return 3; }
 
   void
-  Dido::DJDx_eval(
-    NodeType const     & NODE__,
+  Dido::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 1   ; jIndex[0 ] = 2   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dido::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
+    real_type t1   = U__[iU_theta];
+    real_type t2   = sin(t1);
+    result__[ 0   ] = t2 * sigma__;
+    result__[ 1   ] = result__[0];
+    real_type t5   = cos(t1);
+    result__[ 2   ] = t5 * X__[iX_y] * sigma__ - t2 * L__[iL_lambda2__xo] - t5 * L__[iL_lambda1__xo];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dido::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  Dido::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dido::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  Dido::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 3, i_segment );
   }
 
   /*\
@@ -322,9 +328,7 @@ namespace DidoDefine {
    |              |___/
   \*/
 
-  integer
-  Dido::segmentLink_numEqns() const
-  { return 0; }
+  integer Dido::segmentLink_numEqns() const { return 0; }
 
   void
   Dido::segmentLink_eval(
@@ -338,17 +342,9 @@ namespace DidoDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Dido::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  Dido::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  Dido::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer Dido::DsegmentLinkDxp_numRows() const { return 0; }
+  integer Dido::DsegmentLinkDxp_numCols() const { return 0; }
+  integer Dido::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   Dido::DsegmentLinkDxp_pattern(
@@ -378,9 +374,7 @@ namespace DidoDefine {
    |                 |_|
   \*/
 
-  integer
-  Dido::jump_numEqns() const
-  { return 4; }
+  integer Dido::jump_numEqns() const { return 4; }
 
   void
   Dido::jump_eval(
@@ -408,24 +402,12 @@ namespace DidoDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dido::DjumpDxlxlp_numRows() const
-  { return 4; }
-
-  integer
-  Dido::DjumpDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  Dido::DjumpDxlxlp_nnz() const
-  { return 8; }
+  integer Dido::DjumpDxlxlp_numRows() const { return 4; }
+  integer Dido::DjumpDxlxlp_numCols() const { return 8; }
+  integer Dido::DjumpDxlxlp_nnz()     const { return 8; }
 
   void
-  Dido::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Dido::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -435,6 +417,7 @@ namespace DidoDefine {
     iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
     iIndex[7 ] = 3   ; jIndex[7 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -475,9 +458,7 @@ namespace DidoDefine {
    |                                                    |___/
   \*/
 
-  integer
-  Dido::post_numEqns() const
-  { return 0; }
+  integer Dido::post_numEqns() const { return 0; }
 
   void
   Dido::post_eval(
@@ -491,9 +472,7 @@ namespace DidoDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Dido::integrated_post_numEqns() const
-  { return 0; }
+  integer Dido::integrated_post_numEqns() const { return 0; }
 
   void
   Dido::integrated_post_eval(

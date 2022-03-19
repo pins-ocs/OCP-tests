@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Pars.hh                                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -19,8 +19,9 @@
 #define CROSSROADPARS_DOT_HH
 
 #define numBc                    6
-#define numModelPars             17
-#define numConstraint1D          3
+#define numModelPars             18
+#define numConstraintLT          4
+#define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           1
 #define numXvars                 4
@@ -65,12 +66,13 @@
 #define iM_s_i         8
 #define iM_v_f         9
 #define iM_v_i         10
-#define iM_wJ          11
-#define iM_wT          12
-#define iM_alat_max    13
-#define iM_along_max   14
-#define iM_jerk_max    15
-#define iM_jerk_min    16
+#define iM_v_max       11
+#define iM_wJ          12
+#define iM_wT          13
+#define iM_alat_max    14
+#define iM_along_max   15
+#define iM_jerk_max    16
+#define iM_jerk_min    17
 
 #endif
 

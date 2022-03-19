@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -102,7 +102,7 @@ namespace MaximumAscentDefine {
   \*/
 
   real_type
-  MaximumAscent::penalties_eval(
+  MaximumAscent::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -113,7 +113,7 @@ namespace MaximumAscentDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -121,7 +121,7 @@ namespace MaximumAscentDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  MaximumAscent::control_penalties_eval(
+  MaximumAscent::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -132,10 +132,31 @@ namespace MaximumAscentDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  MaximumAscent::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -193,9 +214,7 @@ namespace MaximumAscentDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  MaximumAscent::DmayerDxxp_numEqns() const
-  { return 8; }
+  integer MaximumAscent::DmayerDxxp_numEqns() const { return 8; }
 
   void
   MaximumAscent::DmayerDxxp_eval(
@@ -233,9 +252,7 @@ namespace MaximumAscentDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  MaximumAscent::DlagrangeDxup_numEqns() const
-  { return 5; }
+  integer MaximumAscent::DlagrangeDxup_numEqns() const { return 5; }
 
   void
   MaximumAscent::DlagrangeDxup_eval(
@@ -257,65 +274,83 @@ namespace MaximumAscentDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 5, i_segment );
   }
 
-  integer
-  MaximumAscent::DJDx_numEqns() const
-  { return 4; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::IPOPT_hess_numRows() const { return 5; }
+  integer MaximumAscent::IPOPT_hess_numCols() const { return 5; }
+  integer MaximumAscent::IPOPT_hess_nnz()     const { return 9; }
 
   void
-  MaximumAscent::DJDx_eval(
-    NodeType const     & NODE__,
+  MaximumAscent::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 0   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 1   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 2   ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  MaximumAscent::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    result__[ 2   ] = 0;
-    result__[ 3   ] = 0;
+    real_type t1   = L__[iL_lambda2__xo];
+    real_type t3   = tf(ModelPars[iM_days]);
+    real_type t4   = eta(t3);
+    real_type t5   = t4 * t1;
+    real_type t6   = X__[iX_v];
+    real_type t7   = t6 * t6;
+    real_type t8   = X__[iX_r];
+    real_type t9   = t8 * t8;
+    real_type t11  = 1.0 / t9 / t8;
+    real_type t14  = t9 * t9;
+    real_type t19  = L__[iL_lambda3__xo];
+    real_type t20  = t4 * t19;
+    real_type t21  = X__[iX_u];
+    real_type t27  = t4 * L__[iL_lambda4__xo];
+    result__[ 0   ] = (2 * t11 * t7 - 6 / t14) * t5 - 2 * t11 * t6 * t21 * t20 + 2 * t11 * t6 * t27;
+    real_type t31  = 1.0 / t9;
+    real_type t32  = t31 * t6;
+    result__[ 1   ] = t32 * t20;
+    result__[ 2   ] = t31 * t21 * t20 - t31 * t27 - 2 * t32 * t5;
+    result__[ 3   ] = result__[1];
+    real_type t38  = 1.0 / t8;
+    result__[ 4   ] = -t38 * t20;
+    result__[ 5   ] = result__[2];
+    result__[ 6   ] = result__[4];
+    result__[ 7   ] = 2 * t38 * t5;
+    real_type t41  = Tbar(t3);
+    real_type t49  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]);
+    real_type t50  = U__[iU_alpha];
+    real_type t51  = sin(t50);
+    real_type t55  = cos(t50);
+    result__[ 8   ] = -t51 * t49 * t41 * t1 - t55 * t49 * t41 * t19;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  MaximumAscent::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  MaximumAscent::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 9, i_segment );
   }
 
   /*\
@@ -348,9 +383,7 @@ namespace MaximumAscentDefine {
    |              |___/
   \*/
 
-  integer
-  MaximumAscent::segmentLink_numEqns() const
-  { return 0; }
+  integer MaximumAscent::segmentLink_numEqns() const { return 0; }
 
   void
   MaximumAscent::segmentLink_eval(
@@ -364,17 +397,9 @@ namespace MaximumAscentDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  MaximumAscent::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer MaximumAscent::DsegmentLinkDxp_numRows() const { return 0; }
+  integer MaximumAscent::DsegmentLinkDxp_numCols() const { return 0; }
+  integer MaximumAscent::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   MaximumAscent::DsegmentLinkDxp_pattern(
@@ -404,9 +429,7 @@ namespace MaximumAscentDefine {
    |                 |_|
   \*/
 
-  integer
-  MaximumAscent::jump_numEqns() const
-  { return 8; }
+  integer MaximumAscent::jump_numEqns() const { return 8; }
 
   void
   MaximumAscent::jump_eval(
@@ -438,24 +461,12 @@ namespace MaximumAscentDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DjumpDxlxlp_numRows() const
-  { return 8; }
-
-  integer
-  MaximumAscent::DjumpDxlxlp_numCols() const
-  { return 16; }
-
-  integer
-  MaximumAscent::DjumpDxlxlp_nnz() const
-  { return 16; }
+  integer MaximumAscent::DjumpDxlxlp_numRows() const { return 8; }
+  integer MaximumAscent::DjumpDxlxlp_numCols() const { return 16; }
+  integer MaximumAscent::DjumpDxlxlp_nnz()     const { return 16; }
 
   void
-  MaximumAscent::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  MaximumAscent::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 8   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -473,6 +484,7 @@ namespace MaximumAscentDefine {
     iIndex[14] = 7   ; jIndex[14] = 7   ;
     iIndex[15] = 7   ; jIndex[15] = 15  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -521,9 +533,7 @@ namespace MaximumAscentDefine {
    |                                                    |___/
   \*/
 
-  integer
-  MaximumAscent::post_numEqns() const
-  { return 4; }
+  integer MaximumAscent::post_numEqns() const { return 4; }
 
   void
   MaximumAscent::post_eval(
@@ -549,9 +559,7 @@ namespace MaximumAscentDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  MaximumAscent::integrated_post_numEqns() const
-  { return 0; }
+  integer MaximumAscent::integrated_post_numEqns() const { return 0; }
 
   void
   MaximumAscent::integrated_post_eval(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -63,9 +63,7 @@ namespace HangGliderDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  HangGlider::rhs_ode_numEqns() const
-  { return 4; }
+  integer HangGlider::rhs_ode_numEqns() const { return 4; }
 
   void
   HangGlider::rhs_ode_eval(
@@ -101,38 +99,33 @@ namespace HangGliderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HangGlider::Drhs_odeDx_numRows() const
-  { return 4; }
-
-  integer
-  HangGlider::Drhs_odeDx_numCols() const
-  { return 4; }
-
-  integer
-  HangGlider::Drhs_odeDx_nnz() const
-  { return 8; }
+  integer HangGlider::Drhs_odeDxup_numRows() const { return 4; }
+  integer HangGlider::Drhs_odeDxup_numCols() const { return 6; }
+  integer HangGlider::Drhs_odeDxup_nnz()     const { return 14; }
 
   void
-  HangGlider::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  HangGlider::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 3   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 3   ;
-    iIndex[5 ] = 3   ; jIndex[5 ] = 0   ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 2   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 3   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 3   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 5   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 0   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 4   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 5   ;
+    iIndex[9 ] = 3   ; jIndex[9 ] = 0   ;
+    iIndex[10] = 3   ; jIndex[10] = 2   ;
+    iIndex[11] = 3   ; jIndex[11] = 3   ;
+    iIndex[12] = 3   ; jIndex[12] = 4   ;
+    iIndex[13] = 3   ; jIndex[13] = 5   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  HangGlider::Drhs_odeDx_sparse(
+  HangGlider::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -143,158 +136,60 @@ namespace HangGliderDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = P__[iP_T];
-    result__[ 1   ] = result__[0];
-    real_type t3   = 1.0 / ModelPars[iM_m] * result__[1];
+    result__[ 1   ] = X__[iX_vx];
+    result__[ 2   ] = result__[0];
+    result__[ 3   ] = X__[iX_vy];
+    real_type t2   = 1.0 / ModelPars[iM_m];
+    real_type t3   = t2 * result__[2];
     real_type t4   = X__[iX_x];
-    real_type t5   = X__[iX_vx];
-    real_type t6   = X__[iX_vy];
-    real_type t7   = v(t4, t5, t6);
-    real_type t8   = t7 * t7;
-    real_type t9   = 1.0 / t8;
-    real_type t11  = U__[iU_cL];
-    real_type t12  = t11 * t11;
-    real_type t15  = t12 * ModelPars[iM_c1] + ModelPars[iM_c0];
-    real_type t16  = Dfun(t4, t5, t6);
-    real_type t17  = t16 * t15;
-    real_type t19  = Lfun(t4, t5, t6);
-    real_type t20  = t19 * t11;
-    real_type t21  = w(t4, t6);
-    real_type t24  = (-t5 * t17 - t21 * t20) * t9;
-    real_type t25  = v_D_1(t4, t5, t6);
-    real_type t28  = 1.0 / t7;
-    real_type t29  = Dfun_D_1(t4, t5, t6);
-    real_type t30  = t29 * t15;
-    real_type t32  = Lfun_D_1(t4, t5, t6);
-    real_type t33  = t32 * t11;
-    real_type t35  = w_D_1(t4, t6);
-    result__[ 2   ] = -t25 * t24 * t3 + (-t35 * t20 - t21 * t33 - t5 * t30) * t28 * t3;
-    real_type t40  = v_D_2(t4, t5, t6);
-    real_type t43  = Dfun_D_2(t4, t5, t6);
-    real_type t44  = t43 * t15;
-    real_type t46  = Lfun_D_2(t4, t5, t6);
-    real_type t47  = t46 * t11;
-    result__[ 3   ] = -t40 * t24 * t3 + (-t21 * t47 - t5 * t44 - t17) * t28 * t3;
-    real_type t52  = v_D_3(t4, t5, t6);
-    real_type t55  = Dfun_D_3(t4, t5, t6);
-    real_type t56  = t55 * t15;
-    real_type t58  = Lfun_D_3(t4, t5, t6);
-    real_type t59  = t58 * t11;
-    real_type t61  = w_D_2(t4, t6);
-    result__[ 4   ] = -t52 * t24 * t3 + (-t61 * t20 - t21 * t59 - t5 * t56) * t28 * t3;
-    real_type t69  = (-t21 * t17 + t5 * t20) * t9;
-    result__[ 5   ] = -t25 * t69 * t3 + (-t35 * t17 - t21 * t30 + t5 * t33) * t28 * t3;
-    result__[ 6   ] = -t40 * t69 * t3 + (-t21 * t44 + t5 * t47 + t20) * t28 * t3;
-    result__[ 7   ] = -t52 * t69 * t3 + (-t61 * t17 - t21 * t56 + t5 * t59) * t28 * t3;
+    real_type t5   = v(t4, result__[1], result__[3]);
+    real_type t6   = t5 * t5;
+    real_type t7   = 1.0 / t6;
+    real_type t8   = ModelPars[iM_c1];
+    real_type t9   = U__[iU_cL];
+    real_type t10  = t9 * t9;
+    real_type t13  = t10 * t8 + ModelPars[iM_c0];
+    real_type t14  = Dfun(t4, result__[1], result__[3]);
+    real_type t15  = t14 * t13;
+    real_type t17  = Lfun(t4, result__[1], result__[3]);
+    real_type t18  = t17 * t9;
+    real_type t19  = w(t4, result__[3]);
+    real_type t21  = -result__[1] * t15 - t19 * t18;
+    real_type t22  = t21 * t7;
+    real_type t23  = v_D_1(t4, result__[1], result__[3]);
+    real_type t26  = 1.0 / t5;
+    real_type t27  = Dfun_D_1(t4, result__[1], result__[3]);
+    real_type t28  = t27 * t13;
+    real_type t30  = Lfun_D_1(t4, result__[1], result__[3]);
+    real_type t31  = t30 * t9;
+    real_type t33  = w_D_1(t4, result__[3]);
+    result__[ 4   ] = -t23 * t22 * t3 + (-t33 * t18 - t19 * t31 - result__[1] * t28) * t26 * t3;
+    real_type t38  = v_D_2(t4, result__[1], result__[3]);
+    real_type t41  = Dfun_D_2(t4, result__[1], result__[3]);
+    real_type t42  = t41 * t13;
+    real_type t44  = Lfun_D_2(t4, result__[1], result__[3]);
+    real_type t45  = t44 * t9;
+    result__[ 5   ] = -t38 * t22 * t3 + (-t19 * t45 - result__[1] * t42 - t15) * t26 * t3;
+    real_type t50  = v_D_3(t4, result__[1], result__[3]);
+    real_type t53  = Dfun_D_3(t4, result__[1], result__[3]);
+    real_type t54  = t53 * t13;
+    real_type t56  = Lfun_D_3(t4, result__[1], result__[3]);
+    real_type t57  = t56 * t9;
+    real_type t59  = w_D_2(t4, result__[3]);
+    result__[ 6   ] = -t50 * t22 * t3 + (-t59 * t18 - t19 * t57 - result__[1] * t54) * t26 * t3;
+    real_type t64  = t9 * t8;
+    result__[ 7   ] = (-2 * result__[1] * t14 * t64 - t19 * t17) * t26 * t3;
+    real_type t71  = t26 * t2;
+    result__[ 8   ] = t21 * t71;
+    real_type t74  = -t19 * t15 + result__[1] * t18;
+    real_type t75  = t74 * t7;
+    result__[ 9   ] = -t23 * t75 * t3 + (-t33 * t15 - t19 * t28 + result__[1] * t31) * t26 * t3;
+    result__[ 10  ] = -t38 * t75 * t3 + (-t19 * t42 + result__[1] * t45 + t18) * t26 * t3;
+    result__[ 11  ] = -t50 * t75 * t3 + (-t59 * t15 - t19 * t54 + result__[1] * t57) * t26 * t3;
+    result__[ 12  ] = (-2 * t19 * t14 * t64 + result__[1] * t17) * t26 * t3;
+    result__[ 13  ] = t74 * t71 - ModelPars[iM_g];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 8, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HangGlider::Drhs_odeDp_numRows() const
-  { return 4; }
-
-  integer
-  HangGlider::Drhs_odeDp_numCols() const
-  { return 1; }
-
-  integer
-  HangGlider::Drhs_odeDp_nnz() const
-  { return 4; }
-
-  void
-  HangGlider::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  HangGlider::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_vx];
-    result__[ 1   ] = X__[iX_vy];
-    real_type t3   = X__[iX_x];
-    real_type t4   = v(t3, result__[0], result__[1]);
-    real_type t6   = 1.0 / t4 / ModelPars[iM_m];
-    real_type t8   = U__[iU_cL];
-    real_type t9   = t8 * t8;
-    real_type t13  = Dfun(t3, result__[0], result__[1]);
-    real_type t14  = t13 * (t9 * ModelPars[iM_c1] + ModelPars[iM_c0]);
-    real_type t16  = Lfun(t3, result__[0], result__[1]);
-    real_type t17  = t16 * t8;
-    real_type t18  = w(t3, result__[1]);
-    result__[ 2   ] = (-result__[0] * t14 - t18 * t17) * t6;
-    result__[ 3   ] = (-t18 * t14 + result__[0] * t17) * t6 - ModelPars[iM_g];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HangGlider::Drhs_odeDu_numRows() const
-  { return 4; }
-
-  integer
-  HangGlider::Drhs_odeDu_numCols() const
-  { return 1; }
-
-  integer
-  HangGlider::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  HangGlider::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 2   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 3   ; jIndex[1 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  HangGlider::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = P__[iP_T] / ModelPars[iM_m];
-    real_type t5   = X__[iX_x];
-    real_type t6   = X__[iX_vx];
-    real_type t7   = X__[iX_vy];
-    real_type t8   = v(t5, t6, t7);
-    real_type t9   = 1.0 / t8;
-    real_type t12  = ModelPars[iM_c1] * U__[iU_cL];
-    real_type t13  = Dfun(t5, t6, t7);
-    real_type t17  = Lfun(t5, t6, t7);
-    real_type t18  = w(t5, t7);
-    result__[ 0   ] = (-2 * t6 * t13 * t12 - t18 * t17) * t9 * t4;
-    result__[ 1   ] = (-2 * t18 * t13 * t12 + t6 * t17) * t9 * t4;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 14, i_segment );
   }
 
   /*\
@@ -304,28 +199,19 @@ namespace HangGliderDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  HangGlider::A_numRows() const
-  { return 4; }
-
-  integer
-  HangGlider::A_numCols() const
-  { return 4; }
-
-  integer
-  HangGlider::A_nnz() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer HangGlider::A_numRows() const { return 4; }
+  integer HangGlider::A_numCols() const { return 4; }
+  integer HangGlider::A_nnz()     const { return 4; }
 
   void
-  HangGlider::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  HangGlider::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

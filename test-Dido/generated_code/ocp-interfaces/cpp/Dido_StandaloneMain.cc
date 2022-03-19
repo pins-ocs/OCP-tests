@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    Dido             model("Dido",&TP,&console);
+    Dido             model("Dido",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -146,14 +146,15 @@ main() {
 
     // Controls: No penalties or barriers constraint defined
 
+    // ConstraintLT: none defined
     // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization
     // User defined classes: M E S H
 Dido_data.Mesh["s0"] = 0;
-Dido_data.Mesh["segments"][0]["n"] = 100;
 Dido_data.Mesh["segments"][0]["length"] = 10;
+Dido_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

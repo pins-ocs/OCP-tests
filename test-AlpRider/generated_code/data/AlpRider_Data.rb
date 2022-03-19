@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: AlpRider_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 20/12/2021                                       #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
-#  Copyright (C) 2021                                                   #
+#  Copyright (C) 2022                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -20,23 +20,25 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-W0    = 0
-epsi0 = 0.1
-epsi  = epsi0
-W     = W0
 tol0  = 0.1
+epsi0 = 0.1
+W0    = 0
+W     = W0
 tol   = tol0
+epsi  = epsi0
 
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = true
+  data.Debug = false
 
   # Enable doctor
   data.Doctor = false
 
   # Level of message
   data.InfoLevel = 4
+
+  data.Use_control_penalties_in_adjoint_equations = false
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -59,7 +61,7 @@ mechatronix do |data|
   data.JacobianCheck_epsilon = 1e-4
 
   # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  data.JacobianDiscretization = 'ANALYTIC'
+  data.JacobianDiscretization = 'FINITE_DIFFERENCE'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "AlpRider_dump"
@@ -325,16 +327,17 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
-  # Constraint1D
+  # ConstraintLT
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-  # PenaltyBarrier1DGreaterThan
+  # PenaltyBarrier1DLessThan
   data.Constraints[:Ybound] = {
     :subType   => "PENALTY_REGULAR",
     :epsilon   => epsi,
     :tolerance => tol,
     :active    => true
   }
+  # Constraint1D: none defined
   # Constraint2D: none defined
 
 
@@ -350,8 +353,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 20,
         :n      => 4000,
+        :length => 20,
       },
     ],
   };

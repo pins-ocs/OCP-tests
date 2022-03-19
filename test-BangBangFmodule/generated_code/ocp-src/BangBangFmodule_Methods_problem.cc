@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -99,7 +99,7 @@ namespace BangBangFmoduleDefine {
   \*/
 
   real_type
-  BangBangFmodule::penalties_eval(
+  BangBangFmodule::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -110,7 +110,7 @@ namespace BangBangFmoduleDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -118,7 +118,7 @@ namespace BangBangFmoduleDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  BangBangFmodule::control_penalties_eval(
+  BangBangFmodule::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -131,10 +131,31 @@ namespace BangBangFmoduleDefine {
     real_type t6   = controlM(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
     real_type result__ = t3 + t6;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  BangBangFmodule::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -192,9 +213,7 @@ namespace BangBangFmoduleDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFmodule::DmayerDxxp_numEqns() const
-  { return 4; }
+  integer BangBangFmodule::DmayerDxxp_numEqns() const { return 4; }
 
   void
   BangBangFmodule::DmayerDxxp_eval(
@@ -228,9 +247,7 @@ namespace BangBangFmoduleDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  BangBangFmodule::DlagrangeDxup_numEqns() const
-  { return 4; }
+  integer BangBangFmodule::DlagrangeDxup_numEqns() const { return 4; }
 
   void
   BangBangFmodule::DlagrangeDxup_eval(
@@ -251,64 +268,38 @@ namespace BangBangFmoduleDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
   }
 
-  integer
-  BangBangFmodule::DJDx_numEqns() const
-  { return 2; }
-
-  void
-  BangBangFmodule::DJDx_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
-  }
-
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFmodule::DJDp_numEqns() const
-  { return 0; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::IPOPT_hess_numRows() const { return 4; }
+  integer BangBangFmodule::IPOPT_hess_numCols() const { return 4; }
+  integer BangBangFmodule::IPOPT_hess_nnz()     const { return 0; }
 
   void
-  BangBangFmodule::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BangBangFmodule::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFmodule::DJDu_numEqns() const
-  { return 2; }
-
   void
-  BangBangFmodule::DJDu_eval(
-    NodeType const     & NODE__,
+  BangBangFmodule::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_controlP_D_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
-    result__[ 1   ] = ALIAS_controlM_D_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 2, i_segment );
+    // EMPTY!
   }
 
   /*\
@@ -341,9 +332,7 @@ namespace BangBangFmoduleDefine {
    |              |___/
   \*/
 
-  integer
-  BangBangFmodule::segmentLink_numEqns() const
-  { return 0; }
+  integer BangBangFmodule::segmentLink_numEqns() const { return 0; }
 
   void
   BangBangFmodule::segmentLink_eval(
@@ -357,17 +346,9 @@ namespace BangBangFmoduleDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFmodule::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  BangBangFmodule::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFmodule::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer BangBangFmodule::DsegmentLinkDxp_numRows() const { return 0; }
+  integer BangBangFmodule::DsegmentLinkDxp_numCols() const { return 0; }
+  integer BangBangFmodule::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   BangBangFmodule::DsegmentLinkDxp_pattern(
@@ -397,9 +378,7 @@ namespace BangBangFmoduleDefine {
    |                 |_|
   \*/
 
-  integer
-  BangBangFmodule::jump_numEqns() const
-  { return 4; }
+  integer BangBangFmodule::jump_numEqns() const { return 4; }
 
   void
   BangBangFmodule::jump_eval(
@@ -427,24 +406,12 @@ namespace BangBangFmoduleDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DjumpDxlxlp_numRows() const
-  { return 4; }
-
-  integer
-  BangBangFmodule::DjumpDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  BangBangFmodule::DjumpDxlxlp_nnz() const
-  { return 8; }
+  integer BangBangFmodule::DjumpDxlxlp_numRows() const { return 4; }
+  integer BangBangFmodule::DjumpDxlxlp_numCols() const { return 8; }
+  integer BangBangFmodule::DjumpDxlxlp_nnz()     const { return 8; }
 
   void
-  BangBangFmodule::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFmodule::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -454,6 +421,7 @@ namespace BangBangFmoduleDefine {
     iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
     iIndex[7 ] = 3   ; jIndex[7 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -494,9 +462,7 @@ namespace BangBangFmoduleDefine {
    |                                                    |___/
   \*/
 
-  integer
-  BangBangFmodule::post_numEqns() const
-  { return 3; }
+  integer BangBangFmodule::post_numEqns() const { return 3; }
 
   void
   BangBangFmodule::post_eval(
@@ -520,9 +486,7 @@ namespace BangBangFmoduleDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFmodule::integrated_post_numEqns() const
-  { return 0; }
+  integer BangBangFmodule::integrated_post_numEqns() const { return 0; }
 
   void
   BangBangFmodule::integrated_post_eval(

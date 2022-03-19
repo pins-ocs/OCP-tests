@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -97,9 +97,9 @@ namespace BangBangFworkDefine {
     return result__;
   }
 
-  integer
-  BangBangFwork::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFwork::g_numEqns() const { return 1; }
 
   void
   BangBangFwork::g_eval(
@@ -135,27 +135,16 @@ namespace BangBangFworkDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFwork::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  BangBangFwork::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  BangBangFwork::DgDxlxlp_nnz() const
-  { return 2; }
+  integer BangBangFwork::DgDxlxlp_numRows() const { return 1; }
+  integer BangBangFwork::DgDxlxlp_numCols() const { return 8; }
+  integer BangBangFwork::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  BangBangFwork::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFwork::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -192,26 +181,15 @@ namespace BangBangFworkDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFwork::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  BangBangFwork::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  BangBangFwork::DgDu_nnz() const
-  { return 1; }
+  integer BangBangFwork::DgDu_numRows() const { return 1; }
+  integer BangBangFwork::DgDu_numCols() const { return 1; }
+  integer BangBangFwork::DgDu_nnz()     const { return 1; }
 
   void
-  BangBangFwork::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFwork::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -385,9 +363,7 @@ namespace BangBangFworkDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFwork::DmDu_numEqns() const
-  { return 1; }
+  integer BangBangFwork::DmDu_numEqns() const { return 1; }
 
   void
   BangBangFwork::DmDu_eval(
@@ -410,28 +386,15 @@ namespace BangBangFworkDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFwork::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  BangBangFwork::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  BangBangFwork::DmDuu_nnz() const
-  { return 1; }
+  integer BangBangFwork::DmDuu_numRows() const { return 1; }
+  integer BangBangFwork::DmDuu_numCols() const { return 1; }
+  integer BangBangFwork::DmDuu_nnz()     const { return 1; }
 
   void
-  BangBangFwork::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFwork::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BangBangFwork::DmDuu_sparse(

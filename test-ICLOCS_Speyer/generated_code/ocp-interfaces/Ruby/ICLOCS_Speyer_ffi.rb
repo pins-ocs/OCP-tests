@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_Speyer_run.rb                                           #
 #                                                                       #
-#  version: 1.0   date 20/12/2021                                       #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
-#  Copyright (C) 2021                                                   #
+#  Copyright (C) 2022                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -19,21 +19,25 @@ HOST_OS = RbConfig::CONFIG['host_os']
 @ext    = ".noextension"
 case HOST_OS
 when /mac|darwin/
+  OS        = :mac;
   DYLIB_EXT = 'dylib';
 when /linux|cygwin|bsd/
+  OS        = :linux;
   DYLIB_EXT = 'so';
 when /mswin|win|mingw/
+  OS        = :win;
   DYLIB_EXT = 'dll';
 end
 
 MECHATRONIX_LIB_PATH = File.expand_path('../../../lib', __FILE__)
+GC_AND_SPLINE_DLL    = MECHATRONIX_LIB_PATH+"/libICLOCS_Speyer.#{DYLIB_EXT}"
 
 module GenericContainer
-  @libGenericContainer = MECHATRONIX_LIB_PATH+"/libICLOCS_Speyer.#{DYLIB_EXT}"
+  @libGenericContainer = GC_AND_SPLINE_DLL
 end
 
 module Splines
-  @libSplines = MECHATRONIX_LIB_PATH+"/libICLOCS_Speyer.#{DYLIB_EXT}"
+  @libSplines = GC_AND_SPLINE_DLL
 end
 
 require_relative 'GenericContainer_ffi.rb';
@@ -291,7 +295,7 @@ module Mechatronix
       self.z0             = 0  # initial z position of road middle line\n"
       self.banking0       = 0  # initial y position of road middle line\n"
       self.is_SAE         = false
-    end  
+    end
 
     def << hsh
       raise ArgumentError, "Need a kind of Hash" unless hsh.respond_to? :to_hash

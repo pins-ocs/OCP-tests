@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SecondOrderSingularRegulator_Methods_controls.cc               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -99,9 +99,9 @@ namespace SecondOrderSingularRegulatorDefine {
     return result__;
   }
 
-  integer
-  SecondOrderSingularRegulator::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SecondOrderSingularRegulator::g_numEqns() const { return 1; }
 
   void
   SecondOrderSingularRegulator::g_eval(
@@ -136,27 +136,16 @@ namespace SecondOrderSingularRegulatorDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SecondOrderSingularRegulator::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  SecondOrderSingularRegulator::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  SecondOrderSingularRegulator::DgDxlxlp_nnz() const
-  { return 2; }
+  integer SecondOrderSingularRegulator::DgDxlxlp_numRows() const { return 1; }
+  integer SecondOrderSingularRegulator::DgDxlxlp_numCols() const { return 8; }
+  integer SecondOrderSingularRegulator::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  SecondOrderSingularRegulator::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SecondOrderSingularRegulator::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -193,26 +182,15 @@ namespace SecondOrderSingularRegulatorDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SecondOrderSingularRegulator::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  SecondOrderSingularRegulator::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  SecondOrderSingularRegulator::DgDu_nnz() const
-  { return 1; }
+  integer SecondOrderSingularRegulator::DgDu_numRows() const { return 1; }
+  integer SecondOrderSingularRegulator::DgDu_numCols() const { return 1; }
+  integer SecondOrderSingularRegulator::DgDu_nnz()     const { return 1; }
 
   void
-  SecondOrderSingularRegulator::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SecondOrderSingularRegulator::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -382,9 +360,7 @@ namespace SecondOrderSingularRegulatorDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SecondOrderSingularRegulator::DmDu_numEqns() const
-  { return 1; }
+  integer SecondOrderSingularRegulator::DmDu_numEqns() const { return 1; }
 
   void
   SecondOrderSingularRegulator::DmDu_eval(
@@ -406,28 +382,15 @@ namespace SecondOrderSingularRegulatorDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SecondOrderSingularRegulator::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  SecondOrderSingularRegulator::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  SecondOrderSingularRegulator::DmDuu_nnz() const
-  { return 1; }
+  integer SecondOrderSingularRegulator::DmDuu_numRows() const { return 1; }
+  integer SecondOrderSingularRegulator::DmDuu_numCols() const { return 1; }
+  integer SecondOrderSingularRegulator::DmDuu_nnz()     const { return 1; }
 
   void
-  SecondOrderSingularRegulator::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SecondOrderSingularRegulator::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   SecondOrderSingularRegulator::DmDuu_sparse(

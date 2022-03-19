@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -41,126 +41,246 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_yy20Limitation_DD(__t1) yy20Limitation.DD( __t1)
-#define ALIAS_yy20Limitation_D(__t1) yy20Limitation.D( __t1)
-#define ALIAS_xx20Limitation_DD(__t1) xx20Limitation.DD( __t1)
-#define ALIAS_xx20Limitation_D(__t1) xx20Limitation.D( __t1)
-#define ALIAS_yy19Limitation_DD(__t1) yy19Limitation.DD( __t1)
-#define ALIAS_yy19Limitation_D(__t1) yy19Limitation.D( __t1)
-#define ALIAS_xx19Limitation_DD(__t1) xx19Limitation.DD( __t1)
-#define ALIAS_xx19Limitation_D(__t1) xx19Limitation.D( __t1)
-#define ALIAS_yy18Limitation_DD(__t1) yy18Limitation.DD( __t1)
-#define ALIAS_yy18Limitation_D(__t1) yy18Limitation.D( __t1)
-#define ALIAS_xx18Limitation_DD(__t1) xx18Limitation.DD( __t1)
-#define ALIAS_xx18Limitation_D(__t1) xx18Limitation.D( __t1)
-#define ALIAS_yy17Limitation_DD(__t1) yy17Limitation.DD( __t1)
-#define ALIAS_yy17Limitation_D(__t1) yy17Limitation.D( __t1)
-#define ALIAS_xx17Limitation_DD(__t1) xx17Limitation.DD( __t1)
-#define ALIAS_xx17Limitation_D(__t1) xx17Limitation.D( __t1)
-#define ALIAS_yy16Limitation_DD(__t1) yy16Limitation.DD( __t1)
-#define ALIAS_yy16Limitation_D(__t1) yy16Limitation.D( __t1)
-#define ALIAS_xx16Limitation_DD(__t1) xx16Limitation.DD( __t1)
-#define ALIAS_xx16Limitation_D(__t1) xx16Limitation.D( __t1)
-#define ALIAS_yy15Limitation_DD(__t1) yy15Limitation.DD( __t1)
-#define ALIAS_yy15Limitation_D(__t1) yy15Limitation.D( __t1)
-#define ALIAS_xx15Limitation_DD(__t1) xx15Limitation.DD( __t1)
-#define ALIAS_xx15Limitation_D(__t1) xx15Limitation.D( __t1)
-#define ALIAS_yy14Limitation_DD(__t1) yy14Limitation.DD( __t1)
-#define ALIAS_yy14Limitation_D(__t1) yy14Limitation.D( __t1)
-#define ALIAS_xx14Limitation_DD(__t1) xx14Limitation.DD( __t1)
-#define ALIAS_xx14Limitation_D(__t1) xx14Limitation.D( __t1)
-#define ALIAS_yy13Limitation_DD(__t1) yy13Limitation.DD( __t1)
-#define ALIAS_yy13Limitation_D(__t1) yy13Limitation.D( __t1)
-#define ALIAS_xx13Limitation_DD(__t1) xx13Limitation.DD( __t1)
-#define ALIAS_xx13Limitation_D(__t1) xx13Limitation.D( __t1)
-#define ALIAS_yy12Limitation_DD(__t1) yy12Limitation.DD( __t1)
-#define ALIAS_yy12Limitation_D(__t1) yy12Limitation.D( __t1)
-#define ALIAS_xx12Limitation_DD(__t1) xx12Limitation.DD( __t1)
-#define ALIAS_xx12Limitation_D(__t1) xx12Limitation.D( __t1)
-#define ALIAS_yy11Limitation_DD(__t1) yy11Limitation.DD( __t1)
-#define ALIAS_yy11Limitation_D(__t1) yy11Limitation.D( __t1)
-#define ALIAS_xx11Limitation_DD(__t1) xx11Limitation.DD( __t1)
-#define ALIAS_xx11Limitation_D(__t1) xx11Limitation.D( __t1)
-#define ALIAS_yy10Limitation_DD(__t1) yy10Limitation.DD( __t1)
-#define ALIAS_yy10Limitation_D(__t1) yy10Limitation.D( __t1)
-#define ALIAS_xx10Limitation_DD(__t1) xx10Limitation.DD( __t1)
-#define ALIAS_xx10Limitation_D(__t1) xx10Limitation.D( __t1)
-#define ALIAS_yy9Limitation_DD(__t1) yy9Limitation.DD( __t1)
-#define ALIAS_yy9Limitation_D(__t1) yy9Limitation.D( __t1)
-#define ALIAS_xx9Limitation_DD(__t1) xx9Limitation.DD( __t1)
-#define ALIAS_xx9Limitation_D(__t1) xx9Limitation.D( __t1)
-#define ALIAS_yy8Limitation_DD(__t1) yy8Limitation.DD( __t1)
-#define ALIAS_yy8Limitation_D(__t1) yy8Limitation.D( __t1)
-#define ALIAS_xx8Limitation_DD(__t1) xx8Limitation.DD( __t1)
-#define ALIAS_xx8Limitation_D(__t1) xx8Limitation.D( __t1)
-#define ALIAS_yy7Limitation_DD(__t1) yy7Limitation.DD( __t1)
-#define ALIAS_yy7Limitation_D(__t1) yy7Limitation.D( __t1)
-#define ALIAS_xx7Limitation_DD(__t1) xx7Limitation.DD( __t1)
-#define ALIAS_xx7Limitation_D(__t1) xx7Limitation.D( __t1)
-#define ALIAS_yy6Limitation_DD(__t1) yy6Limitation.DD( __t1)
-#define ALIAS_yy6Limitation_D(__t1) yy6Limitation.D( __t1)
-#define ALIAS_xx6Limitation_DD(__t1) xx6Limitation.DD( __t1)
-#define ALIAS_xx6Limitation_D(__t1) xx6Limitation.D( __t1)
-#define ALIAS_yy5Limitation_DD(__t1) yy5Limitation.DD( __t1)
-#define ALIAS_yy5Limitation_D(__t1) yy5Limitation.D( __t1)
-#define ALIAS_xx5Limitation_DD(__t1) xx5Limitation.DD( __t1)
-#define ALIAS_xx5Limitation_D(__t1) xx5Limitation.D( __t1)
-#define ALIAS_yy4Limitation_DD(__t1) yy4Limitation.DD( __t1)
-#define ALIAS_yy4Limitation_D(__t1) yy4Limitation.D( __t1)
-#define ALIAS_xx4Limitation_DD(__t1) xx4Limitation.DD( __t1)
-#define ALIAS_xx4Limitation_D(__t1) xx4Limitation.D( __t1)
-#define ALIAS_yy3Limitation_DD(__t1) yy3Limitation.DD( __t1)
-#define ALIAS_yy3Limitation_D(__t1) yy3Limitation.D( __t1)
-#define ALIAS_xx3Limitation_DD(__t1) xx3Limitation.DD( __t1)
-#define ALIAS_xx3Limitation_D(__t1) xx3Limitation.D( __t1)
-#define ALIAS_yy2Limitation_DD(__t1) yy2Limitation.DD( __t1)
-#define ALIAS_yy2Limitation_D(__t1) yy2Limitation.D( __t1)
-#define ALIAS_xx2Limitation_DD(__t1) xx2Limitation.DD( __t1)
-#define ALIAS_xx2Limitation_D(__t1) xx2Limitation.D( __t1)
-#define ALIAS_yy1Limitation_DD(__t1) yy1Limitation.DD( __t1)
-#define ALIAS_yy1Limitation_D(__t1) yy1Limitation.D( __t1)
-#define ALIAS_xx1Limitation_DD(__t1) xx1Limitation.DD( __t1)
-#define ALIAS_xx1Limitation_D(__t1) xx1Limitation.D( __t1)
-#define ALIAS_u20Limitation_DD(__t1) u20Limitation.DD( __t1)
-#define ALIAS_u20Limitation_D(__t1) u20Limitation.D( __t1)
-#define ALIAS_u19Limitation_DD(__t1) u19Limitation.DD( __t1)
-#define ALIAS_u19Limitation_D(__t1) u19Limitation.D( __t1)
-#define ALIAS_u18Limitation_DD(__t1) u18Limitation.DD( __t1)
-#define ALIAS_u18Limitation_D(__t1) u18Limitation.D( __t1)
-#define ALIAS_u17Limitation_DD(__t1) u17Limitation.DD( __t1)
-#define ALIAS_u17Limitation_D(__t1) u17Limitation.D( __t1)
-#define ALIAS_u16Limitation_DD(__t1) u16Limitation.DD( __t1)
-#define ALIAS_u16Limitation_D(__t1) u16Limitation.D( __t1)
-#define ALIAS_u15Limitation_DD(__t1) u15Limitation.DD( __t1)
-#define ALIAS_u15Limitation_D(__t1) u15Limitation.D( __t1)
-#define ALIAS_u14Limitation_DD(__t1) u14Limitation.DD( __t1)
-#define ALIAS_u14Limitation_D(__t1) u14Limitation.D( __t1)
-#define ALIAS_u13Limitation_DD(__t1) u13Limitation.DD( __t1)
-#define ALIAS_u13Limitation_D(__t1) u13Limitation.D( __t1)
-#define ALIAS_u12Limitation_DD(__t1) u12Limitation.DD( __t1)
-#define ALIAS_u12Limitation_D(__t1) u12Limitation.D( __t1)
-#define ALIAS_u11Limitation_DD(__t1) u11Limitation.DD( __t1)
-#define ALIAS_u11Limitation_D(__t1) u11Limitation.D( __t1)
-#define ALIAS_u10Limitation_DD(__t1) u10Limitation.DD( __t1)
-#define ALIAS_u10Limitation_D(__t1) u10Limitation.D( __t1)
-#define ALIAS_u9Limitation_DD(__t1) u9Limitation.DD( __t1)
-#define ALIAS_u9Limitation_D(__t1) u9Limitation.D( __t1)
-#define ALIAS_u8Limitation_DD(__t1) u8Limitation.DD( __t1)
-#define ALIAS_u8Limitation_D(__t1) u8Limitation.D( __t1)
-#define ALIAS_u7Limitation_DD(__t1) u7Limitation.DD( __t1)
-#define ALIAS_u7Limitation_D(__t1) u7Limitation.D( __t1)
-#define ALIAS_u6Limitation_DD(__t1) u6Limitation.DD( __t1)
-#define ALIAS_u6Limitation_D(__t1) u6Limitation.D( __t1)
-#define ALIAS_u5Limitation_DD(__t1) u5Limitation.DD( __t1)
-#define ALIAS_u5Limitation_D(__t1) u5Limitation.D( __t1)
-#define ALIAS_u4Limitation_DD(__t1) u4Limitation.DD( __t1)
-#define ALIAS_u4Limitation_D(__t1) u4Limitation.D( __t1)
-#define ALIAS_u3Limitation_DD(__t1) u3Limitation.DD( __t1)
-#define ALIAS_u3Limitation_D(__t1) u3Limitation.D( __t1)
-#define ALIAS_u2Limitation_DD(__t1) u2Limitation.DD( __t1)
-#define ALIAS_u2Limitation_D(__t1) u2Limitation.D( __t1)
-#define ALIAS_u1Limitation_DD(__t1) u1Limitation.DD( __t1)
-#define ALIAS_u1Limitation_D(__t1) u1Limitation.D( __t1)
+#define ALIAS_yy20Limitation_max_DD(__t1) yy20Limitation_max.DD( __t1)
+#define ALIAS_yy20Limitation_max_D(__t1) yy20Limitation_max.D( __t1)
+#define ALIAS_yy20Limitation_min_DD(__t1) yy20Limitation_min.DD( __t1)
+#define ALIAS_yy20Limitation_min_D(__t1) yy20Limitation_min.D( __t1)
+#define ALIAS_xx20Limitation_max_DD(__t1) xx20Limitation_max.DD( __t1)
+#define ALIAS_xx20Limitation_max_D(__t1) xx20Limitation_max.D( __t1)
+#define ALIAS_xx20Limitation_min_DD(__t1) xx20Limitation_min.DD( __t1)
+#define ALIAS_xx20Limitation_min_D(__t1) xx20Limitation_min.D( __t1)
+#define ALIAS_yy19Limitation_max_DD(__t1) yy19Limitation_max.DD( __t1)
+#define ALIAS_yy19Limitation_max_D(__t1) yy19Limitation_max.D( __t1)
+#define ALIAS_yy19Limitation_min_DD(__t1) yy19Limitation_min.DD( __t1)
+#define ALIAS_yy19Limitation_min_D(__t1) yy19Limitation_min.D( __t1)
+#define ALIAS_xx19Limitation_max_DD(__t1) xx19Limitation_max.DD( __t1)
+#define ALIAS_xx19Limitation_max_D(__t1) xx19Limitation_max.D( __t1)
+#define ALIAS_xx19Limitation_min_DD(__t1) xx19Limitation_min.DD( __t1)
+#define ALIAS_xx19Limitation_min_D(__t1) xx19Limitation_min.D( __t1)
+#define ALIAS_yy18Limitation_max_DD(__t1) yy18Limitation_max.DD( __t1)
+#define ALIAS_yy18Limitation_max_D(__t1) yy18Limitation_max.D( __t1)
+#define ALIAS_yy18Limitation_min_DD(__t1) yy18Limitation_min.DD( __t1)
+#define ALIAS_yy18Limitation_min_D(__t1) yy18Limitation_min.D( __t1)
+#define ALIAS_xx18Limitation_max_DD(__t1) xx18Limitation_max.DD( __t1)
+#define ALIAS_xx18Limitation_max_D(__t1) xx18Limitation_max.D( __t1)
+#define ALIAS_xx18Limitation_min_DD(__t1) xx18Limitation_min.DD( __t1)
+#define ALIAS_xx18Limitation_min_D(__t1) xx18Limitation_min.D( __t1)
+#define ALIAS_yy17Limitation_max_DD(__t1) yy17Limitation_max.DD( __t1)
+#define ALIAS_yy17Limitation_max_D(__t1) yy17Limitation_max.D( __t1)
+#define ALIAS_yy17Limitation_min_DD(__t1) yy17Limitation_min.DD( __t1)
+#define ALIAS_yy17Limitation_min_D(__t1) yy17Limitation_min.D( __t1)
+#define ALIAS_xx17Limitation_max_DD(__t1) xx17Limitation_max.DD( __t1)
+#define ALIAS_xx17Limitation_max_D(__t1) xx17Limitation_max.D( __t1)
+#define ALIAS_xx17Limitation_min_DD(__t1) xx17Limitation_min.DD( __t1)
+#define ALIAS_xx17Limitation_min_D(__t1) xx17Limitation_min.D( __t1)
+#define ALIAS_yy16Limitation_max_DD(__t1) yy16Limitation_max.DD( __t1)
+#define ALIAS_yy16Limitation_max_D(__t1) yy16Limitation_max.D( __t1)
+#define ALIAS_yy16Limitation_min_DD(__t1) yy16Limitation_min.DD( __t1)
+#define ALIAS_yy16Limitation_min_D(__t1) yy16Limitation_min.D( __t1)
+#define ALIAS_xx16Limitation_max_DD(__t1) xx16Limitation_max.DD( __t1)
+#define ALIAS_xx16Limitation_max_D(__t1) xx16Limitation_max.D( __t1)
+#define ALIAS_xx16Limitation_min_DD(__t1) xx16Limitation_min.DD( __t1)
+#define ALIAS_xx16Limitation_min_D(__t1) xx16Limitation_min.D( __t1)
+#define ALIAS_yy15Limitation_max_DD(__t1) yy15Limitation_max.DD( __t1)
+#define ALIAS_yy15Limitation_max_D(__t1) yy15Limitation_max.D( __t1)
+#define ALIAS_yy15Limitation_min_DD(__t1) yy15Limitation_min.DD( __t1)
+#define ALIAS_yy15Limitation_min_D(__t1) yy15Limitation_min.D( __t1)
+#define ALIAS_xx15Limitation_max_DD(__t1) xx15Limitation_max.DD( __t1)
+#define ALIAS_xx15Limitation_max_D(__t1) xx15Limitation_max.D( __t1)
+#define ALIAS_xx15Limitation_min_DD(__t1) xx15Limitation_min.DD( __t1)
+#define ALIAS_xx15Limitation_min_D(__t1) xx15Limitation_min.D( __t1)
+#define ALIAS_yy14Limitation_max_DD(__t1) yy14Limitation_max.DD( __t1)
+#define ALIAS_yy14Limitation_max_D(__t1) yy14Limitation_max.D( __t1)
+#define ALIAS_yy14Limitation_min_DD(__t1) yy14Limitation_min.DD( __t1)
+#define ALIAS_yy14Limitation_min_D(__t1) yy14Limitation_min.D( __t1)
+#define ALIAS_xx14Limitation_max_DD(__t1) xx14Limitation_max.DD( __t1)
+#define ALIAS_xx14Limitation_max_D(__t1) xx14Limitation_max.D( __t1)
+#define ALIAS_xx14Limitation_min_DD(__t1) xx14Limitation_min.DD( __t1)
+#define ALIAS_xx14Limitation_min_D(__t1) xx14Limitation_min.D( __t1)
+#define ALIAS_yy13Limitation_max_DD(__t1) yy13Limitation_max.DD( __t1)
+#define ALIAS_yy13Limitation_max_D(__t1) yy13Limitation_max.D( __t1)
+#define ALIAS_yy13Limitation_min_DD(__t1) yy13Limitation_min.DD( __t1)
+#define ALIAS_yy13Limitation_min_D(__t1) yy13Limitation_min.D( __t1)
+#define ALIAS_xx13Limitation_max_DD(__t1) xx13Limitation_max.DD( __t1)
+#define ALIAS_xx13Limitation_max_D(__t1) xx13Limitation_max.D( __t1)
+#define ALIAS_xx13Limitation_min_DD(__t1) xx13Limitation_min.DD( __t1)
+#define ALIAS_xx13Limitation_min_D(__t1) xx13Limitation_min.D( __t1)
+#define ALIAS_yy12Limitation_max_DD(__t1) yy12Limitation_max.DD( __t1)
+#define ALIAS_yy12Limitation_max_D(__t1) yy12Limitation_max.D( __t1)
+#define ALIAS_yy12Limitation_min_DD(__t1) yy12Limitation_min.DD( __t1)
+#define ALIAS_yy12Limitation_min_D(__t1) yy12Limitation_min.D( __t1)
+#define ALIAS_xx12Limitation_max_DD(__t1) xx12Limitation_max.DD( __t1)
+#define ALIAS_xx12Limitation_max_D(__t1) xx12Limitation_max.D( __t1)
+#define ALIAS_xx12Limitation_min_DD(__t1) xx12Limitation_min.DD( __t1)
+#define ALIAS_xx12Limitation_min_D(__t1) xx12Limitation_min.D( __t1)
+#define ALIAS_yy11Limitation_max_DD(__t1) yy11Limitation_max.DD( __t1)
+#define ALIAS_yy11Limitation_max_D(__t1) yy11Limitation_max.D( __t1)
+#define ALIAS_yy11Limitation_min_DD(__t1) yy11Limitation_min.DD( __t1)
+#define ALIAS_yy11Limitation_min_D(__t1) yy11Limitation_min.D( __t1)
+#define ALIAS_xx11Limitation_max_DD(__t1) xx11Limitation_max.DD( __t1)
+#define ALIAS_xx11Limitation_max_D(__t1) xx11Limitation_max.D( __t1)
+#define ALIAS_xx11Limitation_min_DD(__t1) xx11Limitation_min.DD( __t1)
+#define ALIAS_xx11Limitation_min_D(__t1) xx11Limitation_min.D( __t1)
+#define ALIAS_yy10Limitation_max_DD(__t1) yy10Limitation_max.DD( __t1)
+#define ALIAS_yy10Limitation_max_D(__t1) yy10Limitation_max.D( __t1)
+#define ALIAS_yy10Limitation_min_DD(__t1) yy10Limitation_min.DD( __t1)
+#define ALIAS_yy10Limitation_min_D(__t1) yy10Limitation_min.D( __t1)
+#define ALIAS_xx10Limitation_max_DD(__t1) xx10Limitation_max.DD( __t1)
+#define ALIAS_xx10Limitation_max_D(__t1) xx10Limitation_max.D( __t1)
+#define ALIAS_xx10Limitation_min_DD(__t1) xx10Limitation_min.DD( __t1)
+#define ALIAS_xx10Limitation_min_D(__t1) xx10Limitation_min.D( __t1)
+#define ALIAS_yy9Limitation_max_DD(__t1) yy9Limitation_max.DD( __t1)
+#define ALIAS_yy9Limitation_max_D(__t1) yy9Limitation_max.D( __t1)
+#define ALIAS_yy9Limitation_min_DD(__t1) yy9Limitation_min.DD( __t1)
+#define ALIAS_yy9Limitation_min_D(__t1) yy9Limitation_min.D( __t1)
+#define ALIAS_xx9Limitation_max_DD(__t1) xx9Limitation_max.DD( __t1)
+#define ALIAS_xx9Limitation_max_D(__t1) xx9Limitation_max.D( __t1)
+#define ALIAS_xx9Limitation_min_DD(__t1) xx9Limitation_min.DD( __t1)
+#define ALIAS_xx9Limitation_min_D(__t1) xx9Limitation_min.D( __t1)
+#define ALIAS_yy8Limitation_max_DD(__t1) yy8Limitation_max.DD( __t1)
+#define ALIAS_yy8Limitation_max_D(__t1) yy8Limitation_max.D( __t1)
+#define ALIAS_yy8Limitation_min_DD(__t1) yy8Limitation_min.DD( __t1)
+#define ALIAS_yy8Limitation_min_D(__t1) yy8Limitation_min.D( __t1)
+#define ALIAS_xx8Limitation_max_DD(__t1) xx8Limitation_max.DD( __t1)
+#define ALIAS_xx8Limitation_max_D(__t1) xx8Limitation_max.D( __t1)
+#define ALIAS_xx8Limitation_min_DD(__t1) xx8Limitation_min.DD( __t1)
+#define ALIAS_xx8Limitation_min_D(__t1) xx8Limitation_min.D( __t1)
+#define ALIAS_yy7Limitation_max_DD(__t1) yy7Limitation_max.DD( __t1)
+#define ALIAS_yy7Limitation_max_D(__t1) yy7Limitation_max.D( __t1)
+#define ALIAS_yy7Limitation_min_DD(__t1) yy7Limitation_min.DD( __t1)
+#define ALIAS_yy7Limitation_min_D(__t1) yy7Limitation_min.D( __t1)
+#define ALIAS_xx7Limitation_max_DD(__t1) xx7Limitation_max.DD( __t1)
+#define ALIAS_xx7Limitation_max_D(__t1) xx7Limitation_max.D( __t1)
+#define ALIAS_xx7Limitation_min_DD(__t1) xx7Limitation_min.DD( __t1)
+#define ALIAS_xx7Limitation_min_D(__t1) xx7Limitation_min.D( __t1)
+#define ALIAS_yy6Limitation_max_DD(__t1) yy6Limitation_max.DD( __t1)
+#define ALIAS_yy6Limitation_max_D(__t1) yy6Limitation_max.D( __t1)
+#define ALIAS_yy6Limitation_min_DD(__t1) yy6Limitation_min.DD( __t1)
+#define ALIAS_yy6Limitation_min_D(__t1) yy6Limitation_min.D( __t1)
+#define ALIAS_xx6Limitation_max_DD(__t1) xx6Limitation_max.DD( __t1)
+#define ALIAS_xx6Limitation_max_D(__t1) xx6Limitation_max.D( __t1)
+#define ALIAS_xx6Limitation_min_DD(__t1) xx6Limitation_min.DD( __t1)
+#define ALIAS_xx6Limitation_min_D(__t1) xx6Limitation_min.D( __t1)
+#define ALIAS_yy5Limitation_max_DD(__t1) yy5Limitation_max.DD( __t1)
+#define ALIAS_yy5Limitation_max_D(__t1) yy5Limitation_max.D( __t1)
+#define ALIAS_yy5Limitation_min_DD(__t1) yy5Limitation_min.DD( __t1)
+#define ALIAS_yy5Limitation_min_D(__t1) yy5Limitation_min.D( __t1)
+#define ALIAS_xx5Limitation_max_DD(__t1) xx5Limitation_max.DD( __t1)
+#define ALIAS_xx5Limitation_max_D(__t1) xx5Limitation_max.D( __t1)
+#define ALIAS_xx5Limitation_min_DD(__t1) xx5Limitation_min.DD( __t1)
+#define ALIAS_xx5Limitation_min_D(__t1) xx5Limitation_min.D( __t1)
+#define ALIAS_yy4Limitation_max_DD(__t1) yy4Limitation_max.DD( __t1)
+#define ALIAS_yy4Limitation_max_D(__t1) yy4Limitation_max.D( __t1)
+#define ALIAS_yy4Limitation_min_DD(__t1) yy4Limitation_min.DD( __t1)
+#define ALIAS_yy4Limitation_min_D(__t1) yy4Limitation_min.D( __t1)
+#define ALIAS_xx4Limitation_max_DD(__t1) xx4Limitation_max.DD( __t1)
+#define ALIAS_xx4Limitation_max_D(__t1) xx4Limitation_max.D( __t1)
+#define ALIAS_xx4Limitation_min_DD(__t1) xx4Limitation_min.DD( __t1)
+#define ALIAS_xx4Limitation_min_D(__t1) xx4Limitation_min.D( __t1)
+#define ALIAS_yy3Limitation_max_DD(__t1) yy3Limitation_max.DD( __t1)
+#define ALIAS_yy3Limitation_max_D(__t1) yy3Limitation_max.D( __t1)
+#define ALIAS_yy3Limitation_min_DD(__t1) yy3Limitation_min.DD( __t1)
+#define ALIAS_yy3Limitation_min_D(__t1) yy3Limitation_min.D( __t1)
+#define ALIAS_xx3Limitation_max_DD(__t1) xx3Limitation_max.DD( __t1)
+#define ALIAS_xx3Limitation_max_D(__t1) xx3Limitation_max.D( __t1)
+#define ALIAS_xx3Limitation_min_DD(__t1) xx3Limitation_min.DD( __t1)
+#define ALIAS_xx3Limitation_min_D(__t1) xx3Limitation_min.D( __t1)
+#define ALIAS_yy2Limitation_max_DD(__t1) yy2Limitation_max.DD( __t1)
+#define ALIAS_yy2Limitation_max_D(__t1) yy2Limitation_max.D( __t1)
+#define ALIAS_yy2Limitation_min_DD(__t1) yy2Limitation_min.DD( __t1)
+#define ALIAS_yy2Limitation_min_D(__t1) yy2Limitation_min.D( __t1)
+#define ALIAS_xx2Limitation_max_DD(__t1) xx2Limitation_max.DD( __t1)
+#define ALIAS_xx2Limitation_max_D(__t1) xx2Limitation_max.D( __t1)
+#define ALIAS_xx2Limitation_min_DD(__t1) xx2Limitation_min.DD( __t1)
+#define ALIAS_xx2Limitation_min_D(__t1) xx2Limitation_min.D( __t1)
+#define ALIAS_yy1Limitation_max_DD(__t1) yy1Limitation_max.DD( __t1)
+#define ALIAS_yy1Limitation_max_D(__t1) yy1Limitation_max.D( __t1)
+#define ALIAS_yy1Limitation_min_DD(__t1) yy1Limitation_min.DD( __t1)
+#define ALIAS_yy1Limitation_min_D(__t1) yy1Limitation_min.D( __t1)
+#define ALIAS_xx1Limitation_max_DD(__t1) xx1Limitation_max.DD( __t1)
+#define ALIAS_xx1Limitation_max_D(__t1) xx1Limitation_max.D( __t1)
+#define ALIAS_xx1Limitation_min_DD(__t1) xx1Limitation_min.DD( __t1)
+#define ALIAS_xx1Limitation_min_D(__t1) xx1Limitation_min.D( __t1)
+#define ALIAS_u20Limitation_max_DD(__t1) u20Limitation_max.DD( __t1)
+#define ALIAS_u20Limitation_max_D(__t1) u20Limitation_max.D( __t1)
+#define ALIAS_u20Limitation_min_DD(__t1) u20Limitation_min.DD( __t1)
+#define ALIAS_u20Limitation_min_D(__t1) u20Limitation_min.D( __t1)
+#define ALIAS_u19Limitation_max_DD(__t1) u19Limitation_max.DD( __t1)
+#define ALIAS_u19Limitation_max_D(__t1) u19Limitation_max.D( __t1)
+#define ALIAS_u19Limitation_min_DD(__t1) u19Limitation_min.DD( __t1)
+#define ALIAS_u19Limitation_min_D(__t1) u19Limitation_min.D( __t1)
+#define ALIAS_u18Limitation_max_DD(__t1) u18Limitation_max.DD( __t1)
+#define ALIAS_u18Limitation_max_D(__t1) u18Limitation_max.D( __t1)
+#define ALIAS_u18Limitation_min_DD(__t1) u18Limitation_min.DD( __t1)
+#define ALIAS_u18Limitation_min_D(__t1) u18Limitation_min.D( __t1)
+#define ALIAS_u17Limitation_max_DD(__t1) u17Limitation_max.DD( __t1)
+#define ALIAS_u17Limitation_max_D(__t1) u17Limitation_max.D( __t1)
+#define ALIAS_u17Limitation_min_DD(__t1) u17Limitation_min.DD( __t1)
+#define ALIAS_u17Limitation_min_D(__t1) u17Limitation_min.D( __t1)
+#define ALIAS_u16Limitation_max_DD(__t1) u16Limitation_max.DD( __t1)
+#define ALIAS_u16Limitation_max_D(__t1) u16Limitation_max.D( __t1)
+#define ALIAS_u16Limitation_min_DD(__t1) u16Limitation_min.DD( __t1)
+#define ALIAS_u16Limitation_min_D(__t1) u16Limitation_min.D( __t1)
+#define ALIAS_u15Limitation_max_DD(__t1) u15Limitation_max.DD( __t1)
+#define ALIAS_u15Limitation_max_D(__t1) u15Limitation_max.D( __t1)
+#define ALIAS_u15Limitation_min_DD(__t1) u15Limitation_min.DD( __t1)
+#define ALIAS_u15Limitation_min_D(__t1) u15Limitation_min.D( __t1)
+#define ALIAS_u14Limitation_max_DD(__t1) u14Limitation_max.DD( __t1)
+#define ALIAS_u14Limitation_max_D(__t1) u14Limitation_max.D( __t1)
+#define ALIAS_u14Limitation_min_DD(__t1) u14Limitation_min.DD( __t1)
+#define ALIAS_u14Limitation_min_D(__t1) u14Limitation_min.D( __t1)
+#define ALIAS_u13Limitation_max_DD(__t1) u13Limitation_max.DD( __t1)
+#define ALIAS_u13Limitation_max_D(__t1) u13Limitation_max.D( __t1)
+#define ALIAS_u13Limitation_min_DD(__t1) u13Limitation_min.DD( __t1)
+#define ALIAS_u13Limitation_min_D(__t1) u13Limitation_min.D( __t1)
+#define ALIAS_u12Limitation_max_DD(__t1) u12Limitation_max.DD( __t1)
+#define ALIAS_u12Limitation_max_D(__t1) u12Limitation_max.D( __t1)
+#define ALIAS_u12Limitation_min_DD(__t1) u12Limitation_min.DD( __t1)
+#define ALIAS_u12Limitation_min_D(__t1) u12Limitation_min.D( __t1)
+#define ALIAS_u11Limitation_max_DD(__t1) u11Limitation_max.DD( __t1)
+#define ALIAS_u11Limitation_max_D(__t1) u11Limitation_max.D( __t1)
+#define ALIAS_u11Limitation_min_DD(__t1) u11Limitation_min.DD( __t1)
+#define ALIAS_u11Limitation_min_D(__t1) u11Limitation_min.D( __t1)
+#define ALIAS_u10Limitation_max_DD(__t1) u10Limitation_max.DD( __t1)
+#define ALIAS_u10Limitation_max_D(__t1) u10Limitation_max.D( __t1)
+#define ALIAS_u10Limitation_min_DD(__t1) u10Limitation_min.DD( __t1)
+#define ALIAS_u10Limitation_min_D(__t1) u10Limitation_min.D( __t1)
+#define ALIAS_u9Limitation_max_DD(__t1) u9Limitation_max.DD( __t1)
+#define ALIAS_u9Limitation_max_D(__t1) u9Limitation_max.D( __t1)
+#define ALIAS_u9Limitation_min_DD(__t1) u9Limitation_min.DD( __t1)
+#define ALIAS_u9Limitation_min_D(__t1) u9Limitation_min.D( __t1)
+#define ALIAS_u8Limitation_max_DD(__t1) u8Limitation_max.DD( __t1)
+#define ALIAS_u8Limitation_max_D(__t1) u8Limitation_max.D( __t1)
+#define ALIAS_u8Limitation_min_DD(__t1) u8Limitation_min.DD( __t1)
+#define ALIAS_u8Limitation_min_D(__t1) u8Limitation_min.D( __t1)
+#define ALIAS_u7Limitation_max_DD(__t1) u7Limitation_max.DD( __t1)
+#define ALIAS_u7Limitation_max_D(__t1) u7Limitation_max.D( __t1)
+#define ALIAS_u7Limitation_min_DD(__t1) u7Limitation_min.DD( __t1)
+#define ALIAS_u7Limitation_min_D(__t1) u7Limitation_min.D( __t1)
+#define ALIAS_u6Limitation_max_DD(__t1) u6Limitation_max.DD( __t1)
+#define ALIAS_u6Limitation_max_D(__t1) u6Limitation_max.D( __t1)
+#define ALIAS_u6Limitation_min_DD(__t1) u6Limitation_min.DD( __t1)
+#define ALIAS_u6Limitation_min_D(__t1) u6Limitation_min.D( __t1)
+#define ALIAS_u5Limitation_max_DD(__t1) u5Limitation_max.DD( __t1)
+#define ALIAS_u5Limitation_max_D(__t1) u5Limitation_max.D( __t1)
+#define ALIAS_u5Limitation_min_DD(__t1) u5Limitation_min.DD( __t1)
+#define ALIAS_u5Limitation_min_D(__t1) u5Limitation_min.D( __t1)
+#define ALIAS_u4Limitation_max_DD(__t1) u4Limitation_max.DD( __t1)
+#define ALIAS_u4Limitation_max_D(__t1) u4Limitation_max.D( __t1)
+#define ALIAS_u4Limitation_min_DD(__t1) u4Limitation_min.DD( __t1)
+#define ALIAS_u4Limitation_min_D(__t1) u4Limitation_min.D( __t1)
+#define ALIAS_u3Limitation_max_DD(__t1) u3Limitation_max.DD( __t1)
+#define ALIAS_u3Limitation_max_D(__t1) u3Limitation_max.D( __t1)
+#define ALIAS_u3Limitation_min_DD(__t1) u3Limitation_min.DD( __t1)
+#define ALIAS_u3Limitation_min_D(__t1) u3Limitation_min.D( __t1)
+#define ALIAS_u2Limitation_max_DD(__t1) u2Limitation_max.DD( __t1)
+#define ALIAS_u2Limitation_max_D(__t1) u2Limitation_max.D( __t1)
+#define ALIAS_u2Limitation_min_DD(__t1) u2Limitation_min.DD( __t1)
+#define ALIAS_u2Limitation_min_D(__t1) u2Limitation_min.D( __t1)
+#define ALIAS_u1Limitation_max_DD(__t1) u1Limitation_max.DD( __t1)
+#define ALIAS_u1Limitation_max_D(__t1) u1Limitation_max.D( __t1)
+#define ALIAS_u1Limitation_min_DD(__t1) u1Limitation_min.DD( __t1)
+#define ALIAS_u1Limitation_min_D(__t1) u1Limitation_min.D( __t1)
 
 
 namespace ICLOCS_ContinuousMPDefine {
@@ -176,9 +296,7 @@ namespace ICLOCS_ContinuousMPDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer
-  ICLOCS_ContinuousMP::boundaryConditions_numEqns() const
-  { return 80; }
+  integer ICLOCS_ContinuousMP::boundaryConditions_numEqns() const { return 80; }
 
   void
   ICLOCS_ContinuousMP::boundaryConditions_eval(
@@ -320,24 +438,12 @@ namespace ICLOCS_ContinuousMPDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_ContinuousMP::DboundaryConditionsDxxp_numRows() const
-  { return 80; }
-
-  integer
-  ICLOCS_ContinuousMP::DboundaryConditionsDxxp_numCols() const
-  { return 180; }
-
-  integer
-  ICLOCS_ContinuousMP::DboundaryConditionsDxxp_nnz() const
-  { return 158; }
+  integer ICLOCS_ContinuousMP::DboundaryConditionsDxxp_numRows() const { return 80; }
+  integer ICLOCS_ContinuousMP::DboundaryConditionsDxxp_numCols() const { return 180; }
+  integer ICLOCS_ContinuousMP::DboundaryConditionsDxxp_nnz()     const { return 158; }
 
   void
-  ICLOCS_ContinuousMP::DboundaryConditionsDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_ContinuousMP::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 40  ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 60  ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 41  ;
@@ -497,6 +603,7 @@ namespace ICLOCS_ContinuousMPDefine {
     iIndex[156] = 79  ; jIndex[156] = 39  ;
     iIndex[157] = 79  ; jIndex[157] = 79  ;
   }
+
 
   void
   ICLOCS_ContinuousMP::DboundaryConditionsDxxp_sparse(
@@ -677,14 +784,12 @@ namespace ICLOCS_ContinuousMPDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_ContinuousMP::adjointBC_numEqns() const
-  { return 180; }
+  integer ICLOCS_ContinuousMP::adjointBC_numEqns() const { return 180; }
 
   void
   ICLOCS_ContinuousMP::adjointBC_eval(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
@@ -692,251 +797,209 @@ namespace ICLOCS_ContinuousMPDefine {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
     real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    real_type t1   = OMEGA__[40];
-    result__[ 0   ] = t1 + LL__[iL_lambda1__xo];
-    real_type t3   = OMEGA__[41];
-    result__[ 1   ] = t3 + LL__[iL_lambda2__xo];
-    real_type t5   = OMEGA__[42];
-    result__[ 2   ] = t5 + LL__[iL_lambda3__xo];
-    real_type t7   = OMEGA__[43];
-    result__[ 3   ] = t7 + LL__[iL_lambda4__xo];
-    real_type t9   = OMEGA__[44];
-    result__[ 4   ] = t9 + LL__[iL_lambda5__xo];
-    real_type t11  = OMEGA__[45];
-    result__[ 5   ] = t11 + LL__[iL_lambda6__xo];
-    real_type t13  = OMEGA__[46];
-    result__[ 6   ] = t13 + LL__[iL_lambda7__xo];
-    real_type t15  = OMEGA__[47];
-    result__[ 7   ] = t15 + LL__[iL_lambda8__xo];
-    real_type t17  = OMEGA__[48];
-    result__[ 8   ] = t17 + LL__[iL_lambda9__xo];
-    real_type t19  = OMEGA__[49];
-    result__[ 9   ] = t19 + LL__[iL_lambda10__xo];
-    real_type t21  = OMEGA__[50];
-    result__[ 10  ] = t21 + LL__[iL_lambda11__xo];
-    real_type t23  = OMEGA__[51];
-    result__[ 11  ] = t23 + LL__[iL_lambda12__xo];
-    real_type t25  = OMEGA__[52];
-    result__[ 12  ] = t25 + LL__[iL_lambda13__xo];
-    real_type t27  = OMEGA__[53];
-    result__[ 13  ] = t27 + LL__[iL_lambda14__xo];
-    real_type t29  = OMEGA__[54];
-    result__[ 14  ] = t29 + LL__[iL_lambda15__xo];
-    real_type t31  = OMEGA__[55];
-    result__[ 15  ] = t31 + LL__[iL_lambda16__xo];
-    real_type t33  = OMEGA__[56];
-    result__[ 16  ] = t33 + LL__[iL_lambda17__xo];
-    real_type t35  = OMEGA__[57];
-    result__[ 17  ] = t35 + LL__[iL_lambda18__xo];
-    real_type t37  = OMEGA__[58];
-    result__[ 18  ] = t37 + LL__[iL_lambda19__xo];
-    real_type t39  = OMEGA__[59];
-    result__[ 19  ] = t39 + LL__[iL_lambda20__xo];
-    real_type t41  = OMEGA__[60];
-    result__[ 20  ] = t41 + LL__[iL_lambda21__xo];
-    real_type t43  = OMEGA__[61];
-    result__[ 21  ] = t43 + LL__[iL_lambda22__xo];
-    real_type t45  = OMEGA__[62];
-    result__[ 22  ] = t45 + LL__[iL_lambda23__xo];
-    real_type t47  = OMEGA__[63];
-    result__[ 23  ] = t47 + LL__[iL_lambda24__xo];
-    real_type t49  = OMEGA__[64];
-    result__[ 24  ] = t49 + LL__[iL_lambda25__xo];
-    real_type t51  = OMEGA__[65];
-    result__[ 25  ] = t51 + LL__[iL_lambda26__xo];
-    real_type t53  = OMEGA__[66];
-    result__[ 26  ] = t53 + LL__[iL_lambda27__xo];
-    real_type t55  = OMEGA__[67];
-    result__[ 27  ] = t55 + LL__[iL_lambda28__xo];
-    real_type t57  = OMEGA__[68];
-    result__[ 28  ] = t57 + LL__[iL_lambda29__xo];
-    real_type t59  = OMEGA__[69];
-    result__[ 29  ] = t59 + LL__[iL_lambda30__xo];
-    real_type t61  = OMEGA__[70];
-    result__[ 30  ] = t61 + LL__[iL_lambda31__xo];
-    real_type t63  = OMEGA__[71];
-    result__[ 31  ] = t63 + LL__[iL_lambda32__xo];
-    real_type t65  = OMEGA__[72];
-    result__[ 32  ] = t65 + LL__[iL_lambda33__xo];
-    real_type t67  = OMEGA__[73];
-    result__[ 33  ] = t67 + LL__[iL_lambda34__xo];
-    real_type t69  = OMEGA__[74];
-    result__[ 34  ] = t69 + LL__[iL_lambda35__xo];
-    real_type t71  = OMEGA__[75];
-    result__[ 35  ] = t71 + LL__[iL_lambda36__xo];
-    real_type t73  = OMEGA__[76];
-    result__[ 36  ] = t73 + LL__[iL_lambda37__xo];
-    real_type t75  = OMEGA__[77];
-    result__[ 37  ] = t75 + LL__[iL_lambda38__xo];
-    real_type t77  = OMEGA__[78];
-    result__[ 38  ] = t77 + LL__[iL_lambda39__xo];
-    real_type t79  = OMEGA__[79];
-    result__[ 39  ] = t79 + LL__[iL_lambda40__xo];
-    result__[ 40  ] = OMEGA__[0] - t1 + LL__[iL_lambda41__xo];
-    real_type t83  = OMEGA__[2];
-    result__[ 41  ] = -t83 - t3 + LL__[iL_lambda42__xo];
-    real_type t85  = OMEGA__[3];
-    result__[ 42  ] = -t85 - t5 + LL__[iL_lambda43__xo];
-    real_type t87  = OMEGA__[4];
-    result__[ 43  ] = -t87 - t7 + LL__[iL_lambda44__xo];
-    real_type t89  = OMEGA__[5];
-    result__[ 44  ] = -t89 - t9 + LL__[iL_lambda45__xo];
-    real_type t91  = OMEGA__[6];
-    result__[ 45  ] = -t11 - t91 + LL__[iL_lambda46__xo];
-    real_type t93  = OMEGA__[7];
-    result__[ 46  ] = -t93 - t13 + LL__[iL_lambda47__xo];
-    real_type t95  = OMEGA__[8];
-    result__[ 47  ] = -t95 - t15 + LL__[iL_lambda48__xo];
-    real_type t97  = OMEGA__[9];
-    result__[ 48  ] = -t97 - t17 + LL__[iL_lambda49__xo];
-    real_type t99  = OMEGA__[10];
-    result__[ 49  ] = -t99 - t19 + LL__[iL_lambda50__xo];
-    real_type t101 = OMEGA__[11];
-    result__[ 50  ] = -t101 - t21 + LL__[iL_lambda51__xo];
-    real_type t103 = OMEGA__[12];
-    result__[ 51  ] = -t103 - t23 + LL__[iL_lambda52__xo];
-    real_type t105 = OMEGA__[13];
-    result__[ 52  ] = -t105 - t25 + LL__[iL_lambda53__xo];
-    real_type t107 = OMEGA__[14];
-    result__[ 53  ] = -t107 - t27 + LL__[iL_lambda54__xo];
-    real_type t109 = OMEGA__[15];
-    result__[ 54  ] = -t109 - t29 + LL__[iL_lambda55__xo];
-    real_type t111 = OMEGA__[16];
-    result__[ 55  ] = -t111 - t31 + LL__[iL_lambda56__xo];
-    real_type t113 = OMEGA__[17];
-    result__[ 56  ] = -t113 - t33 + LL__[iL_lambda57__xo];
-    real_type t115 = OMEGA__[18];
-    result__[ 57  ] = -t115 - t35 + LL__[iL_lambda58__xo];
-    real_type t117 = OMEGA__[19];
-    result__[ 58  ] = -t117 - t37 + LL__[iL_lambda59__xo];
-    real_type t119 = OMEGA__[20];
-    result__[ 59  ] = -t119 - t39 + LL__[iL_lambda60__xo];
-    result__[ 60  ] = OMEGA__[1] - t41 + LL__[iL_lambda61__xo];
-    real_type t123 = OMEGA__[21];
-    result__[ 61  ] = -t123 - t43 + LL__[iL_lambda62__xo];
-    real_type t125 = OMEGA__[22];
-    result__[ 62  ] = -t125 - t45 + LL__[iL_lambda63__xo];
-    real_type t127 = OMEGA__[23];
-    result__[ 63  ] = -t127 - t47 + LL__[iL_lambda64__xo];
-    real_type t129 = OMEGA__[24];
-    result__[ 64  ] = -t129 - t49 + LL__[iL_lambda65__xo];
-    real_type t131 = OMEGA__[25];
-    result__[ 65  ] = -t131 - t51 + LL__[iL_lambda66__xo];
-    real_type t133 = OMEGA__[26];
-    result__[ 66  ] = -t133 - t53 + LL__[iL_lambda67__xo];
-    real_type t135 = OMEGA__[27];
-    result__[ 67  ] = -t135 - t55 + LL__[iL_lambda68__xo];
-    real_type t137 = OMEGA__[28];
-    result__[ 68  ] = -t137 - t57 + LL__[iL_lambda69__xo];
-    real_type t139 = OMEGA__[29];
-    result__[ 69  ] = -t139 - t59 + LL__[iL_lambda70__xo];
-    real_type t141 = OMEGA__[30];
-    result__[ 70  ] = -t141 - t61 + LL__[iL_lambda71__xo];
-    real_type t143 = OMEGA__[31];
-    result__[ 71  ] = -t143 - t63 + LL__[iL_lambda72__xo];
-    real_type t145 = OMEGA__[32];
-    result__[ 72  ] = -t145 - t65 + LL__[iL_lambda73__xo];
-    real_type t147 = OMEGA__[33];
-    result__[ 73  ] = -t147 - t67 + LL__[iL_lambda74__xo];
-    real_type t149 = OMEGA__[34];
-    result__[ 74  ] = -t149 - t69 + LL__[iL_lambda75__xo];
-    real_type t151 = OMEGA__[35];
-    result__[ 75  ] = -t151 - t71 + LL__[iL_lambda76__xo];
-    real_type t153 = OMEGA__[36];
-    result__[ 76  ] = -t153 - t73 + LL__[iL_lambda77__xo];
-    real_type t155 = OMEGA__[37];
-    result__[ 77  ] = -t155 - t75 + LL__[iL_lambda78__xo];
-    real_type t157 = OMEGA__[38];
-    result__[ 78  ] = -t157 - t77 + LL__[iL_lambda79__xo];
-    real_type t159 = OMEGA__[39];
-    result__[ 79  ] = -t159 - t79 + LL__[iL_lambda80__xo];
-    result__[ 80  ] = -LR__[iL_lambda1__xo];
-    result__[ 81  ] = -LR__[iL_lambda2__xo];
-    result__[ 82  ] = -LR__[iL_lambda3__xo];
-    result__[ 83  ] = -LR__[iL_lambda4__xo];
-    result__[ 84  ] = -LR__[iL_lambda5__xo];
-    result__[ 85  ] = -LR__[iL_lambda6__xo];
-    result__[ 86  ] = -LR__[iL_lambda7__xo];
-    result__[ 87  ] = -LR__[iL_lambda8__xo];
-    result__[ 88  ] = -LR__[iL_lambda9__xo];
-    result__[ 89  ] = -LR__[iL_lambda10__xo];
-    result__[ 90  ] = -LR__[iL_lambda11__xo];
-    result__[ 91  ] = -LR__[iL_lambda12__xo];
-    result__[ 92  ] = -LR__[iL_lambda13__xo];
-    result__[ 93  ] = -LR__[iL_lambda14__xo];
-    result__[ 94  ] = -LR__[iL_lambda15__xo];
-    result__[ 95  ] = -LR__[iL_lambda16__xo];
-    result__[ 96  ] = -LR__[iL_lambda17__xo];
-    result__[ 97  ] = -LR__[iL_lambda18__xo];
-    result__[ 98  ] = -LR__[iL_lambda19__xo];
-    result__[ 99  ] = -LR__[iL_lambda20__xo];
-    result__[ 100 ] = -LR__[iL_lambda21__xo];
-    result__[ 101 ] = -LR__[iL_lambda22__xo];
-    result__[ 102 ] = -LR__[iL_lambda23__xo];
-    result__[ 103 ] = -LR__[iL_lambda24__xo];
-    result__[ 104 ] = -LR__[iL_lambda25__xo];
-    result__[ 105 ] = -LR__[iL_lambda26__xo];
-    result__[ 106 ] = -LR__[iL_lambda27__xo];
-    result__[ 107 ] = -LR__[iL_lambda28__xo];
-    result__[ 108 ] = -LR__[iL_lambda29__xo];
-    result__[ 109 ] = -LR__[iL_lambda30__xo];
-    result__[ 110 ] = -LR__[iL_lambda31__xo];
-    result__[ 111 ] = -LR__[iL_lambda32__xo];
-    result__[ 112 ] = -LR__[iL_lambda33__xo];
-    result__[ 113 ] = -LR__[iL_lambda34__xo];
-    result__[ 114 ] = -LR__[iL_lambda35__xo];
-    result__[ 115 ] = -LR__[iL_lambda36__xo];
-    result__[ 116 ] = -LR__[iL_lambda37__xo];
-    result__[ 117 ] = -LR__[iL_lambda38__xo];
-    result__[ 118 ] = -LR__[iL_lambda39__xo];
-    result__[ 119 ] = -LR__[iL_lambda40__xo];
-    result__[ 120 ] = t83 - LR__[iL_lambda41__xo];
-    result__[ 121 ] = t85 - LR__[iL_lambda42__xo];
-    result__[ 122 ] = t87 - LR__[iL_lambda43__xo];
-    result__[ 123 ] = t89 - LR__[iL_lambda44__xo];
-    result__[ 124 ] = t91 - LR__[iL_lambda45__xo];
-    result__[ 125 ] = t93 - LR__[iL_lambda46__xo];
-    result__[ 126 ] = t95 - LR__[iL_lambda47__xo];
-    result__[ 127 ] = t97 - LR__[iL_lambda48__xo];
-    result__[ 128 ] = t99 - LR__[iL_lambda49__xo];
-    result__[ 129 ] = t101 - LR__[iL_lambda50__xo];
-    result__[ 130 ] = t103 - LR__[iL_lambda51__xo];
-    result__[ 131 ] = t105 - LR__[iL_lambda52__xo];
-    result__[ 132 ] = t107 - LR__[iL_lambda53__xo];
-    result__[ 133 ] = t109 - LR__[iL_lambda54__xo];
-    result__[ 134 ] = t111 - LR__[iL_lambda55__xo];
-    result__[ 135 ] = t113 - LR__[iL_lambda56__xo];
-    result__[ 136 ] = t115 - LR__[iL_lambda57__xo];
-    result__[ 137 ] = t117 - LR__[iL_lambda58__xo];
-    result__[ 138 ] = t119 - LR__[iL_lambda59__xo];
-    result__[ 139 ] = -LR__[iL_lambda60__xo];
-    result__[ 140 ] = t123 - LR__[iL_lambda61__xo];
-    result__[ 141 ] = t125 - LR__[iL_lambda62__xo];
-    result__[ 142 ] = t127 - LR__[iL_lambda63__xo];
-    result__[ 143 ] = t129 - LR__[iL_lambda64__xo];
-    result__[ 144 ] = t131 - LR__[iL_lambda65__xo];
-    result__[ 145 ] = t133 - LR__[iL_lambda66__xo];
-    result__[ 146 ] = t135 - LR__[iL_lambda67__xo];
-    result__[ 147 ] = t137 - LR__[iL_lambda68__xo];
-    result__[ 148 ] = t139 - LR__[iL_lambda69__xo];
-    result__[ 149 ] = t141 - LR__[iL_lambda70__xo];
-    result__[ 150 ] = t143 - LR__[iL_lambda71__xo];
-    result__[ 151 ] = t145 - LR__[iL_lambda72__xo];
-    result__[ 152 ] = t147 - LR__[iL_lambda73__xo];
-    result__[ 153 ] = t149 - LR__[iL_lambda74__xo];
-    result__[ 154 ] = t151 - LR__[iL_lambda75__xo];
-    result__[ 155 ] = t153 - LR__[iL_lambda76__xo];
-    result__[ 156 ] = t155 - LR__[iL_lambda77__xo];
-    result__[ 157 ] = t157 - LR__[iL_lambda78__xo];
-    result__[ 158 ] = t159 - LR__[iL_lambda79__xo];
-    result__[ 159 ] = -LR__[iL_lambda80__xo];
+    result__[ 0   ] = OMEGA__[40];
+    result__[ 1   ] = OMEGA__[41];
+    result__[ 2   ] = OMEGA__[42];
+    result__[ 3   ] = OMEGA__[43];
+    result__[ 4   ] = OMEGA__[44];
+    result__[ 5   ] = OMEGA__[45];
+    result__[ 6   ] = OMEGA__[46];
+    result__[ 7   ] = OMEGA__[47];
+    result__[ 8   ] = OMEGA__[48];
+    result__[ 9   ] = OMEGA__[49];
+    result__[ 10  ] = OMEGA__[50];
+    result__[ 11  ] = OMEGA__[51];
+    result__[ 12  ] = OMEGA__[52];
+    result__[ 13  ] = OMEGA__[53];
+    result__[ 14  ] = OMEGA__[54];
+    result__[ 15  ] = OMEGA__[55];
+    result__[ 16  ] = OMEGA__[56];
+    result__[ 17  ] = OMEGA__[57];
+    result__[ 18  ] = OMEGA__[58];
+    result__[ 19  ] = OMEGA__[59];
+    result__[ 20  ] = OMEGA__[60];
+    result__[ 21  ] = OMEGA__[61];
+    result__[ 22  ] = OMEGA__[62];
+    result__[ 23  ] = OMEGA__[63];
+    result__[ 24  ] = OMEGA__[64];
+    result__[ 25  ] = OMEGA__[65];
+    result__[ 26  ] = OMEGA__[66];
+    result__[ 27  ] = OMEGA__[67];
+    result__[ 28  ] = OMEGA__[68];
+    result__[ 29  ] = OMEGA__[69];
+    result__[ 30  ] = OMEGA__[70];
+    result__[ 31  ] = OMEGA__[71];
+    result__[ 32  ] = OMEGA__[72];
+    result__[ 33  ] = OMEGA__[73];
+    result__[ 34  ] = OMEGA__[74];
+    result__[ 35  ] = OMEGA__[75];
+    result__[ 36  ] = OMEGA__[76];
+    result__[ 37  ] = OMEGA__[77];
+    result__[ 38  ] = OMEGA__[78];
+    result__[ 39  ] = OMEGA__[79];
+    result__[ 40  ] = OMEGA__[0] - result__[0];
+    real_type t2   = OMEGA__[2];
+    result__[ 41  ] = -t2 - result__[1];
+    real_type t3   = OMEGA__[3];
+    result__[ 42  ] = -t3 - result__[2];
+    real_type t4   = OMEGA__[4];
+    result__[ 43  ] = -t4 - result__[3];
+    real_type t5   = OMEGA__[5];
+    result__[ 44  ] = -t5 - result__[4];
+    real_type t6   = OMEGA__[6];
+    result__[ 45  ] = -result__[5] - t6;
+    real_type t7   = OMEGA__[7];
+    result__[ 46  ] = -result__[6] - t7;
+    real_type t8   = OMEGA__[8];
+    result__[ 47  ] = -result__[7] - t8;
+    real_type t9   = OMEGA__[9];
+    result__[ 48  ] = -result__[8] - t9;
+    real_type t10  = OMEGA__[10];
+    result__[ 49  ] = -result__[9] - t10;
+    real_type t11  = OMEGA__[11];
+    result__[ 50  ] = -result__[10] - t11;
+    real_type t12  = OMEGA__[12];
+    result__[ 51  ] = -result__[11] - t12;
+    real_type t13  = OMEGA__[13];
+    result__[ 52  ] = -result__[12] - t13;
+    real_type t14  = OMEGA__[14];
+    result__[ 53  ] = -result__[13] - t14;
+    real_type t15  = OMEGA__[15];
+    result__[ 54  ] = -result__[14] - t15;
+    real_type t16  = OMEGA__[16];
+    result__[ 55  ] = -result__[15] - t16;
+    real_type t17  = OMEGA__[17];
+    result__[ 56  ] = -result__[16] - t17;
+    real_type t18  = OMEGA__[18];
+    result__[ 57  ] = -result__[17] - t18;
+    real_type t19  = OMEGA__[19];
+    result__[ 58  ] = -result__[18] - t19;
+    real_type t20  = OMEGA__[20];
+    result__[ 59  ] = -result__[19] - t20;
+    result__[ 60  ] = -result__[20] + OMEGA__[1];
+    real_type t22  = OMEGA__[21];
+    result__[ 61  ] = -result__[21] - t22;
+    real_type t23  = OMEGA__[22];
+    result__[ 62  ] = -result__[22] - t23;
+    real_type t24  = OMEGA__[23];
+    result__[ 63  ] = -result__[23] - t24;
+    real_type t25  = OMEGA__[24];
+    result__[ 64  ] = -result__[24] - t25;
+    real_type t26  = OMEGA__[25];
+    result__[ 65  ] = -result__[25] - t26;
+    real_type t27  = OMEGA__[26];
+    result__[ 66  ] = -result__[26] - t27;
+    real_type t28  = OMEGA__[27];
+    result__[ 67  ] = -result__[27] - t28;
+    real_type t29  = OMEGA__[28];
+    result__[ 68  ] = -result__[28] - t29;
+    real_type t30  = OMEGA__[29];
+    result__[ 69  ] = -result__[29] - t30;
+    real_type t31  = OMEGA__[30];
+    result__[ 70  ] = -result__[30] - t31;
+    real_type t32  = OMEGA__[31];
+    result__[ 71  ] = -result__[31] - t32;
+    real_type t33  = OMEGA__[32];
+    result__[ 72  ] = -result__[32] - t33;
+    real_type t34  = OMEGA__[33];
+    result__[ 73  ] = -result__[33] - t34;
+    real_type t35  = OMEGA__[34];
+    result__[ 74  ] = -result__[34] - t35;
+    real_type t36  = OMEGA__[35];
+    result__[ 75  ] = -result__[35] - t36;
+    real_type t37  = OMEGA__[36];
+    result__[ 76  ] = -result__[36] - t37;
+    real_type t38  = OMEGA__[37];
+    result__[ 77  ] = -result__[37] - t38;
+    real_type t39  = OMEGA__[38];
+    result__[ 78  ] = -result__[38] - t39;
+    real_type t40  = OMEGA__[39];
+    result__[ 79  ] = -t40 - result__[39];
+    result__[ 80  ] = 0;
+    result__[ 81  ] = 0;
+    result__[ 82  ] = 0;
+    result__[ 83  ] = 0;
+    result__[ 84  ] = 0;
+    result__[ 85  ] = 0;
+    result__[ 86  ] = 0;
+    result__[ 87  ] = 0;
+    result__[ 88  ] = 0;
+    result__[ 89  ] = 0;
+    result__[ 90  ] = 0;
+    result__[ 91  ] = 0;
+    result__[ 92  ] = 0;
+    result__[ 93  ] = 0;
+    result__[ 94  ] = 0;
+    result__[ 95  ] = 0;
+    result__[ 96  ] = 0;
+    result__[ 97  ] = 0;
+    result__[ 98  ] = 0;
+    result__[ 99  ] = 0;
+    result__[ 100 ] = 0;
+    result__[ 101 ] = 0;
+    result__[ 102 ] = 0;
+    result__[ 103 ] = 0;
+    result__[ 104 ] = 0;
+    result__[ 105 ] = 0;
+    result__[ 106 ] = 0;
+    result__[ 107 ] = 0;
+    result__[ 108 ] = 0;
+    result__[ 109 ] = 0;
+    result__[ 110 ] = 0;
+    result__[ 111 ] = 0;
+    result__[ 112 ] = 0;
+    result__[ 113 ] = 0;
+    result__[ 114 ] = 0;
+    result__[ 115 ] = 0;
+    result__[ 116 ] = 0;
+    result__[ 117 ] = 0;
+    result__[ 118 ] = 0;
+    result__[ 119 ] = 0;
+    result__[ 120 ] = t2;
+    result__[ 121 ] = t3;
+    result__[ 122 ] = t4;
+    result__[ 123 ] = t5;
+    result__[ 124 ] = t6;
+    result__[ 125 ] = t7;
+    result__[ 126 ] = t8;
+    result__[ 127 ] = t9;
+    result__[ 128 ] = t10;
+    result__[ 129 ] = t11;
+    result__[ 130 ] = t12;
+    result__[ 131 ] = t13;
+    result__[ 132 ] = t14;
+    result__[ 133 ] = t15;
+    result__[ 134 ] = t16;
+    result__[ 135 ] = t17;
+    result__[ 136 ] = t18;
+    result__[ 137 ] = t19;
+    result__[ 138 ] = t20;
+    result__[ 139 ] = 0;
+    result__[ 140 ] = t22;
+    result__[ 141 ] = t23;
+    result__[ 142 ] = t24;
+    result__[ 143 ] = t25;
+    result__[ 144 ] = t26;
+    result__[ 145 ] = t27;
+    result__[ 146 ] = t28;
+    result__[ 147 ] = t29;
+    result__[ 148 ] = t30;
+    result__[ 149 ] = t31;
+    result__[ 150 ] = t32;
+    result__[ 151 ] = t33;
+    result__[ 152 ] = t34;
+    result__[ 153 ] = t35;
+    result__[ 154 ] = t36;
+    result__[ 155 ] = t37;
+    result__[ 156 ] = t38;
+    result__[ 157 ] = t39;
+    result__[ 158 ] = t40;
+    result__[ 159 ] = 0;
     result__[ 160 ] = 0;
     result__[ 161 ] = 0;
     result__[ 162 ] = 0;
@@ -962,30 +1025,20 @@ namespace ICLOCS_ContinuousMPDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_ContinuousMP::DadjointBCDxxp_numRows() const
-  { return 180; }
-
-  integer
-  ICLOCS_ContinuousMP::DadjointBCDxxp_numCols() const
-  { return 180; }
-
-  integer
-  ICLOCS_ContinuousMP::DadjointBCDxxp_nnz() const
-  { return 0; }
+  integer ICLOCS_ContinuousMP::DadjointBCDxxp_numRows() const { return 180; }
+  integer ICLOCS_ContinuousMP::DadjointBCDxxp_numCols() const { return 180; }
+  integer ICLOCS_ContinuousMP::DadjointBCDxxp_nnz()     const { return 0; }
 
   void
-  ICLOCS_ContinuousMP::DadjointBCDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_ContinuousMP::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   void
   ICLOCS_ContinuousMP::DadjointBCDxxp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,8 +50,10 @@ using Mechatronix::MeshStd;
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
-#define ALIAS_vsTBInterval_DD(__t1) vsTBInterval.DD( __t1)
-#define ALIAS_vsTBInterval_D(__t1) vsTBInterval.D( __t1)
+#define ALIAS_vsTBInterval_max_DD(__t1) vsTBInterval_max.DD( __t1)
+#define ALIAS_vsTBInterval_max_D(__t1) vsTBInterval_max.D( __t1)
+#define ALIAS_vsTBInterval_min_DD(__t1) vsTBInterval_min.DD( __t1)
+#define ALIAS_vsTBInterval_min_D(__t1) vsTBInterval_min.D( __t1)
 #define ALIAS_vsTmax_DD(__t1) vsTmax.DD( __t1)
 #define ALIAS_vsTmax_D(__t1) vsTmax.D( __t1)
 #define ALIAS_vsBpositive_DD(__t1) vsBpositive.DD( __t1)
@@ -100,26 +102,27 @@ namespace BangBangFtauDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
-    real_type t2   = vsTpositive(t1);
+    real_type t2   = vsTpositive(-t1);
     real_type t3   = UM__[1];
-    real_type t4   = vsBpositive(t3);
-    real_type t7   = vsTmax(ModelPars[iM_maxT] - t1);
-    real_type t9   = vsTBInterval(t1 - t3);
-    real_type t11  = t1 * t1;
-    real_type t12  = t3 * t3;
-    real_type t19  = XM__[2];
-    real_type t20  = XM__[3];
-    real_type t24  = clip(t19 - t20, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    real_type result__ = t2 + t4 + t7 + t9 + (t11 + t12) * ModelPars[iM_epsiTB] + LM__[0] * XM__[1] + t24 * LM__[1] - 1.0 / ModelPars[iM_tauT] * (t19 - t1) * LM__[2] - 1.0 / ModelPars[iM_tauB] * (t20 - t3) * LM__[3];
+    real_type t4   = vsBpositive(-t3);
+    real_type t7   = vsTmax(t1 - ModelPars[iM_maxT]);
+    real_type t9   = vsTBInterval_min(-1 - t1 + t3);
+    real_type t11  = vsTBInterval_max(t1 - t3 - 1);
+    real_type t13  = t1 * t1;
+    real_type t14  = t3 * t3;
+    real_type t21  = XM__[2];
+    real_type t22  = XM__[3];
+    real_type t26  = clip(t21 - t22, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    real_type result__ = t2 + t4 + t7 + t9 + t11 + (t13 + t14) * ModelPars[iM_epsiTB] + LM__[0] * XM__[1] + t26 * LM__[1] - 1.0 / ModelPars[iM_tauT] * (t21 - t1) * LM__[2] - 1.0 / ModelPars[iM_tauB] * (t22 - t3) * LM__[3];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  BangBangFtau::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFtau::g_numEqns() const { return 2; }
 
   void
   BangBangFtau::g_eval(
@@ -152,42 +155,32 @@ namespace BangBangFtauDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
-    real_type t2   = ALIAS_vsTpositive_D(t1);
-    real_type t5   = ALIAS_vsTmax_D(ModelPars[iM_maxT] - t1);
+    real_type t2   = ALIAS_vsTpositive_D(-t1);
+    real_type t5   = ALIAS_vsTmax_D(t1 - ModelPars[iM_maxT]);
     real_type t6   = UM__[1];
-    real_type t8   = ALIAS_vsTBInterval_D(t1 - t6);
-    real_type t9   = ModelPars[iM_epsiTB];
-    result__[ 0   ] = t2 - t5 + t8 + 2 * t1 * t9 + LM__[2] / ModelPars[iM_tauT];
-    real_type t16  = ALIAS_vsBpositive_D(t6);
-    result__[ 1   ] = t16 - t8 + 2 * t6 * t9 + LM__[3] / ModelPars[iM_tauB];
+    real_type t8   = ALIAS_vsTBInterval_min_D(-1 - t1 + t6);
+    real_type t10  = ALIAS_vsTBInterval_max_D(t1 - t6 - 1);
+    real_type t11  = ModelPars[iM_epsiTB];
+    result__[ 0   ] = -t2 + t5 - t8 + t10 + 2 * t1 * t11 + LM__[2] / ModelPars[iM_tauT];
+    real_type t18  = ALIAS_vsBpositive_D(-t6);
+    result__[ 1   ] = -t18 + t8 - t10 + 2 * t6 * t11 + LM__[3] / ModelPars[iM_tauB];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtau::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFtau::DgDxlxlp_numCols() const
-  { return 16; }
-
-  integer
-  BangBangFtau::DgDxlxlp_nnz() const
-  { return 4; }
+  integer BangBangFtau::DgDxlxlp_numRows() const { return 2; }
+  integer BangBangFtau::DgDxlxlp_numCols() const { return 16; }
+  integer BangBangFtau::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  BangBangFtau::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFtau::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 6   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 14  ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 7   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 15  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -230,29 +223,18 @@ namespace BangBangFtauDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtau::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFtau::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFtau::DgDu_nnz() const
-  { return 4; }
+  integer BangBangFtau::DgDu_numRows() const { return 2; }
+  integer BangBangFtau::DgDu_numCols() const { return 2; }
+  integer BangBangFtau::DgDu_nnz()     const { return 4; }
 
   void
-  BangBangFtau::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFtau::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -287,16 +269,17 @@ namespace BangBangFtauDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
-    real_type t2   = ALIAS_vsTpositive_DD(t1);
-    real_type t5   = ALIAS_vsTmax_DD(ModelPars[iM_maxT] - t1);
+    real_type t2   = ALIAS_vsTpositive_DD(-t1);
+    real_type t5   = ALIAS_vsTmax_DD(t1 - ModelPars[iM_maxT]);
     real_type t6   = UM__[1];
-    real_type t8   = ALIAS_vsTBInterval_DD(t1 - t6);
-    real_type t10  = 2 * ModelPars[iM_epsiTB];
-    result__[ 0   ] = t2 + t5 + t8 + t10;
-    result__[ 1   ] = -t8;
+    real_type t8   = ALIAS_vsTBInterval_min_DD(-1 - t1 + t6);
+    real_type t10  = ALIAS_vsTBInterval_max_DD(t1 - t6 - 1);
+    real_type t12  = 2 * ModelPars[iM_epsiTB];
+    result__[ 0   ] = t2 + t5 + t8 + t10 + t12;
+    result__[ 1   ] = -t8 - t10;
     result__[ 2   ] = result__[1];
-    real_type t11  = ALIAS_vsBpositive_DD(t6);
-    result__[ 3   ] = t11 + t8 + t10;
+    real_type t13  = ALIAS_vsBpositive_DD(-t6);
+    result__[ 3   ] = t13 + t8 + t10 + t12;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 4, i_segment );
   }
@@ -458,19 +441,20 @@ namespace BangBangFtauDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_vsT];
-    real_type t2   = vsTpositive(t1);
+    real_type t2   = vsTpositive(-t1);
     real_type t3   = U__[iU_vsB];
-    real_type t4   = vsBpositive(t3);
-    real_type t7   = vsTmax(ModelPars[iM_maxT] - t1);
-    real_type t9   = vsTBInterval(t1 - t3);
-    real_type t13  = pow(V__[0] - X__[iX_v], 2);
-    real_type t15  = X__[iX_sT];
-    real_type t16  = X__[iX_sB];
-    real_type t20  = clip(t15 - t16, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    real_type t22  = pow(V__[1] - t20, 2);
-    real_type t29  = pow(V__[2] + 1.0 / ModelPars[iM_tauT] * (t15 - t1), 2);
-    real_type t36  = pow(V__[3] + 1.0 / ModelPars[iM_tauB] * (t16 - t3), 2);
-    real_type result__ = t2 + t4 + t7 + t9 + t13 + t22 + t29 + t36;
+    real_type t4   = vsBpositive(-t3);
+    real_type t7   = vsTmax(t1 - ModelPars[iM_maxT]);
+    real_type t9   = vsTBInterval_min(-1 - t1 + t3);
+    real_type t11  = vsTBInterval_max(t1 - t3 - 1);
+    real_type t15  = pow(V__[0] - X__[iX_v], 2);
+    real_type t17  = X__[iX_sT];
+    real_type t18  = X__[iX_sB];
+    real_type t22  = clip(t17 - t18, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    real_type t24  = pow(V__[1] - t22, 2);
+    real_type t31  = pow(V__[2] + 1.0 / ModelPars[iM_tauT] * (t17 - t1), 2);
+    real_type t38  = pow(V__[3] + 1.0 / ModelPars[iM_tauB] * (t18 - t3), 2);
+    real_type result__ = t2 + t4 + t7 + t9 + t11 + t15 + t24 + t31 + t38;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -479,9 +463,7 @@ namespace BangBangFtauDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFtau::DmDu_numEqns() const
-  { return 2; }
+  integer BangBangFtau::DmDu_numEqns() const { return 2; }
 
   void
   BangBangFtau::DmDu_eval(
@@ -496,45 +478,33 @@ namespace BangBangFtauDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_vsT];
-    real_type t2   = ALIAS_vsTpositive_D(t1);
-    real_type t5   = ALIAS_vsTmax_D(ModelPars[iM_maxT] - t1);
+    real_type t2   = ALIAS_vsTpositive_D(-t1);
+    real_type t5   = ALIAS_vsTmax_D(t1 - ModelPars[iM_maxT]);
     real_type t6   = U__[iU_vsB];
-    real_type t8   = ALIAS_vsTBInterval_D(t1 - t6);
-    real_type t13  = 1.0 / ModelPars[iM_tauT];
-    result__[ 0   ] = t2 - t5 + t8 - 2 * t13 * (V__[2] + t13 * (X__[iX_sT] - t1));
-    real_type t18  = ALIAS_vsBpositive_D(t6);
-    real_type t23  = 1.0 / ModelPars[iM_tauB];
-    result__[ 1   ] = t18 - t8 - 2 * t23 * (V__[3] + t23 * (X__[iX_sB] - t6));
+    real_type t8   = ALIAS_vsTBInterval_min_D(-1 - t1 + t6);
+    real_type t10  = ALIAS_vsTBInterval_max_D(t1 - t6 - 1);
+    real_type t15  = 1.0 / ModelPars[iM_tauT];
+    result__[ 0   ] = -t2 + t5 - t8 + t10 - 2 * t15 * (V__[2] + t15 * (X__[iX_sT] - t1));
+    real_type t20  = ALIAS_vsBpositive_D(-t6);
+    real_type t25  = 1.0 / ModelPars[iM_tauB];
+    result__[ 1   ] = -t20 + t8 - t10 - 2 * t25 * (V__[3] + t25 * (X__[iX_sB] - t6));
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtau::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFtau::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFtau::DmDuu_nnz() const
-  { return 4; }
+  integer BangBangFtau::DmDuu_numRows() const { return 2; }
+  integer BangBangFtau::DmDuu_numCols() const { return 2; }
+  integer BangBangFtau::DmDuu_nnz()     const { return 4; }
 
   void
-  BangBangFtau::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFtau::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BangBangFtau::DmDuu_sparse(
@@ -549,17 +519,18 @@ namespace BangBangFtauDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_vsT];
-    real_type t2   = ALIAS_vsTpositive_DD(t1);
-    real_type t5   = ALIAS_vsTmax_DD(ModelPars[iM_maxT] - t1);
+    real_type t2   = ALIAS_vsTpositive_DD(-t1);
+    real_type t5   = ALIAS_vsTmax_DD(t1 - ModelPars[iM_maxT]);
     real_type t6   = U__[iU_vsB];
-    real_type t8   = ALIAS_vsTBInterval_DD(t1 - t6);
-    real_type t10  = ModelPars[iM_tauT] * ModelPars[iM_tauT];
-    result__[ 0   ] = t2 + t5 + t8 + 2 / t10;
-    result__[ 1   ] = -t8;
+    real_type t8   = ALIAS_vsTBInterval_min_DD(-1 - t1 + t6);
+    real_type t10  = ALIAS_vsTBInterval_max_DD(t1 - t6 - 1);
+    real_type t12  = ModelPars[iM_tauT] * ModelPars[iM_tauT];
+    result__[ 0   ] = t2 + t5 + t8 + t10 + 2 / t12;
+    result__[ 1   ] = -t8 - t10;
     result__[ 2   ] = result__[1];
-    real_type t13  = ALIAS_vsBpositive_DD(t6);
-    real_type t15  = ModelPars[iM_tauB] * ModelPars[iM_tauB];
-    result__[ 3   ] = t13 + t8 + 2 / t15;
+    real_type t15  = ALIAS_vsBpositive_DD(-t6);
+    real_type t17  = ModelPars[iM_tauB] * ModelPars[iM_tauB];
+    result__[ 3   ] = t15 + t8 + t10 + 2 / t17;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 4, i_segment );
   }

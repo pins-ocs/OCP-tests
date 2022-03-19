@@ -3,9 +3,9 @@
 #                                                                          #
 #  file: PointMassCarModel_2_ffi_structs.rb                                #
 #                                                                          #
-#  version: 1.0   date 20/12/2021                                          #
+#  version: 1.0   date 19/3/2022                                           #
 #                                                                          #
-#  Copyright (C) 2021                                                      #
+#  Copyright (C) 2022                                                      #
 #                                                                          #
 #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                              #
@@ -107,22 +107,24 @@ module PointMassCarModel_2
 
   class PointMassCarModel_2_constraints_params < FFI::Struct
     layout(
-      # 1D constraints
-      :AdherenceEllipseSubType,   :index_t,
-      :AdherenceEllipseEpsilon,   :data_t,
+      # LT constraints
+      :AdherenceEllipseSubType, :index_t,
+      :AdherenceEllipseEpsilon, :data_t,
       :AdherenceEllipseTolerance, :data_t,
-      :RoadLeftBorderSubType,     :index_t,
-      :RoadLeftBorderEpsilon,     :data_t,
-      :RoadLeftBorderTolerance,   :data_t,
-      :RoadRightBorderSubType,    :index_t,
-      :RoadRightBorderEpsilon,    :data_t,
-      :RoadRightBorderTolerance,  :data_t,
-      :PowerLimitSubType,         :index_t,
-      :PowerLimitEpsilon,         :data_t,
-      :PowerLimitTolerance,       :data_t,
-      :LimitMinSpeedSubType,      :index_t,
-      :LimitMinSpeedEpsilon,      :data_t,
-      :LimitMinSpeedTolerance,    :data_t,
+      :RoadLeftBorderSubType, :index_t,
+      :RoadLeftBorderEpsilon, :data_t,
+      :RoadLeftBorderTolerance, :data_t,
+      :RoadRightBorderSubType, :index_t,
+      :RoadRightBorderEpsilon, :data_t,
+      :RoadRightBorderTolerance, :data_t,
+      :PowerLimitSubType, :index_t,
+      :PowerLimitEpsilon, :data_t,
+      :PowerLimitTolerance, :data_t,
+      :LimitMinSpeedSubType, :index_t,
+      :LimitMinSpeedEpsilon, :data_t,
+      :LimitMinSpeedTolerance, :data_t,
+
+      # 1D constraints
 
       # 2D constraints
 

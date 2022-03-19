@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 31/1/2022                                        |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -104,10 +104,10 @@ namespace UnderwaterDefine {
     X__[ iX_vz    ] = t11 * t13;
     X__[ iX_Omega ] = 0;
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 6 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 6 );
+    }
   }
 
   /*\
@@ -147,8 +147,8 @@ namespace UnderwaterDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -159,8 +159,8 @@ namespace UnderwaterDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -271,9 +271,7 @@ namespace UnderwaterDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  Underwater::u_guess_numEqns() const
-  { return 3; }
+  integer Underwater::u_guess_numEqns() const { return 3; }
 
   void
   Underwater::u_guess_eval(

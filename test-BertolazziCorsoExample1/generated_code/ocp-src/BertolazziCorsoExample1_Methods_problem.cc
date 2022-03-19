@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BertolazziCorsoExample1_Methods_problem.cc                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -80,7 +80,7 @@ namespace BertolazziCorsoExample1Define {
   \*/
 
   real_type
-  BertolazziCorsoExample1::penalties_eval(
+  BertolazziCorsoExample1::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -91,7 +91,7 @@ namespace BertolazziCorsoExample1Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -99,7 +99,7 @@ namespace BertolazziCorsoExample1Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  BertolazziCorsoExample1::control_penalties_eval(
+  BertolazziCorsoExample1::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -110,10 +110,31 @@ namespace BertolazziCorsoExample1Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  BertolazziCorsoExample1::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -172,9 +193,7 @@ namespace BertolazziCorsoExample1Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BertolazziCorsoExample1::DmayerDxxp_numEqns() const
-  { return 5; }
+  integer BertolazziCorsoExample1::DmayerDxxp_numEqns() const { return 5; }
 
   void
   BertolazziCorsoExample1::DmayerDxxp_eval(
@@ -209,9 +228,7 @@ namespace BertolazziCorsoExample1Define {
    |              |___/                 |___/
   \*/
 
-  integer
-  BertolazziCorsoExample1::DlagrangeDxup_numEqns() const
-  { return 4; }
+  integer BertolazziCorsoExample1::DlagrangeDxup_numEqns() const { return 4; }
 
   void
   BertolazziCorsoExample1::DlagrangeDxup_eval(
@@ -233,69 +250,53 @@ namespace BertolazziCorsoExample1Define {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
   }
 
-  integer
-  BertolazziCorsoExample1::DJDx_numEqns() const
-  { return 2; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BertolazziCorsoExample1::IPOPT_hess_numRows() const { return 4; }
+  integer BertolazziCorsoExample1::IPOPT_hess_numCols() const { return 4; }
+  integer BertolazziCorsoExample1::IPOPT_hess_nnz()     const { return 5; }
 
   void
-  BertolazziCorsoExample1::DJDx_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
+  BertolazziCorsoExample1::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 1   ; jIndex[0 ] = 3   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 3   ; jIndex[4 ] = 2   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BertolazziCorsoExample1::DJDp_numEqns() const
-  { return 1; }
-
   void
-  BertolazziCorsoExample1::DJDp_eval(
-    NodeType const     & NODE__,
+  BertolazziCorsoExample1::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = 2 * sigma__ * P__[iP_T];
+    result__[ 2   ] = 2 * sigma__ * U__[iU_F] + L__[iL_lambda2__xo] / ModelPars[iM_mass];
+    result__[ 3   ] = result__[0];
+    result__[ 4   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDp_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BertolazziCorsoExample1::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  BertolazziCorsoExample1::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 5, i_segment );
   }
 
   /*\
@@ -328,9 +329,7 @@ namespace BertolazziCorsoExample1Define {
    |              |___/
   \*/
 
-  integer
-  BertolazziCorsoExample1::segmentLink_numEqns() const
-  { return 0; }
+  integer BertolazziCorsoExample1::segmentLink_numEqns() const { return 0; }
 
   void
   BertolazziCorsoExample1::segmentLink_eval(
@@ -344,17 +343,9 @@ namespace BertolazziCorsoExample1Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BertolazziCorsoExample1::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  BertolazziCorsoExample1::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  BertolazziCorsoExample1::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer BertolazziCorsoExample1::DsegmentLinkDxp_numRows() const { return 0; }
+  integer BertolazziCorsoExample1::DsegmentLinkDxp_numCols() const { return 0; }
+  integer BertolazziCorsoExample1::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   BertolazziCorsoExample1::DsegmentLinkDxp_pattern(
@@ -384,9 +375,7 @@ namespace BertolazziCorsoExample1Define {
    |                 |_|
   \*/
 
-  integer
-  BertolazziCorsoExample1::jump_numEqns() const
-  { return 4; }
+  integer BertolazziCorsoExample1::jump_numEqns() const { return 4; }
 
   void
   BertolazziCorsoExample1::jump_eval(
@@ -414,24 +403,12 @@ namespace BertolazziCorsoExample1Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BertolazziCorsoExample1::DjumpDxlxlp_numRows() const
-  { return 4; }
-
-  integer
-  BertolazziCorsoExample1::DjumpDxlxlp_numCols() const
-  { return 9; }
-
-  integer
-  BertolazziCorsoExample1::DjumpDxlxlp_nnz() const
-  { return 8; }
+  integer BertolazziCorsoExample1::DjumpDxlxlp_numRows() const { return 4; }
+  integer BertolazziCorsoExample1::DjumpDxlxlp_numCols() const { return 9; }
+  integer BertolazziCorsoExample1::DjumpDxlxlp_nnz()     const { return 8; }
 
   void
-  BertolazziCorsoExample1::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BertolazziCorsoExample1::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -441,6 +418,7 @@ namespace BertolazziCorsoExample1Define {
     iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
     iIndex[7 ] = 3   ; jIndex[7 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -481,9 +459,7 @@ namespace BertolazziCorsoExample1Define {
    |                                                    |___/
   \*/
 
-  integer
-  BertolazziCorsoExample1::post_numEqns() const
-  { return 0; }
+  integer BertolazziCorsoExample1::post_numEqns() const { return 0; }
 
   void
   BertolazziCorsoExample1::post_eval(
@@ -497,9 +473,7 @@ namespace BertolazziCorsoExample1Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BertolazziCorsoExample1::integrated_post_numEqns() const
-  { return 0; }
+  integer BertolazziCorsoExample1::integrated_post_numEqns() const { return 0; }
 
   void
   BertolazziCorsoExample1::integrated_post_eval(

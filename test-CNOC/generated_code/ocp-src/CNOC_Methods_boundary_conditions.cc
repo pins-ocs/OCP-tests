@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_boundary_conditions.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -101,16 +101,26 @@ using Mechatronix::ToolPath2D;
 #define ALIAS_lenSeg_R(___dummy___) segmentRight.ss_length()
 #define ALIAS_lenSeg_L(___dummy___) segmentLeft.ss_length()
 #define ALIAS_lenSeg(___dummy___) segment.ss_length()
-#define ALIAS_ay_limit_DD(__t1) ay_limit.DD( __t1)
-#define ALIAS_ay_limit_D(__t1) ay_limit.D( __t1)
-#define ALIAS_ax_limit_DD(__t1) ax_limit.DD( __t1)
-#define ALIAS_ax_limit_D(__t1) ax_limit.D( __t1)
-#define ALIAS_an_limit_DD(__t1) an_limit.DD( __t1)
-#define ALIAS_an_limit_D(__t1) an_limit.D( __t1)
-#define ALIAS_as_limit_DD(__t1) as_limit.DD( __t1)
-#define ALIAS_as_limit_D(__t1) as_limit.D( __t1)
-#define ALIAS_PathFollowingTolerance_DD(__t1) PathFollowingTolerance.DD( __t1)
-#define ALIAS_PathFollowingTolerance_D(__t1) PathFollowingTolerance.D( __t1)
+#define ALIAS_ay_limit_max_DD(__t1) ay_limit_max.DD( __t1)
+#define ALIAS_ay_limit_max_D(__t1) ay_limit_max.D( __t1)
+#define ALIAS_ay_limit_min_DD(__t1) ay_limit_min.DD( __t1)
+#define ALIAS_ay_limit_min_D(__t1) ay_limit_min.D( __t1)
+#define ALIAS_ax_limit_max_DD(__t1) ax_limit_max.DD( __t1)
+#define ALIAS_ax_limit_max_D(__t1) ax_limit_max.D( __t1)
+#define ALIAS_ax_limit_min_DD(__t1) ax_limit_min.DD( __t1)
+#define ALIAS_ax_limit_min_D(__t1) ax_limit_min.D( __t1)
+#define ALIAS_an_limit_max_DD(__t1) an_limit_max.DD( __t1)
+#define ALIAS_an_limit_max_D(__t1) an_limit_max.D( __t1)
+#define ALIAS_an_limit_min_DD(__t1) an_limit_min.DD( __t1)
+#define ALIAS_an_limit_min_D(__t1) an_limit_min.D( __t1)
+#define ALIAS_as_limit_max_DD(__t1) as_limit_max.DD( __t1)
+#define ALIAS_as_limit_max_D(__t1) as_limit_max.D( __t1)
+#define ALIAS_as_limit_min_DD(__t1) as_limit_min.DD( __t1)
+#define ALIAS_as_limit_min_D(__t1) as_limit_min.D( __t1)
+#define ALIAS_PathFollowingTolerance_max_DD(__t1) PathFollowingTolerance_max.DD( __t1)
+#define ALIAS_PathFollowingTolerance_max_D(__t1) PathFollowingTolerance_max.D( __t1)
+#define ALIAS_PathFollowingTolerance_min_DD(__t1) PathFollowingTolerance_min.DD( __t1)
+#define ALIAS_PathFollowingTolerance_min_D(__t1) PathFollowingTolerance_min.D( __t1)
 #define ALIAS_vLimit_DD(__t1) vLimit.DD( __t1)
 #define ALIAS_vLimit_D(__t1) vLimit.D( __t1)
 #define ALIAS_timePositive_DD(__t1) timePositive.DD( __t1)
@@ -148,9 +158,7 @@ namespace CNOCDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer
-  CNOC::boundaryConditions_numEqns() const
-  { return 12; }
+  integer CNOC::boundaryConditions_numEqns() const { return 12; }
 
   void
   CNOC::boundaryConditions_eval(
@@ -184,24 +192,12 @@ namespace CNOCDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::DboundaryConditionsDxxp_numRows() const
-  { return 12; }
-
-  integer
-  CNOC::DboundaryConditionsDxxp_numCols() const
-  { return 14; }
-
-  integer
-  CNOC::DboundaryConditionsDxxp_nnz() const
-  { return 12; }
+  integer CNOC::DboundaryConditionsDxxp_numRows() const { return 12; }
+  integer CNOC::DboundaryConditionsDxxp_numCols() const { return 14; }
+  integer CNOC::DboundaryConditionsDxxp_nnz()     const { return 12; }
 
   void
-  CNOC::DboundaryConditionsDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  CNOC::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
@@ -215,6 +211,7 @@ namespace CNOCDefine {
     iIndex[10] = 10  ; jIndex[10] = 0   ;
     iIndex[11] = 11  ; jIndex[11] = 7   ;
   }
+
 
   void
   CNOC::DboundaryConditionsDxxp_sparse(
@@ -249,14 +246,12 @@ namespace CNOCDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  CNOC::adjointBC_numEqns() const
-  { return 14; }
+  integer CNOC::adjointBC_numEqns() const { return 14; }
 
   void
   CNOC::adjointBC_eval(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
@@ -264,56 +259,44 @@ namespace CNOCDefine {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
     real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
     ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
     ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[10] + LL__[iL_lambda1__xo];
-    result__[ 1   ] = OMEGA__[0] + LL__[iL_lambda2__xo];
-    result__[ 2   ] = OMEGA__[1] + LL__[iL_lambda3__xo];
-    result__[ 3   ] = OMEGA__[2] + LL__[iL_lambda4__xo];
-    result__[ 4   ] = OMEGA__[3] + LL__[iL_lambda5__xo];
-    result__[ 5   ] = OMEGA__[4] + LL__[iL_lambda6__xo];
-    result__[ 6   ] = LL__[iL_lambda7__xo];
-    result__[ 7   ] = OMEGA__[11] - LR__[iL_lambda1__xo];
-    result__[ 8   ] = OMEGA__[5] - LR__[iL_lambda2__xo];
-    result__[ 9   ] = OMEGA__[6] - LR__[iL_lambda3__xo];
-    result__[ 10  ] = OMEGA__[7] - LR__[iL_lambda4__xo];
-    result__[ 11  ] = OMEGA__[8] - LR__[iL_lambda5__xo];
-    result__[ 12  ] = OMEGA__[9] - LR__[iL_lambda6__xo];
-    result__[ 13  ] = -LR__[iL_lambda7__xo];
+    result__[ 0   ] = OMEGA__[10];
+    result__[ 1   ] = OMEGA__[0];
+    result__[ 2   ] = OMEGA__[1];
+    result__[ 3   ] = OMEGA__[2];
+    result__[ 4   ] = OMEGA__[3];
+    result__[ 5   ] = OMEGA__[4];
+    result__[ 6   ] = 0;
+    result__[ 7   ] = OMEGA__[11];
+    result__[ 8   ] = OMEGA__[5];
+    result__[ 9   ] = OMEGA__[6];
+    result__[ 10  ] = OMEGA__[7];
+    result__[ 11  ] = OMEGA__[8];
+    result__[ 12  ] = OMEGA__[9];
+    result__[ 13  ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 14, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::DadjointBCDxxp_numRows() const
-  { return 14; }
-
-  integer
-  CNOC::DadjointBCDxxp_numCols() const
-  { return 14; }
-
-  integer
-  CNOC::DadjointBCDxxp_nnz() const
-  { return 0; }
+  integer CNOC::DadjointBCDxxp_numRows() const { return 14; }
+  integer CNOC::DadjointBCDxxp_numCols() const { return 14; }
+  integer CNOC::DadjointBCDxxp_nnz()     const { return 0; }
 
   void
-  CNOC::DadjointBCDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  CNOC::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   void
   CNOC::DadjointBCDxxp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]

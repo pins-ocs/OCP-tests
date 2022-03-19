@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -94,16 +94,16 @@ namespace ICLOCS2_AlyChanDefine {
     real_type t9   = XM__[0] * XM__[0];
     real_type t10  = t2 * t2;
     real_type t14  = uControl(t5, -1, 1);
-    real_type result__ = t2 * LM__[0] + t5 * LM__[1] + (-t9 + t10) * LM__[2] / 2 + t14;
+    real_type result__ = t2 * LM__[0] + t5 * LM__[1] + (-t9 / 2 + t10 / 2) * LM__[2] + t14;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  ICLOCS2_AlyChan::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS2_AlyChan::g_numEqns() const { return 1; }
 
   void
   ICLOCS2_AlyChan::g_eval(
@@ -140,27 +140,16 @@ namespace ICLOCS2_AlyChanDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS2_AlyChan::DgDxlxlp_numCols() const
-  { return 12; }
-
-  integer
-  ICLOCS2_AlyChan::DgDxlxlp_nnz() const
-  { return 2; }
+  integer ICLOCS2_AlyChan::DgDxlxlp_numRows() const { return 1; }
+  integer ICLOCS2_AlyChan::DgDxlxlp_numCols() const { return 12; }
+  integer ICLOCS2_AlyChan::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  ICLOCS2_AlyChan::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS2_AlyChan::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 10  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -199,26 +188,15 @@ namespace ICLOCS2_AlyChanDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS2_AlyChan::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS2_AlyChan::DgDu_nnz() const
-  { return 1; }
+  integer ICLOCS2_AlyChan::DgDu_numRows() const { return 1; }
+  integer ICLOCS2_AlyChan::DgDu_numCols() const { return 1; }
+  integer ICLOCS2_AlyChan::DgDu_nnz()     const { return 1; }
 
   void
-  ICLOCS2_AlyChan::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS2_AlyChan::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -406,9 +384,7 @@ namespace ICLOCS2_AlyChanDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS2_AlyChan::DmDu_numEqns() const
-  { return 1; }
+  integer ICLOCS2_AlyChan::DmDu_numEqns() const { return 1; }
 
   void
   ICLOCS2_AlyChan::DmDu_eval(
@@ -430,28 +406,15 @@ namespace ICLOCS2_AlyChanDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS2_AlyChan::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS2_AlyChan::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS2_AlyChan::DmDuu_nnz() const
-  { return 1; }
+  integer ICLOCS2_AlyChan::DmDuu_numRows() const { return 1; }
+  integer ICLOCS2_AlyChan::DmDuu_numCols() const { return 1; }
+  integer ICLOCS2_AlyChan::DmDuu_nnz()     const { return 1; }
 
   void
-  ICLOCS2_AlyChan::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS2_AlyChan::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ICLOCS2_AlyChan::DmDuu_sparse(

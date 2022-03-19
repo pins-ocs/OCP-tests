@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    ICLOCS_SingularArc model("ICLOCS_SingularArc",&TP,&console);
+    ICLOCS_SingularArc model("ICLOCS_SingularArc",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_T = 0.01;
-    real_type tol_ctrl0 = 0.01;
     real_type epsi_ctrl0 = 0.01;
-    real_type epsi_ctrl = epsi_ctrl0;
-    real_type tol_ctrl = tol_ctrl0;
+    real_type tol_ctrl0 = 0.01;
+    real_type epsi_T = 0.01;
     real_type tol_T = 0.1;
+    real_type tol_ctrl = tol_ctrl0;
+    real_type epsi_ctrl = epsi_ctrl0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -161,7 +161,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
@@ -171,23 +171,24 @@ main() {
 
 
 
-    // Constraint1D
+    // ConstraintLT
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_tfbound = data_Constraints["tfbound"];
     data_tfbound["subType"]   = "BARRIER_LOG";
     data_tfbound["epsilon"]   = epsi_T;
     data_tfbound["tolerance"] = tol_T;
     data_tfbound["active"]    = true;
+    // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_SingularArc_data.Mesh["s0"] = 0;
-ICLOCS_SingularArc_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS_SingularArc_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_SingularArc_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

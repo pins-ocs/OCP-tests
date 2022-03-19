@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SlidingMode_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -55,17 +55,415 @@ using Mechatronix::MeshStd;
 namespace SlidingModeDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  SlidingMode::Hx_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::JPx_numEqns() const { return 2; }
+
+  void
+  SlidingMode::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::LTx_numEqns() const { return 2; }
+
+  void
+  SlidingMode::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::JUx_numEqns() const { return 2; }
+
+  void
+  SlidingMode::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::JPp_numEqns() const { return 0; }
+
+  void
+  SlidingMode::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::LTp_numEqns() const { return 0; }
+
+  void
+  SlidingMode::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::JUp_numEqns() const { return 0; }
+
+  void
+  SlidingMode::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::JPu_numEqns() const { return 1; }
+
+  void
+  SlidingMode::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::LTu_numEqns() const { return 1; }
+
+  void
+  SlidingMode::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::JUu_numEqns() const { return 1; }
+
+  void
+  SlidingMode::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::LTargs_numEqns() const { return 0; }
+
+  void
+  SlidingMode::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DJPxDxp_numRows() const { return 2; }
+  integer SlidingMode::DJPxDxp_numCols() const { return 2; }
+  integer SlidingMode::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DLTxDxp_numRows() const { return 2; }
+  integer SlidingMode::DLTxDxp_numCols() const { return 2; }
+  integer SlidingMode::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DJUxDxp_numRows() const { return 2; }
+  integer SlidingMode::DJUxDxp_numCols() const { return 2; }
+  integer SlidingMode::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DJPuDxp_numRows() const { return 1; }
+  integer SlidingMode::DJPuDxp_numCols() const { return 2; }
+  integer SlidingMode::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DLTuDxp_numRows() const { return 1; }
+  integer SlidingMode::DLTuDxp_numCols() const { return 2; }
+  integer SlidingMode::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DJUuDxp_numRows() const { return 1; }
+  integer SlidingMode::DJUuDxp_numCols() const { return 2; }
+  integer SlidingMode::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DJPpDp_numRows() const { return 0; }
+  integer SlidingMode::DJPpDp_numCols() const { return 0; }
+  integer SlidingMode::DJPpDp_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DLTpDp_numRows() const { return 0; }
+  integer SlidingMode::DLTpDp_numCols() const { return 0; }
+  integer SlidingMode::DLTpDp_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DJUpDp_numRows() const { return 0; }
+  integer SlidingMode::DJUpDp_numCols() const { return 0; }
+  integer SlidingMode::DJUpDp_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DLTargsDxup_numRows() const { return 0; }
+  integer SlidingMode::DLTargsDxup_numCols() const { return 3; }
+  integer SlidingMode::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  SlidingMode::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SlidingMode::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::Hx_numEqns() const { return 2; }
 
   void
   SlidingMode::Hx_eval(
@@ -88,28 +486,33 @@ namespace SlidingModeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SlidingMode::DHxDx_numRows() const
-  { return 2; }
-
-  integer
-  SlidingMode::DHxDx_numCols() const
-  { return 2; }
-
-  integer
-  SlidingMode::DHxDx_nnz() const
-  { return 1; }
+  integer SlidingMode::Hp_numEqns() const { return 0; }
 
   void
-  SlidingMode::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  SlidingMode::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SlidingMode::DHxDxp_numRows() const { return 2; }
+  integer SlidingMode::DHxDxp_numCols() const { return 2; }
+  integer SlidingMode::DHxDxp_nnz()     const { return 1; }
+
+  void
+  SlidingMode::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
+
   void
-  SlidingMode::DHxDx_sparse(
+  SlidingMode::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -123,34 +526,22 @@ namespace SlidingModeDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 2 * L__[iL_lambda2__xo];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DHxDp_numRows() const
-  { return 2; }
-
-  integer
-  SlidingMode::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  SlidingMode::DHxDp_nnz() const
-  { return 0; }
+  integer SlidingMode::DHpDp_numRows() const { return 0; }
+  integer SlidingMode::DHpDp_numCols() const { return 0; }
+  integer SlidingMode::DHpDp_nnz()     const { return 0; }
 
   void
-  SlidingMode::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SlidingMode::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SlidingMode::DHxDp_sparse(
+  SlidingMode::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -169,9 +560,9 @@ namespace SlidingModeDefine {
    |
   \*/
 
-  integer
-  SlidingMode::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::Hu_numEqns() const { return 1; }
 
   void
   SlidingMode::Hu_eval(
@@ -191,122 +582,19 @@ namespace SlidingModeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  SlidingMode::DHuDx_numCols() const
-  { return 2; }
-
-  integer
-  SlidingMode::DHuDx_nnz() const
-  { return 0; }
+  integer SlidingMode::DHuDxp_numRows() const { return 1; }
+  integer SlidingMode::DHuDxp_numCols() const { return 2; }
+  integer SlidingMode::DHuDxp_nnz()     const { return 0; }
 
   void
-  SlidingMode::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  SlidingMode::DHuDx_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  SlidingMode::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  SlidingMode::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  SlidingMode::DHuDp_nnz() const
-  { return 0; }
 
   void
-  SlidingMode::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  SlidingMode::DHuDp_sparse(
+  SlidingMode::DHuDxp_sparse(
     NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  SlidingMode::Hp_numEqns() const
-  { return 0; }
-
-  void
-  SlidingMode::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  SlidingMode::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  SlidingMode::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  SlidingMode::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  SlidingMode::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -321,9 +609,10 @@ namespace SlidingModeDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  SlidingMode::eta_numEqns() const
-  { return 2; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::eta_numEqns() const { return 2; }
 
   void
   SlidingMode::eta_eval(
@@ -343,62 +632,18 @@ namespace SlidingModeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DetaDx_numRows() const
-  { return 2; }
-
-  integer
-  SlidingMode::DetaDx_numCols() const
-  { return 2; }
-
-  integer
-  SlidingMode::DetaDx_nnz() const
-  { return 0; }
+  integer SlidingMode::DetaDxp_numRows() const { return 2; }
+  integer SlidingMode::DetaDxp_numCols() const { return 2; }
+  integer SlidingMode::DetaDxp_nnz()     const { return 0; }
 
   void
-  SlidingMode::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  SlidingMode::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  SlidingMode::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DetaDp_numRows() const
-  { return 2; }
-
-  integer
-  SlidingMode::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  SlidingMode::DetaDp_nnz() const
-  { return 0; }
 
   void
-  SlidingMode::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  SlidingMode::DetaDp_sparse(
+  SlidingMode::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -413,9 +658,9 @@ namespace SlidingModeDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  SlidingMode::nu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::nu_numEqns() const { return 2; }
 
   void
   SlidingMode::nu_eval(
@@ -435,63 +680,18 @@ namespace SlidingModeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DnuDx_numRows() const
-  { return 2; }
-
-  integer
-  SlidingMode::DnuDx_numCols() const
-  { return 2; }
-
-  integer
-  SlidingMode::DnuDx_nnz() const
-  { return 0; }
+  integer SlidingMode::DnuDxp_numRows() const { return 2; }
+  integer SlidingMode::DnuDxp_numCols() const { return 2; }
+  integer SlidingMode::DnuDxp_nnz()     const { return 0; }
 
   void
-  SlidingMode::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  SlidingMode::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  SlidingMode::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DnuDp_numRows() const
-  { return 2; }
-
-  integer
-  SlidingMode::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  SlidingMode::DnuDp_nnz() const
-  { return 0; }
 
   void
-  SlidingMode::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  SlidingMode::DnuDp_sparse(
+  SlidingMode::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

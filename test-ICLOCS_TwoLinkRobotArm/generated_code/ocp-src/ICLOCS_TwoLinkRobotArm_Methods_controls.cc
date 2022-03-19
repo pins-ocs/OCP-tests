@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_controls.cc                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -100,39 +100,33 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = LM__[2];
-    real_type t4   = -t2 + LM__[3];
-    real_type t5   = XM__[0];
-    real_type t7   = UM__[0];
-    real_type t8   = t7 * t7;
-    real_type t9   = ModelPars[iM_rho];
-    real_type t10  = t9 * t8;
-    real_type t11  = UM__[1];
-    real_type t12  = t11 * t11;
-    real_type t13  = t9 * t12;
-    real_type t14  = XM__[1];
-    real_type t15  = t14 * t2;
-    real_type t16  = u1Control(t7, -1, 1);
-    real_type t17  = u2Control(t11, -1, 1);
-    real_type t19  = XM__[2];
-    real_type t20  = cos(t19);
+    real_type t2   = P__[iP_T];
+    real_type t4   = UM__[0];
+    real_type t5   = t4 * t4;
+    real_type t6   = UM__[1];
+    real_type t7   = t6 * t6;
+    real_type t12  = XM__[2];
+    real_type t13  = sin(t12);
+    real_type t14  = cos(t12);
+    real_type t15  = t14 * t13;
+    real_type t16  = XM__[0];
+    real_type t17  = t16 * t16;
+    real_type t20  = XM__[1];
     real_type t21  = t20 * t20;
-    real_type t23  = LM__[0];
-    real_type t24  = t5 * t5;
-    real_type t26  = LM__[1];
-    real_type t27  = t14 * t14;
-    real_type t30  = sin(t19);
-    real_type t57  = t21 * (t5 * t4 + t10 + t13 + t15 + t16 + t17) + t20 * (t30 * (-t24 * t23 + t27 * t26) + t11 * (-2.0 / 3.0 * t26 + 2.0 / 3.0 * t23) + 2.0 / 3.0 * t7 * t26) + 0.14e2 / 9.0 * t24 * t26 - 0.112e3 / 0.81e2 * t5 * t4 - 0.112e3 / 0.81e2 * t13 + t11 * (-0.28e2 / 0.27e2 * t26 + 0.16e2 / 0.27e2 * t23) + t23 * (-8.0 / 9.0 * t27 - 0.16e2 / 0.27e2 * t7) - 0.112e3 / 0.81e2 * t10 - 0.112e3 / 0.81e2 * t15 - 0.112e3 / 0.81e2 * t16 - 0.112e3 / 0.81e2 * t17;
-    real_type result__ = 81 / (81 * t21 - 112) * t57 * P__[iP_T];
+    real_type t28  = t13 * t13;
+    real_type t31  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t28);
+    real_type t53  = u1Control(t4, -1, 1);
+    real_type t55  = u2Control(t6, -1, 1);
+    real_type result__ = (t5 + t7) * t2 * ModelPars[iM_rho] + t31 * (9.0 / 4.0 * t17 * t15 + 2 * t21 + 4.0 / 3.0 * t4 - 4.0 / 3.0 * t6 - 3.0 / 2.0 * t6 * t14) * t2 * LM__[0] - t31 * (9.0 / 4.0 * t21 * t15 + 7.0 / 2.0 * t17 - 7.0 / 3.0 * t6 + 3.0 / 2.0 * (t4 - t6) * t14) * t2 * LM__[1] + (t20 - t16) * t2 * LM__[2] + t16 * t2 * LM__[3] + t53 * t2 + t55 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  ICLOCS_TwoLinkRobotArm::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_TwoLinkRobotArm::g_numEqns() const { return 2; }
 
   void
   ICLOCS_TwoLinkRobotArm::g_eval(
@@ -178,30 +172,18 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     result__[ 0   ] = t25 * (162 * t7 * t5 * t4 + 81 * t10 * t4 - 224 * t5 * t7 - 112 * t10 + t15 - t19) * t1;
     real_type t26  = UM__[1];
     real_type t30  = ALIAS_u2Control_D_1(t26, -1, 1);
-    result__[ 1   ] = t25 * (162 * t7 * t26 * t4 + 54 * t3 * t18 - 224 * t7 * t26 + 81 * t30 * t4 - 84 * t13 - t15 + t19 - 112 * t30) * t1;
+    result__[ 1   ] = -t25 * (-162 * t7 * t26 * t4 - 54 * t3 * t18 + 224 * t26 * t7 - 81 * t30 * t4 + 84 * t13 + t15 - t19 + 112 * t30) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_TwoLinkRobotArm::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::DgDxlxlp_numCols() const
-  { return 17; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::DgDxlxlp_nnz() const
-  { return 14; }
+  integer ICLOCS_TwoLinkRobotArm::DgDxlxlp_numRows() const { return 2; }
+  integer ICLOCS_TwoLinkRobotArm::DgDxlxlp_numCols() const { return 17; }
+  integer ICLOCS_TwoLinkRobotArm::DgDxlxlp_nnz()     const { return 14; }
 
   void
-  ICLOCS_TwoLinkRobotArm::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_TwoLinkRobotArm::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
@@ -217,6 +199,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     iIndex[12] = 1   ; jIndex[12] = 13  ;
     iIndex[13] = 1   ; jIndex[13] = 16  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -278,41 +261,30 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     result__[ 6   ] = t23 * t38;
     real_type t50  = UM__[1];
     real_type t54  = ALIAS_u2Control_D_1(t50, -1, 1);
-    real_type t75  = 162 * t6 * t50 * t20 + 81 * t54 * t20 + 54 * t3 * t35 - 224 * t50 * t6 - 84 * t15 - t32 + t36 - 112 * t54;
-    result__[ 7   ] = 0.5e0 * t23 * (-324 * t8 * t50 * t3 - 162 * t7 * t54 * t3 - 54 * t7 * t35 + t17) * t1 + 0.810e2 * t43 * t75 * t1;
+    real_type t75  = -162 * t6 * t50 * t20 - 81 * t54 * t20 - 54 * t3 * t35 + 224 * t50 * t6 + 84 * t15 + t32 - t36 + 112 * t54;
+    result__[ 7   ] = -0.5e0 * t23 * (324 * t8 * t50 * t3 + 162 * t7 * t54 * t3 + 54 * t7 * t35 - t17) * t1 - 0.810e2 * t43 * t75 * t1;
     real_type t79  = 54 * t3;
-    result__[ 8   ] = 0.5e0 * t23 * (t79 + 48) * t1;
-    result__[ 9   ] = 0.5e0 * t23 * (-t79 - 84) * t1;
+    result__[ 8   ] = -0.5e0 * t23 * (-t79 - 48) * t1;
+    result__[ 9   ] = -0.5e0 * t23 * (t79 + 84) * t1;
     result__[ 10  ] = result__[7];
     result__[ 11  ] = result__[8];
     result__[ 12  ] = result__[9];
-    result__[ 13  ] = t23 * t75;
+    result__[ 13  ] = -t23 * t75;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 14, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_TwoLinkRobotArm::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::DgDu_nnz() const
-  { return 2; }
+  integer ICLOCS_TwoLinkRobotArm::DgDu_numRows() const { return 2; }
+  integer ICLOCS_TwoLinkRobotArm::DgDu_numCols() const { return 2; }
+  integer ICLOCS_TwoLinkRobotArm::DgDu_nnz()     const { return 2; }
 
   void
-  ICLOCS_TwoLinkRobotArm::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_TwoLinkRobotArm::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -356,7 +328,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t18  = 1.0 / (81 * t4 - 112);
     result__[ 0   ] = t18 * (81 * t9 * t4 - t12 + t7 - 112 * t9) * t1;
     real_type t20  = ALIAS_u2Control_D_1_1(UM__[1], -1, 1);
-    result__[ 1   ] = t18 * (81 * t20 * t4 - t12 - 112 * t20 + t7) * t1;
+    result__[ 1   ] = -t18 * (-81 * t20 * t4 + t12 + 112 * t20 - t7) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -549,9 +521,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_TwoLinkRobotArm::DmDu_numEqns() const
-  { return 2; }
+  integer ICLOCS_TwoLinkRobotArm::DmDu_numEqns() const { return 2; }
 
   void
   ICLOCS_TwoLinkRobotArm::DmDu_eval(
@@ -588,31 +558,18 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_TwoLinkRobotArm::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::DmDuu_nnz() const
-  { return 4; }
+  integer ICLOCS_TwoLinkRobotArm::DmDuu_numRows() const { return 2; }
+  integer ICLOCS_TwoLinkRobotArm::DmDuu_numCols() const { return 2; }
+  integer ICLOCS_TwoLinkRobotArm::DmDuu_nnz()     const { return 4; }
 
   void
-  ICLOCS_TwoLinkRobotArm::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_TwoLinkRobotArm::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ICLOCS_TwoLinkRobotArm::DmDuu_sparse(
@@ -645,7 +602,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t31  = ALIAS_u2Control_D_1_1(U__[iU_u2], -1, 1);
     real_type t33  = t21 * t21;
     real_type t37  = t25 * t25;
-    result__[ 3   ] = 2 * t12 * t33 * t5 + 2 * t12 * t37 * t5 + t31 * t1;
+    result__[ 3   ] = 2 * t12 * t33 * t5 + 2 * t12 * t37 * t5 + t1 * t31;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 4, i_segment );
   }

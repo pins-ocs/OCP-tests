@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SlidingMode_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -97,9 +97,9 @@ namespace SlidingModeDefine {
     return result__;
   }
 
-  integer
-  SlidingMode::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SlidingMode::g_numEqns() const { return 1; }
 
   void
   SlidingMode::g_eval(
@@ -134,27 +134,16 @@ namespace SlidingModeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  SlidingMode::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  SlidingMode::DgDxlxlp_nnz() const
-  { return 2; }
+  integer SlidingMode::DgDxlxlp_numRows() const { return 1; }
+  integer SlidingMode::DgDxlxlp_numCols() const { return 8; }
+  integer SlidingMode::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  SlidingMode::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SlidingMode::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -191,26 +180,15 @@ namespace SlidingModeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  SlidingMode::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  SlidingMode::DgDu_nnz() const
-  { return 1; }
+  integer SlidingMode::DgDu_numRows() const { return 1; }
+  integer SlidingMode::DgDu_numCols() const { return 1; }
+  integer SlidingMode::DgDu_nnz()     const { return 1; }
 
   void
-  SlidingMode::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SlidingMode::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -381,9 +359,7 @@ namespace SlidingModeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SlidingMode::DmDu_numEqns() const
-  { return 1; }
+  integer SlidingMode::DmDu_numEqns() const { return 1; }
 
   void
   SlidingMode::DmDu_eval(
@@ -405,28 +381,15 @@ namespace SlidingModeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SlidingMode::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  SlidingMode::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  SlidingMode::DmDuu_nnz() const
-  { return 1; }
+  integer SlidingMode::DmDuu_numRows() const { return 1; }
+  integer SlidingMode::DmDuu_numCols() const { return 1; }
+  integer SlidingMode::DmDuu_nnz()     const { return 1; }
 
   void
-  SlidingMode::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SlidingMode::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   SlidingMode::DmDuu_sparse(

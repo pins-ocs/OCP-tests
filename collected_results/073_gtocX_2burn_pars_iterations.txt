@@ -1,0 +1,190 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_y
+[ 2] initial_z
+[ 3] final_x
+[ 4] final_y
+[ 5] final_z
+
+
+
+Constraints LT
+ray_positive = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h = 0.001
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 51
+Segment N.0: s0 = 0 length = 1 npts = 51 no data set
+END Mesh[mesh]
+
+Model Parameters
+.....................................muS = 0.575874
+..................................time_f = 27
+..................................time_i = 0
+.................................w_guess = 0
+...............................epsi_norm = 0.01
+..............................retrograde = -1
+................................w_nonlin = 0
+INFO CLASS = gtocX_2burn_pars
+  #nodes      = 51
+  dim         = u=0, q=1, x=3, p=3, omega=6, bc=6, full_bc=12
+  BC          = Inital=0, Final=0, Cyclic=12
+  OMEGA       = Inital=0, Final=0, Cyclic=6
+  total       = nZ=315, UC=0, Q=51
+  index start = omega=306, p=312
+  FD jacobian = ANALYTIC
+END INFO
+Solver Master System: CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:      Newton
+Jacobian evaluation:  Analitic Jacobian
+Initializer Controls: Quasi-Newton
+Used threads:         15
+
+
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 1] ( 4.74e-06 , 3.2e-07  ) [ 0.000273 , 9.83e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 1] ( 3.2e-07  , 6.62e-09 ) [ 9.83e-05 , 2.06e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  3, 1] ( 6.62e-09 , 1.37e-10 ) [ 2.06e-06 , 4.28e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 1] ( 1.37e-10 , 2.85e-12 ) [ 4.28e-08 , 8.88e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.2, ds=0.2, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  5, 2] ( 6.98e-07 , 6.96e-08 ) [  6e-05   , 5.93e-06 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 2] ( 6.96e-08 , 6.94e-09 ) [ 5.93e-06 , 5.85e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  7, 2] ( 6.94e-09 , 6.9e-10  ) [ 5.85e-07 , 5.76e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  8, 2] ( 6.9e-10  , 6.87e-11 ) [ 5.76e-08 , 5.65e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 2] ( 6.87e-11 , 6.83e-12 ) [ 5.65e-09 , 5.52e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 10, 2] ( 6.83e-12 , 6.78e-13 ) [ 5.52e-10 , 5.37e-11 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 11, 2] ( 1.05e-06 , 1.04e-07 ) [ 8.99e-05 , 8.9e-06  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 2] ( 1.04e-07 , 1.04e-08 ) [ 8.9e-06  , 8.78e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 13, 2] ( 1.04e-08 , 1.04e-09 ) [ 8.78e-07 , 8.64e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 14, 2] ( 1.04e-09 , 1.03e-10 ) [ 8.64e-08 , 8.48e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 15, 2] ( 1.03e-10 , 1.02e-11 ) [ 8.48e-09 , 8.28e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 16, 2] ( 1.02e-11 , 1.02e-12 ) [ 8.28e-10 , 8.05e-11 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 17, 2] ( 1.57e-06 , 1.57e-07 ) [ 0.000135 , 1.33e-05 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 18, 2] ( 1.57e-07 , 1.56e-08 ) [ 1.33e-05 , 1.32e-06 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 19, 2] ( 1.56e-08 , 1.55e-09 ) [ 1.32e-06 , 1.3e-07  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 20, 2] ( 1.55e-09 , 1.55e-10 ) [ 1.3e-07  , 1.27e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 21, 2] ( 1.55e-10 , 1.54e-11 ) [ 1.27e-08 , 1.24e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 22, 2] ( 1.54e-11 , 1.52e-12 ) [ 1.24e-09 , 1.21e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 23, 2] ( 1.52e-12 , 1.51e-13 ) [ 1.21e-10 , 1.17e-11 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 24, 2] ( 1.75e-07 , 1.74e-08 ) [ 1.5e-05  , 1.48e-06 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 25, 2] ( 1.74e-08 , 1.73e-09 ) [ 1.48e-06 , 1.46e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 26, 2] ( 1.73e-09 , 1.73e-10 ) [ 1.46e-07 , 1.44e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 27, 2] ( 1.73e-10 , 1.72e-11 ) [ 1.44e-08 , 1.41e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 28, 2] ( 1.72e-11 , 1.71e-12 ) [ 1.41e-09 , 1.38e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 29, 2] ( 1.71e-12 , 1.69e-13 ) [ 1.38e-10 , 1.34e-11 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2
+
+Continuation step N.2 s=0.2, ds=0.2, old_s=    0
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 30, 1] ( 0.000702 , 7.37e-06 ) [ 0.00925  , 0.000174 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 31, 1] ( 7.37e-06 , 2.19e-09 ) [ 0.000168 , 9.9e-08  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 32, 1] ( 2.19e-09 , 3.12e-13 ) [ 9.9e-08  , 9.68e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.5, ds=0.3, old_s=  0.2
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 33, 1] ( 0.00108  , 3.2e-05  ) [  0.0155  , 0.000587 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 34, 1] ( 3.2e-05  , 2.81e-08 ) [ 0.000555 , 9.35e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 35, 1] ( 2.81e-08 , 1.13e-12 ) [ 9.36e-07 , 3.36e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.95, ds=0.45, old_s=  0.5
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 36, 1] ( 0.00169  , 0.000207 ) [  0.0283  , 0.00302  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 37, 1] ( 0.000207 , 8.05e-07 ) [ 0.00281  ,  2e-05   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 38, 1] ( 8.05e-07 , 5.26e-11 ) [ 2.02e-05 , 3.43e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 39, 1] ( 5.26e-11 , 2.41e-13 ) [ 3.43e-09 , 8.77e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=1, ds=0.05, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 40, 1] ( 0.000204 , 5.99e-06 ) [  0.0043  , 8.05e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 41, 1] ( 5.99e-06 , 7.57e-10 ) [  8e-05   , 3.39e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 42, 1] ( 7.57e-10 , 1.45e-12 ) [ 3.39e-08 , 5.46e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
+ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 23.7[ms]      timeout        = 0 [ms]
+iteration      = 42            tolerance      = 1e-09
+max iterations = 300           N. Equations   = 315
+max acc. iter. = 800           N. System pars = 0
+Converged      = YES           Memory Used    = 66Kb (+87bytes)
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 76            Jacobian       = 42
+Factorization  = 42            Inversion      = 109
+........................... last residuals ...........................
+last ||f||_inf = 4.5641e-10    last ||d||_inf = 4.7728e-09
+last ||f||_1   = 1.4492e-12    last ||d||_1   = 5.4556e-10
+last ||f||_2   = 2.5716e-11    last ||d||_2   = 1.1304e-09
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+At cell 0, H = 5.7570667230509135e-06, ||g||_inf = 27
+At cell 1, H = 5.7570546338905675e-06, ||g||_inf = 27
+At cell 2, H = 5.757041928341633e-06, ||g||_inf = 27
+At cell 3, H = 5.75702854997895e-06, ||g||_inf = 27
+At cell 4, H = 5.7570144442495e-06, ||g||_inf = 27
+At cell 5, H = 5.756999562600599e-06, ||g||_inf = 27
+skipping...
+Check Controls End
+target [Lagrange,Mayer]       = [ 0, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+Optimization parameters:
+h: -0.0655370757577170282
+k: 2.6717035125056692e-33
+p: 1.85767113762416369
+All Done Folks!

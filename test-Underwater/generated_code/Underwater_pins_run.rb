@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: Underwater_pins_run.rb                                         #
 #                                                                       #
-#  version: 1.0   date 31/1/2022                                        #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -60,7 +60,7 @@ unless ocp.ocp_solution[:error] then
     puts "Penalties         = #{ocp.ocp_solution[:target][:penalties]}"
     puts "Control penalties = #{ocp.ocp_solution[:target][:control_penalties]}"
     if ocp.ocp_solution[:parameters] then
-      puts "Optimization parameters: #{ocp.ocp_solution[:parameters]}"    
+      puts "Optimization parameters: #{ocp.ocp_solution[:parameters]}"
     end
     puts "\nSaving solution file: data/#{problem_name}_OCP_result.txt"
     ocp.write_ocp_solution("data/#{problem_name}_OCP_result.txt")

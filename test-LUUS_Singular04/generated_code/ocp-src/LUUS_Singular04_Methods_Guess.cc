@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -74,10 +74,10 @@ namespace LUUS_Singular04Define {
     X__[ iX_x2 ] = ModelPars[iM_x2_i];
     X__[ iX_x3 ] = ModelPars[iM_x3_i];
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 3 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 3 );
+    }
   }
 
   /*\
@@ -117,8 +117,8 @@ namespace LUUS_Singular04Define {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -129,8 +129,8 @@ namespace LUUS_Singular04Define {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -241,9 +241,7 @@ namespace LUUS_Singular04Define {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  LUUS_Singular04::u_guess_numEqns() const
-  { return 1; }
+  integer LUUS_Singular04::u_guess_numEqns() const { return 1; }
 
   void
   LUUS_Singular04::u_guess_eval(

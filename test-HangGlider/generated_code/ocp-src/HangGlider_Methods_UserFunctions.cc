@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_UserFunctions.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,6 +17,7 @@
 
 #include "HangGlider.hh"
 #include "HangGlider_Pars.hh"
+#include <cmath>
 
 using namespace std;
 using namespace MechatronixLoad;
@@ -55,6 +56,37 @@ using Mechatronix::MeshStd;
 
 
 namespace HangGliderDefine {
+  using std::acos;
+  using std::acosh;
+  using std::asin;
+  using std::asinh;
+  using std::atan;
+  using std::atan2;
+  using std::atanh;
+  using std::cbrt;
+  using std::ceil;
+  using std::abs;
+  using std::cos;
+  using std::cosh;
+  using std::exp;
+  using std::exp2;
+  using std::expm1;
+  using std::floor;
+  using std::log;
+  using std::log10;
+  using std::log1p;
+  using std::log2;
+  using std::logb;
+  using std::pow;
+  using std::hypot;
+  using std::floor;
+  using std::round;
+  using std::sin;
+  using std::sinh;
+  using std::sqrt;
+  using std::tan;
+  using std::tanh;
+  using std::trunc;
   /*\
    |  _   _               ___             _   _
    | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
@@ -303,7 +335,7 @@ namespace HangGliderDefine {
     real_type t2   = w_D_1(xo__x, xo__y1);
     real_type t4   = w(xo__x, xo__y1);
     real_type t5   = w_D_1_2(xo__x, xo__y1);
-    real_type result__ = 2 * t2 * t1 + 2 * t5 * t4;
+    real_type result__ = 2 * t1 * t2 + 2 * t4 * t5;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -357,7 +389,7 @@ namespace HangGliderDefine {
   HangGlider::v2_D_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
     real_type t1   = w(xo__x, xo__y1);
     real_type t2   = w_D_2(xo__x, xo__y1);
-    real_type result__ = 2 * t2 * t1;
+    real_type result__ = 2 * t1 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Data.lua                                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,12 +20,12 @@
 -- User Header
 
 -- Auxiliary values
-cL_min   = 0
 cL_max   = 1.4
-tol_max  = 0.01
+epsi_max = 0.01
 W0       = 1000
 W        = W0
-epsi_max = 0.01
+cL_min   = 0
+tol_max  = 0.01
 
 content = {
 
@@ -37,6 +37,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -305,7 +307,7 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     cLControl = {
@@ -316,15 +318,16 @@ content = {
   },
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     TboundsubType   = "BARRIER_LOG",
     Tboundepsilon   = 0.1,
     Tboundtolerance = 0.5,
     Tboundactive    = true
 
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 

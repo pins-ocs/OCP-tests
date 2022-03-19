@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods_AdjointODE.cc                        |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -55,17 +55,412 @@ using Mechatronix::MeshStd;
 namespace WorstCaseScenarioDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  WorstCaseScenario::Hx_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::JPx_numEqns() const { return 1; }
+
+  void
+  WorstCaseScenario::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::LTx_numEqns() const { return 1; }
+
+  void
+  WorstCaseScenario::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::JUx_numEqns() const { return 1; }
+
+  void
+  WorstCaseScenario::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::JPp_numEqns() const { return 0; }
+
+  void
+  WorstCaseScenario::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::LTp_numEqns() const { return 0; }
+
+  void
+  WorstCaseScenario::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::JUp_numEqns() const { return 0; }
+
+  void
+  WorstCaseScenario::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::JPu_numEqns() const { return 1; }
+
+  void
+  WorstCaseScenario::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::LTu_numEqns() const { return 1; }
+
+  void
+  WorstCaseScenario::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::JUu_numEqns() const { return 1; }
+
+  void
+  WorstCaseScenario::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::LTargs_numEqns() const { return 0; }
+
+  void
+  WorstCaseScenario::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DJPxDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DJPxDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DLTxDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DLTxDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DJUxDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DJUxDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DJPuDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DJPuDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DLTuDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DLTuDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DJUuDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DJUuDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DJPpDp_numRows() const { return 0; }
+  integer WorstCaseScenario::DJPpDp_numCols() const { return 0; }
+  integer WorstCaseScenario::DJPpDp_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DLTpDp_numRows() const { return 0; }
+  integer WorstCaseScenario::DLTpDp_numCols() const { return 0; }
+  integer WorstCaseScenario::DLTpDp_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DJUpDp_numRows() const { return 0; }
+  integer WorstCaseScenario::DJUpDp_numCols() const { return 0; }
+  integer WorstCaseScenario::DJUpDp_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DLTargsDxup_numRows() const { return 0; }
+  integer WorstCaseScenario::DLTargsDxup_numCols() const { return 2; }
+  integer WorstCaseScenario::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  WorstCaseScenario::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::Hx_numEqns() const { return 1; }
 
   void
   WorstCaseScenario::Hx_eval(
@@ -87,27 +482,33 @@ namespace WorstCaseScenarioDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  WorstCaseScenario::DHxDx_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DHxDx_numCols() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DHxDx_nnz() const
-  { return 0; }
+  integer WorstCaseScenario::Hp_numEqns() const { return 0; }
 
   void
-  WorstCaseScenario::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  WorstCaseScenario::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
   }
 
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer WorstCaseScenario::DHxDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DHxDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DHxDxp_nnz()     const { return 0; }
+
   void
-  WorstCaseScenario::DHxDx_sparse(
+  WorstCaseScenario::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  WorstCaseScenario::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -118,30 +519,18 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DHxDp_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DHxDp_nnz() const
-  { return 0; }
+  integer WorstCaseScenario::DHpDp_numRows() const { return 0; }
+  integer WorstCaseScenario::DHpDp_numCols() const { return 0; }
+  integer WorstCaseScenario::DHpDp_nnz()     const { return 0; }
 
   void
-  WorstCaseScenario::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  WorstCaseScenario::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  WorstCaseScenario::DHxDp_sparse(
+  WorstCaseScenario::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -160,9 +549,9 @@ namespace WorstCaseScenarioDefine {
    |
   \*/
 
-  integer
-  WorstCaseScenario::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::Hu_numEqns() const { return 1; }
 
   void
   WorstCaseScenario::Hu_eval(
@@ -182,122 +571,19 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DHuDx_numCols() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DHuDx_nnz() const
-  { return 0; }
+  integer WorstCaseScenario::DHuDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DHuDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DHuDxp_nnz()     const { return 0; }
 
   void
-  WorstCaseScenario::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  WorstCaseScenario::DHuDx_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  WorstCaseScenario::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DHuDp_nnz() const
-  { return 0; }
 
   void
-  WorstCaseScenario::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  WorstCaseScenario::DHuDp_sparse(
+  WorstCaseScenario::DHuDxp_sparse(
     NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  WorstCaseScenario::Hp_numEqns() const
-  { return 0; }
-
-  void
-  WorstCaseScenario::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  WorstCaseScenario::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  WorstCaseScenario::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -312,9 +598,10 @@ namespace WorstCaseScenarioDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  WorstCaseScenario::eta_numEqns() const
-  { return 1; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::eta_numEqns() const { return 1; }
 
   void
   WorstCaseScenario::eta_eval(
@@ -333,62 +620,18 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DetaDx_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DetaDx_numCols() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DetaDx_nnz() const
-  { return 0; }
+  integer WorstCaseScenario::DetaDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DetaDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DetaDxp_nnz()     const { return 0; }
 
   void
-  WorstCaseScenario::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  WorstCaseScenario::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  WorstCaseScenario::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DetaDp_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DetaDp_nnz() const
-  { return 0; }
 
   void
-  WorstCaseScenario::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  WorstCaseScenario::DetaDp_sparse(
+  WorstCaseScenario::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -403,9 +646,9 @@ namespace WorstCaseScenarioDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  WorstCaseScenario::nu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::nu_numEqns() const { return 1; }
 
   void
   WorstCaseScenario::nu_eval(
@@ -424,63 +667,18 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DnuDx_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DnuDx_numCols() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DnuDx_nnz() const
-  { return 0; }
+  integer WorstCaseScenario::DnuDxp_numRows() const { return 1; }
+  integer WorstCaseScenario::DnuDxp_numCols() const { return 1; }
+  integer WorstCaseScenario::DnuDxp_nnz()     const { return 0; }
 
   void
-  WorstCaseScenario::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  WorstCaseScenario::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  WorstCaseScenario::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DnuDp_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  WorstCaseScenario::DnuDp_nnz() const
-  { return 0; }
 
   void
-  WorstCaseScenario::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  WorstCaseScenario::DnuDp_sparse(
+  WorstCaseScenario::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

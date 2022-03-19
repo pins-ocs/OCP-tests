@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_ODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,8 +50,10 @@ using Mechatronix::MeshStd;
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
-#define ALIAS_vsTBInterval_DD(__t1) vsTBInterval.DD( __t1)
-#define ALIAS_vsTBInterval_D(__t1) vsTBInterval.D( __t1)
+#define ALIAS_vsTBInterval_max_DD(__t1) vsTBInterval_max.DD( __t1)
+#define ALIAS_vsTBInterval_max_D(__t1) vsTBInterval_max.D( __t1)
+#define ALIAS_vsTBInterval_min_DD(__t1) vsTBInterval_min.DD( __t1)
+#define ALIAS_vsTBInterval_min_D(__t1) vsTBInterval_min.D( __t1)
 #define ALIAS_vsTmax_DD(__t1) vsTmax.DD( __t1)
 #define ALIAS_vsTmax_D(__t1) vsTmax.D( __t1)
 #define ALIAS_vsBpositive_DD(__t1) vsBpositive.DD( __t1)
@@ -69,9 +71,7 @@ namespace BangBangFtauDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  BangBangFtau::rhs_ode_numEqns() const
-  { return 4; }
+  integer BangBangFtau::rhs_ode_numEqns() const { return 4; }
 
   void
   BangBangFtau::rhs_ode_eval(
@@ -95,35 +95,26 @@ namespace BangBangFtauDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtau::Drhs_odeDx_numRows() const
-  { return 4; }
-
-  integer
-  BangBangFtau::Drhs_odeDx_numCols() const
-  { return 4; }
-
-  integer
-  BangBangFtau::Drhs_odeDx_nnz() const
-  { return 5; }
+  integer BangBangFtau::Drhs_odeDxup_numRows() const { return 4; }
+  integer BangBangFtau::Drhs_odeDxup_numCols() const { return 6; }
+  integer BangBangFtau::Drhs_odeDxup_nnz()     const { return 7; }
 
   void
-  BangBangFtau::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFtau::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 3   ;
     iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 3   ; jIndex[4 ] = 3   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 3   ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 5   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFtau::Drhs_odeDx_sparse(
+  BangBangFtau::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -136,85 +127,14 @@ namespace BangBangFtauDefine {
     result__[ 0   ] = 1;
     result__[ 1   ] = ALIAS_clip_D_1(X__[iX_sT] - X__[iX_sB], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
     result__[ 2   ] = -result__[1];
-    result__[ 3   ] = -1.0 / ModelPars[iM_tauT];
-    result__[ 4   ] = -1.0 / ModelPars[iM_tauB];
+    real_type t7   = 1.0 / ModelPars[iM_tauT];
+    result__[ 3   ] = -t7;
+    result__[ 4   ] = t7;
+    real_type t9   = 1.0 / ModelPars[iM_tauB];
+    result__[ 5   ] = -t9;
+    result__[ 6   ] = t9;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 5, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtau::Drhs_odeDp_numRows() const
-  { return 4; }
-
-  integer
-  BangBangFtau::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFtau::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  BangBangFtau::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFtau::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtau::Drhs_odeDu_numRows() const
-  { return 4; }
-
-  integer
-  BangBangFtau::Drhs_odeDu_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFtau::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  BangBangFtau::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 2   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 3   ; jIndex[1 ] = 1   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFtau::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1.0 / ModelPars[iM_tauT];
-    result__[ 1   ] = 1.0 / ModelPars[iM_tauB];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 7, i_segment );
   }
 
   /*\
@@ -224,28 +144,19 @@ namespace BangBangFtauDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  BangBangFtau::A_numRows() const
-  { return 4; }
-
-  integer
-  BangBangFtau::A_numCols() const
-  { return 4; }
-
-  integer
-  BangBangFtau::A_nnz() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFtau::A_numRows() const { return 4; }
+  integer BangBangFtau::A_numCols() const { return 4; }
+  integer BangBangFtau::A_nnz()     const { return 4; }
 
   void
-  BangBangFtau::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFtau::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

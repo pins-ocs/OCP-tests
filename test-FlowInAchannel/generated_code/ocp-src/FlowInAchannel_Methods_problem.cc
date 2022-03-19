@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_problem.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -65,7 +65,7 @@ namespace FlowInAchannelDefine {
     real_type t2   = X__[iX_u1];
     real_type t5   = X__[iX_u2];
     real_type t8   = X__[iX_u3];
-    real_type result__ = t2 * L__[iL_lambda1__xo] + t5 * L__[iL_lambda2__xo] + t8 * L__[iL_lambda3__xo] + (t2 * t5 - t8 * X__[iX_u]) * ModelPars[iM_R] * L__[iL_lambda4__xo];
+    real_type result__ = t2 * L__[iL_lambda1__xo] + t5 * L__[iL_lambda2__xo] + t8 * L__[iL_lambda3__xo] + (t5 * t2 - t8 * X__[iX_u]) * ModelPars[iM_R] * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -80,7 +80,7 @@ namespace FlowInAchannelDefine {
   \*/
 
   real_type
-  FlowInAchannel::penalties_eval(
+  FlowInAchannel::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -91,7 +91,7 @@ namespace FlowInAchannelDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -99,7 +99,7 @@ namespace FlowInAchannelDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  FlowInAchannel::control_penalties_eval(
+  FlowInAchannel::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -110,10 +110,31 @@ namespace FlowInAchannelDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  FlowInAchannel::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -171,9 +192,7 @@ namespace FlowInAchannelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  FlowInAchannel::DmayerDxxp_numEqns() const
-  { return 8; }
+  integer FlowInAchannel::DmayerDxxp_numEqns() const { return 8; }
 
   void
   FlowInAchannel::DmayerDxxp_eval(
@@ -211,9 +230,7 @@ namespace FlowInAchannelDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  FlowInAchannel::DlagrangeDxup_numEqns() const
-  { return 4; }
+  integer FlowInAchannel::DlagrangeDxup_numEqns() const { return 4; }
 
   void
   FlowInAchannel::DlagrangeDxup_eval(
@@ -234,59 +251,52 @@ namespace FlowInAchannelDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
   }
 
-  integer
-  FlowInAchannel::DJDx_numEqns() const
-  { return 4; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer FlowInAchannel::IPOPT_hess_numRows() const { return 4; }
+  integer FlowInAchannel::IPOPT_hess_numCols() const { return 4; }
+  integer FlowInAchannel::IPOPT_hess_nnz()     const { return 4; }
 
   void
-  FlowInAchannel::DJDx_eval(
-    NodeType const     & NODE__,
+  FlowInAchannel::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 1   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 0   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  FlowInAchannel::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    result__[ 2   ] = 0;
-    result__[ 3   ] = 0;
+    real_type t3   = L__[iL_lambda4__xo] * ModelPars[iM_R];
+    result__[ 0   ] = -t3;
+    result__[ 1   ] = t3;
+    result__[ 2   ] = result__[1];
+    result__[ 3   ] = result__[0];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  FlowInAchannel::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  FlowInAchannel::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  FlowInAchannel::DJDu_numEqns() const
-  { return 0; }
-
-  void
-  FlowInAchannel::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 4, i_segment );
   }
 
   /*\
@@ -319,9 +329,7 @@ namespace FlowInAchannelDefine {
    |              |___/
   \*/
 
-  integer
-  FlowInAchannel::segmentLink_numEqns() const
-  { return 0; }
+  integer FlowInAchannel::segmentLink_numEqns() const { return 0; }
 
   void
   FlowInAchannel::segmentLink_eval(
@@ -335,17 +343,9 @@ namespace FlowInAchannelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  FlowInAchannel::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  FlowInAchannel::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  FlowInAchannel::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer FlowInAchannel::DsegmentLinkDxp_numRows() const { return 0; }
+  integer FlowInAchannel::DsegmentLinkDxp_numCols() const { return 0; }
+  integer FlowInAchannel::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   FlowInAchannel::DsegmentLinkDxp_pattern(
@@ -375,9 +375,7 @@ namespace FlowInAchannelDefine {
    |                 |_|
   \*/
 
-  integer
-  FlowInAchannel::jump_numEqns() const
-  { return 8; }
+  integer FlowInAchannel::jump_numEqns() const { return 8; }
 
   void
   FlowInAchannel::jump_eval(
@@ -409,24 +407,12 @@ namespace FlowInAchannelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  FlowInAchannel::DjumpDxlxlp_numRows() const
-  { return 8; }
-
-  integer
-  FlowInAchannel::DjumpDxlxlp_numCols() const
-  { return 16; }
-
-  integer
-  FlowInAchannel::DjumpDxlxlp_nnz() const
-  { return 16; }
+  integer FlowInAchannel::DjumpDxlxlp_numRows() const { return 8; }
+  integer FlowInAchannel::DjumpDxlxlp_numCols() const { return 16; }
+  integer FlowInAchannel::DjumpDxlxlp_nnz()     const { return 16; }
 
   void
-  FlowInAchannel::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  FlowInAchannel::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 8   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -444,6 +430,7 @@ namespace FlowInAchannelDefine {
     iIndex[14] = 7   ; jIndex[14] = 7   ;
     iIndex[15] = 7   ; jIndex[15] = 15  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -492,9 +479,7 @@ namespace FlowInAchannelDefine {
    |                                                    |___/
   \*/
 
-  integer
-  FlowInAchannel::post_numEqns() const
-  { return 0; }
+  integer FlowInAchannel::post_numEqns() const { return 0; }
 
   void
   FlowInAchannel::post_eval(
@@ -508,9 +493,7 @@ namespace FlowInAchannelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  FlowInAchannel::integrated_post_numEqns() const
-  { return 0; }
+  integer FlowInAchannel::integrated_post_numEqns() const { return 0; }
 
   void
   FlowInAchannel::integrated_post_eval(

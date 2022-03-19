@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham.cc                                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -93,8 +93,12 @@ namespace BrysonDenhamDefine {
     nullptr
   };
 
-  char const *namesConstraint1D[numConstraint1D+1] = {
+  char const *namesConstraintLT[numConstraintLT+1] = {
     "X1bound",
+    nullptr
+  };
+
+  char const *namesConstraint1D[numConstraint1D+1] = {
     nullptr
   };
 
@@ -121,14 +125,15 @@ namespace BrysonDenhamDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   BrysonDenham::BrysonDenham(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
-  // Constraints 1D
+  // Constraints LT
   , X1bound("X1bound")
+  // Constraints 1D
   // Constraints 2D
   // User classes
   {
@@ -306,7 +311,7 @@ namespace BrysonDenhamDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    m_console->message("\nConstraints 1D\n",msg_level);
+    m_console->message("\nConstraints LT\n",msg_level);
     mstr.str("");
     X1bound.info(mstr);
     m_console->message(mstr.str(),msg_level);

@@ -25,11 +25,11 @@ Segment N.0: s0 = 0 length = 1 npts = 101 no data set
 END Mesh[mesh]
 INFO CLASS = BangBangFtmin
   #nodes      = 101
-  dim         = u = 1, q = 1, x = 2, p = 1, omega = 4, bc = 4, full_bc = 8
-  BC          = Inital = 4, Final = 4, Cyclic = 0
-  OMEGA       = Inital = 2, Final = 2, Cyclic = 0
-  total       = nZ = 409, UC = 100, Q = 101
-  index start = omega = 404, p = 408
+  dim         = u=1, q=1, x=2, p=1, omega=4, bc=4, full_bc=8
+  BC          = Inital=4, Final=4, Cyclic=0
+  OMEGA       = Inital=2, Final=2, Cyclic=0
+  total       = nZ=409, UC=100, Q=101
+  index start = omega=404, p=408
   FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
@@ -41,23 +41,25 @@ Used threads:         15
 
 NewtonDumped --- start iterations ---
 Failed check on parameter: 0 < T
-fail 0 < -38.57921666249993
+fail 0 < -38.99920874999993
 Failed check on parameter: 0 < T
-fail 0 < -18.789608331249966
+fail 0 < -18.999604374999965
 Failed check on parameter: 0 < T
-fail 0 < -1.4737010414062457
+fail 0 < -1.4999505468749956
 Failed check on parameter: 0 < T
-fail 0 < -0.23685052070312285
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
-[  1, 7] ( 0.00978  ,  0.0105  ) [    11    ,   10.9   ] 0.00625    [0:0:0:0:1:0:0]
+fail 0 < -0.2499752734374978
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 7] ( 0.00978  ,  0.0105  ) [   11.2   ,    11    ] 0.00625    [0:0:0:0:1:0:0:4:0:0:0:0]
 Failed check on parameter: 0 < T
-fail 0 < -0.07336802271246656
-[  2, 7] (  0.0105  ,  0.0124  ) [   1.26   ,   1.11   ] 0.0648     [3:0:0:0:1:0:0]
-[  3, 1] (  0.0124  , 0.00664  ) [  0.533   ,  0.172   ] 1          [0:0:0:0:0:0:0]
-[  4, 1] ( 0.00664  , 0.000916 ) [  0.195   ,  0.0533  ] 1          [0:0:0:0:0:0:0]
-[  5, 1] ( 0.000916 , 6.09e-05 ) [  0.0256  , 0.00178  ] 1          [0:0:0:0:0:0:0]
-[  6, 1] ( 6.09e-05 , 2.07e-07 ) [  0.002   , 6.39e-06 ] 1          [0:0:0:0:0:0:0]
-[  7, 1] ( 2.07e-07 , 1.11e-12 ) [ 6.42e-06 , 3.38e-11 ] 1          [0:0:0:0:0:0:0]
+fail 0 < -0.06679896526534423
+[  2, 7] (  0.0105  ,  0.0124  ) [   1.26   ,   1.11   ] 0.0648     [3:0:0:0:1:0:0:1:0:0:0:0]
+[  3, 1] (  0.0124  , 0.00665  ) [  0.535   ,  0.173   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 1] ( 0.00665  , 0.000945 ) [  0.196   ,  0.0529  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 1] ( 0.000945 , 5.85e-05 ) [  0.0255  , 0.00174  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 1] ( 5.85e-05 ,  2e-07   ) [ 0.00195  , 6.23e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  7, 1] (  2e-07   ,  3e-11   ) [ 6.26e-06 , 3.71e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  8, 2] (  3e-11   , 2.73e-12 ) [ 3.71e-09 , 3.37e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 2] ( 2.73e-12 , 2.49e-13 ) [ 3.37e-10 , 3.1e-11  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -74,22 +76,22 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
 ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 4.19[ms]      timeout        = 0 [ms]
-iteration      = 7             tolerance      = 1e-09
+Elapsed Time   = 5.79[ms]      timeout        = 0 [ms]
+iteration      = 9             tolerance      = 1e-09
 max iterations = 300           N. Equations   = 409
 max acc. iter. = 800           N. System pars = 100
-Converged      = YES           Memory Used    = 66Kb (+73bytes)
+Converged      = YES           Memory Used    = 68Kb (+47bytes)
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 15            Jacobian       = 7
-Factorization  = 7             Inversion      = 21
+Function       = 19            Jacobian       = 9
+Factorization  = 9             Inversion      = 27
 ........................... last residuals ...........................
-last ||f||_inf = 7.9775e-11    last ||d||_inf = 1.2237e-10
-last ||f||_1   = 1.1073e-12    last ||d||_1   = 3.3847e-11
-last ||f||_2   = 4.2601e-12    last ||d||_2   = 6.169e-11
+last ||f||_inf = 9.8272e-11    last ||d||_inf = 1.1575e-10
+last ||f||_1   = 2.4918e-13    last ||d||_1   = 3.1016e-11
+last ||f||_2   = 4.8593e-12    last ||d||_2   = 4.6933e-11
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
@@ -103,5 +105,5 @@ Check Controls End
 target [Lagrange,Mayer]       = [ 0, 2.83 ]
 [Penalties/Barriers,Controls] = [ 0, 0.00283 ]
 Optimization parameters:
-T: 2.82984192829904124
+T: 2.82984192826145131
 All Done Folks!

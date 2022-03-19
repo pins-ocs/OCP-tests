@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -110,6 +110,7 @@ namespace CrossroadDefine {
     "s_i",
     "v_f",
     "v_i",
+    "v_max",
     "wJ",
     "wT",
     "alat_max",
@@ -119,10 +120,15 @@ namespace CrossroadDefine {
     nullptr
   };
 
-  char const *namesConstraint1D[numConstraint1D+1] = {
+  char const *namesConstraintLT[numConstraintLT+1] = {
     "Tpositive",
     "AccBound",
-    "VelBound",
+    "VelBound_min",
+    "VelBound_max",
+    nullptr
+  };
+
+  char const *namesConstraint1D[numConstraint1D+1] = {
     nullptr
   };
 
@@ -152,17 +158,19 @@ namespace CrossroadDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   Crossroad::Crossroad(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
   , jerkControl("jerkControl")
-  // Constraints 1D
+  // Constraints LT
   , Tpositive("Tpositive")
   , AccBound("AccBound")
-  , VelBound("VelBound")
+  , VelBound_min("VelBound_min")
+  , VelBound_max("VelBound_max")
+  // Constraints 1D
   // Constraints 2D
   // User classes
   {
@@ -287,10 +295,16 @@ namespace CrossroadDefine {
     AccBound.setup( gc("AccBound") );
 
     UTILS_ASSERT0(
-      gc.exists("VelBound"),
-      "in Crossroad::setup_classes(gc) missing key: ``VelBound''\n"
+      gc.exists("VelBound_min"),
+      "in Crossroad::setup_classes(gc) missing key: ``VelBound_min''\n"
     );
-    VelBound.setup( gc("VelBound") );
+    VelBound_min.setup( gc("VelBound_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("VelBound_max"),
+      "in Crossroad::setup_classes(gc) missing key: ``VelBound_max''\n"
+    );
+    VelBound_max.setup( gc("VelBound_max") );
 
   }
 
@@ -385,11 +399,12 @@ namespace CrossroadDefine {
     jerkControl.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
-    m_console->message("\nConstraints 1D\n",msg_level);
+    m_console->message("\nConstraints LT\n",msg_level);
     mstr.str("");
     Tpositive.info(mstr);
-    AccBound .info(mstr);
-    VelBound .info(mstr);
+    AccBound.info(mstr);
+    VelBound_min.info(mstr);
+    VelBound_max.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);

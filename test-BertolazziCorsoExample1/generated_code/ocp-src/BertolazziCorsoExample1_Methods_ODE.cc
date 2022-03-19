@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BertolazziCorsoExample1_Methods_ODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,9 +50,7 @@ namespace BertolazziCorsoExample1Define {
    |   \___/|___/|___|
   \*/
 
-  integer
-  BertolazziCorsoExample1::rhs_ode_numEqns() const
-  { return 2; }
+  integer BertolazziCorsoExample1::rhs_ode_numEqns() const { return 2; }
 
   void
   BertolazziCorsoExample1::rhs_ode_eval(
@@ -73,31 +71,23 @@ namespace BertolazziCorsoExample1Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BertolazziCorsoExample1::Drhs_odeDx_numRows() const
-  { return 2; }
-
-  integer
-  BertolazziCorsoExample1::Drhs_odeDx_numCols() const
-  { return 2; }
-
-  integer
-  BertolazziCorsoExample1::Drhs_odeDx_nnz() const
-  { return 1; }
+  integer BertolazziCorsoExample1::Drhs_odeDxup_numRows() const { return 2; }
+  integer BertolazziCorsoExample1::Drhs_odeDxup_numCols() const { return 4; }
+  integer BertolazziCorsoExample1::Drhs_odeDxup_nnz()     const { return 4; }
 
   void
-  BertolazziCorsoExample1::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BertolazziCorsoExample1::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BertolazziCorsoExample1::Drhs_odeDx_sparse(
+  BertolazziCorsoExample1::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -108,90 +98,12 @@ namespace BertolazziCorsoExample1Define {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = P__[iP_T];
+    result__[ 1   ] = X__[iX_v];
+    real_type t2   = 1.0 / ModelPars[iM_mass];
+    result__[ 2   ] = t2 * result__[0];
+    result__[ 3   ] = t2 * U__[iU_F];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BertolazziCorsoExample1::Drhs_odeDp_numRows() const
-  { return 2; }
-
-  integer
-  BertolazziCorsoExample1::Drhs_odeDp_numCols() const
-  { return 1; }
-
-  integer
-  BertolazziCorsoExample1::Drhs_odeDp_nnz() const
-  { return 2; }
-
-  void
-  BertolazziCorsoExample1::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BertolazziCorsoExample1::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_v];
-    result__[ 1   ] = U__[iU_F] / ModelPars[iM_mass];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BertolazziCorsoExample1::Drhs_odeDu_numRows() const
-  { return 2; }
-
-  integer
-  BertolazziCorsoExample1::Drhs_odeDu_numCols() const
-  { return 1; }
-
-  integer
-  BertolazziCorsoExample1::Drhs_odeDu_nnz() const
-  { return 1; }
-
-  void
-  BertolazziCorsoExample1::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BertolazziCorsoExample1::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = P__[iP_T] / ModelPars[iM_mass];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 4, i_segment );
   }
 
   /*\
@@ -201,26 +113,17 @@ namespace BertolazziCorsoExample1Define {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  BertolazziCorsoExample1::A_numRows() const
-  { return 2; }
-
-  integer
-  BertolazziCorsoExample1::A_numCols() const
-  { return 2; }
-
-  integer
-  BertolazziCorsoExample1::A_nnz() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BertolazziCorsoExample1::A_numRows() const { return 2; }
+  integer BertolazziCorsoExample1::A_numCols() const { return 2; }
+  integer BertolazziCorsoExample1::A_nnz()     const { return 2; }
 
   void
-  BertolazziCorsoExample1::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BertolazziCorsoExample1::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

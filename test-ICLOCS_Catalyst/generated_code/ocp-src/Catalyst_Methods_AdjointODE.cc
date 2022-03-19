@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Catalyst_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -55,17 +55,415 @@ using Mechatronix::MeshStd;
 namespace CatalystDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  Catalyst::Hx_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::JPx_numEqns() const { return 2; }
+
+  void
+  Catalyst::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::LTx_numEqns() const { return 2; }
+
+  void
+  Catalyst::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::JUx_numEqns() const { return 2; }
+
+  void
+  Catalyst::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::JPp_numEqns() const { return 0; }
+
+  void
+  Catalyst::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::LTp_numEqns() const { return 0; }
+
+  void
+  Catalyst::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::JUp_numEqns() const { return 0; }
+
+  void
+  Catalyst::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::JPu_numEqns() const { return 1; }
+
+  void
+  Catalyst::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::LTu_numEqns() const { return 1; }
+
+  void
+  Catalyst::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::JUu_numEqns() const { return 1; }
+
+  void
+  Catalyst::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::LTargs_numEqns() const { return 0; }
+
+  void
+  Catalyst::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DJPxDxp_numRows() const { return 2; }
+  integer Catalyst::DJPxDxp_numCols() const { return 2; }
+  integer Catalyst::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  Catalyst::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DLTxDxp_numRows() const { return 2; }
+  integer Catalyst::DLTxDxp_numCols() const { return 2; }
+  integer Catalyst::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  Catalyst::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DJUxDxp_numRows() const { return 2; }
+  integer Catalyst::DJUxDxp_numCols() const { return 2; }
+  integer Catalyst::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  Catalyst::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DJPuDxp_numRows() const { return 1; }
+  integer Catalyst::DJPuDxp_numCols() const { return 2; }
+  integer Catalyst::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  Catalyst::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DLTuDxp_numRows() const { return 1; }
+  integer Catalyst::DLTuDxp_numCols() const { return 2; }
+  integer Catalyst::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  Catalyst::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DJUuDxp_numRows() const { return 1; }
+  integer Catalyst::DJUuDxp_numCols() const { return 2; }
+  integer Catalyst::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  Catalyst::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DJPpDp_numRows() const { return 0; }
+  integer Catalyst::DJPpDp_numCols() const { return 0; }
+  integer Catalyst::DJPpDp_nnz()     const { return 0; }
+
+  void
+  Catalyst::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DLTpDp_numRows() const { return 0; }
+  integer Catalyst::DLTpDp_numCols() const { return 0; }
+  integer Catalyst::DLTpDp_nnz()     const { return 0; }
+
+  void
+  Catalyst::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DJUpDp_numRows() const { return 0; }
+  integer Catalyst::DJUpDp_numCols() const { return 0; }
+  integer Catalyst::DJUpDp_nnz()     const { return 0; }
+
+  void
+  Catalyst::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DLTargsDxup_numRows() const { return 0; }
+  integer Catalyst::DLTargsDxup_numCols() const { return 3; }
+  integer Catalyst::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  Catalyst::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::Hx_numEqns() const { return 2; }
 
   void
   Catalyst::Hx_eval(
@@ -91,27 +489,33 @@ namespace CatalystDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Catalyst::DHxDx_numRows() const
-  { return 2; }
-
-  integer
-  Catalyst::DHxDx_numCols() const
-  { return 2; }
-
-  integer
-  Catalyst::DHxDx_nnz() const
-  { return 0; }
+  integer Catalyst::Hp_numEqns() const { return 0; }
 
   void
-  Catalyst::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  Catalyst::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
   }
 
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Catalyst::DHxDxp_numRows() const { return 2; }
+  integer Catalyst::DHxDxp_numCols() const { return 2; }
+  integer Catalyst::DHxDxp_nnz()     const { return 0; }
+
   void
-  Catalyst::DHxDx_sparse(
+  Catalyst::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Catalyst::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -122,30 +526,18 @@ namespace CatalystDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Catalyst::DHxDp_numRows() const
-  { return 2; }
-
-  integer
-  Catalyst::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  Catalyst::DHxDp_nnz() const
-  { return 0; }
+  integer Catalyst::DHpDp_numRows() const { return 0; }
+  integer Catalyst::DHpDp_numCols() const { return 0; }
+  integer Catalyst::DHpDp_nnz()     const { return 0; }
 
   void
-  Catalyst::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Catalyst::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Catalyst::DHxDp_sparse(
+  Catalyst::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -164,9 +556,9 @@ namespace CatalystDefine {
    |
   \*/
 
-  integer
-  Catalyst::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::Hu_numEqns() const { return 1; }
 
   void
   Catalyst::Hu_eval(
@@ -188,32 +580,19 @@ namespace CatalystDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Catalyst::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  Catalyst::DHuDx_numCols() const
-  { return 2; }
-
-  integer
-  Catalyst::DHuDx_nnz() const
-  { return 2; }
+  integer Catalyst::DHuDxp_numRows() const { return 1; }
+  integer Catalyst::DHuDxp_numCols() const { return 2; }
+  integer Catalyst::DHuDxp_nnz()     const { return 2; }
 
   void
-  Catalyst::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Catalyst::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Catalyst::DHuDx_sparse(
+  Catalyst::DHuDxp_sparse(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -229,98 +608,7 @@ namespace CatalystDefine {
     result__[ 0   ] = -t1 + t2;
     result__[ 1   ] = 10 * t1 - 9 * t2;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Catalyst::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  Catalyst::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  Catalyst::DHuDp_nnz() const
-  { return 0; }
-
-  void
-  Catalyst::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Catalyst::DHuDp_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  Catalyst::Hp_numEqns() const
-  { return 0; }
-
-  void
-  Catalyst::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Catalyst::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  Catalyst::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  Catalyst::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  Catalyst::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Catalyst::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__,"DHuDxp_sparse", 2, i_segment );
   }
 
   /*\
@@ -330,9 +618,10 @@ namespace CatalystDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  Catalyst::eta_numEqns() const
-  { return 2; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::eta_numEqns() const { return 2; }
 
   void
   Catalyst::eta_eval(
@@ -352,62 +641,18 @@ namespace CatalystDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Catalyst::DetaDx_numRows() const
-  { return 2; }
-
-  integer
-  Catalyst::DetaDx_numCols() const
-  { return 2; }
-
-  integer
-  Catalyst::DetaDx_nnz() const
-  { return 0; }
+  integer Catalyst::DetaDxp_numRows() const { return 2; }
+  integer Catalyst::DetaDxp_numCols() const { return 2; }
+  integer Catalyst::DetaDxp_nnz()     const { return 0; }
 
   void
-  Catalyst::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Catalyst::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  Catalyst::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Catalyst::DetaDp_numRows() const
-  { return 2; }
-
-  integer
-  Catalyst::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  Catalyst::DetaDp_nnz() const
-  { return 0; }
 
   void
-  Catalyst::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Catalyst::DetaDp_sparse(
+  Catalyst::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -422,9 +667,9 @@ namespace CatalystDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  Catalyst::nu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Catalyst::nu_numEqns() const { return 2; }
 
   void
   Catalyst::nu_eval(
@@ -444,63 +689,18 @@ namespace CatalystDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Catalyst::DnuDx_numRows() const
-  { return 2; }
-
-  integer
-  Catalyst::DnuDx_numCols() const
-  { return 2; }
-
-  integer
-  Catalyst::DnuDx_nnz() const
-  { return 0; }
+  integer Catalyst::DnuDxp_numRows() const { return 2; }
+  integer Catalyst::DnuDxp_numCols() const { return 2; }
+  integer Catalyst::DnuDxp_nnz()     const { return 0; }
 
   void
-  Catalyst::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Catalyst::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  Catalyst::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Catalyst::DnuDp_numRows() const
-  { return 2; }
-
-  integer
-  Catalyst::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  Catalyst::DnuDp_nnz() const
-  { return 0; }
 
   void
-  Catalyst::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Catalyst::DnuDp_sparse(
+  Catalyst::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

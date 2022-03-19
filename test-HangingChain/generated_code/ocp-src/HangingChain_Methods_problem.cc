@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -91,7 +91,7 @@ namespace HangingChainDefine {
   \*/
 
   real_type
-  HangingChain::penalties_eval(
+  HangingChain::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -102,7 +102,7 @@ namespace HangingChainDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -110,7 +110,7 @@ namespace HangingChainDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  HangingChain::control_penalties_eval(
+  HangingChain::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -121,10 +121,31 @@ namespace HangingChainDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  HangingChain::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -184,9 +205,7 @@ namespace HangingChainDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  HangingChain::DmayerDxxp_numEqns() const
-  { return 4; }
+  integer HangingChain::DmayerDxxp_numEqns() const { return 4; }
 
   void
   HangingChain::DmayerDxxp_eval(
@@ -220,9 +239,7 @@ namespace HangingChainDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  HangingChain::DlagrangeDxup_numEqns() const
-  { return 3; }
+  integer HangingChain::DlagrangeDxup_numEqns() const { return 3; }
 
   void
   HangingChain::DlagrangeDxup_eval(
@@ -244,63 +261,57 @@ namespace HangingChainDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
   }
 
-  integer
-  HangingChain::DJDx_numEqns() const
-  { return 2; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer HangingChain::IPOPT_hess_numRows() const { return 3; }
+  integer HangingChain::IPOPT_hess_numCols() const { return 3; }
+  integer HangingChain::IPOPT_hess_nnz()     const { return 3; }
 
   void
-  HangingChain::DJDx_eval(
-    NodeType const     & NODE__,
+  HangingChain::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 0   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  HangingChain::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
+    real_type t1   = U__[iU_u];
+    real_type t2   = t1 * t1;
+    real_type t3   = t2 + 1;
+    real_type t4   = sqrt(t3);
+    real_type t5   = 1.0 / t4;
+    result__[ 0   ] = t1 * t5 * sigma__;
+    result__[ 1   ] = result__[0];
+    real_type t8   = sigma__ * X__[iX_x];
+    real_type t10  = 1.0 / t4 / t3;
+    real_type t14  = L__[iL_lambda2__xo];
+    result__[ 2   ] = -t2 * t10 * t14 - t2 * t10 * t8 + t5 * t14 + t5 * t8;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HangingChain::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  HangingChain::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HangingChain::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  HangingChain::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 3, i_segment );
   }
 
   /*\
@@ -333,9 +344,7 @@ namespace HangingChainDefine {
    |              |___/
   \*/
 
-  integer
-  HangingChain::segmentLink_numEqns() const
-  { return 0; }
+  integer HangingChain::segmentLink_numEqns() const { return 0; }
 
   void
   HangingChain::segmentLink_eval(
@@ -349,17 +358,9 @@ namespace HangingChainDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  HangingChain::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  HangingChain::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  HangingChain::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer HangingChain::DsegmentLinkDxp_numRows() const { return 0; }
+  integer HangingChain::DsegmentLinkDxp_numCols() const { return 0; }
+  integer HangingChain::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   HangingChain::DsegmentLinkDxp_pattern(
@@ -389,9 +390,7 @@ namespace HangingChainDefine {
    |                 |_|
   \*/
 
-  integer
-  HangingChain::jump_numEqns() const
-  { return 4; }
+  integer HangingChain::jump_numEqns() const { return 4; }
 
   void
   HangingChain::jump_eval(
@@ -419,24 +418,12 @@ namespace HangingChainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HangingChain::DjumpDxlxlp_numRows() const
-  { return 4; }
-
-  integer
-  HangingChain::DjumpDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  HangingChain::DjumpDxlxlp_nnz() const
-  { return 8; }
+  integer HangingChain::DjumpDxlxlp_numRows() const { return 4; }
+  integer HangingChain::DjumpDxlxlp_numCols() const { return 8; }
+  integer HangingChain::DjumpDxlxlp_nnz()     const { return 8; }
 
   void
-  HangingChain::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  HangingChain::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -446,6 +433,7 @@ namespace HangingChainDefine {
     iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
     iIndex[7 ] = 3   ; jIndex[7 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -486,9 +474,7 @@ namespace HangingChainDefine {
    |                                                    |___/
   \*/
 
-  integer
-  HangingChain::post_numEqns() const
-  { return 0; }
+  integer HangingChain::post_numEqns() const { return 0; }
 
   void
   HangingChain::post_eval(
@@ -502,9 +488,7 @@ namespace HangingChainDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  HangingChain::integrated_post_numEqns() const
-  { return 0; }
+  integer HangingChain::integrated_post_numEqns() const { return 0; }
 
   void
   HangingChain::integrated_post_eval(

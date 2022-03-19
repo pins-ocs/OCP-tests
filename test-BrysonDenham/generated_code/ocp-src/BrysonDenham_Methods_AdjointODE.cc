@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -48,17 +48,433 @@ using Mechatronix::MeshStd;
 namespace BrysonDenhamDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  BrysonDenham::Hx_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::JPx_numEqns() const { return 2; }
+
+  void
+  BrysonDenham::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::LTx_numEqns() const { return 2; }
+
+  void
+  BrysonDenham::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_X1bound_D(X__[iX_x] - 1.0 / 9.0);
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::JUx_numEqns() const { return 2; }
+
+  void
+  BrysonDenham::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::JPp_numEqns() const { return 0; }
+
+  void
+  BrysonDenham::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::LTp_numEqns() const { return 0; }
+
+  void
+  BrysonDenham::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::JUp_numEqns() const { return 0; }
+
+  void
+  BrysonDenham::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::JPu_numEqns() const { return 1; }
+
+  void
+  BrysonDenham::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::LTu_numEqns() const { return 1; }
+
+  void
+  BrysonDenham::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::JUu_numEqns() const { return 1; }
+
+  void
+  BrysonDenham::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::LTargs_numEqns() const { return 1; }
+
+  void
+  BrysonDenham::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = X__[iX_x] - 1.0 / 9.0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTargs_eval", 1, i_segment );
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DJPxDxp_numRows() const { return 2; }
+  integer BrysonDenham::DJPxDxp_numCols() const { return 2; }
+  integer BrysonDenham::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  BrysonDenham::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DLTxDxp_numRows() const { return 2; }
+  integer BrysonDenham::DLTxDxp_numCols() const { return 2; }
+  integer BrysonDenham::DLTxDxp_nnz()     const { return 1; }
+
+  void
+  BrysonDenham::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+
+  void
+  BrysonDenham::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_X1bound_DD(X__[iX_x] - 1.0 / 9.0);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTxDxp_sparse", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DJUxDxp_numRows() const { return 2; }
+  integer BrysonDenham::DJUxDxp_numCols() const { return 2; }
+  integer BrysonDenham::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  BrysonDenham::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DJPuDxp_numRows() const { return 1; }
+  integer BrysonDenham::DJPuDxp_numCols() const { return 2; }
+  integer BrysonDenham::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  BrysonDenham::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DLTuDxp_numRows() const { return 1; }
+  integer BrysonDenham::DLTuDxp_numCols() const { return 2; }
+  integer BrysonDenham::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  BrysonDenham::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DJUuDxp_numRows() const { return 1; }
+  integer BrysonDenham::DJUuDxp_numCols() const { return 2; }
+  integer BrysonDenham::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  BrysonDenham::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DJPpDp_numRows() const { return 0; }
+  integer BrysonDenham::DJPpDp_numCols() const { return 0; }
+  integer BrysonDenham::DJPpDp_nnz()     const { return 0; }
+
+  void
+  BrysonDenham::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DLTpDp_numRows() const { return 0; }
+  integer BrysonDenham::DLTpDp_numCols() const { return 0; }
+  integer BrysonDenham::DLTpDp_nnz()     const { return 0; }
+
+  void
+  BrysonDenham::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DJUpDp_numRows() const { return 0; }
+  integer BrysonDenham::DJUpDp_numCols() const { return 0; }
+  integer BrysonDenham::DJUpDp_nnz()     const { return 0; }
+
+  void
+  BrysonDenham::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DLTargsDxup_numRows() const { return 1; }
+  integer BrysonDenham::DLTargsDxup_numCols() const { return 3; }
+  integer BrysonDenham::DLTargsDxup_nnz()     const { return 1; }
+
+  void
+  BrysonDenham::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+
+  void
+  BrysonDenham::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::Hx_numEqns() const { return 2; }
 
   void
   BrysonDenham::Hx_eval(
@@ -73,8 +489,7 @@ namespace BrysonDenhamDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_X1bound_D(1.0 / 9.0 - X__[iX_x]);
-    result__[ 0   ] = -t3;
+    result__[ 0   ] = 0;
     result__[ 1   ] = L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 2, i_segment );
@@ -82,69 +497,55 @@ namespace BrysonDenhamDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BrysonDenham::DHxDx_numRows() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DHxDx_numCols() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DHxDx_nnz() const
-  { return 1; }
+  integer BrysonDenham::Hp_numEqns() const { return 0; }
 
   void
-  BrysonDenham::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-  }
-
-  void
-  BrysonDenham::DHxDx_sparse(
+  BrysonDenham::Hp_eval(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_X1bound_DD(1.0 / 9.0 - X__[iX_x]);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 1, i_segment );
+    // EMPTY
   }
 
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DHxDp_numRows() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DHxDp_nnz() const
-  { return 0; }
+  integer BrysonDenham::DHxDxp_numRows() const { return 2; }
+  integer BrysonDenham::DHxDxp_numCols() const { return 2; }
+  integer BrysonDenham::DHxDxp_nnz()     const { return 0; }
 
   void
-  BrysonDenham::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  BrysonDenham::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DHxDxp_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BrysonDenham::DHpDp_numRows() const { return 0; }
+  integer BrysonDenham::DHpDp_numCols() const { return 0; }
+  integer BrysonDenham::DHpDp_nnz()     const { return 0; }
 
   void
-  BrysonDenham::DHxDp_sparse(
+  BrysonDenham::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BrysonDenham::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -163,9 +564,9 @@ namespace BrysonDenhamDefine {
    |
   \*/
 
-  integer
-  BrysonDenham::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::Hu_numEqns() const { return 1; }
 
   void
   BrysonDenham::Hu_eval(
@@ -185,122 +586,19 @@ namespace BrysonDenhamDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  BrysonDenham::DHuDx_numCols() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DHuDx_nnz() const
-  { return 0; }
+  integer BrysonDenham::DHuDxp_numRows() const { return 1; }
+  integer BrysonDenham::DHuDxp_numCols() const { return 2; }
+  integer BrysonDenham::DHuDxp_nnz()     const { return 0; }
 
   void
-  BrysonDenham::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BrysonDenham::DHuDx_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BrysonDenham::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  BrysonDenham::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DHuDp_nnz() const
-  { return 0; }
 
   void
-  BrysonDenham::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BrysonDenham::DHuDp_sparse(
+  BrysonDenham::DHuDxp_sparse(
     NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  BrysonDenham::Hp_numEqns() const
-  { return 0; }
-
-  void
-  BrysonDenham::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  BrysonDenham::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BrysonDenham::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -315,9 +613,10 @@ namespace BrysonDenhamDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  BrysonDenham::eta_numEqns() const
-  { return 2; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::eta_numEqns() const { return 2; }
 
   void
   BrysonDenham::eta_eval(
@@ -337,62 +636,18 @@ namespace BrysonDenhamDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DetaDx_numRows() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DetaDx_numCols() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DetaDx_nnz() const
-  { return 0; }
+  integer BrysonDenham::DetaDxp_numRows() const { return 2; }
+  integer BrysonDenham::DetaDxp_numCols() const { return 2; }
+  integer BrysonDenham::DetaDxp_nnz()     const { return 0; }
 
   void
-  BrysonDenham::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BrysonDenham::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BrysonDenham::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DetaDp_numRows() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DetaDp_nnz() const
-  { return 0; }
 
   void
-  BrysonDenham::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BrysonDenham::DetaDp_sparse(
+  BrysonDenham::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -407,9 +662,9 @@ namespace BrysonDenhamDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  BrysonDenham::nu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::nu_numEqns() const { return 2; }
 
   void
   BrysonDenham::nu_eval(
@@ -429,63 +684,18 @@ namespace BrysonDenhamDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DnuDx_numRows() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DnuDx_numCols() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DnuDx_nnz() const
-  { return 0; }
+  integer BrysonDenham::DnuDxp_numRows() const { return 2; }
+  integer BrysonDenham::DnuDxp_numCols() const { return 2; }
+  integer BrysonDenham::DnuDxp_nnz()     const { return 0; }
 
   void
-  BrysonDenham::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BrysonDenham::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BrysonDenham::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DnuDp_numRows() const
-  { return 2; }
-
-  integer
-  BrysonDenham::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  BrysonDenham::DnuDp_nnz() const
-  { return 0; }
 
   void
-  BrysonDenham::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BrysonDenham::DnuDp_sparse(
+  BrysonDenham::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

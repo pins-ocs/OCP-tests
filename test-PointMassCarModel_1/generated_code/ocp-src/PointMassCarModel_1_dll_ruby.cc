@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_dll_ruby.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -59,8 +59,8 @@ namespace PointMassCarModel_1Define {
 
   static map< string, PointMassCarModel_1_Problem * > problems;
 
-  static Console    * pConsole = nullptr;
-  static ThreadPool * pTP      = nullptr;
+  static Console * pConsole  = nullptr;
+  static integer   n_threads = std::thread::hardware_concurrency();
 
   /*
   ::  ____        _             _____ _____ ___
@@ -80,7 +80,6 @@ namespace PointMassCarModel_1Define {
   POINTMASSCARMODEL_1_API_DLL
   bool
   PointMassCarModel_1_ocp_setup( char const id[], GenericContainer & gc_data ) {
-    if ( pTP      == nullptr ) pTP      = new ThreadPool(std::thread::hardware_concurrency());
     if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
     map< string, PointMassCarModel_1_Problem * >::iterator it = problems.find(id);
     string error;
@@ -88,7 +87,7 @@ namespace PointMassCarModel_1Define {
     gc_data.get_if_exists( "InfoLevel", infoLevel );
     pConsole->changeLevel( infoLevel );
     if ( it == problems.end() ) {
-      problems[id] = new PointMassCarModel_1_Problem(pTP,pConsole);
+      problems[id] = new PointMassCarModel_1_Problem(n_threads,pConsole);
       return problems[id]->setup(gc_data,error);
     } else {
       return it->second->setup(gc_data,error);

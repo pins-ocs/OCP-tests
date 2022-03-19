@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Speyer_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    ICLOCS_Speyer    model("ICLOCS_Speyer",&TP,&console);
+    ICLOCS_Speyer    model("ICLOCS_Speyer",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -150,14 +150,15 @@ main() {
 
     // Controls: No penalties or barriers constraint defined
 
+    // ConstraintLT: none defined
     // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_Speyer_data.Mesh["s0"] = 0;
-ICLOCS_Speyer_data.Mesh["segments"][0]["n"] = 1000;
 ICLOCS_Speyer_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_Speyer_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

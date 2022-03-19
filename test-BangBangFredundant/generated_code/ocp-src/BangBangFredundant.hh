@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant.hh                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,6 +76,7 @@ namespace BangBangFredundantDefine {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -113,8 +114,11 @@ namespace BangBangFredundantDefine {
     Mechatronix::PenaltyBarrierU aF1Control;
     Mechatronix::PenaltyBarrierU aF2Control;
 
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DLessThan Flim_min;
+    Mechatronix::PenaltyBarrier1DLessThan Flim_max;
+
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrier1DInterval Flim;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -179,9 +183,9 @@ namespace BangBangFredundantDefine {
     BANGBANGFREDUNDANT_API_DLL
     explicit
     BangBangFredundant(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~BangBangFredundant() override;
@@ -243,6 +247,9 @@ namespace BangBangFredundantDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    BANGBANGFREDUNDANT_API_DLL real_type Flim      ( real_type xo___V ) const;
+    BANGBANGFREDUNDANT_API_DLL real_type Flim_D    ( real_type xo___V ) const;
+    BANGBANGFREDUNDANT_API_DLL real_type Flim_DD   ( real_type xo___V ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

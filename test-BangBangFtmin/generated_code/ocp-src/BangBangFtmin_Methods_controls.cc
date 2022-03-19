@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -87,18 +87,19 @@ namespace BangBangFtminDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t6   = UM__[0];
-    real_type t8   = Fcontrol(t6, -1, 1);
-    real_type result__ = (t6 * LM__[1] + LM__[0] * XM__[1] + t8) * P__[iP_T];
+    real_type t2   = P__[iP_T];
+    real_type t8   = UM__[0];
+    real_type t10  = Fcontrol(t8, -1, 1);
+    real_type result__ = t8 * t2 * LM__[1] + XM__[1] * t2 * LM__[0] + t10 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  BangBangFtmin::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFtmin::g_numEqns() const { return 1; }
 
   void
   BangBangFtmin::g_eval(
@@ -126,35 +127,25 @@ namespace BangBangFtminDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = ALIAS_Fcontrol_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = (LM__[1] + t4) * P__[iP_T];
+    real_type t2   = P__[iP_T];
+    real_type t5   = ALIAS_Fcontrol_D_1(UM__[0], -1, 1);
+    result__[ 0   ] = t2 * t5 + t2 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtmin::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  BangBangFtmin::DgDxlxlp_numCols() const
-  { return 9; }
-
-  integer
-  BangBangFtmin::DgDxlxlp_nnz() const
-  { return 3; }
+  integer BangBangFtmin::DgDxlxlp_numRows() const { return 1; }
+  integer BangBangFtmin::DgDxlxlp_numCols() const { return 9; }
+  integer BangBangFtmin::DgDxlxlp_nnz()     const { return 3; }
 
   void
-  BangBangFtmin::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFtmin::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 8   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -193,26 +184,15 @@ namespace BangBangFtminDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtmin::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  BangBangFtmin::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  BangBangFtmin::DgDu_nnz() const
-  { return 1; }
+  integer BangBangFtmin::DgDu_numRows() const { return 1; }
+  integer BangBangFtmin::DgDu_numCols() const { return 1; }
+  integer BangBangFtmin::DgDu_nnz()     const { return 1; }
 
   void
-  BangBangFtmin::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFtmin::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -386,9 +366,7 @@ namespace BangBangFtminDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFtmin::DmDu_numEqns() const
-  { return 1; }
+  integer BangBangFtmin::DmDu_numEqns() const { return 1; }
 
   void
   BangBangFtmin::DmDu_eval(
@@ -411,28 +389,15 @@ namespace BangBangFtminDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFtmin::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  BangBangFtmin::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  BangBangFtmin::DmDuu_nnz() const
-  { return 1; }
+  integer BangBangFtmin::DmDuu_numRows() const { return 1; }
+  integer BangBangFtmin::DmDuu_numCols() const { return 1; }
+  integer BangBangFtmin::DmDuu_nnz()     const { return 1; }
 
   void
-  BangBangFtmin::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFtmin::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BangBangFtmin::DmDuu_sparse(

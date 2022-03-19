@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Methods_ODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -63,9 +63,7 @@ namespace ICLOCS_PathConstrainedDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  ICLOCS_PathConstrained::rhs_ode_numEqns() const
-  { return 2; }
+  integer ICLOCS_PathConstrained::rhs_ode_numEqns() const { return 2; }
 
   void
   ICLOCS_PathConstrained::rhs_ode_eval(
@@ -85,32 +83,22 @@ namespace ICLOCS_PathConstrainedDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_PathConstrained::Drhs_odeDx_numRows() const
-  { return 2; }
-
-  integer
-  ICLOCS_PathConstrained::Drhs_odeDx_numCols() const
-  { return 2; }
-
-  integer
-  ICLOCS_PathConstrained::Drhs_odeDx_nnz() const
-  { return 2; }
+  integer ICLOCS_PathConstrained::Drhs_odeDxup_numRows() const { return 2; }
+  integer ICLOCS_PathConstrained::Drhs_odeDxup_numCols() const { return 3; }
+  integer ICLOCS_PathConstrained::Drhs_odeDxup_nnz()     const { return 3; }
 
   void
-  ICLOCS_PathConstrained::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_PathConstrained::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_PathConstrained::Drhs_odeDx_sparse(
+  ICLOCS_PathConstrained::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -122,81 +110,9 @@ namespace ICLOCS_PathConstrainedDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = -1;
+    result__[ 2   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_PathConstrained::Drhs_odeDp_numRows() const
-  { return 2; }
-
-  integer
-  ICLOCS_PathConstrained::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS_PathConstrained::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  ICLOCS_PathConstrained::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_PathConstrained::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_PathConstrained::Drhs_odeDu_numRows() const
-  { return 2; }
-
-  integer
-  ICLOCS_PathConstrained::Drhs_odeDu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_PathConstrained::Drhs_odeDu_nnz() const
-  { return 1; }
-
-  void
-  ICLOCS_PathConstrained::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_PathConstrained::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 3, i_segment );
   }
 
   /*\
@@ -206,26 +122,17 @@ namespace ICLOCS_PathConstrainedDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  ICLOCS_PathConstrained::A_numRows() const
-  { return 2; }
-
-  integer
-  ICLOCS_PathConstrained::A_numCols() const
-  { return 2; }
-
-  integer
-  ICLOCS_PathConstrained::A_nnz() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_PathConstrained::A_numRows() const { return 2; }
+  integer ICLOCS_PathConstrained::A_numCols() const { return 2; }
+  integer ICLOCS_PathConstrained::A_nnz()     const { return 2; }
 
   void
-  ICLOCS_PathConstrained::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_PathConstrained::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

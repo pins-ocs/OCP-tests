@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Methods_Guess.cc                                       |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -62,10 +62,10 @@ namespace Dadebo1Define {
     X__[ iX_x ] = 1;
     X__[ iX_y ] = 0;
     L__[ iL_lambda2__xo ] = 1;
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 2 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 2 );
+    }
   }
 
   /*\
@@ -105,8 +105,8 @@ namespace Dadebo1Define {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -117,8 +117,8 @@ namespace Dadebo1Define {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -229,9 +229,7 @@ namespace Dadebo1Define {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  Dadebo1::u_guess_numEqns() const
-  { return 1; }
+  integer Dadebo1::u_guess_numEqns() const { return 1; }
 
   void
   Dadebo1::u_guess_eval(

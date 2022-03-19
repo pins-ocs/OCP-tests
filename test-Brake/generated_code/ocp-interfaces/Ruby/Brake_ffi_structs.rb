@@ -3,9 +3,9 @@
 #                                                                          #
 #  file: Brake_ffi_structs.rb                                              #
 #                                                                          #
-#  version: 1.0   date 20/12/2021                                          #
+#  version: 1.0   date 19/3/2022                                           #
 #                                                                          #
-#  Copyright (C) 2021                                                      #
+#  Copyright (C) 2022                                                      #
 #                                                                          #
 #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                              #
@@ -75,10 +75,12 @@ module Brake
 
   class Brake_constraints_params < FFI::Struct
     layout(
-      # 1D constraints
-      :TpositiveSubType,   :index_t,
-      :TpositiveEpsilon,   :data_t,
+      # LT constraints
+      :TpositiveSubType, :index_t,
+      :TpositiveEpsilon, :data_t,
       :TpositiveTolerance, :data_t,
+
+      # 1D constraints
 
       # 2D constraints
 

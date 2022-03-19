@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -107,9 +107,9 @@ namespace BangBangFmoduleDefine {
     return result__;
   }
 
-  integer
-  BangBangFmodule::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::g_numEqns() const { return 2; }
 
   void
   BangBangFmodule::g_eval(
@@ -147,29 +147,18 @@ namespace BangBangFmoduleDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  BangBangFmodule::DgDxlxlp_nnz() const
-  { return 4; }
+  integer BangBangFmodule::DgDxlxlp_numRows() const { return 2; }
+  integer BangBangFmodule::DgDxlxlp_numCols() const { return 8; }
+  integer BangBangFmodule::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  BangBangFmodule::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFmodule::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 3   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -208,27 +197,16 @@ namespace BangBangFmoduleDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DgDu_nnz() const
-  { return 2; }
+  integer BangBangFmodule::DgDu_numRows() const { return 2; }
+  integer BangBangFmodule::DgDu_numCols() const { return 2; }
+  integer BangBangFmodule::DgDu_nnz()     const { return 2; }
 
   void
-  BangBangFmodule::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFmodule::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -421,9 +399,7 @@ namespace BangBangFmoduleDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFmodule::DmDu_numEqns() const
-  { return 2; }
+  integer BangBangFmodule::DmDu_numEqns() const { return 2; }
 
   void
   BangBangFmodule::DmDu_eval(
@@ -451,31 +427,18 @@ namespace BangBangFmoduleDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DmDuu_nnz() const
-  { return 4; }
+  integer BangBangFmodule::DmDuu_numRows() const { return 2; }
+  integer BangBangFmodule::DmDuu_numCols() const { return 2; }
+  integer BangBangFmodule::DmDuu_nnz()     const { return 4; }
 
   void
-  BangBangFmodule::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFmodule::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BangBangFmodule::DmDuu_sparse(

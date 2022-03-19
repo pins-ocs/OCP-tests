@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_ODE.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -90,9 +90,7 @@ namespace FarmerDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  Farmer::rhs_ode_numEqns() const
-  { return 5; }
+  integer Farmer::rhs_ode_numEqns() const { return 5; }
 
   void
   Farmer::rhs_ode_eval(
@@ -117,36 +115,29 @@ namespace FarmerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Farmer::Drhs_odeDx_numRows() const
-  { return 5; }
-
-  integer
-  Farmer::Drhs_odeDx_numCols() const
-  { return 5; }
-
-  integer
-  Farmer::Drhs_odeDx_nnz() const
-  { return 6; }
+  integer Farmer::Drhs_odeDxup_numRows() const { return 5; }
+  integer Farmer::Drhs_odeDxup_numCols() const { return 9; }
+  integer Farmer::Drhs_odeDxup_nnz()     const { return 10; }
 
   void
-  Farmer::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Farmer::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 3   ; jIndex[4 ] = 4   ;
-    iIndex[5 ] = 4   ; jIndex[5 ] = 4   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 6   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 7   ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 4   ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
+    iIndex[9 ] = 4   ; jIndex[9 ] = 8   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Farmer::Drhs_odeDx_sparse(
+  Farmer::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -156,93 +147,22 @@ namespace FarmerDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = -1.0 / ModelPars[iM_tau__1];
-    result__[ 1   ] = -1.0 / ModelPars[iM_tau__2];
-    result__[ 2   ] = -1.0 / ModelPars[iM_tau__3];
-    result__[ 3   ] = 1.0 / ModelPars[iM_tau__4];
-    result__[ 4   ] = -result__[3];
-    result__[ 5   ] = -1.0 / ModelPars[iM_tau__5];
+    real_type t2   = 1.0 / ModelPars[iM_tau__1];
+    result__[ 0   ] = -t2;
+    result__[ 1   ] = t2;
+    real_type t4   = 1.0 / ModelPars[iM_tau__2];
+    result__[ 2   ] = -t4;
+    result__[ 3   ] = t4;
+    real_type t6   = 1.0 / ModelPars[iM_tau__3];
+    result__[ 4   ] = -t6;
+    result__[ 5   ] = t6;
+    result__[ 6   ] = 1.0 / ModelPars[iM_tau__4];
+    result__[ 7   ] = -result__[6];
+    real_type t9   = 1.0 / ModelPars[iM_tau__5];
+    result__[ 8   ] = -t9;
+    result__[ 9   ] = t9;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 6, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Farmer::Drhs_odeDp_numRows() const
-  { return 5; }
-
-  integer
-  Farmer::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  Farmer::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  Farmer::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Farmer::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Farmer::Drhs_odeDu_numRows() const
-  { return 5; }
-
-  integer
-  Farmer::Drhs_odeDu_numCols() const
-  { return 4; }
-
-  integer
-  Farmer::Drhs_odeDu_nnz() const
-  { return 4; }
-
-  void
-  Farmer::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 4   ; jIndex[3 ] = 3   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Farmer::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1.0 / ModelPars[iM_tau__1];
-    result__[ 1   ] = 1.0 / ModelPars[iM_tau__2];
-    result__[ 2   ] = 1.0 / ModelPars[iM_tau__3];
-    result__[ 3   ] = 1.0 / ModelPars[iM_tau__5];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 10, i_segment );
   }
 
   /*\
@@ -252,29 +172,20 @@ namespace FarmerDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  Farmer::A_numRows() const
-  { return 5; }
-
-  integer
-  Farmer::A_numCols() const
-  { return 5; }
-
-  integer
-  Farmer::A_nnz() const
-  { return 5; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Farmer::A_numRows() const { return 5; }
+  integer Farmer::A_numCols() const { return 5; }
+  integer Farmer::A_nnz()     const { return 5; }
 
   void
-  Farmer::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Farmer::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
     iIndex[4 ] = 4   ; jIndex[4 ] = 4   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

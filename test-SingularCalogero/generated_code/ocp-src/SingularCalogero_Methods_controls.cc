@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -96,9 +96,9 @@ namespace SingularCalogeroDefine {
     return result__;
   }
 
-  integer
-  SingularCalogero::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SingularCalogero::g_numEqns() const { return 1; }
 
   void
   SingularCalogero::g_eval(
@@ -131,27 +131,16 @@ namespace SingularCalogeroDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogero::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  SingularCalogero::DgDxlxlp_numCols() const
-  { return 4; }
-
-  integer
-  SingularCalogero::DgDxlxlp_nnz() const
-  { return 2; }
+  integer SingularCalogero::DgDxlxlp_numRows() const { return 1; }
+  integer SingularCalogero::DgDxlxlp_numCols() const { return 4; }
+  integer SingularCalogero::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  SingularCalogero::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularCalogero::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -186,26 +175,15 @@ namespace SingularCalogeroDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogero::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  SingularCalogero::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  SingularCalogero::DgDu_nnz() const
-  { return 1; }
+  integer SingularCalogero::DgDu_numRows() const { return 1; }
+  integer SingularCalogero::DgDu_numCols() const { return 1; }
+  integer SingularCalogero::DgDu_nnz()     const { return 1; }
 
   void
-  SingularCalogero::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularCalogero::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -360,9 +338,7 @@ namespace SingularCalogeroDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularCalogero::DmDu_numEqns() const
-  { return 1; }
+  integer SingularCalogero::DmDu_numEqns() const { return 1; }
 
   void
   SingularCalogero::DmDu_eval(
@@ -384,28 +360,15 @@ namespace SingularCalogeroDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogero::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  SingularCalogero::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  SingularCalogero::DmDuu_nnz() const
-  { return 1; }
+  integer SingularCalogero::DmDuu_numRows() const { return 1; }
+  integer SingularCalogero::DmDuu_numCols() const { return 1; }
+  integer SingularCalogero::DmDuu_nnz()     const { return 1; }
 
   void
-  SingularCalogero::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularCalogero::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   SingularCalogero::DmDuu_sparse(

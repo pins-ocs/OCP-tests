@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_Guess.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -94,16 +94,26 @@
 #define ALIAS_lenSeg_R(___dummy___) segmentRight.ss_length()
 #define ALIAS_lenSeg_L(___dummy___) segmentLeft.ss_length()
 #define ALIAS_lenSeg(___dummy___) segment.ss_length()
-#define ALIAS_ay_limit_DD(__t1) ay_limit.DD( __t1)
-#define ALIAS_ay_limit_D(__t1) ay_limit.D( __t1)
-#define ALIAS_ax_limit_DD(__t1) ax_limit.DD( __t1)
-#define ALIAS_ax_limit_D(__t1) ax_limit.D( __t1)
-#define ALIAS_an_limit_DD(__t1) an_limit.DD( __t1)
-#define ALIAS_an_limit_D(__t1) an_limit.D( __t1)
-#define ALIAS_as_limit_DD(__t1) as_limit.DD( __t1)
-#define ALIAS_as_limit_D(__t1) as_limit.D( __t1)
-#define ALIAS_PathFollowingTolerance_DD(__t1) PathFollowingTolerance.DD( __t1)
-#define ALIAS_PathFollowingTolerance_D(__t1) PathFollowingTolerance.D( __t1)
+#define ALIAS_ay_limit_max_DD(__t1) ay_limit_max.DD( __t1)
+#define ALIAS_ay_limit_max_D(__t1) ay_limit_max.D( __t1)
+#define ALIAS_ay_limit_min_DD(__t1) ay_limit_min.DD( __t1)
+#define ALIAS_ay_limit_min_D(__t1) ay_limit_min.D( __t1)
+#define ALIAS_ax_limit_max_DD(__t1) ax_limit_max.DD( __t1)
+#define ALIAS_ax_limit_max_D(__t1) ax_limit_max.D( __t1)
+#define ALIAS_ax_limit_min_DD(__t1) ax_limit_min.DD( __t1)
+#define ALIAS_ax_limit_min_D(__t1) ax_limit_min.D( __t1)
+#define ALIAS_an_limit_max_DD(__t1) an_limit_max.DD( __t1)
+#define ALIAS_an_limit_max_D(__t1) an_limit_max.D( __t1)
+#define ALIAS_an_limit_min_DD(__t1) an_limit_min.DD( __t1)
+#define ALIAS_an_limit_min_D(__t1) an_limit_min.D( __t1)
+#define ALIAS_as_limit_max_DD(__t1) as_limit_max.DD( __t1)
+#define ALIAS_as_limit_max_D(__t1) as_limit_max.D( __t1)
+#define ALIAS_as_limit_min_DD(__t1) as_limit_min.DD( __t1)
+#define ALIAS_as_limit_min_D(__t1) as_limit_min.D( __t1)
+#define ALIAS_PathFollowingTolerance_max_DD(__t1) PathFollowingTolerance_max.DD( __t1)
+#define ALIAS_PathFollowingTolerance_max_D(__t1) PathFollowingTolerance_max.D( __t1)
+#define ALIAS_PathFollowingTolerance_min_DD(__t1) PathFollowingTolerance_min.DD( __t1)
+#define ALIAS_PathFollowingTolerance_min_D(__t1) PathFollowingTolerance_min.D( __t1)
 #define ALIAS_vLimit_DD(__t1) vLimit.DD( __t1)
 #define ALIAS_vLimit_D(__t1) vLimit.D( __t1)
 #define ALIAS_timePositive_DD(__t1) timePositive.DD( __t1)
@@ -161,10 +171,10 @@ namespace CNOCDefine {
     X__[ iX_an  ] = 0;
     X__[ iX_coV ] = 1.0 / X__[2];
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 7 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 7 );
+    }
   }
 
   /*\
@@ -204,8 +214,8 @@ namespace CNOCDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -216,8 +226,8 @@ namespace CNOCDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -328,9 +338,7 @@ namespace CNOCDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  CNOC::u_guess_numEqns() const
-  { return 2; }
+  integer CNOC::u_guess_numEqns() const { return 2; }
 
   void
   CNOC::u_guess_eval(

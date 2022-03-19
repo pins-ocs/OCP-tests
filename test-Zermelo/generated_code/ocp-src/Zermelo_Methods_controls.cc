@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_controls.cc                                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -87,7 +87,7 @@ namespace ZermeloDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[4];
-    real_type t2   = Tpositive(t1);
+    real_type t2   = Tpositive(-t1);
     real_type t6   = XM__[0];
     real_type t7   = XM__[1];
     real_type t8   = velX(t6, t7);
@@ -103,9 +103,9 @@ namespace ZermeloDefine {
     return result__;
   }
 
-  integer
-  Zermelo::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Zermelo::g_numEqns() const { return 1; }
 
   void
   Zermelo::g_eval(
@@ -140,32 +140,20 @@ namespace ZermeloDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = UM__[0];
-    real_type t6   = cos(t5);
-    real_type t9   = sin(t5);
-    result__[ 0   ] = (t6 * LM__[3] - t9 * LM__[2]) * ModelPars[iM_S] * XM__[4];
+    real_type t6   = sin(t5);
+    real_type t9   = cos(t5);
+    result__[ 0   ] = -(t6 * LM__[2] - t9 * LM__[3]) * ModelPars[iM_S] * XM__[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  Zermelo::DgDxlxlp_numCols() const
-  { return 20; }
-
-  integer
-  Zermelo::DgDxlxlp_nnz() const
-  { return 6; }
+  integer Zermelo::DgDxlxlp_numRows() const { return 1; }
+  integer Zermelo::DgDxlxlp_numCols() const { return 20; }
+  integer Zermelo::DgDxlxlp_nnz()     const { return 6; }
 
   void
-  Zermelo::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Zermelo::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 8   ;
@@ -173,6 +161,7 @@ namespace ZermeloDefine {
     iIndex[4 ] = 0   ; jIndex[4 ] = 17  ;
     iIndex[5 ] = 0   ; jIndex[5 ] = 18  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -210,12 +199,12 @@ namespace ZermeloDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_S];
     real_type t3   = UM__[0];
-    real_type t4   = cos(t3);
-    real_type t7   = sin(t3);
-    result__[ 0   ] = 0.5e0 * (t4 * LM__[3] - t7 * LM__[2]) * t1;
-    real_type t12  = t1 * XM__[4];
-    result__[ 1   ] = -0.5e0 * t7 * t12;
-    result__[ 2   ] = 0.5e0 * t4 * t12;
+    real_type t4   = sin(t3);
+    real_type t7   = cos(t3);
+    result__[ 0   ] = -0.5e0 * (t4 * LM__[2] - t7 * LM__[3]) * t1;
+    real_type t13  = t1 * XM__[4];
+    result__[ 1   ] = -0.5e0 * t4 * t13;
+    result__[ 2   ] = 0.5e0 * t7 * t13;
     result__[ 3   ] = result__[0];
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[2];
@@ -224,26 +213,15 @@ namespace ZermeloDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  Zermelo::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  Zermelo::DgDu_nnz() const
-  { return 1; }
+  integer Zermelo::DgDu_numRows() const { return 1; }
+  integer Zermelo::DgDu_numCols() const { return 1; }
+  integer Zermelo::DgDu_nnz()     const { return 1; }
 
   void
-  Zermelo::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Zermelo::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -280,9 +258,9 @@ namespace ZermeloDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = UM__[0];
-    real_type t6   = sin(t5);
-    real_type t9   = cos(t5);
-    result__[ 0   ] = (-t6 * LM__[3] - t9 * LM__[2]) * ModelPars[iM_S] * XM__[4];
+    real_type t6   = cos(t5);
+    real_type t9   = sin(t5);
+    result__[ 0   ] = -(t6 * LM__[2] + t9 * LM__[3]) * ModelPars[iM_S] * XM__[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -451,7 +429,7 @@ namespace ZermeloDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
-    real_type t2   = Tpositive(t1);
+    real_type t2   = Tpositive(-t1);
     real_type t5   = X__[iX_x];
     real_type t6   = X__[iX_y];
     real_type t7   = velX(t5, t6);
@@ -474,9 +452,7 @@ namespace ZermeloDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Zermelo::DmDu_numEqns() const
-  { return 1; }
+  integer Zermelo::DmDu_numEqns() const { return 1; }
 
   void
   Zermelo::DmDu_eval(
@@ -502,28 +478,15 @@ namespace ZermeloDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Zermelo::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  Zermelo::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  Zermelo::DmDuu_nnz() const
-  { return 1; }
+  integer Zermelo::DmDuu_numRows() const { return 1; }
+  integer Zermelo::DmDuu_numCols() const { return 1; }
+  integer Zermelo::DmDuu_nnz()     const { return 1; }
 
   void
-  Zermelo::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Zermelo::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Zermelo::DmDuu_sparse(

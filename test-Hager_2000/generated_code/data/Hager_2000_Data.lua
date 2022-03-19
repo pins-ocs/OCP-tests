@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_Data.lua                                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -31,6 +31,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -270,6 +272,7 @@ content = {
   -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
+  -- ConstraintLT: none defined
   -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
@@ -282,8 +285,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 100,
+        length = 1,
       },
     },
   },

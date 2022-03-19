@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad.hh                                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,6 +76,7 @@ namespace CrossroadDefine {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -107,15 +108,18 @@ namespace CrossroadDefine {
   class Crossroad : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[17];
+    real_type ModelPars[18];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU jerkControl;
 
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DLessThan Tpositive;
+    Mechatronix::PenaltyBarrier1DLessThan AccBound;
+    Mechatronix::PenaltyBarrier1DLessThan VelBound_min;
+    Mechatronix::PenaltyBarrier1DLessThan VelBound_max;
+
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrier1DGreaterThan Tpositive;
-    Mechatronix::PenaltyBarrier1DGreaterThan AccBound;
-    Mechatronix::PenaltyBarrier1DInterval VelBound;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -179,9 +183,9 @@ namespace CrossroadDefine {
     CROSSROAD_API_DLL
     explicit
     Crossroad(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~Crossroad() override;
@@ -246,6 +250,9 @@ namespace CrossroadDefine {
     CROSSROAD_API_DLL real_type kappa         ( real_type xo__s ) const;
     CROSSROAD_API_DLL real_type kappa_D       ( real_type xo__s ) const;
     CROSSROAD_API_DLL real_type kappa_DD      ( real_type xo__s ) const;
+    CROSSROAD_API_DLL real_type VelBound      ( real_type xo___V ) const;
+    CROSSROAD_API_DLL real_type VelBound_D    ( real_type xo___V ) const;
+    CROSSROAD_API_DLL real_type VelBound_DD   ( real_type xo___V ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

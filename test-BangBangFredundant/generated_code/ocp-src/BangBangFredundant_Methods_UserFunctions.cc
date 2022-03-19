@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_UserFunctions.cc                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,6 +17,7 @@
 
 #include "BangBangFredundant.hh"
 #include "BangBangFredundant_Pars.hh"
+#include <cmath>
 
 using namespace std;
 using namespace MechatronixLoad;
@@ -50,8 +51,10 @@ using Mechatronix::MeshStd;
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
-#define ALIAS_Flim_DD(__t1) Flim.DD( __t1)
-#define ALIAS_Flim_D(__t1) Flim.D( __t1)
+#define ALIAS_Flim_max_DD(__t1) Flim_max.DD( __t1)
+#define ALIAS_Flim_max_D(__t1) Flim_max.D( __t1)
+#define ALIAS_Flim_min_DD(__t1) Flim_min.DD( __t1)
+#define ALIAS_Flim_min_D(__t1) Flim_min.D( __t1)
 #define ALIAS_aF2Control_D_3(__t1, __t2, __t3) aF2Control.D_3( __t1, __t2, __t3)
 #define ALIAS_aF2Control_D_2(__t1, __t2, __t3) aF2Control.D_2( __t1, __t2, __t3)
 #define ALIAS_aF2Control_D_1(__t1, __t2, __t3) aF2Control.D_1( __t1, __t2, __t3)
@@ -73,6 +76,89 @@ using Mechatronix::MeshStd;
 
 
 namespace BangBangFredundantDefine {
+  using std::acos;
+  using std::acosh;
+  using std::asin;
+  using std::asinh;
+  using std::atan;
+  using std::atan2;
+  using std::atanh;
+  using std::cbrt;
+  using std::ceil;
+  using std::abs;
+  using std::cos;
+  using std::cosh;
+  using std::exp;
+  using std::exp2;
+  using std::expm1;
+  using std::floor;
+  using std::log;
+  using std::log10;
+  using std::log1p;
+  using std::log2;
+  using std::logb;
+  using std::pow;
+  using std::hypot;
+  using std::floor;
+  using std::round;
+  using std::sin;
+  using std::sinh;
+  using std::sqrt;
+  using std::tan;
+  using std::tanh;
+  using std::trunc;
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  real_type
+  BangBangFredundant::Flim( real_type xo___V ) const {
+    real_type t2   = Flim_min(-1 - xo___V);
+    real_type t4   = Flim_min(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Flim( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  BangBangFredundant::Flim_D( real_type xo___V ) const {
+    real_type t2   = ALIAS_Flim_min_D(-1 - xo___V);
+    real_type t4   = ALIAS_Flim_min_D(xo___V - 1);
+    real_type result__ = -t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Flim_D( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  BangBangFredundant::Flim_DD( real_type xo___V ) const {
+    real_type t2   = ALIAS_Flim_min_DD(-1 - xo___V);
+    real_type t4   = ALIAS_Flim_min_DD(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_Flim_DD( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
 }
 
 // EOF: BangBangFredundant_Methods_UserFunctions.cc

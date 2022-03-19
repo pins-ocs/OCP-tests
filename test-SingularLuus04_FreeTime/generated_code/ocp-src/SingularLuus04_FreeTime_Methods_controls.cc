@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_controls.cc                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -92,19 +92,19 @@ namespace SingularLuus04_FreeTimeDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[3];
-    real_type t6   = UM__[0];
-    real_type t14  = XM__[0] * XM__[0];
-    real_type t15  = uControl(t6, -1, 1);
-    real_type result__ = (ModelPars[iM_theta] * t1 + t6 * LM__[2] + LM__[0] * XM__[1] + LM__[1] * XM__[2] + t14 + t15) * t1;
+    real_type t3   = XM__[0] * XM__[0];
+    real_type t18  = UM__[0];
+    real_type t20  = uControl(t18, -1, 1);
+    real_type result__ = (ModelPars[iM_theta] * t1 + t3) * t1 + XM__[1] * t1 * LM__[0] + XM__[2] * t1 * LM__[1] + t18 * t1 * LM__[2] + t20 * t1;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  SingularLuus04_FreeTime::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SingularLuus04_FreeTime::g_numEqns() const { return 1; }
 
   void
   SingularLuus04_FreeTime::g_eval(
@@ -136,36 +136,26 @@ namespace SingularLuus04_FreeTimeDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = (LM__[2] + t4) * XM__[3];
+    real_type t2   = XM__[3];
+    real_type t5   = ALIAS_uControl_D_1(UM__[0], -1, 1);
+    result__[ 0   ] = t5 * t2 + t2 * LM__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  SingularLuus04_FreeTime::DgDxlxlp_numCols() const
-  { return 16; }
-
-  integer
-  SingularLuus04_FreeTime::DgDxlxlp_nnz() const
-  { return 4; }
+  integer SingularLuus04_FreeTime::DgDxlxlp_numRows() const { return 1; }
+  integer SingularLuus04_FreeTime::DgDxlxlp_numCols() const { return 16; }
+  integer SingularLuus04_FreeTime::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  SingularLuus04_FreeTime::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularLuus04_FreeTime::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 11  ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 14  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -209,26 +199,15 @@ namespace SingularLuus04_FreeTimeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  SingularLuus04_FreeTime::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  SingularLuus04_FreeTime::DgDu_nnz() const
-  { return 1; }
+  integer SingularLuus04_FreeTime::DgDu_numRows() const { return 1; }
+  integer SingularLuus04_FreeTime::DgDu_numCols() const { return 1; }
+  integer SingularLuus04_FreeTime::DgDu_nnz()     const { return 1; }
 
   void
-  SingularLuus04_FreeTime::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularLuus04_FreeTime::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -417,11 +396,11 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t1   = X__[iX_T];
     real_type t2   = U__[iU_u];
     real_type t3   = uControl(t2, -1, 1);
-    real_type t9   = pow(-t1 * X__[iX_y] + V__[0], 2);
-    real_type t14  = pow(-t1 * X__[iX_z] + V__[1], 2);
-    real_type t18  = pow(-t1 * t2 + V__[2], 2);
+    real_type t9   = pow(-X__[iX_y] * t1 + V__[0], 2);
+    real_type t14  = pow(-X__[iX_z] * t1 + V__[1], 2);
+    real_type t18  = pow(-t2 * t1 + V__[2], 2);
     real_type t20  = V__[3] * V__[3];
-    real_type result__ = t1 * t3 + t14 + t18 + t20 + t9;
+    real_type result__ = t3 * t1 + t14 + t18 + t20 + t9;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -430,9 +409,7 @@ namespace SingularLuus04_FreeTimeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularLuus04_FreeTime::DmDu_numEqns() const
-  { return 1; }
+  integer SingularLuus04_FreeTime::DmDu_numEqns() const { return 1; }
 
   void
   SingularLuus04_FreeTime::DmDu_eval(
@@ -449,34 +426,21 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t1   = X__[iX_T];
     real_type t2   = U__[iU_u];
     real_type t3   = ALIAS_uControl_D_1(t2, -1, 1);
-    result__[ 0   ] = t1 * t3 - 2 * t1 * (-t1 * t2 + V__[2]);
+    result__[ 0   ] = t3 * t1 - 2 * t1 * (-t2 * t1 + V__[2]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularLuus04_FreeTime::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  SingularLuus04_FreeTime::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  SingularLuus04_FreeTime::DmDuu_nnz() const
-  { return 1; }
+  integer SingularLuus04_FreeTime::DmDuu_numRows() const { return 1; }
+  integer SingularLuus04_FreeTime::DmDuu_numCols() const { return 1; }
+  integer SingularLuus04_FreeTime::DmDuu_nnz()     const { return 1; }
 
   void
-  SingularLuus04_FreeTime::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularLuus04_FreeTime::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   SingularLuus04_FreeTime::DmDuu_sparse(

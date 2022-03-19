@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: HangingChain_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 20/12/2021                                       #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
-#  Copyright (C) 2021                                                   #
+#  Copyright (C) 2022                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-a  = 1
 b  = 3
+a  = 1
 u0 = b-a
 L0 = (u0**2+1)**(1/2.0)
 L  = L0
@@ -29,13 +29,15 @@ L  = L0
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = true
+  data.Debug = false
 
   # Enable doctor
   data.Doctor = false
 
   # Level of message
   data.InfoLevel = 4
+
+  data.Use_control_penalties_in_adjoint_equations = false
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -265,12 +267,12 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
+    :L => L,
 
     # Guess Parameters
     :u0 => u0,
 
     # Boundary Conditions
-    :L => L,
     :a => a,
     :b => b,
 
@@ -310,6 +312,7 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
+  # ConstraintLT: none defined
   # Constraint1D: none defined
   # Constraint2D: none defined
 
@@ -326,8 +329,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 400,
+        :length => 1,
       },
     ],
   };

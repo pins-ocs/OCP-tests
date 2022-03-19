@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau.cc                                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -91,7 +91,8 @@ namespace BangBangFtauDefine {
     "vsTpositive",
     "vsBpositive",
     "vsTmax",
-    "vsTBInterval",
+    "vsTBInterval_min",
+    "vsTBInterval_max",
     "F",
     "clipF",
     nullptr
@@ -111,11 +112,16 @@ namespace BangBangFtauDefine {
     nullptr
   };
 
-  char const *namesConstraint1D[numConstraint1D+1] = {
+  char const *namesConstraintLT[numConstraintLT+1] = {
     "vsTpositive",
     "vsBpositive",
     "vsTmax",
-    "vsTBInterval",
+    "vsTBInterval_min",
+    "vsTBInterval_max",
+    nullptr
+  };
+
+  char const *namesConstraint1D[numConstraint1D+1] = {
     nullptr
   };
 
@@ -143,17 +149,19 @@ namespace BangBangFtauDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   BangBangFtau::BangBangFtau(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
-  // Constraints 1D
+  // Constraints LT
   , vsTpositive("vsTpositive")
   , vsBpositive("vsBpositive")
   , vsTmax("vsTmax")
-  , vsTBInterval("vsTBInterval")
+  , vsTBInterval_min("vsTBInterval_min")
+  , vsTBInterval_max("vsTBInterval_max")
+  // Constraints 1D
   // Constraints 2D
   // User classes
   {
@@ -284,10 +292,16 @@ namespace BangBangFtauDefine {
     vsTmax.setup( gc("vsTmax") );
 
     UTILS_ASSERT0(
-      gc.exists("vsTBInterval"),
-      "in BangBangFtau::setup_classes(gc) missing key: ``vsTBInterval''\n"
+      gc.exists("vsTBInterval_min"),
+      "in BangBangFtau::setup_classes(gc) missing key: ``vsTBInterval_min''\n"
     );
-    vsTBInterval.setup( gc("vsTBInterval") );
+    vsTBInterval_min.setup( gc("vsTBInterval_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("vsTBInterval_max"),
+      "in BangBangFtau::setup_classes(gc) missing key: ``vsTBInterval_max''\n"
+    );
+    vsTBInterval_max.setup( gc("vsTBInterval_max") );
 
   }
 
@@ -383,12 +397,13 @@ namespace BangBangFtauDefine {
     int msg_level = 3;
     ostringstream mstr;
 
-    m_console->message("\nConstraints 1D\n",msg_level);
+    m_console->message("\nConstraints LT\n",msg_level);
     mstr.str("");
-    vsTpositive .info(mstr);
-    vsBpositive .info(mstr);
-    vsTmax      .info(mstr);
-    vsTBInterval.info(mstr);
+    vsTpositive.info(mstr);
+    vsBpositive.info(mstr);
+    vsTmax.info(mstr);
+    vsTBInterval_min.info(mstr);
+    vsTBInterval_max.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -65,9 +65,7 @@ namespace TwoPhaseSchwartzDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  TwoPhaseSchwartz::rhs_ode_numEqns() const
-  { return 4; }
+  integer TwoPhaseSchwartz::rhs_ode_numEqns() const { return 4; }
 
   void
   TwoPhaseSchwartz::rhs_ode_eval(
@@ -93,36 +91,27 @@ namespace TwoPhaseSchwartzDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoPhaseSchwartz::Drhs_odeDx_numRows() const
-  { return 4; }
-
-  integer
-  TwoPhaseSchwartz::Drhs_odeDx_numCols() const
-  { return 4; }
-
-  integer
-  TwoPhaseSchwartz::Drhs_odeDx_nnz() const
-  { return 6; }
+  integer TwoPhaseSchwartz::Drhs_odeDxup_numRows() const { return 4; }
+  integer TwoPhaseSchwartz::Drhs_odeDxup_numCols() const { return 6; }
+  integer TwoPhaseSchwartz::Drhs_odeDxup_nnz()     const { return 8; }
 
   void
-  TwoPhaseSchwartz::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoPhaseSchwartz::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 3   ;
-    iIndex[4 ] = 3   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 3   ; jIndex[5 ] = 3   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 4   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 3   ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 5   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TwoPhaseSchwartz::Drhs_odeDx_sparse(
+  TwoPhaseSchwartz::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -137,88 +126,15 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 1   ] = -0.4e0 * X__[iX_x2] * t1;
     real_type t5   = t1 * t1;
     result__[ 2   ] = -0.1e0 - 0.2e0 * t5;
-    result__[ 3   ] = ModelPars[iM_T2];
+    result__[ 3   ] = 1;
+    result__[ 4   ] = ModelPars[iM_T2];
     real_type t7   = X__[iX_x3];
-    result__[ 4   ] = -0.4e0 * X__[iX_x4] * t7 * result__[3];
+    result__[ 5   ] = -0.4e0 * X__[iX_x4] * t7 * result__[4];
     real_type t12  = t7 * t7;
-    result__[ 5   ] = (-0.1e0 - 0.2e0 * t12) * result__[3];
+    result__[ 6   ] = (-0.1e0 - 0.2e0 * t12) * result__[4];
+    result__[ 7   ] = result__[4];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 6, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoPhaseSchwartz::Drhs_odeDp_numRows() const
-  { return 4; }
-
-  integer
-  TwoPhaseSchwartz::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  TwoPhaseSchwartz::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  TwoPhaseSchwartz::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  TwoPhaseSchwartz::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoPhaseSchwartz::Drhs_odeDu_numRows() const
-  { return 4; }
-
-  integer
-  TwoPhaseSchwartz::Drhs_odeDu_numCols() const
-  { return 2; }
-
-  integer
-  TwoPhaseSchwartz::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  TwoPhaseSchwartz::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 3   ; jIndex[1 ] = 1   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  TwoPhaseSchwartz::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1;
-    result__[ 1   ] = ModelPars[iM_T2];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 8, i_segment );
   }
 
   /*\
@@ -228,28 +144,19 @@ namespace TwoPhaseSchwartzDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  TwoPhaseSchwartz::A_numRows() const
-  { return 4; }
-
-  integer
-  TwoPhaseSchwartz::A_numCols() const
-  { return 4; }
-
-  integer
-  TwoPhaseSchwartz::A_nnz() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoPhaseSchwartz::A_numRows() const { return 4; }
+  integer TwoPhaseSchwartz::A_numCols() const { return 4; }
+  integer TwoPhaseSchwartz::A_nnz()     const { return 4; }
 
   void
-  TwoPhaseSchwartz::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoPhaseSchwartz::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

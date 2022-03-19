@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,8 +50,10 @@ using Mechatronix::MeshStd;
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
-#define ALIAS_Flim_DD(__t1) Flim.DD( __t1)
-#define ALIAS_Flim_D(__t1) Flim.D( __t1)
+#define ALIAS_Flim_max_DD(__t1) Flim_max.DD( __t1)
+#define ALIAS_Flim_max_D(__t1) Flim_max.D( __t1)
+#define ALIAS_Flim_min_DD(__t1) Flim_min.DD( __t1)
+#define ALIAS_Flim_min_D(__t1) Flim_min.D( __t1)
 #define ALIAS_aF2Control_D_3(__t1, __t2, __t3) aF2Control.D_3( __t1, __t2, __t3)
 #define ALIAS_aF2Control_D_2(__t1, __t2, __t3) aF2Control.D_2( __t1, __t2, __t3)
 #define ALIAS_aF2Control_D_1(__t1, __t2, __t3) aF2Control.D_1( __t1, __t2, __t3)
@@ -115,23 +117,26 @@ namespace BangBangFredundantDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = XM__[2] + XM__[3];
-    real_type t5   = Flim(t4);
-    real_type t19  = UM__[0];
-    real_type t22  = UM__[1];
-    real_type t24  = ModelPars[iM_maxAF];
-    real_type t25  = aF1Control(t19, -t24, t24);
-    real_type t26  = aF2Control(t22, -t24, t24);
-    real_type result__ = t19 * LM__[4] + t22 * LM__[5] + t4 * LM__[1] + t5 * ModelPars[iM_w_F] + LM__[0] * XM__[1] + LM__[2] * XM__[4] + LM__[3] * XM__[5] + t25 + t26;
+    real_type t1   = ModelPars[iM_w_F];
+    real_type t2   = XM__[2];
+    real_type t3   = XM__[3];
+    real_type t5   = Flim_min(-1 - t2 - t3);
+    real_type t8   = Flim_max(t2 + t3 - 1);
+    real_type t23  = UM__[0];
+    real_type t26  = UM__[1];
+    real_type t28  = ModelPars[iM_maxAF];
+    real_type t29  = aF1Control(t23, -t28, t28);
+    real_type t30  = aF2Control(t26, -t28, t28);
+    real_type result__ = t5 * t1 + t8 * t1 + LM__[0] * XM__[1] + (t2 + t3) * LM__[1] + LM__[2] * XM__[4] + LM__[3] * XM__[5] + t23 * LM__[4] + t26 * LM__[5] + t29 + t30;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  BangBangFredundant::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::g_numEqns() const { return 2; }
 
   void
   BangBangFredundant::g_eval(
@@ -177,29 +182,18 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFredundant::DgDxlxlp_numCols() const
-  { return 24; }
-
-  integer
-  BangBangFredundant::DgDxlxlp_nnz() const
-  { return 4; }
+  integer BangBangFredundant::DgDxlxlp_numRows() const { return 2; }
+  integer BangBangFredundant::DgDxlxlp_numCols() const { return 24; }
+  integer BangBangFredundant::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  BangBangFredundant::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFredundant::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 10  ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 22  ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 11  ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 23  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -246,27 +240,16 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFredundant::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFredundant::DgDu_nnz() const
-  { return 2; }
+  integer BangBangFredundant::DgDu_numRows() const { return 2; }
+  integer BangBangFredundant::DgDu_numCols() const { return 2; }
+  integer BangBangFredundant::DgDu_nnz()     const { return 2; }
 
   void
-  BangBangFredundant::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFredundant::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -533,21 +516,23 @@ namespace BangBangFredundantDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_F1];
-    real_type t3   = X__[iX_F2];
-    real_type t5   = Flim(t2 + t3);
-    real_type t7   = U__[iU_aF1];
-    real_type t8   = ModelPars[iM_maxAF];
-    real_type t9   = aF1Control(t7, -t8, t8);
-    real_type t10  = U__[iU_aF2];
-    real_type t11  = aF2Control(t10, -t8, t8);
-    real_type t15  = pow(V__[0] - X__[iX_v], 2);
-    real_type t18  = pow(V__[1] - t2 - t3, 2);
-    real_type t22  = pow(V__[2] - X__[iX_vF1], 2);
-    real_type t26  = pow(V__[3] - X__[iX_vF2], 2);
-    real_type t29  = pow(V__[4] - t7, 2);
-    real_type t32  = pow(V__[5] - t10, 2);
-    real_type result__ = t5 * ModelPars[iM_w_F] + t11 + t15 + t18 + t22 + t26 + t29 + t32 + t9;
+    real_type t1   = U__[iU_aF1];
+    real_type t2   = ModelPars[iM_maxAF];
+    real_type t3   = aF1Control(t1, -t2, t2);
+    real_type t4   = U__[iU_aF2];
+    real_type t5   = aF2Control(t4, -t2, t2);
+    real_type t6   = ModelPars[iM_w_F];
+    real_type t7   = X__[iX_F1];
+    real_type t8   = X__[iX_F2];
+    real_type t10  = Flim_min(-1 - t7 - t8);
+    real_type t13  = Flim_max(t7 + t8 - 1);
+    real_type t18  = pow(V__[0] - X__[iX_v], 2);
+    real_type t21  = pow(V__[1] - t7 - t8, 2);
+    real_type t25  = pow(V__[2] - X__[iX_vF1], 2);
+    real_type t29  = pow(V__[3] - X__[iX_vF2], 2);
+    real_type t32  = pow(V__[4] - t1, 2);
+    real_type t35  = pow(V__[5] - t4, 2);
+    real_type result__ = t10 * t6 + t13 * t6 + t18 + t21 + t25 + t29 + t3 + t32 + t35 + t5;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -556,9 +541,7 @@ namespace BangBangFredundantDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFredundant::DmDu_numEqns() const
-  { return 2; }
+  integer BangBangFredundant::DmDu_numEqns() const { return 2; }
 
   void
   BangBangFredundant::DmDu_eval(
@@ -584,29 +567,16 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFredundant::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFredundant::DmDuu_nnz() const
-  { return 2; }
+  integer BangBangFredundant::DmDuu_numRows() const { return 2; }
+  integer BangBangFredundant::DmDuu_numCols() const { return 2; }
+  integer BangBangFredundant::DmDuu_nnz()     const { return 2; }
 
   void
-  BangBangFredundant::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFredundant::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BangBangFredundant::DmDuu_sparse(

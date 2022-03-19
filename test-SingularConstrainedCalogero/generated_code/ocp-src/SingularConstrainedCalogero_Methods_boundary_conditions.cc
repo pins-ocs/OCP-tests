@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_boundary_conditions.cc     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -67,9 +67,7 @@ namespace SingularConstrainedCalogeroDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer
-  SingularConstrainedCalogero::boundaryConditions_numEqns() const
-  { return 2; }
+  integer SingularConstrainedCalogero::boundaryConditions_numEqns() const { return 2; }
 
   void
   SingularConstrainedCalogero::boundaryConditions_eval(
@@ -93,27 +91,16 @@ namespace SingularConstrainedCalogeroDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularConstrainedCalogero::DboundaryConditionsDxxp_numRows() const
-  { return 2; }
-
-  integer
-  SingularConstrainedCalogero::DboundaryConditionsDxxp_numCols() const
-  { return 2; }
-
-  integer
-  SingularConstrainedCalogero::DboundaryConditionsDxxp_nnz() const
-  { return 2; }
+  integer SingularConstrainedCalogero::DboundaryConditionsDxxp_numRows() const { return 2; }
+  integer SingularConstrainedCalogero::DboundaryConditionsDxxp_numCols() const { return 2; }
+  integer SingularConstrainedCalogero::DboundaryConditionsDxxp_nnz()     const { return 2; }
 
   void
-  SingularConstrainedCalogero::DboundaryConditionsDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularConstrainedCalogero::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   void
   SingularConstrainedCalogero::DboundaryConditionsDxxp_sparse(
@@ -138,14 +125,12 @@ namespace SingularConstrainedCalogeroDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularConstrainedCalogero::adjointBC_numEqns() const
-  { return 2; }
+  integer SingularConstrainedCalogero::adjointBC_numEqns() const { return 2; }
 
   void
   SingularConstrainedCalogero::adjointBC_eval(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
@@ -153,44 +138,32 @@ namespace SingularConstrainedCalogeroDefine {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
     real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
-    result__[ 1   ] = OMEGA__[1] - LR__[iL_lambda1__xo];
+    result__[ 0   ] = OMEGA__[0];
+    result__[ 1   ] = OMEGA__[1];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularConstrainedCalogero::DadjointBCDxxp_numRows() const
-  { return 2; }
-
-  integer
-  SingularConstrainedCalogero::DadjointBCDxxp_numCols() const
-  { return 2; }
-
-  integer
-  SingularConstrainedCalogero::DadjointBCDxxp_nnz() const
-  { return 0; }
+  integer SingularConstrainedCalogero::DadjointBCDxxp_numRows() const { return 2; }
+  integer SingularConstrainedCalogero::DadjointBCDxxp_numCols() const { return 2; }
+  integer SingularConstrainedCalogero::DadjointBCDxxp_nnz()     const { return 0; }
 
   void
-  SingularConstrainedCalogero::DadjointBCDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularConstrainedCalogero::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
+
 
   void
   SingularConstrainedCalogero::DadjointBCDxxp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]

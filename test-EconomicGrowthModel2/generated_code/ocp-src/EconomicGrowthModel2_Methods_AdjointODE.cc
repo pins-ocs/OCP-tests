@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_AdjointODE.cc                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -57,17 +57,450 @@ using Mechatronix::MeshStd;
 namespace EconomicGrowthModel2Define {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  EconomicGrowthModel2::Hx_numEqns() const
-  { return 5; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::JPx_numEqns() const { return 5; }
+
+  void
+  EconomicGrowthModel2::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::LTx_numEqns() const { return 5; }
+
+  void
+  EconomicGrowthModel2::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    real_type t2   = ALIAS_Tpositive_D(-X__[iX_T]);
+    result__[ 4   ] = -t2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::JUx_numEqns() const { return 5; }
+
+  void
+  EconomicGrowthModel2::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = uControl(U__[iU_u], 0, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::JPp_numEqns() const { return 0; }
+
+  void
+  EconomicGrowthModel2::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::LTp_numEqns() const { return 0; }
+
+  void
+  EconomicGrowthModel2::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::JUp_numEqns() const { return 0; }
+
+  void
+  EconomicGrowthModel2::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::JPu_numEqns() const { return 1; }
+
+  void
+  EconomicGrowthModel2::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::LTu_numEqns() const { return 1; }
+
+  void
+  EconomicGrowthModel2::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::JUu_numEqns() const { return 1; }
+
+  void
+  EconomicGrowthModel2::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t3   = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    result__[ 0   ] = t3 * X__[iX_T];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::LTargs_numEqns() const { return 1; }
+
+  void
+  EconomicGrowthModel2::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -X__[iX_T];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTargs_eval", 1, i_segment );
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DJPxDxp_numRows() const { return 5; }
+  integer EconomicGrowthModel2::DJPxDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  EconomicGrowthModel2::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  EconomicGrowthModel2::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DLTxDxp_numRows() const { return 5; }
+  integer EconomicGrowthModel2::DLTxDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DLTxDxp_nnz()     const { return 1; }
+
+  void
+  EconomicGrowthModel2::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
+  }
+
+
+  void
+  EconomicGrowthModel2::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_Tpositive_DD(-X__[iX_T]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTxDxp_sparse", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DJUxDxp_numRows() const { return 5; }
+  integer EconomicGrowthModel2::DJUxDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  EconomicGrowthModel2::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  EconomicGrowthModel2::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DJPuDxp_numRows() const { return 1; }
+  integer EconomicGrowthModel2::DJPuDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  EconomicGrowthModel2::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  EconomicGrowthModel2::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DLTuDxp_numRows() const { return 1; }
+  integer EconomicGrowthModel2::DLTuDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  EconomicGrowthModel2::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  EconomicGrowthModel2::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DJUuDxp_numRows() const { return 1; }
+  integer EconomicGrowthModel2::DJUuDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DJUuDxp_nnz()     const { return 1; }
+
+  void
+  EconomicGrowthModel2::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
+  }
+
+
+  void
+  EconomicGrowthModel2::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJUuDxp_sparse", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DJPpDp_numRows() const { return 0; }
+  integer EconomicGrowthModel2::DJPpDp_numCols() const { return 0; }
+  integer EconomicGrowthModel2::DJPpDp_nnz()     const { return 0; }
+
+  void
+  EconomicGrowthModel2::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  EconomicGrowthModel2::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DLTpDp_numRows() const { return 0; }
+  integer EconomicGrowthModel2::DLTpDp_numCols() const { return 0; }
+  integer EconomicGrowthModel2::DLTpDp_nnz()     const { return 0; }
+
+  void
+  EconomicGrowthModel2::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  EconomicGrowthModel2::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DJUpDp_numRows() const { return 0; }
+  integer EconomicGrowthModel2::DJUpDp_numCols() const { return 0; }
+  integer EconomicGrowthModel2::DJUpDp_nnz()     const { return 0; }
+
+  void
+  EconomicGrowthModel2::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  EconomicGrowthModel2::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DLTargsDxup_numRows() const { return 1; }
+  integer EconomicGrowthModel2::DLTargsDxup_numCols() const { return 6; }
+  integer EconomicGrowthModel2::DLTargsDxup_nnz()     const { return 1; }
+
+  void
+  EconomicGrowthModel2::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
+  }
+
+
+  void
+  EconomicGrowthModel2::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::Hx_numEqns() const { return 5; }
 
   void
   EconomicGrowthModel2::Hx_eval(
@@ -98,32 +531,35 @@ namespace EconomicGrowthModel2Define {
     result__[ 2   ] = t7 * t18;
     real_type t19  = L__[iL_lambda3__xo];
     result__[ 3   ] = t7 * t19;
-    real_type t20  = ALIAS_Tpositive_D(t7);
-    real_type t23  = Q(t4, t5);
-    result__[ 4   ] = t23 * t12 + X__[iX_y1] * t18 + X__[iX_y2] * t19 + t23 * t3 + t20;
+    real_type t22  = Q(t4, t5);
+    result__[ 4   ] = t22 * t12 + X__[iX_y1] * t18 + X__[iX_y2] * t19 + t22 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  EconomicGrowthModel2::DHxDx_numRows() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DHxDx_numCols() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DHxDx_nnz() const
-  { return 13; }
+  integer EconomicGrowthModel2::Hp_numEqns() const { return 0; }
 
   void
-  EconomicGrowthModel2::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  EconomicGrowthModel2::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::DHxDxp_numRows() const { return 5; }
+  integer EconomicGrowthModel2::DHxDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DHxDxp_nnz()     const { return 12; }
+
+  void
+  EconomicGrowthModel2::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -136,11 +572,11 @@ namespace EconomicGrowthModel2Define {
     iIndex[9 ] = 4   ; jIndex[9 ] = 1   ;
     iIndex[10] = 4   ; jIndex[10] = 2   ;
     iIndex[11] = 4   ; jIndex[11] = 3   ;
-    iIndex[12] = 4   ; jIndex[12] = 4   ;
   }
 
+
   void
-  EconomicGrowthModel2::DHxDx_sparse(
+  EconomicGrowthModel2::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -178,36 +614,23 @@ namespace EconomicGrowthModel2Define {
     result__[ 9   ] = result__[5];
     result__[ 10  ] = result__[6];
     result__[ 11  ] = result__[7];
-    result__[ 12  ] = ALIAS_Tpositive_DD(t7);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 13, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 12, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DHxDp_numRows() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  EconomicGrowthModel2::DHxDp_nnz() const
-  { return 0; }
+  integer EconomicGrowthModel2::DHpDp_numRows() const { return 0; }
+  integer EconomicGrowthModel2::DHpDp_numCols() const { return 0; }
+  integer EconomicGrowthModel2::DHpDp_nnz()     const { return 0; }
 
   void
-  EconomicGrowthModel2::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  EconomicGrowthModel2::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  EconomicGrowthModel2::DHxDp_sparse(
+  EconomicGrowthModel2::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -226,9 +649,9 @@ namespace EconomicGrowthModel2Define {
    |
   \*/
 
-  integer
-  EconomicGrowthModel2::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::Hu_numEqns() const { return 1; }
 
   void
   EconomicGrowthModel2::Hu_eval(
@@ -244,39 +667,26 @@ namespace EconomicGrowthModel2Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t4   = Q(X__[iX_x1], X__[iX_x2]);
     real_type t6   = X__[iX_T];
-    result__[ 0   ] = t6 * t4 * L__[iL_lambda2__xo] - t6 * t4 * L__[iL_lambda4__xo];
+    result__[ 0   ] = t4 * t6 * L__[iL_lambda2__xo] - t4 * t6 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  EconomicGrowthModel2::DHuDx_numCols() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DHuDx_nnz() const
-  { return 3; }
+  integer EconomicGrowthModel2::DHuDxp_numRows() const { return 1; }
+  integer EconomicGrowthModel2::DHuDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DHuDxp_nnz()     const { return 3; }
 
   void
-  EconomicGrowthModel2::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  EconomicGrowthModel2::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  EconomicGrowthModel2::DHuDx_sparse(
+  EconomicGrowthModel2::DHuDxp_sparse(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -297,100 +707,9 @@ namespace EconomicGrowthModel2Define {
     real_type t11  = Q_D_2(t2, t3);
     result__[ 1   ] = t6 * t11 * t1 - t6 * t11 * t8;
     real_type t16  = Q(t2, t3);
-    result__[ 2   ] = t16 * t1 - t8 * t16;
+    result__[ 2   ] = t16 * t1 - t16 * t8;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  EconomicGrowthModel2::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  EconomicGrowthModel2::DHuDp_nnz() const
-  { return 0; }
-
-  void
-  EconomicGrowthModel2::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  EconomicGrowthModel2::DHuDp_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  EconomicGrowthModel2::Hp_numEqns() const
-  { return 0; }
-
-  void
-  EconomicGrowthModel2::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  EconomicGrowthModel2::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  EconomicGrowthModel2::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  EconomicGrowthModel2::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  EconomicGrowthModel2::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__,"DHuDxp_sparse", 3, i_segment );
   }
 
   /*\
@@ -400,9 +719,10 @@ namespace EconomicGrowthModel2Define {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  EconomicGrowthModel2::eta_numEqns() const
-  { return 5; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::eta_numEqns() const { return 5; }
 
   void
   EconomicGrowthModel2::eta_eval(
@@ -425,62 +745,18 @@ namespace EconomicGrowthModel2Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DetaDx_numRows() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DetaDx_numCols() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DetaDx_nnz() const
-  { return 0; }
+  integer EconomicGrowthModel2::DetaDxp_numRows() const { return 5; }
+  integer EconomicGrowthModel2::DetaDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DetaDxp_nnz()     const { return 0; }
 
   void
-  EconomicGrowthModel2::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  EconomicGrowthModel2::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  EconomicGrowthModel2::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DetaDp_numRows() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  EconomicGrowthModel2::DetaDp_nnz() const
-  { return 0; }
 
   void
-  EconomicGrowthModel2::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  EconomicGrowthModel2::DetaDp_sparse(
+  EconomicGrowthModel2::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -495,9 +771,9 @@ namespace EconomicGrowthModel2Define {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  EconomicGrowthModel2::nu_numEqns() const
-  { return 5; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::nu_numEqns() const { return 5; }
 
   void
   EconomicGrowthModel2::nu_eval(
@@ -520,63 +796,18 @@ namespace EconomicGrowthModel2Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DnuDx_numRows() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DnuDx_numCols() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DnuDx_nnz() const
-  { return 0; }
+  integer EconomicGrowthModel2::DnuDxp_numRows() const { return 5; }
+  integer EconomicGrowthModel2::DnuDxp_numCols() const { return 5; }
+  integer EconomicGrowthModel2::DnuDxp_nnz()     const { return 0; }
 
   void
-  EconomicGrowthModel2::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  EconomicGrowthModel2::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  EconomicGrowthModel2::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DnuDp_numRows() const
-  { return 5; }
-
-  integer
-  EconomicGrowthModel2::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  EconomicGrowthModel2::DnuDp_nnz() const
-  { return 0; }
 
   void
-  EconomicGrowthModel2::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  EconomicGrowthModel2::DnuDp_sparse(
+  EconomicGrowthModel2::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

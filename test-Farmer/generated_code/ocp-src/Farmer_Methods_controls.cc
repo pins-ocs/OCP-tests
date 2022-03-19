@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -124,50 +124,45 @@ namespace FarmerDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[1];
     real_type t2   = XM__[4];
-    real_type t4   = LimitX2X4(0.12e0 - t1 - t2);
-    real_type t5   = XM__[0];
-    real_type t6   = ModelPars[iM_w2];
-    real_type t8   = ModelPars[iM_w3];
-    real_type t9   = ModelPars[iM_w4];
-    real_type t10  = t9 * t8;
-    real_type t13  = XM__[2];
-    real_type t16  = Ptot(QM__[0]);
-    real_type t23  = ModelPars[iM_w1];
-    real_type t26  = pow(-t10 * t6 * t5 + t23 * (-t1 * t10 + t6 * (-t13 * t9 + (t16 * t9 - t2) * t8)), 2);
-    real_type t29  = t23 * t23;
-    real_type t32  = t6 * t6;
-    real_type t34  = t8 * t8;
-    real_type t37  = t9 * t9;
-    real_type t41  = t5 * t5;
-    real_type t43  = t1 * t1;
-    real_type t45  = t13 * t13;
-    real_type t47  = t2 * t2;
-    real_type t50  = UM__[0];
-    real_type t51  = -t5 + t50;
-    real_type t52  = t51 * t51;
-    real_type t55  = UM__[1];
-    real_type t56  = -t1 + t55;
-    real_type t57  = t56 * t56;
-    real_type t60  = UM__[2];
-    real_type t61  = -t13 + t60;
-    real_type t62  = t61 * t61;
-    real_type t65  = UM__[3];
-    real_type t66  = -t2 + t65;
-    real_type t67  = t66 * t66;
-    real_type t99  = x1__oControl(t50, -0.1e-2, 100);
-    real_type t100 = x2__oControl(t55, -0.1e-2, 100);
-    real_type t101 = x3__oControl(t60, -0.1e-2, 100);
-    real_type t102 = x4__oControl(t65, -0.1e-2, 100);
-    real_type result__ = t4 + 1.0 / t37 / t34 / t32 / t29 * ModelPars[iM_wP] * t26 + t41 * t23 + t43 * t6 + t45 * t8 + t47 * t9 + t52 * ModelPars[iM_wJ1] + t57 * ModelPars[iM_wJ2] + t62 * ModelPars[iM_wJ3] + t67 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t51 * LM__[0] + 1.0 / ModelPars[iM_tau__2] * t56 * LM__[1] + 1.0 / ModelPars[iM_tau__3] * t61 * LM__[2] + 1.0 / ModelPars[iM_tau__4] * (t13 - t2) * LM__[3] + 1.0 / ModelPars[iM_tau__5] * t66 * LM__[4] + t99 + t100 + t101 + t102;
+    real_type t4   = LimitX2X4(t1 + t2 - 0.12e0);
+    real_type t6   = ModelPars[iM_w1];
+    real_type t8   = XM__[0];
+    real_type t10  = ModelPars[iM_w2];
+    real_type t13  = ModelPars[iM_w3];
+    real_type t15  = XM__[2];
+    real_type t17  = ModelPars[iM_w4];
+    real_type t21  = Ptot(QM__[0]);
+    real_type t23  = pow(t8 / t6 + t1 / t10 + t15 / t13 + t2 / t17 - t21, 2);
+    real_type t25  = t8 * t8;
+    real_type t27  = t1 * t1;
+    real_type t29  = t15 * t15;
+    real_type t31  = t2 * t2;
+    real_type t34  = UM__[0];
+    real_type t35  = -t8 + t34;
+    real_type t36  = t35 * t35;
+    real_type t39  = UM__[1];
+    real_type t40  = -t1 + t39;
+    real_type t41  = t40 * t40;
+    real_type t44  = UM__[2];
+    real_type t45  = -t15 + t44;
+    real_type t46  = t45 * t45;
+    real_type t49  = UM__[3];
+    real_type t50  = -t2 + t49;
+    real_type t51  = t50 * t50;
+    real_type t83  = x1__oControl(t34, -0.1e-2, 100);
+    real_type t84  = x2__oControl(t39, -0.1e-2, 100);
+    real_type t85  = x3__oControl(t44, -0.1e-2, 100);
+    real_type t86  = x4__oControl(t49, -0.1e-2, 100);
+    real_type result__ = t4 + t23 * ModelPars[iM_wP] + t25 * t6 + t10 * t27 + t29 * t13 + t31 * t17 + t36 * ModelPars[iM_wJ1] + t41 * ModelPars[iM_wJ2] + t46 * ModelPars[iM_wJ3] + t51 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t35 * LM__[0] + 1.0 / ModelPars[iM_tau__2] * t40 * LM__[1] + 1.0 / ModelPars[iM_tau__3] * t45 * LM__[2] - 1.0 / ModelPars[iM_tau__4] * (-t15 + t2) * LM__[3] + 1.0 / ModelPars[iM_tau__5] * t50 * LM__[4] + t83 + t84 + t85 + t86;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  Farmer::g_numEqns() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Farmer::g_numEqns() const { return 4; }
 
   void
   Farmer::g_eval(
@@ -218,24 +213,12 @@ namespace FarmerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Farmer::DgDxlxlp_numRows() const
-  { return 4; }
-
-  integer
-  Farmer::DgDxlxlp_numCols() const
-  { return 20; }
-
-  integer
-  Farmer::DgDxlxlp_nnz() const
-  { return 16; }
+  integer Farmer::DgDxlxlp_numRows() const { return 4; }
+  integer Farmer::DgDxlxlp_numCols() const { return 20; }
+  integer Farmer::DgDxlxlp_nnz()     const { return 16; }
 
   void
-  Farmer::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Farmer::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 10  ;
@@ -253,6 +236,7 @@ namespace FarmerDefine {
     iIndex[14] = 3   ; jIndex[14] = 14  ;
     iIndex[15] = 3   ; jIndex[15] = 19  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -309,29 +293,18 @@ namespace FarmerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Farmer::DgDu_numRows() const
-  { return 4; }
-
-  integer
-  Farmer::DgDu_numCols() const
-  { return 4; }
-
-  integer
-  Farmer::DgDu_nnz() const
-  { return 4; }
+  integer Farmer::DgDu_numRows() const { return 4; }
+  integer Farmer::DgDu_numCols() const { return 4; }
+  integer Farmer::DgDu_nnz()     const { return 4; }
 
   void
-  Farmer::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Farmer::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -633,24 +606,24 @@ namespace FarmerDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_x2];
-    real_type t2   = X__[iX_x4];
-    real_type t4   = LimitX2X4(0.12e0 - t1 - t2);
-    real_type t5   = U__[iU_x1__o];
-    real_type t6   = x1__oControl(t5, -0.1e-2, 100);
-    real_type t7   = U__[iU_x2__o];
-    real_type t8   = x2__oControl(t7, -0.1e-2, 100);
-    real_type t9   = U__[iU_x3__o];
-    real_type t10  = x3__oControl(t9, -0.1e-2, 100);
-    real_type t11  = U__[iU_x4__o];
-    real_type t12  = x4__oControl(t11, -0.1e-2, 100);
-    real_type t20  = pow(V__[0] + 1.0 / ModelPars[iM_tau__1] * (X__[iX_x1] - t5), 2);
-    real_type t27  = pow(V__[1] + 1.0 / ModelPars[iM_tau__2] * (t1 - t7), 2);
+    real_type t1   = U__[iU_x1__o];
+    real_type t2   = x1__oControl(t1, -0.1e-2, 100);
+    real_type t3   = U__[iU_x2__o];
+    real_type t4   = x2__oControl(t3, -0.1e-2, 100);
+    real_type t5   = U__[iU_x3__o];
+    real_type t6   = x3__oControl(t5, -0.1e-2, 100);
+    real_type t7   = U__[iU_x4__o];
+    real_type t8   = x4__oControl(t7, -0.1e-2, 100);
+    real_type t9   = X__[iX_x2];
+    real_type t10  = X__[iX_x4];
+    real_type t12  = LimitX2X4(t9 + t10 - 0.12e0);
+    real_type t20  = pow(V__[0] + 1.0 / ModelPars[iM_tau__1] * (X__[iX_x1] - t1), 2);
+    real_type t27  = pow(V__[1] + 1.0 / ModelPars[iM_tau__2] * (t9 - t3), 2);
     real_type t29  = X__[iX_x3];
-    real_type t35  = pow(V__[2] + 1.0 / ModelPars[iM_tau__3] * (t29 - t9), 2);
-    real_type t42  = pow(V__[3] + 1.0 / ModelPars[iM_tau__4] * (-t29 + t2), 2);
-    real_type t49  = pow(V__[4] + 1.0 / ModelPars[iM_tau__5] * (t2 - t11), 2);
-    real_type result__ = t4 + t6 + t8 + t10 + t12 + t20 + t27 + t35 + t42 + t49;
+    real_type t35  = pow(V__[2] + 1.0 / ModelPars[iM_tau__3] * (t29 - t5), 2);
+    real_type t42  = pow(V__[3] + 1.0 / ModelPars[iM_tau__4] * (-t29 + t10), 2);
+    real_type t49  = pow(V__[4] + 1.0 / ModelPars[iM_tau__5] * (t10 - t7), 2);
+    real_type result__ = t2 + t4 + t6 + t8 + t12 + t20 + t27 + t35 + t42 + t49;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -659,9 +632,7 @@ namespace FarmerDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Farmer::DmDu_numEqns() const
-  { return 4; }
+  integer Farmer::DmDu_numEqns() const { return 4; }
 
   void
   Farmer::DmDu_eval(
@@ -696,31 +667,18 @@ namespace FarmerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Farmer::DmDuu_numRows() const
-  { return 4; }
-
-  integer
-  Farmer::DmDuu_numCols() const
-  { return 4; }
-
-  integer
-  Farmer::DmDuu_nnz() const
-  { return 4; }
+  integer Farmer::DmDuu_numRows() const { return 4; }
+  integer Farmer::DmDuu_numCols() const { return 4; }
+  integer Farmer::DmDuu_nnz()     const { return 4; }
 
   void
-  Farmer::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Farmer::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Farmer::DmDuu_sparse(

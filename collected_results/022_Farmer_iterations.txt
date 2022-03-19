@@ -31,9 +31,9 @@ x4__oControl = {
   size    = 0.001
 }
 
-Constraints 1D
+Constraints LT
 LimitX2X4 = {
-  Type      = GREATER THAN
+  Type      = LESS THAN
   SubType   = WallRegular, h=0.001, epsilon=0.001
   Tolerance = 0.001
   Epsilon   = 0.001
@@ -75,11 +75,11 @@ Model Parameters
 .....................................x40 = 0.001
 INFO CLASS = Farmer
   #nodes      = 401
-  dim         = u = 4, q = 1, x = 5, p = 0, omega = 5, bc = 5, full_bc = 15
-  BC          = Inital = 10, Final = 5, Cyclic = 0
-  OMEGA       = Inital = 5, Final = 0, Cyclic = 0
-  total       = nZ = 4015, UC = 1600, Q = 401
-  index start = omega = 4010, p = 4015
+  dim         = u=4, q=1, x=5, p=0, omega=5, bc=5, full_bc=15
+  BC          = Inital=10, Final=5, Cyclic=0
+  OMEGA       = Inital=5, Final=0, Cyclic=0
+  total       = nZ=4015, UC=1600, Q=401
+  index start = omega=4010, p=4015
   FD jacobian = ANALYTIC
 END INFO
 Solver Master System: CyclicReduction+LU and LastBlock LUPQ
@@ -90,16 +90,16 @@ Used threads:         15
 
 
 NewtonDumped --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad] solverNewtonDumped
-[  1, 2] ( 0.000372 , 3.4e-05  ) [  0.165   ,  0.0133  ] 0.9        [1:0:0:0:0:0:0]
-[  2, 2] ( 3.4e-05  , 3.38e-06 ) [  0.0129  , 0.00129  ] 0.9        [1:0:0:0:0:0:0]
-[  3, 2] ( 3.38e-06 , 3.38e-07 ) [ 0.00129  , 0.000129 ] 0.9        [1:0:0:0:0:0:0]
-[  4, 2] ( 3.38e-07 , 3.38e-08 ) [ 0.000129 , 1.29e-05 ] 0.9        [1:0:0:0:0:0:0]
-[  5, 2] ( 3.38e-08 , 3.38e-09 ) [ 1.29e-05 , 1.29e-06 ] 0.9        [1:0:0:0:0:0:0]
-[  6, 2] ( 3.38e-09 , 3.38e-10 ) [ 1.29e-06 , 1.29e-07 ] 0.9        [1:0:0:0:0:0:0]
-[  7, 2] ( 3.38e-10 , 3.38e-11 ) [ 1.29e-07 , 1.29e-08 ] 0.9        [1:0:0:0:0:0:0]
-[  8, 2] ( 3.38e-11 , 3.38e-12 ) [ 1.29e-08 , 1.29e-09 ] 0.9        [1:0:0:0:0:0:0]
-[  9, 1] ( 3.38e-12 , 1.22e-17 ) [ 1.29e-09 , 8.77e-16 ] 1          [0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 2] ( 0.000372 , 3.4e-05  ) [  0.165   ,  0.0133  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 2] ( 3.4e-05  , 3.38e-06 ) [  0.0129  , 0.00129  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  3, 2] ( 3.38e-06 , 3.38e-07 ) [ 0.00129  , 0.000129 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 2] ( 3.38e-07 , 3.38e-08 ) [ 0.000129 , 1.29e-05 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 2] ( 3.38e-08 , 3.38e-09 ) [ 1.29e-05 , 1.29e-06 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 2] ( 3.38e-09 , 3.38e-10 ) [ 1.29e-06 , 1.29e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  7, 2] ( 3.38e-10 , 3.38e-11 ) [ 1.29e-07 , 1.29e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  8, 2] ( 3.38e-11 , 3.38e-12 ) [ 1.29e-08 , 1.29e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 1] ( 3.38e-12 , 9.74e-18 ) [ 1.29e-09 , 5.31e-17 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -116,11 +116,11 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
 ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 22.1[ms]      timeout        = 0 [ms]
+Elapsed Time   = 43.2[ms]      timeout        = 0 [ms]
 iteration      = 9             tolerance      = 1e-09
 max iterations = 300           N. Equations   = 4015
 max acc. iter. = 800           N. System pars = 1600
-Converged      = YES           Memory Used    = 680Kb (+65bytes)
+Converged      = YES           Memory Used    = 687Kb (+80bytes)
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
@@ -129,9 +129,9 @@ Few iterations = 8
 Function       = 18            Jacobian       = 9
 Factorization  = 9             Inversion      = 26
 ........................... last residuals ...........................
-last ||f||_inf = 2.3523e-15    last ||d||_inf = 6.9902e-15
-last ||f||_1   = 1.217e-17     last ||d||_1   = 8.7688e-16
-last ||f||_2   = 7.364e-17     last ||d||_2   = 1.7754e-15
+last ||f||_inf = 4.0419e-16    last ||d||_inf = 4.3778e-16
+last ||f||_1   = 9.7442e-18    last ||d||_1   = 5.314e-17
+last ||f||_2   = 3.044e-17     last ||d||_2   = 1.0259e-16
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
@@ -143,5 +143,5 @@ Check Jacobian End
 Check Controls Begin
 Check Controls End
 target [Lagrange,Mayer]       = [ 0.0122, 0 ]
-[Penalties/Barriers,Controls] = [ 1.717e-05, 0.009284 ]
+[Penalties/Barriers,Controls] = [ 0, 0.009284 ]
 All Done Folks!

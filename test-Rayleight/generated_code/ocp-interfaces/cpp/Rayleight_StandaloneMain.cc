@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    Rayleight        model("Rayleight",&TP,&console);
+    Rayleight        model("Rayleight",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -145,6 +145,7 @@ main() {
 
     // Controls: No penalties or barriers constraint defined
 
+    // ConstraintLT: none defined
     // Constraint1D: none defined
     // Constraint2D: none defined
 

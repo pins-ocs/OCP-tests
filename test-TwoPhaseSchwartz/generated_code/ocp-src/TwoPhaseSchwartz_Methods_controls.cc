@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -99,26 +99,26 @@ namespace TwoPhaseSchwartzDefine {
     real_type t3   = pow(t1 - 1, 2);
     real_type t5   = XM__[1];
     real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
-    real_type t10  = bound1(-1 + 9 * t3 + t8);
-    real_type t12  = bound2(0.8e0 + t5);
-    real_type t13  = t1 * t1;
-    real_type t17  = UM__[0];
-    real_type t21  = ModelPars[iM_T2];
-    real_type t23  = XM__[2] * XM__[2];
-    real_type t28  = XM__[3];
-    real_type t30  = UM__[1];
-    real_type t39  = t30 * t30;
-    real_type t43  = u1Control(t17, -1, 1);
-    real_type result__ = t10 + t12 + LM__[1] * (t5 * (-0.1e0 - 0.2e0 * t13) + t17) + LM__[3] * (t28 * (-0.2e0 * t23 * t21 - 0.1e0 * t21) + t30 * t21) + t28 * t21 * LM__[2] + t39 * ModelPars[iM_epsilon] + t5 * LM__[0] + t43;
+    real_type t10  = bound1(1 - 9 * t3 - t8);
+    real_type t12  = bound2(-0.8e0 - t5);
+    real_type t14  = UM__[1];
+    real_type t15  = t14 * t14;
+    real_type t20  = UM__[0];
+    real_type t21  = t1 * t1;
+    real_type t29  = ModelPars[iM_T2];
+    real_type t31  = XM__[3];
+    real_type t36  = XM__[2] * XM__[2];
+    real_type t43  = u1Control(t20, -1, 1);
+    real_type result__ = t10 + t12 + t15 * ModelPars[iM_epsilon] + t5 * LM__[0] + (t20 - 0.1e0 * t5 * (2 * t21 + 1)) * LM__[1] + t31 * t29 * LM__[2] + (t14 - 0.1e0 * t31 * (2 * t36 + 1)) * t29 * LM__[3] + t43;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  TwoPhaseSchwartz::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoPhaseSchwartz::g_numEqns() const { return 2; }
 
   void
   TwoPhaseSchwartz::g_eval(
@@ -158,29 +158,18 @@ namespace TwoPhaseSchwartzDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoPhaseSchwartz::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  TwoPhaseSchwartz::DgDxlxlp_numCols() const
-  { return 16; }
-
-  integer
-  TwoPhaseSchwartz::DgDxlxlp_nnz() const
-  { return 4; }
+  integer TwoPhaseSchwartz::DgDxlxlp_numRows() const { return 2; }
+  integer TwoPhaseSchwartz::DgDxlxlp_numCols() const { return 16; }
+  integer TwoPhaseSchwartz::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  TwoPhaseSchwartz::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoPhaseSchwartz::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 5   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 13  ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 7   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 15  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -223,27 +212,16 @@ namespace TwoPhaseSchwartzDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoPhaseSchwartz::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  TwoPhaseSchwartz::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  TwoPhaseSchwartz::DgDu_nnz() const
-  { return 2; }
+  integer TwoPhaseSchwartz::DgDu_numRows() const { return 2; }
+  integer TwoPhaseSchwartz::DgDu_numCols() const { return 2; }
+  integer TwoPhaseSchwartz::DgDu_nnz()     const { return 2; }
 
   void
-  TwoPhaseSchwartz::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoPhaseSchwartz::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -439,23 +417,23 @@ namespace TwoPhaseSchwartzDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_x1];
-    real_type t3   = pow(t1 - 1, 2);
-    real_type t5   = X__[iX_x2];
-    real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
-    real_type t10  = bound1(-1 + 9 * t3 + t8);
-    real_type t12  = bound2(0.8e0 + t5);
-    real_type t13  = U__[iU_u1];
-    real_type t14  = u1Control(t13, -1, 1);
-    real_type t17  = pow(V__[0] - t5, 2);
-    real_type t19  = t1 * t1;
-    real_type t25  = pow(V__[1] - t13 + 0.1e0 * t5 * (2 * t19 + 1), 2);
+    real_type t1   = U__[iU_u1];
+    real_type t2   = u1Control(t1, -1, 1);
+    real_type t3   = X__[iX_x1];
+    real_type t5   = pow(t3 - 1, 2);
+    real_type t7   = X__[iX_x2];
+    real_type t10  = pow(0.3333333333e1 * t7 - 0.1333333333e1, 2);
+    real_type t12  = bound1(1 - 9 * t5 - t10);
+    real_type t14  = bound2(-0.8e0 - t7);
+    real_type t17  = pow(V__[0] - t7, 2);
+    real_type t19  = t3 * t3;
+    real_type t25  = pow(V__[1] - t1 + 0.1e0 * t7 * (2 * t19 + 1), 2);
     real_type t26  = ModelPars[iM_T2];
     real_type t27  = X__[iX_x4];
     real_type t31  = pow(-t27 * t26 + V__[2], 2);
     real_type t35  = X__[iX_x3] * X__[iX_x3];
     real_type t43  = pow(V__[3] - (U__[iU_u2] - 0.1e0 * t27 * (2 * t35 + 1)) * t26, 2);
-    real_type result__ = t10 + t12 + t14 + t17 + t25 + t31 + t43;
+    real_type result__ = t2 + t12 + t14 + t17 + t25 + t31 + t43;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -464,9 +442,7 @@ namespace TwoPhaseSchwartzDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  TwoPhaseSchwartz::DmDu_numEqns() const
-  { return 2; }
+  integer TwoPhaseSchwartz::DmDu_numEqns() const { return 2; }
 
   void
   TwoPhaseSchwartz::DmDu_eval(
@@ -492,29 +468,16 @@ namespace TwoPhaseSchwartzDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoPhaseSchwartz::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  TwoPhaseSchwartz::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  TwoPhaseSchwartz::DmDuu_nnz() const
-  { return 2; }
+  integer TwoPhaseSchwartz::DmDuu_numRows() const { return 2; }
+  integer TwoPhaseSchwartz::DmDuu_numCols() const { return 2; }
+  integer TwoPhaseSchwartz::DmDuu_nnz()     const { return 2; }
 
   void
-  TwoPhaseSchwartz::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoPhaseSchwartz::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   TwoPhaseSchwartz::DmDuu_sparse(

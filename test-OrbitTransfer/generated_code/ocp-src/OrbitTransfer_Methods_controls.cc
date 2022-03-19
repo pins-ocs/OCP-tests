@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -82,27 +82,28 @@ namespace OrbitTransferDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = UM__[0];
-    real_type t3   = cos(t2);
-    real_type t4   = LM__[2];
-    real_type t6   = XM__[2];
-    real_type t7   = t6 * t6;
-    real_type t9   = ModelPars[iM_T] * t7;
-    real_type t11  = LM__[1];
-    real_type t12  = sin(t2);
-    real_type t16  = XM__[3];
-    real_type t23  = XM__[4];
-    real_type t33  = XM__[0];
-    real_type result__ = 1.0 / t33 / t7 * (t9 * t4 * t3 + t9 * t12 * t11 + t33 * (t7 * (t16 * LM__[0] - LM__[3] * ModelPars[iM_mdot]) + t6 * (t23 * t11 - t16 * t4 + LM__[4]) * t23 - ModelPars[iM_mu] * t11)) * ModelPars[iM_tf];
+    real_type t2   = ModelPars[iM_tf];
+    real_type t4   = XM__[3];
+    real_type t8   = XM__[4];
+    real_type t9   = t8 * t8;
+    real_type t10  = XM__[2];
+    real_type t11  = 1.0 / t10;
+    real_type t14  = t10 * t10;
+    real_type t17  = ModelPars[iM_T];
+    real_type t18  = UM__[0];
+    real_type t19  = sin(t18);
+    real_type t22  = 1.0 / XM__[0];
+    real_type t30  = cos(t18);
+    real_type result__ = t4 * t2 * LM__[0] + (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t2 * LM__[1] + (-t11 * t4 * t8 + t22 * t30 * t17) * t2 * LM__[2] - ModelPars[iM_mdot] * t2 * LM__[3] + t11 * t8 * t2 * LM__[4];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  OrbitTransfer::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::g_numEqns() const { return 1; }
 
   void
   OrbitTransfer::g_eval(
@@ -145,24 +146,12 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  OrbitTransfer::DgDxlxlp_numCols() const
-  { return 20; }
-
-  integer
-  OrbitTransfer::DgDxlxlp_nnz() const
-  { return 6; }
+  integer OrbitTransfer::DgDxlxlp_numRows() const { return 1; }
+  integer OrbitTransfer::DgDxlxlp_numCols() const { return 20; }
+  integer OrbitTransfer::DgDxlxlp_nnz()     const { return 6; }
 
   void
-  OrbitTransfer::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  OrbitTransfer::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 7   ;
@@ -170,6 +159,7 @@ namespace OrbitTransferDefine {
     iIndex[4 ] = 0   ; jIndex[4 ] = 16  ;
     iIndex[5 ] = 0   ; jIndex[5 ] = 17  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -223,26 +213,15 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  OrbitTransfer::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  OrbitTransfer::DgDu_nnz() const
-  { return 1; }
+  integer OrbitTransfer::DgDu_numRows() const { return 1; }
+  integer OrbitTransfer::DgDu_numCols() const { return 1; }
+  integer OrbitTransfer::DgDu_nnz()     const { return 1; }
 
   void
-  OrbitTransfer::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  OrbitTransfer::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -451,7 +430,7 @@ namespace OrbitTransferDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_tf];
     real_type t2   = X__[iX_u];
-    real_type t6   = pow(-t1 * t2 + V__[2], 2);
+    real_type t6   = pow(-t2 * t1 + V__[2], 2);
     real_type t8   = X__[iX_v];
     real_type t9   = t8 * t8;
     real_type t10  = X__[iX_r];
@@ -464,7 +443,7 @@ namespace OrbitTransferDefine {
     real_type t27  = pow(V__[3] - (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t1, 2);
     real_type t31  = cos(t18);
     real_type t37  = pow(V__[4] - (-t11 * t2 * t8 + t22 * t31 * t17) * t1, 2);
-    real_type t42  = pow(t1 * ModelPars[iM_mdot] + V__[0], 2);
+    real_type t42  = pow(ModelPars[iM_mdot] * t1 + V__[0], 2);
     real_type t47  = pow(-t11 * t8 * t1 + V__[1], 2);
     real_type result__ = t6 + t27 + t37 + t42 + t47;
     if ( m_debug ) {
@@ -475,9 +454,7 @@ namespace OrbitTransferDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  OrbitTransfer::DmDu_numEqns() const
-  { return 1; }
+  integer OrbitTransfer::DmDu_numEqns() const { return 1; }
 
   void
   OrbitTransfer::DmDu_eval(
@@ -510,28 +487,15 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  OrbitTransfer::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  OrbitTransfer::DmDuu_nnz() const
-  { return 1; }
+  integer OrbitTransfer::DmDuu_numRows() const { return 1; }
+  integer OrbitTransfer::DmDuu_numCols() const { return 1; }
+  integer OrbitTransfer::DmDuu_nnz()     const { return 1; }
 
   void
-  OrbitTransfer::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  OrbitTransfer::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   OrbitTransfer::DmDuu_sparse(

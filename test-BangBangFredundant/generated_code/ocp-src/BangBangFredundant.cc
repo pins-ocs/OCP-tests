@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -92,7 +92,8 @@ namespace BangBangFredundantDefine {
   char const *namesPostProcess[numPostProcess+1] = {
     "aF1Control",
     "aF2Control",
-    "Flim",
+    "Flim_min",
+    "Flim_max",
     "F1+F2",
     nullptr
   };
@@ -107,8 +108,13 @@ namespace BangBangFredundantDefine {
     nullptr
   };
 
+  char const *namesConstraintLT[numConstraintLT+1] = {
+    "Flim_min",
+    "Flim_max",
+    nullptr
+  };
+
   char const *namesConstraint1D[numConstraint1D+1] = {
-    "Flim",
     nullptr
   };
 
@@ -136,16 +142,18 @@ namespace BangBangFredundantDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   BangBangFredundant::BangBangFredundant(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
   , aF1Control("aF1Control")
   , aF2Control("aF2Control")
+  // Constraints LT
+  , Flim_min("Flim_min")
+  , Flim_max("Flim_max")
   // Constraints 1D
-  , Flim("Flim")
   // Constraints 2D
   // User classes
   {
@@ -258,10 +266,16 @@ namespace BangBangFredundantDefine {
     GenericContainer const & gc = gc_data("Constraints");
     // Initialize Constraints 1D
     UTILS_ASSERT0(
-      gc.exists("Flim"),
-      "in BangBangFredundant::setup_classes(gc) missing key: ``Flim''\n"
+      gc.exists("Flim_min"),
+      "in BangBangFredundant::setup_classes(gc) missing key: ``Flim_min''\n"
     );
-    Flim.setup( gc("Flim") );
+    Flim_min.setup( gc("Flim_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("Flim_max"),
+      "in BangBangFredundant::setup_classes(gc) missing key: ``Flim_max''\n"
+    );
+    Flim_max.setup( gc("Flim_max") );
 
   }
 
@@ -371,9 +385,10 @@ namespace BangBangFredundantDefine {
     aF2Control.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
-    m_console->message("\nConstraints 1D\n",msg_level);
+    m_console->message("\nConstraints LT\n",msg_level);
     mstr.str("");
-    Flim.info(mstr);
+    Flim_min.info(mstr);
+    Flim_max.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);

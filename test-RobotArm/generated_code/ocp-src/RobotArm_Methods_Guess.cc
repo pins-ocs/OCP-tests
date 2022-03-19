@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -95,10 +95,10 @@ namespace RobotArmDefine {
     X__[ iX_theta  ] = 2.0 / 3.0 * Q__[iQ_zeta] * 0.314159265358979323846264338328e1;
     X__[ iX_phi    ] = 0.314159265358979323846264338328e1 / 4;
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 6 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 6 );
+    }
   }
 
   /*\
@@ -138,8 +138,8 @@ namespace RobotArmDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -150,8 +150,8 @@ namespace RobotArmDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -262,9 +262,7 @@ namespace RobotArmDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  RobotArm::u_guess_numEqns() const
-  { return 3; }
+  integer RobotArm::u_guess_numEqns() const { return 3; }
 
   void
   RobotArm::u_guess_eval(

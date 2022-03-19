@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_PathConstrained_Data.rb                                 #
 #                                                                       #
-#  version: 1.0   date 20/12/2021                                       #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
-#  Copyright (C) 2021                                                   #
+#  Copyright (C) 2022                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -20,21 +20,23 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol_ctrl0  = 0.01
 epsi_ctrl0 = 0.01
-tol_ctrl   = tol_ctrl0
 epsi_ctrl  = epsi_ctrl0
+tol_ctrl0  = 0.01
+tol_ctrl   = tol_ctrl0
 
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = true
+  data.Debug = false
 
   # Enable doctor
   data.Doctor = false
 
   # Level of message
   data.InfoLevel = 4
+
+  data.Use_control_penalties_in_adjoint_equations = false
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -297,7 +299,7 @@ mechatronix do |data|
   # | (_| (_) | | | | |_| | | (_) | \__ \
   #  \___\___/|_| |_|\__|_|  \___/|_|___/
   # Controls
-  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:uControl] = {
@@ -314,16 +316,17 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
-  # Constraint1D
+  # ConstraintLT
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-  # PenaltyBarrier1DGreaterThan
+  # PenaltyBarrier1DLessThan
   data.Constraints[:x2bound] = {
     :subType   => "PENALTY_REGULAR",
     :epsilon   => epsi_ctrl,
     :tolerance => tol_ctrl,
     :active    => true
   }
+  # Constraint1D: none defined
   # Constraint2D: none defined
 
 
@@ -339,8 +342,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 400,
         :length => 1,
+        :n      => 400,
       },
     ],
   };

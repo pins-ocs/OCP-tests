@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -78,16 +78,16 @@ namespace HyperSensitiveDefine {
     real_type t2   = t1 * t1;
     real_type t3   = UM__[0];
     real_type t4   = t3 * t3;
-    real_type result__ = t2 + t4 + (-t2 * t1 + t3) * LM__[0];
+    real_type result__ = t2 + t4 + (-t1 * t2 + t3) * LM__[0];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  HyperSensitive::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer HyperSensitive::g_numEqns() const { return 1; }
 
   void
   HyperSensitive::g_eval(
@@ -119,27 +119,16 @@ namespace HyperSensitiveDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HyperSensitive::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  HyperSensitive::DgDxlxlp_numCols() const
-  { return 4; }
-
-  integer
-  HyperSensitive::DgDxlxlp_nnz() const
-  { return 2; }
+  integer HyperSensitive::DgDxlxlp_numRows() const { return 1; }
+  integer HyperSensitive::DgDxlxlp_numCols() const { return 4; }
+  integer HyperSensitive::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  HyperSensitive::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  HyperSensitive::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -174,26 +163,15 @@ namespace HyperSensitiveDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HyperSensitive::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  HyperSensitive::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  HyperSensitive::DgDu_nnz() const
-  { return 1; }
+  integer HyperSensitive::DgDu_numRows() const { return 1; }
+  integer HyperSensitive::DgDu_numCols() const { return 1; }
+  integer HyperSensitive::DgDu_nnz()     const { return 1; }
 
   void
-  HyperSensitive::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  HyperSensitive::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -346,9 +324,7 @@ namespace HyperSensitiveDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  HyperSensitive::DmDu_numEqns() const
-  { return 1; }
+  integer HyperSensitive::DmDu_numEqns() const { return 1; }
 
   void
   HyperSensitive::DmDu_eval(
@@ -364,34 +340,21 @@ namespace HyperSensitiveDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_y];
     real_type t2   = t1 * t1;
-    result__[ 0   ] = -2 * t2 * t1 + 2 * U__[iU_u] - 2 * V__[0];
+    result__[ 0   ] = -2 * t1 * t2 + 2 * U__[iU_u] - 2 * V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  HyperSensitive::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  HyperSensitive::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  HyperSensitive::DmDuu_nnz() const
-  { return 1; }
+  integer HyperSensitive::DmDuu_numRows() const { return 1; }
+  integer HyperSensitive::DmDuu_numCols() const { return 1; }
+  integer HyperSensitive::DmDuu_nnz()     const { return 1; }
 
   void
-  HyperSensitive::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  HyperSensitive::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   HyperSensitive::DmDuu_sparse(

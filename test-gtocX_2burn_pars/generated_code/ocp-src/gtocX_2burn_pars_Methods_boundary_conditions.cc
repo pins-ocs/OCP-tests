@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -58,9 +58,7 @@ namespace gtocX_2burn_parsDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer
-  gtocX_2burn_pars::boundaryConditions_numEqns() const
-  { return 6; }
+  integer gtocX_2burn_pars::boundaryConditions_numEqns() const { return 6; }
 
   void
   gtocX_2burn_pars::boundaryConditions_eval(
@@ -112,24 +110,12 @@ namespace gtocX_2burn_parsDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  gtocX_2burn_pars::DboundaryConditionsDxxp_numRows() const
-  { return 6; }
-
-  integer
-  gtocX_2burn_pars::DboundaryConditionsDxxp_numCols() const
-  { return 9; }
-
-  integer
-  gtocX_2burn_pars::DboundaryConditionsDxxp_nnz() const
-  { return 36; }
+  integer gtocX_2burn_pars::DboundaryConditionsDxxp_numRows() const { return 6; }
+  integer gtocX_2burn_pars::DboundaryConditionsDxxp_numCols() const { return 9; }
+  integer gtocX_2burn_pars::DboundaryConditionsDxxp_nnz()     const { return 36; }
 
   void
-  gtocX_2burn_pars::DboundaryConditionsDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  gtocX_2burn_pars::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -167,6 +153,7 @@ namespace gtocX_2burn_parsDefine {
     iIndex[34] = 5   ; jIndex[34] = 7   ;
     iIndex[35] = 5   ; jIndex[35] = 8   ;
   }
+
 
   void
   gtocX_2burn_pars::DboundaryConditionsDxxp_sparse(
@@ -235,14 +222,12 @@ namespace gtocX_2burn_parsDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  gtocX_2burn_pars::adjointBC_numEqns() const
-  { return 9; }
+  integer gtocX_2burn_pars::adjointBC_numEqns() const { return 9; }
 
   void
   gtocX_2burn_pars::adjointBC_eval(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
@@ -250,11 +235,9 @@ namespace gtocX_2burn_parsDefine {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
     real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[0];
@@ -270,77 +253,65 @@ namespace gtocX_2burn_parsDefine {
     real_type t12  = y_position_D_2(t2, t3, t4, t5, t6, t7, t8);
     real_type t14  = OMEGA__[2];
     real_type t15  = z_position_D_2(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 0   ] = t9 * t1 + t12 * t11 + t15 * t14 + LL__[iL_lambda1__xo];
-    real_type t18  = x_position_D_3(t2, t3, t4, t5, t6, t7, t8);
-    real_type t20  = y_position_D_3(t2, t3, t4, t5, t6, t7, t8);
-    real_type t22  = z_position_D_3(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 1   ] = t18 * t1 + t20 * t11 + t22 * t14 + LL__[iL_lambda2__xo];
-    real_type t25  = x_position_D_6(t2, t3, t4, t5, t6, t7, t8);
-    real_type t27  = y_position_D_6(t2, t3, t4, t5, t6, t7, t8);
-    real_type t29  = z_position_D_6(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 2   ] = t25 * t1 + t27 * t11 + t29 * t14 + LL__[iL_lambda3__xo];
-    real_type t32  = OMEGA__[3];
-    real_type t33  = XR__[iX_f];
-    real_type t34  = XR__[iX_g];
-    real_type t35  = XR__[iX_L];
-    real_type t36  = x_position_D_2(t2, t33, t34, t5, t6, t35, t8);
-    real_type t38  = OMEGA__[4];
-    real_type t39  = y_position_D_2(t2, t33, t34, t5, t6, t35, t8);
-    real_type t41  = OMEGA__[5];
-    real_type t42  = z_position_D_2(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 3   ] = t36 * t32 + t39 * t38 + t42 * t41 - LR__[iL_lambda1__xo];
-    real_type t45  = x_position_D_3(t2, t33, t34, t5, t6, t35, t8);
-    real_type t47  = y_position_D_3(t2, t33, t34, t5, t6, t35, t8);
-    real_type t49  = z_position_D_3(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 4   ] = t45 * t32 + t47 * t38 + t49 * t41 - LR__[iL_lambda2__xo];
-    real_type t52  = x_position_D_6(t2, t33, t34, t5, t6, t35, t8);
-    real_type t54  = y_position_D_6(t2, t33, t34, t5, t6, t35, t8);
-    real_type t56  = z_position_D_6(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 5   ] = t52 * t32 + t54 * t38 + t56 * t41 - LR__[iL_lambda3__xo];
-    real_type t59  = x_position_D_1(t2, t3, t4, t5, t6, t7, t8);
-    real_type t61  = y_position_D_1(t2, t3, t4, t5, t6, t7, t8);
-    real_type t63  = z_position_D_1(t2, t3, t4, t5, t6, t7, t8);
-    real_type t65  = x_position_D_1(t2, t33, t34, t5, t6, t35, t8);
-    real_type t67  = y_position_D_1(t2, t33, t34, t5, t6, t35, t8);
-    real_type t69  = z_position_D_1(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 6   ] = t59 * t1 + t61 * t11 + t63 * t14 + t65 * t32 + t67 * t38 + t69 * t41;
-    real_type t71  = x_position_D_4(t2, t3, t4, t5, t6, t7, t8);
-    real_type t73  = y_position_D_4(t2, t3, t4, t5, t6, t7, t8);
-    real_type t75  = z_position_D_4(t2, t3, t4, t5, t6, t7, t8);
-    real_type t77  = x_position_D_4(t2, t33, t34, t5, t6, t35, t8);
-    real_type t79  = y_position_D_4(t2, t33, t34, t5, t6, t35, t8);
-    real_type t81  = z_position_D_4(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 7   ] = t71 * t1 + t73 * t11 + t75 * t14 + t77 * t32 + t79 * t38 + t81 * t41;
-    real_type t83  = x_position_D_5(t2, t3, t4, t5, t6, t7, t8);
-    real_type t85  = y_position_D_5(t2, t3, t4, t5, t6, t7, t8);
-    real_type t87  = z_position_D_5(t2, t3, t4, t5, t6, t7, t8);
-    real_type t89  = x_position_D_5(t2, t33, t34, t5, t6, t35, t8);
-    real_type t91  = y_position_D_5(t2, t33, t34, t5, t6, t35, t8);
-    real_type t93  = z_position_D_5(t2, t33, t34, t5, t6, t35, t8);
-    result__[ 8   ] = t83 * t1 + t85 * t11 + t87 * t14 + t89 * t32 + t91 * t38 + t93 * t41;
+    result__[ 0   ] = t9 * t1 + t12 * t11 + t15 * t14;
+    real_type t17  = x_position_D_3(t2, t3, t4, t5, t6, t7, t8);
+    real_type t19  = y_position_D_3(t2, t3, t4, t5, t6, t7, t8);
+    real_type t21  = z_position_D_3(t2, t3, t4, t5, t6, t7, t8);
+    result__[ 1   ] = t17 * t1 + t19 * t11 + t21 * t14;
+    real_type t23  = x_position_D_6(t2, t3, t4, t5, t6, t7, t8);
+    real_type t25  = y_position_D_6(t2, t3, t4, t5, t6, t7, t8);
+    real_type t27  = z_position_D_6(t2, t3, t4, t5, t6, t7, t8);
+    result__[ 2   ] = t23 * t1 + t25 * t11 + t27 * t14;
+    real_type t29  = OMEGA__[3];
+    real_type t30  = XR__[iX_f];
+    real_type t31  = XR__[iX_g];
+    real_type t32  = XR__[iX_L];
+    real_type t33  = x_position_D_2(t2, t30, t31, t5, t6, t32, t8);
+    real_type t35  = OMEGA__[4];
+    real_type t36  = y_position_D_2(t2, t30, t31, t5, t6, t32, t8);
+    real_type t38  = OMEGA__[5];
+    real_type t39  = z_position_D_2(t2, t30, t31, t5, t6, t32, t8);
+    result__[ 3   ] = t33 * t29 + t36 * t35 + t39 * t38;
+    real_type t41  = x_position_D_3(t2, t30, t31, t5, t6, t32, t8);
+    real_type t43  = y_position_D_3(t2, t30, t31, t5, t6, t32, t8);
+    real_type t45  = z_position_D_3(t2, t30, t31, t5, t6, t32, t8);
+    result__[ 4   ] = t41 * t29 + t43 * t35 + t45 * t38;
+    real_type t47  = x_position_D_6(t2, t30, t31, t5, t6, t32, t8);
+    real_type t49  = y_position_D_6(t2, t30, t31, t5, t6, t32, t8);
+    real_type t51  = z_position_D_6(t2, t30, t31, t5, t6, t32, t8);
+    result__[ 5   ] = t47 * t29 + t49 * t35 + t51 * t38;
+    real_type t53  = x_position_D_1(t2, t3, t4, t5, t6, t7, t8);
+    real_type t55  = y_position_D_1(t2, t3, t4, t5, t6, t7, t8);
+    real_type t57  = z_position_D_1(t2, t3, t4, t5, t6, t7, t8);
+    real_type t59  = x_position_D_1(t2, t30, t31, t5, t6, t32, t8);
+    real_type t61  = y_position_D_1(t2, t30, t31, t5, t6, t32, t8);
+    real_type t63  = z_position_D_1(t2, t30, t31, t5, t6, t32, t8);
+    result__[ 6   ] = t53 * t1 + t55 * t11 + t57 * t14 + t59 * t29 + t61 * t35 + t63 * t38;
+    real_type t65  = x_position_D_4(t2, t3, t4, t5, t6, t7, t8);
+    real_type t67  = y_position_D_4(t2, t3, t4, t5, t6, t7, t8);
+    real_type t69  = z_position_D_4(t2, t3, t4, t5, t6, t7, t8);
+    real_type t71  = x_position_D_4(t2, t30, t31, t5, t6, t32, t8);
+    real_type t73  = y_position_D_4(t2, t30, t31, t5, t6, t32, t8);
+    real_type t75  = z_position_D_4(t2, t30, t31, t5, t6, t32, t8);
+    result__[ 7   ] = t65 * t1 + t67 * t11 + t69 * t14 + t71 * t29 + t73 * t35 + t75 * t38;
+    real_type t77  = x_position_D_5(t2, t3, t4, t5, t6, t7, t8);
+    real_type t79  = y_position_D_5(t2, t3, t4, t5, t6, t7, t8);
+    real_type t81  = z_position_D_5(t2, t3, t4, t5, t6, t7, t8);
+    real_type t83  = x_position_D_5(t2, t30, t31, t5, t6, t32, t8);
+    real_type t85  = y_position_D_5(t2, t30, t31, t5, t6, t32, t8);
+    real_type t87  = z_position_D_5(t2, t30, t31, t5, t6, t32, t8);
+    result__[ 8   ] = t77 * t1 + t79 * t11 + t81 * t14 + t83 * t29 + t85 * t35 + t87 * t38;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "adjointBC_eval", 9, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  gtocX_2burn_pars::DadjointBCDxxp_numRows() const
-  { return 9; }
-
-  integer
-  gtocX_2burn_pars::DadjointBCDxxp_numCols() const
-  { return 9; }
-
-  integer
-  gtocX_2burn_pars::DadjointBCDxxp_nnz() const
-  { return 63; }
+  integer gtocX_2burn_pars::DadjointBCDxxp_numRows() const { return 9; }
+  integer gtocX_2burn_pars::DadjointBCDxxp_numCols() const { return 9; }
+  integer gtocX_2burn_pars::DadjointBCDxxp_nnz()     const { return 63; }
 
   void
-  gtocX_2burn_pars::DadjointBCDxxp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  gtocX_2burn_pars::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -406,10 +377,11 @@ namespace gtocX_2burn_parsDefine {
     iIndex[62] = 8   ; jIndex[62] = 8   ;
   }
 
+
   void
   gtocX_2burn_pars::DadjointBCDxxp_sparse(
-    NodeType2 const             & LEFT__,
-    NodeType2 const             & RIGHT__,
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
     OMEGA_full_const_pointer_type OMEGA__,
     real_type                     result__[]
@@ -417,11 +389,9 @@ namespace gtocX_2burn_parsDefine {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
     real_const_ptr     XL__ = LEFT__.x;
-    real_const_ptr     LL__ = LEFT__.lambda;
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    real_const_ptr     LR__ = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[0];
@@ -488,15 +458,15 @@ namespace gtocX_2burn_parsDefine {
     real_type t83  = x_position_D_1_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t85  = y_position_D_1_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t87  = z_position_D_1_6(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 15  ] = t83 * t1 + t85 * t11 + t87 * t14;
+    result__[ 15  ] = t1 * t83 + t11 * t85 + t14 * t87;
     real_type t89  = x_position_D_4_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t91  = y_position_D_4_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t93  = z_position_D_4_6(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 16  ] = t89 * t1 + t91 * t11 + t93 * t14;
+    result__[ 16  ] = t1 * t89 + t11 * t91 + t14 * t93;
     real_type t95  = x_position_D_5_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t97  = y_position_D_5_6(t2, t3, t4, t5, t6, t7, t8);
     real_type t99  = z_position_D_5_6(t2, t3, t4, t5, t6, t7, t8);
-    result__[ 17  ] = t95 * t1 + t97 * t11 + t99 * t14;
+    result__[ 17  ] = t1 * t95 + t11 * t97 + t14 * t99;
     real_type t101 = OMEGA__[3];
     real_type t102 = XR__[iX_f];
     real_type t103 = XR__[iX_g];
@@ -506,66 +476,66 @@ namespace gtocX_2burn_parsDefine {
     real_type t108 = y_position_D_2_2(t2, t102, t103, t5, t6, t104, t8);
     real_type t110 = OMEGA__[5];
     real_type t111 = z_position_D_2_2(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 18  ] = t105 * t101 + t108 * t107 + t111 * t110;
+    result__[ 18  ] = t101 * t105 + t107 * t108 + t110 * t111;
     real_type t113 = x_position_D_2_3(t2, t102, t103, t5, t6, t104, t8);
     real_type t115 = y_position_D_2_3(t2, t102, t103, t5, t6, t104, t8);
     real_type t117 = z_position_D_2_3(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 19  ] = t113 * t101 + t115 * t107 + t117 * t110;
+    result__[ 19  ] = t101 * t113 + t107 * t115 + t110 * t117;
     real_type t119 = x_position_D_2_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t121 = y_position_D_2_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t123 = z_position_D_2_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 20  ] = t119 * t101 + t121 * t107 + t123 * t110;
+    result__[ 20  ] = t101 * t119 + t107 * t121 + t110 * t123;
     real_type t125 = x_position_D_1_2(t2, t102, t103, t5, t6, t104, t8);
     real_type t127 = y_position_D_1_2(t2, t102, t103, t5, t6, t104, t8);
     real_type t129 = z_position_D_1_2(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 21  ] = t125 * t101 + t127 * t107 + t129 * t110;
+    result__[ 21  ] = t101 * t125 + t107 * t127 + t110 * t129;
     real_type t131 = x_position_D_2_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t133 = y_position_D_2_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t135 = z_position_D_2_4(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 22  ] = t131 * t101 + t133 * t107 + t135 * t110;
+    result__[ 22  ] = t101 * t131 + t107 * t133 + t110 * t135;
     real_type t137 = x_position_D_2_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t139 = y_position_D_2_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t141 = z_position_D_2_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 23  ] = t137 * t101 + t139 * t107 + t141 * t110;
+    result__[ 23  ] = t101 * t137 + t107 * t139 + t110 * t141;
     result__[ 24  ] = result__[19];
     real_type t143 = x_position_D_3_3(t2, t102, t103, t5, t6, t104, t8);
     real_type t145 = y_position_D_3_3(t2, t102, t103, t5, t6, t104, t8);
     real_type t147 = z_position_D_3_3(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 25  ] = t143 * t101 + t145 * t107 + t147 * t110;
+    result__[ 25  ] = t101 * t143 + t107 * t145 + t110 * t147;
     real_type t149 = x_position_D_3_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t151 = y_position_D_3_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t153 = z_position_D_3_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 26  ] = t149 * t101 + t151 * t107 + t153 * t110;
+    result__[ 26  ] = t101 * t149 + t107 * t151 + t110 * t153;
     real_type t155 = x_position_D_1_3(t2, t102, t103, t5, t6, t104, t8);
     real_type t157 = y_position_D_1_3(t2, t102, t103, t5, t6, t104, t8);
     real_type t159 = z_position_D_1_3(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 27  ] = t155 * t101 + t157 * t107 + t159 * t110;
+    result__[ 27  ] = t101 * t155 + t107 * t157 + t110 * t159;
     real_type t161 = x_position_D_3_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t163 = y_position_D_3_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t165 = z_position_D_3_4(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 28  ] = t161 * t101 + t163 * t107 + t165 * t110;
+    result__[ 28  ] = t101 * t161 + t107 * t163 + t110 * t165;
     real_type t167 = x_position_D_3_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t169 = y_position_D_3_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t171 = z_position_D_3_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 29  ] = t167 * t101 + t169 * t107 + t171 * t110;
+    result__[ 29  ] = t101 * t167 + t107 * t169 + t110 * t171;
     result__[ 30  ] = result__[20];
     result__[ 31  ] = result__[26];
     real_type t173 = x_position_D_6_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t175 = y_position_D_6_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t177 = z_position_D_6_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 32  ] = t173 * t101 + t175 * t107 + t177 * t110;
+    result__[ 32  ] = t101 * t173 + t107 * t175 + t110 * t177;
     real_type t179 = x_position_D_1_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t181 = y_position_D_1_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t183 = z_position_D_1_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 33  ] = t179 * t101 + t181 * t107 + t183 * t110;
+    result__[ 33  ] = t101 * t179 + t107 * t181 + t110 * t183;
     real_type t185 = x_position_D_4_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t187 = y_position_D_4_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t189 = z_position_D_4_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 34  ] = t185 * t101 + t187 * t107 + t189 * t110;
+    result__[ 34  ] = t101 * t185 + t107 * t187 + t110 * t189;
     real_type t191 = x_position_D_5_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t193 = y_position_D_5_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t195 = z_position_D_5_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 35  ] = t191 * t101 + t193 * t107 + t195 * t110;
+    result__[ 35  ] = t101 * t191 + t107 * t193 + t110 * t195;
     result__[ 36  ] = result__[3];
     result__[ 37  ] = result__[9];
     result__[ 38  ] = result__[15];
@@ -578,21 +548,21 @@ namespace gtocX_2burn_parsDefine {
     real_type t203 = x_position_D_1_1(t2, t102, t103, t5, t6, t104, t8);
     real_type t205 = y_position_D_1_1(t2, t102, t103, t5, t6, t104, t8);
     real_type t207 = z_position_D_1_1(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 42  ] = t197 * t1 + t203 * t101 + t205 * t107 + t199 * t11 + t207 * t110 + t201 * t14;
+    result__[ 42  ] = t1 * t197 + t101 * t203 + t107 * t205 + t11 * t199 + t110 * t207 + t14 * t201;
     real_type t209 = x_position_D_1_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t211 = y_position_D_1_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t213 = z_position_D_1_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t215 = x_position_D_1_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t217 = y_position_D_1_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t219 = z_position_D_1_4(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 43  ] = t209 * t1 + t215 * t101 + t217 * t107 + t211 * t11 + t219 * t110 + t213 * t14;
+    result__[ 43  ] = t1 * t209 + t101 * t215 + t107 * t217 + t11 * t211 + t110 * t219 + t14 * t213;
     real_type t221 = x_position_D_1_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t223 = y_position_D_1_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t225 = z_position_D_1_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t227 = x_position_D_1_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t229 = y_position_D_1_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t231 = z_position_D_1_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 44  ] = t221 * t1 + t227 * t101 + t229 * t107 + t223 * t11 + t231 * t110 + t225 * t14;
+    result__[ 44  ] = t1 * t221 + t101 * t227 + t107 * t229 + t11 * t223 + t110 * t231 + t14 * t225;
     result__[ 45  ] = result__[4];
     result__[ 46  ] = result__[10];
     result__[ 47  ] = result__[16];
@@ -606,14 +576,14 @@ namespace gtocX_2burn_parsDefine {
     real_type t239 = x_position_D_4_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t241 = y_position_D_4_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t243 = z_position_D_4_4(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 52  ] = t233 * t1 + t239 * t101 + t241 * t107 + t235 * t11 + t243 * t110 + t237 * t14;
+    result__[ 52  ] = t1 * t233 + t101 * t239 + t107 * t241 + t11 * t235 + t110 * t243 + t14 * t237;
     real_type t245 = x_position_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t247 = y_position_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t249 = z_position_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t251 = x_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t253 = y_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t255 = z_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 53  ] = t245 * t1 + t251 * t101 + t253 * t107 + t247 * t11 + t255 * t110 + t249 * t14;
+    result__[ 53  ] = t1 * t245 + t101 * t251 + t107 * t253 + t11 * t247 + t110 * t255 + t14 * t249;
     result__[ 54  ] = result__[5];
     result__[ 55  ] = result__[11];
     result__[ 56  ] = result__[17];
@@ -628,7 +598,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t263 = x_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t265 = y_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t267 = z_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 62  ] = t257 * t1 + t263 * t101 + t265 * t107 + t259 * t11 + t267 * t110 + t261 * t14;
+    result__[ 62  ] = t1 * t257 + t101 * t263 + t107 * t265 + t11 * t259 + t110 * t267 + t14 * t261;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 63, i_segment_left, i_segment_right );
   }

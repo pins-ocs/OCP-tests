@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona.cc                                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -105,6 +105,10 @@ namespace BrachiostocronaDefine {
     nullptr
   };
 
+  char const *namesConstraintLT[numConstraintLT+1] = {
+    nullptr
+  };
+
   char const *namesConstraint1D[numConstraint1D+1] = {
     nullptr
   };
@@ -134,13 +138,14 @@ namespace BrachiostocronaDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   Brachiostocrona::Brachiostocrona(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
   , vthetaControl("vthetaControl")
+  // Constraints LT
   // Constraints 1D
   // Constraints 2D
   // User classes

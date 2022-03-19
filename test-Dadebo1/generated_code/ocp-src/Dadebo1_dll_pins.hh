@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_dll_pins.hh                                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -108,8 +108,8 @@ namespace Dadebo1Define {
   public:
 
     DADEBO1_API_DLL
-    Dadebo1_Problem( ThreadPool * TP, Console const * console )
-    : model("Dadebo1",TP,console)
+    Dadebo1_Problem( integer n_threads, Console const * console )
+    : model("Dadebo1",n_threads,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

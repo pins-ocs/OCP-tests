@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_controls.cc                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -98,9 +98,9 @@ namespace SingularCalogeroModifiedDefine {
     return result__;
   }
 
-  integer
-  SingularCalogeroModified::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer SingularCalogeroModified::g_numEqns() const { return 1; }
 
   void
   SingularCalogeroModified::g_eval(
@@ -137,29 +137,18 @@ namespace SingularCalogeroModifiedDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogeroModified::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  SingularCalogeroModified::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  SingularCalogeroModified::DgDxlxlp_nnz() const
-  { return 4; }
+  integer SingularCalogeroModified::DgDxlxlp_numRows() const { return 1; }
+  integer SingularCalogeroModified::DgDxlxlp_numCols() const { return 8; }
+  integer SingularCalogeroModified::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  SingularCalogeroModified::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularCalogeroModified::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -200,26 +189,15 @@ namespace SingularCalogeroModifiedDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogeroModified::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  SingularCalogeroModified::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  SingularCalogeroModified::DgDu_nnz() const
-  { return 1; }
+  integer SingularCalogeroModified::DgDu_numRows() const { return 1; }
+  integer SingularCalogeroModified::DgDu_numCols() const { return 1; }
+  integer SingularCalogeroModified::DgDu_nnz()     const { return 1; }
 
   void
-  SingularCalogeroModified::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularCalogeroModified::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -397,7 +375,7 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
+    real_type t8   = pow(t3 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
     real_type t10  = U__[iU_u];
     real_type t11  = uControl(t10, -1, 1);
     real_type t16  = pow(V__[0] - X__[iX_y], 2);
@@ -411,9 +389,7 @@ namespace SingularCalogeroModifiedDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularCalogeroModified::DmDu_numEqns() const
-  { return 1; }
+  integer SingularCalogeroModified::DmDu_numEqns() const { return 1; }
 
   void
   SingularCalogeroModified::DmDu_eval(
@@ -428,7 +404,7 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
+    real_type t8   = pow(t3 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
     real_type t10  = U__[iU_u];
     real_type t11  = ALIAS_uControl_D_1(t10, -1, 1);
     result__[ 0   ] = t11 * (ModelPars[iM_epsilon] + t8) - 2 * V__[1] + 2 * t10;
@@ -437,28 +413,15 @@ namespace SingularCalogeroModifiedDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularCalogeroModified::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  SingularCalogeroModified::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  SingularCalogeroModified::DmDuu_nnz() const
-  { return 1; }
+  integer SingularCalogeroModified::DmDuu_numRows() const { return 1; }
+  integer SingularCalogeroModified::DmDuu_numCols() const { return 1; }
+  integer SingularCalogeroModified::DmDuu_nnz()     const { return 1; }
 
   void
-  SingularCalogeroModified::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularCalogeroModified::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   SingularCalogeroModified::DmDuu_sparse(
@@ -473,7 +436,7 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
+    real_type t8   = pow(t3 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
     real_type t11  = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
     result__[ 0   ] = t11 * (ModelPars[iM_epsilon] + t8) + 2;
     if ( m_debug )

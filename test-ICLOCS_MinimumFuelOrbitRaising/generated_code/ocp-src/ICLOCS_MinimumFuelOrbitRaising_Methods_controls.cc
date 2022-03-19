@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_controls.cc             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -78,28 +78,28 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
-    real_type t2   = cos(t1);
-    real_type t3   = LM__[2];
-    real_type t5   = XM__[0];
+    real_type t1   = XM__[1];
+    real_type t5   = XM__[2];
     real_type t6   = t5 * t5;
-    real_type t8   = ModelPars[iM_T] * t6;
-    real_type t10  = LM__[1];
-    real_type t11  = sin(t1);
-    real_type t14  = XM__[1];
-    real_type t19  = XM__[2];
-    real_type t20  = t19 * t19;
-    real_type t28  = mass(QM__[0]);
-    real_type result__ = 1.0 / t28 / t6 * (t8 * t3 * t2 + t8 * t11 * t10 - t28 * (-t6 * (LM__[0] - 1) * t14 + t5 * (t19 * t14 * t3 - t10 * t20) + t10));
+    real_type t7   = XM__[0];
+    real_type t8   = 1.0 / t7;
+    real_type t10  = t7 * t7;
+    real_type t12  = ModelPars[iM_T];
+    real_type t13  = UM__[0];
+    real_type t14  = sin(t13);
+    real_type t17  = mass(QM__[0]);
+    real_type t18  = 1.0 / t17;
+    real_type t25  = cos(t13);
+    real_type result__ = -t1 + t1 * LM__[0] + (t8 * t6 - 1.0 / t10 + t18 * t14 * t12) * LM__[1] + (-t8 * t5 * t1 + t18 * t25 * t12) * LM__[2];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::g_numEqns() const { return 1; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::g_eval(
@@ -139,29 +139,18 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DgDxlxlp_numCols() const
-  { return 12; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DgDxlxlp_nnz() const
-  { return 4; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DgDxlxlp_numRows() const { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DgDxlxlp_numCols() const { return 12; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 10  ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 11  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -208,26 +197,15 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DgDu_nnz() const
-  { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DgDu_numRows() const { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DgDu_numCols() const { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DgDu_nnz()     const { return 1; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -431,9 +409,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DmDu_numEqns() const
-  { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DmDu_numEqns() const { return 1; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::DmDu_eval(
@@ -464,28 +440,15 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DmDuu_nnz() const
-  { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DmDuu_numRows() const { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DmDuu_numCols() const { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DmDuu_nnz()     const { return 1; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ICLOCS_MinimumFuelOrbitRaising::DmDuu_sparse(

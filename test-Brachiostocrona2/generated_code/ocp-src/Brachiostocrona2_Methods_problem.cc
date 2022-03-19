@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -78,13 +78,13 @@ namespace Brachiostocrona2Define {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    real_type t2   = TimePositive(t1);
+    real_type t2   = TimePositive(-t1);
     real_type t4   = U__[iU_theta];
     real_type t7   = pow(t4 - ModelPars[iM_theta0], 2);
     real_type t11  = X__[iX_v];
     real_type t12  = cos(t4);
     real_type t17  = sin(t4);
-    real_type result__ = t12 * t11 * t1 * L__[iL_lambda1__xo] + t17 * t11 * t1 * L__[iL_lambda2__xo] - t17 * ModelPars[iM_g] * t1 * L__[iL_lambda3__xo] + t7 * ModelPars[iM_epsi] + t2;
+    real_type result__ = t1 * t11 * t12 * L__[iL_lambda1__xo] + t1 * t11 * t17 * L__[iL_lambda2__xo] - t1 * t17 * L__[iL_lambda3__xo] * ModelPars[iM_g] + t7 * ModelPars[iM_epsi] + t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -99,26 +99,7 @@ namespace Brachiostocrona2Define {
   \*/
 
   real_type
-  Brachiostocrona2::penalties_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = TimePositive(P__[iP_T]);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Brachiostocrona2::control_penalties_eval(
+  Brachiostocrona2::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -129,10 +110,50 @@ namespace Brachiostocrona2Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Brachiostocrona2::JU_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Brachiostocrona2::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = TimePositive(-P__[iP_T]);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -191,9 +212,7 @@ namespace Brachiostocrona2Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Brachiostocrona2::DmayerDxxp_numEqns() const
-  { return 7; }
+  integer Brachiostocrona2::DmayerDxxp_numEqns() const { return 7; }
 
   void
   Brachiostocrona2::DmayerDxxp_eval(
@@ -230,9 +249,7 @@ namespace Brachiostocrona2Define {
    |              |___/                 |___/
   \*/
 
-  integer
-  Brachiostocrona2::DlagrangeDxup_numEqns() const
-  { return 5; }
+  integer Brachiostocrona2::DlagrangeDxup_numEqns() const { return 5; }
 
   void
   Brachiostocrona2::DlagrangeDxup_eval(
@@ -254,70 +271,68 @@ namespace Brachiostocrona2Define {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 5, i_segment );
   }
 
-  integer
-  Brachiostocrona2::DJDx_numEqns() const
-  { return 3; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Brachiostocrona2::IPOPT_hess_numRows() const { return 5; }
+  integer Brachiostocrona2::IPOPT_hess_numCols() const { return 5; }
+  integer Brachiostocrona2::IPOPT_hess_nnz()     const { return 7; }
 
   void
-  Brachiostocrona2::DJDx_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    result__[ 2   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 3, i_segment );
+  Brachiostocrona2::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 2   ; jIndex[0 ] = 3   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 4   ;
+    iIndex[2 ] = 3   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 3   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 4   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 4   ; jIndex[6 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Brachiostocrona2::DJDp_numEqns() const
-  { return 1; }
-
   void
-  Brachiostocrona2::DJDp_eval(
-    NodeType const     & NODE__,
+  Brachiostocrona2::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_TimePositive_D(P__[iP_T]);
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = P__[iP_T];
+    real_type t3   = t2 * t1;
+    real_type t4   = U__[iU_theta];
+    real_type t5   = sin(t4);
+    real_type t7   = L__[iL_lambda2__xo];
+    real_type t8   = t2 * t7;
+    real_type t9   = cos(t4);
+    result__[ 0   ] = -t3 * t5 + t9 * t8;
+    result__[ 1   ] = t9 * t1 + t5 * t7;
+    result__[ 2   ] = result__[0];
+    real_type t16  = X__[iX_v];
+    real_type t21  = L__[iL_lambda3__xo];
+    real_type t23  = ModelPars[iM_g];
+    result__[ 3   ] = t5 * t23 * t2 * t21 - t9 * t16 * t3 - t5 * t16 * t8 + 2 * sigma__ * ModelPars[iM_epsi];
+    result__[ 4   ] = -t5 * t16 * t1 + t9 * t16 * t7 - t9 * t23 * t21;
+    result__[ 5   ] = result__[1];
+    result__[ 6   ] = result__[4];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDp_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona2::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  Brachiostocrona2::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 7, i_segment );
   }
 
   /*\
@@ -350,9 +365,7 @@ namespace Brachiostocrona2Define {
    |              |___/
   \*/
 
-  integer
-  Brachiostocrona2::segmentLink_numEqns() const
-  { return 0; }
+  integer Brachiostocrona2::segmentLink_numEqns() const { return 0; }
 
   void
   Brachiostocrona2::segmentLink_eval(
@@ -366,17 +379,9 @@ namespace Brachiostocrona2Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Brachiostocrona2::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  Brachiostocrona2::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  Brachiostocrona2::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer Brachiostocrona2::DsegmentLinkDxp_numRows() const { return 0; }
+  integer Brachiostocrona2::DsegmentLinkDxp_numCols() const { return 0; }
+  integer Brachiostocrona2::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   Brachiostocrona2::DsegmentLinkDxp_pattern(
@@ -406,9 +411,7 @@ namespace Brachiostocrona2Define {
    |                 |_|
   \*/
 
-  integer
-  Brachiostocrona2::jump_numEqns() const
-  { return 6; }
+  integer Brachiostocrona2::jump_numEqns() const { return 6; }
 
   void
   Brachiostocrona2::jump_eval(
@@ -439,24 +442,12 @@ namespace Brachiostocrona2Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brachiostocrona2::DjumpDxlxlp_numRows() const
-  { return 6; }
-
-  integer
-  Brachiostocrona2::DjumpDxlxlp_numCols() const
-  { return 13; }
-
-  integer
-  Brachiostocrona2::DjumpDxlxlp_nnz() const
-  { return 12; }
+  integer Brachiostocrona2::DjumpDxlxlp_numRows() const { return 6; }
+  integer Brachiostocrona2::DjumpDxlxlp_numCols() const { return 13; }
+  integer Brachiostocrona2::DjumpDxlxlp_nnz()     const { return 12; }
 
   void
-  Brachiostocrona2::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brachiostocrona2::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -470,6 +461,7 @@ namespace Brachiostocrona2Define {
     iIndex[10] = 5   ; jIndex[10] = 5   ;
     iIndex[11] = 5   ; jIndex[11] = 11  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -515,9 +507,7 @@ namespace Brachiostocrona2Define {
    |                                                    |___/
   \*/
 
-  integer
-  Brachiostocrona2::post_numEqns() const
-  { return 0; }
+  integer Brachiostocrona2::post_numEqns() const { return 0; }
 
   void
   Brachiostocrona2::post_eval(
@@ -531,9 +521,7 @@ namespace Brachiostocrona2Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Brachiostocrona2::integrated_post_numEqns() const
-  { return 0; }
+  integer Brachiostocrona2::integrated_post_numEqns() const { return 0; }
 
   void
   Brachiostocrona2::integrated_post_eval(

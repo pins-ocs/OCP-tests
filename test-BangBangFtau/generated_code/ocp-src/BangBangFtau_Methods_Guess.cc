@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_Guess.cc                                  |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -43,8 +43,10 @@
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
-#define ALIAS_vsTBInterval_DD(__t1) vsTBInterval.DD( __t1)
-#define ALIAS_vsTBInterval_D(__t1) vsTBInterval.D( __t1)
+#define ALIAS_vsTBInterval_max_DD(__t1) vsTBInterval_max.DD( __t1)
+#define ALIAS_vsTBInterval_max_D(__t1) vsTBInterval_max.D( __t1)
+#define ALIAS_vsTBInterval_min_DD(__t1) vsTBInterval_min.DD( __t1)
+#define ALIAS_vsTBInterval_min_D(__t1) vsTBInterval_min.D( __t1)
 #define ALIAS_vsTmax_DD(__t1) vsTmax.DD( __t1)
 #define ALIAS_vsTmax_D(__t1) vsTmax.D( __t1)
 #define ALIAS_vsBpositive_DD(__t1) vsBpositive.DD( __t1)
@@ -81,10 +83,10 @@ namespace BangBangFtauDefine {
     real_type t1   = Q__[iQ_zeta];
     X__[ iX_v  ] = (1 - t1) * t1;
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 4 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 4 );
+    }
   }
 
   /*\
@@ -124,8 +126,8 @@ namespace BangBangFtauDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -136,8 +138,8 @@ namespace BangBangFtauDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -248,9 +250,7 @@ namespace BangBangFtauDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  BangBangFtau::u_guess_numEqns() const
-  { return 2; }
+  integer BangBangFtau::u_guess_numEqns() const { return 2; }
 
   void
   BangBangFtau::u_guess_eval(

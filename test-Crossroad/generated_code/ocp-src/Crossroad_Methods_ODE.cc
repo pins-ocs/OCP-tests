@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_ODE.cc                                       |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -41,8 +41,10 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_VelBound_DD(__t1) VelBound.DD( __t1)
-#define ALIAS_VelBound_D(__t1) VelBound.D( __t1)
+#define ALIAS_VelBound_max_DD(__t1) VelBound_max.DD( __t1)
+#define ALIAS_VelBound_max_D(__t1) VelBound_max.D( __t1)
+#define ALIAS_VelBound_min_DD(__t1) VelBound_min.DD( __t1)
+#define ALIAS_VelBound_min_D(__t1) VelBound_min.D( __t1)
 #define ALIAS_AccBound_DD(__t1) AccBound.DD( __t1)
 #define ALIAS_AccBound_D(__t1) AccBound.D( __t1)
 #define ALIAS_Tpositive_DD(__t1) Tpositive.DD( __t1)
@@ -67,9 +69,7 @@ namespace CrossroadDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  Crossroad::rhs_ode_numEqns() const
-  { return 4; }
+  integer Crossroad::rhs_ode_numEqns() const { return 4; }
 
   void
   Crossroad::rhs_ode_eval(
@@ -92,35 +92,25 @@ namespace CrossroadDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Crossroad::Drhs_odeDx_numRows() const
-  { return 4; }
-
-  integer
-  Crossroad::Drhs_odeDx_numCols() const
-  { return 4; }
-
-  integer
-  Crossroad::Drhs_odeDx_nnz() const
-  { return 5; }
+  integer Crossroad::Drhs_odeDxup_numRows() const { return 4; }
+  integer Crossroad::Drhs_odeDxup_numCols() const { return 5; }
+  integer Crossroad::Drhs_odeDxup_nnz()     const { return 6; }
 
   void
-  Crossroad::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Crossroad::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
     iIndex[4 ] = 2   ; jIndex[4 ] = 3   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 4   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Crossroad::Drhs_odeDx_sparse(
+  Crossroad::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -135,81 +125,9 @@ namespace CrossroadDefine {
     result__[ 2   ] = result__[0];
     result__[ 3   ] = X__[iX_a];
     result__[ 4   ] = U__[iU_jerk];
+    result__[ 5   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 5, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Crossroad::Drhs_odeDp_numRows() const
-  { return 4; }
-
-  integer
-  Crossroad::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  Crossroad::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  Crossroad::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Crossroad::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Crossroad::Drhs_odeDu_numRows() const
-  { return 4; }
-
-  integer
-  Crossroad::Drhs_odeDu_numCols() const
-  { return 1; }
-
-  integer
-  Crossroad::Drhs_odeDu_nnz() const
-  { return 1; }
-
-  void
-  Crossroad::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 2   ; jIndex[0 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Crossroad::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_Ts];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 6, i_segment );
   }
 
   /*\
@@ -219,28 +137,19 @@ namespace CrossroadDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  Crossroad::A_numRows() const
-  { return 4; }
-
-  integer
-  Crossroad::A_numCols() const
-  { return 4; }
-
-  integer
-  Crossroad::A_nnz() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Crossroad::A_numRows() const { return 4; }
+  integer Crossroad::A_numCols() const { return 4; }
+  integer Crossroad::A_nnz()     const { return 4; }
 
   void
-  Crossroad::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Crossroad::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

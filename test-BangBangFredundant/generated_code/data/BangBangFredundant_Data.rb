@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFredundant_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 20/12/2021                                       #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
-#  Copyright (C) 2021                                                   #
+#  Copyright (C) 2022                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -20,19 +20,21 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-maxAF = 100
 h0    = 0.01
+maxAF = 100
 
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = true
+  data.Debug = false
 
   # Enable doctor
   data.Doctor = false
 
   # Level of message
   data.InfoLevel = 4
+
+  data.Use_control_penalties_in_adjoint_equations = false
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -263,7 +265,6 @@ mechatronix do |data|
 
     # Model Parameters
     :maxAF => maxAF,
-    :w_F   => 10,
 
     # Guess Parameters
 
@@ -276,6 +277,7 @@ mechatronix do |data|
     # Continuation Parameters
 
     # Constraints Parameters
+    :w_F => 10,
   }
 
   #                              _
@@ -288,7 +290,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :h => h0, :delta => 0, :delta2 => 0 }
+  data.MappedObjects[:clip] = { :delta => 0, :delta2 => 0, :h => h0 }
 
 
   #                  _             _
@@ -297,7 +299,7 @@ mechatronix do |data|
   # | (_| (_) | | | | |_| | | (_) | \__ \
   #  \___\___/|_| |_|\__|_|  \___/|_|___/
   # Controls
-  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:aF1Control] = {
@@ -320,18 +322,24 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
-  # Constraint1D
+  # ConstraintLT
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-  # PenaltyBarrier1DInterval
-  data.Constraints[:Flim] = {
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:Flim_min] = {
     :subType   => "PENALTY_REGULAR",
     :epsilon   => 0.001,
     :tolerance => 0.001,
-    :min       => -1,
-    :max       => 1,
     :active    => true
   }
+  # PenaltyBarrier1DLessThan
+  data.Constraints[:Flim_max] = {
+    :subType   => "PENALTY_REGULAR",
+    :epsilon   => 0.001,
+    :tolerance => 0.001,
+    :active    => true
+  }
+  # Constraint1D: none defined
   # Constraint2D: none defined
 
 

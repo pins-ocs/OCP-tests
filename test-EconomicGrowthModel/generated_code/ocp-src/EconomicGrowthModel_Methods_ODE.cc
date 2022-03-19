@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -63,9 +63,7 @@ namespace EconomicGrowthModelDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  EconomicGrowthModel::rhs_ode_numEqns() const
-  { return 3; }
+  integer EconomicGrowthModel::rhs_ode_numEqns() const { return 3; }
 
   void
   EconomicGrowthModel::rhs_ode_eval(
@@ -89,36 +87,27 @@ namespace EconomicGrowthModelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel::Drhs_odeDx_numRows() const
-  { return 3; }
-
-  integer
-  EconomicGrowthModel::Drhs_odeDx_numCols() const
-  { return 3; }
-
-  integer
-  EconomicGrowthModel::Drhs_odeDx_nnz() const
-  { return 6; }
+  integer EconomicGrowthModel::Drhs_odeDxup_numRows() const { return 3; }
+  integer EconomicGrowthModel::Drhs_odeDxup_numCols() const { return 4; }
+  integer EconomicGrowthModel::Drhs_odeDxup_nnz()     const { return 8; }
 
   void
-  EconomicGrowthModel::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  EconomicGrowthModel::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 0   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 1   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  EconomicGrowthModel::Drhs_odeDx_sparse(
+  EconomicGrowthModel::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -138,88 +127,14 @@ namespace EconomicGrowthModelDefine {
     result__[ 1   ] = t6 * t7 * t1;
     real_type t9   = Q(t2, t3);
     result__[ 2   ] = t9 * t1;
+    result__[ 3   ] = t6 * t9;
     real_type t10  = 1 - t1;
-    result__[ 3   ] = t6 * t4 * t10;
-    result__[ 4   ] = t6 * t7 * t10;
-    result__[ 5   ] = t9 * t10;
+    result__[ 4   ] = t6 * t4 * t10;
+    result__[ 5   ] = t6 * t7 * t10;
+    result__[ 6   ] = t9 * t10;
+    result__[ 7   ] = -result__[3];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 6, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel::Drhs_odeDp_numRows() const
-  { return 3; }
-
-  integer
-  EconomicGrowthModel::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  EconomicGrowthModel::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  EconomicGrowthModel::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  EconomicGrowthModel::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel::Drhs_odeDu_numRows() const
-  { return 3; }
-
-  integer
-  EconomicGrowthModel::Drhs_odeDu_numCols() const
-  { return 1; }
-
-  integer
-  EconomicGrowthModel::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  EconomicGrowthModel::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  EconomicGrowthModel::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = Q(X__[iX_x1], X__[iX_x2]);
-    result__[ 0   ] = X__[iX_T] * t3;
-    result__[ 1   ] = -result__[0];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 8, i_segment );
   }
 
   /*\
@@ -229,27 +144,18 @@ namespace EconomicGrowthModelDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  EconomicGrowthModel::A_numRows() const
-  { return 3; }
-
-  integer
-  EconomicGrowthModel::A_numCols() const
-  { return 3; }
-
-  integer
-  EconomicGrowthModel::A_nnz() const
-  { return 3; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel::A_numRows() const { return 3; }
+  integer EconomicGrowthModel::A_numCols() const { return 3; }
+  integer EconomicGrowthModel::A_nnz()     const { return 3; }
 
   void
-  EconomicGrowthModel::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  EconomicGrowthModel::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

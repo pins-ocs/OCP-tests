@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank.hh                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,6 +76,7 @@ namespace ICLOCS_StirredTankDefine {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -112,10 +113,14 @@ namespace ICLOCS_StirredTankDefine {
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU uControl;
 
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DLessThan tfbound;
+    Mechatronix::PenaltyBarrier1DLessThan x1bound_min;
+    Mechatronix::PenaltyBarrier1DLessThan x1bound_max;
+    Mechatronix::PenaltyBarrier1DLessThan x2bound_min;
+    Mechatronix::PenaltyBarrier1DLessThan x2bound_max;
+
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrier1DGreaterThan tfbound;
-    Mechatronix::PenaltyBarrier1DInterval x1bound;
-    Mechatronix::PenaltyBarrier1DInterval x2bound;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -181,9 +186,9 @@ namespace ICLOCS_StirredTankDefine {
     ICLOCS_STIRREDTANK_API_DLL
     explicit
     ICLOCS_StirredTank(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~ICLOCS_StirredTank() override;
@@ -245,6 +250,12 @@ namespace ICLOCS_StirredTankDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    ICLOCS_STIRREDTANK_API_DLL real_type x1bound      ( real_type xo___V ) const;
+    ICLOCS_STIRREDTANK_API_DLL real_type x1bound_D    ( real_type xo___V ) const;
+    ICLOCS_STIRREDTANK_API_DLL real_type x1bound_DD   ( real_type xo___V ) const;
+    ICLOCS_STIRREDTANK_API_DLL real_type x2bound      ( real_type xo___V ) const;
+    ICLOCS_STIRREDTANK_API_DLL real_type x2bound_D    ( real_type xo___V ) const;
+    ICLOCS_STIRREDTANK_API_DLL real_type x2bound_DD   ( real_type xo___V ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

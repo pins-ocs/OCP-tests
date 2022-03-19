@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -64,17 +64,418 @@ using Mechatronix::MeshStd;
 namespace BangBangFmoduleDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  BangBangFmodule::Hx_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::JPx_numEqns() const { return 2; }
+
+  void
+  BangBangFmodule::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::LTx_numEqns() const { return 2; }
+
+  void
+  BangBangFmodule::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::JUx_numEqns() const { return 2; }
+
+  void
+  BangBangFmodule::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::JPp_numEqns() const { return 0; }
+
+  void
+  BangBangFmodule::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::LTp_numEqns() const { return 0; }
+
+  void
+  BangBangFmodule::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::JUp_numEqns() const { return 0; }
+
+  void
+  BangBangFmodule::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::JPu_numEqns() const { return 2; }
+
+  void
+  BangBangFmodule::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::LTu_numEqns() const { return 2; }
+
+  void
+  BangBangFmodule::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::JUu_numEqns() const { return 2; }
+
+  void
+  BangBangFmodule::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_controlP_D_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
+    result__[ 1   ] = ALIAS_controlM_D_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::LTargs_numEqns() const { return 0; }
+
+  void
+  BangBangFmodule::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DJPxDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DJPxDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DLTxDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DLTxDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DJUxDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DJUxDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DJPuDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DJPuDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DLTuDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DLTuDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DJUuDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DJUuDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DJPpDp_numRows() const { return 0; }
+  integer BangBangFmodule::DJPpDp_numCols() const { return 0; }
+  integer BangBangFmodule::DJPpDp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DLTpDp_numRows() const { return 0; }
+  integer BangBangFmodule::DLTpDp_numCols() const { return 0; }
+  integer BangBangFmodule::DLTpDp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DJUpDp_numRows() const { return 0; }
+  integer BangBangFmodule::DJUpDp_numCols() const { return 0; }
+  integer BangBangFmodule::DJUpDp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DLTargsDxup_numRows() const { return 0; }
+  integer BangBangFmodule::DLTargsDxup_numCols() const { return 4; }
+  integer BangBangFmodule::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::Hx_numEqns() const { return 2; }
 
   void
   BangBangFmodule::Hx_eval(
@@ -97,27 +498,33 @@ namespace BangBangFmoduleDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFmodule::DHxDx_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DHxDx_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DHxDx_nnz() const
-  { return 0; }
+  integer BangBangFmodule::Hp_numEqns() const { return 0; }
 
   void
-  BangBangFmodule::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  BangBangFmodule::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
   }
 
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DHxDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DHxDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DHxDxp_nnz()     const { return 0; }
+
   void
-  BangBangFmodule::DHxDx_sparse(
+  BangBangFmodule::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -128,30 +535,18 @@ namespace BangBangFmoduleDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DHxDp_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFmodule::DHxDp_nnz() const
-  { return 0; }
+  integer BangBangFmodule::DHpDp_numRows() const { return 0; }
+  integer BangBangFmodule::DHpDp_numCols() const { return 0; }
+  integer BangBangFmodule::DHpDp_nnz()     const { return 0; }
 
   void
-  BangBangFmodule::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFmodule::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFmodule::DHxDp_sparse(
+  BangBangFmodule::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -170,9 +565,9 @@ namespace BangBangFmoduleDefine {
    |
   \*/
 
-  integer
-  BangBangFmodule::Hu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::Hu_numEqns() const { return 2; }
 
   void
   BangBangFmodule::Hu_eval(
@@ -194,122 +589,19 @@ namespace BangBangFmoduleDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DHuDx_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DHuDx_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DHuDx_nnz() const
-  { return 0; }
+  integer BangBangFmodule::DHuDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DHuDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DHuDxp_nnz()     const { return 0; }
 
   void
-  BangBangFmodule::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFmodule::DHuDx_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BangBangFmodule::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DHuDp_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFmodule::DHuDp_nnz() const
-  { return 0; }
 
   void
-  BangBangFmodule::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFmodule::DHuDp_sparse(
+  BangBangFmodule::DHuDxp_sparse(
     NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  BangBangFmodule::Hp_numEqns() const
-  { return 0; }
-
-  void
-  BangBangFmodule::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  BangBangFmodule::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFmodule::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  BangBangFmodule::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFmodule::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -324,9 +616,10 @@ namespace BangBangFmoduleDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  BangBangFmodule::eta_numEqns() const
-  { return 2; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::eta_numEqns() const { return 2; }
 
   void
   BangBangFmodule::eta_eval(
@@ -346,62 +639,18 @@ namespace BangBangFmoduleDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DetaDx_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DetaDx_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DetaDx_nnz() const
-  { return 0; }
+  integer BangBangFmodule::DetaDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DetaDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DetaDxp_nnz()     const { return 0; }
 
   void
-  BangBangFmodule::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFmodule::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BangBangFmodule::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DetaDp_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFmodule::DetaDp_nnz() const
-  { return 0; }
 
   void
-  BangBangFmodule::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFmodule::DetaDp_sparse(
+  BangBangFmodule::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -416,9 +665,9 @@ namespace BangBangFmoduleDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  BangBangFmodule::nu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::nu_numEqns() const { return 2; }
 
   void
   BangBangFmodule::nu_eval(
@@ -438,63 +687,18 @@ namespace BangBangFmoduleDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DnuDx_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DnuDx_numCols() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DnuDx_nnz() const
-  { return 0; }
+  integer BangBangFmodule::DnuDxp_numRows() const { return 2; }
+  integer BangBangFmodule::DnuDxp_numCols() const { return 2; }
+  integer BangBangFmodule::DnuDxp_nnz()     const { return 0; }
 
   void
-  BangBangFmodule::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFmodule::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BangBangFmodule::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFmodule::DnuDp_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFmodule::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFmodule::DnuDp_nnz() const
-  { return 0; }
 
   void
-  BangBangFmodule::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFmodule::DnuDp_sparse(
+  BangBangFmodule::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

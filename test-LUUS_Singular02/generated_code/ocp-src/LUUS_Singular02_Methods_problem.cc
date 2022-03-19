@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular02_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -102,7 +102,7 @@ namespace LUUS_Singular02Define {
   \*/
 
   real_type
-  LUUS_Singular02::penalties_eval(
+  LUUS_Singular02::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -113,7 +113,7 @@ namespace LUUS_Singular02Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -121,7 +121,7 @@ namespace LUUS_Singular02Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  LUUS_Singular02::control_penalties_eval(
+  LUUS_Singular02::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -135,10 +135,31 @@ namespace LUUS_Singular02Define {
     real_type t7   = uControl(U__[iU_u], -1, 1);
     real_type result__ = t7 * (t2 + t4);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  LUUS_Singular02::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -196,9 +217,7 @@ namespace LUUS_Singular02Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  LUUS_Singular02::DmayerDxxp_numEqns() const
-  { return 4; }
+  integer LUUS_Singular02::DmayerDxxp_numEqns() const { return 4; }
 
   void
   LUUS_Singular02::DmayerDxxp_eval(
@@ -232,9 +251,7 @@ namespace LUUS_Singular02Define {
    |              |___/                 |___/
   \*/
 
-  integer
-  LUUS_Singular02::DlagrangeDxup_numEqns() const
-  { return 3; }
+  integer LUUS_Singular02::DlagrangeDxup_numEqns() const { return 3; }
 
   void
   LUUS_Singular02::DlagrangeDxup_eval(
@@ -254,67 +271,45 @@ namespace LUUS_Singular02Define {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
   }
 
-  integer
-  LUUS_Singular02::DJDx_numEqns() const
-  { return 2; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer LUUS_Singular02::IPOPT_hess_numRows() const { return 3; }
+  integer LUUS_Singular02::IPOPT_hess_numCols() const { return 3; }
+  integer LUUS_Singular02::IPOPT_hess_nnz()     const { return 1; }
 
   void
-  LUUS_Singular02::DJDx_eval(
-    NodeType const     & NODE__,
+  LUUS_Singular02::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  LUUS_Singular02::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = uControl(U__[iU_u], -1, 1);
-    result__[ 0   ] = 2 * t3 * X__[iX_x1];
-    result__[ 1   ] = 0;
+    result__[ 0   ] = 2 * sigma__;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  LUUS_Singular02::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  LUUS_Singular02::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  LUUS_Singular02::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  LUUS_Singular02::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_x1] * X__[iX_x1];
-    real_type t4   = ModelPars[iM_epsi_x1] * ModelPars[iM_epsi_x1];
-    real_type t7   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
-    result__[ 0   ] = t7 * (t2 + t4);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 1, i_segment );
   }
 
   /*\
@@ -347,9 +342,7 @@ namespace LUUS_Singular02Define {
    |              |___/
   \*/
 
-  integer
-  LUUS_Singular02::segmentLink_numEqns() const
-  { return 0; }
+  integer LUUS_Singular02::segmentLink_numEqns() const { return 0; }
 
   void
   LUUS_Singular02::segmentLink_eval(
@@ -363,17 +356,9 @@ namespace LUUS_Singular02Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  LUUS_Singular02::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  LUUS_Singular02::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  LUUS_Singular02::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer LUUS_Singular02::DsegmentLinkDxp_numRows() const { return 0; }
+  integer LUUS_Singular02::DsegmentLinkDxp_numCols() const { return 0; }
+  integer LUUS_Singular02::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   LUUS_Singular02::DsegmentLinkDxp_pattern(
@@ -403,9 +388,7 @@ namespace LUUS_Singular02Define {
    |                 |_|
   \*/
 
-  integer
-  LUUS_Singular02::jump_numEqns() const
-  { return 4; }
+  integer LUUS_Singular02::jump_numEqns() const { return 4; }
 
   void
   LUUS_Singular02::jump_eval(
@@ -433,24 +416,12 @@ namespace LUUS_Singular02Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  LUUS_Singular02::DjumpDxlxlp_numRows() const
-  { return 4; }
-
-  integer
-  LUUS_Singular02::DjumpDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  LUUS_Singular02::DjumpDxlxlp_nnz() const
-  { return 8; }
+  integer LUUS_Singular02::DjumpDxlxlp_numRows() const { return 4; }
+  integer LUUS_Singular02::DjumpDxlxlp_numCols() const { return 8; }
+  integer LUUS_Singular02::DjumpDxlxlp_nnz()     const { return 8; }
 
   void
-  LUUS_Singular02::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  LUUS_Singular02::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -460,6 +431,7 @@ namespace LUUS_Singular02Define {
     iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
     iIndex[7 ] = 3   ; jIndex[7 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -500,9 +472,7 @@ namespace LUUS_Singular02Define {
    |                                                    |___/
   \*/
 
-  integer
-  LUUS_Singular02::post_numEqns() const
-  { return 0; }
+  integer LUUS_Singular02::post_numEqns() const { return 0; }
 
   void
   LUUS_Singular02::post_eval(
@@ -516,9 +486,7 @@ namespace LUUS_Singular02Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  LUUS_Singular02::integrated_post_numEqns() const
-  { return 1; }
+  integer LUUS_Singular02::integrated_post_numEqns() const { return 1; }
 
   void
   LUUS_Singular02::integrated_post_eval(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -106,24 +106,24 @@ namespace Bike1DDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[0];
-    real_type t4   = vMinLimit(t1 - ModelPars[iM_v_min]);
-    real_type t5   = UM__[0];
-    real_type t6   = ModelPars[iM_g];
-    real_type t8   = UM__[1];
+    real_type t2   = 1.0 / t1;
+    real_type t5   = vMinLimit(ModelPars[iM_v_min] - t1);
+    real_type t10  = UM__[0];
+    real_type t11  = UM__[1];
     real_type t15  = Tmax_normalized(t1);
     real_type t17  = clip(t15, 0, ModelPars[iM_mur_max]);
-    real_type t18  = murControl(t5, ModelPars[iM_mur_min], t17);
-    real_type t20  = mufControl(t8, ModelPars[iM_muf_min], 0);
-    real_type result__ = 1.0 / t1 * (t4 + t1 * LM__[0] * (t6 * t5 + t6 * t8) + t18 + t20 + 1);
+    real_type t18  = murControl(t10, ModelPars[iM_mur_min], t17);
+    real_type t21  = mufControl(t11, ModelPars[iM_muf_min], 0);
+    real_type result__ = t5 * t2 + t2 + (t10 + t11) * ModelPars[iM_g] * LM__[0] + t18 * t2 + t21 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  Bike1D::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Bike1D::g_numEqns() const { return 2; }
 
   void
   Bike1D::g_eval(
@@ -163,24 +163,12 @@ namespace Bike1DDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Bike1D::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  Bike1D::DgDxlxlp_numCols() const
-  { return 4; }
-
-  integer
-  Bike1D::DgDxlxlp_nnz() const
-  { return 8; }
+  integer Bike1D::DgDxlxlp_numRows() const { return 2; }
+  integer Bike1D::DgDxlxlp_numCols() const { return 4; }
+  integer Bike1D::DgDxlxlp_nnz()     const { return 8; }
 
   void
-  Bike1D::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Bike1D::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -190,6 +178,7 @@ namespace Bike1DDefine {
     iIndex[6 ] = 1   ; jIndex[6 ] = 2   ;
     iIndex[7 ] = 1   ; jIndex[7 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -243,27 +232,16 @@ namespace Bike1DDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Bike1D::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  Bike1D::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  Bike1D::DgDu_nnz() const
-  { return 2; }
+  integer Bike1D::DgDu_numRows() const { return 2; }
+  integer Bike1D::DgDu_numCols() const { return 2; }
+  integer Bike1D::DgDu_nnz()     const { return 2; }
 
   void
-  Bike1D::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Bike1D::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -440,15 +418,15 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_v];
     real_type t2   = 1.0 / t1;
-    real_type t5   = vMinLimit(t1 - ModelPars[iM_v_min]);
-    real_type t7   = U__[iU_mur];
-    real_type t9   = Tmax_normalized(t1);
-    real_type t11  = clip(t9, 0, ModelPars[iM_mur_max]);
-    real_type t12  = murControl(t7, ModelPars[iM_mur_min], t11);
-    real_type t14  = U__[iU_muf];
-    real_type t16  = mufControl(t14, ModelPars[iM_muf_min], 0);
-    real_type t24  = pow(V__[0] * t1 - (t7 + t14) * ModelPars[iM_g], 2);
-    real_type result__ = t12 * t2 + t16 * t2 + t5 * t2 + t24;
+    real_type t3   = U__[iU_mur];
+    real_type t5   = Tmax_normalized(t1);
+    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
+    real_type t8   = murControl(t3, ModelPars[iM_mur_min], t7);
+    real_type t10  = U__[iU_muf];
+    real_type t12  = mufControl(t10, ModelPars[iM_muf_min], 0);
+    real_type t16  = vMinLimit(ModelPars[iM_v_min] - t1);
+    real_type t24  = pow(V__[0] * t1 - (t3 + t10) * ModelPars[iM_g], 2);
+    real_type result__ = t12 * t2 + t16 * t2 + t8 * t2 + t24;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -457,9 +435,7 @@ namespace Bike1DDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Bike1D::DmDu_numEqns() const
-  { return 2; }
+  integer Bike1D::DmDu_numEqns() const { return 2; }
 
   void
   Bike1D::DmDu_eval(
@@ -482,7 +458,7 @@ namespace Bike1DDefine {
     real_type t12  = ModelPars[iM_g];
     real_type t13  = U__[iU_muf];
     real_type t18  = 2 * t12 * (V__[0] * t1 - (t3 + t13) * t12);
-    result__[ 0   ] = t2 * t8 - t18;
+    result__[ 0   ] = t8 * t2 - t18;
     real_type t20  = ALIAS_mufControl_D_1(t13, ModelPars[iM_muf_min], 0);
     result__[ 1   ] = t20 * t2 - t18;
     if ( m_debug )
@@ -490,31 +466,18 @@ namespace Bike1DDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Bike1D::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  Bike1D::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  Bike1D::DmDuu_nnz() const
-  { return 4; }
+  integer Bike1D::DmDuu_numRows() const { return 2; }
+  integer Bike1D::DmDuu_numCols() const { return 2; }
+  integer Bike1D::DmDuu_nnz()     const { return 4; }
 
   void
-  Bike1D::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Bike1D::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Bike1D::DmDuu_sparse(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Methods_controls.cc                                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -86,9 +86,9 @@ namespace Dadebo1Define {
     return result__;
   }
 
-  integer
-  Dadebo1::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Dadebo1::g_numEqns() const { return 1; }
 
   void
   Dadebo1::g_eval(
@@ -122,29 +122,18 @@ namespace Dadebo1Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dadebo1::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  Dadebo1::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  Dadebo1::DgDxlxlp_nnz() const
-  { return 4; }
+  integer Dadebo1::DgDxlxlp_numRows() const { return 1; }
+  integer Dadebo1::DgDxlxlp_numCols() const { return 8; }
+  integer Dadebo1::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  Dadebo1::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Dadebo1::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -183,26 +172,15 @@ namespace Dadebo1Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dadebo1::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  Dadebo1::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  Dadebo1::DgDu_nnz() const
-  { return 1; }
+  integer Dadebo1::DgDu_numRows() const { return 1; }
+  integer Dadebo1::DgDu_numCols() const { return 1; }
+  integer Dadebo1::DgDu_nnz()     const { return 1; }
 
   void
-  Dadebo1::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Dadebo1::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -374,9 +352,7 @@ namespace Dadebo1Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Dadebo1::DmDu_numEqns() const
-  { return 1; }
+  integer Dadebo1::DmDu_numEqns() const { return 1; }
 
   void
   Dadebo1::DmDu_eval(
@@ -399,28 +375,15 @@ namespace Dadebo1Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dadebo1::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  Dadebo1::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  Dadebo1::DmDuu_nnz() const
-  { return 1; }
+  integer Dadebo1::DmDuu_numRows() const { return 1; }
+  integer Dadebo1::DmDuu_numCols() const { return 1; }
+  integer Dadebo1::DmDuu_nnz()     const { return 1; }
 
   void
-  Dadebo1::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Dadebo1::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Dadebo1::DmDuu_sparse(

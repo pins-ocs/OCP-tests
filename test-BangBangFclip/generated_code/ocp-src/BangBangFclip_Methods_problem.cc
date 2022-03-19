@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -112,7 +112,7 @@ namespace BangBangFclipDefine {
   \*/
 
   real_type
-  BangBangFclip::penalties_eval(
+  BangBangFclip::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -123,7 +123,7 @@ namespace BangBangFclipDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -131,7 +131,7 @@ namespace BangBangFclipDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  BangBangFclip::control_penalties_eval(
+  BangBangFclip::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -143,10 +143,31 @@ namespace BangBangFclipDefine {
     real_type t2   = ModelPars[iM_vFmax];
     real_type result__ = controlForce(U__[iU_vF], -t2, t2);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  BangBangFclip::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -204,9 +225,7 @@ namespace BangBangFclipDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFclip::DmayerDxxp_numEqns() const
-  { return 6; }
+  integer BangBangFclip::DmayerDxxp_numEqns() const { return 6; }
 
   void
   BangBangFclip::DmayerDxxp_eval(
@@ -242,9 +261,7 @@ namespace BangBangFclipDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  BangBangFclip::DlagrangeDxup_numEqns() const
-  { return 4; }
+  integer BangBangFclip::DlagrangeDxup_numEqns() const { return 4; }
 
   void
   BangBangFclip::DlagrangeDxup_eval(
@@ -265,65 +282,46 @@ namespace BangBangFclipDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
   }
 
-  integer
-  BangBangFclip::DJDx_numEqns() const
-  { return 3; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFclip::IPOPT_hess_numRows() const { return 4; }
+  integer BangBangFclip::IPOPT_hess_numCols() const { return 4; }
+  integer BangBangFclip::IPOPT_hess_nnz()     const { return 1; }
 
   void
-  BangBangFclip::DJDx_eval(
-    NodeType const     & NODE__,
+  BangBangFclip::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  BangBangFclip::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    result__[ 2   ] = 0;
+    real_type t5   = ALIAS_clip_D_1_1(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    result__[ 0   ] = t5 * L__[iL_lambda2__xo];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFclip::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  BangBangFclip::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFclip::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  BangBangFclip::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ModelPars[iM_vFmax];
-    result__[ 0   ] = ALIAS_controlForce_D_1(U__[iU_vF], -t2, t2);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 1, i_segment );
   }
 
   /*\
@@ -356,9 +354,7 @@ namespace BangBangFclipDefine {
    |              |___/
   \*/
 
-  integer
-  BangBangFclip::segmentLink_numEqns() const
-  { return 0; }
+  integer BangBangFclip::segmentLink_numEqns() const { return 0; }
 
   void
   BangBangFclip::segmentLink_eval(
@@ -372,17 +368,9 @@ namespace BangBangFclipDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFclip::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  BangBangFclip::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFclip::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer BangBangFclip::DsegmentLinkDxp_numRows() const { return 0; }
+  integer BangBangFclip::DsegmentLinkDxp_numCols() const { return 0; }
+  integer BangBangFclip::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   BangBangFclip::DsegmentLinkDxp_pattern(
@@ -412,9 +400,7 @@ namespace BangBangFclipDefine {
    |                 |_|
   \*/
 
-  integer
-  BangBangFclip::jump_numEqns() const
-  { return 6; }
+  integer BangBangFclip::jump_numEqns() const { return 6; }
 
   void
   BangBangFclip::jump_eval(
@@ -444,24 +430,12 @@ namespace BangBangFclipDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFclip::DjumpDxlxlp_numRows() const
-  { return 6; }
-
-  integer
-  BangBangFclip::DjumpDxlxlp_numCols() const
-  { return 12; }
-
-  integer
-  BangBangFclip::DjumpDxlxlp_nnz() const
-  { return 12; }
+  integer BangBangFclip::DjumpDxlxlp_numRows() const { return 6; }
+  integer BangBangFclip::DjumpDxlxlp_numCols() const { return 12; }
+  integer BangBangFclip::DjumpDxlxlp_nnz()     const { return 12; }
 
   void
-  BangBangFclip::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFclip::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -475,6 +449,7 @@ namespace BangBangFclipDefine {
     iIndex[10] = 5   ; jIndex[10] = 5   ;
     iIndex[11] = 5   ; jIndex[11] = 11  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -519,9 +494,7 @@ namespace BangBangFclipDefine {
    |                                                    |___/
   \*/
 
-  integer
-  BangBangFclip::post_numEqns() const
-  { return 1; }
+  integer BangBangFclip::post_numEqns() const { return 1; }
 
   void
   BangBangFclip::post_eval(
@@ -541,9 +514,7 @@ namespace BangBangFclipDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFclip::integrated_post_numEqns() const
-  { return 0; }
+  integer BangBangFclip::integrated_post_numEqns() const { return 0; }
 
   void
   BangBangFclip::integrated_post_eval(

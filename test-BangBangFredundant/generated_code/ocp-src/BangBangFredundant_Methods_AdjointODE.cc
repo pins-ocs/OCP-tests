@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,8 +50,10 @@ using Mechatronix::MeshStd;
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
-#define ALIAS_Flim_DD(__t1) Flim.DD( __t1)
-#define ALIAS_Flim_D(__t1) Flim.D( __t1)
+#define ALIAS_Flim_max_DD(__t1) Flim_max.DD( __t1)
+#define ALIAS_Flim_max_D(__t1) Flim_max.D( __t1)
+#define ALIAS_Flim_min_DD(__t1) Flim_min.DD( __t1)
+#define ALIAS_Flim_min_D(__t1) Flim_min.D( __t1)
 #define ALIAS_aF2Control_D_3(__t1, __t2, __t3) aF2Control.D_3( __t1, __t2, __t3)
 #define ALIAS_aF2Control_D_2(__t1, __t2, __t3) aF2Control.D_2( __t1, __t2, __t3)
 #define ALIAS_aF2Control_D_1(__t1, __t2, __t3) aF2Control.D_1( __t1, __t2, __t3)
@@ -75,17 +77,474 @@ using Mechatronix::MeshStd;
 namespace BangBangFredundantDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  BangBangFredundant::Hx_numEqns() const
-  { return 6; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::JPx_numEqns() const { return 6; }
+
+  void
+  BangBangFredundant::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::LTx_numEqns() const { return 6; }
+
+  void
+  BangBangFredundant::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    real_type t1   = ModelPars[iM_w_F];
+    real_type t2   = X__[iX_F1];
+    real_type t3   = X__[iX_F2];
+    real_type t5   = ALIAS_Flim_min_D(-1 - t2 - t3);
+    real_type t8   = ALIAS_Flim_max_D(t2 + t3 - 1);
+    result__[ 2   ] = -t5 * t1 + t8 * t1;
+    result__[ 3   ] = result__[2];
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::JUx_numEqns() const { return 6; }
+
+  void
+  BangBangFredundant::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::JPp_numEqns() const { return 0; }
+
+  void
+  BangBangFredundant::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::LTp_numEqns() const { return 0; }
+
+  void
+  BangBangFredundant::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::JUp_numEqns() const { return 0; }
+
+  void
+  BangBangFredundant::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::JPu_numEqns() const { return 2; }
+
+  void
+  BangBangFredundant::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::LTu_numEqns() const { return 2; }
+
+  void
+  BangBangFredundant::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::JUu_numEqns() const { return 2; }
+
+  void
+  BangBangFredundant::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = ModelPars[iM_maxAF];
+    result__[ 0   ] = ALIAS_aF1Control_D_1(U__[iU_aF1], -t2, t2);
+    result__[ 1   ] = ALIAS_aF2Control_D_1(U__[iU_aF2], -t2, t2);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::LTargs_numEqns() const { return 2; }
+
+  void
+  BangBangFredundant::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_F1];
+    real_type t2   = X__[iX_F2];
+    result__[ 0   ] = -1 - t1 - t2;
+    result__[ 1   ] = t1 + t2 - 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTargs_eval", 2, i_segment );
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DJPxDxp_numRows() const { return 6; }
+  integer BangBangFredundant::DJPxDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DLTxDxp_numRows() const { return 6; }
+  integer BangBangFredundant::DLTxDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DLTxDxp_nnz()     const { return 4; }
+
+  void
+  BangBangFredundant::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 3   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
+  }
+
+
+  void
+  BangBangFredundant::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_w_F];
+    real_type t2   = X__[iX_F1];
+    real_type t3   = X__[iX_F2];
+    real_type t5   = ALIAS_Flim_min_DD(-1 - t2 - t3);
+    real_type t8   = ALIAS_Flim_max_DD(t2 + t3 - 1);
+    result__[ 0   ] = t5 * t1 + t8 * t1;
+    result__[ 1   ] = result__[0];
+    result__[ 2   ] = result__[1];
+    result__[ 3   ] = result__[2];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTxDxp_sparse", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DJUxDxp_numRows() const { return 6; }
+  integer BangBangFredundant::DJUxDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DJPuDxp_numRows() const { return 2; }
+  integer BangBangFredundant::DJPuDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DLTuDxp_numRows() const { return 2; }
+  integer BangBangFredundant::DLTuDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DJUuDxp_numRows() const { return 2; }
+  integer BangBangFredundant::DJUuDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DJPpDp_numRows() const { return 0; }
+  integer BangBangFredundant::DJPpDp_numCols() const { return 0; }
+  integer BangBangFredundant::DJPpDp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DLTpDp_numRows() const { return 0; }
+  integer BangBangFredundant::DLTpDp_numCols() const { return 0; }
+  integer BangBangFredundant::DLTpDp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DJUpDp_numRows() const { return 0; }
+  integer BangBangFredundant::DJUpDp_numCols() const { return 0; }
+  integer BangBangFredundant::DJUpDp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DLTargsDxup_numRows() const { return 2; }
+  integer BangBangFredundant::DLTargsDxup_numCols() const { return 8; }
+  integer BangBangFredundant::DLTargsDxup_nnz()     const { return 4; }
+
+  void
+  BangBangFredundant::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
+  }
+
+
+  void
+  BangBangFredundant::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -1;
+    result__[ 1   ] = -1;
+    result__[ 2   ] = 1;
+    result__[ 3   ] = 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 4, i_segment );
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::Hx_numEqns() const { return 6; }
 
   void
   BangBangFredundant::Hx_eval(
@@ -102,8 +561,7 @@ namespace BangBangFredundantDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = L__[iL_lambda1__xo];
-    real_type t5   = ALIAS_Flim_D(X__[iX_F1] + X__[iX_F2]);
-    result__[ 2   ] = t5 * ModelPars[iM_w_F] + L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda2__xo];
     result__[ 3   ] = result__[2];
     result__[ 4   ] = L__[iL_lambda3__xo];
     result__[ 5   ] = L__[iL_lambda4__xo];
@@ -113,76 +571,55 @@ namespace BangBangFredundantDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFredundant::DHxDx_numRows() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DHxDx_numCols() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DHxDx_nnz() const
-  { return 4; }
+  integer BangBangFredundant::Hp_numEqns() const { return 0; }
 
   void
-  BangBangFredundant::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
-    iIndex[1 ] = 2   ; jIndex[1 ] = 3   ;
-    iIndex[2 ] = 3   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
-  }
-
-  void
-  BangBangFredundant::DHxDx_sparse(
+  BangBangFredundant::Hp_eval(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t5   = ALIAS_Flim_DD(X__[iX_F1] + X__[iX_F2]);
-    result__[ 0   ] = t5 * ModelPars[iM_w_F];
-    result__[ 1   ] = result__[0];
-    result__[ 2   ] = result__[1];
-    result__[ 3   ] = result__[2];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 4, i_segment );
+    // EMPTY
   }
 
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DHxDp_numRows() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFredundant::DHxDp_nnz() const
-  { return 0; }
+  integer BangBangFredundant::DHxDxp_numRows() const { return 6; }
+  integer BangBangFredundant::DHxDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DHxDxp_nnz()     const { return 0; }
 
   void
-  BangBangFredundant::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  BangBangFredundant::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DHxDxp_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DHpDp_numRows() const { return 0; }
+  integer BangBangFredundant::DHpDp_numCols() const { return 0; }
+  integer BangBangFredundant::DHpDp_nnz()     const { return 0; }
 
   void
-  BangBangFredundant::DHxDp_sparse(
+  BangBangFredundant::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -201,9 +638,9 @@ namespace BangBangFredundantDefine {
    |
   \*/
 
-  integer
-  BangBangFredundant::Hu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::Hu_numEqns() const { return 2; }
 
   void
   BangBangFredundant::Hu_eval(
@@ -224,122 +661,19 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DHuDx_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFredundant::DHuDx_numCols() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DHuDx_nnz() const
-  { return 0; }
+  integer BangBangFredundant::DHuDxp_numRows() const { return 2; }
+  integer BangBangFredundant::DHuDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DHuDxp_nnz()     const { return 0; }
 
   void
-  BangBangFredundant::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFredundant::DHuDx_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BangBangFredundant::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DHuDp_numRows() const
-  { return 2; }
-
-  integer
-  BangBangFredundant::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFredundant::DHuDp_nnz() const
-  { return 0; }
 
   void
-  BangBangFredundant::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFredundant::DHuDp_sparse(
+  BangBangFredundant::DHuDxp_sparse(
     NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  BangBangFredundant::Hp_numEqns() const
-  { return 0; }
-
-  void
-  BangBangFredundant::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  BangBangFredundant::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFredundant::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  BangBangFredundant::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFredundant::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -354,9 +688,10 @@ namespace BangBangFredundantDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  BangBangFredundant::eta_numEqns() const
-  { return 6; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::eta_numEqns() const { return 6; }
 
   void
   BangBangFredundant::eta_eval(
@@ -380,62 +715,18 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DetaDx_numRows() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DetaDx_numCols() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DetaDx_nnz() const
-  { return 0; }
+  integer BangBangFredundant::DetaDxp_numRows() const { return 6; }
+  integer BangBangFredundant::DetaDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DetaDxp_nnz()     const { return 0; }
 
   void
-  BangBangFredundant::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFredundant::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BangBangFredundant::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DetaDp_numRows() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFredundant::DetaDp_nnz() const
-  { return 0; }
 
   void
-  BangBangFredundant::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFredundant::DetaDp_sparse(
+  BangBangFredundant::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -450,9 +741,9 @@ namespace BangBangFredundantDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  BangBangFredundant::nu_numEqns() const
-  { return 6; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::nu_numEqns() const { return 6; }
 
   void
   BangBangFredundant::nu_eval(
@@ -476,63 +767,18 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DnuDx_numRows() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DnuDx_numCols() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DnuDx_nnz() const
-  { return 0; }
+  integer BangBangFredundant::DnuDxp_numRows() const { return 6; }
+  integer BangBangFredundant::DnuDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DnuDxp_nnz()     const { return 0; }
 
   void
-  BangBangFredundant::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFredundant::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  BangBangFredundant::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFredundant::DnuDp_numRows() const
-  { return 6; }
-
-  integer
-  BangBangFredundant::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  BangBangFredundant::DnuDp_nnz() const
-  { return 0; }
 
   void
-  BangBangFredundant::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFredundant::DnuDp_sparse(
+  BangBangFredundant::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

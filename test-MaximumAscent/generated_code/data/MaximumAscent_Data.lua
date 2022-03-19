@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -21,16 +21,16 @@
 
 -- Auxiliary values
 days1  = 30
-T      = 0.68
-g0     = 9.80665
-Isp    = 1500
-mdot   = T/g0/Isp
 mu     = 398600441800000
+r0     = 6678140
+u0     = 0
 days   = 1
 tf     = 86400*days
-r0     = 6678140
+g0     = 9.80665
+Isp    = 1500
+T      = 0.68
+mdot   = T/g0/Isp
 v0     = (mu/r0)**(1/2.0)
-u0     = 0
 u0_bar = u0/v0
 
 content = {
@@ -43,6 +43,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -300,6 +302,7 @@ content = {
   -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
+  -- ConstraintLT: none defined
   -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
@@ -312,8 +315,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 1000*days1,
+        length = 1,
       },
     },
   },

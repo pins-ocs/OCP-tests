@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -159,9 +159,7 @@ namespace PointMassCarModel_4Define {
    |   \___/|___/|___|
   \*/
 
-  integer
-  PointMassCarModel_4::rhs_ode_numEqns() const
-  { return 7; }
+  integer PointMassCarModel_4::rhs_ode_numEqns() const { return 7; }
 
   void
   PointMassCarModel_4::rhs_ode_eval(
@@ -193,24 +191,12 @@ namespace PointMassCarModel_4Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_4::Drhs_odeDx_numRows() const
-  { return 7; }
-
-  integer
-  PointMassCarModel_4::Drhs_odeDx_numCols() const
-  { return 7; }
-
-  integer
-  PointMassCarModel_4::Drhs_odeDx_nnz() const
-  { return 19; }
+  integer PointMassCarModel_4::Drhs_odeDxup_numRows() const { return 7; }
+  integer PointMassCarModel_4::Drhs_odeDxup_numCols() const { return 9; }
+  integer PointMassCarModel_4::Drhs_odeDxup_nnz()     const { return 21; }
 
   void
-  PointMassCarModel_4::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  PointMassCarModel_4::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -229,13 +215,16 @@ namespace PointMassCarModel_4Define {
     iIndex[15] = 3   ; jIndex[15] = 5   ;
     iIndex[16] = 3   ; jIndex[16] = 6   ;
     iIndex[17] = 4   ; jIndex[17] = 6   ;
-    iIndex[18] = 5   ; jIndex[18] = 6   ;
+    iIndex[18] = 4   ; jIndex[18] = 8   ;
+    iIndex[19] = 5   ; jIndex[19] = 6   ;
+    iIndex[20] = 5   ; jIndex[20] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PointMassCarModel_4::Drhs_odeDx_sparse(
+  PointMassCarModel_4::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -279,86 +268,14 @@ namespace PointMassCarModel_4Define {
     result__[ 15  ] = result__[12];
     real_type t37  = t3 * t3;
     result__[ 16  ] = result__[15] * (-t37 * t33 + X__[iX_fx]);
-    result__[ 17  ] = ModelPars[iM_v__Omega__max] * U__[iU_v__Omega] * result__[15];
-    result__[ 18  ] = ModelPars[iM_v__fx__max] * U__[iU_v__fx] * result__[15];
+    real_type t43  = ModelPars[iM_v__Omega__max];
+    result__[ 17  ] = t43 * U__[iU_v__Omega] * result__[15];
+    result__[ 18  ] = t43 * result__[15];
+    real_type t46  = ModelPars[iM_v__fx__max];
+    result__[ 19  ] = t46 * U__[iU_v__fx] * result__[15];
+    result__[ 20  ] = t46 * result__[15];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 19, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_4::Drhs_odeDp_numRows() const
-  { return 7; }
-
-  integer
-  PointMassCarModel_4::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  PointMassCarModel_4::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  PointMassCarModel_4::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  PointMassCarModel_4::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  PointMassCarModel_4::Drhs_odeDu_numRows() const
-  { return 7; }
-
-  integer
-  PointMassCarModel_4::Drhs_odeDu_numCols() const
-  { return 2; }
-
-  integer
-  PointMassCarModel_4::Drhs_odeDu_nnz() const
-  { return 2; }
-
-  void
-  PointMassCarModel_4::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 4   ; jIndex[0 ] = 1   ;
-    iIndex[1 ] = 5   ; jIndex[1 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  PointMassCarModel_4::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    real_type t2   = exp(X__[iX_log_inv_Vseg]);
-    result__[ 0   ] = ModelPars[iM_v__Omega__max] * t2;
-    result__[ 1   ] = ModelPars[iM_v__fx__max] * t2;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 21, i_segment );
   }
 
   /*\
@@ -368,23 +285,13 @@ namespace PointMassCarModel_4Define {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  PointMassCarModel_4::A_numRows() const
-  { return 7; }
-
-  integer
-  PointMassCarModel_4::A_numCols() const
-  { return 7; }
-
-  integer
-  PointMassCarModel_4::A_nnz() const
-  { return 7; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer PointMassCarModel_4::A_numRows() const { return 7; }
+  integer PointMassCarModel_4::A_numCols() const { return 7; }
+  integer PointMassCarModel_4::A_nnz()     const { return 7; }
 
   void
-  PointMassCarModel_4::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  PointMassCarModel_4::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -393,6 +300,7 @@ namespace PointMassCarModel_4Define {
     iIndex[5 ] = 5   ; jIndex[5 ] = 5   ;
     iIndex[6 ] = 6   ; jIndex[6 ] = 6   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

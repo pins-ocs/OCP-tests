@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_UserFunctions.cc                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,6 +17,7 @@
 
 #include "BangBangFtau.hh"
 #include "BangBangFtau_Pars.hh"
+#include <cmath>
 
 using namespace std;
 using namespace MechatronixLoad;
@@ -50,8 +51,10 @@ using Mechatronix::MeshStd;
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
-#define ALIAS_vsTBInterval_DD(__t1) vsTBInterval.DD( __t1)
-#define ALIAS_vsTBInterval_D(__t1) vsTBInterval.D( __t1)
+#define ALIAS_vsTBInterval_max_DD(__t1) vsTBInterval_max.DD( __t1)
+#define ALIAS_vsTBInterval_max_D(__t1) vsTBInterval_max.D( __t1)
+#define ALIAS_vsTBInterval_min_DD(__t1) vsTBInterval_min.DD( __t1)
+#define ALIAS_vsTBInterval_min_D(__t1) vsTBInterval_min.D( __t1)
 #define ALIAS_vsTmax_DD(__t1) vsTmax.DD( __t1)
 #define ALIAS_vsTmax_D(__t1) vsTmax.D( __t1)
 #define ALIAS_vsBpositive_DD(__t1) vsBpositive.DD( __t1)
@@ -61,6 +64,89 @@ using Mechatronix::MeshStd;
 
 
 namespace BangBangFtauDefine {
+  using std::acos;
+  using std::acosh;
+  using std::asin;
+  using std::asinh;
+  using std::atan;
+  using std::atan2;
+  using std::atanh;
+  using std::cbrt;
+  using std::ceil;
+  using std::abs;
+  using std::cos;
+  using std::cosh;
+  using std::exp;
+  using std::exp2;
+  using std::expm1;
+  using std::floor;
+  using std::log;
+  using std::log10;
+  using std::log1p;
+  using std::log2;
+  using std::logb;
+  using std::pow;
+  using std::hypot;
+  using std::floor;
+  using std::round;
+  using std::sin;
+  using std::sinh;
+  using std::sqrt;
+  using std::tan;
+  using std::tanh;
+  using std::trunc;
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  real_type
+  BangBangFtau::vsTBInterval( real_type xo___V ) const {
+    real_type t2   = vsTBInterval_min(-1 - xo___V);
+    real_type t4   = vsTBInterval_min(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_vsTBInterval( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  BangBangFtau::vsTBInterval_D( real_type xo___V ) const {
+    real_type t2   = ALIAS_vsTBInterval_min_D(-1 - xo___V);
+    real_type t4   = ALIAS_vsTBInterval_min_D(xo___V - 1);
+    real_type result__ = -t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_vsTBInterval_D( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  BangBangFtau::vsTBInterval_DD( real_type xo___V ) const {
+    real_type t2   = ALIAS_vsTBInterval_min_DD(-1 - xo___V);
+    real_type t4   = ALIAS_vsTBInterval_min_DD(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_vsTBInterval_DD( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
 }
 
 // EOF: BangBangFtau_Methods_UserFunctions.cc

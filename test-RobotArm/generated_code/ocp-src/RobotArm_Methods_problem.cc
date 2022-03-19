@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -131,7 +131,7 @@ namespace RobotArmDefine {
   \*/
 
   real_type
-  RobotArm::penalties_eval(
+  RobotArm::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -142,7 +142,7 @@ namespace RobotArmDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -150,7 +150,7 @@ namespace RobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  RobotArm::control_penalties_eval(
+  RobotArm::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -163,12 +163,33 @@ namespace RobotArmDefine {
     real_type t3   = u_rhoControl(U__[iU_u_rho], -1, 1);
     real_type t6   = u_thetaControl(U__[iU_u_theta], -1, 1);
     real_type t9   = u_phiControl(U__[iU_u_phi], -1, 1);
-    real_type result__ = t1 * t3 + t1 * t6 + t1 * t9;
+    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  RobotArm::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -228,9 +249,7 @@ namespace RobotArmDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  RobotArm::DmayerDxxp_numEqns() const
-  { return 13; }
+  integer RobotArm::DmayerDxxp_numEqns() const { return 13; }
 
   void
   RobotArm::DmayerDxxp_eval(
@@ -274,9 +293,7 @@ namespace RobotArmDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  RobotArm::DlagrangeDxup_numEqns() const
-  { return 10; }
+  integer RobotArm::DlagrangeDxup_numEqns() const { return 10; }
 
   void
   RobotArm::DlagrangeDxup_eval(
@@ -303,82 +320,84 @@ namespace RobotArmDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 10, i_segment );
   }
 
-  integer
-  RobotArm::DJDx_numEqns() const
-  { return 6; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer RobotArm::IPOPT_hess_numRows() const { return 10; }
+  integer RobotArm::IPOPT_hess_numCols() const { return 10; }
+  integer RobotArm::IPOPT_hess_nnz()     const { return 16; }
 
   void
-  RobotArm::DJDx_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    result__[ 2   ] = 0;
-    result__[ 3   ] = 0;
-    result__[ 4   ] = 0;
-    result__[ 5   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 6, i_segment );
+  RobotArm::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
+    iIndex[4 ] = 3   ; jIndex[4 ] = 9   ;
+    iIndex[5 ] = 4   ; jIndex[5 ] = 9   ;
+    iIndex[6 ] = 5   ; jIndex[6 ] = 9   ;
+    iIndex[7 ] = 6   ; jIndex[7 ] = 9   ;
+    iIndex[8 ] = 7   ; jIndex[8 ] = 9   ;
+    iIndex[9 ] = 8   ; jIndex[9 ] = 9   ;
+    iIndex[10] = 9   ; jIndex[10] = 3   ;
+    iIndex[11] = 9   ; jIndex[11] = 4   ;
+    iIndex[12] = 9   ; jIndex[12] = 5   ;
+    iIndex[13] = 9   ; jIndex[13] = 6   ;
+    iIndex[14] = 9   ; jIndex[14] = 7   ;
+    iIndex[15] = 9   ; jIndex[15] = 8   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  RobotArm::DJDp_numEqns() const
-  { return 1; }
-
   void
-  RobotArm::DJDp_eval(
-    NodeType const     & NODE__,
+  RobotArm::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = u_rhoControl(U__[iU_u_rho], -1, 1);
-    real_type t4   = u_thetaControl(U__[iU_u_theta], -1, 1);
-    real_type t6   = u_phiControl(U__[iU_u_phi], -1, 1);
-    result__[ 0   ] = t2 + t4 + t6;
+    real_type t1   = L__[iL_lambda2__xo];
+    real_type t2   = X__[iX_rho];
+    real_type t3   = X__[iX_phi];
+    real_type t4   = I_theta_D_1_1(t2, t3);
+    real_type t6   = V__[4];
+    real_type t8   = L__[iL_lambda3__xo];
+    real_type t9   = I_phi_DD(t2);
+    result__[ 0   ] = -t6 * t4 * t1 - V__[5] * t9 * t8;
+    real_type t13  = I_theta_D_1_2(t2, t3);
+    result__[ 1   ] = -t6 * t13 * t1;
+    result__[ 2   ] = result__[1];
+    real_type t16  = I_theta_D_2_2(t2, t3);
+    result__[ 3   ] = -t6 * t16 * t1;
+    result__[ 4   ] = L__[iL_lambda4__xo];
+    result__[ 5   ] = L__[iL_lambda5__xo];
+    result__[ 6   ] = L__[iL_lambda6__xo];
+    result__[ 7   ] = L__[iL_lambda1__xo];
+    result__[ 8   ] = t1;
+    result__[ 9   ] = t8;
+    result__[ 10  ] = result__[4];
+    result__[ 11  ] = result__[5];
+    result__[ 12  ] = result__[6];
+    result__[ 13  ] = result__[7];
+    result__[ 14  ] = result__[8];
+    result__[ 15  ] = result__[9];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDp_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::DJDu_numEqns() const
-  { return 3; }
-
-  void
-  RobotArm::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t3   = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
-    result__[ 0   ] = t1 * t3;
-    real_type t5   = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
-    result__[ 1   ] = t5 * t1;
-    real_type t7   = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);
-    result__[ 2   ] = t7 * t1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 16, i_segment );
   }
 
   /*\
@@ -411,9 +430,7 @@ namespace RobotArmDefine {
    |              |___/
   \*/
 
-  integer
-  RobotArm::segmentLink_numEqns() const
-  { return 0; }
+  integer RobotArm::segmentLink_numEqns() const { return 0; }
 
   void
   RobotArm::segmentLink_eval(
@@ -427,17 +444,9 @@ namespace RobotArmDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  RobotArm::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  RobotArm::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  RobotArm::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer RobotArm::DsegmentLinkDxp_numRows() const { return 0; }
+  integer RobotArm::DsegmentLinkDxp_numCols() const { return 0; }
+  integer RobotArm::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   RobotArm::DsegmentLinkDxp_pattern(
@@ -467,9 +476,7 @@ namespace RobotArmDefine {
    |                 |_|
   \*/
 
-  integer
-  RobotArm::jump_numEqns() const
-  { return 12; }
+  integer RobotArm::jump_numEqns() const { return 12; }
 
   void
   RobotArm::jump_eval(
@@ -514,24 +521,12 @@ namespace RobotArmDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  RobotArm::DjumpDxlxlp_numRows() const
-  { return 12; }
-
-  integer
-  RobotArm::DjumpDxlxlp_numCols() const
-  { return 25; }
-
-  integer
-  RobotArm::DjumpDxlxlp_nnz() const
-  { return 30; }
+  integer RobotArm::DjumpDxlxlp_numRows() const { return 12; }
+  integer RobotArm::DjumpDxlxlp_numCols() const { return 25; }
+  integer RobotArm::DjumpDxlxlp_nnz()     const { return 30; }
 
   void
-  RobotArm::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  RobotArm::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 12  ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -563,6 +558,7 @@ namespace RobotArmDefine {
     iIndex[28] = 11  ; jIndex[28] = 12  ;
     iIndex[29] = 11  ; jIndex[29] = 20  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -640,9 +636,7 @@ namespace RobotArmDefine {
    |                                                    |___/
   \*/
 
-  integer
-  RobotArm::post_numEqns() const
-  { return 0; }
+  integer RobotArm::post_numEqns() const { return 0; }
 
   void
   RobotArm::post_eval(
@@ -656,9 +650,7 @@ namespace RobotArmDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  RobotArm::integrated_post_numEqns() const
-  { return 0; }
+  integer RobotArm::integrated_post_numEqns() const { return 0; }
 
   void
   RobotArm::integrated_post_eval(

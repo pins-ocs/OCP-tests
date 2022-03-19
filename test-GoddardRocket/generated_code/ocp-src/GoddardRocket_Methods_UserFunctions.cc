@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_UserFunctions.cc                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,6 +17,7 @@
 
 #include "GoddardRocket.hh"
 #include "GoddardRocket_Pars.hh"
+#include <cmath>
 
 using namespace std;
 using namespace MechatronixLoad;
@@ -59,6 +60,37 @@ using Mechatronix::MeshStd;
 
 
 namespace GoddardRocketDefine {
+  using std::acos;
+  using std::acosh;
+  using std::asin;
+  using std::asinh;
+  using std::atan;
+  using std::atan2;
+  using std::atanh;
+  using std::cbrt;
+  using std::ceil;
+  using std::abs;
+  using std::cos;
+  using std::cosh;
+  using std::exp;
+  using std::exp2;
+  using std::expm1;
+  using std::floor;
+  using std::log;
+  using std::log10;
+  using std::log1p;
+  using std::log2;
+  using std::logb;
+  using std::pow;
+  using std::hypot;
+  using std::floor;
+  using std::round;
+  using std::sin;
+  using std::sinh;
+  using std::sqrt;
+  using std::tan;
+  using std::tanh;
+  using std::trunc;
   /*\
    |  _   _               ___             _   _
    | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
@@ -260,7 +292,7 @@ namespace GoddardRocketDefine {
     real_type t2   = 1 - xo__s;
     real_type t3   = log(xo__a);
     real_type t5   = log(xo__b);
-    real_type t8   = exp(t2 * t3 + t5 * xo__s);
+    real_type t8   = exp(t3 * t2 + t5 * xo__s);
     real_type t9   = t8 / xo__a;
     real_type result__ = -t9 + t9 * t2 * (-t3 + t5);
     if ( m_debug ) {
@@ -295,7 +327,7 @@ namespace GoddardRocketDefine {
     real_type t1   = 1 - xo__s;
     real_type t4   = log(xo__a);
     real_type t6   = log(xo__b);
-    real_type t9   = exp(t4 * t1 + t6 * xo__s);
+    real_type t9   = exp(t1 * t4 + t6 * xo__s);
     real_type result__ = t9 / xo__a * t1;
     if ( m_debug ) {
       UTILS_ASSERT(

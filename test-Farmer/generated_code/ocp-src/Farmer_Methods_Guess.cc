@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -105,10 +105,10 @@ namespace FarmerDefine {
     X__[ iX_res ] = 0.1e-1;
     X__[ iX_x4  ] = 0.1e-1;
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 5 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 5 );
+    }
   }
 
   /*\
@@ -148,8 +148,8 @@ namespace FarmerDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -160,8 +160,8 @@ namespace FarmerDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -289,9 +289,7 @@ namespace FarmerDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  Farmer::u_guess_numEqns() const
-  { return 4; }
+  integer Farmer::u_guess_numEqns() const { return 4; }
 
   void
   Farmer::u_guess_eval(

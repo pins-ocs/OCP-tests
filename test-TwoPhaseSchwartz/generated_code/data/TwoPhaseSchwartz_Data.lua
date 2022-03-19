@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,12 +20,12 @@
 -- User Header
 
 -- Auxiliary values
-epsi0    = 0.1
 epsilon0 = 0.001
 epsilon  = epsilon0
-epsi     = epsi0
+epsi0    = 0.1
 tol0     = 0.1
 tol      = tol0
+epsi     = epsi0
 
 content = {
 
@@ -37,6 +37,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -285,7 +287,7 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     u1Control = {
@@ -296,21 +298,22 @@ content = {
   },
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     bound1subType   = "PENALTY_REGULAR",
     bound1epsilon   = epsi,
     bound1tolerance = tol,
     bound1active    = true
 
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     bound2subType   = "PENALTY_REGULAR",
     bound2epsilon   = epsi,
     bound2tolerance = tol,
     bound2active    = true
 
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 
@@ -322,8 +325,8 @@ content = {
     segments = {
       
       {
-        n      = 100,
         length = 1,
+        n      = 100,
       },
     },
   },

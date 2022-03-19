@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Data.lua                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
+u_epsilon0   = 0.01
 u_tolerance0 = 0.01
 u_tolerance  = u_tolerance0
-u_epsilon0   = 0.01
 u_epsilon    = u_epsilon0
 
 content = {
@@ -35,6 +35,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -260,13 +262,13 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    rho = 0.01,
+    T_guess = 3,
+    W       = 0,
+    rho     = 0.01,
 
     -- Guess Parameters
 
     -- Boundary Conditions
-    T_guess        = 3,
-    W              = 0,
     alpha_f        = 0.522,
     alpha_i        = 0,
     theta_f        = 0.5,
@@ -294,7 +296,7 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     u1Control = {
@@ -310,6 +312,7 @@ content = {
   },
 
   Constraints = {
+  -- ConstraintLT: none defined
   -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
@@ -322,8 +325,8 @@ content = {
     segments = {
       
       {
-        n      = 800,
         length = 1,
+        n      = 800,
       },
     },
   },

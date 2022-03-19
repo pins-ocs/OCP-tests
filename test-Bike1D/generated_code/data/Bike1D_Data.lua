@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
-mur_max = 1
 muf_min = -1
 mur_min = -1
+mur_max = 1
 
 content = {
 
@@ -34,6 +34,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -257,7 +259,6 @@ content = {
     muf_min = muf_min,
     mur_max = mur_max,
     mur_min = mur_min,
-    v_min   = 1,
 
     -- Guess Parameters
 
@@ -266,6 +267,7 @@ content = {
     v_i = 10,
 
     -- Post Processing Parameters
+    v_min = 1,
 
     -- User Function Parameters
     Pmax = 50000,
@@ -280,13 +282,13 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithSinAtan
-    cliph = 0.01,
-    clipdelta = 0,
     clipdelta2 = 0,
+    clipdelta = 0,
+    cliph = 0.01,
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     murControl = {
@@ -302,15 +304,16 @@ content = {
   },
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     vMinLimitsubType   = "BARRIER_LOG",
     vMinLimitepsilon   = 0.1,
     vMinLimittolerance = 0.1,
     vMinLimitactive    = true
 
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 
@@ -322,8 +325,8 @@ content = {
     segments = {
       
       {
-        length = 1000,
         n      = 1000,
+        length = 1000,
       },
     },
   },

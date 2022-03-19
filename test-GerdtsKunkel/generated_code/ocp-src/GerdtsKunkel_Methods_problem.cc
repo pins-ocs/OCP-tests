@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -66,7 +66,7 @@ namespace GerdtsKunkelDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = x1Limitation(1.0 / 9.0 - X__[iX_x1]);
+    real_type t3   = x1Limitation(X__[iX_x1] - 1.0 / 9.0);
     real_type t8   = U__[iU_u];
     real_type t11  = t8 * t8;
     real_type result__ = t3 + L__[iL_lambda1__xo] * X__[iX_x2] + t8 * L__[iL_lambda2__xo] + t11 * L__[iL_lambda3__xo] / 2;
@@ -84,26 +84,7 @@ namespace GerdtsKunkelDefine {
   \*/
 
   real_type
-  GerdtsKunkel::penalties_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = x1Limitation(1.0 / 9.0 - X__[iX_x1]);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  GerdtsKunkel::control_penalties_eval(
+  GerdtsKunkel::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -114,10 +95,50 @@ namespace GerdtsKunkelDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  GerdtsKunkel::JU_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  GerdtsKunkel::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = x1Limitation(X__[iX_x1] - 1.0 / 9.0);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -175,9 +196,7 @@ namespace GerdtsKunkelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  GerdtsKunkel::DmayerDxxp_numEqns() const
-  { return 6; }
+  integer GerdtsKunkel::DmayerDxxp_numEqns() const { return 6; }
 
   void
   GerdtsKunkel::DmayerDxxp_eval(
@@ -213,9 +232,7 @@ namespace GerdtsKunkelDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  GerdtsKunkel::DlagrangeDxup_numEqns() const
-  { return 4; }
+  integer GerdtsKunkel::DlagrangeDxup_numEqns() const { return 4; }
 
   void
   GerdtsKunkel::DlagrangeDxup_eval(
@@ -236,65 +253,45 @@ namespace GerdtsKunkelDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
   }
 
-  integer
-  GerdtsKunkel::DJDx_numEqns() const
-  { return 3; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GerdtsKunkel::IPOPT_hess_numRows() const { return 4; }
+  integer GerdtsKunkel::IPOPT_hess_numCols() const { return 4; }
+  integer GerdtsKunkel::IPOPT_hess_nnz()     const { return 1; }
 
   void
-  GerdtsKunkel::DJDx_eval(
-    NodeType const     & NODE__,
+  GerdtsKunkel::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 3   ; jIndex[0 ] = 3   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  GerdtsKunkel::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_x1Limitation_D(1.0 / 9.0 - X__[iX_x1]);
-    result__[ 0   ] = -t3;
-    result__[ 1   ] = 0;
-    result__[ 2   ] = 0;
+    result__[ 0   ] = L__[iL_lambda3__xo];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GerdtsKunkel::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  GerdtsKunkel::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GerdtsKunkel::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  GerdtsKunkel::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 1, i_segment );
   }
 
   /*\
@@ -327,9 +324,7 @@ namespace GerdtsKunkelDefine {
    |              |___/
   \*/
 
-  integer
-  GerdtsKunkel::segmentLink_numEqns() const
-  { return 0; }
+  integer GerdtsKunkel::segmentLink_numEqns() const { return 0; }
 
   void
   GerdtsKunkel::segmentLink_eval(
@@ -343,17 +338,9 @@ namespace GerdtsKunkelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  GerdtsKunkel::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  GerdtsKunkel::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  GerdtsKunkel::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer GerdtsKunkel::DsegmentLinkDxp_numRows() const { return 0; }
+  integer GerdtsKunkel::DsegmentLinkDxp_numCols() const { return 0; }
+  integer GerdtsKunkel::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   GerdtsKunkel::DsegmentLinkDxp_pattern(
@@ -383,9 +370,7 @@ namespace GerdtsKunkelDefine {
    |                 |_|
   \*/
 
-  integer
-  GerdtsKunkel::jump_numEqns() const
-  { return 6; }
+  integer GerdtsKunkel::jump_numEqns() const { return 6; }
 
   void
   GerdtsKunkel::jump_eval(
@@ -415,24 +400,12 @@ namespace GerdtsKunkelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GerdtsKunkel::DjumpDxlxlp_numRows() const
-  { return 6; }
-
-  integer
-  GerdtsKunkel::DjumpDxlxlp_numCols() const
-  { return 12; }
-
-  integer
-  GerdtsKunkel::DjumpDxlxlp_nnz() const
-  { return 12; }
+  integer GerdtsKunkel::DjumpDxlxlp_numRows() const { return 6; }
+  integer GerdtsKunkel::DjumpDxlxlp_numCols() const { return 12; }
+  integer GerdtsKunkel::DjumpDxlxlp_nnz()     const { return 12; }
 
   void
-  GerdtsKunkel::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  GerdtsKunkel::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -446,6 +419,7 @@ namespace GerdtsKunkelDefine {
     iIndex[10] = 5   ; jIndex[10] = 5   ;
     iIndex[11] = 5   ; jIndex[11] = 11  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -490,9 +464,7 @@ namespace GerdtsKunkelDefine {
    |                                                    |___/
   \*/
 
-  integer
-  GerdtsKunkel::post_numEqns() const
-  { return 0; }
+  integer GerdtsKunkel::post_numEqns() const { return 0; }
 
   void
   GerdtsKunkel::post_eval(
@@ -506,9 +478,7 @@ namespace GerdtsKunkelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  GerdtsKunkel::integrated_post_numEqns() const
-  { return 0; }
+  integer GerdtsKunkel::integrated_post_numEqns() const { return 0; }
 
   void
   GerdtsKunkel::integrated_post_eval(

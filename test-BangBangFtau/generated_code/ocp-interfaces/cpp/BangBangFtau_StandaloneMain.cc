@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console    console(&std::cout,4);
-  Mechatronix::ThreadPool TP(std::thread::hardware_concurrency());
+  Mechatronix::Console console(&std::cout,4);
+  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
 
   try {
 
-    BangBangFtau     model("BangBangFtau",&TP,&console);
+    BangBangFtau     model("BangBangFtau",n_threads,&console);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -155,42 +155,47 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["h"] = 0.1;
-    data_clip["delta"] = 0;
     data_clip["delta2"] = 0;
+    data_clip["delta"] = 0;
+    data_clip["h"] = 0.1;
 
     // Controls: No penalties or barriers constraint defined
 
-    // Constraint1D
+    // ConstraintLT
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
     // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     GenericContainer & data_Constraints = gc_data["Constraints"];
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_vsTpositive = data_Constraints["vsTpositive"];
     data_vsTpositive["subType"]   = "PENALTY_REGULAR";
     data_vsTpositive["epsilon"]   = 0.001;
     data_vsTpositive["tolerance"] = 0.001;
     data_vsTpositive["active"]    = true;
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_vsBpositive = data_Constraints["vsBpositive"];
     data_vsBpositive["subType"]   = "PENALTY_REGULAR";
     data_vsBpositive["epsilon"]   = 0.001;
     data_vsBpositive["tolerance"] = 0.001;
     data_vsBpositive["active"]    = true;
-    // PenaltyBarrier1DGreaterThan
+    // PenaltyBarrier1DLessThan
     GenericContainer & data_vsTmax = data_Constraints["vsTmax"];
     data_vsTmax["subType"]   = "PENALTY_REGULAR";
     data_vsTmax["epsilon"]   = 0.001;
     data_vsTmax["tolerance"] = 0.001;
     data_vsTmax["active"]    = true;
-    // PenaltyBarrier1DInterval
-    GenericContainer & data_vsTBInterval = data_Constraints["vsTBInterval"];
-    data_vsTBInterval["subType"]   = "PENALTY_REGULAR";
-    data_vsTBInterval["epsilon"]   = 0.001;
-    data_vsTBInterval["tolerance"] = 0.001;
-    data_vsTBInterval["min"]       = -1;
-    data_vsTBInterval["max"]       = 1;
-    data_vsTBInterval["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_vsTBInterval_min = data_Constraints["vsTBInterval_min"];
+    data_vsTBInterval_min["subType"]   = "PENALTY_REGULAR";
+    data_vsTBInterval_min["epsilon"]   = 0.001;
+    data_vsTBInterval_min["tolerance"] = 0.001;
+    data_vsTBInterval_min["active"]    = true;
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_vsTBInterval_max = data_Constraints["vsTBInterval_max"];
+    data_vsTBInterval_max["subType"]   = "PENALTY_REGULAR";
+    data_vsTBInterval_max["epsilon"]   = 0.001;
+    data_vsTBInterval_max["tolerance"] = 0.001;
+    data_vsTBInterval_max["active"]    = true;
+    // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization

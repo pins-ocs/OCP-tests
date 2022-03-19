@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,19 +76,19 @@ namespace DidoDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = UM__[0];
-    real_type t5   = cos(t4);
-    real_type t8   = sin(t4);
-    real_type result__ = t5 * (-XM__[1] + LM__[0]) + t8 * LM__[1];
+    real_type t2   = UM__[0];
+    real_type t3   = cos(t2);
+    real_type t8   = sin(t2);
+    real_type result__ = t3 * LM__[0] - t3 * XM__[1] + t8 * LM__[1];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  Dido::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Dido::g_numEqns() const { return 1; }
 
   void
   Dido::g_eval(
@@ -116,33 +116,21 @@ namespace DidoDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = UM__[0];
-    real_type t5   = sin(t4);
-    real_type t8   = cos(t4);
-    result__[ 0   ] = t5 * (XM__[1] - LM__[0]) + t8 * LM__[1];
+    real_type t2   = UM__[0];
+    real_type t3   = sin(t2);
+    real_type t8   = cos(t2);
+    result__[ 0   ] = -t3 * LM__[0] + t3 * XM__[1] + t8 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dido::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  Dido::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  Dido::DgDxlxlp_nnz() const
-  { return 6; }
+  integer Dido::DgDxlxlp_numRows() const { return 1; }
+  integer Dido::DgDxlxlp_numCols() const { return 8; }
+  integer Dido::DgDxlxlp_nnz()     const { return 6; }
 
   void
-  Dido::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Dido::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -150,6 +138,7 @@ namespace DidoDefine {
     iIndex[4 ] = 0   ; jIndex[4 ] = 6   ;
     iIndex[5 ] = 0   ; jIndex[5 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -193,26 +182,15 @@ namespace DidoDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dido::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  Dido::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  Dido::DgDu_nnz() const
-  { return 1; }
+  integer Dido::DgDu_numRows() const { return 1; }
+  integer Dido::DgDu_numCols() const { return 1; }
+  integer Dido::DgDu_nnz()     const { return 1; }
 
   void
-  Dido::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Dido::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -242,10 +220,10 @@ namespace DidoDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = UM__[0];
-    real_type t5   = cos(t4);
-    real_type t8   = sin(t4);
-    result__[ 0   ] = t5 * (XM__[1] - LM__[0]) - t8 * LM__[1];
+    real_type t2   = UM__[0];
+    real_type t3   = cos(t2);
+    real_type t8   = sin(t2);
+    result__[ 0   ] = -t3 * LM__[0] + t3 * XM__[1] - t8 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -392,9 +370,7 @@ namespace DidoDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Dido::DmDu_numEqns() const
-  { return 1; }
+  integer Dido::DmDu_numEqns() const { return 1; }
 
   void
   Dido::DmDu_eval(
@@ -417,28 +393,15 @@ namespace DidoDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Dido::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  Dido::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  Dido::DmDuu_nnz() const
-  { return 1; }
+  integer Dido::DmDuu_numRows() const { return 1; }
+  integer Dido::DmDuu_numCols() const { return 1; }
+  integer Dido::DmDuu_nnz()     const { return 1; }
 
   void
-  Dido::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Dido::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Dido::DmDuu_sparse(

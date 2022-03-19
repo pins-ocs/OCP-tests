@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_problem.cc              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -89,7 +89,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   \*/
 
   real_type
-  ICLOCS_MinimumFuelOrbitRaising::penalties_eval(
+  ICLOCS_MinimumFuelOrbitRaising::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -100,7 +100,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -108,7 +108,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ICLOCS_MinimumFuelOrbitRaising::control_penalties_eval(
+  ICLOCS_MinimumFuelOrbitRaising::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -119,10 +119,31 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ICLOCS_MinimumFuelOrbitRaising::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -180,9 +201,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DmayerDxxp_numEqns() const
-  { return 6; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DmayerDxxp_numEqns() const { return 6; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::DmayerDxxp_eval(
@@ -218,9 +237,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DlagrangeDxup_numEqns() const
-  { return 4; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DlagrangeDxup_numEqns() const { return 4; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::DlagrangeDxup_eval(
@@ -241,64 +258,78 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
   }
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DJDx_numEqns() const
-  { return 3; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::IPOPT_hess_numRows() const { return 4; }
+  integer ICLOCS_MinimumFuelOrbitRaising::IPOPT_hess_numCols() const { return 4; }
+  integer ICLOCS_MinimumFuelOrbitRaising::IPOPT_hess_nnz()     const { return 9; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DJDx_eval(
-    NodeType const     & NODE__,
+  ICLOCS_MinimumFuelOrbitRaising::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 0   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 1   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 2   ;
+    iIndex[8 ] = 3   ; jIndex[8 ] = 3   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
-    result__[ 2   ] = 0;
+    real_type t1   = L__[iL_lambda2__xo];
+    real_type t2   = X__[iX_vt];
+    real_type t3   = t2 * t2;
+    real_type t4   = X__[iX_r];
+    real_type t5   = t4 * t4;
+    real_type t7   = 1.0 / t5 / t4;
+    real_type t10  = t5 * t5;
+    real_type t15  = L__[iL_lambda3__xo];
+    real_type t17  = X__[iX_vr] * t15;
+    result__[ 0   ] = (2 * t7 * t3 - 6 / t10) * t1 - 2 * t7 * t2 * t17;
+    real_type t22  = 1.0 / t5;
+    result__[ 1   ] = t22 * t2 * t15;
+    result__[ 2   ] = -2 * t22 * t2 * t1 + t22 * t17;
+    result__[ 3   ] = result__[1];
+    real_type t27  = 1.0 / t4;
+    result__[ 4   ] = -t27 * t15;
+    result__[ 5   ] = result__[2];
+    result__[ 6   ] = result__[4];
+    result__[ 7   ] = 2 * t27 * t1;
+    real_type t30  = ModelPars[iM_T];
+    real_type t32  = U__[iU_theta];
+    real_type t33  = sin(t32);
+    real_type t35  = mass(Q__[iQ_zeta]);
+    real_type t36  = 1.0 / t35;
+    real_type t40  = cos(t32);
+    result__[ 8   ] = -t36 * t33 * t30 * t1 - t36 * t40 * t30 * t15;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 9, i_segment );
   }
 
   /*\
@@ -331,9 +362,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |              |___/
   \*/
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::segmentLink_numEqns() const
-  { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::segmentLink_numEqns() const { return 0; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::segmentLink_eval(
@@ -347,17 +376,9 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DsegmentLinkDxp_numRows() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DsegmentLinkDxp_numCols() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::DsegmentLinkDxp_pattern(
@@ -387,9 +408,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |                 |_|
   \*/
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::jump_numEqns() const
-  { return 6; }
+  integer ICLOCS_MinimumFuelOrbitRaising::jump_numEqns() const { return 6; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::jump_eval(
@@ -419,24 +438,12 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DjumpDxlxlp_numRows() const
-  { return 6; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DjumpDxlxlp_numCols() const
-  { return 12; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DjumpDxlxlp_nnz() const
-  { return 12; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DjumpDxlxlp_numRows() const { return 6; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DjumpDxlxlp_numCols() const { return 12; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DjumpDxlxlp_nnz()     const { return 12; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -450,6 +457,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     iIndex[10] = 5   ; jIndex[10] = 5   ;
     iIndex[11] = 5   ; jIndex[11] = 11  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -494,9 +502,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |                                                    |___/
   \*/
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::post_numEqns() const
-  { return 2; }
+  integer ICLOCS_MinimumFuelOrbitRaising::post_numEqns() const { return 2; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::post_eval(
@@ -519,9 +525,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::integrated_post_numEqns() const
-  { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::integrated_post_numEqns() const { return 0; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::integrated_post_eval(

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_dll_pins.hh                                         |
  |                                                                       |
- |  version: 1.0   date 31/1/2022                                        |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -108,8 +108,8 @@ namespace UnderwaterDefine {
   public:
 
     UNDERWATER_API_DLL
-    Underwater_Problem( ThreadPool * TP, Console const * console )
-    : model("Underwater",TP,console)
+    Underwater_Problem( integer n_threads, Console const * console )
+    : model("Underwater",n_threads,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -44,17 +44,421 @@ using Mechatronix::MeshStd;
 namespace MaximumAscentDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  MaximumAscent::Hx_numEqns() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::JPx_numEqns() const { return 4; }
+
+  void
+  MaximumAscent::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::LTx_numEqns() const { return 4; }
+
+  void
+  MaximumAscent::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::JUx_numEqns() const { return 4; }
+
+  void
+  MaximumAscent::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::JPp_numEqns() const { return 0; }
+
+  void
+  MaximumAscent::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::LTp_numEqns() const { return 0; }
+
+  void
+  MaximumAscent::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::JUp_numEqns() const { return 0; }
+
+  void
+  MaximumAscent::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::JPu_numEqns() const { return 1; }
+
+  void
+  MaximumAscent::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::LTu_numEqns() const { return 1; }
+
+  void
+  MaximumAscent::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::JUu_numEqns() const { return 1; }
+
+  void
+  MaximumAscent::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::LTargs_numEqns() const { return 0; }
+
+  void
+  MaximumAscent::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DJPxDxp_numRows() const { return 4; }
+  integer MaximumAscent::DJPxDxp_numCols() const { return 4; }
+  integer MaximumAscent::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DLTxDxp_numRows() const { return 4; }
+  integer MaximumAscent::DLTxDxp_numCols() const { return 4; }
+  integer MaximumAscent::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DJUxDxp_numRows() const { return 4; }
+  integer MaximumAscent::DJUxDxp_numCols() const { return 4; }
+  integer MaximumAscent::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DJPuDxp_numRows() const { return 1; }
+  integer MaximumAscent::DJPuDxp_numCols() const { return 4; }
+  integer MaximumAscent::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DLTuDxp_numRows() const { return 1; }
+  integer MaximumAscent::DLTuDxp_numCols() const { return 4; }
+  integer MaximumAscent::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DJUuDxp_numRows() const { return 1; }
+  integer MaximumAscent::DJUuDxp_numCols() const { return 4; }
+  integer MaximumAscent::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DJPpDp_numRows() const { return 0; }
+  integer MaximumAscent::DJPpDp_numCols() const { return 0; }
+  integer MaximumAscent::DJPpDp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DLTpDp_numRows() const { return 0; }
+  integer MaximumAscent::DLTpDp_numCols() const { return 0; }
+  integer MaximumAscent::DLTpDp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DJUpDp_numRows() const { return 0; }
+  integer MaximumAscent::DJUpDp_numCols() const { return 0; }
+  integer MaximumAscent::DJUpDp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DLTargsDxup_numRows() const { return 0; }
+  integer MaximumAscent::DLTargsDxup_numCols() const { return 5; }
+  integer MaximumAscent::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::Hx_numEqns() const { return 4; }
 
   void
   MaximumAscent::Hx_eval(
@@ -92,23 +496,27 @@ namespace MaximumAscentDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  MaximumAscent::DHxDx_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DHxDx_numCols() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DHxDx_nnz() const
-  { return 8; }
+  integer MaximumAscent::Hp_numEqns() const { return 0; }
 
   void
-  MaximumAscent::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  MaximumAscent::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::DHxDxp_numRows() const { return 4; }
+  integer MaximumAscent::DHxDxp_numCols() const { return 4; }
+  integer MaximumAscent::DHxDxp_nnz()     const { return 8; }
+
+  void
+  MaximumAscent::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -119,8 +527,9 @@ namespace MaximumAscentDefine {
     iIndex[7 ] = 2   ; jIndex[7 ] = 2   ;
   }
 
+
   void
-  MaximumAscent::DHxDx_sparse(
+  MaximumAscent::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -156,34 +565,22 @@ namespace MaximumAscentDefine {
     result__[ 6   ] = result__[4];
     result__[ 7   ] = 2 * t38 * t5;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 8, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DHxDp_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DHxDp_nnz() const
-  { return 0; }
+  integer MaximumAscent::DHpDp_numRows() const { return 0; }
+  integer MaximumAscent::DHpDp_numCols() const { return 0; }
+  integer MaximumAscent::DHpDp_nnz()     const { return 0; }
 
   void
-  MaximumAscent::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  MaximumAscent::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  MaximumAscent::DHxDp_sparse(
+  MaximumAscent::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -202,9 +599,9 @@ namespace MaximumAscentDefine {
    |
   \*/
 
-  integer
-  MaximumAscent::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::Hu_numEqns() const { return 1; }
 
   void
   MaximumAscent::Hu_eval(
@@ -230,122 +627,19 @@ namespace MaximumAscentDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  MaximumAscent::DHuDx_numCols() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DHuDx_nnz() const
-  { return 0; }
+  integer MaximumAscent::DHuDxp_numRows() const { return 1; }
+  integer MaximumAscent::DHuDxp_numCols() const { return 4; }
+  integer MaximumAscent::DHuDxp_nnz()     const { return 0; }
 
   void
-  MaximumAscent::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MaximumAscent::DHuDx_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  MaximumAscent::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  MaximumAscent::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DHuDp_nnz() const
-  { return 0; }
 
   void
-  MaximumAscent::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MaximumAscent::DHuDp_sparse(
+  MaximumAscent::DHuDxp_sparse(
     NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  MaximumAscent::Hp_numEqns() const
-  { return 0; }
-
-  void
-  MaximumAscent::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  MaximumAscent::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MaximumAscent::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -360,9 +654,10 @@ namespace MaximumAscentDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  MaximumAscent::eta_numEqns() const
-  { return 4; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::eta_numEqns() const { return 4; }
 
   void
   MaximumAscent::eta_eval(
@@ -384,62 +679,18 @@ namespace MaximumAscentDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DetaDx_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DetaDx_numCols() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DetaDx_nnz() const
-  { return 0; }
+  integer MaximumAscent::DetaDxp_numRows() const { return 4; }
+  integer MaximumAscent::DetaDxp_numCols() const { return 4; }
+  integer MaximumAscent::DetaDxp_nnz()     const { return 0; }
 
   void
-  MaximumAscent::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MaximumAscent::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  MaximumAscent::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DetaDp_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DetaDp_nnz() const
-  { return 0; }
 
   void
-  MaximumAscent::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MaximumAscent::DetaDp_sparse(
+  MaximumAscent::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -454,9 +705,9 @@ namespace MaximumAscentDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  MaximumAscent::nu_numEqns() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MaximumAscent::nu_numEqns() const { return 4; }
 
   void
   MaximumAscent::nu_eval(
@@ -478,63 +729,18 @@ namespace MaximumAscentDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DnuDx_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DnuDx_numCols() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DnuDx_nnz() const
-  { return 0; }
+  integer MaximumAscent::DnuDxp_numRows() const { return 4; }
+  integer MaximumAscent::DnuDxp_numCols() const { return 4; }
+  integer MaximumAscent::DnuDxp_nnz()     const { return 0; }
 
   void
-  MaximumAscent::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MaximumAscent::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  MaximumAscent::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  MaximumAscent::DnuDp_numRows() const
-  { return 4; }
-
-  integer
-  MaximumAscent::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  MaximumAscent::DnuDp_nnz() const
-  { return 0; }
 
   void
-  MaximumAscent::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  MaximumAscent::DnuDp_sparse(
+  MaximumAscent::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

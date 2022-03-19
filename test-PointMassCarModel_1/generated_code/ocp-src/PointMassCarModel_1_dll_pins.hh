@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_dll_pins.hh                                |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -108,8 +108,8 @@ namespace PointMassCarModel_1Define {
   public:
 
     POINTMASSCARMODEL_1_API_DLL
-    PointMassCarModel_1_Problem( ThreadPool * TP, Console const * console )
-    : model("PointMassCarModel_1",TP,console)
+    PointMassCarModel_1_Problem( integer n_threads, Console const * console )
+    : model("PointMassCarModel_1",n_threads,console)
     , road( "road" )
     {
       Mechatronix::activate_ctrlC();

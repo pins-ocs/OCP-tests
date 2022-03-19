@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_AdjointODE.cc           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -44,17 +44,418 @@ using Mechatronix::MeshStd;
 namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Hx_numEqns() const
-  { return 3; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::JPx_numEqns() const { return 3; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::LTx_numEqns() const { return 3; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::JUx_numEqns() const { return 3; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::JPp_numEqns() const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::LTp_numEqns() const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::JUp_numEqns() const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::JPu_numEqns() const { return 1; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::LTu_numEqns() const { return 1; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::JUu_numEqns() const { return 1; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::LTargs_numEqns() const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DJPxDxp_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJPxDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTxDxp_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTxDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DJUxDxp_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJUxDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DJPuDxp_numRows() const { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJPuDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTuDxp_numRows() const { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTuDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DJUuDxp_numRows() const { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJUuDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DJPpDp_numRows() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJPpDp_numCols() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJPpDp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTpDp_numRows() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTpDp_numCols() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTpDp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DJUpDp_numRows() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJUpDp_numCols() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DJUpDp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTargsDxup_numRows() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTargsDxup_numCols() const { return 4; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::Hx_numEqns() const { return 3; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::Hx_eval(
@@ -87,23 +488,27 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHxDx_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHxDx_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHxDx_nnz() const
-  { return 8; }
+  integer ICLOCS_MinimumFuelOrbitRaising::Hp_numEqns() const { return 0; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  ICLOCS_MinimumFuelOrbitRaising::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::DHxDxp_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHxDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHxDxp_nnz()     const { return 8; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -114,8 +519,9 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     iIndex[7 ] = 2   ; jIndex[7 ] = 2   ;
   }
 
+
   void
-  ICLOCS_MinimumFuelOrbitRaising::DHxDx_sparse(
+  ICLOCS_MinimumFuelOrbitRaising::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -147,34 +553,22 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     result__[ 6   ] = result__[4];
     result__[ 7   ] = 2 * t27 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 8, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHxDp_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHxDp_nnz() const
-  { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHpDp_numRows() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHpDp_numCols() const { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHpDp_nnz()     const { return 0; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DHxDp_sparse(
+  ICLOCS_MinimumFuelOrbitRaising::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -193,9 +587,9 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |
   \*/
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::Hu_numEqns() const { return 1; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::Hu_eval(
@@ -221,122 +615,19 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHuDx_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHuDx_nnz() const
-  { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHuDxp_numRows() const { return 1; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHuDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHuDxp_nnz()     const { return 0; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DHuDx_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHuDp_nnz() const
-  { return 0; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DHuDp_sparse(
+  ICLOCS_MinimumFuelOrbitRaising::DHuDxp_sparse(
     NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::Hp_numEqns() const
-  { return 0; }
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -351,9 +642,10 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::eta_numEqns() const
-  { return 3; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::eta_numEqns() const { return 3; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::eta_eval(
@@ -374,62 +666,18 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DetaDx_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DetaDx_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DetaDx_nnz() const
-  { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DetaDxp_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DetaDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DetaDxp_nnz()     const { return 0; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DetaDp_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DetaDp_nnz() const
-  { return 0; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DetaDp_sparse(
+  ICLOCS_MinimumFuelOrbitRaising::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -444,9 +692,9 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::nu_numEqns() const
-  { return 3; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_MinimumFuelOrbitRaising::nu_numEqns() const { return 3; }
 
   void
   ICLOCS_MinimumFuelOrbitRaising::nu_eval(
@@ -467,63 +715,18 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DnuDx_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DnuDx_numCols() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DnuDx_nnz() const
-  { return 0; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DnuDxp_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DnuDxp_numCols() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DnuDxp_nnz()     const { return 0; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DnuDp_numRows() const
-  { return 3; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  ICLOCS_MinimumFuelOrbitRaising::DnuDp_nnz() const
-  { return 0; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DnuDp_sparse(
+  ICLOCS_MinimumFuelOrbitRaising::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

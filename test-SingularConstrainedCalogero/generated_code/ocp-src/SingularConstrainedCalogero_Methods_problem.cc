@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_problem.cc                 |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -88,10 +88,10 @@ namespace SingularConstrainedCalogeroDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t3   = Q__[iQ_zeta];
-    real_type t5   = uMaxBound(t1 - 1 - X__[iX_x] + t3);
-    real_type result__ = t5 + (t3 - 4) * t1 + t1 * L__[iL_lambda1__xo];
+    real_type t2   = Q__[iQ_zeta];
+    real_type t3   = U__[iU_u];
+    real_type t5   = uMaxBound(X__[iX_x] - t2 - t3 + 1);
+    real_type result__ = t5 + (t2 - 4) * t3 + t3 * L__[iL_lambda1__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -106,7 +106,7 @@ namespace SingularConstrainedCalogeroDefine {
   \*/
 
   real_type
-  SingularConstrainedCalogero::penalties_eval(
+  SingularConstrainedCalogero::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -115,9 +115,9 @@ namespace SingularConstrainedCalogeroDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = uMaxBound(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
+    real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -125,7 +125,7 @@ namespace SingularConstrainedCalogeroDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  SingularConstrainedCalogero::control_penalties_eval(
+  SingularConstrainedCalogero::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -136,10 +136,31 @@ namespace SingularConstrainedCalogeroDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = uControl(U__[iU_u], 0, 2);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  SingularConstrainedCalogero::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = uMaxBound(X__[iX_x] - Q__[iQ_zeta] - U__[iU_u] + 1);
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -197,9 +218,7 @@ namespace SingularConstrainedCalogeroDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularConstrainedCalogero::DmayerDxxp_numEqns() const
-  { return 2; }
+  integer SingularConstrainedCalogero::DmayerDxxp_numEqns() const { return 2; }
 
   void
   SingularConstrainedCalogero::DmayerDxxp_eval(
@@ -231,9 +250,7 @@ namespace SingularConstrainedCalogeroDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  SingularConstrainedCalogero::DlagrangeDxup_numEqns() const
-  { return 2; }
+  integer SingularConstrainedCalogero::DlagrangeDxup_numEqns() const { return 2; }
 
   void
   SingularConstrainedCalogero::DlagrangeDxup_eval(
@@ -252,66 +269,38 @@ namespace SingularConstrainedCalogeroDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 2, i_segment );
   }
 
-  integer
-  SingularConstrainedCalogero::DJDx_numEqns() const
-  { return 1; }
-
-  void
-  SingularConstrainedCalogero::DJDx_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t5   = ALIAS_uMaxBound_D(U__[iU_u] - 1 - X__[iX_x] + Q__[iQ_zeta]);
-    result__[ 0   ] = -t5;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 1, i_segment );
-  }
-
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularConstrainedCalogero::DJDp_numEqns() const
-  { return 0; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SingularConstrainedCalogero::IPOPT_hess_numRows() const { return 2; }
+  integer SingularConstrainedCalogero::IPOPT_hess_numCols() const { return 2; }
+  integer SingularConstrainedCalogero::IPOPT_hess_nnz()     const { return 0; }
 
   void
-  SingularConstrainedCalogero::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  SingularConstrainedCalogero::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularConstrainedCalogero::DJDu_numEqns() const
-  { return 1; }
-
   void
-  SingularConstrainedCalogero::DJDu_eval(
-    NodeType const     & NODE__,
+  SingularConstrainedCalogero::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t5   = ALIAS_uMaxBound_D(t1 - 1 - X__[iX_x] + Q__[iQ_zeta]);
-    real_type t6   = ALIAS_uControl_D_1(t1, 0, 2);
-    result__[ 0   ] = t5 + t6;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+    // EMPTY!
   }
 
   /*\
@@ -344,9 +333,7 @@ namespace SingularConstrainedCalogeroDefine {
    |              |___/
   \*/
 
-  integer
-  SingularConstrainedCalogero::segmentLink_numEqns() const
-  { return 0; }
+  integer SingularConstrainedCalogero::segmentLink_numEqns() const { return 0; }
 
   void
   SingularConstrainedCalogero::segmentLink_eval(
@@ -360,17 +347,9 @@ namespace SingularConstrainedCalogeroDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularConstrainedCalogero::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  SingularConstrainedCalogero::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  SingularConstrainedCalogero::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer SingularConstrainedCalogero::DsegmentLinkDxp_numRows() const { return 0; }
+  integer SingularConstrainedCalogero::DsegmentLinkDxp_numCols() const { return 0; }
+  integer SingularConstrainedCalogero::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   SingularConstrainedCalogero::DsegmentLinkDxp_pattern(
@@ -400,9 +379,7 @@ namespace SingularConstrainedCalogeroDefine {
    |                 |_|
   \*/
 
-  integer
-  SingularConstrainedCalogero::jump_numEqns() const
-  { return 2; }
+  integer SingularConstrainedCalogero::jump_numEqns() const { return 2; }
 
   void
   SingularConstrainedCalogero::jump_eval(
@@ -428,29 +405,18 @@ namespace SingularConstrainedCalogeroDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  SingularConstrainedCalogero::DjumpDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  SingularConstrainedCalogero::DjumpDxlxlp_numCols() const
-  { return 4; }
-
-  integer
-  SingularConstrainedCalogero::DjumpDxlxlp_nnz() const
-  { return 4; }
+  integer SingularConstrainedCalogero::DjumpDxlxlp_numRows() const { return 2; }
+  integer SingularConstrainedCalogero::DjumpDxlxlp_numCols() const { return 4; }
+  integer SingularConstrainedCalogero::DjumpDxlxlp_nnz()     const { return 4; }
 
   void
-  SingularConstrainedCalogero::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  SingularConstrainedCalogero::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -487,9 +453,7 @@ namespace SingularConstrainedCalogeroDefine {
    |                                                    |___/
   \*/
 
-  integer
-  SingularConstrainedCalogero::post_numEqns() const
-  { return 1; }
+  integer SingularConstrainedCalogero::post_numEqns() const { return 1; }
 
   void
   SingularConstrainedCalogero::post_eval(
@@ -509,9 +473,7 @@ namespace SingularConstrainedCalogeroDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  SingularConstrainedCalogero::integrated_post_numEqns() const
-  { return 1; }
+  integer SingularConstrainedCalogero::integrated_post_numEqns() const { return 1; }
 
   void
   SingularConstrainedCalogero::integrated_post_eval(

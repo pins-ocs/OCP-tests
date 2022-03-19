@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -80,7 +80,7 @@ namespace BrysonDenhamDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = X1bound(1.0 / 9.0 - XM__[0]);
+    real_type t3   = X1bound(XM__[0] - 1.0 / 9.0);
     real_type t4   = UM__[0];
     real_type t5   = t4 * t4;
     real_type result__ = t3 + t5 / 2 + LM__[0] * XM__[1] + t4 * LM__[1];
@@ -90,9 +90,9 @@ namespace BrysonDenhamDefine {
     return result__;
   }
 
-  integer
-  BrysonDenham::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BrysonDenham::g_numEqns() const { return 1; }
 
   void
   BrysonDenham::g_eval(
@@ -126,27 +126,16 @@ namespace BrysonDenhamDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  BrysonDenham::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  BrysonDenham::DgDxlxlp_nnz() const
-  { return 2; }
+  integer BrysonDenham::DgDxlxlp_numRows() const { return 1; }
+  integer BrysonDenham::DgDxlxlp_numCols() const { return 8; }
+  integer BrysonDenham::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  BrysonDenham::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BrysonDenham::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -183,26 +172,15 @@ namespace BrysonDenhamDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  BrysonDenham::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  BrysonDenham::DgDu_nnz() const
-  { return 1; }
+  integer BrysonDenham::DgDu_numRows() const { return 1; }
+  integer BrysonDenham::DgDu_numCols() const { return 1; }
+  integer BrysonDenham::DgDu_nnz()     const { return 1; }
 
   void
-  BrysonDenham::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BrysonDenham::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -358,7 +336,7 @@ namespace BrysonDenhamDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = X1bound(1.0 / 9.0 - X__[iX_x]);
+    real_type t3   = X1bound(X__[iX_x] - 1.0 / 9.0);
     real_type t7   = pow(V__[0] - X__[iX_v], 2);
     real_type t11  = pow(V__[1] - U__[iU_u], 2);
     real_type result__ = t3 + t7 + t11;
@@ -370,9 +348,7 @@ namespace BrysonDenhamDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BrysonDenham::DmDu_numEqns() const
-  { return 1; }
+  integer BrysonDenham::DmDu_numEqns() const { return 1; }
 
   void
   BrysonDenham::DmDu_eval(
@@ -392,28 +368,15 @@ namespace BrysonDenhamDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BrysonDenham::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  BrysonDenham::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  BrysonDenham::DmDuu_nnz() const
-  { return 1; }
+  integer BrysonDenham::DmDuu_numRows() const { return 1; }
+  integer BrysonDenham::DmDuu_numCols() const { return 1; }
+  integer BrysonDenham::DmDuu_nnz()     const { return 1; }
 
   void
-  BrysonDenham::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BrysonDenham::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BrysonDenham::DmDuu_sparse(

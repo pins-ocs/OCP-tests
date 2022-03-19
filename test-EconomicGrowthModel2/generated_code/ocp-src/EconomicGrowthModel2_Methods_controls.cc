@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_controls.cc                       |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -96,20 +96,21 @@ namespace EconomicGrowthModel2Define {
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[4];
-    real_type t2   = UM__[0];
+    real_type t2   = Tpositive(-t1);
+    real_type t8   = UM__[0];
     real_type t12  = Q(XM__[0], XM__[1]);
-    real_type t14  = Tpositive(t1);
-    real_type t21  = uControl(t2, 0, 1);
-    real_type result__ = t12 * (LM__[3] * (1 - t2) + t2 * LM__[1]) * t1 + t14 + t1 * (LM__[0] * XM__[2] + LM__[2] * XM__[3] + t21);
+    real_type t13  = t1 * t12;
+    real_type t23  = uControl(t8, 0, 1);
+    real_type result__ = t2 + t1 * XM__[2] * LM__[0] + t13 * t8 * LM__[1] + t1 * XM__[3] * LM__[2] + t13 * (1 - t8) * LM__[3] + t23 * t1;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  EconomicGrowthModel2::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer EconomicGrowthModel2::g_numEqns() const { return 1; }
 
   void
   EconomicGrowthModel2::g_eval(
@@ -143,32 +144,21 @@ namespace EconomicGrowthModel2Define {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t6   = Q(XM__[0], XM__[1]);
-    real_type t9   = ALIAS_uControl_D_1(UM__[0], 0, 1);
-    result__[ 0   ] = XM__[4] * (t6 * (LM__[1] - LM__[3]) + t9);
+    real_type t4   = Q(XM__[0], XM__[1]);
+    real_type t6   = XM__[4];
+    real_type t12  = ALIAS_uControl_D_1(UM__[0], 0, 1);
+    result__[ 0   ] = t6 * t4 * LM__[1] - t6 * t4 * LM__[3] + t12 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  EconomicGrowthModel2::DgDxlxlp_numCols() const
-  { return 20; }
-
-  integer
-  EconomicGrowthModel2::DgDxlxlp_nnz() const
-  { return 10; }
+  integer EconomicGrowthModel2::DgDxlxlp_numRows() const { return 1; }
+  integer EconomicGrowthModel2::DgDxlxlp_numCols() const { return 20; }
+  integer EconomicGrowthModel2::DgDxlxlp_nnz()     const { return 10; }
 
   void
-  EconomicGrowthModel2::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  EconomicGrowthModel2::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -180,6 +170,7 @@ namespace EconomicGrowthModel2Define {
     iIndex[8 ] = 0   ; jIndex[8 ] = 16  ;
     iIndex[9 ] = 0   ; jIndex[9 ] = 18  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -215,18 +206,19 @@ namespace EconomicGrowthModel2Define {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = LM__[1] - LM__[3];
-    real_type t4   = XM__[0];
-    real_type t5   = XM__[1];
-    real_type t6   = Q_D_1(t4, t5);
-    real_type t8   = XM__[4];
-    result__[ 0   ] = 0.5e0 * t8 * t6 * t3;
-    real_type t10  = Q_D_2(t4, t5);
-    result__[ 1   ] = 0.5e0 * t8 * t10 * t3;
-    real_type t13  = Q(t4, t5);
-    real_type t17  = ALIAS_uControl_D_1(UM__[0], 0, 1);
-    result__[ 2   ] = 0.5e0 * t13 * t3 + 0.5e0 * t17;
-    result__[ 3   ] = 0.5e0 * t8 * t13;
+    real_type t1   = LM__[1];
+    real_type t2   = XM__[0];
+    real_type t3   = XM__[1];
+    real_type t4   = Q_D_1(t2, t3);
+    real_type t6   = XM__[4];
+    real_type t9   = LM__[3];
+    result__[ 0   ] = 0.5e0 * t6 * t4 * t1 - 0.5e0 * t6 * t4 * t9;
+    real_type t13  = Q_D_2(t2, t3);
+    result__[ 1   ] = 0.5e0 * t6 * t13 * t1 - 0.5e0 * t6 * t13 * t9;
+    real_type t20  = Q(t2, t3);
+    real_type t26  = ALIAS_uControl_D_1(UM__[0], 0, 1);
+    result__[ 2   ] = 0.5e0 * t20 * t1 - 0.5e0 * t9 * t20 + 0.5e0 * t26;
+    result__[ 3   ] = 0.5e0 * t6 * t20;
     result__[ 4   ] = -result__[3];
     result__[ 5   ] = result__[0];
     result__[ 6   ] = result__[1];
@@ -238,26 +230,15 @@ namespace EconomicGrowthModel2Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  EconomicGrowthModel2::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  EconomicGrowthModel2::DgDu_nnz() const
-  { return 1; }
+  integer EconomicGrowthModel2::DgDu_numRows() const { return 1; }
+  integer EconomicGrowthModel2::DgDu_numCols() const { return 1; }
+  integer EconomicGrowthModel2::DgDu_nnz()     const { return 1; }
 
   void
-  EconomicGrowthModel2::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  EconomicGrowthModel2::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -293,8 +274,8 @@ namespace EconomicGrowthModel2Define {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], 0, 1);
-    result__[ 0   ] = XM__[4] * t2;
+    real_type t3   = ALIAS_uControl_D_1_1(UM__[0], 0, 1);
+    result__[ 0   ] = t3 * XM__[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -346,8 +327,8 @@ namespace EconomicGrowthModel2Define {
     LM__[4] = (LL__[4]+LR__[4])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = Q(XM__[0], XM__[1]);
-    U__[ iU_u ] = uControl.solve(-LM__[1] * t3 + LM__[3] * t3, 0, 1);
+    real_type t4   = Q(XM__[0], XM__[1]);
+    U__[ iU_u ] = uControl.solve(-t4 * LM__[1] + LM__[3] * t4, 0, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
@@ -395,21 +376,21 @@ namespace EconomicGrowthModel2Define {
     LM__[4] = (LL__[4]+LR__[4])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
-    real_type t2   = XM__[1];
-    real_type t3   = Q(t1, t2);
-    real_type t4   = LM__[1];
+    real_type t1   = LM__[1];
+    real_type t2   = XM__[0];
+    real_type t3   = XM__[1];
+    real_type t4   = Q(t2, t3);
     real_type t6   = LM__[3];
-    real_type t9   = uControl.solve_rhs(-t4 * t3 + t6 * t3, 0, 1);
-    real_type t10  = Q_D_1(t1, t2);
-    real_type tmp_0_0 = 0.5e0 * (-t4 * t10 + t6 * t10) * t9;
-    real_type t15  = Q_D_2(t1, t2);
-    real_type tmp_0_1 = 0.5e0 * (-t4 * t15 + t6 * t15) * t9;
+    real_type t9   = uControl.solve_rhs(-t4 * t1 + t6 * t4, 0, 1);
+    real_type t10  = Q_D_1(t2, t3);
+    real_type tmp_0_0 = 0.5e0 * (-t10 * t1 + t6 * t10) * t9;
+    real_type t15  = Q_D_2(t2, t3);
+    real_type tmp_0_1 = 0.5e0 * (-t15 * t1 + t6 * t15) * t9;
     real_type tmp_0_2 = 0.0e0;
     real_type tmp_0_3 = 0.0e0;
     real_type tmp_0_4 = 0.0e0;
     real_type tmp_0_5 = 0.0e0;
-    real_type t21  = 0.5e0 * t3 * t9;
+    real_type t21  = 0.5e0 * t4 * t9;
     real_type tmp_0_6 = -t21;
     real_type tmp_0_7 = 0.0e0;
     real_type tmp_0_8 = t21;
@@ -467,16 +448,16 @@ namespace EconomicGrowthModel2Define {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
-    real_type t2   = Tpositive(t1);
-    real_type t3   = U__[iU_u];
-    real_type t4   = uControl(t3, 0, 1);
+    real_type t2   = U__[iU_u];
+    real_type t3   = uControl(t2, 0, 1);
+    real_type t5   = Tpositive(-t1);
     real_type t10  = pow(-t1 * X__[iX_y1] + V__[0], 2);
     real_type t14  = Q(X__[iX_x1], X__[iX_x2]);
-    real_type t18  = pow(-t1 * t14 * t3 + V__[2], 2);
+    real_type t18  = pow(-t1 * t14 * t2 + V__[2], 2);
     real_type t23  = pow(-t1 * X__[iX_y2] + V__[1], 2);
-    real_type t29  = pow(V__[3] - t1 * t14 * (1 - t3), 2);
+    real_type t29  = pow(V__[3] - t1 * t14 * (1 - t2), 2);
     real_type t31  = V__[4] * V__[4];
-    real_type result__ = t1 * t4 + t10 + t18 + t2 + t23 + t29 + t31;
+    real_type result__ = t3 * t1 + t10 + t18 + t23 + t29 + t31 + t5;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -485,9 +466,7 @@ namespace EconomicGrowthModel2Define {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  EconomicGrowthModel2::DmDu_numEqns() const
-  { return 1; }
+  integer EconomicGrowthModel2::DmDu_numEqns() const { return 1; }
 
   void
   EconomicGrowthModel2::DmDu_eval(
@@ -511,28 +490,15 @@ namespace EconomicGrowthModel2Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  EconomicGrowthModel2::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  EconomicGrowthModel2::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  EconomicGrowthModel2::DmDuu_nnz() const
-  { return 1; }
+  integer EconomicGrowthModel2::DmDuu_numRows() const { return 1; }
+  integer EconomicGrowthModel2::DmDuu_numCols() const { return 1; }
+  integer EconomicGrowthModel2::DmDuu_nnz()     const { return 1; }
 
   void
-  EconomicGrowthModel2::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  EconomicGrowthModel2::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   EconomicGrowthModel2::DmDuu_sparse(

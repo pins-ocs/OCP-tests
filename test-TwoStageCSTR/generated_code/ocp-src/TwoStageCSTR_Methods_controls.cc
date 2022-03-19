@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -100,39 +100,35 @@ namespace TwoStageCSTRDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = LM__[0];
-    real_type t3   = LM__[1];
-    real_type t4   = LM__[2];
-    real_type t5   = ModelPars[iM_tau];
-    real_type t7   = LM__[3];
-    real_type t11  = XM__[0];
-    real_type t12  = XM__[1];
-    real_type t13  = R1(t11, t12);
-    real_type t17  = XM__[2];
-    real_type t18  = XM__[3];
-    real_type t19  = R2(t17, t18);
-    real_type t21  = UM__[0];
-    real_type t22  = t21 * t5;
-    real_type t29  = UM__[1];
-    real_type t41  = t12 * t12;
-    real_type t49  = t21 * t21;
-    real_type t50  = ModelPars[iM_W];
-    real_type t52  = t29 * t29;
-    real_type t54  = t17 * t17;
-    real_type t55  = t18 * t18;
-    real_type t59  = t11 * t11;
-    real_type t60  = u1Control(t21, -0.5e0, 0.5e0);
-    real_type t61  = u2Control(t29, -0.5e0, 0.5e0);
-    real_type result__ = t13 * (-1.0 * t1 + t3 + t5 * t4 - 1.0 * t5 * t7) + t19 * (-1.0 * t4 + t7) + t7 * (t12 * (1.0 + t22 + 2.0 * t5) + 0.25e0 * t22 + t29 * (-0.25e0 - 1.0 * t18) - 2.0 * t18 + 0.50e0 * t5 - 0.25e0) + t4 * (t11 * (1.0 + t5) - 0.5e0 * t5 + 0.25e0 - 1.0 * t17) + t41 + t12 * t3 * (-2.0 - 1.0 * t21) + t3 * (-0.50e0 - 0.25e0 * t21) + t50 * t49 + t50 * t52 + t54 + t55 + 0.5e0 * t1 - 1.0 * t11 * t1 + t59 + t60 + t61;
+    real_type t1   = XM__[0];
+    real_type t2   = t1 * t1;
+    real_type t3   = XM__[1];
+    real_type t4   = t3 * t3;
+    real_type t5   = XM__[2];
+    real_type t6   = t5 * t5;
+    real_type t7   = XM__[3];
+    real_type t8   = t7 * t7;
+    real_type t10  = UM__[0];
+    real_type t11  = t10 * t10;
+    real_type t12  = UM__[1];
+    real_type t13  = t12 * t12;
+    real_type t17  = R1(t1, t3);
+    real_type t18  = 0.5e0 - t1 - t17;
+    real_type t24  = t17 - (2 + t10) * (t3 + 0.25e0);
+    real_type t27  = ModelPars[iM_tau];
+    real_type t29  = R2(t5, t7);
+    real_type t39  = u1Control(t10, -0.5e0, 0.5e0);
+    real_type t40  = u2Control(t12, -0.5e0, 0.5e0);
+    real_type result__ = t2 + t4 + t6 + t8 + (t11 + t13) * ModelPars[iM_W] + t18 * LM__[0] + t24 * LM__[1] + (t1 - t5 - t18 * t27 - t29 + 0.25e0) * LM__[2] + (t3 - 2 * t7 - (t7 + 0.25e0) * t12 - t24 * t27 + t29 - 0.25e0) * LM__[3] + t39 + t40;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  TwoStageCSTR::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoStageCSTR::g_numEqns() const { return 2; }
 
   void
   TwoStageCSTR::g_eval(
@@ -164,39 +160,26 @@ namespace TwoStageCSTRDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = LM__[1];
-    real_type t3   = LM__[3];
-    real_type t5   = ModelPars[iM_tau] * t3;
-    real_type t11  = ModelPars[iM_W];
-    real_type t12  = UM__[0];
-    real_type t15  = ALIAS_u1Control_D_1(t12, -0.5e0, 0.5e0);
-    result__[ 0   ] = XM__[1] * (-1.0 * t1 + t5) - 0.25e0 * t1 + 0.25e0 * t5 + 2.0 * t12 * t11 + t15;
-    real_type t16  = UM__[1];
-    real_type t22  = ALIAS_u2Control_D_1(t16, -0.5e0, 0.5e0);
-    result__[ 1   ] = 2 * t16 * t11 + (-XM__[3] - 0.25e0) * t3 + t22;
+    real_type t1   = ModelPars[iM_W];
+    real_type t2   = UM__[0];
+    real_type t7   = -XM__[1] - 0.25e0;
+    real_type t9   = LM__[3];
+    real_type t13  = ALIAS_u1Control_D_1(t2, -0.5e0, 0.5e0);
+    result__[ 0   ] = -t7 * ModelPars[iM_tau] * t9 + 2 * t2 * t1 + t7 * LM__[1] + t13;
+    real_type t14  = UM__[1];
+    real_type t20  = ALIAS_u2Control_D_1(t14, -0.5e0, 0.5e0);
+    result__[ 1   ] = 2 * t14 * t1 + (-XM__[3] - 0.25e0) * t9 + t20;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  TwoStageCSTR::DgDxlxlp_numCols() const
-  { return 16; }
-
-  integer
-  TwoStageCSTR::DgDxlxlp_nnz() const
-  { return 10; }
+  integer TwoStageCSTR::DgDxlxlp_numRows() const { return 2; }
+  integer TwoStageCSTR::DgDxlxlp_numCols() const { return 16; }
+  integer TwoStageCSTR::DgDxlxlp_nnz()     const { return 10; }
 
   void
-  TwoStageCSTR::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoStageCSTR::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 7   ;
@@ -208,6 +191,7 @@ namespace TwoStageCSTRDefine {
     iIndex[8 ] = 1   ; jIndex[8 ] = 11  ;
     iIndex[9 ] = 1   ; jIndex[9 ] = 15  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -246,7 +230,7 @@ namespace TwoStageCSTRDefine {
     result__[ 0   ] = -0.5e0 * LM__[1] + 0.5e0 * t4 * t3;
     real_type t7   = XM__[1];
     result__[ 1   ] = -0.5e0 * t7 - 0.125e0;
-    result__[ 2   ] = 0.5e0 * t7 * t4 + 0.125e0 * t4;
+    result__[ 2   ] = -0.5e0 * (-t7 - 0.25e0) * t4;
     result__[ 3   ] = result__[0];
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[2];
@@ -259,27 +243,16 @@ namespace TwoStageCSTRDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  TwoStageCSTR::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  TwoStageCSTR::DgDu_nnz() const
-  { return 2; }
+  integer TwoStageCSTR::DgDu_numRows() const { return 2; }
+  integer TwoStageCSTR::DgDu_numCols() const { return 2; }
+  integer TwoStageCSTR::DgDu_nnz()     const { return 2; }
 
   void
-  TwoStageCSTR::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoStageCSTR::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -313,11 +286,11 @@ namespace TwoStageCSTRDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_W];
+    real_type t2   = 2 * ModelPars[iM_W];
     real_type t4   = ALIAS_u1Control_D_1_1(UM__[0], -0.5e0, 0.5e0);
-    result__[ 0   ] = 2.0 * t1 + t4;
-    real_type t7   = ALIAS_u2Control_D_1_1(UM__[1], -0.5e0, 0.5e0);
-    result__[ 1   ] = 2 * t1 + t7;
+    result__[ 0   ] = t2 + t4;
+    real_type t6   = ALIAS_u2Control_D_1_1(UM__[1], -0.5e0, 0.5e0);
+    result__[ 1   ] = t2 + t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -503,9 +476,7 @@ namespace TwoStageCSTRDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  TwoStageCSTR::DmDu_numEqns() const
-  { return 2; }
+  integer TwoStageCSTR::DmDu_numEqns() const { return 2; }
 
   void
   TwoStageCSTR::DmDu_eval(
@@ -539,31 +510,18 @@ namespace TwoStageCSTRDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  TwoStageCSTR::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  TwoStageCSTR::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  TwoStageCSTR::DmDuu_nnz() const
-  { return 4; }
+  integer TwoStageCSTR::DmDuu_numRows() const { return 2; }
+  integer TwoStageCSTR::DmDuu_numCols() const { return 2; }
+  integer TwoStageCSTR::DmDuu_nnz()     const { return 4; }
 
   void
-  TwoStageCSTR::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  TwoStageCSTR::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   TwoStageCSTR::DmDuu_sparse(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Pars.hh                                           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,7 +20,8 @@
 
 #define numBc                    5
 #define numModelPars             6
-#define numConstraint1D          4
+#define numConstraintLT          5
+#define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           0
 #define numXvars                 4
@@ -29,7 +30,7 @@
 #define numOMEGAvars             5
 #define numQvars                 1
 #define numPvars                 0
-#define numPostProcess           6
+#define numPostProcess           7
 #define numIntegratedPostProcess 0
 #define numContinuationSteps     0
 

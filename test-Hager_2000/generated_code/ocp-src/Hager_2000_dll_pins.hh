@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_dll_pins.hh                                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -108,8 +108,8 @@ namespace Hager_2000Define {
   public:
 
     HAGER_2000_API_DLL
-    Hager_2000_Problem( ThreadPool * TP, Console const * console )
-    : model("Hager_2000",TP,console)
+    Hager_2000_Problem( integer n_threads, Console const * console )
+    : model("Hager_2000",n_threads,console)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

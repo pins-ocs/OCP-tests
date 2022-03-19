@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Pars.hh                                             |
  |                                                                       |
- |  version: 1.0   date 31/1/2022                                        |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,6 +20,7 @@
 
 #define numBc                    10
 #define numModelPars             16
+#define numConstraintLT          0
 #define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           3

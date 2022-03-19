@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_Guess.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -34,10 +34,14 @@
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_x2bound_DD(__t1) x2bound.DD( __t1)
-#define ALIAS_x2bound_D(__t1) x2bound.D( __t1)
-#define ALIAS_x1bound_DD(__t1) x1bound.DD( __t1)
-#define ALIAS_x1bound_D(__t1) x1bound.D( __t1)
+#define ALIAS_x2bound_max_DD(__t1) x2bound_max.DD( __t1)
+#define ALIAS_x2bound_max_D(__t1) x2bound_max.D( __t1)
+#define ALIAS_x2bound_min_DD(__t1) x2bound_min.DD( __t1)
+#define ALIAS_x2bound_min_D(__t1) x2bound_min.D( __t1)
+#define ALIAS_x1bound_max_DD(__t1) x1bound_max.DD( __t1)
+#define ALIAS_x1bound_max_D(__t1) x1bound_max.D( __t1)
+#define ALIAS_x1bound_min_DD(__t1) x1bound_min.DD( __t1)
+#define ALIAS_x1bound_min_D(__t1) x1bound_min.D( __t1)
 #define ALIAS_tfbound_DD(__t1) tfbound.DD( __t1)
 #define ALIAS_tfbound_D(__t1) tfbound.D( __t1)
 #define ALIAS_uControl_D_3(__t1, __t2, __t3) uControl.D_3( __t1, __t2, __t3)
@@ -82,10 +86,10 @@ namespace ICLOCS_StirredTankDefine {
     X__[ iX_x1 ] = ModelPars[iM_x1_f];
     X__[ iX_x2 ] = ModelPars[iM_x2_f];
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 2 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 2 );
+    }
   }
 
   /*\
@@ -125,8 +129,8 @@ namespace ICLOCS_StirredTankDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -137,8 +141,8 @@ namespace ICLOCS_StirredTankDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -270,9 +274,7 @@ namespace ICLOCS_StirredTankDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  ICLOCS_StirredTank::u_guess_numEqns() const
-  { return 1; }
+  integer ICLOCS_StirredTank::u_guess_numEqns() const { return 1; }
 
   void
   ICLOCS_StirredTank::u_guess_eval(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Pars.hh                                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,7 +20,8 @@
 
 #define numBc                    3
 #define numModelPars             2
-#define numConstraint1D          1
+#define numConstraintLT          2
+#define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           2
 #define numXvars                 6
@@ -29,7 +30,7 @@
 #define numOMEGAvars             3
 #define numQvars                 1
 #define numPvars                 0
-#define numPostProcess           4
+#define numPostProcess           5
 #define numIntegratedPostProcess 0
 #define numContinuationSteps     0
 

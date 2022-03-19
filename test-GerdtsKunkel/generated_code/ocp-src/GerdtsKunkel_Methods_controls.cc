@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -82,7 +82,7 @@ namespace GerdtsKunkelDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = x1Limitation(1.0 / 9.0 - XM__[0]);
+    real_type t3   = x1Limitation(XM__[0] - 1.0 / 9.0);
     real_type t8   = UM__[0];
     real_type t11  = t8 * t8;
     real_type result__ = t3 + LM__[0] * XM__[1] + t8 * LM__[1] + t11 * LM__[2] / 2;
@@ -92,9 +92,9 @@ namespace GerdtsKunkelDefine {
     return result__;
   }
 
-  integer
-  GerdtsKunkel::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GerdtsKunkel::g_numEqns() const { return 1; }
 
   void
   GerdtsKunkel::g_eval(
@@ -130,29 +130,18 @@ namespace GerdtsKunkelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GerdtsKunkel::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  GerdtsKunkel::DgDxlxlp_numCols() const
-  { return 12; }
-
-  integer
-  GerdtsKunkel::DgDxlxlp_nnz() const
-  { return 4; }
+  integer GerdtsKunkel::DgDxlxlp_numRows() const { return 1; }
+  integer GerdtsKunkel::DgDxlxlp_numCols() const { return 12; }
+  integer GerdtsKunkel::DgDxlxlp_nnz()     const { return 4; }
 
   void
-  GerdtsKunkel::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  GerdtsKunkel::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 10  ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 11  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -193,26 +182,15 @@ namespace GerdtsKunkelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GerdtsKunkel::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  GerdtsKunkel::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  GerdtsKunkel::DgDu_nnz() const
-  { return 1; }
+  integer GerdtsKunkel::DgDu_numRows() const { return 1; }
+  integer GerdtsKunkel::DgDu_numCols() const { return 1; }
+  integer GerdtsKunkel::DgDu_nnz()     const { return 1; }
 
   void
-  GerdtsKunkel::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  GerdtsKunkel::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -384,7 +362,7 @@ namespace GerdtsKunkelDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = x1Limitation(1.0 / 9.0 - X__[iX_x1]);
+    real_type t3   = x1Limitation(X__[iX_x1] - 1.0 / 9.0);
     real_type t7   = pow(V__[0] - X__[iX_x2], 2);
     real_type t9   = U__[iU_u];
     real_type t11  = pow(V__[1] - t9, 2);
@@ -399,9 +377,7 @@ namespace GerdtsKunkelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  GerdtsKunkel::DmDu_numEqns() const
-  { return 1; }
+  integer GerdtsKunkel::DmDu_numEqns() const { return 1; }
 
   void
   GerdtsKunkel::DmDu_eval(
@@ -423,28 +399,15 @@ namespace GerdtsKunkelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GerdtsKunkel::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  GerdtsKunkel::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  GerdtsKunkel::DmDuu_nnz() const
-  { return 1; }
+  integer GerdtsKunkel::DmDuu_numRows() const { return 1; }
+  integer GerdtsKunkel::DmDuu_numCols() const { return 1; }
+  integer GerdtsKunkel::DmDuu_nnz()     const { return 1; }
 
   void
-  GerdtsKunkel::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  GerdtsKunkel::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   GerdtsKunkel::DmDuu_sparse(

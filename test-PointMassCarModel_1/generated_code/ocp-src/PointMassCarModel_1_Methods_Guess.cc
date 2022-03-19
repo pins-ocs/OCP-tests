@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -164,10 +164,10 @@ namespace PointMassCarModel_1Define {
     X__[ iX_V     ] = ModelPars[iM_V0];
     X__[ iX_Omega ] = 0.1000000000e-1 * X__[2];
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 5 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 5 );
+    }
   }
 
   /*\
@@ -207,8 +207,8 @@ namespace PointMassCarModel_1Define {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -219,8 +219,8 @@ namespace PointMassCarModel_1Define {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -340,9 +340,7 @@ namespace PointMassCarModel_1Define {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  PointMassCarModel_1::u_guess_numEqns() const
-  { return 2; }
+  integer PointMassCarModel_1::u_guess_numEqns() const { return 2; }
 
   void
   PointMassCarModel_1::u_guess_eval(

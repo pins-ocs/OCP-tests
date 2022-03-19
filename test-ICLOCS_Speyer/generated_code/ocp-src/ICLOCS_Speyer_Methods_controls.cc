@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Speyer_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -89,9 +89,9 @@ namespace ICLOCS_SpeyerDefine {
     return result__;
   }
 
-  integer
-  ICLOCS_Speyer::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_Speyer::g_numEqns() const { return 1; }
 
   void
   ICLOCS_Speyer::g_eval(
@@ -125,27 +125,16 @@ namespace ICLOCS_SpeyerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_Speyer::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_Speyer::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  ICLOCS_Speyer::DgDxlxlp_nnz() const
-  { return 2; }
+  integer ICLOCS_Speyer::DgDxlxlp_numRows() const { return 1; }
+  integer ICLOCS_Speyer::DgDxlxlp_numCols() const { return 8; }
+  integer ICLOCS_Speyer::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  ICLOCS_Speyer::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_Speyer::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -182,26 +171,15 @@ namespace ICLOCS_SpeyerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_Speyer::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_Speyer::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_Speyer::DgDu_nnz() const
-  { return 1; }
+  integer ICLOCS_Speyer::DgDu_numRows() const { return 1; }
+  integer ICLOCS_Speyer::DgDu_numCols() const { return 1; }
+  integer ICLOCS_Speyer::DgDu_nnz()     const { return 1; }
 
   void
-  ICLOCS_Speyer::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_Speyer::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -368,9 +346,7 @@ namespace ICLOCS_SpeyerDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ICLOCS_Speyer::DmDu_numEqns() const
-  { return 1; }
+  integer ICLOCS_Speyer::DmDu_numEqns() const { return 1; }
 
   void
   ICLOCS_Speyer::DmDu_eval(
@@ -390,28 +366,15 @@ namespace ICLOCS_SpeyerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_Speyer::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  ICLOCS_Speyer::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_Speyer::DmDuu_nnz() const
-  { return 1; }
+  integer ICLOCS_Speyer::DmDuu_numRows() const { return 1; }
+  integer ICLOCS_Speyer::DmDuu_numCols() const { return 1; }
+  integer ICLOCS_Speyer::DmDuu_nnz()     const { return 1; }
 
   void
-  ICLOCS_Speyer::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_Speyer::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ICLOCS_Speyer::DmDuu_sparse(

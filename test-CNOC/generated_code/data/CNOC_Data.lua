@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Data.lua                                                  |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,13 +20,13 @@
 -- User Header
 
 -- Auxiliary values
-path_following_tolerance = 1.0e-05
-jn_max                   = 65
 js_max                   = 30
 js_min                   = -50
 mesh_segments            = 100
-pf_error                 = path_following_tolerance
 v_nom                    = 0.173
+path_following_tolerance = 1.0e-05
+pf_error                 = path_following_tolerance
+jn_max                   = 65
 deltaFeed                = v_nom
 
 content = {
@@ -39,6 +39,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -268,15 +270,10 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    an_max                   = 1.2,
-    as_max                   = 2.1,
-    ax_max                   = 2.1,
-    ay_max                   = 2.1,
-    jn_max                   = jn_max,
-    js_max                   = js_max,
-    js_min                   = js_min,
-    deltaFeed                = deltaFeed,
-    path_following_tolerance = path_following_tolerance,
+    jn_max    = jn_max,
+    js_max    = js_max,
+    js_min    = js_min,
+    deltaFeed = deltaFeed,
 
     -- Guess Parameters
 
@@ -300,6 +297,11 @@ content = {
     -- Continuation Parameters
 
     -- Constraints Parameters
+    an_max                   = 1.2,
+    as_max                   = 2.1,
+    ax_max                   = 2.1,
+    ay_max                   = 2.1,
+    path_following_tolerance = path_following_tolerance,
   },
 
   -- functions mapped objects
@@ -307,7 +309,7 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     jsControl = {
@@ -323,61 +325,82 @@ content = {
   },
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     timePositivesubType   = "BARRIER_LOG",
     timePositiveepsilon   = 0.01,
     timePositivetolerance = 0.01,
     timePositiveactive    = true
 
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     vLimitsubType   = "PENALTY_PIECEWISE",
     vLimitepsilon   = 0.01,
     vLimittolerance = 0.01,
     vLimitactive    = true
 
-    -- PenaltyBarrier1DInterval
-    PathFollowingTolerancesubType   = "PENALTY_REGULAR",
-    PathFollowingToleranceepsilon   = 0.01,
-    PathFollowingTolerancetolerance = 0.1,
-    PathFollowingTolerancemin       = -1,
-    PathFollowingTolerancemax       = 1,
-    PathFollowingToleranceactive    = true
+    -- PenaltyBarrier1DLessThan
+    PathFollowingTolerance_minsubType   = "PENALTY_REGULAR",
+    PathFollowingTolerance_minepsilon   = 0.01,
+    PathFollowingTolerance_mintolerance = 0.1,
+    PathFollowingTolerance_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    as_limitsubType   = "PENALTY_REGULAR",
-    as_limitepsilon   = 0.01,
-    as_limittolerance = 0.01,
-    as_limitmin       = -1,
-    as_limitmax       = 1,
-    as_limitactive    = true
+    -- PenaltyBarrier1DLessThan
+    PathFollowingTolerance_maxsubType   = "PENALTY_REGULAR",
+    PathFollowingTolerance_maxepsilon   = 0.01,
+    PathFollowingTolerance_maxtolerance = 0.1,
+    PathFollowingTolerance_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    an_limitsubType   = "PENALTY_REGULAR",
-    an_limitepsilon   = 0.01,
-    an_limittolerance = 0.01,
-    an_limitmin       = -1,
-    an_limitmax       = 1,
-    an_limitactive    = true
+    -- PenaltyBarrier1DLessThan
+    as_limit_minsubType   = "PENALTY_REGULAR",
+    as_limit_minepsilon   = 0.01,
+    as_limit_mintolerance = 0.01,
+    as_limit_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    ax_limitsubType   = "PENALTY_REGULAR",
-    ax_limitepsilon   = 0.01,
-    ax_limittolerance = 0.01,
-    ax_limitmin       = -1,
-    ax_limitmax       = 1,
-    ax_limitactive    = true
+    -- PenaltyBarrier1DLessThan
+    as_limit_maxsubType   = "PENALTY_REGULAR",
+    as_limit_maxepsilon   = 0.01,
+    as_limit_maxtolerance = 0.01,
+    as_limit_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    ay_limitsubType   = "PENALTY_REGULAR",
-    ay_limitepsilon   = 0.01,
-    ay_limittolerance = 0.01,
-    ay_limitmin       = -1,
-    ay_limitmax       = 1,
-    ay_limitactive    = true
+    -- PenaltyBarrier1DLessThan
+    an_limit_minsubType   = "PENALTY_REGULAR",
+    an_limit_minepsilon   = 0.01,
+    an_limit_mintolerance = 0.01,
+    an_limit_minactive    = true
 
+    -- PenaltyBarrier1DLessThan
+    an_limit_maxsubType   = "PENALTY_REGULAR",
+    an_limit_maxepsilon   = 0.01,
+    an_limit_maxtolerance = 0.01,
+    an_limit_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    ax_limit_minsubType   = "PENALTY_REGULAR",
+    ax_limit_minepsilon   = 0.01,
+    ax_limit_mintolerance = 0.01,
+    ax_limit_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    ax_limit_maxsubType   = "PENALTY_REGULAR",
+    ax_limit_maxepsilon   = 0.01,
+    ax_limit_maxtolerance = 0.01,
+    ax_limit_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    ay_limit_minsubType   = "PENALTY_REGULAR",
+    ay_limit_minepsilon   = 0.01,
+    ay_limit_mintolerance = 0.01,
+    ay_limit_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    ay_limit_maxsubType   = "PENALTY_REGULAR",
+    ay_limit_maxepsilon   = 0.01,
+    ay_limit_maxtolerance = 0.01,
+    ay_limit_maxactive    = true
+
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -87,24 +87,22 @@ namespace vanDerPolDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
-    real_type t2   = uControl(t1, -1, 1);
-    real_type t3   = t2 + 1;
-    real_type t4   = XM__[1];
-    real_type t5   = t4 * t4;
-    real_type t7   = XM__[0];
-    real_type t8   = t7 * t7;
-    real_type t9   = LM__[1];
-    real_type result__ = t5 * t3 + t4 * (-t9 * t8 + t9 + LM__[0]) + t9 * (t1 - t7) + t8 * t3 + t2 * ModelPars[iM_epsilon];
+    real_type t1   = XM__[0];
+    real_type t2   = t1 * t1;
+    real_type t3   = XM__[1];
+    real_type t4   = t3 * t3;
+    real_type t10  = UM__[0];
+    real_type t15  = uControl(t10, -1, 1);
+    real_type result__ = t2 + t4 + t3 * LM__[0] + (t3 * (-t2 + 1) - t1 + t10) * LM__[1] + t15 * (t2 + t4 + ModelPars[iM_epsilon]);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  vanDerPol::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer vanDerPol::g_numEqns() const { return 1; }
 
   void
   vanDerPol::g_eval(
@@ -141,24 +139,12 @@ namespace vanDerPolDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  vanDerPol::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  vanDerPol::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  vanDerPol::DgDxlxlp_nnz() const
-  { return 6; }
+  integer vanDerPol::DgDxlxlp_numRows() const { return 1; }
+  integer vanDerPol::DgDxlxlp_numCols() const { return 8; }
+  integer vanDerPol::DgDxlxlp_nnz()     const { return 6; }
 
   void
-  vanDerPol::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  vanDerPol::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -166,6 +152,7 @@ namespace vanDerPolDefine {
     iIndex[4 ] = 0   ; jIndex[4 ] = 5   ;
     iIndex[5 ] = 0   ; jIndex[5 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -207,26 +194,15 @@ namespace vanDerPolDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  vanDerPol::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  vanDerPol::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  vanDerPol::DgDu_nnz() const
-  { return 1; }
+  integer vanDerPol::DgDu_numRows() const { return 1; }
+  integer vanDerPol::DgDu_numCols() const { return 1; }
+  integer vanDerPol::DgDu_nnz()     const { return 1; }
 
   void
-  vanDerPol::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  vanDerPol::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -415,9 +391,7 @@ namespace vanDerPolDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  vanDerPol::DmDu_numEqns() const
-  { return 1; }
+  integer vanDerPol::DmDu_numEqns() const { return 1; }
 
   void
   vanDerPol::DmDu_eval(
@@ -443,28 +417,15 @@ namespace vanDerPolDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  vanDerPol::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  vanDerPol::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  vanDerPol::DmDuu_nnz() const
-  { return 1; }
+  integer vanDerPol::DmDuu_numRows() const { return 1; }
+  integer vanDerPol::DmDuu_numCols() const { return 1; }
+  integer vanDerPol::DmDuu_nnz()     const { return 1; }
 
   void
-  vanDerPol::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  vanDerPol::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   vanDerPol::DmDuu_sparse(

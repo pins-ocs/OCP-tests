@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -87,21 +87,20 @@ namespace GunnAndThomasDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = LM__[1];
-    real_type t2   = XM__[0];
-    real_type t3   = XM__[1];
-    real_type t12  = UM__[0];
-    real_type t15  = uControl(t12, 0, 1);
-    real_type result__ = t12 * ((t2 - 9 * t3) * t1 - (t2 - 10 * t3) * LM__[0]) - t3 * t1 + t15;
+    real_type t2   = UM__[0];
+    real_type t4   = XM__[1];
+    real_type t7   = 10 * t4 - XM__[0];
+    real_type t16  = uControl(t2, 0, 1);
+    real_type result__ = t7 * t2 * LM__[0] + (-t7 * t2 - t4 * (1 - t2)) * LM__[1] + t16;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  GunnAndThomas::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::g_numEqns() const { return 1; }
 
   void
   GunnAndThomas::g_eval(
@@ -138,24 +137,12 @@ namespace GunnAndThomasDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  GunnAndThomas::DgDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  GunnAndThomas::DgDxlxlp_nnz() const
-  { return 8; }
+  integer GunnAndThomas::DgDxlxlp_numRows() const { return 1; }
+  integer GunnAndThomas::DgDxlxlp_numCols() const { return 8; }
+  integer GunnAndThomas::DgDxlxlp_nnz()     const { return 8; }
 
   void
-  GunnAndThomas::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  GunnAndThomas::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -165,6 +152,7 @@ namespace GunnAndThomasDefine {
     iIndex[6 ] = 0   ; jIndex[6 ] = 6   ;
     iIndex[7 ] = 0   ; jIndex[7 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -211,26 +199,15 @@ namespace GunnAndThomasDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  GunnAndThomas::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  GunnAndThomas::DgDu_nnz() const
-  { return 1; }
+  integer GunnAndThomas::DgDu_numRows() const { return 1; }
+  integer GunnAndThomas::DgDu_numCols() const { return 1; }
+  integer GunnAndThomas::DgDu_nnz()     const { return 1; }
 
   void
-  GunnAndThomas::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  GunnAndThomas::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -310,7 +287,7 @@ namespace GunnAndThomasDefine {
     real_type t2   = XM__[0];
     real_type t4   = XM__[1];
     real_type t7   = LM__[1];
-    U__[ iU_u ] = uControl.solve(t2 * t1 - 10 * t4 * t1 - t7 * t2 + 9 * t4 * t7, 0, 1);
+    U__[ iU_u ] = uControl.solve(t1 * t2 - 10 * t1 * t4 - t2 * t7 + 9 * t4 * t7, 0, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
@@ -410,9 +387,7 @@ namespace GunnAndThomasDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  GunnAndThomas::DmDu_numEqns() const
-  { return 1; }
+  integer GunnAndThomas::DmDu_numEqns() const { return 1; }
 
   void
   GunnAndThomas::DmDu_eval(
@@ -438,28 +413,15 @@ namespace GunnAndThomasDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  GunnAndThomas::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  GunnAndThomas::DmDuu_nnz() const
-  { return 1; }
+  integer GunnAndThomas::DmDuu_numRows() const { return 1; }
+  integer GunnAndThomas::DmDuu_numCols() const { return 1; }
+  integer GunnAndThomas::DmDuu_nnz()     const { return 1; }
 
   void
-  GunnAndThomas::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  GunnAndThomas::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   GunnAndThomas::DmDuu_sparse(

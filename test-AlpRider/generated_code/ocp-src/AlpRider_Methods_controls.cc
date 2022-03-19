@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -93,7 +93,7 @@ namespace AlpRiderDefine {
     real_type t7   = XM__[3];
     real_type t8   = t7 * t7;
     real_type t11  = q(QM__[0]);
-    real_type t13  = Ybound(t2 + t4 + t6 + t8 - t11);
+    real_type t13  = Ybound(t11 - t2 - t4 - t6 - t8);
     real_type t18  = UM__[0];
     real_type t19  = t18 * t18;
     real_type t21  = UM__[1];
@@ -105,9 +105,9 @@ namespace AlpRiderDefine {
     return result__;
   }
 
-  integer
-  AlpRider::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer AlpRider::g_numEqns() const { return 2; }
 
   void
   AlpRider::g_eval(
@@ -150,24 +150,12 @@ namespace AlpRiderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AlpRider::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  AlpRider::DgDxlxlp_numCols() const
-  { return 16; }
-
-  integer
-  AlpRider::DgDxlxlp_nnz() const
-  { return 16; }
+  integer AlpRider::DgDxlxlp_numRows() const { return 2; }
+  integer AlpRider::DgDxlxlp_numCols() const { return 16; }
+  integer AlpRider::DgDxlxlp_nnz()     const { return 16; }
 
   void
-  AlpRider::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  AlpRider::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
@@ -185,6 +173,7 @@ namespace AlpRiderDefine {
     iIndex[14] = 1   ; jIndex[14] = 14  ;
     iIndex[15] = 1   ; jIndex[15] = 15  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -239,27 +228,16 @@ namespace AlpRiderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AlpRider::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  AlpRider::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  AlpRider::DgDu_nnz() const
-  { return 2; }
+  integer AlpRider::DgDu_numRows() const { return 2; }
+  integer AlpRider::DgDu_numCols() const { return 2; }
+  integer AlpRider::DgDu_nnz()     const { return 2; }
 
   void
-  AlpRider::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  AlpRider::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -490,7 +468,7 @@ namespace AlpRiderDefine {
     real_type t7   = X__[iX_y4];
     real_type t8   = t7 * t7;
     real_type t11  = q(Q__[iQ_zeta]);
-    real_type t13  = Ybound(t2 + t4 + t6 + t8 - t11);
+    real_type t13  = Ybound(t11 - t2 - t4 - t6 - t8);
     real_type t17  = U__[iU_u1];
     real_type t18  = U__[iU_u2];
     real_type t20  = pow(V__[0] + 10 * t1 - t17 - t18, 2);
@@ -506,9 +484,7 @@ namespace AlpRiderDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  AlpRider::DmDu_numEqns() const
-  { return 2; }
+  integer AlpRider::DmDu_numEqns() const { return 2; }
 
   void
   AlpRider::DmDu_eval(
@@ -539,31 +515,18 @@ namespace AlpRiderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  AlpRider::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  AlpRider::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  AlpRider::DmDuu_nnz() const
-  { return 4; }
+  integer AlpRider::DmDuu_numRows() const { return 2; }
+  integer AlpRider::DmDuu_numCols() const { return 2; }
+  integer AlpRider::DmDuu_nnz()     const { return 4; }
 
   void
-  AlpRider::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  AlpRider::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   AlpRider::DmDuu_sparse(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -103,7 +103,7 @@ namespace vanDerPolDefine {
   \*/
 
   real_type
-  vanDerPol::penalties_eval(
+  vanDerPol::JP_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -114,7 +114,7 @@ namespace vanDerPolDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -122,7 +122,7 @@ namespace vanDerPolDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  vanDerPol::control_penalties_eval(
+  vanDerPol::JU_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__
@@ -136,10 +136,31 @@ namespace vanDerPolDefine {
     real_type t8   = uControl(U__[iU_u], -1, 1);
     real_type result__ = t8 * (t2 + t4 + ModelPars[iM_epsilon]);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "control_penalties_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
     return result__;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  vanDerPol::LT_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
+    }
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -199,9 +220,7 @@ namespace vanDerPolDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  vanDerPol::DmayerDxxp_numEqns() const
-  { return 4; }
+  integer vanDerPol::DmayerDxxp_numEqns() const { return 4; }
 
   void
   vanDerPol::DmayerDxxp_eval(
@@ -235,9 +254,7 @@ namespace vanDerPolDefine {
    |              |___/                 |___/
   \*/
 
-  integer
-  vanDerPol::DlagrangeDxup_numEqns() const
-  { return 3; }
+  integer vanDerPol::DlagrangeDxup_numEqns() const { return 3; }
 
   void
   vanDerPol::DlagrangeDxup_eval(
@@ -257,67 +274,52 @@ namespace vanDerPolDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
   }
 
-  integer
-  vanDerPol::DJDx_numEqns() const
-  { return 2; }
+  /*\
+   |   ___ ____   ___  ____ _____
+   |  |_ _|  _ \ / _ \|  _ \_   _|
+   |   | || |_) | | | | |_) || |
+   |   | ||  __/| |_| |  __/ | |
+   |  |___|_|    \___/|_|    |_|
+  \*/
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer vanDerPol::IPOPT_hess_numRows() const { return 3; }
+  integer vanDerPol::IPOPT_hess_numCols() const { return 3; }
+  integer vanDerPol::IPOPT_hess_nnz()     const { return 4; }
 
   void
-  vanDerPol::DJDx_eval(
-    NodeType const     & NODE__,
+  vanDerPol::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  vanDerPol::IPOPT_hess_sparse(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = uControl(U__[iU_u], -1, 1);
-    result__[ 0   ] = 2 * t3 * X__[iX_x1];
-    result__[ 1   ] = 2 * t3 * X__[iX_x2];
+    real_type t1   = L__[iL_lambda2__xo];
+    result__[ 0   ] = -2 * t1 * X__[iX_x2] + 2 * sigma__;
+    result__[ 1   ] = -2 * X__[iX_x1] * t1;
+    result__[ 2   ] = result__[1];
+    result__[ 3   ] = 2 * sigma__;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDx_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  vanDerPol::DJDp_numEqns() const
-  { return 0; }
-
-  void
-  vanDerPol::DJDp_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  vanDerPol::DJDu_numEqns() const
-  { return 1; }
-
-  void
-  vanDerPol::DJDu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_x1] * X__[iX_x1];
-    real_type t4   = X__[iX_x2] * X__[iX_x2];
-    real_type t8   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
-    result__[ 0   ] = t8 * (t2 + t4 + ModelPars[iM_epsilon]);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJDu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 4, i_segment );
   }
 
   /*\
@@ -350,9 +352,7 @@ namespace vanDerPolDefine {
    |              |___/
   \*/
 
-  integer
-  vanDerPol::segmentLink_numEqns() const
-  { return 0; }
+  integer vanDerPol::segmentLink_numEqns() const { return 0; }
 
   void
   vanDerPol::segmentLink_eval(
@@ -366,17 +366,9 @@ namespace vanDerPolDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  vanDerPol::DsegmentLinkDxp_numRows() const
-  { return 0; }
-
-  integer
-  vanDerPol::DsegmentLinkDxp_numCols() const
-  { return 0; }
-
-  integer
-  vanDerPol::DsegmentLinkDxp_nnz() const
-  { return 0; }
+  integer vanDerPol::DsegmentLinkDxp_numRows() const { return 0; }
+  integer vanDerPol::DsegmentLinkDxp_numCols() const { return 0; }
+  integer vanDerPol::DsegmentLinkDxp_nnz() const { return 0; }
 
   void
   vanDerPol::DsegmentLinkDxp_pattern(
@@ -406,9 +398,7 @@ namespace vanDerPolDefine {
    |                 |_|
   \*/
 
-  integer
-  vanDerPol::jump_numEqns() const
-  { return 4; }
+  integer vanDerPol::jump_numEqns() const { return 4; }
 
   void
   vanDerPol::jump_eval(
@@ -436,24 +426,12 @@ namespace vanDerPolDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  vanDerPol::DjumpDxlxlp_numRows() const
-  { return 4; }
-
-  integer
-  vanDerPol::DjumpDxlxlp_numCols() const
-  { return 8; }
-
-  integer
-  vanDerPol::DjumpDxlxlp_nnz() const
-  { return 8; }
+  integer vanDerPol::DjumpDxlxlp_numRows() const { return 4; }
+  integer vanDerPol::DjumpDxlxlp_numCols() const { return 8; }
+  integer vanDerPol::DjumpDxlxlp_nnz()     const { return 8; }
 
   void
-  vanDerPol::DjumpDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  vanDerPol::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -463,6 +441,7 @@ namespace vanDerPolDefine {
     iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
     iIndex[7 ] = 3   ; jIndex[7 ] = 7   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -503,9 +482,7 @@ namespace vanDerPolDefine {
    |                                                    |___/
   \*/
 
-  integer
-  vanDerPol::post_numEqns() const
-  { return 0; }
+  integer vanDerPol::post_numEqns() const { return 0; }
 
   void
   vanDerPol::post_eval(
@@ -519,9 +496,7 @@ namespace vanDerPolDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  vanDerPol::integrated_post_numEqns() const
-  { return 0; }
+  integer vanDerPol::integrated_post_numEqns() const { return 0; }
 
   void
   vanDerPol::integrated_post_eval(

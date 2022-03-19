@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods_controls.cc                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -94,9 +94,9 @@ namespace WorstCaseScenarioDefine {
     return result__;
   }
 
-  integer
-  WorstCaseScenario::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer WorstCaseScenario::g_numEqns() const { return 1; }
 
   void
   WorstCaseScenario::g_eval(
@@ -129,27 +129,16 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DgDxlxlp_numCols() const
-  { return 4; }
-
-  integer
-  WorstCaseScenario::DgDxlxlp_nnz() const
-  { return 2; }
+  integer WorstCaseScenario::DgDxlxlp_numRows() const { return 1; }
+  integer WorstCaseScenario::DgDxlxlp_numCols() const { return 4; }
+  integer WorstCaseScenario::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  WorstCaseScenario::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  WorstCaseScenario::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -184,26 +173,15 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DgDu_nnz() const
-  { return 1; }
+  integer WorstCaseScenario::DgDu_numRows() const { return 1; }
+  integer WorstCaseScenario::DgDu_numCols() const { return 1; }
+  integer WorstCaseScenario::DgDu_nnz()     const { return 1; }
 
   void
-  WorstCaseScenario::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  WorstCaseScenario::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -359,9 +337,7 @@ namespace WorstCaseScenarioDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  WorstCaseScenario::DmDu_numEqns() const
-  { return 1; }
+  integer WorstCaseScenario::DmDu_numEqns() const { return 1; }
 
   void
   WorstCaseScenario::DmDu_eval(
@@ -384,28 +360,15 @@ namespace WorstCaseScenarioDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  WorstCaseScenario::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  WorstCaseScenario::DmDuu_nnz() const
-  { return 1; }
+  integer WorstCaseScenario::DmDuu_numRows() const { return 1; }
+  integer WorstCaseScenario::DmDuu_numCols() const { return 1; }
+  integer WorstCaseScenario::DmDuu_nnz()     const { return 1; }
 
   void
-  WorstCaseScenario::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  WorstCaseScenario::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   WorstCaseScenario::DmDuu_sparse(

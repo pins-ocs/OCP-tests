@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_UserFunctions.cc                                  |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,6 +17,7 @@
 
 #include "CNOC.hh"
 #include "CNOC_Pars.hh"
+#include <cmath>
 
 using namespace std;
 using namespace MechatronixLoad;
@@ -101,16 +102,26 @@ using Mechatronix::ToolPath2D;
 #define ALIAS_lenSeg_R(___dummy___) segmentRight.ss_length()
 #define ALIAS_lenSeg_L(___dummy___) segmentLeft.ss_length()
 #define ALIAS_lenSeg(___dummy___) segment.ss_length()
-#define ALIAS_ay_limit_DD(__t1) ay_limit.DD( __t1)
-#define ALIAS_ay_limit_D(__t1) ay_limit.D( __t1)
-#define ALIAS_ax_limit_DD(__t1) ax_limit.DD( __t1)
-#define ALIAS_ax_limit_D(__t1) ax_limit.D( __t1)
-#define ALIAS_an_limit_DD(__t1) an_limit.DD( __t1)
-#define ALIAS_an_limit_D(__t1) an_limit.D( __t1)
-#define ALIAS_as_limit_DD(__t1) as_limit.DD( __t1)
-#define ALIAS_as_limit_D(__t1) as_limit.D( __t1)
-#define ALIAS_PathFollowingTolerance_DD(__t1) PathFollowingTolerance.DD( __t1)
-#define ALIAS_PathFollowingTolerance_D(__t1) PathFollowingTolerance.D( __t1)
+#define ALIAS_ay_limit_max_DD(__t1) ay_limit_max.DD( __t1)
+#define ALIAS_ay_limit_max_D(__t1) ay_limit_max.D( __t1)
+#define ALIAS_ay_limit_min_DD(__t1) ay_limit_min.DD( __t1)
+#define ALIAS_ay_limit_min_D(__t1) ay_limit_min.D( __t1)
+#define ALIAS_ax_limit_max_DD(__t1) ax_limit_max.DD( __t1)
+#define ALIAS_ax_limit_max_D(__t1) ax_limit_max.D( __t1)
+#define ALIAS_ax_limit_min_DD(__t1) ax_limit_min.DD( __t1)
+#define ALIAS_ax_limit_min_D(__t1) ax_limit_min.D( __t1)
+#define ALIAS_an_limit_max_DD(__t1) an_limit_max.DD( __t1)
+#define ALIAS_an_limit_max_D(__t1) an_limit_max.D( __t1)
+#define ALIAS_an_limit_min_DD(__t1) an_limit_min.DD( __t1)
+#define ALIAS_an_limit_min_D(__t1) an_limit_min.D( __t1)
+#define ALIAS_as_limit_max_DD(__t1) as_limit_max.DD( __t1)
+#define ALIAS_as_limit_max_D(__t1) as_limit_max.D( __t1)
+#define ALIAS_as_limit_min_DD(__t1) as_limit_min.DD( __t1)
+#define ALIAS_as_limit_min_D(__t1) as_limit_min.D( __t1)
+#define ALIAS_PathFollowingTolerance_max_DD(__t1) PathFollowingTolerance_max.DD( __t1)
+#define ALIAS_PathFollowingTolerance_max_D(__t1) PathFollowingTolerance_max.D( __t1)
+#define ALIAS_PathFollowingTolerance_min_DD(__t1) PathFollowingTolerance_min.DD( __t1)
+#define ALIAS_PathFollowingTolerance_min_D(__t1) PathFollowingTolerance_min.D( __t1)
 #define ALIAS_vLimit_DD(__t1) vLimit.DD( __t1)
 #define ALIAS_vLimit_D(__t1) vLimit.D( __t1)
 #define ALIAS_timePositive_DD(__t1) timePositive.DD( __t1)
@@ -136,6 +147,269 @@ using Mechatronix::ToolPath2D;
 
 
 namespace CNOCDefine {
+  using std::acos;
+  using std::acosh;
+  using std::asin;
+  using std::asinh;
+  using std::atan;
+  using std::atan2;
+  using std::atanh;
+  using std::cbrt;
+  using std::ceil;
+  using std::abs;
+  using std::cos;
+  using std::cosh;
+  using std::exp;
+  using std::exp2;
+  using std::expm1;
+  using std::floor;
+  using std::log;
+  using std::log10;
+  using std::log1p;
+  using std::log2;
+  using std::logb;
+  using std::pow;
+  using std::hypot;
+  using std::floor;
+  using std::round;
+  using std::sin;
+  using std::sinh;
+  using std::sqrt;
+  using std::tan;
+  using std::tanh;
+  using std::trunc;
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  real_type
+  CNOC::PathFollowingTolerance( real_type xo___V ) const {
+    real_type t2   = PathFollowingTolerance_min(-1 - xo___V);
+    real_type t4   = PathFollowingTolerance_min(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_PathFollowingTolerance( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::PathFollowingTolerance_D( real_type xo___V ) const {
+    real_type t2   = ALIAS_PathFollowingTolerance_min_D(-1 - xo___V);
+    real_type t4   = ALIAS_PathFollowingTolerance_min_D(xo___V - 1);
+    real_type result__ = -t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_PathFollowingTolerance_D( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::PathFollowingTolerance_DD( real_type xo___V ) const {
+    real_type t2   = ALIAS_PathFollowingTolerance_min_DD(-1 - xo___V);
+    real_type t4   = ALIAS_PathFollowingTolerance_min_DD(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_PathFollowingTolerance_DD( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::as_limit( real_type xo___V ) const {
+    real_type t2   = as_limit_min(-1 - xo___V);
+    real_type t4   = as_limit_min(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_as_limit( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::as_limit_D( real_type xo___V ) const {
+    real_type t2   = ALIAS_as_limit_min_D(-1 - xo___V);
+    real_type t4   = ALIAS_as_limit_min_D(xo___V - 1);
+    real_type result__ = -t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_as_limit_D( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::as_limit_DD( real_type xo___V ) const {
+    real_type t2   = ALIAS_as_limit_min_DD(-1 - xo___V);
+    real_type t4   = ALIAS_as_limit_min_DD(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_as_limit_DD( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::an_limit( real_type xo___V ) const {
+    real_type t2   = an_limit_min(-1 - xo___V);
+    real_type t4   = an_limit_min(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_an_limit( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::an_limit_D( real_type xo___V ) const {
+    real_type t2   = ALIAS_an_limit_min_D(-1 - xo___V);
+    real_type t4   = ALIAS_an_limit_min_D(xo___V - 1);
+    real_type result__ = -t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_an_limit_D( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::an_limit_DD( real_type xo___V ) const {
+    real_type t2   = ALIAS_an_limit_min_DD(-1 - xo___V);
+    real_type t4   = ALIAS_an_limit_min_DD(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_an_limit_DD( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::ax_limit( real_type xo___V ) const {
+    real_type t2   = ax_limit_min(-1 - xo___V);
+    real_type t4   = ax_limit_min(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_ax_limit( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::ax_limit_D( real_type xo___V ) const {
+    real_type t2   = ALIAS_ax_limit_min_D(-1 - xo___V);
+    real_type t4   = ALIAS_ax_limit_min_D(xo___V - 1);
+    real_type result__ = -t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_ax_limit_D( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::ax_limit_DD( real_type xo___V ) const {
+    real_type t2   = ALIAS_ax_limit_min_DD(-1 - xo___V);
+    real_type t4   = ALIAS_ax_limit_min_DD(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_ax_limit_DD( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::ay_limit( real_type xo___V ) const {
+    real_type t2   = ay_limit_min(-1 - xo___V);
+    real_type t4   = ay_limit_min(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_ay_limit( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::ay_limit_D( real_type xo___V ) const {
+    real_type t2   = ALIAS_ay_limit_min_D(-1 - xo___V);
+    real_type t4   = ALIAS_ay_limit_min_D(xo___V - 1);
+    real_type result__ = -t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_ay_limit_D( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  CNOC::ay_limit_DD( real_type xo___V ) const {
+    real_type t2   = ALIAS_ay_limit_min_DD(-1 - xo___V);
+    real_type t4   = ALIAS_ay_limit_min_DD(xo___V - 1);
+    real_type result__ = t2 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_ay_limit_DD( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
 }
 
 // EOF: CNOC_Methods_UserFunctions.cc

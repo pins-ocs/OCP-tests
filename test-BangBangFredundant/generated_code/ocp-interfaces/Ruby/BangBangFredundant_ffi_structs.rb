@@ -3,9 +3,9 @@
 #                                                                          #
 #  file: BangBangFredundant_ffi_structs.rb                                 #
 #                                                                          #
-#  version: 1.0   date 20/12/2021                                          #
+#  version: 1.0   date 19/3/2022                                           #
 #                                                                          #
-#  Copyright (C) 2021                                                      #
+#  Copyright (C) 2022                                                      #
 #                                                                          #
 #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                              #
@@ -73,12 +73,15 @@ module BangBangFredundant
 
   class BangBangFredundant_constraints_params < FFI::Struct
     layout(
+      # LT constraints
+      :Flim_minSubType, :index_t,
+      :Flim_minEpsilon, :data_t,
+      :Flim_minTolerance, :data_t,
+      :Flim_maxSubType, :index_t,
+      :Flim_maxEpsilon, :data_t,
+      :Flim_maxTolerance, :data_t,
+
       # 1D constraints
-      :FlimSubType,   :index_t,
-      :FlimEpsilon,   :data_t,
-      :FlimTolerance, :data_t,
-      :FlimMinValue,  :data_t,
-      :FlimMaxValue,  :data_t,
 
       # 2D constraints
 

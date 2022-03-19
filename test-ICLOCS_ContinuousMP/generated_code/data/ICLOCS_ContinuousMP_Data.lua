@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,13 +20,12 @@
 -- User Header
 
 -- Auxiliary values
-xy_tol0   = 0.1
 tol_ctrl  = 0.01
-epsi_ctrl = 0.01
-xy_bound  = 2
-xy_tol    = xy_tol0
 xy_eps0   = 0.1
 xy_eps    = xy_eps0
+epsi_ctrl = 0.01
+xy_tol0   = 0.1
+xy_tol    = xy_tol0
 
 content = {
 
@@ -38,6 +37,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -343,6 +344,7 @@ content = {
     -- Post Processing Parameters
 
     -- User Function Parameters
+    xy_bound = 2,
 
     -- Continuation Parameters
     xy_eps0 = xy_eps0,
@@ -360,489 +362,730 @@ content = {
   -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DInterval
-    u1LimitationsubType   = "BARRIER_LOG",
-    u1Limitationepsilon   = epsi_ctrl,
-    u1Limitationtolerance = tol_ctrl,
-    u1Limitationmin       = -10,
-    u1Limitationmax       = 10,
-    u1Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u1Limitation_minsubType   = "BARRIER_LOG",
+    u1Limitation_minepsilon   = epsi_ctrl,
+    u1Limitation_mintolerance = tol_ctrl,
+    u1Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u2LimitationsubType   = "BARRIER_LOG",
-    u2Limitationepsilon   = epsi_ctrl,
-    u2Limitationtolerance = tol_ctrl,
-    u2Limitationmin       = -10,
-    u2Limitationmax       = 10,
-    u2Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u1Limitation_maxsubType   = "BARRIER_LOG",
+    u1Limitation_maxepsilon   = epsi_ctrl,
+    u1Limitation_maxtolerance = tol_ctrl,
+    u1Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u3LimitationsubType   = "BARRIER_LOG",
-    u3Limitationepsilon   = epsi_ctrl,
-    u3Limitationtolerance = tol_ctrl,
-    u3Limitationmin       = -10,
-    u3Limitationmax       = 10,
-    u3Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u2Limitation_minsubType   = "BARRIER_LOG",
+    u2Limitation_minepsilon   = epsi_ctrl,
+    u2Limitation_mintolerance = tol_ctrl,
+    u2Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u4LimitationsubType   = "BARRIER_LOG",
-    u4Limitationepsilon   = epsi_ctrl,
-    u4Limitationtolerance = tol_ctrl,
-    u4Limitationmin       = -10,
-    u4Limitationmax       = 10,
-    u4Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u2Limitation_maxsubType   = "BARRIER_LOG",
+    u2Limitation_maxepsilon   = epsi_ctrl,
+    u2Limitation_maxtolerance = tol_ctrl,
+    u2Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u5LimitationsubType   = "BARRIER_LOG",
-    u5Limitationepsilon   = epsi_ctrl,
-    u5Limitationtolerance = tol_ctrl,
-    u5Limitationmin       = -10,
-    u5Limitationmax       = 10,
-    u5Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u3Limitation_minsubType   = "BARRIER_LOG",
+    u3Limitation_minepsilon   = epsi_ctrl,
+    u3Limitation_mintolerance = tol_ctrl,
+    u3Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u6LimitationsubType   = "BARRIER_LOG",
-    u6Limitationepsilon   = epsi_ctrl,
-    u6Limitationtolerance = tol_ctrl,
-    u6Limitationmin       = -10,
-    u6Limitationmax       = 10,
-    u6Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u3Limitation_maxsubType   = "BARRIER_LOG",
+    u3Limitation_maxepsilon   = epsi_ctrl,
+    u3Limitation_maxtolerance = tol_ctrl,
+    u3Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u7LimitationsubType   = "BARRIER_LOG",
-    u7Limitationepsilon   = epsi_ctrl,
-    u7Limitationtolerance = tol_ctrl,
-    u7Limitationmin       = -10,
-    u7Limitationmax       = 10,
-    u7Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u4Limitation_minsubType   = "BARRIER_LOG",
+    u4Limitation_minepsilon   = epsi_ctrl,
+    u4Limitation_mintolerance = tol_ctrl,
+    u4Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u8LimitationsubType   = "BARRIER_LOG",
-    u8Limitationepsilon   = epsi_ctrl,
-    u8Limitationtolerance = tol_ctrl,
-    u8Limitationmin       = -10,
-    u8Limitationmax       = 10,
-    u8Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u4Limitation_maxsubType   = "BARRIER_LOG",
+    u4Limitation_maxepsilon   = epsi_ctrl,
+    u4Limitation_maxtolerance = tol_ctrl,
+    u4Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u9LimitationsubType   = "BARRIER_LOG",
-    u9Limitationepsilon   = epsi_ctrl,
-    u9Limitationtolerance = tol_ctrl,
-    u9Limitationmin       = -10,
-    u9Limitationmax       = 10,
-    u9Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u5Limitation_minsubType   = "BARRIER_LOG",
+    u5Limitation_minepsilon   = epsi_ctrl,
+    u5Limitation_mintolerance = tol_ctrl,
+    u5Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u10LimitationsubType   = "BARRIER_LOG",
-    u10Limitationepsilon   = epsi_ctrl,
-    u10Limitationtolerance = tol_ctrl,
-    u10Limitationmin       = -10,
-    u10Limitationmax       = 10,
-    u10Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u5Limitation_maxsubType   = "BARRIER_LOG",
+    u5Limitation_maxepsilon   = epsi_ctrl,
+    u5Limitation_maxtolerance = tol_ctrl,
+    u5Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u11LimitationsubType   = "BARRIER_LOG",
-    u11Limitationepsilon   = epsi_ctrl,
-    u11Limitationtolerance = tol_ctrl,
-    u11Limitationmin       = -10,
-    u11Limitationmax       = 10,
-    u11Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u6Limitation_minsubType   = "BARRIER_LOG",
+    u6Limitation_minepsilon   = epsi_ctrl,
+    u6Limitation_mintolerance = tol_ctrl,
+    u6Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u12LimitationsubType   = "BARRIER_LOG",
-    u12Limitationepsilon   = epsi_ctrl,
-    u12Limitationtolerance = tol_ctrl,
-    u12Limitationmin       = -10,
-    u12Limitationmax       = 10,
-    u12Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u6Limitation_maxsubType   = "BARRIER_LOG",
+    u6Limitation_maxepsilon   = epsi_ctrl,
+    u6Limitation_maxtolerance = tol_ctrl,
+    u6Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u13LimitationsubType   = "BARRIER_LOG",
-    u13Limitationepsilon   = epsi_ctrl,
-    u13Limitationtolerance = tol_ctrl,
-    u13Limitationmin       = -10,
-    u13Limitationmax       = 10,
-    u13Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u7Limitation_minsubType   = "BARRIER_LOG",
+    u7Limitation_minepsilon   = epsi_ctrl,
+    u7Limitation_mintolerance = tol_ctrl,
+    u7Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u14LimitationsubType   = "BARRIER_LOG",
-    u14Limitationepsilon   = epsi_ctrl,
-    u14Limitationtolerance = tol_ctrl,
-    u14Limitationmin       = -10,
-    u14Limitationmax       = 10,
-    u14Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u7Limitation_maxsubType   = "BARRIER_LOG",
+    u7Limitation_maxepsilon   = epsi_ctrl,
+    u7Limitation_maxtolerance = tol_ctrl,
+    u7Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u15LimitationsubType   = "BARRIER_LOG",
-    u15Limitationepsilon   = epsi_ctrl,
-    u15Limitationtolerance = tol_ctrl,
-    u15Limitationmin       = -10,
-    u15Limitationmax       = 10,
-    u15Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u8Limitation_minsubType   = "BARRIER_LOG",
+    u8Limitation_minepsilon   = epsi_ctrl,
+    u8Limitation_mintolerance = tol_ctrl,
+    u8Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u16LimitationsubType   = "BARRIER_LOG",
-    u16Limitationepsilon   = epsi_ctrl,
-    u16Limitationtolerance = tol_ctrl,
-    u16Limitationmin       = -10,
-    u16Limitationmax       = 10,
-    u16Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u8Limitation_maxsubType   = "BARRIER_LOG",
+    u8Limitation_maxepsilon   = epsi_ctrl,
+    u8Limitation_maxtolerance = tol_ctrl,
+    u8Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u17LimitationsubType   = "BARRIER_LOG",
-    u17Limitationepsilon   = epsi_ctrl,
-    u17Limitationtolerance = tol_ctrl,
-    u17Limitationmin       = -10,
-    u17Limitationmax       = 10,
-    u17Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u9Limitation_minsubType   = "BARRIER_LOG",
+    u9Limitation_minepsilon   = epsi_ctrl,
+    u9Limitation_mintolerance = tol_ctrl,
+    u9Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u18LimitationsubType   = "BARRIER_LOG",
-    u18Limitationepsilon   = epsi_ctrl,
-    u18Limitationtolerance = tol_ctrl,
-    u18Limitationmin       = -10,
-    u18Limitationmax       = 10,
-    u18Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u9Limitation_maxsubType   = "BARRIER_LOG",
+    u9Limitation_maxepsilon   = epsi_ctrl,
+    u9Limitation_maxtolerance = tol_ctrl,
+    u9Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u19LimitationsubType   = "BARRIER_LOG",
-    u19Limitationepsilon   = epsi_ctrl,
-    u19Limitationtolerance = tol_ctrl,
-    u19Limitationmin       = -10,
-    u19Limitationmax       = 10,
-    u19Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u10Limitation_minsubType   = "BARRIER_LOG",
+    u10Limitation_minepsilon   = epsi_ctrl,
+    u10Limitation_mintolerance = tol_ctrl,
+    u10Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    u20LimitationsubType   = "BARRIER_LOG",
-    u20Limitationepsilon   = epsi_ctrl,
-    u20Limitationtolerance = tol_ctrl,
-    u20Limitationmin       = -10,
-    u20Limitationmax       = 10,
-    u20Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u10Limitation_maxsubType   = "BARRIER_LOG",
+    u10Limitation_maxepsilon   = epsi_ctrl,
+    u10Limitation_maxtolerance = tol_ctrl,
+    u10Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx1LimitationsubType   = "BARRIER_LOG",
-    xx1Limitationepsilon   = xy_eps,
-    xx1Limitationtolerance = xy_tol,
-    xx1Limitationmin       = -xy_bound,
-    xx1Limitationmax       = xy_bound,
-    xx1Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u11Limitation_minsubType   = "BARRIER_LOG",
+    u11Limitation_minepsilon   = epsi_ctrl,
+    u11Limitation_mintolerance = tol_ctrl,
+    u11Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy1LimitationsubType   = "BARRIER_LOG",
-    yy1Limitationepsilon   = xy_eps,
-    yy1Limitationtolerance = xy_tol,
-    yy1Limitationmin       = -xy_bound,
-    yy1Limitationmax       = xy_bound,
-    yy1Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u11Limitation_maxsubType   = "BARRIER_LOG",
+    u11Limitation_maxepsilon   = epsi_ctrl,
+    u11Limitation_maxtolerance = tol_ctrl,
+    u11Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx2LimitationsubType   = "BARRIER_LOG",
-    xx2Limitationepsilon   = xy_eps,
-    xx2Limitationtolerance = xy_tol,
-    xx2Limitationmin       = -xy_bound,
-    xx2Limitationmax       = xy_bound,
-    xx2Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u12Limitation_minsubType   = "BARRIER_LOG",
+    u12Limitation_minepsilon   = epsi_ctrl,
+    u12Limitation_mintolerance = tol_ctrl,
+    u12Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy2LimitationsubType   = "BARRIER_LOG",
-    yy2Limitationepsilon   = xy_eps,
-    yy2Limitationtolerance = xy_tol,
-    yy2Limitationmin       = -xy_bound,
-    yy2Limitationmax       = xy_bound,
-    yy2Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u12Limitation_maxsubType   = "BARRIER_LOG",
+    u12Limitation_maxepsilon   = epsi_ctrl,
+    u12Limitation_maxtolerance = tol_ctrl,
+    u12Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx3LimitationsubType   = "BARRIER_LOG",
-    xx3Limitationepsilon   = xy_eps,
-    xx3Limitationtolerance = xy_tol,
-    xx3Limitationmin       = -xy_bound,
-    xx3Limitationmax       = xy_bound,
-    xx3Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u13Limitation_minsubType   = "BARRIER_LOG",
+    u13Limitation_minepsilon   = epsi_ctrl,
+    u13Limitation_mintolerance = tol_ctrl,
+    u13Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy3LimitationsubType   = "BARRIER_LOG",
-    yy3Limitationepsilon   = xy_eps,
-    yy3Limitationtolerance = xy_tol,
-    yy3Limitationmin       = -xy_bound,
-    yy3Limitationmax       = xy_bound,
-    yy3Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u13Limitation_maxsubType   = "BARRIER_LOG",
+    u13Limitation_maxepsilon   = epsi_ctrl,
+    u13Limitation_maxtolerance = tol_ctrl,
+    u13Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx4LimitationsubType   = "BARRIER_LOG",
-    xx4Limitationepsilon   = xy_eps,
-    xx4Limitationtolerance = xy_tol,
-    xx4Limitationmin       = -xy_bound,
-    xx4Limitationmax       = xy_bound,
-    xx4Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u14Limitation_minsubType   = "BARRIER_LOG",
+    u14Limitation_minepsilon   = epsi_ctrl,
+    u14Limitation_mintolerance = tol_ctrl,
+    u14Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy4LimitationsubType   = "BARRIER_LOG",
-    yy4Limitationepsilon   = xy_eps,
-    yy4Limitationtolerance = xy_tol,
-    yy4Limitationmin       = -xy_bound,
-    yy4Limitationmax       = xy_bound,
-    yy4Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u14Limitation_maxsubType   = "BARRIER_LOG",
+    u14Limitation_maxepsilon   = epsi_ctrl,
+    u14Limitation_maxtolerance = tol_ctrl,
+    u14Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx5LimitationsubType   = "BARRIER_LOG",
-    xx5Limitationepsilon   = xy_eps,
-    xx5Limitationtolerance = xy_tol,
-    xx5Limitationmin       = -xy_bound,
-    xx5Limitationmax       = xy_bound,
-    xx5Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u15Limitation_minsubType   = "BARRIER_LOG",
+    u15Limitation_minepsilon   = epsi_ctrl,
+    u15Limitation_mintolerance = tol_ctrl,
+    u15Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy5LimitationsubType   = "BARRIER_LOG",
-    yy5Limitationepsilon   = xy_eps,
-    yy5Limitationtolerance = xy_tol,
-    yy5Limitationmin       = -xy_bound,
-    yy5Limitationmax       = xy_bound,
-    yy5Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u15Limitation_maxsubType   = "BARRIER_LOG",
+    u15Limitation_maxepsilon   = epsi_ctrl,
+    u15Limitation_maxtolerance = tol_ctrl,
+    u15Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx6LimitationsubType   = "BARRIER_LOG",
-    xx6Limitationepsilon   = xy_eps,
-    xx6Limitationtolerance = xy_tol,
-    xx6Limitationmin       = -xy_bound,
-    xx6Limitationmax       = xy_bound,
-    xx6Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u16Limitation_minsubType   = "BARRIER_LOG",
+    u16Limitation_minepsilon   = epsi_ctrl,
+    u16Limitation_mintolerance = tol_ctrl,
+    u16Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy6LimitationsubType   = "BARRIER_LOG",
-    yy6Limitationepsilon   = xy_eps,
-    yy6Limitationtolerance = xy_tol,
-    yy6Limitationmin       = -xy_bound,
-    yy6Limitationmax       = xy_bound,
-    yy6Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u16Limitation_maxsubType   = "BARRIER_LOG",
+    u16Limitation_maxepsilon   = epsi_ctrl,
+    u16Limitation_maxtolerance = tol_ctrl,
+    u16Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx7LimitationsubType   = "BARRIER_LOG",
-    xx7Limitationepsilon   = xy_eps,
-    xx7Limitationtolerance = xy_tol,
-    xx7Limitationmin       = -xy_bound,
-    xx7Limitationmax       = xy_bound,
-    xx7Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u17Limitation_minsubType   = "BARRIER_LOG",
+    u17Limitation_minepsilon   = epsi_ctrl,
+    u17Limitation_mintolerance = tol_ctrl,
+    u17Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy7LimitationsubType   = "BARRIER_LOG",
-    yy7Limitationepsilon   = xy_eps,
-    yy7Limitationtolerance = xy_tol,
-    yy7Limitationmin       = -xy_bound,
-    yy7Limitationmax       = xy_bound,
-    yy7Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u17Limitation_maxsubType   = "BARRIER_LOG",
+    u17Limitation_maxepsilon   = epsi_ctrl,
+    u17Limitation_maxtolerance = tol_ctrl,
+    u17Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx8LimitationsubType   = "BARRIER_LOG",
-    xx8Limitationepsilon   = xy_eps,
-    xx8Limitationtolerance = xy_tol,
-    xx8Limitationmin       = -xy_bound,
-    xx8Limitationmax       = xy_bound,
-    xx8Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u18Limitation_minsubType   = "BARRIER_LOG",
+    u18Limitation_minepsilon   = epsi_ctrl,
+    u18Limitation_mintolerance = tol_ctrl,
+    u18Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy8LimitationsubType   = "BARRIER_LOG",
-    yy8Limitationepsilon   = xy_eps,
-    yy8Limitationtolerance = xy_tol,
-    yy8Limitationmin       = -xy_bound,
-    yy8Limitationmax       = xy_bound,
-    yy8Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u18Limitation_maxsubType   = "BARRIER_LOG",
+    u18Limitation_maxepsilon   = epsi_ctrl,
+    u18Limitation_maxtolerance = tol_ctrl,
+    u18Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx9LimitationsubType   = "BARRIER_LOG",
-    xx9Limitationepsilon   = xy_eps,
-    xx9Limitationtolerance = xy_tol,
-    xx9Limitationmin       = -xy_bound,
-    xx9Limitationmax       = xy_bound,
-    xx9Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u19Limitation_minsubType   = "BARRIER_LOG",
+    u19Limitation_minepsilon   = epsi_ctrl,
+    u19Limitation_mintolerance = tol_ctrl,
+    u19Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy9LimitationsubType   = "BARRIER_LOG",
-    yy9Limitationepsilon   = xy_eps,
-    yy9Limitationtolerance = xy_tol,
-    yy9Limitationmin       = -xy_bound,
-    yy9Limitationmax       = xy_bound,
-    yy9Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u19Limitation_maxsubType   = "BARRIER_LOG",
+    u19Limitation_maxepsilon   = epsi_ctrl,
+    u19Limitation_maxtolerance = tol_ctrl,
+    u19Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx10LimitationsubType   = "BARRIER_LOG",
-    xx10Limitationepsilon   = xy_eps,
-    xx10Limitationtolerance = xy_tol,
-    xx10Limitationmin       = -xy_bound,
-    xx10Limitationmax       = xy_bound,
-    xx10Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u20Limitation_minsubType   = "BARRIER_LOG",
+    u20Limitation_minepsilon   = epsi_ctrl,
+    u20Limitation_mintolerance = tol_ctrl,
+    u20Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy10LimitationsubType   = "BARRIER_LOG",
-    yy10Limitationepsilon   = xy_eps,
-    yy10Limitationtolerance = xy_tol,
-    yy10Limitationmin       = -xy_bound,
-    yy10Limitationmax       = xy_bound,
-    yy10Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    u20Limitation_maxsubType   = "BARRIER_LOG",
+    u20Limitation_maxepsilon   = epsi_ctrl,
+    u20Limitation_maxtolerance = tol_ctrl,
+    u20Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx11LimitationsubType   = "BARRIER_LOG",
-    xx11Limitationepsilon   = xy_eps,
-    xx11Limitationtolerance = xy_tol,
-    xx11Limitationmin       = -xy_bound,
-    xx11Limitationmax       = xy_bound,
-    xx11Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx1Limitation_minsubType   = "BARRIER_LOG",
+    xx1Limitation_minepsilon   = xy_eps,
+    xx1Limitation_mintolerance = xy_tol,
+    xx1Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy11LimitationsubType   = "BARRIER_LOG",
-    yy11Limitationepsilon   = xy_eps,
-    yy11Limitationtolerance = xy_tol,
-    yy11Limitationmin       = -xy_bound,
-    yy11Limitationmax       = xy_bound,
-    yy11Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx1Limitation_maxsubType   = "BARRIER_LOG",
+    xx1Limitation_maxepsilon   = xy_eps,
+    xx1Limitation_maxtolerance = xy_tol,
+    xx1Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx12LimitationsubType   = "BARRIER_LOG",
-    xx12Limitationepsilon   = xy_eps,
-    xx12Limitationtolerance = xy_tol,
-    xx12Limitationmin       = -xy_bound,
-    xx12Limitationmax       = xy_bound,
-    xx12Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy1Limitation_minsubType   = "BARRIER_LOG",
+    yy1Limitation_minepsilon   = xy_eps,
+    yy1Limitation_mintolerance = xy_tol,
+    yy1Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy12LimitationsubType   = "BARRIER_LOG",
-    yy12Limitationepsilon   = xy_eps,
-    yy12Limitationtolerance = xy_tol,
-    yy12Limitationmin       = -xy_bound,
-    yy12Limitationmax       = xy_bound,
-    yy12Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy1Limitation_maxsubType   = "BARRIER_LOG",
+    yy1Limitation_maxepsilon   = xy_eps,
+    yy1Limitation_maxtolerance = xy_tol,
+    yy1Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx13LimitationsubType   = "BARRIER_LOG",
-    xx13Limitationepsilon   = xy_eps,
-    xx13Limitationtolerance = xy_tol,
-    xx13Limitationmin       = -xy_bound,
-    xx13Limitationmax       = xy_bound,
-    xx13Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx2Limitation_minsubType   = "BARRIER_LOG",
+    xx2Limitation_minepsilon   = xy_eps,
+    xx2Limitation_mintolerance = xy_tol,
+    xx2Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy13LimitationsubType   = "BARRIER_LOG",
-    yy13Limitationepsilon   = xy_eps,
-    yy13Limitationtolerance = xy_tol,
-    yy13Limitationmin       = -xy_bound,
-    yy13Limitationmax       = xy_bound,
-    yy13Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx2Limitation_maxsubType   = "BARRIER_LOG",
+    xx2Limitation_maxepsilon   = xy_eps,
+    xx2Limitation_maxtolerance = xy_tol,
+    xx2Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx14LimitationsubType   = "BARRIER_LOG",
-    xx14Limitationepsilon   = xy_eps,
-    xx14Limitationtolerance = xy_tol,
-    xx14Limitationmin       = -xy_bound,
-    xx14Limitationmax       = xy_bound,
-    xx14Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy2Limitation_minsubType   = "BARRIER_LOG",
+    yy2Limitation_minepsilon   = xy_eps,
+    yy2Limitation_mintolerance = xy_tol,
+    yy2Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy14LimitationsubType   = "BARRIER_LOG",
-    yy14Limitationepsilon   = xy_eps,
-    yy14Limitationtolerance = xy_tol,
-    yy14Limitationmin       = -xy_bound,
-    yy14Limitationmax       = xy_bound,
-    yy14Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy2Limitation_maxsubType   = "BARRIER_LOG",
+    yy2Limitation_maxepsilon   = xy_eps,
+    yy2Limitation_maxtolerance = xy_tol,
+    yy2Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx15LimitationsubType   = "BARRIER_LOG",
-    xx15Limitationepsilon   = xy_eps,
-    xx15Limitationtolerance = xy_tol,
-    xx15Limitationmin       = -xy_bound,
-    xx15Limitationmax       = xy_bound,
-    xx15Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx3Limitation_minsubType   = "BARRIER_LOG",
+    xx3Limitation_minepsilon   = xy_eps,
+    xx3Limitation_mintolerance = xy_tol,
+    xx3Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy15LimitationsubType   = "BARRIER_LOG",
-    yy15Limitationepsilon   = xy_eps,
-    yy15Limitationtolerance = xy_tol,
-    yy15Limitationmin       = -xy_bound,
-    yy15Limitationmax       = xy_bound,
-    yy15Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx3Limitation_maxsubType   = "BARRIER_LOG",
+    xx3Limitation_maxepsilon   = xy_eps,
+    xx3Limitation_maxtolerance = xy_tol,
+    xx3Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx16LimitationsubType   = "BARRIER_LOG",
-    xx16Limitationepsilon   = xy_eps,
-    xx16Limitationtolerance = xy_tol,
-    xx16Limitationmin       = -xy_bound,
-    xx16Limitationmax       = xy_bound,
-    xx16Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy3Limitation_minsubType   = "BARRIER_LOG",
+    yy3Limitation_minepsilon   = xy_eps,
+    yy3Limitation_mintolerance = xy_tol,
+    yy3Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy16LimitationsubType   = "BARRIER_LOG",
-    yy16Limitationepsilon   = xy_eps,
-    yy16Limitationtolerance = xy_tol,
-    yy16Limitationmin       = -xy_bound,
-    yy16Limitationmax       = xy_bound,
-    yy16Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy3Limitation_maxsubType   = "BARRIER_LOG",
+    yy3Limitation_maxepsilon   = xy_eps,
+    yy3Limitation_maxtolerance = xy_tol,
+    yy3Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx17LimitationsubType   = "BARRIER_LOG",
-    xx17Limitationepsilon   = xy_eps,
-    xx17Limitationtolerance = xy_tol,
-    xx17Limitationmin       = -xy_bound,
-    xx17Limitationmax       = xy_bound,
-    xx17Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx4Limitation_minsubType   = "BARRIER_LOG",
+    xx4Limitation_minepsilon   = xy_eps,
+    xx4Limitation_mintolerance = xy_tol,
+    xx4Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy17LimitationsubType   = "BARRIER_LOG",
-    yy17Limitationepsilon   = xy_eps,
-    yy17Limitationtolerance = xy_tol,
-    yy17Limitationmin       = -xy_bound,
-    yy17Limitationmax       = xy_bound,
-    yy17Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx4Limitation_maxsubType   = "BARRIER_LOG",
+    xx4Limitation_maxepsilon   = xy_eps,
+    xx4Limitation_maxtolerance = xy_tol,
+    xx4Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx18LimitationsubType   = "BARRIER_LOG",
-    xx18Limitationepsilon   = xy_eps,
-    xx18Limitationtolerance = xy_tol,
-    xx18Limitationmin       = -xy_bound,
-    xx18Limitationmax       = xy_bound,
-    xx18Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy4Limitation_minsubType   = "BARRIER_LOG",
+    yy4Limitation_minepsilon   = xy_eps,
+    yy4Limitation_mintolerance = xy_tol,
+    yy4Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy18LimitationsubType   = "BARRIER_LOG",
-    yy18Limitationepsilon   = xy_eps,
-    yy18Limitationtolerance = xy_tol,
-    yy18Limitationmin       = -xy_bound,
-    yy18Limitationmax       = xy_bound,
-    yy18Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy4Limitation_maxsubType   = "BARRIER_LOG",
+    yy4Limitation_maxepsilon   = xy_eps,
+    yy4Limitation_maxtolerance = xy_tol,
+    yy4Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx19LimitationsubType   = "BARRIER_LOG",
-    xx19Limitationepsilon   = xy_eps,
-    xx19Limitationtolerance = xy_tol,
-    xx19Limitationmin       = -xy_bound,
-    xx19Limitationmax       = xy_bound,
-    xx19Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx5Limitation_minsubType   = "BARRIER_LOG",
+    xx5Limitation_minepsilon   = xy_eps,
+    xx5Limitation_mintolerance = xy_tol,
+    xx5Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy19LimitationsubType   = "BARRIER_LOG",
-    yy19Limitationepsilon   = xy_eps,
-    yy19Limitationtolerance = xy_tol,
-    yy19Limitationmin       = -xy_bound,
-    yy19Limitationmax       = xy_bound,
-    yy19Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    xx5Limitation_maxsubType   = "BARRIER_LOG",
+    xx5Limitation_maxepsilon   = xy_eps,
+    xx5Limitation_maxtolerance = xy_tol,
+    xx5Limitation_maxactive    = true
 
-    -- PenaltyBarrier1DInterval
-    xx20LimitationsubType   = "BARRIER_LOG",
-    xx20Limitationepsilon   = xy_eps,
-    xx20Limitationtolerance = xy_tol,
-    xx20Limitationmin       = -xy_bound,
-    xx20Limitationmax       = xy_bound,
-    xx20Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy5Limitation_minsubType   = "BARRIER_LOG",
+    yy5Limitation_minepsilon   = xy_eps,
+    yy5Limitation_mintolerance = xy_tol,
+    yy5Limitation_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    yy20LimitationsubType   = "BARRIER_LOG",
-    yy20Limitationepsilon   = xy_eps,
-    yy20Limitationtolerance = xy_tol,
-    yy20Limitationmin       = -xy_bound,
-    yy20Limitationmax       = xy_bound,
-    yy20Limitationactive    = true
+    -- PenaltyBarrier1DLessThan
+    yy5Limitation_maxsubType   = "BARRIER_LOG",
+    yy5Limitation_maxepsilon   = xy_eps,
+    yy5Limitation_maxtolerance = xy_tol,
+    yy5Limitation_maxactive    = true
 
+    -- PenaltyBarrier1DLessThan
+    xx6Limitation_minsubType   = "BARRIER_LOG",
+    xx6Limitation_minepsilon   = xy_eps,
+    xx6Limitation_mintolerance = xy_tol,
+    xx6Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx6Limitation_maxsubType   = "BARRIER_LOG",
+    xx6Limitation_maxepsilon   = xy_eps,
+    xx6Limitation_maxtolerance = xy_tol,
+    xx6Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy6Limitation_minsubType   = "BARRIER_LOG",
+    yy6Limitation_minepsilon   = xy_eps,
+    yy6Limitation_mintolerance = xy_tol,
+    yy6Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy6Limitation_maxsubType   = "BARRIER_LOG",
+    yy6Limitation_maxepsilon   = xy_eps,
+    yy6Limitation_maxtolerance = xy_tol,
+    yy6Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx7Limitation_minsubType   = "BARRIER_LOG",
+    xx7Limitation_minepsilon   = xy_eps,
+    xx7Limitation_mintolerance = xy_tol,
+    xx7Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx7Limitation_maxsubType   = "BARRIER_LOG",
+    xx7Limitation_maxepsilon   = xy_eps,
+    xx7Limitation_maxtolerance = xy_tol,
+    xx7Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy7Limitation_minsubType   = "BARRIER_LOG",
+    yy7Limitation_minepsilon   = xy_eps,
+    yy7Limitation_mintolerance = xy_tol,
+    yy7Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy7Limitation_maxsubType   = "BARRIER_LOG",
+    yy7Limitation_maxepsilon   = xy_eps,
+    yy7Limitation_maxtolerance = xy_tol,
+    yy7Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx8Limitation_minsubType   = "BARRIER_LOG",
+    xx8Limitation_minepsilon   = xy_eps,
+    xx8Limitation_mintolerance = xy_tol,
+    xx8Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx8Limitation_maxsubType   = "BARRIER_LOG",
+    xx8Limitation_maxepsilon   = xy_eps,
+    xx8Limitation_maxtolerance = xy_tol,
+    xx8Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy8Limitation_minsubType   = "BARRIER_LOG",
+    yy8Limitation_minepsilon   = xy_eps,
+    yy8Limitation_mintolerance = xy_tol,
+    yy8Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy8Limitation_maxsubType   = "BARRIER_LOG",
+    yy8Limitation_maxepsilon   = xy_eps,
+    yy8Limitation_maxtolerance = xy_tol,
+    yy8Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx9Limitation_minsubType   = "BARRIER_LOG",
+    xx9Limitation_minepsilon   = xy_eps,
+    xx9Limitation_mintolerance = xy_tol,
+    xx9Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx9Limitation_maxsubType   = "BARRIER_LOG",
+    xx9Limitation_maxepsilon   = xy_eps,
+    xx9Limitation_maxtolerance = xy_tol,
+    xx9Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy9Limitation_minsubType   = "BARRIER_LOG",
+    yy9Limitation_minepsilon   = xy_eps,
+    yy9Limitation_mintolerance = xy_tol,
+    yy9Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy9Limitation_maxsubType   = "BARRIER_LOG",
+    yy9Limitation_maxepsilon   = xy_eps,
+    yy9Limitation_maxtolerance = xy_tol,
+    yy9Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx10Limitation_minsubType   = "BARRIER_LOG",
+    xx10Limitation_minepsilon   = xy_eps,
+    xx10Limitation_mintolerance = xy_tol,
+    xx10Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx10Limitation_maxsubType   = "BARRIER_LOG",
+    xx10Limitation_maxepsilon   = xy_eps,
+    xx10Limitation_maxtolerance = xy_tol,
+    xx10Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy10Limitation_minsubType   = "BARRIER_LOG",
+    yy10Limitation_minepsilon   = xy_eps,
+    yy10Limitation_mintolerance = xy_tol,
+    yy10Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy10Limitation_maxsubType   = "BARRIER_LOG",
+    yy10Limitation_maxepsilon   = xy_eps,
+    yy10Limitation_maxtolerance = xy_tol,
+    yy10Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx11Limitation_minsubType   = "BARRIER_LOG",
+    xx11Limitation_minepsilon   = xy_eps,
+    xx11Limitation_mintolerance = xy_tol,
+    xx11Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx11Limitation_maxsubType   = "BARRIER_LOG",
+    xx11Limitation_maxepsilon   = xy_eps,
+    xx11Limitation_maxtolerance = xy_tol,
+    xx11Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy11Limitation_minsubType   = "BARRIER_LOG",
+    yy11Limitation_minepsilon   = xy_eps,
+    yy11Limitation_mintolerance = xy_tol,
+    yy11Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy11Limitation_maxsubType   = "BARRIER_LOG",
+    yy11Limitation_maxepsilon   = xy_eps,
+    yy11Limitation_maxtolerance = xy_tol,
+    yy11Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx12Limitation_minsubType   = "BARRIER_LOG",
+    xx12Limitation_minepsilon   = xy_eps,
+    xx12Limitation_mintolerance = xy_tol,
+    xx12Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx12Limitation_maxsubType   = "BARRIER_LOG",
+    xx12Limitation_maxepsilon   = xy_eps,
+    xx12Limitation_maxtolerance = xy_tol,
+    xx12Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy12Limitation_minsubType   = "BARRIER_LOG",
+    yy12Limitation_minepsilon   = xy_eps,
+    yy12Limitation_mintolerance = xy_tol,
+    yy12Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy12Limitation_maxsubType   = "BARRIER_LOG",
+    yy12Limitation_maxepsilon   = xy_eps,
+    yy12Limitation_maxtolerance = xy_tol,
+    yy12Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx13Limitation_minsubType   = "BARRIER_LOG",
+    xx13Limitation_minepsilon   = xy_eps,
+    xx13Limitation_mintolerance = xy_tol,
+    xx13Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx13Limitation_maxsubType   = "BARRIER_LOG",
+    xx13Limitation_maxepsilon   = xy_eps,
+    xx13Limitation_maxtolerance = xy_tol,
+    xx13Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy13Limitation_minsubType   = "BARRIER_LOG",
+    yy13Limitation_minepsilon   = xy_eps,
+    yy13Limitation_mintolerance = xy_tol,
+    yy13Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy13Limitation_maxsubType   = "BARRIER_LOG",
+    yy13Limitation_maxepsilon   = xy_eps,
+    yy13Limitation_maxtolerance = xy_tol,
+    yy13Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx14Limitation_minsubType   = "BARRIER_LOG",
+    xx14Limitation_minepsilon   = xy_eps,
+    xx14Limitation_mintolerance = xy_tol,
+    xx14Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx14Limitation_maxsubType   = "BARRIER_LOG",
+    xx14Limitation_maxepsilon   = xy_eps,
+    xx14Limitation_maxtolerance = xy_tol,
+    xx14Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy14Limitation_minsubType   = "BARRIER_LOG",
+    yy14Limitation_minepsilon   = xy_eps,
+    yy14Limitation_mintolerance = xy_tol,
+    yy14Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy14Limitation_maxsubType   = "BARRIER_LOG",
+    yy14Limitation_maxepsilon   = xy_eps,
+    yy14Limitation_maxtolerance = xy_tol,
+    yy14Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx15Limitation_minsubType   = "BARRIER_LOG",
+    xx15Limitation_minepsilon   = xy_eps,
+    xx15Limitation_mintolerance = xy_tol,
+    xx15Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx15Limitation_maxsubType   = "BARRIER_LOG",
+    xx15Limitation_maxepsilon   = xy_eps,
+    xx15Limitation_maxtolerance = xy_tol,
+    xx15Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy15Limitation_minsubType   = "BARRIER_LOG",
+    yy15Limitation_minepsilon   = xy_eps,
+    yy15Limitation_mintolerance = xy_tol,
+    yy15Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy15Limitation_maxsubType   = "BARRIER_LOG",
+    yy15Limitation_maxepsilon   = xy_eps,
+    yy15Limitation_maxtolerance = xy_tol,
+    yy15Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx16Limitation_minsubType   = "BARRIER_LOG",
+    xx16Limitation_minepsilon   = xy_eps,
+    xx16Limitation_mintolerance = xy_tol,
+    xx16Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx16Limitation_maxsubType   = "BARRIER_LOG",
+    xx16Limitation_maxepsilon   = xy_eps,
+    xx16Limitation_maxtolerance = xy_tol,
+    xx16Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy16Limitation_minsubType   = "BARRIER_LOG",
+    yy16Limitation_minepsilon   = xy_eps,
+    yy16Limitation_mintolerance = xy_tol,
+    yy16Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy16Limitation_maxsubType   = "BARRIER_LOG",
+    yy16Limitation_maxepsilon   = xy_eps,
+    yy16Limitation_maxtolerance = xy_tol,
+    yy16Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx17Limitation_minsubType   = "BARRIER_LOG",
+    xx17Limitation_minepsilon   = xy_eps,
+    xx17Limitation_mintolerance = xy_tol,
+    xx17Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx17Limitation_maxsubType   = "BARRIER_LOG",
+    xx17Limitation_maxepsilon   = xy_eps,
+    xx17Limitation_maxtolerance = xy_tol,
+    xx17Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy17Limitation_minsubType   = "BARRIER_LOG",
+    yy17Limitation_minepsilon   = xy_eps,
+    yy17Limitation_mintolerance = xy_tol,
+    yy17Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy17Limitation_maxsubType   = "BARRIER_LOG",
+    yy17Limitation_maxepsilon   = xy_eps,
+    yy17Limitation_maxtolerance = xy_tol,
+    yy17Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx18Limitation_minsubType   = "BARRIER_LOG",
+    xx18Limitation_minepsilon   = xy_eps,
+    xx18Limitation_mintolerance = xy_tol,
+    xx18Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx18Limitation_maxsubType   = "BARRIER_LOG",
+    xx18Limitation_maxepsilon   = xy_eps,
+    xx18Limitation_maxtolerance = xy_tol,
+    xx18Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy18Limitation_minsubType   = "BARRIER_LOG",
+    yy18Limitation_minepsilon   = xy_eps,
+    yy18Limitation_mintolerance = xy_tol,
+    yy18Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy18Limitation_maxsubType   = "BARRIER_LOG",
+    yy18Limitation_maxepsilon   = xy_eps,
+    yy18Limitation_maxtolerance = xy_tol,
+    yy18Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx19Limitation_minsubType   = "BARRIER_LOG",
+    xx19Limitation_minepsilon   = xy_eps,
+    xx19Limitation_mintolerance = xy_tol,
+    xx19Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx19Limitation_maxsubType   = "BARRIER_LOG",
+    xx19Limitation_maxepsilon   = xy_eps,
+    xx19Limitation_maxtolerance = xy_tol,
+    xx19Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy19Limitation_minsubType   = "BARRIER_LOG",
+    yy19Limitation_minepsilon   = xy_eps,
+    yy19Limitation_mintolerance = xy_tol,
+    yy19Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy19Limitation_maxsubType   = "BARRIER_LOG",
+    yy19Limitation_maxepsilon   = xy_eps,
+    yy19Limitation_maxtolerance = xy_tol,
+    yy19Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx20Limitation_minsubType   = "BARRIER_LOG",
+    xx20Limitation_minepsilon   = xy_eps,
+    xx20Limitation_mintolerance = xy_tol,
+    xx20Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    xx20Limitation_maxsubType   = "BARRIER_LOG",
+    xx20Limitation_maxepsilon   = xy_eps,
+    xx20Limitation_maxtolerance = xy_tol,
+    xx20Limitation_maxactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy20Limitation_minsubType   = "BARRIER_LOG",
+    yy20Limitation_minepsilon   = xy_eps,
+    yy20Limitation_mintolerance = xy_tol,
+    yy20Limitation_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    yy20Limitation_maxsubType   = "BARRIER_LOG",
+    yy20Limitation_maxepsilon   = xy_eps,
+    yy20Limitation_maxtolerance = xy_tol,
+    yy20Limitation_maxactive    = true
+
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 

@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-wT0       = 0.01
 up_tol0   = 0.01
 m         = 700
 kD        = 0.2500000000/m
-wT        = wT0
-p_tol0    = 0.1
-p_epsi0   = 0.1
 up_epsi0  = 0.1
 road_tol0 = 0.01
+p_epsi0   = 0.1
+wT0       = 0.01
+wT        = wT0
+p_tol0    = 0.1
 
 content = {
 
@@ -40,6 +40,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -263,13 +265,8 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    Pmax          = 200000,
-    g             = 9.806,
     kD            = kD,
-    m             = m,
     wT            = wT,
-    mu__x__max    = 1,
-    mu__y__max    = 1.5,
     v__Omega__max = 5,
     v__fx__max    = 30,
 
@@ -279,6 +276,11 @@ content = {
     V0 = 5,
 
     -- Post Processing Parameters
+    Pmax       = 200000,
+    g          = 9.806,
+    m          = m,
+    mu__x__max = 1,
+    mu__y__max = 1.5,
 
     -- User Function Parameters
 
@@ -298,7 +300,7 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     v__fxControl = {
@@ -314,39 +316,40 @@ content = {
   },
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     AdherenceEllipsesubType   = "PENALTY_REGULAR",
     AdherenceEllipseepsilon   = p_epsi0,
     AdherenceEllipsetolerance = p_tol0,
     AdherenceEllipseactive    = true
 
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     RoadLeftBordersubType   = "PENALTY_REGULAR",
     RoadLeftBorderepsilon   = p_epsi0,
     RoadLeftBordertolerance = road_tol0,
     RoadLeftBorderactive    = true
 
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     RoadRightBordersubType   = "PENALTY_REGULAR",
     RoadRightBorderepsilon   = p_epsi0,
     RoadRightBordertolerance = road_tol0,
     RoadRightBorderactive    = true
 
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     PowerLimitsubType   = "PENALTY_REGULAR",
     PowerLimitepsilon   = p_epsi0,
     PowerLimittolerance = p_tol0,
     PowerLimitactive    = true
 
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     LimitMinSpeedsubType   = "PENALTY_REGULAR",
     LimitMinSpeedepsilon   = p_epsi0,
     LimitMinSpeedtolerance = p_tol0,
     LimitMinSpeedactive    = true
 
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 
@@ -362,83 +365,83 @@ content = {
     segments = {
       
       {
-        length     = 190,
+        curvature  = 0,
         rightWidth = 60,
+        length     = 190,
         gridSize   = 1,
         leftWidth  = 15/2.0,
-        curvature  = 0,
       },
       
       {
-        length     = 973.8937227,
+        curvature  = 0.003225806452,
         rightWidth = 30,
+        length     = 973.8937227,
         gridSize   = 1,
         leftWidth  = 60,
-        curvature  = 0.003225806452,
       },
       
       {
-        length     = 180,
+        curvature  = 0,
         rightWidth = 30,
+        length     = 180,
         gridSize   = 1,
         leftWidth  = 30,
-        curvature  = 0,
       },
       
       {
-        length     = 235.619449,
+        curvature  = 0.006666666667,
         rightWidth = 15,
+        length     = 235.619449,
         gridSize   = 1,
         leftWidth  = 20,
-        curvature  = 0.006666666667,
       },
       
       {
+        curvature  = 0,
+        rightWidth = 30,
         length     = 240,
-        rightWidth = 30,
         gridSize   = 1,
         leftWidth  = 30,
-        curvature  = 0,
       },
       
       {
-        length     = 235.619449,
-        rightWidth = 30,
-        gridSize   = 1,
-        leftWidth  = 30,
         curvature  = -1/150.0,
+        rightWidth = 30,
+        length     = 235.619449,
+        gridSize   = 1,
+        leftWidth  = 30,
       },
       
       {
+        curvature  = 0,
+        rightWidth = 30,
         length     = 200,
-        rightWidth = 30,
         gridSize   = 1,
         leftWidth  = 30,
-        curvature  = 0,
       },
       
       {
-        length     = 125.6637062,
-        rightWidth = 30,
-        gridSize   = 1,
-        leftWidth  = 30,
         curvature  = 0.025,
-      },
-      
-      {
-        length     = 480,
         rightWidth = 30,
+        length     = 125.6637062,
         gridSize   = 1,
         leftWidth  = 30,
-        curvature  = 0,
       },
       
       {
-        length     = 10,
+        curvature  = 0,
         rightWidth = 30,
+        length     = 480,
+        gridSize   = 1,
+        leftWidth  = 30,
+      },
+      
+      {
+        curvature  = 0,
+        rightWidth = 30,
+        length     = 10,
         gridSize   = 0.1,
         leftWidth  = 30,
-        curvature  = 0,
       },
     },
   },

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -73,10 +73,10 @@ namespace AlpRiderDefine {
     real_type t14  = ModelPars[iM_y4_i];
     X__[ iX_y4 ] = t14 + (ModelPars[iM_y4_f] - t14) * t2;
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 4 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 4 );
+    }
   }
 
   /*\
@@ -116,8 +116,8 @@ namespace AlpRiderDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -128,8 +128,8 @@ namespace AlpRiderDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -240,9 +240,7 @@ namespace AlpRiderDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  AlpRider::u_guess_numEqns() const
-  { return 2; }
+  integer AlpRider::u_guess_numEqns() const { return 2; }
 
   void
   AlpRider::u_guess_eval(

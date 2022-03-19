@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,12 +20,12 @@
 -- User Header
 
 -- Auxiliary values
-r0   = 1
 mu   = 1
+r0   = 1
 tf   = 16.60*(r0**3/mu)**(1/2.0)
-v0   = (mu/r0)**(1/2.0)
 m0   = 1
 T    = 0.1405e-1*m0*mu/r0**2
+v0   = (mu/r0)**(1/2.0)
 mdot = 0.533*T*(mu/r0)**(1/2.0)
 
 content = {
@@ -38,6 +38,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -290,6 +292,7 @@ content = {
   -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
+  -- ConstraintLT: none defined
   -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
@@ -302,8 +305,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 1000,
+        length = 1,
       },
     },
   },

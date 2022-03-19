@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -115,10 +115,16 @@ namespace ICLOCS_StirredTankDefine {
     nullptr
   };
 
-  char const *namesConstraint1D[numConstraint1D+1] = {
+  char const *namesConstraintLT[numConstraintLT+1] = {
     "tfbound",
-    "x1bound",
-    "x2bound",
+    "x1bound_min",
+    "x1bound_max",
+    "x2bound_min",
+    "x2bound_max",
+    nullptr
+  };
+
+  char const *namesConstraint1D[numConstraint1D+1] = {
     nullptr
   };
 
@@ -146,17 +152,20 @@ namespace ICLOCS_StirredTankDefine {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   ICLOCS_StirredTank::ICLOCS_StirredTank(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
   , uControl("uControl")
-  // Constraints 1D
+  // Constraints LT
   , tfbound("tfbound")
-  , x1bound("x1bound")
-  , x2bound("x2bound")
+  , x1bound_min("x1bound_min")
+  , x1bound_max("x1bound_max")
+  , x2bound_min("x2bound_min")
+  , x2bound_max("x2bound_max")
+  // Constraints 1D
   // Constraints 2D
   // User classes
   {
@@ -294,16 +303,28 @@ namespace ICLOCS_StirredTankDefine {
     tfbound.setup( gc("tfbound") );
 
     UTILS_ASSERT0(
-      gc.exists("x1bound"),
-      "in ICLOCS_StirredTank::setup_classes(gc) missing key: ``x1bound''\n"
+      gc.exists("x1bound_min"),
+      "in ICLOCS_StirredTank::setup_classes(gc) missing key: ``x1bound_min''\n"
     );
-    x1bound.setup( gc("x1bound") );
+    x1bound_min.setup( gc("x1bound_min") );
 
     UTILS_ASSERT0(
-      gc.exists("x2bound"),
-      "in ICLOCS_StirredTank::setup_classes(gc) missing key: ``x2bound''\n"
+      gc.exists("x1bound_max"),
+      "in ICLOCS_StirredTank::setup_classes(gc) missing key: ``x1bound_max''\n"
     );
-    x2bound.setup( gc("x2bound") );
+    x1bound_max.setup( gc("x1bound_max") );
+
+    UTILS_ASSERT0(
+      gc.exists("x2bound_min"),
+      "in ICLOCS_StirredTank::setup_classes(gc) missing key: ``x2bound_min''\n"
+    );
+    x2bound_min.setup( gc("x2bound_min") );
+
+    UTILS_ASSERT0(
+      gc.exists("x2bound_max"),
+      "in ICLOCS_StirredTank::setup_classes(gc) missing key: ``x2bound_max''\n"
+    );
+    x2bound_max.setup( gc("x2bound_max") );
 
   }
 
@@ -398,11 +419,13 @@ namespace ICLOCS_StirredTankDefine {
     uControl.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
-    m_console->message("\nConstraints 1D\n",msg_level);
+    m_console->message("\nConstraints LT\n",msg_level);
     mstr.str("");
     tfbound.info(mstr);
-    x1bound.info(mstr);
-    x2bound.info(mstr);
+    x1bound_min.info(mstr);
+    x1bound_max.info(mstr);
+    x2bound_min.info(mstr);
+    x2bound_max.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_controls.cc                                      |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -90,19 +90,19 @@ namespace BrakeDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    real_type t2   = Tpositive(t1);
+    real_type t2   = Tpositive(-t1);
     real_type t9   = UM__[0];
     real_type t11  = aControl(t9, -1, 1);
-    real_type result__ = t1 * t9 * LM__[1] + t1 * LM__[0] * XM__[1] + t11 + t2;
+    real_type result__ = t9 * t1 * LM__[1] + XM__[1] * t1 * LM__[0] + t11 + t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  Brake::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Brake::g_numEqns() const { return 1; }
 
   void
   Brake::g_eval(
@@ -137,28 +137,17 @@ namespace BrakeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brake::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  Brake::DgDxlxlp_numCols() const
-  { return 9; }
-
-  integer
-  Brake::DgDxlxlp_nnz() const
-  { return 3; }
+  integer Brake::DgDxlxlp_numRows() const { return 1; }
+  integer Brake::DgDxlxlp_numCols() const { return 9; }
+  integer Brake::DgDxlxlp_nnz()     const { return 3; }
 
   void
-  Brake::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brake::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 8   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -196,26 +185,15 @@ namespace BrakeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brake::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  Brake::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  Brake::DgDu_nnz() const
-  { return 1; }
+  integer Brake::DgDu_numRows() const { return 1; }
+  integer Brake::DgDu_numCols() const { return 1; }
+  integer Brake::DgDu_nnz()     const { return 1; }
 
   void
-  Brake::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brake::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -376,12 +354,12 @@ namespace BrakeDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = Tpositive(t1);
-    real_type t3   = U__[iU_a];
-    real_type t4   = aControl(t3, -1, 1);
-    real_type t9   = pow(-X__[iX_v] * t1 + V__[0], 2);
-    real_type t13  = pow(-t3 * t1 + V__[1], 2);
+    real_type t1   = U__[iU_a];
+    real_type t2   = aControl(t1, -1, 1);
+    real_type t3   = P__[iP_T];
+    real_type t4   = Tpositive(-t3);
+    real_type t9   = pow(-X__[iX_v] * t3 + V__[0], 2);
+    real_type t13  = pow(-t1 * t3 + V__[1], 2);
     real_type result__ = t2 + t4 + t9 + t13;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
@@ -391,9 +369,7 @@ namespace BrakeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Brake::DmDu_numEqns() const
-  { return 1; }
+  integer Brake::DmDu_numEqns() const { return 1; }
 
   void
   Brake::DmDu_eval(
@@ -416,28 +392,15 @@ namespace BrakeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  Brake::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  Brake::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  Brake::DmDuu_nnz() const
-  { return 1; }
+  integer Brake::DmDuu_numRows() const { return 1; }
+  integer Brake::DmDuu_numCols() const { return 1; }
+  integer Brake::DmDuu_nnz()     const { return 1; }
 
   void
-  Brake::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  Brake::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Brake::DmDuu_sparse(

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_ODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -70,9 +70,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  ICLOCS_TwoLinkRobotArm::rhs_ode_numEqns() const
-  { return 4; }
+  integer ICLOCS_TwoLinkRobotArm::rhs_ode_numEqns() const { return 4; }
 
   void
   ICLOCS_TwoLinkRobotArm::rhs_ode_eval(
@@ -107,39 +105,36 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDx_numRows() const
-  { return 4; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDx_numCols() const
-  { return 4; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDx_nnz() const
-  { return 9; }
+  integer ICLOCS_TwoLinkRobotArm::Drhs_odeDxup_numRows() const { return 4; }
+  integer ICLOCS_TwoLinkRobotArm::Drhs_odeDxup_numCols() const { return 7; }
+  integer ICLOCS_TwoLinkRobotArm::Drhs_odeDxup_nnz()     const { return 17; }
 
   void
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_TwoLinkRobotArm::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 0   ;
-    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
-    iIndex[8 ] = 3   ; jIndex[8 ] = 0   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 4   ;
+    iIndex[4 ] = 0   ; jIndex[4 ] = 5   ;
+    iIndex[5 ] = 0   ; jIndex[5 ] = 6   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 0   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 1   ;
+    iIndex[8 ] = 1   ; jIndex[8 ] = 2   ;
+    iIndex[9 ] = 1   ; jIndex[9 ] = 4   ;
+    iIndex[10] = 1   ; jIndex[10] = 5   ;
+    iIndex[11] = 1   ; jIndex[11] = 6   ;
+    iIndex[12] = 2   ; jIndex[12] = 0   ;
+    iIndex[13] = 2   ; jIndex[13] = 1   ;
+    iIndex[14] = 2   ; jIndex[14] = 6   ;
+    iIndex[15] = 3   ; jIndex[15] = 0   ;
+    iIndex[16] = 3   ; jIndex[16] = 6   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDx_sparse(
+  ICLOCS_TwoLinkRobotArm::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -167,129 +162,29 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t29  = t5 * t3;
     real_type t32  = t14 * t14;
     real_type t34  = U__[iU_u1];
+    real_type t39  = 9.0 / 4.0 * t18 * t29 + 2 * t32 + 4.0 / 3.0 * t34 - 4.0 / 3.0 * t23 - 3.0 / 2.0 * t23 * t5;
     real_type t41  = t10 * t10;
     real_type t44  = t5 * t3 / t41;
-    result__[ 2   ] = t11 * (9.0 / 4.0 * t18 * t17 - 9.0 / 4.0 * t18 * t8 + 3.0 / 2.0 * t23 * t3) * t1 - 9.0 / 2.0 * t44 * (9.0 / 4.0 * t18 * t29 + 2 * t32 + 4.0 / 3.0 * t34 - 4.0 / 3.0 * t23 - 3.0 / 2.0 * t23 * t5) * t1;
-    result__[ 3   ] = -7 * t11 * t6 * t1;
-    result__[ 4   ] = -9.0 / 2.0 * t11 * t14 * t5 * t4;
-    real_type t58  = t34 - t23;
-    result__[ 5   ] = -t11 * (9.0 / 4.0 * t32 * t17 - 9.0 / 4.0 * t32 * t8 - 3.0 / 2.0 * t58 * t3) * t1 + 9.0 / 2.0 * t44 * (9.0 / 4.0 * t32 * t29 + 7.0 / 2.0 * t18 - 7.0 / 3.0 * t23 + 3.0 / 2.0 * t58 * t5) * t1;
-    result__[ 6   ] = -t1;
-    result__[ 7   ] = t1;
-    result__[ 8   ] = result__[7];
+    result__[ 2   ] = t11 * (9.0 / 4.0 * t18 * t17 - 9.0 / 4.0 * t18 * t8 + 3.0 / 2.0 * t23 * t3) * t1 - 9.0 / 2.0 * t44 * t39 * t1;
+    result__[ 3   ] = 4.0 / 3.0 * t11 * t1;
+    real_type t48  = 3.0 / 2.0 * t5;
+    result__[ 4   ] = t11 * (-4.0 / 3.0 - t48) * t1;
+    result__[ 5   ] = t11 * t39;
+    result__[ 6   ] = -7 * t11 * t6 * t1;
+    result__[ 7   ] = -9.0 / 2.0 * t11 * t14 * t5 * t4;
+    real_type t62  = t34 - t23;
+    real_type t74  = 9.0 / 4.0 * t32 * t29 + 7.0 / 2.0 * t18 - 7.0 / 3.0 * t23 + 3.0 / 2.0 * t62 * t5;
+    result__[ 8   ] = -t11 * (9.0 / 4.0 * t32 * t17 - 9.0 / 4.0 * t32 * t8 - 3.0 / 2.0 * t62 * t3) * t1 + 9.0 / 2.0 * t44 * t74 * t1;
+    result__[ 9   ] = -3.0 / 2.0 * t11 * t5 * t1;
+    result__[ 10  ] = -t11 * (-7.0 / 3.0 - t48) * t1;
+    result__[ 11  ] = -t11 * t74;
+    result__[ 12  ] = -t1;
+    result__[ 13  ] = t1;
+    result__[ 14  ] = t14 - t6;
+    result__[ 15  ] = result__[13];
+    result__[ 16  ] = t6;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 9, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDp_numRows() const
-  { return 4; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDp_numCols() const
-  { return 1; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDp_nnz() const
-  { return 4; }
-
-  void
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 0   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_theta];
-    real_type t2   = sin(t1);
-    real_type t3   = cos(t1);
-    real_type t4   = t3 * t2;
-    real_type t5   = X__[iX_omega__alpha];
-    real_type t6   = t5 * t5;
-    real_type t9   = X__[iX_omega__beta];
-    real_type t10  = t9 * t9;
-    real_type t12  = U__[iU_u1];
-    real_type t14  = U__[iU_u2];
-    real_type t19  = t2 * t2;
-    real_type t22  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t19);
-    result__[ 0   ] = t22 * (9.0 / 4.0 * t6 * t4 + 2 * t10 + 4.0 / 3.0 * t12 - 4.0 / 3.0 * t14 - 3.0 / 2.0 * t14 * t3);
-    result__[ 1   ] = -t22 * (9.0 / 4.0 * t10 * t4 + 7.0 / 2.0 * t6 - 7.0 / 3.0 * t14 + 3.0 / 2.0 * (t12 - t14) * t3);
-    result__[ 2   ] = t9 - t5;
-    result__[ 3   ] = t5;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDp_sparse", 4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDu_numRows() const
-  { return 4; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDu_numCols() const
-  { return 2; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDu_nnz() const
-  { return 4; }
-
-  void
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ICLOCS_TwoLinkRobotArm::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = X__[iX_theta];
-    real_type t3   = sin(t2);
-    real_type t4   = t3 * t3;
-    real_type t7   = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t4);
-    result__[ 0   ] = 4.0 / 3.0 * t7 * t1;
-    real_type t9   = cos(t2);
-    real_type t10  = 3.0 / 2.0 * t9;
-    result__[ 1   ] = t7 * (-4.0 / 3.0 - t10) * t1;
-    result__[ 2   ] = -3.0 / 2.0 * t7 * t9 * t1;
-    result__[ 3   ] = -t7 * (-7.0 / 3.0 - t10) * t1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDu_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 17, i_segment );
   }
 
   /*\
@@ -299,28 +194,19 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  ICLOCS_TwoLinkRobotArm::A_numRows() const
-  { return 4; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::A_numCols() const
-  { return 4; }
-
-  integer
-  ICLOCS_TwoLinkRobotArm::A_nnz() const
-  { return 4; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_TwoLinkRobotArm::A_numRows() const { return 4; }
+  integer ICLOCS_TwoLinkRobotArm::A_numCols() const { return 4; }
+  integer ICLOCS_TwoLinkRobotArm::A_nnz()     const { return 4; }
 
   void
-  ICLOCS_TwoLinkRobotArm::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  ICLOCS_TwoLinkRobotArm::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

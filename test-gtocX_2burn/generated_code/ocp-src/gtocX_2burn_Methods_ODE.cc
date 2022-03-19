@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_ODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -54,9 +54,7 @@ namespace gtocX_2burnDefine {
    |   \___/|___/|___|
   \*/
 
-  integer
-  gtocX_2burn::rhs_ode_numEqns() const
-  { return 6; }
+  integer gtocX_2burn::rhs_ode_numEqns() const { return 6; }
 
   void
   gtocX_2burn::rhs_ode_eval(
@@ -95,24 +93,12 @@ namespace gtocX_2burnDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  gtocX_2burn::Drhs_odeDx_numRows() const
-  { return 6; }
-
-  integer
-  gtocX_2burn::Drhs_odeDx_numCols() const
-  { return 6; }
-
-  integer
-  gtocX_2burn::Drhs_odeDx_nnz() const
-  { return 12; }
+  integer gtocX_2burn::Drhs_odeDxup_numRows() const { return 6; }
+  integer gtocX_2burn::Drhs_odeDxup_numCols() const { return 6; }
+  integer gtocX_2burn::Drhs_odeDxup_nnz()     const { return 12; }
 
   void
-  gtocX_2burn::Drhs_odeDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  gtocX_2burn::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 1   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
@@ -127,10 +113,11 @@ namespace gtocX_2burnDefine {
     iIndex[11] = 5   ; jIndex[11] = 5   ;
   }
 
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  gtocX_2burn::Drhs_odeDx_sparse(
+  gtocX_2burn::Drhs_odeDxup_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -183,73 +170,7 @@ namespace gtocX_2burnDefine {
     result__[ 10  ] = 2 * t19 * t73 * t70;
     result__[ 11  ] = 2 * (-t19 * t13 + t14 * t41) * t73 * t70;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxp_sparse", 12, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  gtocX_2burn::Drhs_odeDp_numRows() const
-  { return 6; }
-
-  integer
-  gtocX_2burn::Drhs_odeDp_numCols() const
-  { return 0; }
-
-  integer
-  gtocX_2burn::Drhs_odeDp_nnz() const
-  { return 0; }
-
-  void
-  gtocX_2burn::Drhs_odeDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  gtocX_2burn::Drhs_odeDp_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  gtocX_2burn::Drhs_odeDu_numRows() const
-  { return 6; }
-
-  integer
-  gtocX_2burn::Drhs_odeDu_numCols() const
-  { return 0; }
-
-  integer
-  gtocX_2burn::Drhs_odeDu_nnz() const
-  { return 0; }
-
-  void
-  gtocX_2burn::Drhs_odeDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  gtocX_2burn::Drhs_odeDu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 12, i_segment );
   }
 
   /*\
@@ -259,23 +180,13 @@ namespace gtocX_2burnDefine {
    |  |_|  |_\__,_/__/__/ |_|  |_\__,_|\__|_| |_/_\_\
   \*/
 
-  integer
-  gtocX_2burn::A_numRows() const
-  { return 6; }
-
-  integer
-  gtocX_2burn::A_numCols() const
-  { return 6; }
-
-  integer
-  gtocX_2burn::A_nnz() const
-  { return 6; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer gtocX_2burn::A_numRows() const { return 6; }
+  integer gtocX_2burn::A_numCols() const { return 6; }
+  integer gtocX_2burn::A_nnz()     const { return 6; }
 
   void
-  gtocX_2burn::A_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  gtocX_2burn::A_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -283,6 +194,7 @@ namespace gtocX_2burnDefine {
     iIndex[4 ] = 4   ; jIndex[4 ] = 4   ;
     iIndex[5 ] = 5   ; jIndex[5 ] = 5   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

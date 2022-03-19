@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -101,16 +101,26 @@ using Mechatronix::ToolPath2D;
 #define ALIAS_lenSeg_R(___dummy___) segmentRight.ss_length()
 #define ALIAS_lenSeg_L(___dummy___) segmentLeft.ss_length()
 #define ALIAS_lenSeg(___dummy___) segment.ss_length()
-#define ALIAS_ay_limit_DD(__t1) ay_limit.DD( __t1)
-#define ALIAS_ay_limit_D(__t1) ay_limit.D( __t1)
-#define ALIAS_ax_limit_DD(__t1) ax_limit.DD( __t1)
-#define ALIAS_ax_limit_D(__t1) ax_limit.D( __t1)
-#define ALIAS_an_limit_DD(__t1) an_limit.DD( __t1)
-#define ALIAS_an_limit_D(__t1) an_limit.D( __t1)
-#define ALIAS_as_limit_DD(__t1) as_limit.DD( __t1)
-#define ALIAS_as_limit_D(__t1) as_limit.D( __t1)
-#define ALIAS_PathFollowingTolerance_DD(__t1) PathFollowingTolerance.DD( __t1)
-#define ALIAS_PathFollowingTolerance_D(__t1) PathFollowingTolerance.D( __t1)
+#define ALIAS_ay_limit_max_DD(__t1) ay_limit_max.DD( __t1)
+#define ALIAS_ay_limit_max_D(__t1) ay_limit_max.D( __t1)
+#define ALIAS_ay_limit_min_DD(__t1) ay_limit_min.DD( __t1)
+#define ALIAS_ay_limit_min_D(__t1) ay_limit_min.D( __t1)
+#define ALIAS_ax_limit_max_DD(__t1) ax_limit_max.DD( __t1)
+#define ALIAS_ax_limit_max_D(__t1) ax_limit_max.D( __t1)
+#define ALIAS_ax_limit_min_DD(__t1) ax_limit_min.DD( __t1)
+#define ALIAS_ax_limit_min_D(__t1) ax_limit_min.D( __t1)
+#define ALIAS_an_limit_max_DD(__t1) an_limit_max.DD( __t1)
+#define ALIAS_an_limit_max_D(__t1) an_limit_max.D( __t1)
+#define ALIAS_an_limit_min_DD(__t1) an_limit_min.DD( __t1)
+#define ALIAS_an_limit_min_D(__t1) an_limit_min.D( __t1)
+#define ALIAS_as_limit_max_DD(__t1) as_limit_max.DD( __t1)
+#define ALIAS_as_limit_max_D(__t1) as_limit_max.D( __t1)
+#define ALIAS_as_limit_min_DD(__t1) as_limit_min.DD( __t1)
+#define ALIAS_as_limit_min_D(__t1) as_limit_min.D( __t1)
+#define ALIAS_PathFollowingTolerance_max_DD(__t1) PathFollowingTolerance_max.DD( __t1)
+#define ALIAS_PathFollowingTolerance_max_D(__t1) PathFollowingTolerance_max.D( __t1)
+#define ALIAS_PathFollowingTolerance_min_DD(__t1) PathFollowingTolerance_min.DD( __t1)
+#define ALIAS_PathFollowingTolerance_min_D(__t1) PathFollowingTolerance_min.D( __t1)
 #define ALIAS_vLimit_DD(__t1) vLimit.DD( __t1)
 #define ALIAS_vLimit_D(__t1) vLimit.D( __t1)
 #define ALIAS_timePositive_DD(__t1) timePositive.DD( __t1)
@@ -181,56 +191,57 @@ namespace CNOCDefine {
     LM__[6] = (LL__[6]+LR__[6])/2;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = XM__[6];
-    real_type t3   = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
-    real_type t4   = t3 * t1;
-    real_type t5   = XM__[1];
-    real_type t6   = XM__[0];
-    real_type t7   = ALIAS_kappa(t6);
-    real_type t9   = t7 * t5 - 1;
-    real_type t10  = ALIAS_nominalFeed();
-    real_type t12  = XM__[2];
-    real_type t13  = t12 * t12;
-    real_type t14  = XM__[3];
-    real_type t15  = t14 * t14;
-    real_type t17  = sqrt(t13 + t15);
-    real_type t21  = vLimit(1.0 / t10 * (0.101e1 * t10 - t17));
-    real_type t24  = XM__[4];
-    real_type t25  = ALIAS_theta(t6);
-    real_type t26  = cos(t25);
-    real_type t28  = XM__[5];
-    real_type t29  = sin(t25);
-    real_type t35  = ax_limit(1.0 / ModelPars[iM_ax_max] * (t26 * t24 - t29 * t28));
-    real_type t44  = ay_limit(1.0 / ModelPars[iM_ay_max] * (t29 * t24 + t26 * t28));
-    real_type t54  = PathFollowingTolerance(1.0 / ModelPars[iM_path_following_tolerance] * t5);
-    real_type t60  = an_limit(1.0 / ModelPars[iM_an_max] * t28);
-    real_type t66  = as_limit(1.0 / ModelPars[iM_as_max] * t24);
-    real_type t70  = timePositive(t1);
-    real_type t74  = t14 * t3 * LM__[1];
-    real_type t76  = LM__[2];
-    real_type t77  = t76 * t3 * t24;
-    real_type t78  = LM__[3];
-    real_type t80  = t3 * t78 * t28;
-    real_type t81  = UM__[0];
-    real_type t83  = LM__[4];
-    real_type t84  = t83 * t3 * t81;
-    real_type t85  = UM__[1];
-    real_type t86  = LM__[5];
-    real_type t88  = t3 * t86 * t85;
-    real_type t91  = jsControl(t81, ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    real_type t92  = ModelPars[iM_jn_max];
-    real_type t93  = jnControl(t85, -t92, t92);
-    real_type t94  = -t91 - t93;
-    real_type t96  = t10 * t10;
-    real_type result__ = 1.0 / t9 / t3 * (t21 * t9 * t4 + t35 * t9 * t4 + t44 * t9 * t4 - 2 * t17 * t9 * t10 * t1 + t54 * t9 * t4 + t60 * t9 * t4 + t66 * t9 * t4 + t7 * (t70 * t5 * t3 - (t5 * (t3 * t94 - t13 - t15 - t74 - t77 - t80 - t84 - t88 - t96) + (-t12 * t78 + t14 * t76 - t86 * t24 + t83 * t28) * t12 * t3) * t1) - t3 * t70 - (t12 * t3 * LM__[0] - t3 * t94 + t13 + t15 + t74 + t77 + t80 + t84 + t88 + t96) * t1);
+    real_type t2   = timePositive(-t1);
+    real_type t3   = XM__[2];
+    real_type t4   = t3 * t3;
+    real_type t5   = XM__[3];
+    real_type t6   = t5 * t5;
+    real_type t8   = sqrt(t4 + t6);
+    real_type t9   = ALIAS_nominalFeed();
+    real_type t13  = vLimit(1.0 / t9 * t8 - 0.101e1);
+    real_type t15  = XM__[1];
+    real_type t18  = 1.0 / ModelPars[iM_path_following_tolerance] * t15;
+    real_type t20  = PathFollowingTolerance_min(-1 - t18);
+    real_type t23  = PathFollowingTolerance_max(t18 - 1);
+    real_type t25  = XM__[4];
+    real_type t28  = 1.0 / ModelPars[iM_as_max] * t25;
+    real_type t30  = as_limit_min(-1 - t28);
+    real_type t33  = as_limit_max(t28 - 1);
+    real_type t35  = XM__[5];
+    real_type t38  = 1.0 / ModelPars[iM_an_max] * t35;
+    real_type t40  = an_limit_min(-1 - t38);
+    real_type t43  = an_limit_max(t38 - 1);
+    real_type t45  = XM__[0];
+    real_type t46  = ALIAS_theta(t45);
+    real_type t47  = cos(t46);
+    real_type t49  = sin(t46);
+    real_type t54  = 1.0 / ModelPars[iM_ax_max] * (t25 * t47 - t35 * t49);
+    real_type t56  = ax_limit_min(-1 - t54);
+    real_type t59  = ax_limit_max(t54 - 1);
+    real_type t67  = 1.0 / ModelPars[iM_ay_max] * (t25 * t49 + t35 * t47);
+    real_type t69  = ay_limit_min(-1 - t67);
+    real_type t72  = ay_limit_max(t67 - 1);
+    real_type t75  = pow(t8 - t9, 2);
+    real_type t78  = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
+    real_type t83  = ALIAS_kappa(t45);
+    real_type t86  = 1.0 / (-t83 * t15 + 1);
+    real_type t94  = t86 * t83;
+    real_type t106 = UM__[0];
+    real_type t113 = UM__[1];
+    real_type t121 = jsControl(t106, ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t123 = ModelPars[iM_jn_max];
+    real_type t124 = jnControl(t113, -t123, t123);
+    real_type t126 = t69 * t1 + t72 * t1 + 1.0 / t78 * t75 * t1 + t1 * t86 * t3 * LM__[0] + t1 * t5 * LM__[1] - t1 * (-t94 * t5 * t3 - t25) * LM__[2] - t1 * (t86 * t83 * t4 - t35) * LM__[3] - t1 * (-t94 * t35 * t3 - t106) * LM__[4] - t1 * (t94 * t25 * t3 - t113) * LM__[5] + t121 * t1 + t124 * t1;
+    real_type result__ = t1 * t13 + t1 * t20 + t1 * t23 + t1 * t30 + t1 * t33 + t1 * t40 + t1 * t43 + t1 * t56 + t1 * t59 + t126 + t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
 
-  integer
-  CNOC::g_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer CNOC::g_numEqns() const { return 2; }
 
   void
   CNOC::g_eval(
@@ -268,35 +279,23 @@ namespace CNOCDefine {
     LM__[5] = (LL__[5]+LR__[5])/2;
     LM__[6] = (LL__[6]+LR__[6])/2;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    real_type t1   = XM__[6];
-    real_type t6   = ALIAS_jsControl_D_1(UM__[0], ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    result__[ 0   ] = (LM__[4] + t6) * t1;
-    real_type t10  = ModelPars[iM_jn_max];
-    real_type t11  = ALIAS_jnControl_D_1(UM__[1], -t10, t10);
-    result__[ 1   ] = (LM__[5] + t11) * t1;
+    real_type t2   = XM__[6];
+    real_type t7   = ALIAS_jsControl_D_1(UM__[0], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    result__[ 0   ] = t7 * t2 + t2 * LM__[4];
+    real_type t12  = ModelPars[iM_jn_max];
+    real_type t13  = ALIAS_jnControl_D_1(UM__[1], -t12, t12);
+    result__[ 1   ] = t13 * t2 + t2 * LM__[5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::DgDxlxlp_numRows() const
-  { return 2; }
-
-  integer
-  CNOC::DgDxlxlp_numCols() const
-  { return 28; }
-
-  integer
-  CNOC::DgDxlxlp_nnz() const
-  { return 8; }
+  integer CNOC::DgDxlxlp_numRows() const { return 2; }
+  integer CNOC::DgDxlxlp_numCols() const { return 28; }
+  integer CNOC::DgDxlxlp_nnz()     const { return 8; }
 
   void
-  CNOC::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  CNOC::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 6   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 11  ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 20  ;
@@ -306,6 +305,7 @@ namespace CNOCDefine {
     iIndex[6 ] = 1   ; jIndex[6 ] = 20  ;
     iIndex[7 ] = 1   ; jIndex[7 ] = 26  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -361,27 +361,16 @@ namespace CNOCDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::DgDu_numRows() const
-  { return 2; }
-
-  integer
-  CNOC::DgDu_numCols() const
-  { return 2; }
-
-  integer
-  CNOC::DgDu_nnz() const
-  { return 2; }
+  integer CNOC::DgDu_numRows() const { return 2; }
+  integer CNOC::DgDu_numCols() const { return 2; }
+  integer CNOC::DgDu_nnz()     const { return 2; }
 
   void
-  CNOC::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  CNOC::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -674,42 +663,53 @@ namespace CNOCDefine {
     real_const_ptr X__ = NODE__.x;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
-    real_type t2   = timePositive(t1);
-    real_type t3   = X__[iX_vs];
-    real_type t4   = t3 * t3;
-    real_type t5   = X__[iX_vn];
-    real_type t6   = t5 * t5;
-    real_type t8   = sqrt(t4 + t6);
-    real_type t9   = ALIAS_nominalFeed();
-    real_type t13  = vLimit(0.101e1 - 1.0 / t9 * t8);
-    real_type t15  = X__[iX_n];
-    real_type t19  = PathFollowingTolerance(1.0 / ModelPars[iM_path_following_tolerance] * t15);
-    real_type t21  = X__[iX_as];
-    real_type t25  = as_limit(1.0 / ModelPars[iM_as_max] * t21);
-    real_type t27  = X__[iX_an];
-    real_type t31  = an_limit(1.0 / ModelPars[iM_an_max] * t27);
-    real_type t33  = X__[iX_s];
-    real_type t34  = ALIAS_theta(t33);
-    real_type t35  = cos(t34);
-    real_type t37  = sin(t34);
-    real_type t43  = ax_limit(1.0 / ModelPars[iM_ax_max] * (t35 * t21 - t37 * t27));
-    real_type t51  = ay_limit(1.0 / ModelPars[iM_ay_max] * (t37 * t21 + t35 * t27));
-    real_type t53  = U__[iU_js];
-    real_type t56  = jsControl(t53, ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    real_type t58  = U__[iU_jn];
-    real_type t59  = ModelPars[iM_jn_max];
-    real_type t60  = jnControl(t58, -t59, t59);
-    real_type t63  = ALIAS_kappa(t33);
-    real_type t66  = 1.0 / (-t63 * t15 + 1);
-    real_type t70  = pow(-t1 * t66 * t3 + V__[0], 2);
-    real_type t74  = pow(-t1 * t5 + V__[1], 2);
-    real_type t77  = t66 * t63;
-    real_type t82  = pow(V__[2] + t1 * (-t77 * t5 * t3 - t21), 2);
-    real_type t89  = pow(V__[3] + t1 * (t66 * t63 * t4 - t27), 2);
-    real_type t96  = pow(V__[4] + t1 * (-t77 * t27 * t3 - t53), 2);
-    real_type t103 = pow(V__[5] + t1 * (t77 * t21 * t3 - t58), 2);
-    real_type t105 = V__[6] * V__[6];
-    real_type result__ = t13 * t1 + t19 * t1 + t25 * t1 + t31 * t1 + t43 * t1 + t51 * t1 + t56 * t1 + t60 * t1 + t103 + t105 + t2 + t70 + t74 + t82 + t89 + t96;
+    real_type t2   = U__[iU_js];
+    real_type t5   = jsControl(t2, ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t7   = U__[iU_jn];
+    real_type t8   = ModelPars[iM_jn_max];
+    real_type t9   = jnControl(t7, -t8, t8);
+    real_type t11  = timePositive(-t1);
+    real_type t12  = X__[iX_vs];
+    real_type t13  = t12 * t12;
+    real_type t14  = X__[iX_vn];
+    real_type t15  = t14 * t14;
+    real_type t17  = sqrt(t13 + t15);
+    real_type t18  = ALIAS_nominalFeed();
+    real_type t22  = vLimit(1.0 / t18 * t17 - 0.101e1);
+    real_type t24  = X__[iX_n];
+    real_type t27  = 1.0 / ModelPars[iM_path_following_tolerance] * t24;
+    real_type t29  = PathFollowingTolerance_min(-1 - t27);
+    real_type t32  = PathFollowingTolerance_max(t27 - 1);
+    real_type t34  = X__[iX_as];
+    real_type t37  = 1.0 / ModelPars[iM_as_max] * t34;
+    real_type t39  = as_limit_min(-1 - t37);
+    real_type t42  = as_limit_max(t37 - 1);
+    real_type t44  = X__[iX_an];
+    real_type t47  = 1.0 / ModelPars[iM_an_max] * t44;
+    real_type t49  = an_limit_min(-1 - t47);
+    real_type t52  = an_limit_max(t47 - 1);
+    real_type t55  = X__[iX_s];
+    real_type t56  = ALIAS_theta(t55);
+    real_type t57  = cos(t56);
+    real_type t59  = sin(t56);
+    real_type t64  = 1.0 / ModelPars[iM_ax_max] * (t57 * t34 - t59 * t44);
+    real_type t66  = ax_limit_min(-1 - t64);
+    real_type t69  = ax_limit_max(t64 - 1);
+    real_type t76  = 1.0 / ModelPars[iM_ay_max] * (t59 * t34 + t57 * t44);
+    real_type t78  = ay_limit_min(-1 - t76);
+    real_type t81  = ay_limit_max(t76 - 1);
+    real_type t84  = ALIAS_kappa(t55);
+    real_type t87  = 1.0 / (-t84 * t24 + 1);
+    real_type t91  = pow(-t1 * t87 * t12 + V__[0], 2);
+    real_type t95  = pow(-t1 * t14 + V__[1], 2);
+    real_type t98  = t87 * t84;
+    real_type t103 = pow(V__[2] + t1 * (-t98 * t14 * t12 - t34), 2);
+    real_type t110 = pow(V__[3] + t1 * (t87 * t84 * t13 - t44), 2);
+    real_type t117 = pow(V__[4] + t1 * (-t98 * t44 * t12 - t2), 2);
+    real_type t124 = pow(V__[5] + t1 * (t98 * t34 * t12 - t7), 2);
+    real_type t126 = V__[6] * V__[6];
+    real_type t127 = t66 * t1 + t69 * t1 + t78 * t1 + t81 * t1 + t103 + t110 + t117 + t124 + t126 + t91 + t95;
+    real_type result__ = t22 * t1 + t29 * t1 + t32 * t1 + t39 * t1 + t42 * t1 + t49 * t1 + t5 * t1 + t52 * t1 + t9 * t1 + t11 + t127;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -718,9 +718,7 @@ namespace CNOCDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  CNOC::DmDu_numEqns() const
-  { return 2; }
+  integer CNOC::DmDu_numEqns() const { return 2; }
 
   void
   CNOC::DmDu_eval(
@@ -740,7 +738,7 @@ namespace CNOCDefine {
     real_type t8   = X__[iX_vs];
     real_type t12  = ALIAS_kappa(X__[iX_s]);
     real_type t17  = 1.0 / (-t12 * X__[iX_n] + 1) * t12;
-    result__[ 0   ] = t1 * t5 - 2 * t1 * (V__[4] + t1 * (-t17 * X__[iX_an] * t8 - t2));
+    result__[ 0   ] = t5 * t1 - 2 * t1 * (V__[4] + t1 * (-t17 * X__[iX_an] * t8 - t2));
     real_type t24  = U__[iU_jn];
     real_type t25  = ModelPars[iM_jn_max];
     real_type t26  = ALIAS_jnControl_D_1(t24, -t25, t25);
@@ -750,29 +748,16 @@ namespace CNOCDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  CNOC::DmDuu_numRows() const
-  { return 2; }
-
-  integer
-  CNOC::DmDuu_numCols() const
-  { return 2; }
-
-  integer
-  CNOC::DmDuu_nnz() const
-  { return 2; }
+  integer CNOC::DmDuu_numRows() const { return 2; }
+  integer CNOC::DmDuu_numCols() const { return 2; }
+  integer CNOC::DmDuu_nnz()     const { return 2; }
 
   void
-  CNOC::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  CNOC::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CNOC::DmDuu_sparse(

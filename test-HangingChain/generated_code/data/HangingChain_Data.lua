@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-a  = 1
 b  = 3
+a  = 1
 u0 = b-a
 L0 = (u0**2+1)**(1/2.0)
 L  = L0
@@ -36,6 +36,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -256,12 +258,12 @@ content = {
   Parameters = {
 
     -- Model Parameters
+    L = L,
 
     -- Guess Parameters
     u0 = u0,
 
     -- Boundary Conditions
-    L = L,
     a = a,
     b = b,
 
@@ -283,6 +285,7 @@ content = {
   -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
+  -- ConstraintLT: none defined
   -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
@@ -295,8 +298,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

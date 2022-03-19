@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Data.lua                                    |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,16 +20,16 @@
 -- User Header
 
 -- Auxiliary values
+w_time_max = 1
 tol_ctrl0  = 0.1
+tol_ctrl   = tol_ctrl0
+epsi_T     = 0.01
+tol_T      = 1
+x_epsi     = 0.01
+w_time     = w_time_max
+x_tol      = 0.01
 epsi_ctrl0 = 0.1
 epsi_ctrl  = epsi_ctrl0
-x_epsi     = 0.01
-tol_T      = 1
-tol_ctrl   = tol_ctrl0
-w_time_max = 1
-x_tol      = 0.01
-w_time     = w_time_max
-epsi_T     = 0.01
 
 content = {
 
@@ -41,6 +41,8 @@ content = {
 
   -- Level of message
   InfoLevel = 4,
+
+  Use_control_penalties_in_adjoint_equations = false,
 
   --[[
    _   _                        _
@@ -301,7 +303,7 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, BIPOWER
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
@@ -312,31 +314,40 @@ content = {
   },
 
   Constraints = {
-  -- Constraint1D
+  -- ConstraintLT
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DGreaterThan
+    -- PenaltyBarrier1DLessThan
     tfboundsubType   = "BARRIER_LOG",
     tfboundepsilon   = epsi_T,
     tfboundtolerance = tol_T,
     tfboundactive    = true
 
-    -- PenaltyBarrier1DInterval
-    x1boundsubType   = "BARRIER_LOG",
-    x1boundepsilon   = x_epsi,
-    x1boundtolerance = x_tol,
-    x1boundmin       = 0,
-    x1boundmax       = 1,
-    x1boundactive    = true
+    -- PenaltyBarrier1DLessThan
+    x1bound_minsubType   = "BARRIER_LOG",
+    x1bound_minepsilon   = x_epsi,
+    x1bound_mintolerance = x_tol,
+    x1bound_minactive    = true
 
-    -- PenaltyBarrier1DInterval
-    x2boundsubType   = "BARRIER_LOG",
-    x2boundepsilon   = x_epsi,
-    x2boundtolerance = x_tol,
-    x2boundmin       = 0,
-    x2boundmax       = 1,
-    x2boundactive    = true
+    -- PenaltyBarrier1DLessThan
+    x1bound_maxsubType   = "BARRIER_LOG",
+    x1bound_maxepsilon   = x_epsi,
+    x1bound_maxtolerance = x_tol,
+    x1bound_maxactive    = true
 
+    -- PenaltyBarrier1DLessThan
+    x2bound_minsubType   = "BARRIER_LOG",
+    x2bound_minepsilon   = x_epsi,
+    x2bound_mintolerance = x_tol,
+    x2bound_minactive    = true
+
+    -- PenaltyBarrier1DLessThan
+    x2bound_maxsubType   = "BARRIER_LOG",
+    x2bound_maxepsilon   = x_epsi,
+    x2bound_maxtolerance = x_tol,
+    x2bound_maxactive    = true
+
+  -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 
@@ -348,8 +359,8 @@ content = {
     segments = {
       
       {
-        n      = 400,
         length = 1,
+        n      = 400,
       },
     },
   },

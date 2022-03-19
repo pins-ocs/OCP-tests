@@ -3,9 +3,9 @@
 #                                                                          #
 #  file: gtocX_2burn_ffi_structs.rb                                        #
 #                                                                          #
-#  version: 1.0   date 20/12/2021                                          #
+#  version: 1.0   date 19/3/2022                                           #
 #                                                                          #
-#  Copyright (C) 2021                                                      #
+#  Copyright (C) 2022                                                      #
 #                                                                          #
 #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                              #
@@ -89,10 +89,12 @@ module gtocX_2burn
 
   class gtocX_2burn_constraints_params < FFI::Struct
     layout(
-      # 1D constraints
-      :ray_positiveSubType,   :index_t,
-      :ray_positiveEpsilon,   :data_t,
+      # LT constraints
+      :ray_positiveSubType, :index_t,
+      :ray_positiveEpsilon, :data_t,
       :ray_positiveTolerance, :data_t,
+
+      # 1D constraints
 
       # 2D constraints
 

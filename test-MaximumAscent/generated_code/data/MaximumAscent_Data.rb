@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 20/12/2021                                       #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
-#  Copyright (C) 2021                                                   #
+#  Copyright (C) 2022                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -21,28 +21,30 @@ include Mechatronix
 
 # Auxiliary values
 days1  = 30
-T      = 0.68
-g0     = 9.80665
-Isp    = 1500
-mdot   = T/g0/Isp
 mu     = 398600441800000
+r0     = 6678140
+u0     = 0
 days   = 1
 tf     = 86400*days
-r0     = 6678140
+g0     = 9.80665
+Isp    = 1500
+T      = 0.68
+mdot   = T/g0/Isp
 v0     = (mu/r0)**(1/2.0)
-u0     = 0
 u0_bar = u0/v0
 
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = true
+  data.Debug = false
 
   # Enable doctor
   data.Doctor = false
 
   # Level of message
   data.InfoLevel = 4
+
+  data.Use_control_penalties_in_adjoint_equations = false
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -327,6 +329,7 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
+  # ConstraintLT: none defined
   # Constraint1D: none defined
   # Constraint2D: none defined
 
@@ -343,8 +346,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 1000*days1,
+        :length => 1,
       },
     ],
   };

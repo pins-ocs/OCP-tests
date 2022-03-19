@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BertolazziCorsoExample1_dll_pins.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -53,8 +53,8 @@
 #include "BertolazziCorsoExample1_dll_pins.hh"
 #include <map>
 
-static Mechatronix::Console    * pConsole = nullptr;
-static Mechatronix::ThreadPool * pTP      = nullptr;
+static Mechatronix::Console * pConsole  = nullptr;
+static Mechatronix::integer   n_threads = std::thread::hardware_concurrency();
 
 /*
 ::         _             _       _             __
@@ -82,7 +82,6 @@ namespace BertolazziCorsoExample1Define {
   BERTOLAZZICORSOEXAMPLE1_API_DLL
   mrb_value
   mrb_BertolazziCorsoExample1_ocp_setup( mrb_state *mrb, mrb_value self ) {
-    if ( pTP      == nullptr ) pTP      = new ThreadPool(std::thread::hardware_concurrency());
     if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
 
     mrb_sym m_sym_id   = mrb_intern_lit( mrb,"@id" );
@@ -125,7 +124,7 @@ namespace BertolazziCorsoExample1Define {
     string error;
     MAP_PROBLEM::iterator it = problems.find( id.c_str() );
     if ( it == problems.end() ) {
-      problems[id] = new BertolazziCorsoExample1_Problem( pTP, pConsole );
+      problems[id] = new BertolazziCorsoExample1_Problem( n_threads, pConsole );
       ok           = problems[id]->setup( gc_data, error );
     } else {
       ok = it->second->setup( gc_data, error );

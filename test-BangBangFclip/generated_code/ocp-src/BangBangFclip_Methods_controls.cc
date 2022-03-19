@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -109,9 +109,9 @@ namespace BangBangFclipDefine {
     return result__;
   }
 
-  integer
-  BangBangFclip::g_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFclip::g_numEqns() const { return 1; }
 
   void
   BangBangFclip::g_eval(
@@ -149,27 +149,16 @@ namespace BangBangFclipDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFclip::DgDxlxlp_numRows() const
-  { return 1; }
-
-  integer
-  BangBangFclip::DgDxlxlp_numCols() const
-  { return 12; }
-
-  integer
-  BangBangFclip::DgDxlxlp_nnz() const
-  { return 2; }
+  integer BangBangFclip::DgDxlxlp_numRows() const { return 1; }
+  integer BangBangFclip::DgDxlxlp_numCols() const { return 12; }
+  integer BangBangFclip::DgDxlxlp_nnz()     const { return 2; }
 
   void
-  BangBangFclip::DgDxlxlp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFclip::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 5   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 11  ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -208,26 +197,15 @@ namespace BangBangFclipDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFclip::DgDu_numRows() const
-  { return 1; }
-
-  integer
-  BangBangFclip::DgDu_numCols() const
-  { return 1; }
-
-  integer
-  BangBangFclip::DgDu_nnz() const
-  { return 1; }
+  integer BangBangFclip::DgDu_numRows() const { return 1; }
+  integer BangBangFclip::DgDu_numCols() const { return 1; }
+  integer BangBangFclip::DgDu_nnz()     const { return 1; }
 
   void
-  BangBangFclip::DgDu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFclip::DgDu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -417,9 +395,7 @@ namespace BangBangFclipDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  BangBangFclip::DmDu_numEqns() const
-  { return 1; }
+  integer BangBangFclip::DmDu_numEqns() const { return 1; }
 
   void
   BangBangFclip::DmDu_eval(
@@ -442,28 +418,15 @@ namespace BangBangFclipDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  BangBangFclip::DmDuu_numRows() const
-  { return 1; }
-
-  integer
-  BangBangFclip::DmDuu_numCols() const
-  { return 1; }
-
-  integer
-  BangBangFclip::DmDuu_nnz() const
-  { return 1; }
+  integer BangBangFclip::DmDuu_numRows() const { return 1; }
+  integer BangBangFclip::DmDuu_numCols() const { return 1; }
+  integer BangBangFclip::DmDuu_nnz()     const { return 1; }
 
   void
-  BangBangFclip::DmDuu_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  BangBangFclip::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BangBangFclip::DmDuu_sparse(

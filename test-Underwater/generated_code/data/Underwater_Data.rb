@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Underwater_Data.rb                                             #
 #                                                                       #
-#  version: 1.0   date 31/1/2022                                        #
+#  version: 1.0   date 19/3/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -27,13 +27,15 @@ tol_penalty  = 0.01
 mechatronix do |data|
 
   # activate run time debug
-  data.Debug = true
+  data.Debug = false
 
   # Enable doctor
   data.Doctor = false
 
   # Level of message
   data.InfoLevel = 4
+
+  data.Use_control_penalties_in_adjoint_equations = false
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -345,6 +347,7 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
+  # ConstraintLT: none defined
   # Constraint1D: none defined
   # Constraint2D: none defined
 

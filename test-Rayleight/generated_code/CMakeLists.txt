@@ -9,7 +9,7 @@
 #                                                                          #
 ############################################################################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
 SET( TARGET Rayleight )
 PROJECT( ${TARGET} CXX )
 
@@ -21,6 +21,21 @@ SET( CMAKE_MACOSX_RPATH               ./lib )
 SET( CXX_WARN   "-Weverything -Wno-alloca -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-c++2a-compat -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-format-nonliteral -Wno-implicit-fallthrough -Wno-documentation -Wno-float-equal -Wno-padded -Wno-reserved-id-macro -Wno-unreachable-code-break -Wno-unused-macros -Wno-switch-enum -Wno-sign-conversion -Wno-signed-enum-bitfield -Wno-weak-vtables" )
 SET( CLANG_WARN "-Wall -Wno-float-equal -Wno-padded -Wno-comment" )
 SET( VS_WARN    "" )
+
+if (APPLE)
+  # workaround for Xcode not looking the right SDK
+  set(_CMAKE_OSX_SYSROOT_PATH "")
+  set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
+else()
+  set( CMAKE_INSTALL_RPATH $ORIGIN )
+endif()
+
+if( NOT UNIX )
+  set( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON )
+endif()
+
+# Always include cmath defines globally
+add_compile_definitions(_USE_MATH_DEFINES)
 
 EXEC_PROGRAM( pins ARGS --cflags     OUTPUT_VARIABLE CFLAGS   )
 EXEC_PROGRAM( pins ARGS --cppflags   OUTPUT_VARIABLE CXXFLAGS )

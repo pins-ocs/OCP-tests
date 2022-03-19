@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04.cc                                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -105,6 +105,10 @@ namespace LUUS_Singular04Define {
     nullptr
   };
 
+  char const *namesConstraintLT[numConstraintLT+1] = {
+    nullptr
+  };
+
   char const *namesConstraint1D[numConstraint1D+1] = {
     nullptr
   };
@@ -132,13 +136,14 @@ namespace LUUS_Singular04Define {
   //   \___\___/_||_/__/\__|_|  \_,_\__|\__\___/_|
   */
   LUUS_Singular04::LUUS_Singular04(
-    string const &  name,
-    ThreadPool *    TP,
-    Console const * console
+    string const   & name,
+    integer          n_threads,
+    Console const  * console
   )
-  : Discretized_Indirect_OCP( name, TP, console )
+  : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
   , uControl("uControl")
+  // Constraints LT
   // Constraints 1D
   // Constraints 2D
   // User classes

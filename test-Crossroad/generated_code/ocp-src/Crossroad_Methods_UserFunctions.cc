@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_UserFunctions.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,6 +17,7 @@
 
 #include "Crossroad.hh"
 #include "Crossroad_Pars.hh"
+#include <cmath>
 
 using namespace std;
 using namespace MechatronixLoad;
@@ -41,8 +42,10 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_VelBound_DD(__t1) VelBound.DD( __t1)
-#define ALIAS_VelBound_D(__t1) VelBound.D( __t1)
+#define ALIAS_VelBound_max_DD(__t1) VelBound_max.DD( __t1)
+#define ALIAS_VelBound_max_D(__t1) VelBound_max.D( __t1)
+#define ALIAS_VelBound_min_DD(__t1) VelBound_min.DD( __t1)
+#define ALIAS_VelBound_min_D(__t1) VelBound_min.D( __t1)
 #define ALIAS_AccBound_DD(__t1) AccBound.DD( __t1)
 #define ALIAS_AccBound_D(__t1) AccBound.D( __t1)
 #define ALIAS_Tpositive_DD(__t1) Tpositive.DD( __t1)
@@ -59,6 +62,37 @@ using Mechatronix::MeshStd;
 
 
 namespace CrossroadDefine {
+  using std::acos;
+  using std::acosh;
+  using std::asin;
+  using std::asinh;
+  using std::atan;
+  using std::atan2;
+  using std::atanh;
+  using std::cbrt;
+  using std::ceil;
+  using std::abs;
+  using std::cos;
+  using std::cosh;
+  using std::exp;
+  using std::exp2;
+  using std::expm1;
+  using std::floor;
+  using std::log;
+  using std::log10;
+  using std::log1p;
+  using std::log2;
+  using std::logb;
+  using std::pow;
+  using std::hypot;
+  using std::floor;
+  using std::round;
+  using std::sin;
+  using std::sinh;
+  using std::sqrt;
+  using std::tan;
+  using std::tanh;
+  using std::trunc;
   /*\
    |  _   _               ___             _   _
    | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
@@ -100,6 +134,51 @@ namespace CrossroadDefine {
         isRegular(result__),
         "UserFunctions_kappa_DD( s={} ) return {}\n",
         xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Crossroad::VelBound( real_type xo___V ) const {
+    real_type t1   = VelBound_min(-xo___V);
+    real_type t4   = VelBound_min(xo___V - ModelPars[iM_v_max]);
+    real_type result__ = t1 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_VelBound( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Crossroad::VelBound_D( real_type xo___V ) const {
+    real_type t1   = ALIAS_VelBound_min_D(-xo___V);
+    real_type t4   = ALIAS_VelBound_min_D(xo___V - ModelPars[iM_v_max]);
+    real_type result__ = -t1 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_VelBound_D( _V={} ) return {}\n",
+        xo___V, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Crossroad::VelBound_DD( real_type xo___V ) const {
+    real_type t1   = ALIAS_VelBound_min_DD(-xo___V);
+    real_type t4   = ALIAS_VelBound_min_DD(xo___V - ModelPars[iM_v_max]);
+    real_type result__ = t1 + t4;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_VelBound_DD( _V={} ) return {}\n",
+        xo___V, result__
       );
     }
     return result__;

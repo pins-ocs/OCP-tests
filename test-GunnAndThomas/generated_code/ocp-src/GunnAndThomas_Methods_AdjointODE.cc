@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -55,17 +55,415 @@ using Mechatronix::MeshStd;
 namespace GunnAndThomasDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  GunnAndThomas::Hx_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::JPx_numEqns() const { return 2; }
+
+  void
+  GunnAndThomas::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::LTx_numEqns() const { return 2; }
+
+  void
+  GunnAndThomas::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::JUx_numEqns() const { return 2; }
+
+  void
+  GunnAndThomas::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::JPp_numEqns() const { return 0; }
+
+  void
+  GunnAndThomas::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::LTp_numEqns() const { return 0; }
+
+  void
+  GunnAndThomas::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::JUp_numEqns() const { return 0; }
+
+  void
+  GunnAndThomas::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::JPu_numEqns() const { return 1; }
+
+  void
+  GunnAndThomas::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::LTu_numEqns() const { return 1; }
+
+  void
+  GunnAndThomas::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::JUu_numEqns() const { return 1; }
+
+  void
+  GunnAndThomas::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::LTargs_numEqns() const { return 0; }
+
+  void
+  GunnAndThomas::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DJPxDxp_numRows() const { return 2; }
+  integer GunnAndThomas::DJPxDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DLTxDxp_numRows() const { return 2; }
+  integer GunnAndThomas::DLTxDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DJUxDxp_numRows() const { return 2; }
+  integer GunnAndThomas::DJUxDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DJPuDxp_numRows() const { return 1; }
+  integer GunnAndThomas::DJPuDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DLTuDxp_numRows() const { return 1; }
+  integer GunnAndThomas::DLTuDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DJUuDxp_numRows() const { return 1; }
+  integer GunnAndThomas::DJUuDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DJPpDp_numRows() const { return 0; }
+  integer GunnAndThomas::DJPpDp_numCols() const { return 0; }
+  integer GunnAndThomas::DJPpDp_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DLTpDp_numRows() const { return 0; }
+  integer GunnAndThomas::DLTpDp_numCols() const { return 0; }
+  integer GunnAndThomas::DLTpDp_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DJUpDp_numRows() const { return 0; }
+  integer GunnAndThomas::DJUpDp_numCols() const { return 0; }
+  integer GunnAndThomas::DJUpDp_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DLTargsDxup_numRows() const { return 0; }
+  integer GunnAndThomas::DLTargsDxup_numCols() const { return 3; }
+  integer GunnAndThomas::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  GunnAndThomas::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::Hx_numEqns() const { return 2; }
 
   void
   GunnAndThomas::Hx_eval(
@@ -91,27 +489,33 @@ namespace GunnAndThomasDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  GunnAndThomas::DHxDx_numRows() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DHxDx_numCols() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DHxDx_nnz() const
-  { return 0; }
+  integer GunnAndThomas::Hp_numEqns() const { return 0; }
 
   void
-  GunnAndThomas::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  GunnAndThomas::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
   }
 
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer GunnAndThomas::DHxDxp_numRows() const { return 2; }
+  integer GunnAndThomas::DHxDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DHxDxp_nnz()     const { return 0; }
+
   void
-  GunnAndThomas::DHxDx_sparse(
+  GunnAndThomas::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  GunnAndThomas::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -122,30 +526,18 @@ namespace GunnAndThomasDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DHxDp_numRows() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  GunnAndThomas::DHxDp_nnz() const
-  { return 0; }
+  integer GunnAndThomas::DHpDp_numRows() const { return 0; }
+  integer GunnAndThomas::DHpDp_numCols() const { return 0; }
+  integer GunnAndThomas::DHpDp_nnz()     const { return 0; }
 
   void
-  GunnAndThomas::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  GunnAndThomas::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  GunnAndThomas::DHxDp_sparse(
+  GunnAndThomas::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -164,9 +556,9 @@ namespace GunnAndThomasDefine {
    |
   \*/
 
-  integer
-  GunnAndThomas::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::Hu_numEqns() const { return 1; }
 
   void
   GunnAndThomas::Hu_eval(
@@ -188,32 +580,19 @@ namespace GunnAndThomasDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  GunnAndThomas::DHuDx_numCols() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DHuDx_nnz() const
-  { return 2; }
+  integer GunnAndThomas::DHuDxp_numRows() const { return 1; }
+  integer GunnAndThomas::DHuDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DHuDxp_nnz()     const { return 2; }
 
   void
-  GunnAndThomas::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  GunnAndThomas::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  GunnAndThomas::DHuDx_sparse(
+  GunnAndThomas::DHuDxp_sparse(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -229,98 +608,7 @@ namespace GunnAndThomasDefine {
     result__[ 0   ] = -t1 + t2;
     result__[ 1   ] = 10 * t1 - 9 * t2;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  GunnAndThomas::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  GunnAndThomas::DHuDp_nnz() const
-  { return 0; }
-
-  void
-  GunnAndThomas::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  GunnAndThomas::DHuDp_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  GunnAndThomas::Hp_numEqns() const
-  { return 0; }
-
-  void
-  GunnAndThomas::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  GunnAndThomas::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  GunnAndThomas::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  GunnAndThomas::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  GunnAndThomas::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__,"DHuDxp_sparse", 2, i_segment );
   }
 
   /*\
@@ -330,9 +618,10 @@ namespace GunnAndThomasDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  GunnAndThomas::eta_numEqns() const
-  { return 2; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::eta_numEqns() const { return 2; }
 
   void
   GunnAndThomas::eta_eval(
@@ -352,62 +641,18 @@ namespace GunnAndThomasDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DetaDx_numRows() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DetaDx_numCols() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DetaDx_nnz() const
-  { return 0; }
+  integer GunnAndThomas::DetaDxp_numRows() const { return 2; }
+  integer GunnAndThomas::DetaDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DetaDxp_nnz()     const { return 0; }
 
   void
-  GunnAndThomas::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  GunnAndThomas::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  GunnAndThomas::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DetaDp_numRows() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  GunnAndThomas::DetaDp_nnz() const
-  { return 0; }
 
   void
-  GunnAndThomas::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  GunnAndThomas::DetaDp_sparse(
+  GunnAndThomas::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -422,9 +667,9 @@ namespace GunnAndThomasDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  GunnAndThomas::nu_numEqns() const
-  { return 2; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GunnAndThomas::nu_numEqns() const { return 2; }
 
   void
   GunnAndThomas::nu_eval(
@@ -444,63 +689,18 @@ namespace GunnAndThomasDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DnuDx_numRows() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DnuDx_numCols() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DnuDx_nnz() const
-  { return 0; }
+  integer GunnAndThomas::DnuDxp_numRows() const { return 2; }
+  integer GunnAndThomas::DnuDxp_numCols() const { return 2; }
+  integer GunnAndThomas::DnuDxp_nnz()     const { return 0; }
 
   void
-  GunnAndThomas::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  GunnAndThomas::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  GunnAndThomas::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  GunnAndThomas::DnuDp_numRows() const
-  { return 2; }
-
-  integer
-  GunnAndThomas::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  GunnAndThomas::DnuDp_nnz() const
-  { return 0; }
 
   void
-  GunnAndThomas::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  GunnAndThomas::DnuDp_sparse(
+  GunnAndThomas::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

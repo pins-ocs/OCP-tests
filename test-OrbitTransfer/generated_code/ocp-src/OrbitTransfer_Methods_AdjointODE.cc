@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -44,17 +44,424 @@ using Mechatronix::MeshStd;
 namespace OrbitTransferDefine {
 
   /*\
-   |  _   _
-   | | | | |_  __
-   | | |_| \ \/ /
-   | |  _  |>  <
-   | |_| |_/_/\_\
-   |
+   |   ____                  _ _   _
+   |  |  _ \ ___ _ __   __ _| | |_(_) ___  ___
+   |  | |_) / _ \ '_ \ / _` | | __| |/ _ \/ __|
+   |  |  __/  __/ | | | (_| | | |_| |  __/\__ \
+   |  |_|   \___|_| |_|\__,_|_|\__|_|\___||___/
   \*/
 
-  integer
-  OrbitTransfer::Hx_numEqns() const
-  { return 5; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::JPx_numEqns() const { return 5; }
+
+  void
+  OrbitTransfer::JPx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::LTx_numEqns() const { return 5; }
+
+  void
+  OrbitTransfer::LTx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::JUx_numEqns() const { return 5; }
+
+  void
+  OrbitTransfer::JUx_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUx_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::JPp_numEqns() const { return 0; }
+
+  void
+  OrbitTransfer::JPp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::LTp_numEqns() const { return 0; }
+
+  void
+  OrbitTransfer::LTp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::JUp_numEqns() const { return 0; }
+
+  void
+  OrbitTransfer::JUp_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::JPu_numEqns() const { return 1; }
+
+  void
+  OrbitTransfer::JPu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::LTu_numEqns() const { return 1; }
+
+  void
+  OrbitTransfer::LTu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::JUu_numEqns() const { return 1; }
+
+  void
+  OrbitTransfer::JUu_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUu_eval", 1, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::LTargs_numEqns() const { return 0; }
+
+  void
+  OrbitTransfer::LTargs_eval(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DJPxDxp_numRows() const { return 5; }
+  integer OrbitTransfer::DJPxDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DJPxDxp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DJPxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DJPxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DLTxDxp_numRows() const { return 5; }
+  integer OrbitTransfer::DLTxDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DLTxDxp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DLTxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DJUxDxp_numRows() const { return 5; }
+  integer OrbitTransfer::DJUxDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DJUxDxp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DJUxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DJUxDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DJPuDxp_numRows() const { return 1; }
+  integer OrbitTransfer::DJPuDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DJPuDxp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DJPuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DJPuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DLTuDxp_numRows() const { return 1; }
+  integer OrbitTransfer::DLTuDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DLTuDxp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DLTuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DLTuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DJUuDxp_numRows() const { return 1; }
+  integer OrbitTransfer::DJUuDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DJUuDxp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DJUuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DJUuDxp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DJPpDp_numRows() const { return 0; }
+  integer OrbitTransfer::DJPpDp_numCols() const { return 0; }
+  integer OrbitTransfer::DJPpDp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DJPpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DJPpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DLTpDp_numRows() const { return 0; }
+  integer OrbitTransfer::DLTpDp_numCols() const { return 0; }
+  integer OrbitTransfer::DLTpDp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DLTpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DLTpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DJUpDp_numRows() const { return 0; }
+  integer OrbitTransfer::DJUpDp_numCols() const { return 0; }
+  integer OrbitTransfer::DJUpDp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DJUpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DJUpDp_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DLTargsDxup_numRows() const { return 0; }
+  integer OrbitTransfer::DLTargsDxup_numCols() const { return 6; }
+  integer OrbitTransfer::DLTargsDxup_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DLTargsDxup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |   _   _        _   _
+   |  | | | |_  __ | | | |_ __
+   |  | |_| \ \/ / | |_| | '_ \
+   |  |  _  |>  <  |  _  | |_) |
+   |  |_| |_/_/\_\ |_| |_| .__/
+   |                     |_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::Hx_numEqns() const { return 5; }
 
   void
   OrbitTransfer::Hx_eval(
@@ -98,23 +505,27 @@ namespace OrbitTransferDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  OrbitTransfer::DHxDx_numRows() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DHxDx_numCols() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DHxDx_nnz() const
-  { return 9; }
+  integer OrbitTransfer::Hp_numEqns() const { return 0; }
 
   void
-  OrbitTransfer::DHxDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
+  OrbitTransfer::Hp_eval(
+    NodeType2 const    & NODE__,
+    V_const_pointer_type V__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_type            result__[]
   ) const {
+    // EMPTY
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DHxDxp_numRows() const { return 5; }
+  integer OrbitTransfer::DHxDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DHxDxp_nnz()     const { return 9; }
+
+  void
+  OrbitTransfer::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 2   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
@@ -126,8 +537,9 @@ namespace OrbitTransferDefine {
     iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
   }
 
+
   void
-  OrbitTransfer::DHxDx_sparse(
+  OrbitTransfer::DHxDxp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -170,34 +582,22 @@ namespace OrbitTransferDefine {
     result__[ 7   ] = result__[5];
     result__[ 8   ] = 2 * t53 * t3;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxDx_sparse", 9, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DHxDp_numRows() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DHxDp_numCols() const
-  { return 0; }
-
-  integer
-  OrbitTransfer::DHxDp_nnz() const
-  { return 0; }
+  integer OrbitTransfer::DHpDp_numRows() const { return 0; }
+  integer OrbitTransfer::DHpDp_numCols() const { return 0; }
+  integer OrbitTransfer::DHpDp_nnz()     const { return 0; }
 
   void
-  OrbitTransfer::DHxDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  OrbitTransfer::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  OrbitTransfer::DHxDp_sparse(
+  OrbitTransfer::DHpDp_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -216,9 +616,9 @@ namespace OrbitTransferDefine {
    |
   \*/
 
-  integer
-  OrbitTransfer::Hu_numEqns() const
-  { return 1; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::Hu_numEqns() const { return 1; }
 
   void
   OrbitTransfer::Hu_eval(
@@ -244,31 +644,18 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DHuDx_numRows() const
-  { return 1; }
-
-  integer
-  OrbitTransfer::DHuDx_numCols() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DHuDx_nnz() const
-  { return 1; }
+  integer OrbitTransfer::DHuDxp_numRows() const { return 1; }
+  integer OrbitTransfer::DHuDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DHuDxp_nnz()     const { return 1; }
 
   void
-  OrbitTransfer::DHuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
+  OrbitTransfer::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  OrbitTransfer::DHuDx_sparse(
+  OrbitTransfer::DHuDxp_sparse(
     NodeType2 const    & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -288,98 +675,7 @@ namespace OrbitTransferDefine {
     real_type t15  = sin(t5);
     result__[ 0   ] = t10 * t15 * t4 * t2 * L__[iL_lambda3__xo] - t10 * t6 * t4 * t2 * L__[iL_lambda2__xo];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"DHuDx_sparse", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DHuDp_numRows() const
-  { return 1; }
-
-  integer
-  OrbitTransfer::DHuDp_numCols() const
-  { return 0; }
-
-  integer
-  OrbitTransfer::DHuDp_nnz() const
-  { return 0; }
-
-  void
-  OrbitTransfer::DHuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  OrbitTransfer::DHuDp_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |  _   _
-   | | | | |_ __
-   | | |_| | '_ \
-   | |  _  | |_) |
-   | |_| |_| .__/
-   |       |_|
-  \*/
-
-  integer
-  OrbitTransfer::Hp_numEqns() const
-  { return 0; }
-
-  void
-  OrbitTransfer::Hp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DHpDp_numRows() const
-  { return 0; }
-
-  integer
-  OrbitTransfer::DHpDp_numCols() const
-  { return 0; }
-
-  integer
-  OrbitTransfer::DHpDp_nnz() const
-  { return 0; }
-
-  void
-  OrbitTransfer::DHpDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  OrbitTransfer::DHpDp_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__,"DHuDxp_sparse", 1, i_segment );
   }
 
   /*\
@@ -389,9 +685,10 @@ namespace OrbitTransferDefine {
    |  |  __/ || (_| |
    |   \___|\__\__,_|
   \*/
-  integer
-  OrbitTransfer::eta_numEqns() const
-  { return 5; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::eta_numEqns() const { return 5; }
 
   void
   OrbitTransfer::eta_eval(
@@ -414,62 +711,18 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DetaDx_numRows() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DetaDx_numCols() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DetaDx_nnz() const
-  { return 0; }
+  integer OrbitTransfer::DetaDxp_numRows() const { return 5; }
+  integer OrbitTransfer::DetaDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DetaDxp_nnz()     const { return 0; }
 
   void
-  OrbitTransfer::DetaDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  OrbitTransfer::DetaDx_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  OrbitTransfer::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DetaDp_numRows() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DetaDp_numCols() const
-  { return 0; }
-
-  integer
-  OrbitTransfer::DetaDp_nnz() const
-  { return 0; }
 
   void
-  OrbitTransfer::DetaDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  OrbitTransfer::DetaDp_sparse(
+  OrbitTransfer::DetaDxp_sparse(
     NodeType2 const    & NODE__,
     P_const_pointer_type P__,
     real_type            result__[]
@@ -484,9 +737,9 @@ namespace OrbitTransferDefine {
    |   |_| |_|\__,_|
   \*/
 
-  integer
-  OrbitTransfer::nu_numEqns() const
-  { return 5; }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::nu_numEqns() const { return 5; }
 
   void
   OrbitTransfer::nu_eval(
@@ -509,63 +762,18 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DnuDx_numRows() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DnuDx_numCols() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DnuDx_nnz() const
-  { return 0; }
+  integer OrbitTransfer::DnuDxp_numRows() const { return 5; }
+  integer OrbitTransfer::DnuDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DnuDxp_nnz()     const { return 0; }
 
   void
-  OrbitTransfer::DnuDx_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  OrbitTransfer::DnuDx_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
+  OrbitTransfer::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer
-  OrbitTransfer::DnuDp_numRows() const
-  { return 5; }
-
-  integer
-  OrbitTransfer::DnuDp_numCols() const
-  { return 0; }
-
-  integer
-  OrbitTransfer::DnuDp_nnz() const
-  { return 0; }
 
   void
-  OrbitTransfer::DnuDp_pattern(
-    integer iIndex[],
-    integer jIndex[]
-  ) const {
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  OrbitTransfer::DnuDp_sparse(
+  OrbitTransfer::DnuDxp_sparse(
     NodeType const     & NODE__,
     V_const_pointer_type V__,
     P_const_pointer_type P__,

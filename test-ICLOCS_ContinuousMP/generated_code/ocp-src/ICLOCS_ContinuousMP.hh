@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP.hh                                         |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -76,6 +76,7 @@ namespace ICLOCS_ContinuousMPDefine {
 
   extern char const *namesPostProcess[];
   extern char const *namesIntegratedPostProcess[];
+  extern char const *namesConstraintLT[];
   extern char const *namesConstraint1D[];
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
@@ -107,71 +108,133 @@ namespace ICLOCS_ContinuousMPDefine {
   class ICLOCS_ContinuousMP : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[4];
+    real_type ModelPars[5];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DLessThan u1Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u1Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u2Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u2Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u3Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u3Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u4Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u4Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u5Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u5Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u6Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u6Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u7Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u7Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u8Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u8Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u9Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u9Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u10Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u10Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u11Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u11Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u12Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u12Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u13Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u13Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u14Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u14Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u15Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u15Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u16Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u16Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u17Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u17Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u18Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u18Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u19Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u19Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan u20Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan u20Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx1Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx1Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy1Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy1Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx2Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx2Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy2Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy2Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx3Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx3Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy3Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy3Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx4Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx4Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy4Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy4Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx5Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx5Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy5Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy5Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx6Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx6Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy6Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy6Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx7Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx7Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy7Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy7Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx8Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx8Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy8Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy8Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx9Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx9Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy9Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy9Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx10Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx10Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy10Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy10Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx11Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx11Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy11Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy11Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx12Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx12Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy12Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy12Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx13Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx13Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy13Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy13Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx14Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx14Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy14Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy14Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx15Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx15Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy15Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy15Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx16Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx16Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy16Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy16Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx17Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx17Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy17Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy17Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx18Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx18Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy18Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy18Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx19Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx19Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy19Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy19Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan xx20Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan xx20Limitation_max;
+    Mechatronix::PenaltyBarrier1DLessThan yy20Limitation_min;
+    Mechatronix::PenaltyBarrier1DLessThan yy20Limitation_max;
+
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrier1DInterval u1Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u2Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u3Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u4Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u5Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u6Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u7Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u8Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u9Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u10Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u11Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u12Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u13Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u14Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u15Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u16Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u17Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u18Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u19Limitation;
-    Mechatronix::PenaltyBarrier1DInterval u20Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx1Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy1Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx2Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy2Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx3Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy3Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx4Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy4Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx5Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy5Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx6Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy6Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx7Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy7Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx8Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy8Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx9Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy9Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx10Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy10Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx11Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy11Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx12Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy12Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx13Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy13Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx14Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy14Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx15Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy15Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx16Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy16Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx17Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy17Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx18Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy18Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx19Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy19Limitation;
-    Mechatronix::PenaltyBarrier1DInterval xx20Limitation;
-    Mechatronix::PenaltyBarrier1DInterval yy20Limitation;
 
     // Constraints 2D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -236,9 +299,9 @@ namespace ICLOCS_ContinuousMPDefine {
     ICLOCS_CONTINUOUSMP_API_DLL
     explicit
     ICLOCS_ContinuousMP(
-      string  const & name,
-      ThreadPool    * TP,
-      Console const * console
+      string const   & name,
+      integer          n_threads,
+      Console const  * console
     );
 
     ~ICLOCS_ContinuousMP() override;
@@ -300,6 +363,186 @@ namespace ICLOCS_ContinuousMPDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u1Limitation        ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u1Limitation_D      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u1Limitation_DD     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u2Limitation        ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u2Limitation_D      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u2Limitation_DD     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u3Limitation        ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u3Limitation_D      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u3Limitation_DD     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u4Limitation        ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u4Limitation_D      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u4Limitation_DD     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u5Limitation        ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u5Limitation_D      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u5Limitation_DD     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u6Limitation        ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u6Limitation_D      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u6Limitation_DD     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u7Limitation        ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u7Limitation_D      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u7Limitation_DD     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u8Limitation        ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u8Limitation_D      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u8Limitation_DD     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u9Limitation        ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u9Limitation_D      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u9Limitation_DD     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u10Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u10Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u10Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u11Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u11Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u11Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u12Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u12Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u12Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u13Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u13Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u13Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u14Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u14Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u14Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u15Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u15Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u15Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u16Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u16Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u16Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u17Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u17Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u17Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u18Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u18Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u18Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u19Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u19Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u19Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u20Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u20Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type u20Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx1Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx1Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx1Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy1Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy1Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy1Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx2Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx2Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx2Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy2Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy2Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy2Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx3Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx3Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx3Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy3Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy3Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy3Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx4Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx4Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx4Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy4Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy4Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy4Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx5Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx5Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx5Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy5Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy5Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy5Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx6Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx6Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx6Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy6Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy6Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy6Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx7Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx7Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx7Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy7Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy7Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy7Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx8Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx8Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx8Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy8Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy8Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy8Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx9Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx9Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx9Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy9Limitation       ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy9Limitation_D     ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy9Limitation_DD    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx10Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx10Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx10Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy10Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy10Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy10Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx11Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx11Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx11Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy11Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy11Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy11Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx12Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx12Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx12Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy12Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy12Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy12Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx13Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx13Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx13Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy13Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy13Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy13Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx14Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx14Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx14Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy14Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy14Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy14Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx15Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx15Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx15Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy15Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy15Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy15Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx16Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx16Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx16Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy16Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy16Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy16Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx17Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx17Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx17Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy17Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy17Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy17Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx18Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx18Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx18Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy18Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy18Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy18Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx19Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx19Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx19Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy19Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy19Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy19Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx20Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx20Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type xx20Limitation_DD   ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy20Limitation      ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy20Limitation_D    ( real_type xo___V ) const;
+    ICLOCS_CONTINUOUSMP_API_DLL real_type yy20Limitation_DD   ( real_type xo___V ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

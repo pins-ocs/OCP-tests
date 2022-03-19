@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -17,6 +17,7 @@
 
 #include "MinimumEnergyProblem.hh"
 #include "MinimumEnergyProblem_Pars.hh"
+#include <cmath>
 
 using namespace std;
 using namespace MechatronixLoad;
@@ -46,6 +47,37 @@ using Mechatronix::MeshStd;
 
 
 namespace MinimumEnergyProblemDefine {
+  using std::acos;
+  using std::acosh;
+  using std::asin;
+  using std::asinh;
+  using std::atan;
+  using std::atan2;
+  using std::atanh;
+  using std::cbrt;
+  using std::ceil;
+  using std::abs;
+  using std::cos;
+  using std::cosh;
+  using std::exp;
+  using std::exp2;
+  using std::expm1;
+  using std::floor;
+  using std::log;
+  using std::log10;
+  using std::log1p;
+  using std::log2;
+  using std::logb;
+  using std::pow;
+  using std::hypot;
+  using std::floor;
+  using std::round;
+  using std::sin;
+  using std::sinh;
+  using std::sqrt;
+  using std::tan;
+  using std::tanh;
+  using std::trunc;
   /*\
    |  _   _               ___             _   _
    | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
@@ -167,7 +199,7 @@ namespace MinimumEnergyProblemDefine {
     real_type t5   = xo__v0 * xo__v0;
     real_type t7   = pow(xo__v1, xo__s);
     real_type t8   = t7 / t5;
-    real_type result__ = -t1 * t2 * t8 + t2 * t3 * t8;
+    real_type result__ = -t8 * t1 * t2 + t8 * t3 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

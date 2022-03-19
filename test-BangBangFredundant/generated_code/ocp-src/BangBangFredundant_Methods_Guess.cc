@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_Guess.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/12/2021                                       |
+ |  version: 1.0   date 19/3/2022                                        |
  |                                                                       |
- |  Copyright (C) 2021                                                   |
+ |  Copyright (C) 2022                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -43,8 +43,10 @@
 #define ALIAS_clip_D_1_3(__t1, __t2, __t3) clip.D_1_3( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_2(__t1, __t2, __t3) clip.D_1_2( __t1, __t2, __t3)
 #define ALIAS_clip_D_1_1(__t1, __t2, __t3) clip.D_1_1( __t1, __t2, __t3)
-#define ALIAS_Flim_DD(__t1) Flim.DD( __t1)
-#define ALIAS_Flim_D(__t1) Flim.D( __t1)
+#define ALIAS_Flim_max_DD(__t1) Flim_max.DD( __t1)
+#define ALIAS_Flim_max_D(__t1) Flim_max.D( __t1)
+#define ALIAS_Flim_min_DD(__t1) Flim_min.DD( __t1)
+#define ALIAS_Flim_min_D(__t1) Flim_min.D( __t1)
 #define ALIAS_aF2Control_D_3(__t1, __t2, __t3) aF2Control.D_3( __t1, __t2, __t3)
 #define ALIAS_aF2Control_D_2(__t1, __t2, __t3) aF2Control.D_2( __t1, __t2, __t3)
 #define ALIAS_aF2Control_D_1(__t1, __t2, __t3) aF2Control.D_1( __t1, __t2, __t3)
@@ -93,10 +95,10 @@ namespace BangBangFredundantDefine {
     real_type t1   = Q__[iQ_zeta];
     X__[ iX_v   ] = (1 - t1) * t1;
 
-    if ( m_debug )
+    if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 6 );
-    if ( m_debug )
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 6 );
+    }
   }
 
   /*\
@@ -136,8 +138,8 @@ namespace BangBangFredundantDefine {
     real_type a = A, b = B;                                           \
     if ( a >= b ) {                                                   \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} < {}\n",     \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} < {}\n",                \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -148,8 +150,8 @@ namespace BangBangFredundantDefine {
     real_type a = A, b = B;                                           \
     if ( a > b ) {                                                    \
       m_console->yellow(fmt::format(                                  \
-        "Failed check on cell={} segment={}: {}\nfail {} <= {}\n",    \
-        icell, i_segment, MSG, a, b                                   \
+        "Failed check on cell={}: {}\nfail {} <= {}\n",               \
+        icell, MSG, a, b                                              \
       ),3);                                                           \
       return false;                                                   \
     }                                                                 \
@@ -260,9 +262,7 @@ namespace BangBangFredundantDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer
-  BangBangFredundant::u_guess_numEqns() const
-  { return 2; }
+  integer BangBangFredundant::u_guess_numEqns() const { return 2; }
 
   void
   BangBangFredundant::u_guess_eval(
