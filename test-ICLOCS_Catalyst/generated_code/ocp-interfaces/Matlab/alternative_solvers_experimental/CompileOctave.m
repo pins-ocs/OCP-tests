@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
-%  file: Catalyst_Data.rb                                               %
+%  file: ICLOCS_Catalyst_Data.rb                                        %
 %                                                                       %
-%  version: 1.0   date 19/3/2022                                        %
+%  version: 1.0   date 20/3/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -16,7 +16,7 @@
 
 
 function [lib_name] = CompileOctave()
-  MODEL     = 'Catalyst';
+  MODEL     = 'ICLOCS_Catalyst';
   lib_name  = [MODEL, '.m'];
   SRCS_BASE = '../../ocp-src/';
   SRCS      = [ MODEL '_Mex.cc GenericContainerMatlabInterface.cc ' ];

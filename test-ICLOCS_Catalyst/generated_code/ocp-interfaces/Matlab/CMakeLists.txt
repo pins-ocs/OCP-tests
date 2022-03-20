@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CMakeLists.txt                                                 #
 #                                                                       #
-#  version: 1.0   date 19/3/2022                                        #
+#  version: 1.0   date 20/3/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -17,7 +17,7 @@
 
 cmake_minimum_required( VERSION 3.14 )
 
-project( Catalyst_Mex )
+project( ICLOCS_Catalyst_Mex )
 
 find_package( Matlab REQUIRED )
 

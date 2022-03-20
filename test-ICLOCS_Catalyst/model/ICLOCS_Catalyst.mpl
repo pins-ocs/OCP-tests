@@ -40,7 +40,7 @@ GUESS := [
 ];
 MESH_DEF := [length=1, n=400];
 project_dir  := "../generated_code";
-project_name := "Catalyst";
+project_name := "ICLOCS_Catalyst";
 generateOCProblem(
   project_name,
   post_processing = POST,

@@ -10,7 +10,7 @@
 ############################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
-SET( TARGET Catalyst )
+SET( TARGET ICLOCS_Catalyst )
 PROJECT( ${TARGET} CXX )
 
 SET( CMAKE_VERBOSE_MAKEFILE           TRUE  )

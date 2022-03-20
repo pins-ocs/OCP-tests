@@ -1,0 +1,98 @@
+
+# 
+# XOPTIMA Automatic Code Generation for Optimal Control Problems 
+# Optimal Mixing of a Catalyst (ICLOCS example 4 or 14 of COPS3)
+# Authors: E. Bertolazzi, F. Biral
+# Date:
+restart:
+with(XOptima):
+# Dynamical System
+# User defined functions
+# Dynamical system
+EQ1    := diff(x1(t),t) = u(t)*( 10*x2(t) - x1(t) ):
+EQ2    := diff(x2(t),t) = u(t)*( x1(t) - 10*x2(t) ) - (1-u(t))*x2(t):
+EQNS_T := [ EQ||(1..2)]: <%>;
+# OCP (PINS generation)
+# Load Dynamical system
+# States
+qvars := [x1(t),x2(t)];
+# Controls
+cvars := [u(t)];
+loadDynamicSystem(
+  equations = EQNS_T,
+  controls  = cvars,
+  states    = qvars
+);
+# Define BC
+addBoundaryConditions(initial=[x1,x2]);
+infoBoundaryConditions();
+# Define target
+setTarget(
+  mayer    = -1+x1(zeta_f)+x2(zeta_f),
+  lagrange = 0
+);
+# Define control bounds
+addControlBound(
+  u,
+  controlType = "U_COS_LOGARITHMIC",
+  min         = 0,
+  max         = 1,
+  epsilon     = epsi_ctrl,
+  tolerance   = tol_ctrl,
+  scale       = 1
+);
+# States bounds
+
+# Generate C++ Code
+# Parameters
+PARS := [
+  x1_i      = 1,
+  x2_i      = 0,
+  epsi_ctrl = 0.00001,
+  tol_ctrl  = 0.00001
+];
+# Post Processing
+POST := [];
+# Continuation
+CONT := [];
+# Guess
+GUESS := [
+  x1 = x1_i,
+  x2 = x2_i
+];
+# Mesh
+MESH_DEF := [length=1, n=400];
+project_dir  := "../generated_code";
+project_name := "ICLOCS_Catalyst";
+generateOCProblem(
+  project_name,
+  post_processing = POST,
+  parameters      = PARS,
+  continuation    = CONT,
+  mesh            = MESH_DEF,
+  states_guess    = GUESS
+);
+# Execute Code and Numerical Solution
+# if used in batch mode use the comment to quit
+# quit
+# Compile and execute
+#launchSolver(project_dir,project_name);
+compileSolver(project_dir,project_name);
+runSolver(project_dir);
+# Solution analysis
+with(plots):
+XOptimaPlots:-loadSolution(project_dir,project_name); # # load solution
+hhdrs := XOptimaPlots:-getHeaders(): nops(%);
+XOptimaPlots:-plotSolution(
+  zeta,[x1,x2],
+  line_opts  = [[color="Blue",thickness=3], [color="Red",thickness=1]],
+  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
+  plot_title = "Catalyst"
+);
+XOptimaPlots:-plotSolution(
+  zeta,[u],
+  line_opts  = [[color="Blue",thickness=3]],
+  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
+  plot_title = "Catalyst"
+);
+
