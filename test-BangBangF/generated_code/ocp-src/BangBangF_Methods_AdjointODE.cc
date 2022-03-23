@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Methods_AdjointODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -41,6 +41,8 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
+#define ALIAS_C1_constr_DD(__t1) C1_constr.DD( __t1)
+#define ALIAS_C1_constr_D(__t1) C1_constr.D( __t1)
 #define ALIAS_FControl_D_3(__t1, __t2, __t3) FControl.D_3( __t1, __t2, __t3)
 #define ALIAS_FControl_D_2(__t1, __t2, __t3) FControl.D_2( __t1, __t2, __t3)
 #define ALIAS_FControl_D_1(__t1, __t2, __t3) FControl.D_1( __t1, __t2, __t3)
@@ -99,7 +101,11 @@ namespace BangBangFDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
-    result__[ 1   ] = 0;
+    real_type t1   = X__[iX_v];
+    real_type t2   = C1(t1);
+    real_type t3   = ALIAS_C1_constr_D(t2);
+    real_type t4   = C1_D(t1);
+    result__[ 1   ] = t4 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "LTx_eval", 2, i_segment );
   }
@@ -229,7 +235,7 @@ namespace BangBangFDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer BangBangF::LTargs_numEqns() const { return 0; }
+  integer BangBangF::LTargs_numEqns() const { return 1; }
 
   void
   BangBangF::LTargs_eval(
@@ -238,7 +244,13 @@ namespace BangBangFDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = C1(X__[iX_v]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTargs_eval", 1, i_segment );
   }
 
 
@@ -266,11 +278,11 @@ namespace BangBangFDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer BangBangF::DLTxDxp_numRows() const { return 2; }
   integer BangBangF::DLTxDxp_numCols() const { return 2; }
-  integer BangBangF::DLTxDxp_nnz()     const { return 0; }
+  integer BangBangF::DLTxDxp_nnz()     const { return 1; }
 
   void
   BangBangF::DLTxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
+    iIndex[0 ] = 1   ; jIndex[0 ] = 1   ;
   }
 
 
@@ -281,7 +293,20 @@ namespace BangBangFDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_v];
+    real_type t2   = C1(t1);
+    real_type t3   = ALIAS_C1_constr_DD(t2);
+    real_type t4   = C1_D(t1);
+    real_type t5   = t4 * t4;
+    real_type t7   = ALIAS_C1_constr_D(t2);
+    real_type t8   = C1_DD(t1);
+    result__[ 0   ] = t5 * t3 + t8 * t7;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTxDxp_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -432,13 +457,13 @@ namespace BangBangFDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangF::DLTargsDxup_numRows() const { return 0; }
+  integer BangBangF::DLTargsDxup_numRows() const { return 1; }
   integer BangBangF::DLTargsDxup_numCols() const { return 3; }
-  integer BangBangF::DLTargsDxup_nnz()     const { return 0; }
+  integer BangBangF::DLTargsDxup_nnz()     const { return 1; }
 
   void
   BangBangF::DLTargsDxup_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
+    iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
   }
 
 
@@ -449,7 +474,44 @@ namespace BangBangFDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = C1_D(X__[iX_v]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangF::D2LTargsD2xup_numRows() const { return 3; }
+  integer BangBangF::D2LTargsD2xup_numCols() const { return 3; }
+  integer BangBangF::D2LTargsD2xup_nnz()     const { return 1; }
+
+  void
+  BangBangF::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 1   ; jIndex[0 ] = 1   ;
+  }
+
+
+  void
+  BangBangF::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = C1_DD(X__[iX_v]);
+    result__[ 0   ] = OMEGA__[0] * t2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2LTargsD2xup_sparse", 1, i_segment );
   }
 
   /*\

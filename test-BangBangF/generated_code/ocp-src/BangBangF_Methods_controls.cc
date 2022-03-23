@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -41,6 +41,8 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
+#define ALIAS_C1_constr_DD(__t1) C1_constr.DD( __t1)
+#define ALIAS_C1_constr_D(__t1) C1_constr.D( __t1)
 #define ALIAS_FControl_D_3(__t1, __t2, __t3) FControl.D_3( __t1, __t2, __t3)
 #define ALIAS_FControl_D_2(__t1, __t2, __t3) FControl.D_2( __t1, __t2, __t3)
 #define ALIAS_FControl_D_1(__t1, __t2, __t3) FControl.D_1( __t1, __t2, __t3)
@@ -87,9 +89,12 @@ namespace BangBangFDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t5   = UM__[0];
-    real_type t7   = FControl(t5, -1, 1);
-    real_type result__ = t5 * LM__[1] + LM__[0] * XM__[1] + t7;
+    real_type t1   = XM__[1];
+    real_type t2   = C1(t1);
+    real_type t3   = C1_constr(t2);
+    real_type t7   = UM__[0];
+    real_type t9   = FControl(t7, -1, 1);
+    real_type result__ = t1 * LM__[0] + t7 * LM__[1] + t3 + t9;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -346,9 +351,12 @@ namespace BangBangFDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_F];
     real_type t2   = FControl(t1, -1, 1);
-    real_type t6   = pow(V__[0] - X__[iX_v], 2);
-    real_type t9   = pow(V__[1] - t1, 2);
-    real_type result__ = t2 + t6 + t9;
+    real_type t3   = X__[iX_v];
+    real_type t4   = C1(t3);
+    real_type t5   = C1_constr(t4);
+    real_type t8   = pow(V__[0] - t3, 2);
+    real_type t11  = pow(V__[1] - t1, 2);
+    real_type result__ = t2 + t5 + t8 + t11;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }

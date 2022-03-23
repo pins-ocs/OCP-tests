@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -41,6 +41,8 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
+#define ALIAS_C1_constr_DD(__t1) C1_constr.DD( __t1)
+#define ALIAS_C1_constr_D(__t1) C1_constr.D( __t1)
 #define ALIAS_FControl_D_3(__t1, __t2, __t3) FControl.D_3( __t1, __t2, __t3)
 #define ALIAS_FControl_D_2(__t1, __t2, __t3) FControl.D_2( __t1, __t2, __t3)
 #define ALIAS_FControl_D_1(__t1, __t2, __t3) FControl.D_1( __t1, __t2, __t3)
@@ -53,6 +55,40 @@ using Mechatronix::MeshStd;
 
 
 namespace BangBangFDefine {
+
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  BangBangF::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[2];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+    real_type t2   = C1(X__[iX_v]);
+    res = res && C1_constr.check_range(t2, m_max_penalty_value);
+    return res;
+  }
 
   /*\
    |  _  _            _ _ _            _
@@ -73,7 +109,10 @@ namespace BangBangFDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda2__xo] * U__[iU_F];
+    real_type t1   = X__[iX_v];
+    real_type t2   = C1(t1);
+    real_type t3   = C1_constr(t2);
+    real_type result__ = t1 * L__[iL_lambda1__xo] + L__[iL_lambda2__xo] * U__[iU_F] + t3;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -135,7 +174,8 @@ namespace BangBangFDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
+    real_type t2   = C1(X__[iX_v]);
+    real_type result__ = C1_constr(t2);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
     }
@@ -448,7 +488,7 @@ namespace BangBangFDefine {
    |                                                    |___/
   \*/
 
-  integer BangBangF::post_numEqns() const { return 0; }
+  integer BangBangF::post_numEqns() const { return 1; }
 
   void
   BangBangF::post_eval(
@@ -457,7 +497,13 @@ namespace BangBangFDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = C1(X__[iX_v]);
+    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

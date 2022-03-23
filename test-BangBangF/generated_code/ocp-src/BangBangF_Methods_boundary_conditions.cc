@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Methods_boundary_conditions.cc                       |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -41,6 +41,8 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
+#define ALIAS_C1_constr_DD(__t1) C1_constr.DD( __t1)
+#define ALIAS_C1_constr_D(__t1) C1_constr.D( __t1)
 #define ALIAS_FControl_D_3(__t1, __t2, __t3) FControl.D_3( __t1, __t2, __t3)
 #define ALIAS_FControl_D_2(__t1, __t2, __t3) FControl.D_2( __t1, __t2, __t3)
 #define ALIAS_FControl_D_1(__t1, __t2, __t3) FControl.D_1( __t1, __t2, __t3)
@@ -82,9 +84,9 @@ namespace BangBangFDefine {
     real_const_ptr     XR__ = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = XL__[iX_x];
-    result__[ 1   ] = XL__[iX_v];
-    result__[ 2   ] = XR__[iX_v];
+    result__[ 0   ] = XL__[iX_x] - ModelPars[iM_x_i];
+    result__[ 1   ] = XL__[iX_v] - ModelPars[iM_v_i];
+    result__[ 2   ] = XR__[iX_v] - ModelPars[iM_v_f];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 3, i_segment_left, i_segment_right );
   }

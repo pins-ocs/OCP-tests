@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Methods_UserFunctions.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -42,6 +42,8 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
+#define ALIAS_C1_constr_DD(__t1) C1_constr.DD( __t1)
+#define ALIAS_C1_constr_D(__t1) C1_constr.D( __t1)
 #define ALIAS_FControl_D_3(__t1, __t2, __t3) FControl.D_3( __t1, __t2, __t3)
 #define ALIAS_FControl_D_2(__t1, __t2, __t3) FControl.D_2( __t1, __t2, __t3)
 #define ALIAS_FControl_D_1(__t1, __t2, __t3) FControl.D_1( __t1, __t2, __t3)
@@ -85,6 +87,52 @@ namespace BangBangFDefine {
   using std::tan;
   using std::tanh;
   using std::trunc;
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  real_type
+  BangBangF::C1( real_type xo__v ) const {
+    real_type result__ = -ModelPars[iM_v__max] + xo__v;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_C1( v={} ) return {}\n",
+        xo__v, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  BangBangF::C1_D( real_type xo__v ) const {
+    real_type result__ = 1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_C1_D( v={} ) return {}\n",
+        xo__v, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  BangBangF::C1_DD( real_type xo__v ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        isRegular(result__),
+        "UserFunctions_C1_DD( v={} ) return {}\n",
+        xo__v, result__
+      );
+    }
+    return result__;
+  }
+
 }
 
 // EOF: BangBangF_Methods_UserFunctions.cc

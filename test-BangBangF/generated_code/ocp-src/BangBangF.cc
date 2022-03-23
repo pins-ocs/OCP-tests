@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -81,6 +81,7 @@ namespace BangBangFDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "C1",
     nullptr
   };
 
@@ -89,10 +90,15 @@ namespace BangBangFDefine {
   };
 
   char const *namesModelPars[numModelPars+1] = {
+    "v__max",
+    "v_f",
+    "v_i",
+    "x_i",
     nullptr
   };
 
   char const *namesConstraintLT[numConstraintLT+1] = {
+    "C1_constr",
     nullptr
   };
 
@@ -131,6 +137,7 @@ namespace BangBangFDefine {
   // Controls
   , FControl("FControl")
   // Constraints LT
+  , C1_constr("C1_constr")
   // Constraints 1D
   // Constraints 2D
   // User classes
@@ -138,6 +145,7 @@ namespace BangBangFDefine {
     m_U_solve_iterative = false;
 
     // Initialize to NaN all the ModelPars
+    std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
     // Initialize string of names
     setup_names(
@@ -200,10 +208,30 @@ namespace BangBangFDefine {
   */
   void
   BangBangF::setup_parameters( GenericContainer const & gc_data ) {
+    UTILS_ASSERT0(
+      gc_data.exists("Parameters"),
+      "BangBangF::setup_parameters: Missing key `Parameters` in data\n"
+    );
+    GenericContainer const & gc = gc_data("Parameters");
+
+    bool allfound = true;
+    for ( integer i = 0; i < numModelPars; ++i ) {
+      char const * namei = namesModelPars[i];
+      if ( gc.exists( namei ) ) {
+        ModelPars[i] = gc(namei).get_number();
+      } else {
+        m_console->error( fmt::format( "Missing parameter: '{}'\n", namei ) );
+        allfound = false;
+      }
+    }
+    UTILS_ASSERT0(
+      allfound, "in BangBangF::setup not all parameters are set!\n"
+    );
   }
 
   void
   BangBangF::setup_parameters( real_type const Pars[] ) {
+    std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
   /* --------------------------------------------------------------------------
@@ -216,6 +244,18 @@ namespace BangBangFDefine {
   */
   void
   BangBangF::setup_classes( GenericContainer const & gc_data ) {
+    UTILS_ASSERT0(
+      gc_data.exists("Constraints"),
+      "BangBangF::setup_classes: Missing key `Parameters` in data\n"
+    );
+    GenericContainer const & gc = gc_data("Constraints");
+    // Initialize Constraints 1D
+    UTILS_ASSERT0(
+      gc.exists("C1_constr"),
+      "in BangBangF::setup_classes(gc) missing key: ``C1_constr''\n"
+    );
+    C1_constr.setup( gc("C1_constr") );
+
   }
 
   /* --------------------------------------------------------------------------
@@ -309,11 +349,25 @@ namespace BangBangFDefine {
     FControl.info(mstr);
     m_console->message(mstr.str(),msg_level);
 
+    m_console->message("\nConstraints LT\n",msg_level);
+    mstr.str("");
+    C1_constr.info(mstr);
+    m_console->message(mstr.str(),msg_level);
+
     m_console->message("\nUser class (pointer)\n",msg_level);
     mstr.str("");
     mstr << "\nUser function `pMesh`\n";
     pMesh->info(mstr);
     m_console->message(mstr.str(),msg_level);
+
+    m_console->message("\nModel Parameters\n",msg_level);
+    for ( integer i = 0; i < numModelPars; ++i ) {
+      m_console->message(
+        fmt::format("{:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
+        msg_level
+      );
+    }
+
   }
 
   /* --------------------------------------------------------------------------
@@ -392,6 +446,8 @@ namespace BangBangFDefine {
   // save model parameters
   void
   BangBangF::save_OCP_info( GenericContainer & gc ) const {
+    for ( integer i = 0; i < numModelPars; ++i )
+      gc[namesModelPars[i]] = ModelPars[i];
 
   }
 

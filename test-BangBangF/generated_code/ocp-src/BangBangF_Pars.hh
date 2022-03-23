@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Pars.hh                                              |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -19,8 +19,8 @@
 #define BANGBANGFPARS_DOT_HH
 
 #define numBc                    3
-#define numModelPars             0
-#define numConstraintLT          0
+#define numModelPars             4
+#define numConstraintLT          1
 #define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           1
@@ -30,7 +30,7 @@
 #define numOMEGAvars             3
 #define numQvars                 1
 #define numPvars                 0
-#define numPostProcess           0
+#define numPostProcess           1
 #define numIntegratedPostProcess 0
 #define numContinuationSteps     0
 
@@ -51,6 +51,10 @@
 // Pvars
 
 // ModelPars Maps
+#define iM_v__max      0
+#define iM_v_f         1
+#define iM_v_i         2
+#define iM_x_i         3
 
 #endif
 

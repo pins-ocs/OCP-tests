@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF.hh                                                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -108,11 +108,13 @@ namespace BangBangFDefine {
   class BangBangF : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    real_type ModelPars[4];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU FControl;
 
     // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DLessThan C1_constr;
 
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -212,8 +214,8 @@ namespace BangBangFDefine {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     BANGBANGF_API_DLL
     void
-    update_parameter( real_type, integer )
-    { } // no parameters to modify!
+    update_parameter( real_type val, integer idx )
+    { ModelPars[idx] = val; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     BANGBANGF_API_DLL
@@ -242,6 +244,9 @@ namespace BangBangFDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    BANGBANGF_API_DLL real_type C1      ( real_type xo__v ) const;
+    BANGBANGF_API_DLL real_type C1_D    ( real_type xo__v ) const;
+    BANGBANGF_API_DLL real_type C1_DD   ( real_type xo__v ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

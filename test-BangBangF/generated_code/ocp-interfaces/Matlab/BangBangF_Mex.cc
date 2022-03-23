@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Mex.cc                                               |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -236,7 +236,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('read',obj,filename): "
     CHECK_IN_OUT(3,1);
@@ -263,7 +262,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('setup',obj,struct_or_filename): "
     CHECK_IN_OUT(3,0);
@@ -310,7 +308,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('remesh',obj,new_mesh): "
     UTILS_MEX_ASSERT0(
@@ -357,7 +354,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('set_guess',obj[,userguess]): "
     UTILS_MEX_ASSERT0(
@@ -404,7 +400,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('get_guess',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'guess'" );
@@ -418,7 +413,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('get_solution_as_guess',obj): "
     UTILS_MEX_ASSERT0(
@@ -444,7 +438,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('solve',obj[,timeout]): "
     UTILS_MEX_ASSERT0(
@@ -478,7 +471,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('dims',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dims'" );
@@ -508,7 +500,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('names',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'names'" );
@@ -531,7 +522,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('update_continuation',obj,nphase,old_s,s): "
     UTILS_MEX_ASSERT0(
@@ -558,7 +548,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('get_raw_solution',obj): "
     UTILS_MEX_ASSERT0(
@@ -584,7 +573,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('set_raw_solution',obj,x,u): "
     UTILS_MEX_ASSERT0(
@@ -624,7 +612,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('check_raw_solution',obj,x): "
     UTILS_MEX_ASSERT0(
@@ -656,7 +643,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('check_jacobian',obj,x,u,epsi): "
     UTILS_MEX_ASSERT0(
@@ -696,7 +682,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('get_solution',obj[,column_name]): "
     UTILS_MEX_ASSERT0(
@@ -737,7 +722,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('get_solution2',obj): "
     UTILS_MEX_ASSERT0(
@@ -759,7 +743,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('get_solution3',obj): "
     UTILS_MEX_ASSERT0(
@@ -788,7 +771,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('get_ocp_data',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'get_ocp_data'" );
@@ -811,7 +793,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('init_U',obj,x,do_minimize): "
     UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'init_U'" );
@@ -844,7 +825,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_U',obj,Z,u_guess): "
     UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'eval_U'" );
@@ -882,7 +862,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_F',obj,Z,U): "
     UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'eval_F'" );
@@ -930,7 +909,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_JF',obj,Z,U): "
     UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'eval_JF'" );
@@ -1002,7 +980,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_JF_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_JF_pattern'" );
@@ -1048,7 +1025,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('pack',obj,x,lambda,pars,omega): "
     UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'pack'" );
@@ -1090,7 +1066,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('pack_for_direct',obj,X,U,Pars): "
     UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'pack_for_direct'" );
@@ -1134,7 +1109,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('unpack',obj,Z): "
     UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'unpack'" );
@@ -1163,7 +1137,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('unpack_for_direct',obj,Z): "
     UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'unpack_for_direct'" );
@@ -1202,7 +1175,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('estimate_multipliers', obj, X, U, Pars, method): "
     UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'estimate_multipliers'" );
@@ -1371,7 +1343,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('ac', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
@@ -1405,7 +1376,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('DacDxlxlpu', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
@@ -1462,7 +1432,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('hc', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
@@ -1494,7 +1463,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('DhcDxlxlop', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
@@ -1530,7 +1498,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('u', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
@@ -1566,7 +1533,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('DuDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
@@ -1643,7 +1609,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('rhs_ode', obj, i_seg, q, x, u, pars ): "
 
@@ -1668,7 +1633,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('Drhs_odeDxup', i_seg, obj, q, x, u, pars ): "
 
@@ -1696,7 +1660,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('A', obj, i_seg, q, x, pars ): "
 
@@ -1724,7 +1687,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eta', obj, i_seg, q, x, lambda, pars ): "
 
@@ -1748,7 +1710,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DetaDxp', obj, i_seg, q, x, lambda, pars ): "
 
@@ -1775,7 +1736,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('nu', obj, i_seg, q, x, V, pars ): "
 
@@ -1800,7 +1760,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DnuDxp', obj, i_seg, q, x, V, pars ): "
 
@@ -1836,7 +1795,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('Hx', obj, i_seg, q, x, lambda, V, u, pars ): "
 
@@ -1862,7 +1820,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DHxDxp', obj, i_seg, q, x, lambda, V, u, pars ): "
 
@@ -1892,7 +1849,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('Hu', obj, i_seg, q, x, lambda, u, pars ): "
 
@@ -1917,7 +1873,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DHuDxp', obj, i_seg, q, x, lambda, u, pars ): "
 
@@ -1947,7 +1902,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('Hp', obj, i_seg, q, x, lambda, V, u, pars ): "
 
@@ -1973,7 +1927,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DHpDp', obj, i_seg, q, x, lambda, V, u, pars ): "
 
@@ -2004,7 +1957,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('JPx', obj, i_seg, q, x, u, pars ): "
 
@@ -2028,7 +1980,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('LTx', obj, i_seg, q, x, u, pars ): "
 
@@ -2052,7 +2003,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('JUx', obj, i_seg, q, x, u, pars ): "
 
@@ -2076,7 +2026,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('JPp', obj, i_seg, q, x, u, pars ): "
 
@@ -2100,7 +2049,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('LTp', obj, i_seg, q, x, u, pars ): "
 
@@ -2124,7 +2072,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('JUp', obj, i_seg, q, x, u, pars ): "
 
@@ -2148,7 +2095,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('LTargs', obj, i_seg, q, x, u, pars ): "
 
@@ -2175,7 +2121,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DJPxDxp', obj, i_seg, q, x, u, pars ): "
 
@@ -2199,7 +2144,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DLTxDxp', obj, i_seg, q, x, u, pars ): "
 
@@ -2223,7 +2167,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DJUxDxp', obj, i_seg, q, x, u, pars ): "
 
@@ -2247,7 +2190,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DJPuDxp', obj, i_seg, q, x, u, pars ): "
 
@@ -2271,7 +2213,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DLTuDxp', obj, i_seg, q, x, u, pars ): "
 
@@ -2295,7 +2236,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DJUuDxp', obj, i_seg, q, x, u, pars ): "
 
@@ -2319,7 +2259,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DJPpDp', obj, i_seg, q, x, u, pars ): "
 
@@ -2343,7 +2282,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DLTpDp', obj, i_seg, q, x, u, pars ): "
 
@@ -2367,7 +2305,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DJUpDp', obj, i_seg, q, x, u, pars ): "
 
@@ -2391,7 +2328,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DLTargsDxup', obj, i_seg, q, x, u, pars ): "
 
@@ -2410,6 +2346,34 @@ public:
 
   // --------------------------------------------------------------------------
 
+
+  void
+  do_D2LTargsD2xup(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  )
+  {
+    #define CMD MODEL_NAME "_Mex('D2LTargsD2xup', obj, i_seg, q, x, u, pars, omega ): "
+
+    CHECK_IN_OUT( 8, 1 );
+
+    NodeType N;
+    get_qx( CMD, nrhs, prhs, N );
+
+    GET_ARG_U( arg_in_5 );
+    GET_ARG_P( arg_in_6 );
+
+    mwSize nO;
+    real_const_ptr OMEGA = Utils::mex_vector_pointer(
+      arg_in_7, nO, CMD " argument omega"
+    );
+
+    RETURN_SPARSE( D2LTargsD2xup, N, U, P, OMEGA );
+
+    #undef CMD
+  }
+
+  // --------------------------------------------------------------------------
 
   /*\
    |   _                      _                                _ _ _   _
@@ -2495,7 +2459,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('boundaryConditions', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
@@ -2520,7 +2483,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DboundaryConditionsDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
@@ -2547,7 +2509,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('adjointBC', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, Omega ): "
@@ -2578,7 +2539,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('DadjointBCDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, Omega ): "
@@ -2607,7 +2567,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('jump', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
@@ -2636,7 +2595,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME \
     "_Mex('DjumpDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
@@ -2664,7 +2622,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('JP', obj, i_seg, q, x, u, pars ): "
 
@@ -2688,7 +2645,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('JU', obj, i_seg, q, x, u, pars ): "
 
@@ -2718,7 +2674,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('lagrange_target', obj, i_seg, q, x, u, pars ): "
 
@@ -2742,7 +2697,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DlagrangeDxup', obj, iseg, q, x, u, pars ): "
 
@@ -2768,7 +2722,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('mayer_target', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
@@ -2790,7 +2743,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('DmayerDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
@@ -2807,29 +2759,86 @@ public:
     #undef CMD
   }
 
-  // --------------------------------------------------------------------------
+  /*\
+  :|:   ____  _               _
+  :|:  |  _ \(_)_ __ ___  ___| |_
+  :|:  | | | | | '__/ _ \/ __| __|
+  :|:  | |_| | | | |  __/ (__| |_
+  :|:  |____/|_|_|  \___|\___|\__|
+  \*/
 
   void
-  do_IPOPT_hess(
+  do_fd_ode(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
-    #define CMD MODEL_NAME "_Mex('IPOPT_hess', obj, i_seg, q, x, lambda, v, u, pars, sigma ): "
+    #define CMD MODEL_NAME \
+    "_Mex('fd_ode', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ): "
 
     CHECK_IN_OUT( 10, 1 );
 
-    NodeType2 N; // q, x, lamnbda
-    get_N( CMD, nrhs, prhs, N );
+    NodeType L, R;
+    get_LR( CMD, nrhs, prhs, L, R );
+    GET_ARG_U( arg_in_8 );
+    GET_ARG_P( arg_in_9 );
 
-    GET_ARG_V( arg_in_6 );
-    GET_ARG_U( arg_in_7 );
-    GET_ARG_P( arg_in_8 );
+    real_ptr res = Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), 1 );
 
-    real_type sigma = Utils::mex_get_scalar_value( arg_in_9, CMD ", sigma" );
+    this->fd_ode_eval( L, R, P, U, res );
 
-    RETURN_SPARSE( IPOPT_hess, N, V, U, P, sigma );
+    #undef CMD
+  }
+
+  // --------------------------------------------------------------------------
+
+  void
+  do_Dfd_odeDxxup(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  )
+  {
+    #define CMD MODEL_NAME \
+    "_Mex('Dfd_odeDxxup', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ): "
+
+    CHECK_IN_OUT( 10, 1 );
+
+    NodeType L, R;
+    get_LR( CMD, nrhs, prhs, L, R );
+    GET_ARG_U( arg_in_8 );
+    GET_ARG_P( arg_in_9 );
+
+    RETURN_SPARSE( Dfd_odeDxxup, L, R, P, U );
+
+    #undef CMD
+  }
+
+  // --------------------------------------------------------------------------
+
+  void
+  do_D2fd_odeD2xxup(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  )
+  {
+    #define CMD MODEL_NAME \
+    "_Mex('D2fd_odeD2xxup', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ): "
+
+    CHECK_IN_OUT( 11, 1 );
+
+    NodeType L, R;
+    get_LR( CMD, nrhs, prhs, L, R );
+    GET_ARG_U( arg_in_8 );
+    GET_ARG_P( arg_in_9 );
+
+    mwSize nL;
+    L_const_pointer_type lambda(Utils::mex_vector_pointer( arg_in_10, nL, CMD " argument lambda" ));
+    UTILS_MEX_ASSERT(
+      nL == this->dim_X(),
+      "{} |lambda| = {} expected to be {}\n", CMD, nL, this->dim_X()
+    );
+
+    RETURN_SPARSE( D2fd_odeD2xxup, L, R, P, U, lambda );
 
     #undef CMD
   }
@@ -2841,7 +2850,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('mesh_functions', obj, i_segment, s ): "
 
@@ -2870,7 +2878,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('nodes', obj ): "
 
@@ -2891,7 +2898,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('node_to_segment', obj ): "
 
@@ -2918,7 +2924,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_A_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_A_pattern'" );
@@ -2955,7 +2960,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DadjointBCDxxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DadjointBCDxxp_pattern'" );
@@ -2992,7 +2996,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DboundaryConditionsDxxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DboundaryConditionsDxxp_pattern'" );
@@ -3029,7 +3032,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_Drhs_odeDxup_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_Drhs_odeDxup_pattern'" );
@@ -3066,7 +3068,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DsegmentLinkDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DsegmentLinkDxp_pattern'" );
@@ -3103,7 +3104,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DjumpDxlxlp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DjumpDxlxlp_pattern'" );
@@ -3140,7 +3140,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_IPOPT_hess_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_IPOPT_hess_pattern'" );
@@ -3177,7 +3176,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DHxDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DHxDxp_pattern'" );
@@ -3214,7 +3212,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DJPxDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DJPxDxp_pattern'" );
@@ -3251,7 +3248,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DLTxDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DLTxDxp_pattern'" );
@@ -3288,7 +3284,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DJUxDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DJUxDxp_pattern'" );
@@ -3325,7 +3320,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DHuDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DHuDxp_pattern'" );
@@ -3362,7 +3356,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DJPuDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DJPuDxp_pattern'" );
@@ -3399,7 +3392,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DLTuDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DLTuDxp_pattern'" );
@@ -3436,7 +3428,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DJUuDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DJUuDxp_pattern'" );
@@ -3473,7 +3464,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DHpDp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DHpDp_pattern'" );
@@ -3510,7 +3500,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DJPpDp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DJPpDp_pattern'" );
@@ -3547,7 +3536,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DLTpDp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DLTpDp_pattern'" );
@@ -3584,7 +3572,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DJUpDp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DJUpDp_pattern'" );
@@ -3621,7 +3608,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DLTargsDxup_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DLTargsDxup_pattern'" );
@@ -3654,11 +3640,46 @@ public:
   //---------------------------------------------------------------------
 
   void
+  do_eval_D2LTargsD2xup_pattern(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  )
+  {
+    #define CMD MODEL_NAME "_Mex('eval_D2LTargsD2xup_pattern',obj): "
+    UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_D2LTargsD2xup_pattern'" );
+    CHECK_IN_OUT( 2, 1 );
+
+    integer nnz = D2LTargsD2xup_nnz();
+    integer nr  = D2LTargsD2xup_numRows();
+    integer nc  = D2LTargsD2xup_numCols();
+    mxArray *args[5];
+    real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+    real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+    Utils::mex_set_scalar_value( args[2], 1  );
+    Utils::mex_set_scalar_value( args[3], nr );
+    Utils::mex_set_scalar_value( args[4], nc );
+
+    Mechatronix::Malloc<integer> mem("mex_D2LTargsD2xup");
+    mem.allocate( 2*nnz, "D2LTargsD2xup" );
+    integer_ptr i_row = mem( nnz );
+    integer_ptr j_col = mem( nnz );
+    MODEL_CLASS::D2LTargsD2xup_pattern( i_row, j_col );
+    for ( integer i = 0; i < nnz; ++i ) {
+      I[i] = i_row[i]+1;
+      J[i] = j_col[i]+1;
+    }
+    int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+    UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+    #undef CMD
+  }
+
+  //---------------------------------------------------------------------
+
+  void
   do_eval_DnuDxp_pattern(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DnuDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DnuDxp_pattern'" );
@@ -3695,7 +3716,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DetaDxp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DetaDxp_pattern'" );
@@ -3732,7 +3752,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DgDxlxlp_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DgDxlxlp_pattern'" );
@@ -3769,7 +3788,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DgDu_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DgDu_pattern'" );
@@ -3806,7 +3824,6 @@ public:
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
-
   {
     #define CMD MODEL_NAME "_Mex('eval_DmDuu_pattern',obj): "
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DmDuu_pattern'" );
@@ -3838,6 +3855,61 @@ public:
 
   //---------------------------------------------------------------------
 
+
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  void
+  do_C1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('C1', obj, xo__v ): "
+    CHECK_IN_OUT( 3, 1 );
+    mwSize N0, M0;
+    real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__v" );
+
+    real_ptr res = Utils::mex_create_matrix_value( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->C1(arg0[ii]);
+    #undef CMD
+  }
+
+  void
+  do_C1_D(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  )
+  {
+    #define CMD MODEL_NAME "_Mex('C1_D', obj, xo__v ): "
+    CHECK_IN_OUT( 3, 1 );
+    mwSize N0, M0;
+    real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__v" );
+
+    real_ptr res = Utils::mex_create_matrix_value( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->C1_D(arg0[ii]);
+    #undef CMD
+  }
+  void
+  do_C1_DD(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD MODEL_NAME "_Mex('C1_DD', obj, xo__v ): "
+    CHECK_IN_OUT( 3, 1 );
+    mwSize N0, M0;
+    real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__v" );
+
+    real_ptr res = Utils::mex_create_matrix_value( arg_out_0, N0, M0 );
+    for ( mwSize ii = 0; ii < N0*M0; ++ii )
+      res[ii] = this->C1_DD(arg0[ii]);
+    #undef CMD
+  }
 
 
 };
@@ -4864,6 +4936,20 @@ do_DLTargsDxup(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
+do_D2LTargsD2xup(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('D2LTargsD2xup',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_D2LTargsD2xup( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
 do_boundaryConditions(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
@@ -5032,15 +5118,43 @@ do_DmayerDxxp(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_IPOPT_hess(
+do_fd_ode(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   UTILS_MEX_ASSERT(
     nrhs >= 2,
-    MODEL_NAME "_Mex('IPOPT_hess',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('fd_ode',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_IPOPT_hess( nlhs, plhs, nrhs, prhs );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_fd_ode( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_Dfd_odeDxxup(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('Dfd_odeDxxup',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_Dfd_odeDxxup( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_D2fd_odeD2xxup(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('D2fd_odeD2xxup',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_D2fd_odeD2xxup( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -5368,6 +5482,20 @@ do_eval_DLTargsDxup_pattern(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
+do_eval_D2LTargsD2xup_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('eval_D2LTargsD2xup_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_eval_D2LTargsD2xup_pattern( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
 do_eval_DnuDxp_pattern(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
@@ -5436,6 +5564,48 @@ do_eval_DmDuu_pattern(
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_C1(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('C1',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_C1( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_C1_D(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('C1_D',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_C1_D( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_C1_DD(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('C1_DD',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_C1_DD( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"read",do_read},
   {"setup",do_setup},
@@ -5501,6 +5671,7 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"DLTpDp",do_DLTpDp},
   {"DJUpDp",do_DJUpDp},
   {"DLTargsDxup",do_DLTargsDxup},
+  {"D2LTargsD2xup",do_D2LTargsD2xup},
   {"boundaryConditions",do_boundaryConditions},
   {"DboundaryConditionsDxxp",do_DboundaryConditionsDxxp},
   {"adjointBC",do_adjointBC},
@@ -5513,7 +5684,9 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"DlagrangeDxup",do_DlagrangeDxup},
   {"mayer_target",do_mayer_target},
   {"DmayerDxxp",do_DmayerDxxp},
-  {"IPOPT_hess",do_IPOPT_hess},
+  {"fd_ode",do_fd_ode},
+  {"Dfd_odeDxxup",do_Dfd_odeDxxup},
+  {"D2fd_odeD2xxup",do_D2fd_odeD2xxup},
   {"mesh_functions",do_mesh_functions},
   {"nodes",do_nodes},
   {"node_to_segment",do_node_to_segment},
@@ -5537,11 +5710,15 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"eval_DLTpDp_pattern",do_eval_DLTpDp_pattern},
   {"eval_DJUpDp_pattern",do_eval_DJUpDp_pattern},
   {"eval_DLTargsDxup_pattern",do_eval_DLTargsDxup_pattern},
+  {"eval_D2LTargsD2xup_pattern",do_eval_D2LTargsD2xup_pattern},
   {"eval_DnuDxp_pattern",do_eval_DnuDxp_pattern},
   {"eval_DetaDxp_pattern",do_eval_DetaDxp_pattern},
   {"eval_DgDxlxlp_pattern",do_eval_DgDxlxlp_pattern},
   {"eval_DgDu_pattern",do_eval_DgDu_pattern},
   {"eval_DmDuu_pattern",do_eval_DmDuu_pattern},
+  {"C1",do_C1},
+  {"C1_D",do_C1_D},
+  {"C1_DD",do_C1_DD},
   {"new",do_new},
   {"set_info_level",do_set_info_level},
   {"set_max_threads",do_set_max_threads},

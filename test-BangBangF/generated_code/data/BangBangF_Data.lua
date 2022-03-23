@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Data.lua                                             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 23/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -33,6 +33,8 @@ content = {
   InfoLevel = 4,
 
   Use_control_penalties_in_adjoint_equations = false,
+
+  Max_penalty_value = 1000,
 
   --[[
    _   _                        _
@@ -257,10 +259,14 @@ content = {
     -- Guess Parameters
 
     -- Boundary Conditions
+    v_f = 0,
+    v_i = 0,
+    x_i = 0,
 
     -- Post Processing Parameters
 
     -- User Function Parameters
+    v__max = 0.3,
 
     -- Continuation Parameters
 
@@ -283,7 +289,15 @@ content = {
   },
 
   Constraints = {
-  -- ConstraintLT: none defined
+  -- ConstraintLT
+  -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    -- PenaltyBarrier1DLessThan
+    C1_constrsubType   = "PENALTY_REGULAR",
+    C1_constrepsilon   = 0.001,
+    C1_constrtolerance = 0.025,
+    C1_constractive    = true
+
   -- Constraint1D: none defined
   -- Constraint2D: none defined
   },

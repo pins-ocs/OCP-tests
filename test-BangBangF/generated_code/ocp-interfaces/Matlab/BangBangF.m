@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: BangBangF.m                                                    %
 %                                                                       %
-%  version: 1.0   date 19/3/2022                                        %
+%  version: 1.0   date 23/3/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -464,6 +464,12 @@ classdef BangBangF < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function res = post_processing_C1( self )
+      %
+      % Return the solution for the post processing variable: C1
+      %
+      res = BangBangF_Mex( 'get_solution', self.objectHandle, 'C1' );
+    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -731,6 +737,40 @@ classdef BangBangF < handle
         'IPOPT_hess', self.objectHandle, iseg, q, x, lambda, v, u, pars, sigma ...
       );
     end
+    %
+    %   ____  _               _
+    %  |  _ \(_)_ __ ___  ___| |_
+    %  | | | | | '__/ _ \/ __| __|
+    %  | |_| | | | |  __/ (__| |_
+    %  |____/|_|_|  \___|\___|\__|
+    %
+    % ---------------------------------------------------------------------
+    function fd_ode = eval_fd_ode( self, iseg_L, q_L, x_L, ...
+                                         iseg_R, q_R, x_R, ...
+                                         U, pars )
+      fd_ode = BangBangF_Mex( ...
+        'fd_ode', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function Dfd_odeDxxup = eval_Dfd_odeDxxup( self, iseg_L, q_L, x_L, ...
+                                                     iseg_R, q_R, x_R, ...
+                                                     U, pars )
+      Dfd_odeDxxup = BangBangF_Mex( ...
+        'Dfd_odeDxxup', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function D2fd_odeD2xxup = eval_D2fd_odeD2xxup( self, iseg_L, q_L, x_L, ...
+                                                         iseg_R, q_R, x_R, ...
+                                                         U, pars, lambda )
+      D2fd_odeD2xxup = BangBangF_Mex( ...
+        'D2fd_odeD2xxup', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ...
+      );
+    end
     % ---------------------------------------------------------------------
     function target = eval_mayer_target( self, iseg_L, q_L, x_L, ...
                                                iseg_R, q_R, x_R, ...
@@ -755,7 +795,7 @@ classdef BangBangF < handle
       % Evaluate contraints c(x,u,p) <= 0
       %
       c = BangBangF_Mex(...
-        'LTargs', self.objectHandle, iseg, q, x, u, pars...
+        'LTargs', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
@@ -764,7 +804,16 @@ classdef BangBangF < handle
       % Evaluate jacobian of constraints c(x,u,p) <= 0
       %
       Jc = BangBangF_Mex(...
-        'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars...
+        'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function Hc = eval_D2cD2xup( self, iseg, q, x, u, pars, omega )
+      %
+      % Evaluate hessian of constraints omega . c(x,u,p) <= 0
+      %
+      Hc = BangBangF_Mex(...
+        'D2LTargsD2xup', self.objectHandle, iseg, q, x, u, pars, omega ...
       );
     end
     %
@@ -1134,6 +1183,10 @@ classdef BangBangF < handle
       res = BangBangF_Mex('eval_DLTargsDxup_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
+    function res = D2LTargsD2xup_pattern( self )
+      res = BangBangF_Mex('eval_D2LTargsD2xup_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
     function res = DnuDxp_pattern( self )
       res = BangBangF_Mex('eval_DnuDxp_pattern', self.objectHandle );
     end
@@ -1154,6 +1207,23 @@ classdef BangBangF < handle
       res = BangBangF_Mex('eval_DmDuu_pattern', self.objectHandle );
     end
 
+    % ---------------------------------------------------------------------
+    %  _   _               ___             _   _
+    % | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+    % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+    %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+    % ---------------------------------------------------------------------
+    function res = C1( self, xo__v )
+      res = BangBangF_Mex('C1', self.objectHandle, xo__v );
+    end
+    % ---------------------------------------------------------------------
+    function res = C1_D( self, xo__v )
+      res = BangBangF_Mex('C1_D', self.objectHandle, xo__v );
+    end
+    % ---------------------------------------------------------------------
+    function res = C1_DD( self, xo__v )
+      res = BangBangF_Mex('C1_DD', self.objectHandle, xo__v );
+    end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION
     % ---------------------------------------------------------------------

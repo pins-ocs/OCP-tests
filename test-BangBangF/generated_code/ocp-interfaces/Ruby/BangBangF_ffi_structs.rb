@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: BangBangF_ffi_structs.rb                                          #
 #                                                                          #
-#  version: 1.0   date 19/3/2022                                           #
+#  version: 1.0   date 23/3/2022                                           #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #
@@ -40,6 +40,14 @@ module BangBangF
   class BangBangF_model_params < FFI::Struct
     layout(
 
+      :v__max, :data_t,
+
+      :v_f,    :data_t,
+
+      :v_i,    :data_t,
+
+      :x_i,    :data_t,
+
     )
 
     def initialize
@@ -70,6 +78,9 @@ module BangBangF
   class BangBangF_constraints_params < FFI::Struct
     layout(
       # LT constraints
+      :C1_constrSubType, :index_t,
+      :C1_constrEpsilon, :data_t,
+      :C1_constrTolerance, :data_t,
 
       # 1D constraints
 
