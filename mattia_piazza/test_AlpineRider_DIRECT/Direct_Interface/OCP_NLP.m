@@ -104,6 +104,7 @@ classdef (Abstract) OCP_NLP < handle
     %              |___/
     %
     function res = NLP_target( self, Z )
+%       fprintf("Eval Target \n");
 
       totx = self.N*self.nx ;
       totu = (self.N-1)*self.nu ;

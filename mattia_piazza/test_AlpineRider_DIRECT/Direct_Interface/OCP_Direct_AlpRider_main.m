@@ -24,5 +24,6 @@ bb = OCP_Direct_AlpRider() ;
 
 bb.setup() ;
 
-info = bb.solve() ;
+% info = bb.solve() ;
+info = bb.solve_continuation() ;
 bb.plot() ;

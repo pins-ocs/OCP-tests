@@ -177,6 +177,46 @@ classdef OCP_Direct_AlpRider < OCP_NLP
       c_lb      = [ reshape([C0_lb; C1_lb], 1, (self.N-1)*(self.nx+self.npc) ) , Cbc_lb ];
       c_ub      = [ reshape([C0_ub; C1_ub], 1, (self.N-1)*(self.nx+self.npc) ) , Cbc_ub ];
     end
+
+    function info = solve_continuation( self, varargin )
+
+      info_tmp = self.solve();
+      last_saved_sol = info_tmp;
+      self.plot();
+      cont_end_flag = 1;
+      num_cont = 0;
+      ds     = 0.2;
+      s_old  = 0;
+      s_new  = 0;
+      ds_lim = 0.01;
+
+      if info_tmp.status == 0
+        fprintf("\n+++++++++++++++++++++++++START CONTINUATION+++++++++++++++++++++++++\n")
+        while (cont_end_flag && ds > ds_lim)
+          s_new = min( s_old + ds , 1);
+          self.pins.update_continuation(num_cont,s_old,s_new)
+          info_tmp = self.solve(last_saved_sol);
+          if info_tmp.status == 0
+            last_saved_sol = info_tmp;
+            s_old = s_new;
+            ds = ds * 1.5;
+          else
+            ds = ds * 0.5;
+          end
+          self.plot();
+
+          if (s_new >= 1 && info_tmp.status == 0)
+            cont_end_flag = 0;
+          end
+        end
+      else
+        fprintf("\n++++++++++++++++++++++++++NOT CONVERGED!!!++++++++++++++++++++++++++\n");
+      end
+      info = last_saved_sol; %%%%%%%%%%
+
+      %self.pins.update_continuation(0,0,0.4)
+
+    end
     
     function info = solve( self, varargin )
       
@@ -200,7 +240,7 @@ classdef OCP_Direct_AlpRider < OCP_NLP
       options.ipopt.jac_d_constant   = 'no';
       options.ipopt.hessian_constant = 'no';
       options.ipopt.mu_strategy      = 'adaptive';
-      options.ipopt.max_iter         = 2000; %%% 2000
+      options.ipopt.max_iter         = 100; %%% 2000
       options.ipopt.tol              = 1e-6;%
       %options.ipopt.linear_solver    = 'ma57';
       options.ipopt.linear_solver    = 'mumps';
@@ -221,7 +261,7 @@ classdef OCP_Direct_AlpRider < OCP_NLP
       funcs.jacobianstructure = @() self.NLP_constraints_jacobian_pattern();
 
       if false %%%
-        %options.ipopt.derivative_test = 'second-order';
+        options.ipopt.derivative_test = 'second-order';
         funcs.hessian           = @( Z, sigma, lambda ) self.NLP_hessian( Z, sigma, lambda ) ;
         funcs.hessianstructure  = @() self.NLP_hessian_pattern();
       else
@@ -236,7 +276,14 @@ classdef OCP_Direct_AlpRider < OCP_NLP
       
       % If there is an argument to the function try to set the argument as guess
       if nargin == 2
-        new_guess = varargin{1};
+        if isstruct(varargin{1})
+          new_guess      = varargin{1}.x;
+          options.zl     = varargin{1}.zl;
+          options.zu     = varargin{1}.zu;
+          options.lambda = varargin{1}.lambda;
+        else
+          new_guess = varargin{1};
+        end
         size_new  = size(new_guess,2);
         supposed_size = self.N*self.nx + (self.N-1)*self.nu;
         if size_new == supposed_size
@@ -450,10 +497,16 @@ classdef OCP_Direct_AlpRider < OCP_NLP
       % C' = A'*V + A*V' - RHS' = D
       % V' = V1
       A = full(self.pins.eval_A( nseg, qM, XM, [] ));
-      DnuDXM  = full(self.pins.eval_DnuDx(nseg, qM, XM, VM, [] ));
+      DnuDXM  = full(self.pins.eval_DnuDxp(nseg, qM, XM, VM, [] )); %%% eval_DnuDx
+      %%% separare derivata parametro
       DnuDVM  = A; 
-      DRHSDXM = full(self.pins.eval_Drhs_odeDx(nseg, qM, XM, UC, [] ));
-      DRHSDUC = full(self.pins.eval_Drhs_odeDu(nseg, qM, XM, UC, [] ));
+
+      DRHSDXMUCP = full( self.pins.eval_Drhs_odeDxup( nseg, qM, XM, UC, [] ) );
+      DRHSDXM = DRHSDXMUCP(1:1:self.nx,1:1:self.nx);
+      DRHSDUC = DRHSDXMUCP(1:self.nx, self.nx + (1:self.nu));
+
+%       DRHSDXM = full(self.pins.eval_Drhs_odeDx(nseg, qM, XM, UC, [] ));
+%       DRHSDUC = full(self.pins.eval_Drhs_odeDu(nseg, qM, XM, UC, [] ));
 
       DCDXL = DnuDXM * DXMDXL + DnuDVM * DVMDXL - DRHSDXM * DXMDXL;
       DCDXR = DnuDXM * DXMDXR + DnuDVM * DVMDXR - DRHSDXM * DXMDXR;
@@ -609,13 +662,27 @@ classdef OCP_Direct_AlpRider < OCP_NLP
     end
     
     function tvU = TVU_custom( self, tL, tC, tR, UCL, UCR )
-      w__tv = 0;
+%       if tL < 1 
+%         w__tv = 0.01*(tL-1)^2;
+%       elseif tL > 19
+%         w__tv = 0.01*(tL-19)^2;
+%       else
+%         w__tv = 0;
+%       end
+      w__tv = 0.01;
       delta = (UCL - UCR);
       tvU = w__tv * self.vec_square(delta);
     end
     
     function tvG = TVU_custom_gradient( self, tL, tC, tR, UCL, UCR )
-      w__tv = 0;
+%       if tL < 1 
+%         w__tv = 0.01*(tL-1)^2;
+%       elseif tL > 19
+%         w__tv = 0.01*(tL-19)^2;
+%       else
+%         w__tv = 0;
+%       end
+      w__tv = 0.01;
       delta  = (UCL - UCR);
       Ddelta = [eye(self.nu), -eye(self.nu)];
       tvG = w__tv * self.Dvec_square(delta) * Ddelta;

@@ -352,7 +352,7 @@ classdef OCP_Direct_AlpRider < OCP_NLP
     function gradM = mayer_gradient( self, tL, tR, XL, XR, ~ )
       qL = self.eval_q(tL);
       qR = self.eval_q(tR);
-      gradM = self.pins.eval_DmayerDxxp(0,qL,XL,0,qR,XR,[]) ;
+      gradM = self.pins.eval_DmayerDxxp(0,qL,XL,0,qR,XR,[]) ; 
     end
     
     % [ M, gradM, hessianM ]
@@ -401,10 +401,16 @@ classdef OCP_Direct_AlpRider < OCP_NLP
       % C' = A'*V + A*V' - RHS' = D
       % V' = V1
       A = full(self.pins.eval_A( nseg, qM, XM, [] ));
-      DnuDXM  = full(self.pins.eval_DnuDx(nseg, qM, XM, VM, [] ));
+      DnuDXM  = full(self.pins.eval_DnuDxp(nseg, qM, XM, VM, [] )); %%% eval_DnuDx
       DnuDVM  = A; 
-      DRHSDXM = full(self.pins.eval_Drhs_odeDx(nseg, qM, XM, UC, [] ));
-      DRHSDUC = full(self.pins.eval_Drhs_odeDu(nseg, qM, XM, UC, [] ));
+
+      DRHSDXMUCP = full( self.pins.eval_Drhs_odeDxup( nseg, qM, XM, UC, [] ) );
+      DRHSDXM = DRHSDXMUCP(1:1:self.nx,1:1:self.nx);
+      DRHSDUC = DRHSDXMUCP(1:self.nx, self.nx + (1:self.nu));
+
+
+%       DRHSDXM = full(self.pins.eval_Drhs_odeDx(nseg, qM, XM, UC, [] ));
+%       DRHSDUC = full(self.pins.eval_Drhs_odeDu(nseg, qM, XM, UC, [] ));
 
       DCDXL = DnuDXM * DXMDXL + DnuDVM * DVMDXL - DRHSDXM * DXMDXL;
       DCDXR = DnuDXM * DXMDXR + DnuDVM * DVMDXR - DRHSDXM * DXMDXR;
