@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer.cc                                                      |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -92,6 +92,11 @@ namespace FarmerDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "x1__oControl",
+    "x2__oControl",
+    "x3__oControl",
+    "x4__oControl",
+    "LimitX2X4",
     "power_delivered",
     "power_required",
     nullptr

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -185,12 +185,12 @@ namespace PointMassCarModel_2Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer PointMassCarModel_2::DboundaryConditionsDxxp_numRows() const { return 6; }
-  integer PointMassCarModel_2::DboundaryConditionsDxxp_numCols() const { return 10; }
-  integer PointMassCarModel_2::DboundaryConditionsDxxp_nnz()     const { return 11; }
+  integer PointMassCarModel_2::DbcDxxp_numRows() const { return 6; }
+  integer PointMassCarModel_2::DbcDxxp_numCols() const { return 10; }
+  integer PointMassCarModel_2::DbcDxxp_nnz()     const { return 11; }
 
   void
-  PointMassCarModel_2::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  PointMassCarModel_2::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 5   ;
@@ -206,7 +206,7 @@ namespace PointMassCarModel_2Define {
 
 
   void
-  PointMassCarModel_2::DboundaryConditionsDxxp_sparse(
+  PointMassCarModel_2::DbcDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -232,7 +232,31 @@ namespace PointMassCarModel_2Define {
     result__[ 9   ] = -1;
     result__[ 10  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 11, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 11, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer PointMassCarModel_2::D2bcD2xxp_numRows() const { return 10; }
+  integer PointMassCarModel_2::D2bcD2xxp_numCols() const { return 10; }
+  integer PointMassCarModel_2::D2bcD2xxp_nnz()     const { return 0; }
+
+  void
+  PointMassCarModel_2::D2bcD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  PointMassCarModel_2::D2bcD2xxp_sparse(
+    NodeType const         & LEFT__,
+    NodeType const         & RIGHT__,
+    P_const_pointer_type     P__,
+    OMEGA_const_pointer_type OMEGA__,
+    real_type                result__[]
+  ) const {
+    // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

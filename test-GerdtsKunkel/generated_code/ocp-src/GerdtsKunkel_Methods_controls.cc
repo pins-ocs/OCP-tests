@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -82,10 +82,10 @@ namespace GerdtsKunkelDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = x1Limitation(XM__[0] - 1.0 / 9.0);
-    real_type t8   = UM__[0];
-    real_type t11  = t8 * t8;
-    real_type result__ = t3 + LM__[0] * XM__[1] + t8 * LM__[1] + t11 * LM__[2] / 2;
+    real_type t5   = UM__[0];
+    real_type t8   = t5 * t5;
+    real_type t13  = x1Limitation(XM__[0] - 1.0 / 9.0);
+    real_type result__ = LM__[0] * XM__[1] + t5 * LM__[1] + t8 * LM__[2] / 2 + t13;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -808,6 +808,64 @@ namespace PointMassCarModel_4Define {
     result__[ 8   ] = t28 * t25 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 9, i_segment );
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer PointMassCarModel_4::D2LTargsD2xup_numRows() const { return 9; }
+  integer PointMassCarModel_4::D2LTargsD2xup_numCols() const { return 9; }
+  integer PointMassCarModel_4::D2LTargsD2xup_nnz()     const { return 8; }
+
+  void
+  PointMassCarModel_4::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 3   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 3   ; jIndex[2 ] = 4   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 5   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 3   ;
+    iIndex[5 ] = 4   ; jIndex[5 ] = 4   ;
+    iIndex[6 ] = 5   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 5   ; jIndex[7 ] = 5   ;
+  }
+
+
+  void
+  PointMassCarModel_4::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_s];
+    real_type t2   = ALIAS_leftWidth_DD(t1);
+    real_type t5   = ALIAS_rightWidth_DD(t1);
+    result__[ 0   ] = -OMEGA__[1] * t2 - OMEGA__[2] * t5;
+    real_type t8   = X__[iX_Omega];
+    real_type t9   = t8 * t8;
+    real_type t11  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
+    real_type t12  = 1.0 / t11;
+    real_type t15  = ModelPars[iM_g] * ModelPars[iM_g];
+    real_type t16  = 1.0 / t15;
+    real_type t17  = OMEGA__[0];
+    real_type t18  = t17 * t16;
+    result__[ 1   ] = 2 * t18 * t12 * t9;
+    real_type t20  = X__[iX_V];
+    result__[ 2   ] = 4 * t17 * t16 * t12 * t20 * t8;
+    result__[ 3   ] = ModelPars[iM_m] / ModelPars[iM_Pmax] * OMEGA__[3];
+    result__[ 4   ] = result__[2];
+    real_type t30  = t20 * t20;
+    result__[ 5   ] = 2 * t18 * t12 * t30;
+    result__[ 6   ] = result__[3];
+    real_type t34  = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
+    result__[ 7   ] = 2 * t17 * t16 / t34;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2LTargsD2xup_sparse", 8, i_segment );
   }
 
   /*\

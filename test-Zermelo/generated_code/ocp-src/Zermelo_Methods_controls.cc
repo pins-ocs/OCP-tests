@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_controls.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -86,17 +86,17 @@ namespace ZermeloDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[4];
-    real_type t2   = Tpositive(-t1);
-    real_type t6   = XM__[0];
-    real_type t7   = XM__[1];
-    real_type t8   = velX(t6, t7);
-    real_type t14  = velY(t6, t7);
-    real_type t19  = ModelPars[iM_S];
-    real_type t20  = UM__[0];
-    real_type t21  = cos(t20);
-    real_type t26  = sin(t20);
-    real_type result__ = t2 + (XM__[2] + t8) * t1 * LM__[0] + (XM__[3] + t14) * t1 * LM__[1] + t21 * t19 * t1 * LM__[2] + t26 * t19 * t1 * LM__[3];
+    real_type t2   = XM__[4];
+    real_type t5   = XM__[0];
+    real_type t6   = XM__[1];
+    real_type t7   = velX(t5, t6);
+    real_type t13  = velY(t5, t6);
+    real_type t18  = ModelPars[iM_S];
+    real_type t19  = UM__[0];
+    real_type t20  = cos(t19);
+    real_type t25  = sin(t19);
+    real_type t28  = Tpositive(-t2);
+    real_type result__ = (XM__[2] + t7) * t2 * LM__[0] + (XM__[3] + t13) * t2 * LM__[1] + t20 * t18 * t2 * LM__[2] + t25 * t18 * t2 * LM__[3] + t28;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

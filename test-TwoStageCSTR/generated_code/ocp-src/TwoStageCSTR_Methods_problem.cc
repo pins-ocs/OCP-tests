@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -62,6 +62,41 @@ using Mechatronix::MeshStd;
 
 
 namespace TwoStageCSTRDefine {
+
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  TwoStageCSTR::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[4];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+
+    return res;
+  }
 
   /*\
    |  _  _            _ _ _            _
@@ -263,6 +298,29 @@ namespace TwoStageCSTRDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 8, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoStageCSTR::D2mayerD2xxp_numRows() const { return 8; }
+  integer TwoStageCSTR::D2mayerD2xxp_numCols() const { return 8; }
+  integer TwoStageCSTR::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  TwoStageCSTR::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  TwoStageCSTR::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -296,89 +354,41 @@ namespace TwoStageCSTRDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 6, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoStageCSTR::IPOPT_hess_numRows() const { return 6; }
-  integer TwoStageCSTR::IPOPT_hess_numCols() const { return 6; }
-  integer TwoStageCSTR::IPOPT_hess_nnz()     const { return 14; }
+  integer TwoStageCSTR::D2lagrangeD2xup_numRows() const { return 6; }
+  integer TwoStageCSTR::D2lagrangeD2xup_numCols() const { return 6; }
+  integer TwoStageCSTR::D2lagrangeD2xup_nnz()     const { return 6; }
 
   void
-  TwoStageCSTR::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+  TwoStageCSTR::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 4   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 2   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 3   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 2   ;
-    iIndex[8 ] = 3   ; jIndex[8 ] = 3   ;
-    iIndex[9 ] = 3   ; jIndex[9 ] = 5   ;
-    iIndex[10] = 4   ; jIndex[10] = 1   ;
-    iIndex[11] = 4   ; jIndex[11] = 4   ;
-    iIndex[12] = 5   ; jIndex[12] = 3   ;
-    iIndex[13] = 5   ; jIndex[13] = 5   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 5   ;
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  TwoStageCSTR::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  TwoStageCSTR::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = 2 * sigma__;
-    real_type t2   = L__[iL_lambda1__xo];
-    real_type t3   = X__[iX_x1];
-    real_type t4   = X__[iX_x2];
-    real_type t5   = R1_D_1_1(t3, t4);
-    real_type t7   = L__[iL_lambda2__xo];
-    real_type t9   = L__[iL_lambda3__xo];
-    real_type t10  = ModelPars[iM_tau];
-    real_type t11  = t10 * t9;
-    real_type t13  = L__[iL_lambda4__xo];
-    real_type t14  = t10 * t13;
-    result__[ 0   ] = t5 * t11 - t5 * t14 - t5 * t2 + t5 * t7 + t1;
-    real_type t16  = R1_D_1_2(t3, t4);
-    result__[ 1   ] = t16 * t11 - t16 * t14 - t16 * t2 + t16 * t7;
-    result__[ 2   ] = result__[1];
-    real_type t21  = R1_D_2_2(t3, t4);
-    result__[ 3   ] = t21 * t11 - t21 * t14 - t21 * t2 + t21 * t7 + t1;
-    result__[ 4   ] = t14 - t7;
-    real_type t26  = X__[iX_x3];
-    real_type t27  = X__[iX_x4];
-    real_type t28  = R2_D_1_1(t26, t27);
-    result__[ 5   ] = t28 * t13 - t28 * t9 + t1;
-    real_type t31  = R2_D_1_2(t26, t27);
-    result__[ 6   ] = t31 * t13 - t31 * t9;
-    result__[ 7   ] = result__[6];
-    real_type t34  = R2_D_2_2(t26, t27);
-    result__[ 8   ] = t34 * t13 - t34 * t9 + t1;
-    result__[ 9   ] = -t13;
-    result__[ 10  ] = result__[4];
-    result__[ 11  ] = 2 * sigma__ * ModelPars[iM_W];
-    result__[ 12  ] = result__[9];
-    result__[ 13  ] = result__[11];
+    result__[ 0   ] = 2;
+    result__[ 1   ] = 2;
+    result__[ 2   ] = 2;
+    result__[ 3   ] = 2;
+    result__[ 4   ] = 2 * ModelPars[iM_W];
+    result__[ 5   ] = result__[4];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 14, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 6, i_segment );
   }
 
   /*\
@@ -561,7 +571,7 @@ namespace TwoStageCSTRDefine {
    |                                                    |___/
   \*/
 
-  integer TwoStageCSTR::post_numEqns() const { return 0; }
+  integer TwoStageCSTR::post_numEqns() const { return 2; }
 
   void
   TwoStageCSTR::post_eval(
@@ -570,7 +580,14 @@ namespace TwoStageCSTRDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = u1Control(U__[iU_u1], -0.5e0, 0.5e0);
+    result__[ 1   ] = u2Control(U__[iU_u2], -0.5e0, 0.5e0);
+    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

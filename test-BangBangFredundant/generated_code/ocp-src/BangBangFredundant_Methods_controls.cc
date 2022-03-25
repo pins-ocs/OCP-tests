@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -117,17 +117,17 @@ namespace BangBangFredundantDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_w_F];
-    real_type t2   = XM__[2];
-    real_type t3   = XM__[3];
-    real_type t5   = Flim_min(-1 - t2 - t3);
-    real_type t8   = Flim_max(t2 + t3 - 1);
-    real_type t23  = UM__[0];
-    real_type t26  = UM__[1];
+    real_type t5   = XM__[2];
+    real_type t6   = XM__[3];
+    real_type t16  = UM__[0];
+    real_type t19  = UM__[1];
+    real_type t21  = ModelPars[iM_w_F];
+    real_type t23  = Flim_min(-1 - t5 - t6);
+    real_type t26  = Flim_max(t5 + t6 - 1);
     real_type t28  = ModelPars[iM_maxAF];
-    real_type t29  = aF1Control(t23, -t28, t28);
-    real_type t30  = aF2Control(t26, -t28, t28);
-    real_type result__ = t5 * t1 + t8 * t1 + LM__[0] * XM__[1] + (t2 + t3) * LM__[1] + LM__[2] * XM__[4] + LM__[3] * XM__[5] + t23 * LM__[4] + t26 * LM__[5] + t29 + t30;
+    real_type t29  = aF1Control(t16, -t28, t28);
+    real_type t30  = aF2Control(t19, -t28, t28);
+    real_type result__ = LM__[0] * XM__[1] + (t5 + t6) * LM__[1] + LM__[2] * XM__[4] + LM__[3] * XM__[5] + t16 * LM__[4] + t19 * LM__[5] + t23 * t21 + t26 * t21 + t29 + t30;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

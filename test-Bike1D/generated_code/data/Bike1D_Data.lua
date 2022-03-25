@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -21,8 +21,8 @@
 
 -- Auxiliary values
 muf_min = -1
-mur_min = -1
 mur_max = 1
+mur_min = -1
 
 content = {
 
@@ -36,6 +36,8 @@ content = {
   InfoLevel = 4,
 
   Use_control_penalties_in_adjoint_equations = false,
+
+  Max_penalty_value = 1000,
 
   --[[
    _   _                        _
@@ -197,13 +199,13 @@ content = {
       check_angle = 120,
 
       -- check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
-      check_ratio_norm_two_f = 1.4,
+      check_ratio_norm_two_f = 2,
       -- check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
-      check_ratio_norm_two_d = 1.4,
+      check_ratio_norm_two_d = 2,
       -- check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
-      check_ratio_norm_one_f = 1.4,
+      check_ratio_norm_one_f = 2,
       -- check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
-      check_ratio_norm_one_d = 1.4,
+      check_ratio_norm_one_d = 2,
     },
 
     Hyness = {
@@ -282,9 +284,9 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithSinAtan
-    clipdelta2 = 0,
-    clipdelta = 0,
     cliph = 0.01,
+    clipdelta = 0,
+    clipdelta2 = 0,
   },
 
   -- Controls
@@ -304,7 +306,10 @@ content = {
   },
 
   Constraints = {
-  -- ConstraintLT
+  --  _  _____
+  -- | ||_   _|
+  -- | |__| |
+  -- |____|_|
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DLessThan

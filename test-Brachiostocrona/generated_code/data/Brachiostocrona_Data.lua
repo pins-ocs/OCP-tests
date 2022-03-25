@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-xf = 5
 g  = 9.81
+xf = 5
 yf = -2
 Tf = (-2.0*yf/g)**(1/2.0)
 Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
@@ -38,6 +38,8 @@ content = {
   InfoLevel = 4,
 
   Use_control_penalties_in_adjoint_equations = false,
+
+  Max_penalty_value = 1000,
 
   --[[
    _   _                        _
@@ -199,13 +201,13 @@ content = {
       check_angle = 120,
 
       -- check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
-      check_ratio_norm_two_f = 1.4,
+      check_ratio_norm_two_f = 2,
       -- check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
-      check_ratio_norm_two_d = 1.4,
+      check_ratio_norm_two_d = 2,
       -- check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
-      check_ratio_norm_one_f = 1.4,
+      check_ratio_norm_one_f = 2,
       -- check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
-      check_ratio_norm_one_d = 1.4,
+      check_ratio_norm_one_d = 2,
     },
 
     Hyness = {

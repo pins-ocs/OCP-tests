@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_problem.cc                    |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -69,6 +69,39 @@ namespace SingularCalogeroModifiedDefine {
   }
 
   /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  SingularCalogeroModified::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[2];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+
+    return res;
+  }
+
+  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -133,7 +166,7 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(t3 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
+    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
     real_type t11  = uControl(U__[iU_u], -1, 1);
     real_type result__ = t11 * (ModelPars[iM_epsilon] + t8);
     if ( m_debug ) {
@@ -245,6 +278,29 @@ namespace SingularCalogeroModifiedDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 4, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SingularCalogeroModified::D2mayerD2xxp_numRows() const { return 4; }
+  integer SingularCalogeroModified::D2mayerD2xxp_numCols() const { return 4; }
+  integer SingularCalogeroModified::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  SingularCalogeroModified::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SingularCalogeroModified::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -275,45 +331,31 @@ namespace SingularCalogeroModifiedDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularCalogeroModified::IPOPT_hess_numRows() const { return 3; }
-  integer SingularCalogeroModified::IPOPT_hess_numCols() const { return 3; }
-  integer SingularCalogeroModified::IPOPT_hess_nnz()     const { return 1; }
+  integer SingularCalogeroModified::D2lagrangeD2xup_numRows() const { return 3; }
+  integer SingularCalogeroModified::D2lagrangeD2xup_numCols() const { return 3; }
+  integer SingularCalogeroModified::D2lagrangeD2xup_nnz()     const { return 1; }
 
   void
-  SingularCalogeroModified::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularCalogeroModified::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  SingularCalogeroModified::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  SingularCalogeroModified::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * sigma__;
+    result__[ 0   ] = 2;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 1, i_segment );
   }
 
   /*\
@@ -476,7 +518,7 @@ namespace SingularCalogeroModifiedDefine {
    |                                                    |___/
   \*/
 
-  integer SingularCalogeroModified::post_numEqns() const { return 0; }
+  integer SingularCalogeroModified::post_numEqns() const { return 1; }
 
   void
   SingularCalogeroModified::post_eval(
@@ -485,7 +527,13 @@ namespace SingularCalogeroModifiedDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = uControl(U__[iU_u], -1, 1);
+    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

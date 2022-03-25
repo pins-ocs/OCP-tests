@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -164,7 +164,7 @@ namespace MinimumEnergyProblemDefine {
     real_type t7   = 1.0 / xo__v1;
     real_type t10  = t5 * t2;
     real_type t12  = log(xo__v1);
-    real_type result__ = -t7 * xo__s * t5 * t3 * t2 + t12 * t7 * xo__s * t10 + t7 * t10;
+    real_type result__ = -t2 * t3 * t5 * t7 * xo__s + t10 * t12 * t7 * xo__s + t10 * t7;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

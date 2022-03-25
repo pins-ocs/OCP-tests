@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Methods_controls.cc                     |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,15 +89,15 @@ namespace ICLOCS_PathConstrainedDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = pow(QM__[0] - 0.5e0, 2);
-    real_type t5   = XM__[1];
-    real_type t7   = x2bound(0.5e0 - 8 * t3 + t5);
-    real_type t8   = UM__[0];
-    real_type t9   = t8 * t8;
-    real_type t12  = XM__[0] * XM__[0];
-    real_type t13  = t5 * t5;
-    real_type t19  = uControl(t8, -20, 20);
-    real_type result__ = t7 + 0.5e-2 * t9 + t12 + t13 + t5 * LM__[0] + (-t5 + t8) * LM__[1] + t19;
+    real_type t1   = UM__[0];
+    real_type t2   = t1 * t1;
+    real_type t5   = XM__[0] * XM__[0];
+    real_type t6   = XM__[1];
+    real_type t7   = t6 * t6;
+    real_type t15  = pow(QM__[0] - 0.5e0, 2);
+    real_type t18  = x2bound(0.5e0 - 8 * t15 + t6);
+    real_type t19  = uControl(t1, -20, 20);
+    real_type result__ = 0.5e-2 * t2 + t5 + t7 + t6 * LM__[0] + (-t6 + t1) * LM__[1] + t18 + t19;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

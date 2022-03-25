@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -504,6 +504,48 @@ namespace gtocX_2burnDefine {
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 3, i_segment );
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer gtocX_2burn::D2LTargsD2xup_numRows() const { return 6; }
+  integer gtocX_2burn::D2LTargsD2xup_numCols() const { return 6; }
+  integer gtocX_2burn::D2LTargsD2xup_nnz()     const { return 5; }
+
+  void
+  gtocX_2burn::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 1   ; jIndex[0 ] = 5   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 5   ;
+    iIndex[2 ] = 5   ; jIndex[2 ] = 1   ;
+    iIndex[3 ] = 5   ; jIndex[3 ] = 2   ;
+    iIndex[4 ] = 5   ; jIndex[4 ] = 5   ;
+  }
+
+
+  void
+  gtocX_2burn::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_L];
+    real_type t2   = sin(t1);
+    real_type t3   = OMEGA__[0];
+    result__[ 0   ] = t3 * t2;
+    real_type t4   = cos(t1);
+    result__[ 1   ] = -t3 * t4;
+    result__[ 2   ] = result__[0];
+    result__[ 3   ] = result__[1];
+    result__[ 4   ] = t3 * (t2 * X__[iX_g] + t4 * X__[iX_f]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2LTargsD2xup_sparse", 5, i_segment );
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -538,52 +580,51 @@ namespace gtocX_2burnDefine {
     real_type t10  = t6 * (1 - t4) + t8 * t4;
     real_type t11  = p_guess(t10);
     real_type t12  = 1.0 / t11;
-    real_type t18  = L__[iL_lambda2__xo];
     real_type t19  = t8 - t6;
-    real_type t20  = sqrt(t3);
-    real_type t23  = ModelPars[iM_muS];
-    real_type t24  = sqrt(t23);
-    real_type t25  = 1.0 / t24;
-    real_type t26  = t25 / t20 * t19;
+    real_type t20  = t19 * L__[iL_lambda2__xo];
+    real_type t21  = sqrt(t3);
+    real_type t22  = 1.0 / t21;
+    real_type t24  = ModelPars[iM_muS];
+    real_type t25  = sqrt(t24);
+    real_type t26  = 1.0 / t25;
     real_type t27  = ModelPars[iM_w_nonlin];
-    real_type t28  = X__[iX_f];
-    real_type t29  = X__[iX_g];
-    real_type t30  = X__[iX_L];
-    real_type t31  = ray(t3, t28, t29, t30);
-    real_type t32  = acceleration_r(t31, t23);
-    real_type t33  = t32 * t27;
-    real_type t34  = sin(t30);
-    real_type t35  = t34 * t33;
-    real_type t39  = t25 * t20 * t19;
-    real_type t40  = acceleration_r_D_1(t31, t23);
-    real_type t41  = t40 * t27;
-    real_type t42  = ray_D_1(t3, t28, t29, t30);
-    real_type t48  = L__[iL_lambda3__xo];
-    real_type t49  = cos(t30);
-    real_type t50  = t49 * t33;
-    real_type t59  = t19 * L__[iL_lambda6__xo];
-    real_type t62  = t49 * t28 + t34 * t29 + 1;
-    real_type t63  = t62 * t62;
-    real_type t64  = t3 * t3;
-    result__[ 0   ] = 2 * t12 * (t12 * t3 - 1) * t2 + (t35 * t26 / 2 + t34 * t42 * t41 * t39) * t18 + (-t50 * t26 / 2 - t49 * t42 * t41 * t39) * t48 - 3.0 / 2.0 * t24 / t20 / t64 * t63 * t59;
-    real_type t71  = f_guess(t10);
-    real_type t76  = t25 * t20;
-    real_type t77  = t76 * t19 * t18;
-    real_type t78  = ray_D_2(t3, t28, t29, t30);
-    real_type t83  = t76 * t19 * t48;
-    real_type t87  = t62 * t59;
-    real_type t90  = t24 / t20 / t3;
-    result__[ 1   ] = (2 * t28 - 2 * t71) * t2 + t34 * t78 * t41 * t77 - t49 * t78 * t41 * t83 + 2 * t49 * t90 * t87;
-    real_type t94  = g_guess(t10);
-    real_type t98  = ray_D_3(t3, t28, t29, t30);
-    result__[ 2   ] = (2 * t29 - 2 * t94) * t2 + t34 * t98 * t41 * t77 - t49 * t98 * t41 * t83 + 2 * t34 * t90 * t87;
-    real_type t109 = h_guess(t10);
-    result__[ 3   ] = (2 * X__[iX_h] - 2 * t109) * t2;
-    real_type t113 = k_guess(t10);
-    result__[ 4   ] = (2 * X__[iX_k] - 2 * t113) * t2;
-    real_type t116 = L_guess(t10, t6);
-    real_type t120 = ray_D_4(t3, t28, t29, t30);
-    result__[ 5   ] = (2 * t30 - 2 * t116) * t2 + (t120 * t34 * t39 * t41 + t39 * t50) * t18 + (-t120 * t39 * t41 * t49 + t35 * t39) * t48 + 2 * (-t28 * t34 + t29 * t49) * t90 * t87;
+    real_type t28  = t27 * t26;
+    real_type t29  = X__[iX_f];
+    real_type t30  = X__[iX_g];
+    real_type t31  = X__[iX_L];
+    real_type t32  = ray(t3, t29, t30, t31);
+    real_type t33  = acceleration_r(t32, t24);
+    real_type t34  = sin(t31);
+    real_type t36  = t34 * t33 * t28;
+    real_type t39  = t26 * t21;
+    real_type t40  = t39 * t20;
+    real_type t41  = acceleration_r_D_1(t32, t24);
+    real_type t42  = t41 * t27;
+    real_type t43  = ray_D_1(t3, t29, t30, t31);
+    real_type t48  = t19 * L__[iL_lambda3__xo];
+    real_type t50  = cos(t31);
+    real_type t52  = t50 * t33 * t28;
+    real_type t55  = t39 * t48;
+    real_type t60  = t19 * L__[iL_lambda6__xo];
+    real_type t63  = t29 * t50 + t30 * t34 + 1;
+    real_type t64  = t63 * t63;
+    real_type t65  = t3 * t3;
+    result__[ 0   ] = 2 * t12 * (t12 * t3 - 1) * t2 + t36 * t22 * t20 / 2 + t34 * t43 * t42 * t40 - t52 * t22 * t48 / 2 - t50 * t43 * t42 * t55 - 3.0 / 2.0 * t25 / t21 / t65 * t64 * t60;
+    real_type t72  = f_guess(t10);
+    real_type t76  = ray_D_2(t3, t29, t30, t31);
+    real_type t83  = t63 * t60;
+    real_type t86  = t25 / t21 / t3;
+    result__[ 1   ] = (2 * t29 - 2 * t72) * t2 + t34 * t76 * t42 * t40 - t50 * t76 * t42 * t55 + 2 * t50 * t86 * t83;
+    real_type t90  = g_guess(t10);
+    real_type t94  = ray_D_3(t3, t29, t30, t31);
+    result__[ 2   ] = (2 * t30 - 2 * t90) * t2 + t34 * t94 * t42 * t40 - t50 * t94 * t42 * t55 + 2 * t34 * t86 * t83;
+    real_type t105 = h_guess(t10);
+    result__[ 3   ] = (2 * X__[iX_h] - 2 * t105) * t2;
+    real_type t109 = k_guess(t10);
+    result__[ 4   ] = (2 * X__[iX_k] - 2 * t109) * t2;
+    real_type t112 = L_guess(t10, t6);
+    real_type t116 = ray_D_4(t3, t29, t30, t31);
+    result__[ 5   ] = (2 * t31 - 2 * t112) * t2 + t34 * t116 * t42 * t40 + t52 * t21 * t20 - t50 * t116 * t42 * t55 + t36 * t21 * t48 + 2 * (-t34 * t29 + t50 * t30) * t86 * t83;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 6, i_segment );
   }
@@ -652,131 +693,104 @@ namespace gtocX_2burnDefine {
     real_type t7   = ModelPars[iM_time_f];
     real_type t10  = p_guess(t5 * (1 - t3) + t7 * t3);
     real_type t11  = t10 * t10;
-    real_type t15  = L__[iL_lambda2__xo];
     real_type t16  = t7 - t5;
-    real_type t17  = X__[iX_p];
-    real_type t18  = sqrt(t17);
-    real_type t20  = 1.0 / t18 / t17;
-    real_type t22  = ModelPars[iM_muS];
-    real_type t23  = sqrt(t22);
-    real_type t24  = 1.0 / t23;
-    real_type t25  = t24 * t20 * t16;
+    real_type t17  = t16 * L__[iL_lambda2__xo];
+    real_type t18  = X__[iX_p];
+    real_type t19  = sqrt(t18);
+    real_type t21  = 1.0 / t19 / t18;
+    real_type t23  = ModelPars[iM_muS];
+    real_type t24  = sqrt(t23);
+    real_type t25  = 1.0 / t24;
     real_type t26  = ModelPars[iM_w_nonlin];
-    real_type t27  = X__[iX_f];
-    real_type t28  = X__[iX_g];
-    real_type t29  = X__[iX_L];
-    real_type t30  = ray(t17, t27, t28, t29);
-    real_type t31  = acceleration_r(t30, t22);
-    real_type t32  = t31 * t26;
-    real_type t33  = sin(t29);
-    real_type t34  = t33 * t32;
-    real_type t37  = 1.0 / t18;
-    real_type t39  = t24 * t37 * t16;
-    real_type t40  = acceleration_r_D_1(t30, t22);
-    real_type t41  = t40 * t26;
-    real_type t42  = ray_D_1(t17, t27, t28, t29);
-    real_type t43  = t33 * t42;
-    real_type t44  = t43 * t41;
-    real_type t46  = t18 * t16;
-    real_type t47  = t24 * t46;
-    real_type t48  = acceleration_r_D_1_1(t30, t22);
-    real_type t49  = t48 * t26;
-    real_type t50  = t42 * t42;
-    real_type t54  = ray_D_1_1(t17, t27, t28, t29);
-    real_type t60  = L__[iL_lambda3__xo];
-    real_type t61  = cos(t29);
-    real_type t62  = t61 * t32;
-    real_type t65  = t61 * t42;
-    real_type t66  = t65 * t41;
-    real_type t77  = t16 * L__[iL_lambda6__xo];
-    real_type t78  = t61 * t27;
-    real_type t79  = t33 * t28;
-    real_type t80  = 1 + t78 + t79;
-    real_type t81  = t80 * t80;
-    real_type t82  = t17 * t17;
-    result__[ 0   ] = 2 / t11 * t2 + (-t34 * t25 / 4 + t44 * t39 + t33 * t50 * t49 * t47 + t33 * t54 * t41 * t47) * t15 + (t62 * t25 / 4 - t66 * t39 - t61 * t50 * t49 * t47 - t61 * t54 * t41 * t47) * t60 + 0.15e2 / 4.0 * t23 / t18 / t82 / t17 * t81 * t77;
-    real_type t90  = ray_D_2(t17, t27, t28, t29);
-    real_type t92  = t33 * t90 * t41;
-    real_type t96  = t26 * t24 * t46;
-    real_type t97  = t90 * t48;
-    real_type t100 = ray_D_1_2(t17, t27, t28, t29);
-    real_type t102 = t33 * t100 * t41;
-    real_type t107 = t61 * t90 * t41;
-    real_type t113 = t61 * t100 * t41;
-    real_type t117 = t80 * t77;
-    real_type t120 = t23 / t18 / t82;
-    real_type t123 = 3 * t61 * t120 * t117;
-    result__[ 1   ] = (t92 * t39 / 2 + t43 * t97 * t96 + t102 * t47) * t15 + (-t107 * t39 / 2 - t65 * t97 * t96 - t113 * t47) * t60 - t123;
-    real_type t124 = ray_D_3(t17, t27, t28, t29);
-    real_type t126 = t33 * t124 * t41;
-    real_type t129 = t124 * t48;
-    real_type t132 = ray_D_1_3(t17, t27, t28, t29);
-    real_type t134 = t33 * t132 * t41;
-    real_type t139 = t61 * t124 * t41;
-    real_type t145 = t61 * t132 * t41;
-    real_type t151 = 3 * t33 * t120 * t117;
-    result__[ 2   ] = (t126 * t39 / 2 + t43 * t129 * t96 + t134 * t47) * t15 + (-t139 * t39 / 2 - t65 * t129 * t96 - t145 * t47) * t60 - t151;
-    real_type t152 = ray_D_4(t17, t27, t28, t29);
-    real_type t153 = t33 * t152;
-    real_type t154 = t153 * t41;
-    real_type t159 = t152 * t48;
-    real_type t162 = ray_D_1_4(t17, t27, t28, t29);
-    real_type t169 = t61 * t152;
-    real_type t170 = t169 * t41;
-    real_type t185 = -t27 * t33 + t28 * t61;
-    result__[ 3   ] = (t154 * t39 / 2 + t62 * t39 / 2 + t43 * t159 * t96 + t33 * t162 * t41 * t47 + t66 * t47) * t15 + (-t170 * t39 / 2 + t34 * t39 / 2 - t65 * t159 * t96 - t61 * t162 * t41 * t47 + t44 * t47) * t60 - 3 * t185 * t120 * t117;
-    real_type t189 = t16 * t15;
-    real_type t190 = t24 * t37;
-    real_type t191 = t190 * t189;
-    real_type t194 = t24 * t18;
-    real_type t195 = t194 * t189;
-    real_type t196 = t90 * t42;
-    real_type t201 = t16 * t60;
-    real_type t202 = t190 * t201;
-    real_type t205 = t194 * t201;
-    result__[ 4   ] = t92 * t191 / 2 + t33 * t196 * t49 * t195 + t102 * t195 - t107 * t202 / 2 - t61 * t196 * t49 * t205 - t113 * t205 - t123;
-    real_type t210 = 2 * t1;
-    real_type t211 = t90 * t90;
-    real_type t215 = ray_D_2_2(t17, t27, t28, t29);
-    real_type t225 = t61 * t61;
-    result__[ 5   ] = t195 * t211 * t33 * t49 + t195 * t215 * t33 * t41 + 2 * t20 * t225 * t23 * t77 - t205 * t211 * t49 * t61 - t205 * t215 * t41 * t61 - t210 + 2;
-    real_type t230 = t90 * t124;
-    real_type t234 = ray_D_2_3(t17, t27, t28, t29);
-    real_type t245 = t23 * t20;
-    real_type t246 = t61 * t245;
-    result__[ 6   ] = t195 * t230 * t33 * t49 + t195 * t234 * t33 * t41 - t205 * t230 * t49 * t61 - t205 * t234 * t41 * t61 + 2 * t246 * t33 * t77;
-    real_type t249 = t90 * t152;
-    real_type t253 = ray_D_2_4(t17, t27, t28, t29);
-    real_type t255 = t33 * t253 * t41;
-    real_type t262 = t61 * t253 * t41;
-    real_type t265 = t185 * t77;
-    real_type t267 = 2 * t246 * t265;
-    real_type t268 = t33 * t245;
-    real_type t270 = 2 * t268 * t117;
-    result__[ 7   ] = t195 * t249 * t33 * t49 - t205 * t249 * t49 * t61 + t107 * t195 + t195 * t255 - t205 * t262 + t205 * t92 + t267 - t270;
-    real_type t273 = t124 * t42;
-    result__[ 8   ] = t126 * t191 / 2 + t33 * t273 * t49 * t195 + t134 * t195 - t139 * t202 / 2 - t61 * t273 * t49 * t205 - t145 * t205 - t151;
+    real_type t27  = t26 * t25;
+    real_type t28  = X__[iX_f];
+    real_type t29  = X__[iX_g];
+    real_type t30  = X__[iX_L];
+    real_type t31  = ray(t18, t28, t29, t30);
+    real_type t32  = acceleration_r(t31, t23);
+    real_type t33  = sin(t30);
+    real_type t35  = t33 * t32 * t27;
+    real_type t38  = 1.0 / t19;
+    real_type t39  = t25 * t38;
+    real_type t40  = t39 * t17;
+    real_type t41  = acceleration_r_D_1(t31, t23);
+    real_type t42  = t41 * t26;
+    real_type t43  = ray_D_1(t18, t28, t29, t30);
+    real_type t45  = t33 * t43 * t42;
+    real_type t47  = t25 * t19;
+    real_type t48  = t47 * t17;
+    real_type t49  = acceleration_r_D_1_1(t31, t23);
+    real_type t50  = t49 * t26;
+    real_type t51  = t43 * t43;
+    real_type t55  = ray_D_1_1(t18, t28, t29, t30);
+    real_type t60  = t16 * L__[iL_lambda3__xo];
+    real_type t62  = cos(t30);
+    real_type t64  = t62 * t32 * t27;
+    real_type t67  = t39 * t60;
+    real_type t69  = t62 * t43 * t42;
+    real_type t71  = t47 * t60;
+    real_type t79  = t16 * L__[iL_lambda6__xo];
+    real_type t80  = t62 * t28;
+    real_type t81  = t33 * t29;
+    real_type t82  = 1 + t80 + t81;
+    real_type t83  = t82 * t82;
+    real_type t84  = t18 * t18;
+    result__[ 0   ] = 2 / t11 * t2 - t35 * t21 * t17 / 4 + t45 * t40 + t33 * t51 * t50 * t48 + t33 * t55 * t42 * t48 + t64 * t21 * t60 / 4 - t69 * t67 - t62 * t51 * t50 * t71 - t62 * t55 * t42 * t71 + 0.15e2 / 4.0 * t24 / t19 / t84 / t18 * t83 * t79;
+    real_type t92  = ray_D_2(t18, t28, t29, t30);
+    real_type t94  = t33 * t92 * t42;
+    real_type t97  = t43 * t92;
+    real_type t101 = ray_D_1_2(t18, t28, t29, t30);
+    real_type t106 = t62 * t92 * t42;
+    real_type t115 = t82 * t79;
+    real_type t118 = t24 / t19 / t84;
+    result__[ 1   ] = t94 * t40 / 2 + t33 * t97 * t50 * t48 + t33 * t101 * t42 * t48 - t106 * t67 / 2 - t62 * t97 * t50 * t71 - t62 * t101 * t42 * t71 - 3 * t62 * t118 * t115;
+    real_type t122 = ray_D_3(t18, t28, t29, t30);
+    real_type t124 = t33 * t122 * t42;
+    real_type t127 = t43 * t122;
+    real_type t131 = ray_D_1_3(t18, t28, t29, t30);
+    real_type t136 = t62 * t122 * t42;
+    result__[ 2   ] = t124 * t40 / 2 + t33 * t127 * t50 * t48 + t33 * t131 * t42 * t48 - t136 * t67 / 2 - t62 * t127 * t50 * t71 - t62 * t131 * t42 * t71 - 3 * t33 * t118 * t115;
+    real_type t148 = ray_D_4(t18, t28, t29, t30);
+    real_type t150 = t33 * t148 * t42;
+    real_type t156 = t43 * t148;
+    real_type t160 = ray_D_1_4(t18, t28, t29, t30);
+    real_type t166 = t62 * t148 * t42;
+    real_type t181 = -t33 * t28 + t62 * t29;
+    result__[ 3   ] = t150 * t40 / 2 + t64 * t38 * t17 / 2 + t33 * t156 * t50 * t48 + t33 * t160 * t42 * t48 + t69 * t48 - t166 * t67 / 2 + t35 * t38 * t60 / 2 - t62 * t156 * t50 * t71 - t62 * t160 * t42 * t71 + t45 * t71 - 3 * t181 * t118 * t115;
+    result__[ 4   ] = result__[1];
+    real_type t185 = 2 * t1;
+    real_type t186 = t92 * t92;
+    real_type t190 = ray_D_2_2(t18, t28, t29, t30);
+    real_type t200 = t62 * t62;
+    result__[ 5   ] = t33 * t186 * t50 * t48 - t62 * t186 * t50 * t71 + t33 * t190 * t42 * t48 - t62 * t190 * t42 * t71 + 2 * t24 * t21 * t200 * t79 - t185 + 2;
+    real_type t205 = t92 * t122;
+    real_type t209 = ray_D_2_3(t18, t28, t29, t30);
+    real_type t220 = t24 * t21;
+    real_type t221 = t62 * t220;
+    result__[ 6   ] = t33 * t205 * t50 * t48 - t62 * t205 * t50 * t71 + t33 * t209 * t42 * t48 - t62 * t209 * t42 * t71 + 2 * t221 * t33 * t79;
+    real_type t224 = t92 * t148;
+    real_type t228 = ray_D_2_4(t18, t28, t29, t30);
+    real_type t240 = t181 * t79;
+    real_type t243 = t33 * t220;
+    result__[ 7   ] = t33 * t224 * t50 * t48 - t62 * t224 * t50 * t71 + t33 * t228 * t42 * t48 - t62 * t228 * t42 * t71 + t106 * t48 - 2 * t243 * t115 + 2 * t221 * t240 + t94 * t71;
+    result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
-    real_type t284 = t124 * t124;
-    real_type t288 = ray_D_3_3(t17, t27, t28, t29);
-    real_type t298 = t33 * t33;
-    result__[ 10  ] = t195 * t284 * t33 * t49 + t195 * t288 * t33 * t41 + 2 * t20 * t23 * t298 * t77 - t205 * t284 * t49 * t61 - t205 * t288 * t41 * t61 - t210 + 2;
-    real_type t303 = t124 * t152;
-    real_type t307 = ray_D_3_4(t17, t27, t28, t29);
-    real_type t309 = t33 * t307 * t41;
-    real_type t316 = t61 * t307 * t41;
-    real_type t320 = 2 * t268 * t265;
-    real_type t322 = 2 * t246 * t117;
-    result__[ 11  ] = t195 * t303 * t33 * t49 - t205 * t303 * t49 * t61 + t126 * t205 + t139 * t195 + t195 * t309 - t205 * t316 + t320 + t322;
+    real_type t246 = t122 * t122;
+    real_type t250 = ray_D_3_3(t18, t28, t29, t30);
+    real_type t260 = t33 * t33;
+    result__[ 10  ] = 2 * t24 * t21 * t260 * t79 + t33 * t246 * t50 * t48 - t62 * t246 * t50 * t71 + t33 * t250 * t42 * t48 - t62 * t250 * t42 * t71 - t185 + 2;
+    real_type t265 = t122 * t148;
+    real_type t269 = ray_D_3_4(t18, t28, t29, t30);
+    result__[ 11  ] = t33 * t265 * t50 * t48 - t62 * t265 * t50 * t71 + t33 * t269 * t42 * t48 - t62 * t269 * t42 * t71 + 2 * t221 * t115 + t124 * t71 + t136 * t48 + 2 * t243 * t240;
     result__[ 12  ] = 2 * t2;
     result__[ 13  ] = result__[12];
     result__[ 14  ] = result__[3];
-    result__[ 15  ] = (t153 * t96 * t97 + t107 * t47 + t255 * t47) * t15 + (-t169 * t96 * t97 - t262 * t47 + t47 * t92) * t60 + t267 - t270;
-    result__[ 16  ] = (t129 * t153 * t96 + t139 * t47 + t309 * t47) * t15 + (-t129 * t169 * t96 + t126 * t47 - t316 * t47) * t60 + t320 + t322;
-    real_type t347 = t152 * t152;
-    real_type t351 = ray_D_4_4(t17, t27, t28, t29);
-    real_type t371 = t185 * t185;
-    result__[ 17  ] = 2 - t210 + (t33 * t347 * t47 * t49 + t33 * t351 * t41 * t47 + 2 * t170 * t47 - t34 * t47) * t15 + (-t347 * t47 * t49 * t61 - t351 * t41 * t47 * t61 + 2 * t154 * t47 + t47 * t62) * t60 + 2 * t23 * t20 * t371 * t77 + 2 * (-t78 - t79) * t245 * t117;
+    result__[ 15  ] = result__[7];
+    result__[ 16  ] = result__[11];
+    real_type t285 = t148 * t148;
+    real_type t289 = ray_D_4_4(t18, t28, t29, t30);
+    real_type t307 = t181 * t181;
+    result__[ 17  ] = 2 - t185 + t33 * t285 * t50 * t48 + t33 * t289 * t42 * t48 + 2 * t166 * t48 - t35 * t19 * t17 - t62 * t285 * t50 * t71 - t62 * t289 * t42 * t71 + 2 * t150 * t71 + t64 * t19 * t60 + 2 * t24 * t21 * t307 * t79 + 2 * (-t80 - t81) * t220 * t115;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 18, i_segment );
   }

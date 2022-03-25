@@ -48,5 +48,10 @@ cmd9:
 cmd10:
 	@echo "Compile Underwater_Methods_ODE.cc"
 	clang++ -fPIC -Os -g -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics -std=c++11 -stdlib=libc++  -I/usr/local/include  -I././ocp-src -F/Library/Frameworks  -o ./ocp-src/Underwater_Methods_ODE.o -c ./ocp-src/Underwater_Methods_ODE.cc
-all:  cmd1 cmd2 cmd3 cmd4 cmd5 cmd6 cmd7 cmd8 cmd9 cmd10
+
+
+cmd11:
+	@echo "Compile Underwater_Methods_Direct.cc"
+	clang++ -fPIC -Os -g -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics -std=c++11 -stdlib=libc++  -I/usr/local/include  -I././ocp-src -F/Library/Frameworks  -o ./ocp-src/Underwater_Methods_Direct.o -c ./ocp-src/Underwater_Methods_Direct.cc
+all:  cmd1 cmd2 cmd3 cmd4 cmd5 cmd6 cmd7 cmd8 cmd9 cmd10 cmd11
 

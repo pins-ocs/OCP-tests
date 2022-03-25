@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,16 +50,16 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type w_time_max = 1;
     real_type tol_ctrl0 = 0.1;
-    real_type tol_ctrl = tol_ctrl0;
-    real_type epsi_T = 0.01;
-    real_type tol_T = 1;
     real_type x_epsi = 0.01;
+    real_type epsi_ctrl0 = 0.1;
+    real_type tol_T = 1;
+    real_type epsi_T = 0.01;
+    real_type epsi_ctrl = epsi_ctrl0;
+    real_type w_time_max = 1;
     real_type w_time = w_time_max;
     real_type x_tol = 0.01;
-    real_type epsi_ctrl0 = 0.1;
-    real_type epsi_ctrl = epsi_ctrl0;
+    real_type tol_ctrl = tol_ctrl0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -226,8 +226,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_StirredTank_data.Mesh["s0"] = 0;
-ICLOCS_StirredTank_data.Mesh["segments"][0]["length"] = 1;
 ICLOCS_StirredTank_data.Mesh["segments"][0]["n"] = 400;
+ICLOCS_StirredTank_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

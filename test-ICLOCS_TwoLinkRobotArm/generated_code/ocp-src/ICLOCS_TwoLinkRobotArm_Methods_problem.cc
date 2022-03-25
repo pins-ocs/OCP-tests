@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_problem.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -93,6 +93,41 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     u1Control.update_tolerance(t11);
     u2Control.update_epsilon(t6);
     u2Control.update_tolerance(t11);
+  }
+
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  ICLOCS_TwoLinkRobotArm::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[4];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+
+    return res;
   }
 
   /*\
@@ -301,6 +336,44 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 9, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_TwoLinkRobotArm::D2mayerD2xxp_numRows() const { return 9; }
+  integer ICLOCS_TwoLinkRobotArm::D2mayerD2xxp_numCols() const { return 9; }
+  integer ICLOCS_TwoLinkRobotArm::D2mayerD2xxp_nnz()     const { return 1; }
+
+  void
+  ICLOCS_TwoLinkRobotArm::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 8   ; jIndex[0 ] = 8   ;
+  }
+
+
+  void
+  ICLOCS_TwoLinkRobotArm::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    real_type t1   = P__[iP_T];
+    real_type t4   = -1 + ModelPars[iM_W];
+    real_type t5   = ModelPars[iM_T_guess];
+    real_type t9   = t1 * t1;
+    real_type t13  = t5 * t5;
+    result__[ 0   ] = 2 / t1 - 2 / t9 * (2 * t5 * t4 + 2 * t1) + 2 / t9 / t1 * (2 * t5 * t4 * t1 - t13 * t4 + t9);
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "D2mayerD2xxp_eval", 1, i_segment_left, i_segment_right );
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -340,135 +413,42 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 7, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_TwoLinkRobotArm::IPOPT_hess_numRows() const { return 7; }
-  integer ICLOCS_TwoLinkRobotArm::IPOPT_hess_numCols() const { return 7; }
-  integer ICLOCS_TwoLinkRobotArm::IPOPT_hess_nnz()     const { return 23; }
+  integer ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_numRows() const { return 7; }
+  integer ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_numCols() const { return 7; }
+  integer ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_nnz()     const { return 6; }
 
   void
-  ICLOCS_TwoLinkRobotArm::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 6   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 0   ;
-    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
-    iIndex[8 ] = 2   ; jIndex[8 ] = 2   ;
-    iIndex[9 ] = 2   ; jIndex[9 ] = 4   ;
-    iIndex[10] = 2   ; jIndex[10] = 5   ;
-    iIndex[11] = 2   ; jIndex[11] = 6   ;
-    iIndex[12] = 4   ; jIndex[12] = 2   ;
-    iIndex[13] = 4   ; jIndex[13] = 4   ;
-    iIndex[14] = 4   ; jIndex[14] = 6   ;
-    iIndex[15] = 5   ; jIndex[15] = 2   ;
-    iIndex[16] = 5   ; jIndex[16] = 5   ;
-    iIndex[17] = 5   ; jIndex[17] = 6   ;
-    iIndex[18] = 6   ; jIndex[18] = 0   ;
-    iIndex[19] = 6   ; jIndex[19] = 1   ;
-    iIndex[20] = 6   ; jIndex[20] = 2   ;
-    iIndex[21] = 6   ; jIndex[21] = 4   ;
-    iIndex[22] = 6   ; jIndex[22] = 5   ;
+  ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
+    iIndex[1 ] = 4   ; jIndex[1 ] = 6   ;
+    iIndex[2 ] = 5   ; jIndex[2 ] = 5   ;
+    iIndex[3 ] = 5   ; jIndex[3 ] = 6   ;
+    iIndex[4 ] = 6   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 6   ; jIndex[5 ] = 5   ;
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  ICLOCS_TwoLinkRobotArm::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda1__xo];
-    real_type t2   = P__[iP_T];
-    real_type t3   = t2 * t1;
-    real_type t4   = X__[iX_theta];
-    real_type t5   = sin(t4);
-    real_type t6   = cos(t4);
-    real_type t7   = t6 * t5;
-    real_type t8   = t5 * t5;
-    real_type t10  = 0.31e2 / 0.36e2 + 9.0 / 4.0 * t8;
-    real_type t11  = 1.0 / t10;
-    real_type t12  = t11 * t7;
-    real_type t15  = L__[iL_lambda2__xo];
-    real_type t16  = t2 * t15;
-    result__[ 0   ] = 9.0 / 2.0 * t12 * t3 - 7 * t11 * t16;
-    real_type t19  = t6 * t6;
-    real_type t20  = X__[iX_omega__alpha];
-    real_type t21  = t20 * t19;
-    real_type t30  = t10 * t10;
-    real_type t31  = 1.0 / t30;
-    real_type t36  = t5 * t31;
-    real_type t37  = t6 * t36;
-    result__[ 1   ] = 9.0 / 2.0 * t11 * t21 * t3 - 9.0 / 2.0 * t11 * t20 * t8 * t3 - 0.81e2 / 4.0 * t31 * t21 * t8 * t3 + 0.63e2 / 2.0 * t37 * t20 * t16;
-    real_type t48  = L__[iL_lambda3__xo];
-    result__[ 2   ] = 9.0 / 2.0 * t11 * t20 * t6 * t5 * t1 - 7 * t11 * t20 * t15 - t48 + L__[iL_lambda4__xo];
-    result__[ 3   ] = 4 * t11 * t3 - 9.0 / 2.0 * t12 * t16;
-    real_type t54  = X__[iX_omega__beta];
-    real_type t58  = t54 * t19;
-    result__[ 4   ] = -18 * t37 * t54 * t3 - 9.0 / 2.0 * t11 * t58 * t16 + 9.0 / 2.0 * t11 * t54 * t8 * t16 + 0.81e2 / 4.0 * t31 * t58 * t8 * t16;
-    result__[ 5   ] = 4 * t11 * t54 * t1 - 9.0 / 2.0 * t11 * t54 * t6 * t5 * t15 + t48;
-    result__[ 6   ] = result__[1];
-    result__[ 7   ] = result__[4];
-    real_type t78  = t20 * t20;
-    real_type t79  = t78 * t7;
-    real_type t81  = U__[iU_u2];
-    real_type t83  = 3.0 / 2.0 * t81 * t6;
-    real_type t93  = 9.0 / 4.0 * t78 * t19 - 9.0 / 4.0 * t78 * t8 + 3.0 / 2.0 * t81 * t5;
-    real_type t98  = t54 * t54;
-    real_type t100 = U__[iU_u1];
-    real_type t103 = 9.0 / 4.0 * t79 + 2 * t98 + 4.0 / 3.0 * t100 - 4.0 / 3.0 * t81 - t83;
-    real_type t104 = t103 * t2;
-    real_type t108 = t19 * t8 / t30 / t10;
-    real_type t111 = t19 * t31;
-    real_type t114 = t8 * t31;
-    real_type t119 = t98 * t7;
-    real_type t121 = t100 - t81;
-    real_type t123 = 3.0 / 2.0 * t121 * t6;
-    real_type t133 = 9.0 / 4.0 * t98 * t19 - 9.0 / 4.0 * t98 * t8 - 3.0 / 2.0 * t121 * t5;
-    real_type t140 = 9.0 / 4.0 * t119 + 7.0 / 2.0 * t78 - 7.0 / 3.0 * t81 + t123;
-    real_type t141 = t140 * t2;
-    result__[ 8   ] = (t11 * (-9 * t79 + t83) * t2 - 9 * t37 * t93 * t2 + 0.81e2 / 2.0 * t108 * t104 - 9.0 / 2.0 * t111 * t104 + 9.0 / 2.0 * t114 * t104) * t1 + (-t11 * (-9 * t119 - t123) * t2 + 9 * t37 * t133 * t2 - 0.81e2 / 2.0 * t108 * t141 + 9.0 / 2.0 * t111 * t141 - 9.0 / 2.0 * t114 * t141) * t15;
-    real_type t154 = 3.0 / 2.0 * t11 * t5 * t2;
-    result__[ 9   ] = -6 * t37 * t3 + (t154 + 0.27e2 / 4.0 * t36 * t19 * t2) * t15;
-    real_type t160 = 3.0 / 2.0 * t6;
-    real_type t161 = -4.0 / 3.0 - t160;
-    real_type t167 = -7.0 / 3.0 - t160;
-    result__[ 10  ] = (t154 - 9.0 / 2.0 * t37 * t161 * t2) * t1 + (-t154 + 9.0 / 2.0 * t37 * t167 * t2) * t15;
-    result__[ 11  ] = (t11 * t93 - 9.0 / 2.0 * t7 * t31 * t103) * t1 + (-t11 * t133 + 9.0 / 2.0 * t7 * t31 * t140) * t15;
-    result__[ 12  ] = result__[9];
-    real_type t186 = ModelPars[iM_rho] * sigma__;
-    result__[ 13  ] = 2 * t2 * t186;
-    result__[ 14  ] = 2 * t100 * t186 + 4.0 / 3.0 * t11 * t1 - 3.0 / 2.0 * t11 * t6 * t15;
-    result__[ 15  ] = result__[10];
-    result__[ 16  ] = result__[13];
-    result__[ 17  ] = t1 * t11 * t161 - t11 * t15 * t167 + 2 * t186 * t81;
-    result__[ 18  ] = result__[2];
-    result__[ 19  ] = result__[5];
-    result__[ 20  ] = result__[11];
-    result__[ 21  ] = result__[14];
-    result__[ 22  ] = result__[17];
+    real_type t1   = ModelPars[iM_rho];
+    result__[ 0   ] = 2 * P__[iP_T] * t1;
+    result__[ 1   ] = 2 * U__[iU_u1] * t1;
+    result__[ 2   ] = result__[0];
+    result__[ 3   ] = 2 * U__[iU_u2] * t1;
+    result__[ 4   ] = result__[1];
+    result__[ 5   ] = result__[3];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 23, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 6, i_segment );
   }
 
   /*\
@@ -651,7 +631,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
    |                                                    |___/
   \*/
 
-  integer ICLOCS_TwoLinkRobotArm::post_numEqns() const { return 1; }
+  integer ICLOCS_TwoLinkRobotArm::post_numEqns() const { return 3; }
 
   void
   ICLOCS_TwoLinkRobotArm::post_eval(
@@ -665,8 +645,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = Q__[iQ_zeta] * P__[iP_T];
-    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
+    result__[ 0   ] = u1Control(U__[iU_u1], -1, 1);
+    result__[ 1   ] = u2Control(U__[iU_u2], -1, 1);
+    result__[ 2   ] = Q__[iQ_zeta] * P__[iP_T];
+    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

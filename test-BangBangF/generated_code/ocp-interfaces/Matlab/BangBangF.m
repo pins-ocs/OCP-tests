@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: BangBangF.m                                                    %
 %                                                                       %
-%  version: 1.0   date 23/3/2022                                        %
+%  version: 1.0   date 25/3/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -464,6 +464,18 @@ classdef BangBangF < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function res = post_processing_FControl( self )
+      %
+      % Return the solution for the post processing variable: FControl
+      %
+      res = BangBangF_Mex( 'get_solution', self.objectHandle, 'FControl' );
+    end
+    function res = post_processing_C1_constr( self )
+      %
+      % Return the solution for the post processing variable: C1_constr
+      %
+      res = BangBangF_Mex( 'get_solution', self.objectHandle, 'C1_constr' );
+    end
     function res = post_processing_C1( self )
       %
       % Return the solution for the post processing variable: C1
@@ -715,8 +727,15 @@ classdef BangBangF < handle
     % ---------------------------------------------------------------------
     function J = eval_DbcDxxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       J = BangBangF_Mex( ...
-        'DboundaryConditionsDxxp', self.objectHandle, ...
+        'DbcDxxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function J = eval_D2bcD2xxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega )
+      J = BangBangF_Mex( ...
+        'D2bcD2xxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega ...
       );
     end
     % ---------------------------------------------------------------------
@@ -732,9 +751,9 @@ classdef BangBangF < handle
       );
     end
     % ---------------------------------------------------------------------
-    function IPOPT_hess = eval_IPOPT_hess( self, iseg, q, x, lambda, v, u, pars, sigma )
-      IPOPT_hess = BangBangF_Mex( ...
-        'IPOPT_hess', self.objectHandle, iseg, q, x, lambda, v, u, pars, sigma ...
+    function D2lagrangeD2xup = eval_D2lagrangeD2xup( self, iseg, q, x, u, pars )
+      D2lagrangeD2xup = BangBangF_Mex( ...
+        'D2lagrangeD2xup', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
     %
@@ -790,6 +809,15 @@ classdef BangBangF < handle
       );
     end
     % ---------------------------------------------------------------------
+    function D2mayerD2xxp = eval_D2mayerD2xxp( self, iseg_L, q_L, x_L, ...
+                                                     iseg_R, q_R, x_R, ...
+                                                     pars )
+      D2mayerD2xxp = BangBangF_Mex( ...
+        'D2mayerD2xxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
     function c = eval_c( self, iseg, q, x, u, pars )
       %
       % Evaluate contraints c(x,u,p) <= 0
@@ -799,6 +827,20 @@ classdef BangBangF < handle
       );
     end
     % ---------------------------------------------------------------------
+    function c = eval_fd_c( self, iseg_L, q_L, x_L, ...
+                                  iseg_R, q_R, x_R, ...
+                                  u, pars )
+      %
+      % Evaluate contraints c(x_M,u,p) <= 0
+      %
+      if iseg_L ~= iseg_R
+        error('in eval_fd_c iseg_L(%d) must be equal to iseg_R(%d)',iseg_L,iseg_R);
+      end
+      q = (q_L+q_R)./2;
+      x = (x_L+x_R)./2;
+      c = self.eval_c(iseg_L,q,x,u,pars);
+    end
+    % ---------------------------------------------------------------------
     function Jc = eval_DcDxup( self, iseg, q, x, u, pars )
       %
       % Evaluate jacobian of constraints c(x,u,p) <= 0
@@ -806,6 +848,23 @@ classdef BangBangF < handle
       Jc = BangBangF_Mex(...
         'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars ...
       );
+    end
+    % ---------------------------------------------------------------------
+    function Jc = eval_Dfd_cDxxup( self, iseg_L, q_L, x_L, ...
+                                         iseg_R, q_R, x_R, ...
+                                         u, pars )
+      %
+      % Evaluate jacobian of constraints c(x,u,p) <= 0
+      %
+      if iseg_L ~= iseg_R
+        error('in eval_Dfd_cDxxup iseg_L(%d) must be equal to iseg_R(%d)',iseg_L,iseg_R);
+      end
+      q      = (q_L+q_R)./2;
+      x      = (x_L+x_R)./2;
+      Jc_pre = self.eval_DcDxup( iseg_L, q, x, u, pars );
+      nx     = length(x);
+      Jx     = 0.5*Jc_pre(:,1:nx);
+      Jc     = [Jx,Jx,Jc_pre(:,nx+1:end)];
     end
     % ---------------------------------------------------------------------
     function Hc = eval_D2cD2xup( self, iseg, q, x, u, pars, omega )
@@ -1111,8 +1170,12 @@ classdef BangBangF < handle
       res = BangBangF_Mex('eval_DadjointBCDxxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DboundaryConditionsDxxp_pattern( self )
-      res = BangBangF_Mex('eval_DboundaryConditionsDxxp_pattern', self.objectHandle );
+    function res = DbcDxxp_pattern( self )
+      res = BangBangF_Mex('eval_DbcDxxp_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = D2bcD2xxp_pattern( self )
+      res = BangBangF_Mex('eval_D2bcD2xxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = Drhs_odeDxup_pattern( self )
@@ -1125,10 +1188,6 @@ classdef BangBangF < handle
     % ---------------------------------------------------------------------
     function res = DjumpDxlxlp_pattern( self )
       res = BangBangF_Mex('eval_DjumpDxlxlp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = IPOPT_hess_pattern( self )
-      res = BangBangF_Mex('eval_IPOPT_hess_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DHxDxp_pattern( self )

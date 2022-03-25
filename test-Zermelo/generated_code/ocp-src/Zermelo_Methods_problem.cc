@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_problem.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -48,6 +48,42 @@ using Mechatronix::MeshStd;
 namespace ZermeloDefine {
 
   /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  Zermelo::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[5];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
+    X__[4] = (XL__[4]+XR__[4])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+    res = res && Tpositive.check_range(-X__[iX_T], m_max_penalty_value);
+    return res;
+  }
+
+  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -66,17 +102,16 @@ namespace ZermeloDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_T];
-    real_type t2   = Tpositive(-t1);
-    real_type t6   = X__[iX_x];
-    real_type t7   = X__[iX_y];
-    real_type t8   = velX(t6, t7);
-    real_type t14  = velY(t6, t7);
-    real_type t19  = ModelPars[iM_S];
-    real_type t20  = U__[iU_u];
-    real_type t21  = cos(t20);
-    real_type t26  = sin(t20);
-    real_type result__ = t2 + (X__[iX_vx] + t8) * t1 * L__[iL_lambda1__xo] + (X__[iX_vy] + t14) * t1 * L__[iL_lambda2__xo] + t21 * t19 * t1 * L__[iL_lambda3__xo] + t26 * t19 * t1 * L__[iL_lambda4__xo];
+    real_type t2   = X__[iX_T];
+    real_type t5   = X__[iX_x];
+    real_type t6   = X__[iX_y];
+    real_type t7   = velX(t5, t6);
+    real_type t13  = velY(t5, t6);
+    real_type t18  = ModelPars[iM_S];
+    real_type t19  = U__[iU_u];
+    real_type t20  = cos(t19);
+    real_type t25  = sin(t19);
+    real_type result__ = (X__[iX_vx] + t7) * t2 * L__[iL_lambda1__xo] + (X__[iX_vy] + t13) * t2 * L__[iL_lambda2__xo] + t20 * t18 * t2 * L__[iL_lambda3__xo] + t25 * t18 * t2 * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -234,6 +269,29 @@ namespace ZermeloDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 10, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::D2mayerD2xxp_numRows() const { return 10; }
+  integer Zermelo::D2mayerD2xxp_numCols() const { return 10; }
+  integer Zermelo::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  Zermelo::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -266,96 +324,25 @@ namespace ZermeloDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 6, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Zermelo::IPOPT_hess_numRows() const { return 6; }
-  integer Zermelo::IPOPT_hess_numCols() const { return 6; }
-  integer Zermelo::IPOPT_hess_nnz()     const { return 15; }
+  integer Zermelo::D2lagrangeD2xup_numRows() const { return 6; }
+  integer Zermelo::D2lagrangeD2xup_numCols() const { return 6; }
+  integer Zermelo::D2lagrangeD2xup_nnz()     const { return 0; }
 
   void
-  Zermelo::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 4   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 4   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 4   ;
-    iIndex[8 ] = 4   ; jIndex[8 ] = 0   ;
-    iIndex[9 ] = 4   ; jIndex[9 ] = 1   ;
-    iIndex[10] = 4   ; jIndex[10] = 2   ;
-    iIndex[11] = 4   ; jIndex[11] = 3   ;
-    iIndex[12] = 4   ; jIndex[12] = 5   ;
-    iIndex[13] = 5   ; jIndex[13] = 4   ;
-    iIndex[14] = 5   ; jIndex[14] = 5   ;
+  Zermelo::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  Zermelo::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  Zermelo::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda1__xo];
-    real_type t2   = X__[iX_T];
-    real_type t3   = t2 * t1;
-    real_type t4   = X__[iX_x];
-    real_type t5   = X__[iX_y];
-    real_type t6   = velX_D_1_1(t4, t5);
-    real_type t8   = L__[iL_lambda2__xo];
-    real_type t9   = t2 * t8;
-    real_type t10  = velY_D_1_1(t4, t5);
-    result__[ 0   ] = t10 * t9 + t6 * t3;
-    real_type t12  = velX_D_1_2(t4, t5);
-    real_type t14  = velY_D_1_2(t4, t5);
-    result__[ 1   ] = t12 * t3 + t14 * t9;
-    real_type t16  = velX_D_1(t4, t5);
-    real_type t18  = velY_D_1(t4, t5);
-    result__[ 2   ] = t16 * t1 + t18 * t8;
-    result__[ 3   ] = result__[1];
-    real_type t20  = velX_D_2_2(t4, t5);
-    real_type t22  = velY_D_2_2(t4, t5);
-    result__[ 4   ] = t20 * t3 + t22 * t9;
-    real_type t24  = velX_D_2(t4, t5);
-    real_type t26  = velY_D_2(t4, t5);
-    result__[ 5   ] = t24 * t1 + t26 * t8;
-    result__[ 6   ] = t1;
-    result__[ 7   ] = t8;
-    result__[ 8   ] = result__[2];
-    result__[ 9   ] = result__[5];
-    result__[ 10  ] = result__[6];
-    result__[ 11  ] = result__[7];
-    real_type t28  = L__[iL_lambda3__xo];
-    real_type t29  = ModelPars[iM_S];
-    real_type t31  = U__[iU_u];
-    real_type t32  = sin(t31);
-    real_type t34  = L__[iL_lambda4__xo];
-    real_type t36  = cos(t31);
-    result__[ 12  ] = -t32 * t29 * t28 + t36 * t29 * t34;
-    result__[ 13  ] = result__[12];
-    result__[ 14  ] = -t36 * t29 * t2 * t28 - t32 * t29 * t2 * t34;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 15, i_segment );
+    // EMPTY!
   }
 
   /*\
@@ -548,7 +535,7 @@ namespace ZermeloDefine {
    |                                                    |___/
   \*/
 
-  integer Zermelo::post_numEqns() const { return 0; }
+  integer Zermelo::post_numEqns() const { return 1; }
 
   void
   Zermelo::post_eval(
@@ -557,7 +544,13 @@ namespace ZermeloDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = Tpositive(-X__[iX_T]);
+    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

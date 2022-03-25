@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_controls.cc                                      |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,11 +89,11 @@ namespace BrakeDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = Tpositive(-t1);
-    real_type t9   = UM__[0];
-    real_type t11  = aControl(t9, -1, 1);
-    real_type result__ = t9 * t1 * LM__[1] + XM__[1] * t1 * LM__[0] + t11 + t2;
+    real_type t2   = P__[iP_T];
+    real_type t8   = UM__[0];
+    real_type t10  = Tpositive(-t2);
+    real_type t11  = aControl(t8, -1, 1);
+    real_type result__ = t8 * t2 * LM__[1] + XM__[1] * t2 * LM__[0] + t10 + t11;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

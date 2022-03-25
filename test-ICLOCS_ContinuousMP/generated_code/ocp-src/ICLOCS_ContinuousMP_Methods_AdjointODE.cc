@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -802,9 +802,9 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t45  = ALIAS_u9Limitation_max_D(t41 - 10);
     result__[ 8   ] = -t43 + t45;
     real_type t46  = P__[iP_u10];
-    real_type t48  = ALIAS_u10Limitation_min_D(-10 - t46);
-    real_type t50  = ALIAS_u10Limitation_max_D(t46 - 10);
-    result__[ 9   ] = -t48 + t50;
+    real_type t48  = ALIAS_u10Limitation_max_D(t46 - 10);
+    real_type t50  = ALIAS_u10Limitation_min_D(-10 - t46);
+    result__[ 9   ] = t48 - t50;
     real_type t51  = P__[iP_u11];
     real_type t53  = ALIAS_u11Limitation_min_D(-10 - t51);
     real_type t55  = ALIAS_u11Limitation_max_D(t51 - 10);
@@ -838,9 +838,9 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t90  = ALIAS_u18Limitation_max_D(t86 - 10);
     result__[ 17  ] = -t88 + t90;
     real_type t91  = P__[iP_u19];
-    real_type t93  = ALIAS_u19Limitation_max_D(t91 - 10);
-    real_type t95  = ALIAS_u19Limitation_min_D(-10 - t91);
-    result__[ 18  ] = t93 - t95;
+    real_type t93  = ALIAS_u19Limitation_min_D(-10 - t91);
+    real_type t95  = ALIAS_u19Limitation_max_D(t91 - 10);
+    result__[ 18  ] = -t93 + t95;
     real_type t96  = P__[iP_u20];
     real_type t98  = ALIAS_u20Limitation_min_D(-10 - t96);
     real_type t100 = ALIAS_u20Limitation_max_D(t96 - 10);
@@ -1561,8 +1561,8 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t45  = ALIAS_u9Limitation_max_DD(t41 - 10);
     result__[ 8   ] = t43 + t45;
     real_type t46  = P__[iP_u10];
-    real_type t48  = ALIAS_u10Limitation_min_DD(-10 - t46);
-    real_type t50  = ALIAS_u10Limitation_max_DD(t46 - 10);
+    real_type t48  = ALIAS_u10Limitation_max_DD(t46 - 10);
+    real_type t50  = ALIAS_u10Limitation_min_DD(-10 - t46);
     result__[ 9   ] = t48 + t50;
     real_type t51  = P__[iP_u11];
     real_type t53  = ALIAS_u11Limitation_min_DD(-10 - t51);
@@ -1597,8 +1597,8 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t90  = ALIAS_u18Limitation_max_DD(t86 - 10);
     result__[ 17  ] = t88 + t90;
     real_type t91  = P__[iP_u19];
-    real_type t93  = ALIAS_u19Limitation_max_DD(t91 - 10);
-    real_type t95  = ALIAS_u19Limitation_min_DD(-10 - t91);
+    real_type t93  = ALIAS_u19Limitation_min_DD(-10 - t91);
+    real_type t95  = ALIAS_u19Limitation_max_DD(t91 - 10);
     result__[ 18  ] = t93 + t95;
     real_type t96  = P__[iP_u20];
     real_type t98  = ALIAS_u20Limitation_min_DD(-10 - t96);
@@ -1892,6 +1892,30 @@ namespace ICLOCS_ContinuousMPDefine {
     result__[ 119 ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 120, i_segment );
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_ContinuousMP::D2LTargsD2xup_numRows() const { return 100; }
+  integer ICLOCS_ContinuousMP::D2LTargsD2xup_numCols() const { return 100; }
+  integer ICLOCS_ContinuousMP::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  ICLOCS_ContinuousMP::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_ContinuousMP::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
   /*\

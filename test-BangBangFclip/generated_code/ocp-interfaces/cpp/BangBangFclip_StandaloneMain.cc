@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type tolerance0 = 0.01;
     real_type vFmax = 10;
     real_type h0 = 0.01;
-    real_type tolerance0 = 0.01;
     real_type epsilon0 = 0.1;
     integer InfoLevel = 4;
 
@@ -162,8 +162,8 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta2"] = 0;
     data_clip["delta"] = 0;
+    data_clip["delta2"] = 0;
     data_clip["h"] = h0;
 
     // Controls
@@ -184,8 +184,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFclip_data.Mesh["s0"] = 0;
-BangBangFclip_data.Mesh["segments"][0]["length"] = 1;
 BangBangFclip_data.Mesh["segments"][0]["n"] = 100;
+BangBangFclip_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

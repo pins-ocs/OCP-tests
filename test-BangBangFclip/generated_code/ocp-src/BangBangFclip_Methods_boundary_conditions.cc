@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -101,12 +101,12 @@ namespace BangBangFclipDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFclip::DboundaryConditionsDxxp_numRows() const { return 5; }
-  integer BangBangFclip::DboundaryConditionsDxxp_numCols() const { return 6; }
-  integer BangBangFclip::DboundaryConditionsDxxp_nnz()     const { return 5; }
+  integer BangBangFclip::DbcDxxp_numRows() const { return 5; }
+  integer BangBangFclip::DbcDxxp_numCols() const { return 6; }
+  integer BangBangFclip::DbcDxxp_nnz()     const { return 5; }
 
   void
-  BangBangFclip::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFclip::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -116,7 +116,7 @@ namespace BangBangFclipDefine {
 
 
   void
-  BangBangFclip::DboundaryConditionsDxxp_sparse(
+  BangBangFclip::DbcDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -136,7 +136,31 @@ namespace BangBangFclipDefine {
     result__[ 3   ] = 1;
     result__[ 4   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 5, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 5, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFclip::D2bcD2xxp_numRows() const { return 6; }
+  integer BangBangFclip::D2bcD2xxp_numCols() const { return 6; }
+  integer BangBangFclip::D2bcD2xxp_nnz()     const { return 0; }
+
+  void
+  BangBangFclip::D2bcD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFclip::D2bcD2xxp_sparse(
+    NodeType const         & LEFT__,
+    NodeType const         & RIGHT__,
+    P_const_pointer_type     P__,
+    OMEGA_const_pointer_type OMEGA__,
+    real_type                result__[]
+  ) const {
+    // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

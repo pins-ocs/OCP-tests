@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -151,9 +151,9 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
+    data_clip["h"] = h0;
     data_clip["delta"] = 0;
     data_clip["delta2"] = 0;
-    data_clip["h"] = h0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER

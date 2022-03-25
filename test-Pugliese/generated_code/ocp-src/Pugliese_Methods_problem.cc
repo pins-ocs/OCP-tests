@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -42,6 +42,42 @@ using Mechatronix::MeshStd;
 
 
 namespace PuglieseDefine {
+
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  Pugliese::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[5];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
+    X__[4] = (XL__[4]+XR__[4])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+
+    return res;
+  }
 
   /*\
    |  _  _            _ _ _            _
@@ -231,6 +267,29 @@ namespace PuglieseDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 10, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Pugliese::D2mayerD2xxp_numRows() const { return 10; }
+  integer Pugliese::D2mayerD2xxp_numCols() const { return 10; }
+  integer Pugliese::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  Pugliese::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Pugliese::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -267,94 +326,36 @@ namespace PuglieseDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 5, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Pugliese::IPOPT_hess_numRows() const { return 5; }
-  integer Pugliese::IPOPT_hess_numCols() const { return 5; }
-  integer Pugliese::IPOPT_hess_nnz()     const { return 12; }
+  integer Pugliese::D2lagrangeD2xup_numRows() const { return 5; }
+  integer Pugliese::D2lagrangeD2xup_numCols() const { return 5; }
+  integer Pugliese::D2lagrangeD2xup_nnz()     const { return 1; }
 
   void
-  Pugliese::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
-    iIndex[6 ] = 1   ; jIndex[6 ] = 4   ;
-    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
-    iIndex[8 ] = 3   ; jIndex[8 ] = 3   ;
-    iIndex[9 ] = 4   ; jIndex[9 ] = 0   ;
-    iIndex[10] = 4   ; jIndex[10] = 1   ;
-    iIndex[11] = 4   ; jIndex[11] = 4   ;
+  Pugliese::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  Pugliese::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  Pugliese::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda1__xo];
-    real_type t2   = X__[iX_C];
-    real_type t4   = X__[iX_T];
-    real_type t5   = T_lim_DD(t4);
-    real_type t7   = L__[iL_lambda2__xo];
-    real_type t8   = t2 * t7;
-    real_type t9   = IL(t4, t2);
-    real_type t10  = IL_lim_DD(t9);
-    real_type t11  = IL_D_1(t4, t2);
-    real_type t12  = t11 * t11;
-    real_type t15  = IL_lim_D(t9);
-    real_type t16  = IL_D_1_1(t4, t2);
-    real_type t21  = ModelPars[iM_a__IL] * L__[iL_lambda3__xo];
-    result__[ 0   ] = -t5 * t2 * t1 - t12 * t10 * t8 - t16 * t15 * t8 + t16 * t21;
-    real_type t23  = T_lim_D(t4);
-    real_type t24  = ModelPars[iM_kappa__AC];
-    real_type t25  = X__[iX_I__p];
-    real_type t31  = IL_D_2(t4, t2);
-    real_type t35  = IL_D_1_2(t4, t2);
-    result__[ 1   ] = (-t25 * t24 - t23) * t1 - t11 * t15 * t7 - t11 * t31 * t10 * t8 - t35 * t15 * t8 + t35 * t21;
-    real_type t39  = t24 * t1;
-    result__[ 2   ] = -t2 * t39;
-    result__[ 3   ] = result__[1];
-    real_type t44  = t31 * t31;
-    real_type t47  = IL_D_2_2(t4, t2);
-    result__[ 4   ] = (-t44 * t10 * t2 - t47 * t15 * t2 - 2 * t31 * t15) * t7 + t47 * t21;
-    result__[ 5   ] = -ModelPars[iM_kappa__R] * t7;
-    result__[ 6   ] = -t4 * t39;
-    result__[ 7   ] = result__[5];
-    real_type t56  = D_lim_DD(X__[iX_DD]);
-    result__[ 8   ] = t56 * t7;
-    result__[ 9   ] = result__[2];
-    result__[ 10  ] = result__[6];
-    real_type t59  = ModelPars[iM_w2] * ModelPars[iM_a];
-    real_type t60  = t25 * t25;
-    real_type t62  = t60 + ModelPars[iM_b];
-    real_type t66  = t62 * t62;
-    real_type t71  = t60 * t60;
-    result__[ 11  ] = (2 / t62 * t59 - 10 / t66 * t60 * t59 + 8 / t66 / t62 * t71 * t59) * sigma__;
+    real_type t3   = ModelPars[iM_w2] * ModelPars[iM_a];
+    real_type t5   = X__[iX_I__p] * X__[iX_I__p];
+    real_type t7   = t5 + ModelPars[iM_b];
+    real_type t11  = t7 * t7;
+    real_type t16  = t5 * t5;
+    result__[ 0   ] = 2 / t7 * t3 - 10 / t11 * t5 * t3 + 8 / t11 / t7 * t16 * t3;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 12, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 1, i_segment );
   }
 
   /*\

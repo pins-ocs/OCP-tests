@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_controls.cc                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -375,7 +375,7 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(t3 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
+    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
     real_type t10  = U__[iU_u];
     real_type t11  = uControl(t10, -1, 1);
     real_type t16  = pow(V__[0] - X__[iX_y], 2);
@@ -404,7 +404,7 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(t3 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
+    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
     real_type t10  = U__[iU_u];
     real_type t11  = ALIAS_uControl_D_1(t10, -1, 1);
     result__[ 0   ] = t11 * (ModelPars[iM_epsilon] + t8) - 2 * V__[1] + 2 * t10;
@@ -436,7 +436,7 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t8   = pow(t3 * ModelPars[iM_C] + X__[iX_x] - 1, 2);
+    real_type t8   = pow(ModelPars[iM_C] * t3 + X__[iX_x] - 1, 2);
     real_type t11  = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
     result__[ 0   ] = t11 * (ModelPars[iM_epsilon] + t8) + 2;
     if ( m_debug )

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -78,7 +78,7 @@ namespace HyperSensitiveDefine {
     real_type t2   = t1 * t1;
     real_type t3   = UM__[0];
     real_type t4   = t3 * t3;
-    real_type result__ = t2 + t4 + (-t1 * t2 + t3) * LM__[0];
+    real_type result__ = t2 + t4 + (-t2 * t1 + t3) * LM__[0];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -340,7 +340,7 @@ namespace HyperSensitiveDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_y];
     real_type t2   = t1 * t1;
-    result__[ 0   ] = -2 * t1 * t2 + 2 * U__[iU_u] - 2 * V__[0];
+    result__[ 0   ] = -2 * t2 * t1 + 2 * U__[iU_u] - 2 * V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

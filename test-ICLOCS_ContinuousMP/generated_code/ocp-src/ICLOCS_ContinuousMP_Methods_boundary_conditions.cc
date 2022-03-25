@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -438,12 +438,12 @@ namespace ICLOCS_ContinuousMPDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_ContinuousMP::DboundaryConditionsDxxp_numRows() const { return 80; }
-  integer ICLOCS_ContinuousMP::DboundaryConditionsDxxp_numCols() const { return 180; }
-  integer ICLOCS_ContinuousMP::DboundaryConditionsDxxp_nnz()     const { return 158; }
+  integer ICLOCS_ContinuousMP::DbcDxxp_numRows() const { return 80; }
+  integer ICLOCS_ContinuousMP::DbcDxxp_numCols() const { return 180; }
+  integer ICLOCS_ContinuousMP::DbcDxxp_nnz()     const { return 158; }
 
   void
-  ICLOCS_ContinuousMP::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_ContinuousMP::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 40  ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 60  ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 41  ;
@@ -606,7 +606,7 @@ namespace ICLOCS_ContinuousMPDefine {
 
 
   void
-  ICLOCS_ContinuousMP::DboundaryConditionsDxxp_sparse(
+  ICLOCS_ContinuousMP::DbcDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -779,7 +779,31 @@ namespace ICLOCS_ContinuousMPDefine {
     result__[ 156 ] = 1;
     result__[ 157 ] = -1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 158, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 158, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_ContinuousMP::D2bcD2xxp_numRows() const { return 180; }
+  integer ICLOCS_ContinuousMP::D2bcD2xxp_numCols() const { return 180; }
+  integer ICLOCS_ContinuousMP::D2bcD2xxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_ContinuousMP::D2bcD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_ContinuousMP::D2bcD2xxp_sparse(
+    NodeType const         & LEFT__,
+    NodeType const         & RIGHT__,
+    P_const_pointer_type     P__,
+    OMEGA_const_pointer_type OMEGA__,
+    real_type                result__[]
+  ) const {
+    // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -852,72 +876,72 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t5   = OMEGA__[5];
     result__[ 44  ] = -t5 - result__[4];
     real_type t6   = OMEGA__[6];
-    result__[ 45  ] = -result__[5] - t6;
+    result__[ 45  ] = -t6 - result__[5];
     real_type t7   = OMEGA__[7];
-    result__[ 46  ] = -result__[6] - t7;
+    result__[ 46  ] = -t7 - result__[6];
     real_type t8   = OMEGA__[8];
-    result__[ 47  ] = -result__[7] - t8;
+    result__[ 47  ] = -t8 - result__[7];
     real_type t9   = OMEGA__[9];
-    result__[ 48  ] = -result__[8] - t9;
+    result__[ 48  ] = -t9 - result__[8];
     real_type t10  = OMEGA__[10];
-    result__[ 49  ] = -result__[9] - t10;
+    result__[ 49  ] = -t10 - result__[9];
     real_type t11  = OMEGA__[11];
-    result__[ 50  ] = -result__[10] - t11;
+    result__[ 50  ] = -t11 - result__[10];
     real_type t12  = OMEGA__[12];
-    result__[ 51  ] = -result__[11] - t12;
+    result__[ 51  ] = -t12 - result__[11];
     real_type t13  = OMEGA__[13];
-    result__[ 52  ] = -result__[12] - t13;
+    result__[ 52  ] = -t13 - result__[12];
     real_type t14  = OMEGA__[14];
     result__[ 53  ] = -result__[13] - t14;
     real_type t15  = OMEGA__[15];
-    result__[ 54  ] = -result__[14] - t15;
+    result__[ 54  ] = -t15 - result__[14];
     real_type t16  = OMEGA__[16];
-    result__[ 55  ] = -result__[15] - t16;
+    result__[ 55  ] = -t16 - result__[15];
     real_type t17  = OMEGA__[17];
-    result__[ 56  ] = -result__[16] - t17;
+    result__[ 56  ] = -t17 - result__[16];
     real_type t18  = OMEGA__[18];
-    result__[ 57  ] = -result__[17] - t18;
+    result__[ 57  ] = -t18 - result__[17];
     real_type t19  = OMEGA__[19];
-    result__[ 58  ] = -result__[18] - t19;
+    result__[ 58  ] = -t19 - result__[18];
     real_type t20  = OMEGA__[20];
-    result__[ 59  ] = -result__[19] - t20;
-    result__[ 60  ] = -result__[20] + OMEGA__[1];
+    result__[ 59  ] = -t20 - result__[19];
+    result__[ 60  ] = OMEGA__[1] - result__[20];
     real_type t22  = OMEGA__[21];
-    result__[ 61  ] = -result__[21] - t22;
+    result__[ 61  ] = -t22 - result__[21];
     real_type t23  = OMEGA__[22];
-    result__[ 62  ] = -result__[22] - t23;
+    result__[ 62  ] = -t23 - result__[22];
     real_type t24  = OMEGA__[23];
-    result__[ 63  ] = -result__[23] - t24;
+    result__[ 63  ] = -t24 - result__[23];
     real_type t25  = OMEGA__[24];
-    result__[ 64  ] = -result__[24] - t25;
+    result__[ 64  ] = -t25 - result__[24];
     real_type t26  = OMEGA__[25];
-    result__[ 65  ] = -result__[25] - t26;
+    result__[ 65  ] = -t26 - result__[25];
     real_type t27  = OMEGA__[26];
-    result__[ 66  ] = -result__[26] - t27;
+    result__[ 66  ] = -t27 - result__[26];
     real_type t28  = OMEGA__[27];
-    result__[ 67  ] = -result__[27] - t28;
+    result__[ 67  ] = -t28 - result__[27];
     real_type t29  = OMEGA__[28];
-    result__[ 68  ] = -result__[28] - t29;
+    result__[ 68  ] = -t29 - result__[28];
     real_type t30  = OMEGA__[29];
-    result__[ 69  ] = -result__[29] - t30;
+    result__[ 69  ] = -t30 - result__[29];
     real_type t31  = OMEGA__[30];
-    result__[ 70  ] = -result__[30] - t31;
+    result__[ 70  ] = -t31 - result__[30];
     real_type t32  = OMEGA__[31];
-    result__[ 71  ] = -result__[31] - t32;
+    result__[ 71  ] = -t32 - result__[31];
     real_type t33  = OMEGA__[32];
-    result__[ 72  ] = -result__[32] - t33;
+    result__[ 72  ] = -t33 - result__[32];
     real_type t34  = OMEGA__[33];
-    result__[ 73  ] = -result__[33] - t34;
+    result__[ 73  ] = -t34 - result__[33];
     real_type t35  = OMEGA__[34];
-    result__[ 74  ] = -result__[34] - t35;
+    result__[ 74  ] = -t35 - result__[34];
     real_type t36  = OMEGA__[35];
-    result__[ 75  ] = -result__[35] - t36;
+    result__[ 75  ] = -t36 - result__[35];
     real_type t37  = OMEGA__[36];
-    result__[ 76  ] = -result__[36] - t37;
+    result__[ 76  ] = -t37 - result__[36];
     real_type t38  = OMEGA__[37];
-    result__[ 77  ] = -result__[37] - t38;
+    result__[ 77  ] = -t38 - result__[37];
     real_type t39  = OMEGA__[38];
-    result__[ 78  ] = -result__[38] - t39;
+    result__[ 78  ] = -t39 - result__[38];
     real_type t40  = OMEGA__[39];
     result__[ 79  ] = -t40 - result__[39];
     result__[ 80  ] = 0;

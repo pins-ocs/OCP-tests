@@ -121,10 +121,10 @@ dump_min       = 0.4           dump_max       = 0.9
 n_power        = 2             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
-ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 27[ms]        timeout        = 0 [ms]
+Elapsed Time   = 31.9[ms]      timeout        = 0 [ms]
 iteration      = 34            tolerance      = 1e-09
 max iterations = 300           N. Equations   = 611
 max acc. iter. = 800           N. System pars = 100
@@ -146,9 +146,11 @@ last ||f||_2   = 1.3174e-13    last ||d||_2   = 2.5269e-08
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
+All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
+All controls solution are OK
 Check Controls End
 target [Lagrange,Mayer]       = [ 0, -0.2 ]
 [Penalties/Barriers,Controls] = [ 0, 4.336e-05 ]

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -445,6 +445,30 @@ namespace OrbitTransferDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::D2LTargsD2xup_numRows() const { return 6; }
+  integer OrbitTransfer::D2LTargsD2xup_numCols() const { return 6; }
+  integer OrbitTransfer::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
     real_type            result__[]
   ) const {
     // EMPTY!

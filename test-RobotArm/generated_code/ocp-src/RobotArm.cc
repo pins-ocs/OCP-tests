@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm.cc                                                    |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -101,6 +101,9 @@ namespace RobotArmDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "u_rhoControl",
+    "u_thetaControl",
+    "u_phiControl",
     nullptr
   };
 

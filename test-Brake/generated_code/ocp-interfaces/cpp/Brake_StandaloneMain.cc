@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Main.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -174,8 +174,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Brake_data.Mesh["s0"] = 0;
-Brake_data.Mesh["segments"][0]["n"] = 400;
 Brake_data.Mesh["segments"][0]["length"] = 1;
+Brake_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

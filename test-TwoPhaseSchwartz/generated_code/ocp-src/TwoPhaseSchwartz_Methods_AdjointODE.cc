@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -513,6 +513,39 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 2   ] = -1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 3, i_segment );
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoPhaseSchwartz::D2LTargsD2xup_numRows() const { return 6; }
+  integer TwoPhaseSchwartz::D2LTargsD2xup_numCols() const { return 6; }
+  integer TwoPhaseSchwartz::D2LTargsD2xup_nnz()     const { return 2; }
+
+  void
+  TwoPhaseSchwartz::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+  }
+
+
+  void
+  TwoPhaseSchwartz::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = OMEGA__[0];
+    result__[ 0   ] = -18 * t1;
+    result__[ 1   ] = -0.2222222222e2 * t1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2LTargsD2xup_sparse", 2, i_segment );
   }
 
   /*\

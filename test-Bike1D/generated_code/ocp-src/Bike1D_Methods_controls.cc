@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -107,14 +107,14 @@ namespace Bike1DDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[0];
     real_type t2   = 1.0 / t1;
-    real_type t5   = vMinLimit(ModelPars[iM_v_min] - t1);
-    real_type t10  = UM__[0];
-    real_type t11  = UM__[1];
+    real_type t6   = UM__[0];
+    real_type t7   = UM__[1];
+    real_type t12  = vMinLimit(ModelPars[iM_v_min] - t1);
     real_type t15  = Tmax_normalized(t1);
     real_type t17  = clip(t15, 0, ModelPars[iM_mur_max]);
-    real_type t18  = murControl(t10, ModelPars[iM_mur_min], t17);
-    real_type t21  = mufControl(t11, ModelPars[iM_muf_min], 0);
-    real_type result__ = t5 * t2 + t2 + (t10 + t11) * ModelPars[iM_g] * LM__[0] + t18 * t2 + t21 * t2;
+    real_type t18  = murControl(t6, ModelPars[iM_mur_min], t17);
+    real_type t21  = mufControl(t7, ModelPars[iM_muf_min], 0);
+    real_type result__ = t2 + (t6 + t7) * ModelPars[iM_g] * LM__[0] + t12 * t2 + t18 * t2 + t21 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC.cc                                                        |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -101,6 +101,20 @@ namespace CNOCDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "jsControl",
+    "jnControl",
+    "timePositive",
+    "vLimit",
+    "PathFollowingTolerance_min",
+    "PathFollowingTolerance_max",
+    "as_limit_min",
+    "as_limit_max",
+    "an_limit_min",
+    "an_limit_max",
+    "ax_limit_min",
+    "ax_limit_max",
+    "ay_limit_min",
+    "ay_limit_max",
     "feed",
     "acc",
     "jerk",

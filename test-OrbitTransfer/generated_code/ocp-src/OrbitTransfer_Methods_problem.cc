@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -42,6 +42,42 @@ using Mechatronix::MeshStd;
 
 
 namespace OrbitTransferDefine {
+
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  OrbitTransfer::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[5];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
+    X__[4] = (XL__[4]+XR__[4])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+
+    return res;
+  }
 
   /*\
    |  _  _            _ _ _            _
@@ -232,6 +268,29 @@ namespace OrbitTransferDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 10, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::D2mayerD2xxp_numRows() const { return 10; }
+  integer OrbitTransfer::D2mayerD2xxp_numCols() const { return 10; }
+  integer OrbitTransfer::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -264,92 +323,25 @@ namespace OrbitTransferDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 6, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer OrbitTransfer::IPOPT_hess_numRows() const { return 6; }
-  integer OrbitTransfer::IPOPT_hess_numCols() const { return 6; }
-  integer OrbitTransfer::IPOPT_hess_nnz()     const { return 12; }
+  integer OrbitTransfer::D2lagrangeD2xup_numRows() const { return 6; }
+  integer OrbitTransfer::D2lagrangeD2xup_numCols() const { return 6; }
+  integer OrbitTransfer::D2lagrangeD2xup_nnz()     const { return 0; }
 
   void
-  OrbitTransfer::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 3   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 4   ;
-    iIndex[5 ] = 3   ; jIndex[5 ] = 2   ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 4   ;
-    iIndex[7 ] = 4   ; jIndex[7 ] = 2   ;
-    iIndex[8 ] = 4   ; jIndex[8 ] = 3   ;
-    iIndex[9 ] = 4   ; jIndex[9 ] = 4   ;
-    iIndex[10] = 5   ; jIndex[10] = 0   ;
-    iIndex[11] = 5   ; jIndex[11] = 5   ;
+  OrbitTransfer::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  OrbitTransfer::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  OrbitTransfer::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ModelPars[iM_tf];
-    real_type t3   = t2 * L__[iL_lambda2__xo];
-    real_type t4   = ModelPars[iM_T];
-    real_type t5   = U__[iU_theta];
-    real_type t6   = sin(t5);
-    real_type t7   = t6 * t4;
-    real_type t8   = X__[iX_m];
-    real_type t9   = t8 * t8;
-    real_type t11  = 1.0 / t9 / t8;
-    real_type t15  = t2 * L__[iL_lambda3__xo];
-    real_type t16  = cos(t5);
-    real_type t17  = t16 * t4;
-    result__[ 0   ] = 2 * t11 * t17 * t15 + 2 * t11 * t7 * t3;
-    real_type t21  = 1.0 / t9;
-    result__[ 1   ] = t21 * t7 * t15 - t21 * t17 * t3;
-    real_type t26  = X__[iX_v];
-    real_type t27  = t26 * t26;
-    real_type t28  = X__[iX_r];
-    real_type t29  = t28 * t28;
-    real_type t31  = 1.0 / t29 / t28;
-    real_type t35  = t29 * t29;
-    real_type t41  = X__[iX_u];
-    real_type t47  = t2 * L__[iL_lambda5__xo];
-    result__[ 2   ] = (2 * t31 * t27 - 6 / t35 * ModelPars[iM_mu]) * t3 - 2 * t31 * t41 * t26 * t15 + 2 * t31 * t26 * t47;
-    real_type t51  = 1.0 / t29;
-    real_type t52  = t51 * t26;
-    result__[ 3   ] = t52 * t15;
-    result__[ 4   ] = t51 * t41 * t15 - 2 * t52 * t3 - t51 * t47;
-    result__[ 5   ] = result__[3];
-    real_type t58  = 1.0 / t28;
-    result__[ 6   ] = -t58 * t15;
-    result__[ 7   ] = result__[4];
-    result__[ 8   ] = result__[6];
-    result__[ 9   ] = 2 * t58 * t3;
-    result__[ 10  ] = result__[1];
-    real_type t61  = 1.0 / t8;
-    result__[ 11  ] = -t61 * t17 * t15 - t61 * t7 * t3;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 12, i_segment );
+    // EMPTY!
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -88,6 +88,11 @@ namespace CrossroadDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "jerkControl",
+    "Tpositive",
+    "AccBound",
+    "VelBound_min",
+    "VelBound_max",
     "kappa",
     "a_su_along",
     "a_su_alat",

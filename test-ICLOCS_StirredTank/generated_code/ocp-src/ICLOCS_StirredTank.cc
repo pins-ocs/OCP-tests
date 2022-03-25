@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank.cc                                          |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -83,6 +83,12 @@ namespace ICLOCS_StirredTankDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "uControl",
+    "tfbound",
+    "x1bound_min",
+    "x1bound_max",
+    "x2bound_min",
+    "x2bound_max",
     "time",
     nullptr
   };

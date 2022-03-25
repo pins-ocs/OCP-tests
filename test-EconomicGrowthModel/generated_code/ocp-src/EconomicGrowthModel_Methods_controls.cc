@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -91,13 +91,13 @@ namespace EconomicGrowthModelDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[2];
-    real_type t2   = Tpositive(-t1);
-    real_type t4   = UM__[0];
-    real_type t8   = Q(XM__[0], XM__[1]);
-    real_type t9   = t1 * t8;
-    real_type t15  = uControl(t4, 0, 1);
-    real_type result__ = t2 + t9 * t4 * LM__[0] + t9 * (1 - t4) * LM__[1] + t15 * t1;
+    real_type t2   = UM__[0];
+    real_type t6   = Q(XM__[0], XM__[1]);
+    real_type t7   = XM__[2];
+    real_type t8   = t7 * t6;
+    real_type t14  = Tpositive(-t7);
+    real_type t15  = uControl(t2, 0, 1);
+    real_type result__ = t8 * t2 * LM__[0] + t8 * (1 - t2) * LM__[1] + t14 + t15 * t7;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

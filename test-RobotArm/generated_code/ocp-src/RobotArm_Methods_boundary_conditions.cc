@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_boundary_conditions.cc                        |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -118,12 +118,12 @@ namespace RobotArmDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer RobotArm::DboundaryConditionsDxxp_numRows() const { return 12; }
-  integer RobotArm::DboundaryConditionsDxxp_numCols() const { return 13; }
-  integer RobotArm::DboundaryConditionsDxxp_nnz()     const { return 12; }
+  integer RobotArm::DbcDxxp_numRows() const { return 12; }
+  integer RobotArm::DbcDxxp_numCols() const { return 13; }
+  integer RobotArm::DbcDxxp_nnz()     const { return 12; }
 
   void
-  RobotArm::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  RobotArm::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -140,7 +140,7 @@ namespace RobotArmDefine {
 
 
   void
-  RobotArm::DboundaryConditionsDxxp_sparse(
+  RobotArm::DbcDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -167,7 +167,31 @@ namespace RobotArmDefine {
     result__[ 10  ] = 1;
     result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 12, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 12, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer RobotArm::D2bcD2xxp_numRows() const { return 13; }
+  integer RobotArm::D2bcD2xxp_numCols() const { return 13; }
+  integer RobotArm::D2bcD2xxp_nnz()     const { return 0; }
+
+  void
+  RobotArm::D2bcD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  RobotArm::D2bcD2xxp_sparse(
+    NodeType const         & LEFT__,
+    NodeType const         & RIGHT__,
+    P_const_pointer_type     P__,
+    OMEGA_const_pointer_type OMEGA__,
+    real_type                result__[]
+  ) const {
+    // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

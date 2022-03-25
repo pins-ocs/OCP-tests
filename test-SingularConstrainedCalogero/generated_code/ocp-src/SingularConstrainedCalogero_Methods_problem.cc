@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_problem.cc                 |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -70,6 +70,38 @@ namespace SingularConstrainedCalogeroDefine {
   }
 
   /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  SingularConstrainedCalogero::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[1];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+    res = res && uMaxBound.check_range(X__[iX_x] - Q__[iQ_zeta] - U__[iU_u] + 1, m_max_penalty_value);
+    return res;
+  }
+
+  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -88,10 +120,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = Q__[iQ_zeta];
-    real_type t3   = U__[iU_u];
-    real_type t5   = uMaxBound(X__[iX_x] - t2 - t3 + 1);
-    real_type result__ = t5 + (t2 - 4) * t3 + t3 * L__[iL_lambda1__xo];
+    real_type t1   = U__[iU_u];
+    real_type result__ = (Q__[iQ_zeta] - 4) * t1 + t1 * L__[iL_lambda1__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -241,6 +271,29 @@ namespace SingularConstrainedCalogeroDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 2, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SingularConstrainedCalogero::D2mayerD2xxp_numRows() const { return 2; }
+  integer SingularConstrainedCalogero::D2mayerD2xxp_numCols() const { return 2; }
+  integer SingularConstrainedCalogero::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  SingularConstrainedCalogero::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SingularConstrainedCalogero::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -269,35 +322,22 @@ namespace SingularConstrainedCalogeroDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 2, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularConstrainedCalogero::IPOPT_hess_numRows() const { return 2; }
-  integer SingularConstrainedCalogero::IPOPT_hess_numCols() const { return 2; }
-  integer SingularConstrainedCalogero::IPOPT_hess_nnz()     const { return 0; }
+  integer SingularConstrainedCalogero::D2lagrangeD2xup_numRows() const { return 2; }
+  integer SingularConstrainedCalogero::D2lagrangeD2xup_numCols() const { return 2; }
+  integer SingularConstrainedCalogero::D2lagrangeD2xup_nnz()     const { return 0; }
 
   void
-  SingularConstrainedCalogero::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularConstrainedCalogero::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  SingularConstrainedCalogero::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  SingularConstrainedCalogero::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
     // EMPTY!
@@ -453,7 +493,7 @@ namespace SingularConstrainedCalogeroDefine {
    |                                                    |___/
   \*/
 
-  integer SingularConstrainedCalogero::post_numEqns() const { return 1; }
+  integer SingularConstrainedCalogero::post_numEqns() const { return 3; }
 
   void
   SingularConstrainedCalogero::post_eval(
@@ -467,8 +507,13 @@ namespace SingularConstrainedCalogeroDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_x] + 1 - Q__[iQ_zeta];
-    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
+    real_type t1   = U__[iU_u];
+    result__[ 0   ] = uControl(t1, 0, 2);
+    real_type t2   = X__[iX_x];
+    real_type t3   = Q__[iQ_zeta];
+    result__[ 1   ] = uMaxBound(t2 - t3 - t1 + 1);
+    result__[ 2   ] = t2 + 1 - t3;
+    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

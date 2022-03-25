@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -82,14 +82,14 @@ namespace Brachiostocrona2Define {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = TimePositive(-t1);
-    real_type t4   = UM__[0];
-    real_type t7   = pow(t4 - ModelPars[iM_theta0], 2);
-    real_type t11  = XM__[2];
-    real_type t12  = cos(t4);
-    real_type t17  = sin(t4);
-    real_type result__ = t12 * t11 * t1 * LM__[0] + t17 * t11 * t1 * LM__[1] - t17 * ModelPars[iM_g] * t1 * LM__[2] + t7 * ModelPars[iM_epsi] + t2;
+    real_type t2   = UM__[0];
+    real_type t5   = pow(t2 - ModelPars[iM_theta0], 2);
+    real_type t8   = P__[iP_T];
+    real_type t10  = XM__[2];
+    real_type t11  = cos(t2);
+    real_type t16  = sin(t2);
+    real_type t24  = TimePositive(-t8);
+    real_type result__ = t11 * t10 * t8 * LM__[0] + t16 * t10 * t8 * LM__[1] - t16 * ModelPars[iM_g] * t8 * LM__[2] + t5 * ModelPars[iM_epsi] + t24;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -255,7 +255,7 @@ namespace Brachiostocrona2Define {
     real_type t7   = UM__[0];
     real_type t8   = cos(t7);
     real_type t13  = sin(t7);
-    result__[ 0   ] = -t13 * t6 * t4 * LM__[1] + t13 * ModelPars[iM_g] * t4 * LM__[2] - t8 * t6 * t4 * LM__[0] + 2 * ModelPars[iM_epsi];
+    result__[ 0   ] = -t13 * t4 * t6 * LM__[1] + t13 * t4 * LM__[2] * ModelPars[iM_g] - t4 * t6 * t8 * LM__[0] + 2 * ModelPars[iM_epsi];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

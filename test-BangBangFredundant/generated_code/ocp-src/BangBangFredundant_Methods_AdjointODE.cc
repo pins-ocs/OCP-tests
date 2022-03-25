@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -131,7 +131,7 @@ namespace BangBangFredundantDefine {
     real_type t3   = X__[iX_F2];
     real_type t5   = ALIAS_Flim_min_D(-1 - t2 - t3);
     real_type t8   = ALIAS_Flim_max_D(t2 + t3 - 1);
-    result__[ 2   ] = -t5 * t1 + t8 * t1;
+    result__[ 2   ] = -t1 * t5 + t1 * t8;
     result__[ 3   ] = result__[2];
     result__[ 4   ] = 0;
     result__[ 5   ] = 0;
@@ -531,6 +531,30 @@ namespace BangBangFredundantDefine {
     result__[ 3   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 4, i_segment );
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::D2LTargsD2xup_numRows() const { return 8; }
+  integer BangBangFredundant::D2LTargsD2xup_numCols() const { return 8; }
+  integer BangBangFredundant::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
   /*\

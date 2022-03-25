@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -543,6 +543,42 @@ namespace AlpRiderDefine {
     result__[ 3   ] = -2 * X__[iX_y4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 4, i_segment );
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer AlpRider::D2LTargsD2xup_numRows() const { return 6; }
+  integer AlpRider::D2LTargsD2xup_numCols() const { return 6; }
+  integer AlpRider::D2LTargsD2xup_nnz()     const { return 4; }
+
+  void
+  AlpRider::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
+  }
+
+
+  void
+  AlpRider::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -2 * OMEGA__[0];
+    result__[ 1   ] = result__[0];
+    result__[ 2   ] = result__[1];
+    result__[ 3   ] = result__[2];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2LTargsD2xup_sparse", 4, i_segment );
   }
 
   /*\

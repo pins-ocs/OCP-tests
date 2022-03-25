@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -84,12 +84,12 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer OrbitTransfer::DboundaryConditionsDxxp_numRows() const { return 7; }
-  integer OrbitTransfer::DboundaryConditionsDxxp_numCols() const { return 10; }
-  integer OrbitTransfer::DboundaryConditionsDxxp_nnz()     const { return 8; }
+  integer OrbitTransfer::DbcDxxp_numRows() const { return 7; }
+  integer OrbitTransfer::DbcDxxp_numCols() const { return 10; }
+  integer OrbitTransfer::DbcDxxp_nnz()     const { return 8; }
 
   void
-  OrbitTransfer::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  OrbitTransfer::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -102,7 +102,7 @@ namespace OrbitTransferDefine {
 
 
   void
-  OrbitTransfer::DboundaryConditionsDxxp_sparse(
+  OrbitTransfer::DbcDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -129,7 +129,52 @@ namespace OrbitTransferDefine {
     result__[ 6   ] = 1.0 / t8 * t1 / t5 / 2;
     result__[ 7   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 8, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::D2bcD2xxp_numRows() const { return 10; }
+  integer OrbitTransfer::D2bcD2xxp_numCols() const { return 10; }
+  integer OrbitTransfer::D2bcD2xxp_nnz()     const { return 1; }
+
+  void
+  OrbitTransfer::D2bcD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 7   ; jIndex[0 ] = 7   ;
+  }
+
+
+  void
+  OrbitTransfer::D2bcD2xxp_sparse(
+    NodeType const         & LEFT__,
+    NodeType const         & RIGHT__,
+    P_const_pointer_type     P__,
+    OMEGA_const_pointer_type OMEGA__,
+    real_type                result__[]
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = 1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = 1;
+    result__[ 3   ] = 1;
+    result__[ 4   ] = 1;
+    result__[ 5   ] = 1;
+    real_type t1   = ModelPars[iM_mu];
+    real_type t2   = XR__[iX_r];
+    real_type t5   = sqrt(1.0 / t2 * t1);
+    real_type t8   = t2 * t2;
+    result__[ 6   ] = 1.0 / t8 * t1 / t5 / 2;
+    result__[ 7   ] = 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "D2bcD2xxp_sparse", 1, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

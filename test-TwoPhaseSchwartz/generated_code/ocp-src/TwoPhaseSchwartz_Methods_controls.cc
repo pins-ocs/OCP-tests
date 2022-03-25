@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -95,21 +95,21 @@ namespace TwoPhaseSchwartzDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
-    real_type t3   = pow(t1 - 1, 2);
-    real_type t5   = XM__[1];
-    real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
-    real_type t10  = bound1(1 - 9 * t3 - t8);
-    real_type t12  = bound2(-0.8e0 - t5);
-    real_type t14  = UM__[1];
-    real_type t15  = t14 * t14;
-    real_type t20  = UM__[0];
-    real_type t21  = t1 * t1;
-    real_type t29  = ModelPars[iM_T2];
-    real_type t31  = XM__[3];
-    real_type t36  = XM__[2] * XM__[2];
-    real_type t43  = u1Control(t20, -1, 1);
-    real_type result__ = t10 + t12 + t15 * ModelPars[iM_epsilon] + t5 * LM__[0] + (t20 - 0.1e0 * t5 * (2 * t21 + 1)) * LM__[1] + t31 * t29 * LM__[2] + (t14 - 0.1e0 * t31 * (2 * t36 + 1)) * t29 * LM__[3] + t43;
+    real_type t2   = UM__[1];
+    real_type t3   = t2 * t2;
+    real_type t6   = XM__[1];
+    real_type t9   = UM__[0];
+    real_type t10  = XM__[0];
+    real_type t11  = t10 * t10;
+    real_type t19  = ModelPars[iM_T2];
+    real_type t21  = XM__[3];
+    real_type t26  = XM__[2] * XM__[2];
+    real_type t34  = pow(t10 - 1, 2);
+    real_type t38  = pow(0.3333333333e1 * t6 - 0.1333333333e1, 2);
+    real_type t40  = bound1(1 - 9 * t34 - t38);
+    real_type t42  = bound2(-0.8e0 - t6);
+    real_type t43  = u1Control(t9, -1, 1);
+    real_type result__ = t3 * ModelPars[iM_epsilon] + t6 * LM__[0] + (t9 - 0.1e0 * t6 * (2 * t11 + 1)) * LM__[1] + t21 * t19 * LM__[2] + (t2 - 0.1e0 * t21 * (2 * t26 + 1)) * t19 * LM__[3] + t40 + t42 + t43;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

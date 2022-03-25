@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,24 +99,24 @@ namespace CrossroadDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[3];
-    real_type t2   = Tpositive(-t1);
-    real_type t3   = XM__[2];
-    real_type t4   = t3 * t3;
-    real_type t6   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
-    real_type t9   = XM__[1];
-    real_type t10  = t9 * t9;
-    real_type t11  = t10 * t10;
-    real_type t13  = kappa(XM__[0]);
-    real_type t14  = t13 * t13;
-    real_type t17  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
-    real_type t21  = AccBound(1.0 / t6 * t4 + 1.0 / t17 * t14 * t11 - 1);
-    real_type t22  = VelBound_min(-t9);
-    real_type t25  = VelBound_max(t9 - ModelPars[iM_v_max]);
-    real_type t26  = UM__[0];
+    real_type t1   = UM__[0];
+    real_type t2   = t1 * t1;
+    real_type t7   = XM__[3];
+    real_type t11  = XM__[1];
+    real_type t15  = XM__[2];
+    real_type t20  = Tpositive(-t7);
+    real_type t21  = t15 * t15;
+    real_type t23  = ModelPars[iM_along_max] * ModelPars[iM_along_max];
+    real_type t26  = t11 * t11;
     real_type t27  = t26 * t26;
-    real_type t44  = jerkControl(t26, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
-    real_type result__ = t2 + t21 + t22 + t25 + t1 * (ModelPars[iM_wJ] * t27 + ModelPars[iM_wT]) + t9 * t1 * LM__[0] + t3 * t1 * LM__[1] + t26 * t1 * LM__[2] + t44;
+    real_type t29  = kappa(XM__[0]);
+    real_type t30  = t29 * t29;
+    real_type t33  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
+    real_type t37  = AccBound(1.0 / t23 * t21 + 1.0 / t33 * t30 * t27 - 1);
+    real_type t38  = VelBound_min(-t11);
+    real_type t41  = VelBound_max(t11 - ModelPars[iM_v_max]);
+    real_type t44  = jerkControl(t1, ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
+    real_type result__ = t7 * (ModelPars[iM_wJ] * t2 + ModelPars[iM_wT]) + t11 * t7 * LM__[0] + t15 * t7 * LM__[1] + t1 * t7 * LM__[2] + t20 + t37 + t38 + t41 + t44;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

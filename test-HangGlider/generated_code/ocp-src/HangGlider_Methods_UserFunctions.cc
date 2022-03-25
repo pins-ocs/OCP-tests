@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_UserFunctions.cc                            |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -335,7 +335,7 @@ namespace HangGliderDefine {
     real_type t2   = w_D_1(xo__x, xo__y1);
     real_type t4   = w(xo__x, xo__y1);
     real_type t5   = w_D_1_2(xo__x, xo__y1);
-    real_type result__ = 2 * t1 * t2 + 2 * t4 * t5;
+    real_type result__ = 2 * t2 * t1 + 2 * t5 * t4;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -389,7 +389,7 @@ namespace HangGliderDefine {
   HangGlider::v2_D_3( real_type xo__x, real_type xo__x1, real_type xo__y1 ) const {
     real_type t1   = w(xo__x, xo__y1);
     real_type t2   = w_D_2(xo__x, xo__y1);
-    real_type result__ = 2 * t1 * t2;
+    real_type result__ = 2 * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

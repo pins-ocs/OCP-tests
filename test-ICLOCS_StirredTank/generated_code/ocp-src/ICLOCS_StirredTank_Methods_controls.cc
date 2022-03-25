@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -97,25 +97,25 @@ namespace ICLOCS_StirredTankDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = P__[iP_TimeSize];
-    real_type t4   = tfbound(ModelPars[iM_T_min] - t2);
+    real_type t1   = P__[iP_TimeSize];
+    real_type t3   = log(t1);
     real_type t5   = XM__[0];
-    real_type t6   = x1bound_min(-t5);
-    real_type t7   = t5 - 1;
-    real_type t8   = x1bound_max(t7);
+    real_type t8   = pow(t5 - ModelPars[iM_x1_f], 2);
     real_type t9   = XM__[1];
-    real_type t10  = x2bound_min(-t9);
-    real_type t12  = x2bound_max(t9 - 1);
-    real_type t14  = log(t2);
-    real_type t18  = pow(t5 - ModelPars[iM_x1_f], 2);
-    real_type t21  = pow(t9 - ModelPars[iM_x2_f], 2);
-    real_type t22  = UM__[0];
-    real_type t25  = pow(t22 - ModelPars[iM_u_f], 2);
-    real_type t32  = 1.0 / ModelPars[iM_theta];
-    real_type t39  = exp(-1.0 / t9 * ModelPars[iM_En]);
-    real_type t40  = t39 * t5 * ModelPars[iM_k];
-    real_type t55  = uControl(t22, 0, 2);
-    real_type result__ = t4 + t6 + t8 + t10 + t12 + (t14 * ModelPars[iM_w_time] + t18 + t21 + t25) * t2 + (-t32 * t7 - t40) * t2 * LM__[0] + (t32 * (ModelPars[iM_Tf] - t9) + t40 - (t9 - ModelPars[iM_Tc]) * t22 * ModelPars[iM_a]) * t2 * LM__[1] + t55;
+    real_type t12  = pow(t9 - ModelPars[iM_x2_f], 2);
+    real_type t13  = UM__[0];
+    real_type t16  = pow(t13 - ModelPars[iM_u_f], 2);
+    real_type t21  = 1 - t5;
+    real_type t23  = 1.0 / ModelPars[iM_theta];
+    real_type t30  = exp(-1.0 / t9 * ModelPars[iM_En]);
+    real_type t31  = t30 * t5 * ModelPars[iM_k];
+    real_type t48  = tfbound(ModelPars[iM_T_min] - t1);
+    real_type t49  = x1bound_min(-t5);
+    real_type t51  = x1bound_max(-t21);
+    real_type t52  = x2bound_min(-t9);
+    real_type t54  = x2bound_max(t9 - 1);
+    real_type t55  = uControl(t13, 0, 2);
+    real_type result__ = (t3 * ModelPars[iM_w_time] + t12 + t16 + t8) * t1 + (t23 * t21 - t31) * t1 * LM__[0] + (t23 * (ModelPars[iM_Tf] - t9) + t31 - (t9 - ModelPars[iM_Tc]) * t13 * ModelPars[iM_a]) * t1 * LM__[1] + t48 + t49 + t51 + t52 + t54 + t55;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

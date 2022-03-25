@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -62,6 +62,39 @@ using Mechatronix::MeshStd;
 
 
 namespace BangBangFmoduleDefine {
+
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  BangBangFmodule::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[2];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+
+    return res;
+  }
 
   /*\
    |  _  _            _ _ _            _
@@ -238,6 +271,29 @@ namespace BangBangFmoduleDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 4, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::D2mayerD2xxp_numRows() const { return 4; }
+  integer BangBangFmodule::D2mayerD2xxp_numCols() const { return 4; }
+  integer BangBangFmodule::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -268,35 +324,22 @@ namespace BangBangFmoduleDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFmodule::IPOPT_hess_numRows() const { return 4; }
-  integer BangBangFmodule::IPOPT_hess_numCols() const { return 4; }
-  integer BangBangFmodule::IPOPT_hess_nnz()     const { return 0; }
+  integer BangBangFmodule::D2lagrangeD2xup_numRows() const { return 4; }
+  integer BangBangFmodule::D2lagrangeD2xup_numCols() const { return 4; }
+  integer BangBangFmodule::D2lagrangeD2xup_nnz()     const { return 0; }
 
   void
-  BangBangFmodule::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFmodule::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  BangBangFmodule::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  BangBangFmodule::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
     // EMPTY!
@@ -462,7 +505,7 @@ namespace BangBangFmoduleDefine {
    |                                                    |___/
   \*/
 
-  integer BangBangFmodule::post_numEqns() const { return 3; }
+  integer BangBangFmodule::post_numEqns() const { return 5; }
 
   void
   BangBangFmodule::post_eval(
@@ -480,8 +523,10 @@ namespace BangBangFmoduleDefine {
     result__[ 0   ] = controlP(t1, 0, ModelPars[iM_FpMax]);
     real_type t3   = U__[iU_Fm];
     result__[ 1   ] = controlM(t3, 0, ModelPars[iM_FmMax]);
-    result__[ 2   ] = t1 - t3;
-    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
+    result__[ 2   ] = result__[0];
+    result__[ 3   ] = result__[1];
+    result__[ 4   ] = t1 - t3;
+    Mechatronix::check_in_segment( result__, "post_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -84,21 +84,21 @@ namespace AlpRiderDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
-    real_type t2   = t1 * t1;
-    real_type t3   = XM__[1];
-    real_type t4   = t3 * t3;
-    real_type t5   = XM__[2];
-    real_type t6   = t5 * t5;
-    real_type t7   = XM__[3];
-    real_type t8   = t7 * t7;
-    real_type t11  = q(QM__[0]);
-    real_type t13  = Ybound(t11 - t2 - t4 - t6 - t8);
-    real_type t18  = UM__[0];
-    real_type t19  = t18 * t18;
-    real_type t21  = UM__[1];
-    real_type t22  = t21 * t21;
-    real_type result__ = t13 * (t2 + t4 + t6 + t8 + 1) + (t2 + t4 + t6 + t8) * ModelPars[iM_W] + t19 / 100 + t22 / 100 + (-10 * t1 + t18 + t21) * LM__[0] + (-2 * t3 + t18 + 2 * t21) * LM__[1] + (-3 * t5 + 5 * t7 + t18 - t21) * LM__[2] + (5 * t5 - 3 * t7 + t18 + 3 * t21) * LM__[3];
+    real_type t2   = XM__[0];
+    real_type t3   = t2 * t2;
+    real_type t4   = XM__[1];
+    real_type t5   = t4 * t4;
+    real_type t6   = XM__[2];
+    real_type t7   = t6 * t6;
+    real_type t8   = XM__[3];
+    real_type t9   = t8 * t8;
+    real_type t12  = UM__[0];
+    real_type t13  = t12 * t12;
+    real_type t15  = UM__[1];
+    real_type t16  = t15 * t15;
+    real_type t40  = q(QM__[0]);
+    real_type t42  = Ybound(t40 - t3 - t5 - t7 - t9);
+    real_type result__ = (t3 + t5 + t7 + t9) * ModelPars[iM_W] + t13 / 100 + t16 / 100 + (-10 * t2 + t12 + t15) * LM__[0] + (-2 * t4 + t12 + 2 * t15) * LM__[1] + (-3 * t6 + 5 * t8 + t12 - t15) * LM__[2] + (5 * t6 - 3 * t8 + t12 + 3 * t15) * LM__[3] + t42 * (t3 + t5 + t7 + t9 + 1);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

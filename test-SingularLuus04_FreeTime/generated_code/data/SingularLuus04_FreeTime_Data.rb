@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus04_FreeTime_Data.rb                                #
 #                                                                       #
-#  version: 1.0   date 19/3/2022                                        #
+#  version: 1.0   date 25/3/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-u_epsi = 0.01
-u_tol  = 0.01
 theta0 = 1
 theta  = theta0
+u_tol  = 0.01
+u_epsi = 0.01
 
 mechatronix do |data|
 
@@ -37,6 +37,8 @@ mechatronix do |data|
   data.InfoLevel = 4
 
   data.Use_control_penalties_in_adjoint_equations = false
+
+  data.Max_penalty_value = 1000
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -209,13 +211,13 @@ mechatronix do |data|
       :check_angle  => 120,
 
       # check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
-      :check_ratio_norm_two_f => 1.4,
+      :check_ratio_norm_two_f => 2,
       # check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
-      :check_ratio_norm_two_d => 1.4,
+      :check_ratio_norm_two_d => 2,
       # check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
-      :check_ratio_norm_one_f => 1.4,
+      :check_ratio_norm_one_f => 2,
       # check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
-      :check_ratio_norm_one_d => 1.4,
+      :check_ratio_norm_one_d => 2,
     },
 
     :Hyness => {
@@ -345,8 +347,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 5000,
+        :length => 1,
       },
     ],
   };

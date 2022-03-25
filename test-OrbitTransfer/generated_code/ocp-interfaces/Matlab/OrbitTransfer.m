@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: OrbitTransfer.m                                                %
 %                                                                       %
-%  version: 1.0   date 19/3/2022                                        %
+%  version: 1.0   date 25/3/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -769,8 +769,15 @@ classdef OrbitTransfer < handle
     % ---------------------------------------------------------------------
     function J = eval_DbcDxxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       J = OrbitTransfer_Mex( ...
-        'DboundaryConditionsDxxp', self.objectHandle, ...
+        'DbcDxxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function J = eval_D2bcD2xxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega )
+      J = OrbitTransfer_Mex( ...
+        'D2bcD2xxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega ...
       );
     end
     % ---------------------------------------------------------------------
@@ -786,9 +793,43 @@ classdef OrbitTransfer < handle
       );
     end
     % ---------------------------------------------------------------------
-    function IPOPT_hess = eval_IPOPT_hess( self, iseg, q, x, lambda, v, u, pars, sigma )
-      IPOPT_hess = OrbitTransfer_Mex( ...
-        'IPOPT_hess', self.objectHandle, iseg, q, x, lambda, v, u, pars, sigma ...
+    function D2lagrangeD2xup = eval_D2lagrangeD2xup( self, iseg, q, x, u, pars )
+      D2lagrangeD2xup = OrbitTransfer_Mex( ...
+        'D2lagrangeD2xup', self.objectHandle, iseg, q, x, u, pars ...
+      );
+    end
+    %
+    %   ____  _               _
+    %  |  _ \(_)_ __ ___  ___| |_
+    %  | | | | | '__/ _ \/ __| __|
+    %  | |_| | | | |  __/ (__| |_
+    %  |____/|_|_|  \___|\___|\__|
+    %
+    % ---------------------------------------------------------------------
+    function fd_ode = eval_fd_ode( self, iseg_L, q_L, x_L, ...
+                                         iseg_R, q_R, x_R, ...
+                                         U, pars )
+      fd_ode = OrbitTransfer_Mex( ...
+        'fd_ode', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function Dfd_odeDxxup = eval_Dfd_odeDxxup( self, iseg_L, q_L, x_L, ...
+                                                     iseg_R, q_R, x_R, ...
+                                                     U, pars )
+      Dfd_odeDxxup = OrbitTransfer_Mex( ...
+        'Dfd_odeDxxup', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function D2fd_odeD2xxup = eval_D2fd_odeD2xxup( self, iseg_L, q_L, x_L, ...
+                                                         iseg_R, q_R, x_R, ...
+                                                         U, pars, lambda )
+      D2fd_odeD2xxup = OrbitTransfer_Mex( ...
+        'D2fd_odeD2xxup', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ...
       );
     end
     % ---------------------------------------------------------------------
@@ -810,13 +851,36 @@ classdef OrbitTransfer < handle
       );
     end
     % ---------------------------------------------------------------------
+    function D2mayerD2xxp = eval_D2mayerD2xxp( self, iseg_L, q_L, x_L, ...
+                                                     iseg_R, q_R, x_R, ...
+                                                     pars )
+      D2mayerD2xxp = OrbitTransfer_Mex( ...
+        'D2mayerD2xxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
     function c = eval_c( self, iseg, q, x, u, pars )
       %
       % Evaluate contraints c(x,u,p) <= 0
       %
       c = OrbitTransfer_Mex(...
-        'LTargs', self.objectHandle, iseg, q, x, u, pars...
+        'LTargs', self.objectHandle, iseg, q, x, u, pars ...
       );
+    end
+    % ---------------------------------------------------------------------
+    function c = eval_fd_c( self, iseg_L, q_L, x_L, ...
+                                  iseg_R, q_R, x_R, ...
+                                  u, pars )
+      %
+      % Evaluate contraints c(x_M,u,p) <= 0
+      %
+      if iseg_L ~= iseg_R
+        error('in eval_fd_c iseg_L(%d) must be equal to iseg_R(%d)',iseg_L,iseg_R);
+      end
+      q = (q_L+q_R)./2;
+      x = (x_L+x_R)./2;
+      c = self.eval_c(iseg_L,q,x,u,pars);
     end
     % ---------------------------------------------------------------------
     function Jc = eval_DcDxup( self, iseg, q, x, u, pars )
@@ -824,7 +888,33 @@ classdef OrbitTransfer < handle
       % Evaluate jacobian of constraints c(x,u,p) <= 0
       %
       Jc = OrbitTransfer_Mex(...
-        'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars...
+        'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function Jc = eval_Dfd_cDxxup( self, iseg_L, q_L, x_L, ...
+                                         iseg_R, q_R, x_R, ...
+                                         u, pars )
+      %
+      % Evaluate jacobian of constraints c(x,u,p) <= 0
+      %
+      if iseg_L ~= iseg_R
+        error('in eval_Dfd_cDxxup iseg_L(%d) must be equal to iseg_R(%d)',iseg_L,iseg_R);
+      end
+      q      = (q_L+q_R)./2;
+      x      = (x_L+x_R)./2;
+      Jc_pre = self.eval_DcDxup( iseg_L, q, x, u, pars );
+      nx     = length(x);
+      Jx     = 0.5*Jc_pre(:,1:nx);
+      Jc     = [Jx,Jx,Jc_pre(:,nx+1:end)];
+    end
+    % ---------------------------------------------------------------------
+    function Hc = eval_D2cD2xup( self, iseg, q, x, u, pars, omega )
+      %
+      % Evaluate hessian of constraints omega . c(x,u,p) <= 0
+      %
+      Hc = OrbitTransfer_Mex(...
+        'D2LTargsD2xup', self.objectHandle, iseg, q, x, u, pars, omega ...
       );
     end
     %
@@ -1122,8 +1212,12 @@ classdef OrbitTransfer < handle
       res = OrbitTransfer_Mex('eval_DadjointBCDxxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DboundaryConditionsDxxp_pattern( self )
-      res = OrbitTransfer_Mex('eval_DboundaryConditionsDxxp_pattern', self.objectHandle );
+    function res = DbcDxxp_pattern( self )
+      res = OrbitTransfer_Mex('eval_DbcDxxp_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = D2bcD2xxp_pattern( self )
+      res = OrbitTransfer_Mex('eval_D2bcD2xxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = Drhs_odeDxup_pattern( self )
@@ -1136,10 +1230,6 @@ classdef OrbitTransfer < handle
     % ---------------------------------------------------------------------
     function res = DjumpDxlxlp_pattern( self )
       res = OrbitTransfer_Mex('eval_DjumpDxlxlp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = IPOPT_hess_pattern( self )
-      res = OrbitTransfer_Mex('eval_IPOPT_hess_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DHxDxp_pattern( self )
@@ -1192,6 +1282,10 @@ classdef OrbitTransfer < handle
     % ---------------------------------------------------------------------
     function res = DLTargsDxup_pattern( self )
       res = OrbitTransfer_Mex('eval_DLTargsDxup_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = D2LTargsD2xup_pattern( self )
+      res = OrbitTransfer_Mex('eval_D2LTargsD2xup_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DnuDxp_pattern( self )

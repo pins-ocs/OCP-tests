@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -414,7 +414,7 @@ namespace BangBangFtminDefine {
     real_type t1   = P__[iP_T];
     real_type t3   = ALIAS_Fcontrol_D_1_1(U__[iU_F], -1, 1);
     real_type t5   = t1 * t1;
-    result__[ 0   ] = t3 * t1 + 2 * t5;
+    result__[ 0   ] = t1 * t3 + 2 * t5;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

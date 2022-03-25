@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_boundary_conditions.cc                    |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -93,12 +93,12 @@ namespace BikeSteeringDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BikeSteering::DboundaryConditionsDxxp_numRows() const { return 4; }
-  integer BikeSteering::DboundaryConditionsDxxp_numCols() const { return 6; }
-  integer BikeSteering::DboundaryConditionsDxxp_nnz()     const { return 4; }
+  integer BikeSteering::DbcDxxp_numRows() const { return 4; }
+  integer BikeSteering::DbcDxxp_numCols() const { return 6; }
+  integer BikeSteering::DbcDxxp_nnz()     const { return 4; }
 
   void
-  BikeSteering::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  BikeSteering::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
@@ -107,7 +107,7 @@ namespace BikeSteeringDefine {
 
 
   void
-  BikeSteering::DboundaryConditionsDxxp_sparse(
+  BikeSteering::DbcDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -126,7 +126,31 @@ namespace BikeSteeringDefine {
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 4, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 4, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BikeSteering::D2bcD2xxp_numRows() const { return 6; }
+  integer BikeSteering::D2bcD2xxp_numCols() const { return 6; }
+  integer BikeSteering::D2bcD2xxp_nnz()     const { return 0; }
+
+  void
+  BikeSteering::D2bcD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BikeSteering::D2bcD2xxp_sparse(
+    NodeType const         & LEFT__,
+    NodeType const         & RIGHT__,
+    P_const_pointer_type     P__,
+    OMEGA_const_pointer_type OMEGA__,
+    real_type                result__[]
+  ) const {
+    // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

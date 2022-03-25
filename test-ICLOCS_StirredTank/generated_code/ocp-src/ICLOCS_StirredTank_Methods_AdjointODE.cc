@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -533,6 +533,30 @@ namespace ICLOCS_StirredTankDefine {
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 5, i_segment );
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_StirredTank::D2LTargsD2xup_numRows() const { return 4; }
+  integer ICLOCS_StirredTank::D2LTargsD2xup_numCols() const { return 4; }
+  integer ICLOCS_StirredTank::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  ICLOCS_StirredTank::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_StirredTank::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -644,7 +668,7 @@ namespace ICLOCS_StirredTankDefine {
     result__[ 0   ] = 2 * t1;
     real_type t2   = L__[iL_lambda1__xo];
     real_type t4   = ModelPars[iM_k];
-    real_type t5   = t4 * t2 * t1;
+    real_type t5   = t4 * t1 * t2;
     real_type t6   = ModelPars[iM_En];
     real_type t7   = X__[iX_x2];
     real_type t8   = t7 * t7;

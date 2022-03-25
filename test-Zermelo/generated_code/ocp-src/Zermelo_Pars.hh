@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Pars.hh                                                |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -30,7 +30,7 @@
 #define numOMEGAvars             7
 #define numQvars                 1
 #define numPvars                 0
-#define numPostProcess           0
+#define numPostProcess           1
 #define numIntegratedPostProcess 1
 #define numContinuationSteps     0
 

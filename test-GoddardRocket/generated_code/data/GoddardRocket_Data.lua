@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,23 +20,23 @@
 -- User Header
 
 -- Auxiliary values
-epsi_T    = 0.01
-epsi_v    = 0.01
-h_i       = 1
-epsi_mass = 0.01
-tol_v     = 0.01
 tol_mass  = 0.01
+h_i       = 1
+mc        = 0.6
+tol_TS    = 0.01
 tol_T     = 0.01
+epsi_v    = 0.01
+epsi_mass = 0.01
+epsi_T    = 0.01
 m_i       = 1
+m_f       = mc*m_i
 g0        = 1
-Tmax      = 3.5*g0*m_i
 c         = 0.5*(g0*h_i)**(1/2.0)
+tol_v     = 0.01
+Tmax      = 3.5*g0*m_i
+epsi_TS   = 0.01
 vc        = 620
 Dc        = 0.5*vc*m_i/g0
-tol_TS    = 0.01
-mc        = 0.6
-m_f       = mc*m_i
-epsi_TS   = 0.01
 
 content = {
 
@@ -50,6 +50,8 @@ content = {
   InfoLevel = 4,
 
   Use_control_penalties_in_adjoint_equations = false,
+
+  Max_penalty_value = 1000,
 
   --[[
    _   _                        _
@@ -211,13 +213,13 @@ content = {
       check_angle = 120,
 
       -- check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
-      check_ratio_norm_two_f = 1.4,
+      check_ratio_norm_two_f = 2,
       -- check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
-      check_ratio_norm_two_d = 1.4,
+      check_ratio_norm_two_d = 2,
       -- check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
-      check_ratio_norm_one_f = 1.4,
+      check_ratio_norm_one_f = 2,
       -- check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
-      check_ratio_norm_one_d = 1.4,
+      check_ratio_norm_one_d = 2,
     },
 
     Hyness = {
@@ -318,7 +320,10 @@ content = {
   },
 
   Constraints = {
-  -- ConstraintLT
+  --  _  _____
+  -- | ||_   _|
+  -- | |__| |
+  -- |____|_|
   -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DLessThan

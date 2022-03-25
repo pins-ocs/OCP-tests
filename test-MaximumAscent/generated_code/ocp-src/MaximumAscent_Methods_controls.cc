@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,7 +94,7 @@ namespace MaximumAscentDefine {
     real_type t28  = sin(t27);
     real_type t34  = t12 * t9;
     real_type t36  = cos(t27);
-    real_type result__ = t6 * t4 * LM__[0] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * LM__[1] + (-t34 * t4 * t6 + t26 * t36) * LM__[2] + t34 * t4 * LM__[3];
+    real_type result__ = t6 * t4 * LM__[0] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * LM__[1] + (-t34 * t6 * t4 + t36 * t26) * LM__[2] + t34 * t4 * LM__[3];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

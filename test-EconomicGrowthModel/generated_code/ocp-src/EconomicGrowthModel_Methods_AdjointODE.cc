@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -483,6 +483,30 @@ namespace EconomicGrowthModelDefine {
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel::D2LTargsD2xup_numRows() const { return 4; }
+  integer EconomicGrowthModel::D2LTargsD2xup_numCols() const { return 4; }
+  integer EconomicGrowthModel::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  EconomicGrowthModel::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  EconomicGrowthModel::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -591,9 +615,9 @@ namespace EconomicGrowthModelDefine {
     result__[ 3   ] = result__[1];
     real_type t21  = Q_D_2_2(t4, t5);
     real_type t22  = t7 * t21;
-    result__[ 4   ] = t12 * t22 + t22 * t3;
+    result__[ 4   ] = t22 * t12 + t22 * t3;
     real_type t25  = Q_D_2(t4, t5);
-    result__[ 5   ] = t12 * t25 + t25 * t3;
+    result__[ 5   ] = t25 * t12 + t25 * t3;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
     if ( m_debug )

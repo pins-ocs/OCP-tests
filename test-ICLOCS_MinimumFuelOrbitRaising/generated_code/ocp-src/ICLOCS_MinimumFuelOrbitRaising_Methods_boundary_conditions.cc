@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_boundary_conditions.cc  |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -82,12 +82,12 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_MinimumFuelOrbitRaising::DboundaryConditionsDxxp_numRows() const { return 5; }
-  integer ICLOCS_MinimumFuelOrbitRaising::DboundaryConditionsDxxp_numCols() const { return 6; }
-  integer ICLOCS_MinimumFuelOrbitRaising::DboundaryConditionsDxxp_nnz()     const { return 6; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DbcDxxp_numRows() const { return 5; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DbcDxxp_numCols() const { return 6; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DbcDxxp_nnz()     const { return 6; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -98,7 +98,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DboundaryConditionsDxxp_sparse(
+  ICLOCS_MinimumFuelOrbitRaising::DbcDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -120,7 +120,49 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     result__[ 4   ] = t1 * t1;
     result__[ 5   ] = 2 * t1 * XR__[iX_r];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 6, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 6, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_MinimumFuelOrbitRaising::D2bcD2xxp_numRows() const { return 6; }
+  integer ICLOCS_MinimumFuelOrbitRaising::D2bcD2xxp_numCols() const { return 6; }
+  integer ICLOCS_MinimumFuelOrbitRaising::D2bcD2xxp_nnz()     const { return 3; }
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::D2bcD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 3   ; jIndex[0 ] = 5   ;
+    iIndex[1 ] = 5   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 5   ; jIndex[2 ] = 5   ;
+  }
+
+
+  void
+  ICLOCS_MinimumFuelOrbitRaising::D2bcD2xxp_sparse(
+    NodeType const         & LEFT__,
+    NodeType const         & RIGHT__,
+    P_const_pointer_type     P__,
+    OMEGA_const_pointer_type OMEGA__,
+    real_type                result__[]
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = 1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = 1;
+    result__[ 3   ] = 1;
+    real_type t1   = XR__[iX_vt];
+    result__[ 4   ] = t1 * t1;
+    result__[ 5   ] = 2 * t1 * XR__[iX_r];
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "D2bcD2xxp_sparse", 3, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

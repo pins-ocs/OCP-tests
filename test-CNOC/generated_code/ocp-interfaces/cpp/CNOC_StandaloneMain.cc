@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,13 +50,13 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
+    real_type v_nom = 0.173;
+    real_type mesh_segments = 100;
+    real_type jn_max = 65;
+    real_type path_following_tolerance = 1.0e-05;
     real_type js_max = 30;
     real_type js_min = -50;
-    real_type mesh_segments = 100;
-    real_type v_nom = 0.173;
-    real_type path_following_tolerance = 1.0e-05;
     real_type pf_error = path_following_tolerance;
-    real_type jn_max = 65;
     real_type deltaFeed = v_nom;
     integer InfoLevel = 4;
 
@@ -166,18 +166,18 @@ main() {
     data_Parameters["vs_i"] = 0;
 
     // Post Processing Parameters
+    data_Parameters["an_max"] = 1.2;
+    data_Parameters["as_max"] = 2.1;
+    data_Parameters["ax_max"] = 2.1;
+    data_Parameters["ay_max"] = 2.1;
     data_Parameters["pf_error"] = pf_error;
+    data_Parameters["path_following_tolerance"] = path_following_tolerance;
 
     // User Function Parameters
 
     // Continuation Parameters
 
     // Constraints Parameters
-    data_Parameters["an_max"] = 1.2;
-    data_Parameters["as_max"] = 2.1;
-    data_Parameters["ax_max"] = 2.1;
-    data_Parameters["ay_max"] = 2.1;
-    data_Parameters["path_following_tolerance"] = path_following_tolerance;
 
     // functions mapped on objects
 

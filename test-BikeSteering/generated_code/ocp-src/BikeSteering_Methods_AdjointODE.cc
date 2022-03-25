@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -486,6 +486,30 @@ namespace BikeSteeringDefine {
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BikeSteering::D2LTargsD2xup_numRows() const { return 4; }
+  integer BikeSteering::D2LTargsD2xup_numCols() const { return 4; }
+  integer BikeSteering::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  BikeSteering::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BikeSteering::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -519,7 +543,7 @@ namespace BikeSteeringDefine {
     real_type t7   = ModelPars[iM_m] * ModelPars[iM_g];
     real_type t8   = ModelPars[iM_h];
     result__[ 1   ] = t8 * t7 * t2 * t3;
-    result__[ 2   ] = X__[iX_omega] * t1 + (X__[iX_phi] * t8 * t7 - U__[iU_Fy] * t8) * t3;
+    result__[ 2   ] = X__[iX_omega] * t1 + (t7 * t8 * X__[iX_phi] - U__[iU_Fy] * t8) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }

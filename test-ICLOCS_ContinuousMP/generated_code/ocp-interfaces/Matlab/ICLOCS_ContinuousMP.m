@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_ContinuousMP.m                                          %
 %                                                                       %
-%  version: 1.0   date 19/3/2022                                        %
+%  version: 1.0   date 25/3/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -1394,6 +1394,726 @@ classdef ICLOCS_ContinuousMP < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function res = post_processing_u1Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u1Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u1Limitation_min' );
+    end
+    function res = post_processing_u1Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u1Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u1Limitation_max' );
+    end
+    function res = post_processing_u2Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u2Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u2Limitation_min' );
+    end
+    function res = post_processing_u2Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u2Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u2Limitation_max' );
+    end
+    function res = post_processing_u3Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u3Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u3Limitation_min' );
+    end
+    function res = post_processing_u3Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u3Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u3Limitation_max' );
+    end
+    function res = post_processing_u4Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u4Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u4Limitation_min' );
+    end
+    function res = post_processing_u4Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u4Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u4Limitation_max' );
+    end
+    function res = post_processing_u5Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u5Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u5Limitation_min' );
+    end
+    function res = post_processing_u5Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u5Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u5Limitation_max' );
+    end
+    function res = post_processing_u6Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u6Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u6Limitation_min' );
+    end
+    function res = post_processing_u6Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u6Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u6Limitation_max' );
+    end
+    function res = post_processing_u7Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u7Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u7Limitation_min' );
+    end
+    function res = post_processing_u7Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u7Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u7Limitation_max' );
+    end
+    function res = post_processing_u8Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u8Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u8Limitation_min' );
+    end
+    function res = post_processing_u8Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u8Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u8Limitation_max' );
+    end
+    function res = post_processing_u9Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u9Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u9Limitation_min' );
+    end
+    function res = post_processing_u9Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u9Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u9Limitation_max' );
+    end
+    function res = post_processing_u10Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u10Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u10Limitation_min' );
+    end
+    function res = post_processing_u10Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u10Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u10Limitation_max' );
+    end
+    function res = post_processing_u11Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u11Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u11Limitation_min' );
+    end
+    function res = post_processing_u11Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u11Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u11Limitation_max' );
+    end
+    function res = post_processing_u12Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u12Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u12Limitation_min' );
+    end
+    function res = post_processing_u12Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u12Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u12Limitation_max' );
+    end
+    function res = post_processing_u13Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u13Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u13Limitation_min' );
+    end
+    function res = post_processing_u13Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u13Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u13Limitation_max' );
+    end
+    function res = post_processing_u14Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u14Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u14Limitation_min' );
+    end
+    function res = post_processing_u14Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u14Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u14Limitation_max' );
+    end
+    function res = post_processing_u15Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u15Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u15Limitation_min' );
+    end
+    function res = post_processing_u15Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u15Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u15Limitation_max' );
+    end
+    function res = post_processing_u16Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u16Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u16Limitation_min' );
+    end
+    function res = post_processing_u16Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u16Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u16Limitation_max' );
+    end
+    function res = post_processing_u17Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u17Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u17Limitation_min' );
+    end
+    function res = post_processing_u17Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u17Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u17Limitation_max' );
+    end
+    function res = post_processing_u18Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u18Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u18Limitation_min' );
+    end
+    function res = post_processing_u18Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u18Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u18Limitation_max' );
+    end
+    function res = post_processing_u19Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u19Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u19Limitation_min' );
+    end
+    function res = post_processing_u19Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u19Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u19Limitation_max' );
+    end
+    function res = post_processing_u20Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: u20Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u20Limitation_min' );
+    end
+    function res = post_processing_u20Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: u20Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'u20Limitation_max' );
+    end
+    function res = post_processing_xx1Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx1Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx1Limitation_min' );
+    end
+    function res = post_processing_xx1Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx1Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx1Limitation_max' );
+    end
+    function res = post_processing_yy1Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy1Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy1Limitation_min' );
+    end
+    function res = post_processing_yy1Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy1Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy1Limitation_max' );
+    end
+    function res = post_processing_xx2Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx2Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx2Limitation_min' );
+    end
+    function res = post_processing_xx2Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx2Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx2Limitation_max' );
+    end
+    function res = post_processing_yy2Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy2Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy2Limitation_min' );
+    end
+    function res = post_processing_yy2Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy2Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy2Limitation_max' );
+    end
+    function res = post_processing_xx3Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx3Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx3Limitation_min' );
+    end
+    function res = post_processing_xx3Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx3Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx3Limitation_max' );
+    end
+    function res = post_processing_yy3Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy3Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy3Limitation_min' );
+    end
+    function res = post_processing_yy3Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy3Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy3Limitation_max' );
+    end
+    function res = post_processing_xx4Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx4Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx4Limitation_min' );
+    end
+    function res = post_processing_xx4Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx4Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx4Limitation_max' );
+    end
+    function res = post_processing_yy4Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy4Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy4Limitation_min' );
+    end
+    function res = post_processing_yy4Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy4Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy4Limitation_max' );
+    end
+    function res = post_processing_xx5Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx5Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx5Limitation_min' );
+    end
+    function res = post_processing_xx5Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx5Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx5Limitation_max' );
+    end
+    function res = post_processing_yy5Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy5Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy5Limitation_min' );
+    end
+    function res = post_processing_yy5Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy5Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy5Limitation_max' );
+    end
+    function res = post_processing_xx6Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx6Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx6Limitation_min' );
+    end
+    function res = post_processing_xx6Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx6Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx6Limitation_max' );
+    end
+    function res = post_processing_yy6Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy6Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy6Limitation_min' );
+    end
+    function res = post_processing_yy6Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy6Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy6Limitation_max' );
+    end
+    function res = post_processing_xx7Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx7Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx7Limitation_min' );
+    end
+    function res = post_processing_xx7Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx7Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx7Limitation_max' );
+    end
+    function res = post_processing_yy7Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy7Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy7Limitation_min' );
+    end
+    function res = post_processing_yy7Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy7Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy7Limitation_max' );
+    end
+    function res = post_processing_xx8Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx8Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx8Limitation_min' );
+    end
+    function res = post_processing_xx8Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx8Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx8Limitation_max' );
+    end
+    function res = post_processing_yy8Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy8Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy8Limitation_min' );
+    end
+    function res = post_processing_yy8Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy8Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy8Limitation_max' );
+    end
+    function res = post_processing_xx9Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx9Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx9Limitation_min' );
+    end
+    function res = post_processing_xx9Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx9Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx9Limitation_max' );
+    end
+    function res = post_processing_yy9Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy9Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy9Limitation_min' );
+    end
+    function res = post_processing_yy9Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy9Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy9Limitation_max' );
+    end
+    function res = post_processing_xx10Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx10Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx10Limitation_min' );
+    end
+    function res = post_processing_xx10Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx10Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx10Limitation_max' );
+    end
+    function res = post_processing_yy10Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy10Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy10Limitation_min' );
+    end
+    function res = post_processing_yy10Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy10Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy10Limitation_max' );
+    end
+    function res = post_processing_xx11Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx11Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx11Limitation_min' );
+    end
+    function res = post_processing_xx11Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx11Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx11Limitation_max' );
+    end
+    function res = post_processing_yy11Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy11Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy11Limitation_min' );
+    end
+    function res = post_processing_yy11Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy11Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy11Limitation_max' );
+    end
+    function res = post_processing_xx12Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx12Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx12Limitation_min' );
+    end
+    function res = post_processing_xx12Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx12Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx12Limitation_max' );
+    end
+    function res = post_processing_yy12Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy12Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy12Limitation_min' );
+    end
+    function res = post_processing_yy12Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy12Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy12Limitation_max' );
+    end
+    function res = post_processing_xx13Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx13Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx13Limitation_min' );
+    end
+    function res = post_processing_xx13Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx13Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx13Limitation_max' );
+    end
+    function res = post_processing_yy13Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy13Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy13Limitation_min' );
+    end
+    function res = post_processing_yy13Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy13Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy13Limitation_max' );
+    end
+    function res = post_processing_xx14Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx14Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx14Limitation_min' );
+    end
+    function res = post_processing_xx14Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx14Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx14Limitation_max' );
+    end
+    function res = post_processing_yy14Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy14Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy14Limitation_min' );
+    end
+    function res = post_processing_yy14Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy14Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy14Limitation_max' );
+    end
+    function res = post_processing_xx15Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx15Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx15Limitation_min' );
+    end
+    function res = post_processing_xx15Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx15Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx15Limitation_max' );
+    end
+    function res = post_processing_yy15Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy15Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy15Limitation_min' );
+    end
+    function res = post_processing_yy15Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy15Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy15Limitation_max' );
+    end
+    function res = post_processing_xx16Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx16Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx16Limitation_min' );
+    end
+    function res = post_processing_xx16Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx16Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx16Limitation_max' );
+    end
+    function res = post_processing_yy16Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy16Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy16Limitation_min' );
+    end
+    function res = post_processing_yy16Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy16Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy16Limitation_max' );
+    end
+    function res = post_processing_xx17Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx17Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx17Limitation_min' );
+    end
+    function res = post_processing_xx17Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx17Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx17Limitation_max' );
+    end
+    function res = post_processing_yy17Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy17Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy17Limitation_min' );
+    end
+    function res = post_processing_yy17Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy17Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy17Limitation_max' );
+    end
+    function res = post_processing_xx18Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx18Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx18Limitation_min' );
+    end
+    function res = post_processing_xx18Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx18Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx18Limitation_max' );
+    end
+    function res = post_processing_yy18Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy18Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy18Limitation_min' );
+    end
+    function res = post_processing_yy18Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy18Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy18Limitation_max' );
+    end
+    function res = post_processing_xx19Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx19Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx19Limitation_min' );
+    end
+    function res = post_processing_xx19Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx19Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx19Limitation_max' );
+    end
+    function res = post_processing_yy19Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy19Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy19Limitation_min' );
+    end
+    function res = post_processing_yy19Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy19Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy19Limitation_max' );
+    end
+    function res = post_processing_xx20Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: xx20Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx20Limitation_min' );
+    end
+    function res = post_processing_xx20Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: xx20Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'xx20Limitation_max' );
+    end
+    function res = post_processing_yy20Limitation_min( self )
+      %
+      % Return the solution for the post processing variable: yy20Limitation_min
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy20Limitation_min' );
+    end
+    function res = post_processing_yy20Limitation_max( self )
+      %
+      % Return the solution for the post processing variable: yy20Limitation_max
+      %
+      res = ICLOCS_ContinuousMP_Mex( 'get_solution', self.objectHandle, 'yy20Limitation_max' );
+    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -1639,8 +2359,15 @@ classdef ICLOCS_ContinuousMP < handle
     % ---------------------------------------------------------------------
     function J = eval_DbcDxxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       J = ICLOCS_ContinuousMP_Mex( ...
-        'DboundaryConditionsDxxp', self.objectHandle, ...
+        'DbcDxxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function J = eval_D2bcD2xxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega )
+      J = ICLOCS_ContinuousMP_Mex( ...
+        'D2bcD2xxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega ...
       );
     end
     % ---------------------------------------------------------------------
@@ -1656,9 +2383,43 @@ classdef ICLOCS_ContinuousMP < handle
       );
     end
     % ---------------------------------------------------------------------
-    function IPOPT_hess = eval_IPOPT_hess( self, iseg, q, x, lambda, v, u, pars, sigma )
-      IPOPT_hess = ICLOCS_ContinuousMP_Mex( ...
-        'IPOPT_hess', self.objectHandle, iseg, q, x, lambda, v, u, pars, sigma ...
+    function D2lagrangeD2xup = eval_D2lagrangeD2xup( self, iseg, q, x, u, pars )
+      D2lagrangeD2xup = ICLOCS_ContinuousMP_Mex( ...
+        'D2lagrangeD2xup', self.objectHandle, iseg, q, x, u, pars ...
+      );
+    end
+    %
+    %   ____  _               _
+    %  |  _ \(_)_ __ ___  ___| |_
+    %  | | | | | '__/ _ \/ __| __|
+    %  | |_| | | | |  __/ (__| |_
+    %  |____/|_|_|  \___|\___|\__|
+    %
+    % ---------------------------------------------------------------------
+    function fd_ode = eval_fd_ode( self, iseg_L, q_L, x_L, ...
+                                         iseg_R, q_R, x_R, ...
+                                         U, pars )
+      fd_ode = ICLOCS_ContinuousMP_Mex( ...
+        'fd_ode', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function Dfd_odeDxxup = eval_Dfd_odeDxxup( self, iseg_L, q_L, x_L, ...
+                                                     iseg_R, q_R, x_R, ...
+                                                     U, pars )
+      Dfd_odeDxxup = ICLOCS_ContinuousMP_Mex( ...
+        'Dfd_odeDxxup', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function D2fd_odeD2xxup = eval_D2fd_odeD2xxup( self, iseg_L, q_L, x_L, ...
+                                                         iseg_R, q_R, x_R, ...
+                                                         U, pars, lambda )
+      D2fd_odeD2xxup = ICLOCS_ContinuousMP_Mex( ...
+        'D2fd_odeD2xxup', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ...
       );
     end
     % ---------------------------------------------------------------------
@@ -1680,13 +2441,36 @@ classdef ICLOCS_ContinuousMP < handle
       );
     end
     % ---------------------------------------------------------------------
+    function D2mayerD2xxp = eval_D2mayerD2xxp( self, iseg_L, q_L, x_L, ...
+                                                     iseg_R, q_R, x_R, ...
+                                                     pars )
+      D2mayerD2xxp = ICLOCS_ContinuousMP_Mex( ...
+        'D2mayerD2xxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
     function c = eval_c( self, iseg, q, x, u, pars )
       %
       % Evaluate contraints c(x,u,p) <= 0
       %
       c = ICLOCS_ContinuousMP_Mex(...
-        'LTargs', self.objectHandle, iseg, q, x, u, pars...
+        'LTargs', self.objectHandle, iseg, q, x, u, pars ...
       );
+    end
+    % ---------------------------------------------------------------------
+    function c = eval_fd_c( self, iseg_L, q_L, x_L, ...
+                                  iseg_R, q_R, x_R, ...
+                                  u, pars )
+      %
+      % Evaluate contraints c(x_M,u,p) <= 0
+      %
+      if iseg_L ~= iseg_R
+        error('in eval_fd_c iseg_L(%d) must be equal to iseg_R(%d)',iseg_L,iseg_R);
+      end
+      q = (q_L+q_R)./2;
+      x = (x_L+x_R)./2;
+      c = self.eval_c(iseg_L,q,x,u,pars);
     end
     % ---------------------------------------------------------------------
     function Jc = eval_DcDxup( self, iseg, q, x, u, pars )
@@ -1694,7 +2478,33 @@ classdef ICLOCS_ContinuousMP < handle
       % Evaluate jacobian of constraints c(x,u,p) <= 0
       %
       Jc = ICLOCS_ContinuousMP_Mex(...
-        'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars...
+        'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars ...
+      );
+    end
+    % ---------------------------------------------------------------------
+    function Jc = eval_Dfd_cDxxup( self, iseg_L, q_L, x_L, ...
+                                         iseg_R, q_R, x_R, ...
+                                         u, pars )
+      %
+      % Evaluate jacobian of constraints c(x,u,p) <= 0
+      %
+      if iseg_L ~= iseg_R
+        error('in eval_Dfd_cDxxup iseg_L(%d) must be equal to iseg_R(%d)',iseg_L,iseg_R);
+      end
+      q      = (q_L+q_R)./2;
+      x      = (x_L+x_R)./2;
+      Jc_pre = self.eval_DcDxup( iseg_L, q, x, u, pars );
+      nx     = length(x);
+      Jx     = 0.5*Jc_pre(:,1:nx);
+      Jc     = [Jx,Jx,Jc_pre(:,nx+1:end)];
+    end
+    % ---------------------------------------------------------------------
+    function Hc = eval_D2cD2xup( self, iseg, q, x, u, pars, omega )
+      %
+      % Evaluate hessian of constraints omega . c(x,u,p) <= 0
+      %
+      Hc = ICLOCS_ContinuousMP_Mex(...
+        'D2LTargsD2xup', self.objectHandle, iseg, q, x, u, pars, omega ...
       );
     end
     %
@@ -1992,8 +2802,12 @@ classdef ICLOCS_ContinuousMP < handle
       res = ICLOCS_ContinuousMP_Mex('eval_DadjointBCDxxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DboundaryConditionsDxxp_pattern( self )
-      res = ICLOCS_ContinuousMP_Mex('eval_DboundaryConditionsDxxp_pattern', self.objectHandle );
+    function res = DbcDxxp_pattern( self )
+      res = ICLOCS_ContinuousMP_Mex('eval_DbcDxxp_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = D2bcD2xxp_pattern( self )
+      res = ICLOCS_ContinuousMP_Mex('eval_D2bcD2xxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = Drhs_odeDxup_pattern( self )
@@ -2006,10 +2820,6 @@ classdef ICLOCS_ContinuousMP < handle
     % ---------------------------------------------------------------------
     function res = DjumpDxlxlp_pattern( self )
       res = ICLOCS_ContinuousMP_Mex('eval_DjumpDxlxlp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = IPOPT_hess_pattern( self )
-      res = ICLOCS_ContinuousMP_Mex('eval_IPOPT_hess_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DHxDxp_pattern( self )
@@ -2062,6 +2872,10 @@ classdef ICLOCS_ContinuousMP < handle
     % ---------------------------------------------------------------------
     function res = DLTargsDxup_pattern( self )
       res = ICLOCS_ContinuousMP_Mex('eval_DLTargsDxup_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = D2LTargsD2xup_pattern( self )
+      res = ICLOCS_ContinuousMP_Mex('eval_D2LTargsD2xup_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DnuDxp_pattern( self )

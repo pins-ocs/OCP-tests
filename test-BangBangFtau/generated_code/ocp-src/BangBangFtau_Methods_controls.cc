@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -101,19 +101,19 @@ namespace BangBangFtauDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
-    real_type t2   = vsTpositive(-t1);
-    real_type t3   = UM__[1];
-    real_type t4   = vsBpositive(-t3);
-    real_type t7   = vsTmax(t1 - ModelPars[iM_maxT]);
-    real_type t9   = vsTBInterval_min(-1 - t1 + t3);
-    real_type t11  = vsTBInterval_max(t1 - t3 - 1);
-    real_type t13  = t1 * t1;
-    real_type t14  = t3 * t3;
-    real_type t21  = XM__[2];
-    real_type t22  = XM__[3];
-    real_type t26  = clip(t21 - t22, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    real_type result__ = t2 + t4 + t7 + t9 + t11 + (t13 + t14) * ModelPars[iM_epsiTB] + LM__[0] * XM__[1] + t26 * LM__[1] - 1.0 / ModelPars[iM_tauT] * (t21 - t1) * LM__[2] - 1.0 / ModelPars[iM_tauB] * (t22 - t3) * LM__[3];
+    real_type t2   = UM__[0];
+    real_type t3   = t2 * t2;
+    real_type t4   = UM__[1];
+    real_type t5   = t4 * t4;
+    real_type t12  = XM__[2];
+    real_type t13  = XM__[3];
+    real_type t17  = clip(t12 - t13, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
+    real_type t31  = vsTpositive(-t2);
+    real_type t32  = vsBpositive(-t4);
+    real_type t35  = vsTmax(t2 - ModelPars[iM_maxT]);
+    real_type t37  = vsTBInterval_min(-1 - t2 + t4);
+    real_type t39  = vsTBInterval_max(t2 - t4 - 1);
+    real_type result__ = (t3 + t5) * ModelPars[iM_epsiTB] + LM__[0] * XM__[1] + t17 * LM__[1] - 1.0 / ModelPars[iM_tauT] * (t12 - t2) * LM__[2] - 1.0 / ModelPars[iM_tauB] * (t13 - t4) * LM__[3] + t31 + t32 + t35 + t37 + t39;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -154,16 +154,16 @@ namespace BangBangFtauDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
-    real_type t2   = ALIAS_vsTpositive_D(-t1);
-    real_type t5   = ALIAS_vsTmax_D(t1 - ModelPars[iM_maxT]);
-    real_type t6   = UM__[1];
-    real_type t8   = ALIAS_vsTBInterval_min_D(-1 - t1 + t6);
-    real_type t10  = ALIAS_vsTBInterval_max_D(t1 - t6 - 1);
-    real_type t11  = ModelPars[iM_epsiTB];
-    result__[ 0   ] = -t2 + t5 - t8 + t10 + 2 * t1 * t11 + LM__[2] / ModelPars[iM_tauT];
-    real_type t18  = ALIAS_vsBpositive_D(-t6);
-    result__[ 1   ] = -t18 + t8 - t10 + 2 * t6 * t11 + LM__[3] / ModelPars[iM_tauB];
+    real_type t1   = ModelPars[iM_epsiTB];
+    real_type t2   = UM__[0];
+    real_type t9   = ALIAS_vsTpositive_D(-t2);
+    real_type t12  = ALIAS_vsTmax_D(t2 - ModelPars[iM_maxT]);
+    real_type t13  = UM__[1];
+    real_type t15  = ALIAS_vsTBInterval_min_D(-1 - t2 + t13);
+    real_type t17  = ALIAS_vsTBInterval_max_D(t2 - t13 - 1);
+    result__[ 0   ] = 2 * t2 * t1 + LM__[2] / ModelPars[iM_tauT] - t9 + t12 - t15 + t17;
+    real_type t24  = ALIAS_vsBpositive_D(-t13);
+    result__[ 1   ] = 2 * t13 * t1 + LM__[3] / ModelPars[iM_tauB] - t24 + t15 - t17;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -268,18 +268,18 @@ namespace BangBangFtauDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
-    real_type t2   = ALIAS_vsTpositive_DD(-t1);
-    real_type t5   = ALIAS_vsTmax_DD(t1 - ModelPars[iM_maxT]);
-    real_type t6   = UM__[1];
-    real_type t8   = ALIAS_vsTBInterval_min_DD(-1 - t1 + t6);
-    real_type t10  = ALIAS_vsTBInterval_max_DD(t1 - t6 - 1);
-    real_type t12  = 2 * ModelPars[iM_epsiTB];
-    result__[ 0   ] = t2 + t5 + t8 + t10 + t12;
-    result__[ 1   ] = -t8 - t10;
+    real_type t2   = 2 * ModelPars[iM_epsiTB];
+    real_type t3   = UM__[0];
+    real_type t4   = ALIAS_vsTpositive_DD(-t3);
+    real_type t7   = ALIAS_vsTmax_DD(t3 - ModelPars[iM_maxT]);
+    real_type t8   = UM__[1];
+    real_type t10  = ALIAS_vsTBInterval_min_DD(-1 - t3 + t8);
+    real_type t12  = ALIAS_vsTBInterval_max_DD(t3 - t8 - 1);
+    result__[ 0   ] = t2 + t4 + t7 + t10 + t12;
+    result__[ 1   ] = -t10 - t12;
     result__[ 2   ] = result__[1];
-    real_type t13  = ALIAS_vsBpositive_DD(-t6);
-    result__[ 3   ] = t13 + t8 + t10 + t12;
+    real_type t13  = ALIAS_vsBpositive_DD(-t8);
+    result__[ 3   ] = t2 + t13 + t10 + t12;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 4, i_segment );
   }

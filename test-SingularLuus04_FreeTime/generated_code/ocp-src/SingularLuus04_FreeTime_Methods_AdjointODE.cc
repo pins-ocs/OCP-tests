@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_AdjointODE.cc                  |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -460,6 +460,30 @@ namespace SingularLuus04_FreeTimeDefine {
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SingularLuus04_FreeTime::D2LTargsD2xup_numRows() const { return 5; }
+  integer SingularLuus04_FreeTime::D2LTargsD2xup_numCols() const { return 5; }
+  integer SingularLuus04_FreeTime::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  SingularLuus04_FreeTime::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SingularLuus04_FreeTime::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
     real_type            result__[]
   ) const {
     // EMPTY!

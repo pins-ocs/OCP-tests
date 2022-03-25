@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -91,14 +91,14 @@ namespace ICLOCS_SingularArcDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = tfbound(-t1);
-    real_type t5   = UM__[0];
-    real_type t9   = XM__[0];
-    real_type t10  = cos(t9);
-    real_type t14  = sin(t9);
-    real_type t16  = uControl(t5, -2, 2);
-    real_type result__ = t10 * t1 * LM__[1] + t14 * t1 * LM__[2] + t5 * t1 * LM__[0] + t16 + t2;
+    real_type t2   = P__[iP_T];
+    real_type t4   = UM__[0];
+    real_type t8   = XM__[0];
+    real_type t9   = cos(t8);
+    real_type t13  = sin(t8);
+    real_type t15  = tfbound(-t2);
+    real_type t16  = uControl(t4, -2, 2);
+    real_type result__ = t13 * t2 * LM__[2] + t4 * t2 * LM__[0] + t9 * t2 * LM__[1] + t15 + t16;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

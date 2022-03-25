@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_ctrl = 0.01;
+    real_type xy_tol0 = 0.1;
+    real_type epsi_ctrl = 0.01;
     real_type xy_eps0 = 0.1;
     real_type xy_eps = xy_eps0;
-    real_type epsi_ctrl = 0.01;
-    real_type xy_tol0 = 0.1;
     real_type xy_tol = xy_tol0;
+    real_type tol_ctrl = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -218,9 +218,9 @@ main() {
     // Boundary Conditions
 
     // Post Processing Parameters
+    data_Parameters["xy_bound"] = 2;
 
     // User Function Parameters
-    data_Parameters["xy_bound"] = 2;
 
     // Continuation Parameters
     data_Parameters["xy_eps0"] = xy_eps0;
@@ -964,8 +964,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_ContinuousMP_data.Mesh["s0"] = 0;
-ICLOCS_ContinuousMP_data.Mesh["segments"][0]["n"] = 50;
 ICLOCS_ContinuousMP_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_ContinuousMP_data.Mesh["segments"][0]["n"] = 50;
 
 
     // alias for user object classes passed as pointers

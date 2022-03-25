@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Mex.cc                                               |
  |                                                                       |
- |  version: 1.0   date 23/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -2479,12 +2479,12 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  do_DboundaryConditionsDxxp(
+  do_DbcDxxp(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
   {
-    #define CMD MODEL_NAME "_Mex('DboundaryConditionsDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+    #define CMD MODEL_NAME "_Mex('DbcDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
     CHECK_IN_OUT( 9, 1 );
 
@@ -2492,7 +2492,29 @@ public:
     get_LR( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_8 );
 
-    RETURN_SPARSE( DboundaryConditionsDxxp, L, R, P );
+    RETURN_SPARSE( DbcDxxp, L, R, P );
+
+    #undef CMD
+  }
+
+  // --------------------------------------------------------------------------
+
+  void
+  do_D2bcD2xxp(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  )
+  {
+    #define CMD MODEL_NAME "_Mex('D2bcD2xxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega ): "
+
+    CHECK_IN_OUT( 10, 1 );
+
+    NodeType L, R;
+    get_LR( CMD, nrhs, prhs, L, R );
+    GET_ARG_P( arg_in_8 );
+    GET_ARG_OMEGA( arg_in_9 );
+
+    RETURN_SPARSE( D2bcD2xxp, L, R, P, Omega );
 
     #undef CMD
   }
@@ -2718,6 +2740,29 @@ public:
   // --------------------------------------------------------------------------
 
   void
+  do_D2lagrangeD2xup(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  )
+  {
+    #define CMD MODEL_NAME "_Mex('D2lagrangeD2xup', obj, iseg, q, x, u, pars ): "
+
+    CHECK_IN_OUT( 7, 1 );
+
+    NodeType N;
+    get_qx( CMD, nrhs, prhs, N );
+
+    GET_ARG_U( arg_in_5 );
+    GET_ARG_P( arg_in_6 );
+
+    RETURN_SPARSE( D2lagrangeD2xup, N, U, P );
+
+    #undef CMD
+  }
+
+  // --------------------------------------------------------------------------
+
+  void
   do_mayer_target(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
@@ -2755,6 +2800,27 @@ public:
     // Gradient is a row vector
     real_ptr res = Utils::mex_create_matrix_value( arg_out_0, 1, this->DmayerDxxp_numEqns() );
     this->DmayerDxxp_eval( L, R, P , res );
+
+    #undef CMD
+  }
+
+  // --------------------------------------------------------------------------
+
+  void
+  do_D2mayerD2xxp(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  )
+  {
+    #define CMD MODEL_NAME "_Mex('D2mayerD2xxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+
+    CHECK_IN_OUT( 9, 1 );
+
+    NodeType L, R;
+    get_LR( CMD, nrhs, prhs, L, R );
+    GET_ARG_P( arg_in_8 );
+
+    RETURN_SPARSE( D2mayerD2xxp, L, R, P );
 
     #undef CMD
   }
@@ -2992,18 +3058,18 @@ public:
   //---------------------------------------------------------------------
 
   void
-  do_eval_DboundaryConditionsDxxp_pattern(
+  do_eval_DbcDxxp_pattern(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
   {
-    #define CMD MODEL_NAME "_Mex('eval_DboundaryConditionsDxxp_pattern',obj): "
-    UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DboundaryConditionsDxxp_pattern'" );
+    #define CMD MODEL_NAME "_Mex('eval_DbcDxxp_pattern',obj): "
+    UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DbcDxxp_pattern'" );
     CHECK_IN_OUT( 2, 1 );
 
-    integer nnz = DboundaryConditionsDxxp_nnz();
-    integer nr  = DboundaryConditionsDxxp_numRows();
-    integer nc  = DboundaryConditionsDxxp_numCols();
+    integer nnz = DbcDxxp_nnz();
+    integer nr  = DbcDxxp_numRows();
+    integer nc  = DbcDxxp_numCols();
     mxArray *args[5];
     real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
     real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
@@ -3011,11 +3077,47 @@ public:
     Utils::mex_set_scalar_value( args[3], nr );
     Utils::mex_set_scalar_value( args[4], nc );
 
-    Mechatronix::Malloc<integer> mem("mex_DboundaryConditionsDxxp");
-    mem.allocate( 2*nnz, "DboundaryConditionsDxxp" );
+    Mechatronix::Malloc<integer> mem("mex_DbcDxxp");
+    mem.allocate( 2*nnz, "DbcDxxp" );
     integer_ptr i_row = mem( nnz );
     integer_ptr j_col = mem( nnz );
-    MODEL_CLASS::DboundaryConditionsDxxp_pattern( i_row, j_col );
+    MODEL_CLASS::DbcDxxp_pattern( i_row, j_col );
+    for ( integer i = 0; i < nnz; ++i ) {
+      I[i] = i_row[i]+1;
+      J[i] = j_col[i]+1;
+    }
+    int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+    UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+    #undef CMD
+  }
+
+  //---------------------------------------------------------------------
+
+  void
+  do_eval_D2bcD2xxp_pattern(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  )
+  {
+    #define CMD MODEL_NAME "_Mex('eval_D2bcD2xxp_pattern',obj): "
+    UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_D2bcD2xxp_pattern'" );
+    CHECK_IN_OUT( 2, 1 );
+
+    integer nnz = D2bcD2xxp_nnz();
+    integer nr  = D2bcD2xxp_numRows();
+    integer nc  = D2bcD2xxp_numCols();
+    mxArray *args[5];
+    real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+    real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+    Utils::mex_set_scalar_value( args[2], 1  );
+    Utils::mex_set_scalar_value( args[3], nr );
+    Utils::mex_set_scalar_value( args[4], nc );
+
+    Mechatronix::Malloc<integer> mem("mex_D2bcD2xxp");
+    mem.allocate( 2*nnz, "D2bcD2xxp" );
+    integer_ptr i_row = mem( nnz );
+    integer_ptr j_col = mem( nnz );
+    MODEL_CLASS::D2bcD2xxp_pattern( i_row, j_col );
     for ( integer i = 0; i < nnz; ++i ) {
       I[i] = i_row[i]+1;
       J[i] = j_col[i]+1;
@@ -3124,42 +3226,6 @@ public:
     integer_ptr i_row = mem( nnz );
     integer_ptr j_col = mem( nnz );
     MODEL_CLASS::DjumpDxlxlp_pattern( i_row, j_col );
-    for ( integer i = 0; i < nnz; ++i ) {
-      I[i] = i_row[i]+1;
-      J[i] = j_col[i]+1;
-    }
-    int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
-    UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
-    #undef CMD
-  }
-
-  //---------------------------------------------------------------------
-
-  void
-  do_eval_IPOPT_hess_pattern(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  )
-  {
-    #define CMD MODEL_NAME "_Mex('eval_IPOPT_hess_pattern',obj): "
-    UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_IPOPT_hess_pattern'" );
-    CHECK_IN_OUT( 2, 1 );
-
-    integer nnz = IPOPT_hess_nnz();
-    integer nr  = IPOPT_hess_numRows();
-    integer nc  = IPOPT_hess_numCols();
-    mxArray *args[5];
-    real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-    real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-    Utils::mex_set_scalar_value( args[2], 1  );
-    Utils::mex_set_scalar_value( args[3], nr );
-    Utils::mex_set_scalar_value( args[4], nc );
-
-    Mechatronix::Malloc<integer> mem("mex_IPOPT_hess");
-    mem.allocate( 2*nnz, "IPOPT_hess" );
-    integer_ptr i_row = mem( nnz );
-    integer_ptr j_col = mem( nnz );
-    MODEL_CLASS::IPOPT_hess_pattern( i_row, j_col );
     for ( integer i = 0; i < nnz; ++i ) {
       I[i] = i_row[i]+1;
       J[i] = j_col[i]+1;
@@ -4964,15 +5030,29 @@ do_boundaryConditions(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_DboundaryConditionsDxxp(
+do_DbcDxxp(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   UTILS_MEX_ASSERT(
     nrhs >= 2,
-    MODEL_NAME "_Mex('DboundaryConditionsDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('DbcDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_DboundaryConditionsDxxp( nlhs, plhs, nrhs, prhs );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_DbcDxxp( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_D2bcD2xxp(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('D2bcD2xxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_D2bcD2xxp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -5090,6 +5170,20 @@ do_DlagrangeDxup(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
+do_D2lagrangeD2xup(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('D2lagrangeD2xup',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_D2lagrangeD2xup( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
 do_mayer_target(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
@@ -5113,6 +5207,20 @@ do_DmayerDxxp(
     MODEL_NAME "_Mex('DmayerDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
   Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_DmayerDxxp( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_D2mayerD2xxp(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('D2mayerD2xxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_D2mayerD2xxp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -5230,15 +5338,29 @@ do_eval_DadjointBCDxxp_pattern(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_eval_DboundaryConditionsDxxp_pattern(
+do_eval_DbcDxxp_pattern(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   UTILS_MEX_ASSERT(
     nrhs >= 2,
-    MODEL_NAME "_Mex('eval_DboundaryConditionsDxxp_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('eval_DbcDxxp_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_eval_DboundaryConditionsDxxp_pattern( nlhs, plhs, nrhs, prhs );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_eval_DbcDxxp_pattern( nlhs, plhs, nrhs, prhs );
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+static
+void
+do_eval_D2bcD2xxp_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+) {
+  UTILS_MEX_ASSERT(
+    nrhs >= 2,
+    MODEL_NAME "_Mex('eval_D2bcD2xxp_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+  );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_eval_D2bcD2xxp_pattern( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -5281,20 +5403,6 @@ do_eval_DjumpDxlxlp_pattern(
     MODEL_NAME "_Mex('eval_DjumpDxlxlp_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
   Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_eval_DjumpDxlxlp_pattern( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_eval_IPOPT_hess_pattern(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  UTILS_MEX_ASSERT(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('eval_IPOPT_hess_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_eval_IPOPT_hess_pattern( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -5673,7 +5781,8 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"DLTargsDxup",do_DLTargsDxup},
   {"D2LTargsD2xup",do_D2LTargsD2xup},
   {"boundaryConditions",do_boundaryConditions},
-  {"DboundaryConditionsDxxp",do_DboundaryConditionsDxxp},
+  {"DbcDxxp",do_DbcDxxp},
+  {"D2bcD2xxp",do_D2bcD2xxp},
   {"adjointBC",do_adjointBC},
   {"DadjointBCDxxp",do_DadjointBCDxxp},
   {"jump",do_jump},
@@ -5682,8 +5791,10 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"JU",do_JU},
   {"lagrange_target",do_lagrange_target},
   {"DlagrangeDxup",do_DlagrangeDxup},
+  {"D2lagrangeD2xup",do_D2lagrangeD2xup},
   {"mayer_target",do_mayer_target},
   {"DmayerDxxp",do_DmayerDxxp},
+  {"D2mayerD2xxp",do_D2mayerD2xxp},
   {"fd_ode",do_fd_ode},
   {"Dfd_odeDxxup",do_Dfd_odeDxxup},
   {"D2fd_odeD2xxup",do_D2fd_odeD2xxup},
@@ -5692,11 +5803,11 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"node_to_segment",do_node_to_segment},
   {"eval_A_pattern",do_eval_A_pattern},
   {"eval_DadjointBCDxxp_pattern",do_eval_DadjointBCDxxp_pattern},
-  {"eval_DboundaryConditionsDxxp_pattern",do_eval_DboundaryConditionsDxxp_pattern},
+  {"eval_DbcDxxp_pattern",do_eval_DbcDxxp_pattern},
+  {"eval_D2bcD2xxp_pattern",do_eval_D2bcD2xxp_pattern},
   {"eval_Drhs_odeDxup_pattern",do_eval_Drhs_odeDxup_pattern},
   {"eval_DsegmentLinkDxp_pattern",do_eval_DsegmentLinkDxp_pattern},
   {"eval_DjumpDxlxlp_pattern",do_eval_DjumpDxlxlp_pattern},
-  {"eval_IPOPT_hess_pattern",do_eval_IPOPT_hess_pattern},
   {"eval_DHxDxp_pattern",do_eval_DHxDxp_pattern},
   {"eval_DJPxDxp_pattern",do_eval_DJPxDxp_pattern},
   {"eval_DLTxDxp_pattern",do_eval_DLTxDxp_pattern},

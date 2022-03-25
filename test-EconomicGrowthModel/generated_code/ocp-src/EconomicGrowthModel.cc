@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel.cc                                         |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -83,6 +83,8 @@ namespace EconomicGrowthModelDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "uControl",
+    "Tpositive",
     "X1-exact",
     "X2-exact",
     "L1-exact",

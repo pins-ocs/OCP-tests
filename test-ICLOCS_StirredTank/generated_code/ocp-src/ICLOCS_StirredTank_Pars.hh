@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Pars.hh                                     |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -30,7 +30,7 @@
 #define numOMEGAvars             4
 #define numQvars                 1
 #define numPvars                 1
-#define numPostProcess           1
+#define numPostProcess           7
 #define numIntegratedPostProcess 0
 #define numContinuationSteps     2
 

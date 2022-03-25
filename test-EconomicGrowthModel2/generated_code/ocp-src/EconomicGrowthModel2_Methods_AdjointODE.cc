@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_AdjointODE.cc                     |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -489,6 +489,30 @@ namespace EconomicGrowthModel2Define {
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer EconomicGrowthModel2::D2LTargsD2xup_numRows() const { return 6; }
+  integer EconomicGrowthModel2::D2LTargsD2xup_numCols() const { return 6; }
+  integer EconomicGrowthModel2::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  EconomicGrowthModel2::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  EconomicGrowthModel2::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -596,18 +620,18 @@ namespace EconomicGrowthModel2Define {
     real_type t7   = X__[iX_T];
     real_type t8   = t7 * t6;
     real_type t12  = (1 - t2) * L__[iL_lambda4__xo];
-    result__[ 0   ] = t8 * t12 + t8 * t3;
+    result__[ 0   ] = t12 * t8 + t3 * t8;
     real_type t14  = Q_D_1_2(t4, t5);
     real_type t15  = t7 * t14;
-    result__[ 1   ] = t15 * t12 + t15 * t3;
+    result__[ 1   ] = t12 * t15 + t15 * t3;
     real_type t18  = Q_D_1(t4, t5);
-    result__[ 2   ] = t18 * t12 + t18 * t3;
+    result__[ 2   ] = t12 * t18 + t18 * t3;
     result__[ 3   ] = result__[1];
     real_type t21  = Q_D_2_2(t4, t5);
     real_type t22  = t7 * t21;
-    result__[ 4   ] = t22 * t12 + t22 * t3;
+    result__[ 4   ] = t12 * t22 + t22 * t3;
     real_type t25  = Q_D_2(t4, t5);
-    result__[ 5   ] = t25 * t12 + t25 * t3;
+    result__[ 5   ] = t12 * t25 + t25 * t3;
     result__[ 6   ] = L__[iL_lambda1__xo];
     result__[ 7   ] = L__[iL_lambda3__xo];
     result__[ 8   ] = result__[2];
@@ -667,7 +691,7 @@ namespace EconomicGrowthModel2Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t4   = Q(X__[iX_x1], X__[iX_x2]);
     real_type t6   = X__[iX_T];
-    result__[ 0   ] = t4 * t6 * L__[iL_lambda2__xo] - t4 * t6 * L__[iL_lambda4__xo];
+    result__[ 0   ] = t6 * t4 * L__[iL_lambda2__xo] - t6 * t4 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }

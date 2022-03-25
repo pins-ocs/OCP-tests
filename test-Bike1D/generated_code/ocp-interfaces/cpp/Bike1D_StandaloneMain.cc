@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,8 +51,8 @@ main() {
 
     // Auxiliary values
     real_type muf_min = -1;
-    real_type mur_min = -1;
     real_type mur_max = 1;
+    real_type mur_min = -1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -159,9 +159,9 @@ main() {
 
     // ClipIntervalWithSinAtan
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta2"] = 0;
-    data_clip["delta"] = 0;
     data_clip["h"] = 0.01;
+    data_clip["delta"] = 0;
+    data_clip["delta2"] = 0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER

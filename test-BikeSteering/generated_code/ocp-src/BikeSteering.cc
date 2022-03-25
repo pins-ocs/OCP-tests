@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering.cc                                                |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -84,6 +84,8 @@ namespace BikeSteeringDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "FyControl",
+    "minimumTimeSize",
     "minTime",
     "Talpha",
     nullptr

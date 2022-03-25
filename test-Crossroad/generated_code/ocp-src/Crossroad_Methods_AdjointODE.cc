@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_AdjointODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -577,6 +577,58 @@ namespace CrossroadDefine {
     result__[ 5   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 6, i_segment );
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Crossroad::D2LTargsD2xup_numRows() const { return 5; }
+  integer Crossroad::D2LTargsD2xup_numCols() const { return 5; }
+  integer Crossroad::D2LTargsD2xup_nnz()     const { return 5; }
+
+  void
+  Crossroad::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
+  }
+
+
+  void
+  Crossroad::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_v];
+    real_type t2   = t1 * t1;
+    real_type t3   = t2 * t2;
+    real_type t4   = X__[iX_s];
+    real_type t5   = kappa_D(t4);
+    real_type t6   = t5 * t5;
+    real_type t9   = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
+    real_type t10  = 1.0 / t9;
+    real_type t11  = OMEGA__[1];
+    real_type t12  = t11 * t10;
+    real_type t14  = kappa(t4);
+    real_type t16  = kappa_DD(t4);
+    result__[ 0   ] = 2 * t11 * t16 * t10 * t14 * t3 + 2 * t12 * t6 * t3;
+    result__[ 1   ] = 8 * t11 * t5 * t10 * t14 * t2 * t1;
+    result__[ 2   ] = result__[1];
+    real_type t26  = t14 * t14;
+    result__[ 3   ] = 12 * t12 * t26 * t2;
+    real_type t30  = ModelPars[iM_along_max] * ModelPars[iM_along_max];
+    result__[ 4   ] = 2 * t11 / t30;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2LTargsD2xup_sparse", 5, i_segment );
   }
 
   /*\

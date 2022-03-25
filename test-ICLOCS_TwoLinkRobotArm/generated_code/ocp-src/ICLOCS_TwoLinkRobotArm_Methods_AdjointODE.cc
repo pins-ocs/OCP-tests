@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_AdjointODE.cc                   |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -501,6 +501,30 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     // EMPTY!
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_TwoLinkRobotArm::D2LTargsD2xup_numRows() const { return 7; }
+  integer ICLOCS_TwoLinkRobotArm::D2LTargsD2xup_numCols() const { return 7; }
+  integer ICLOCS_TwoLinkRobotArm::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  ICLOCS_TwoLinkRobotArm::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_TwoLinkRobotArm::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -527,9 +551,8 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda1__xo];
     real_type t2   = P__[iP_T];
-    real_type t3   = t2 * t1;
+    real_type t3   = t2 * L__[iL_lambda1__xo];
     real_type t4   = X__[iX_theta];
     real_type t5   = sin(t4);
     real_type t7   = cos(t4);
@@ -537,8 +560,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t10  = t5 * t5;
     real_type t12  = 0.31e2 / 0.36e2 + 9.0 / 4.0 * t10;
     real_type t13  = 1.0 / t12;
-    real_type t17  = L__[iL_lambda2__xo];
-    real_type t18  = t2 * t17;
+    real_type t18  = t2 * L__[iL_lambda2__xo];
     real_type t23  = t2 * L__[iL_lambda3__xo];
     result__[ 0   ] = 9.0 / 2.0 * t13 * t8 * t7 * t5 * t3 - 7 * t13 * t8 * t18 - t23 + t2 * L__[iL_lambda4__xo];
     real_type t26  = X__[iX_omega__beta];
@@ -551,8 +573,8 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t52  = U__[iU_u1];
     real_type t59  = t12 * t12;
     real_type t62  = t7 * t5 / t59;
-    real_type t71  = t52 - t41;
-    result__[ 2   ] = (t13 * (9.0 / 4.0 * t36 * t35 - 9.0 / 4.0 * t36 * t10 + 3.0 / 2.0 * t41 * t5) * t2 - 9.0 / 2.0 * t62 * (9.0 / 4.0 * t36 * t47 + 2 * t50 + 4.0 / 3.0 * t52 - 4.0 / 3.0 * t41 - 3.0 / 2.0 * t41 * t7) * t2) * t1 + (-t13 * (9.0 / 4.0 * t50 * t35 - 9.0 / 4.0 * t50 * t10 - 3.0 / 2.0 * t71 * t5) * t2 + 9.0 / 2.0 * t62 * (9.0 / 4.0 * t50 * t47 + 7.0 / 2.0 * t36 - 7.0 / 3.0 * t41 + 3.0 / 2.0 * t71 * t7) * t2) * t17;
+    real_type t69  = t52 - t41;
+    result__[ 2   ] = t13 * (9.0 / 4.0 * t36 * t35 - 9.0 / 4.0 * t36 * t10 + 3.0 / 2.0 * t41 * t5) * t3 - 9.0 / 2.0 * t62 * (9.0 / 4.0 * t36 * t47 + 2 * t50 + 4.0 / 3.0 * t52 - 4.0 / 3.0 * t41 - 3.0 / 2.0 * t41 * t7) * t3 - t13 * (9.0 / 4.0 * t50 * t35 - 9.0 / 4.0 * t50 * t10 - 3.0 / 2.0 * t69 * t5) * t18 + 9.0 / 2.0 * t62 * (9.0 / 4.0 * t50 * t47 + 7.0 / 2.0 * t36 - 7.0 / 3.0 * t41 + 3.0 / 2.0 * t69 * t7) * t18;
     result__[ 3   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
@@ -648,10 +670,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t25  = t20 * t8;
     real_type t30  = t10 * t10;
     real_type t31  = 1.0 / t30;
-    real_type t32  = t31 * t21;
+    real_type t34  = 0.81e2 / 4.0 * t31 * t21 * t8 * t3;
     real_type t37  = t6 * t5 * t31;
     real_type t39  = 0.63e2 / 2.0 * t37 * t20 * t16;
-    result__[ 1   ] = 9.0 / 2.0 * t11 * t21 * t3 - 9.0 / 2.0 * t11 * t25 * t3 - 0.81e2 / 4.0 * t32 * t8 * t3 + t39;
+    result__[ 1   ] = 9.0 / 2.0 * t11 * t21 * t3 - 9.0 / 2.0 * t11 * t25 * t3 - t34 + t39;
     real_type t48  = L__[iL_lambda3__xo];
     result__[ 2   ] = 9.0 / 2.0 * t11 * t20 * t6 * t5 * t1 - 7 * t11 * t20 * t15 - t48 + L__[iL_lambda4__xo];
     result__[ 3   ] = 4 * t11 * t3 - 9.0 / 2.0 * t12 * t16;
@@ -659,32 +681,29 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t57  = 18 * t37 * t54 * t3;
     real_type t58  = t54 * t19;
     real_type t62  = t54 * t8;
-    real_type t67  = t31 * t58;
-    result__[ 4   ] = -t57 - 9.0 / 2.0 * t11 * t58 * t16 + 9.0 / 2.0 * t11 * t62 * t16 + 0.81e2 / 4.0 * t67 * t8 * t16;
+    real_type t69  = 0.81e2 / 4.0 * t31 * t58 * t8 * t16;
+    result__[ 4   ] = -t57 - 9.0 / 2.0 * t11 * t58 * t16 + 9.0 / 2.0 * t11 * t62 * t16 + t69;
     result__[ 5   ] = 4 * t11 * t54 * t1 - 9.0 / 2.0 * t11 * t54 * t6 * t5 * t15 + t48;
-    real_type t82  = t8 * t2;
-    result__[ 6   ] = (t11 * (9.0 / 2.0 * t21 - 9.0 / 2.0 * t25) * t2 - 0.81e2 / 4.0 * t32 * t82) * t1 + t39;
-    result__[ 7   ] = -t57 + (-t11 * (9.0 / 2.0 * t58 - 9.0 / 2.0 * t62) * t2 + 0.81e2 / 4.0 * t67 * t82) * t15;
-    real_type t95  = t20 * t20;
-    real_type t96  = t95 * t7;
-    real_type t98  = U__[iU_u2];
-    real_type t100 = 3.0 / 2.0 * t98 * t6;
-    real_type t110 = 9.0 / 4.0 * t95 * t19 - 9.0 / 4.0 * t95 * t8 + 3.0 / 2.0 * t98 * t5;
-    real_type t115 = t54 * t54;
-    real_type t117 = U__[iU_u1];
-    real_type t120 = 9.0 / 4.0 * t96 + 2 * t115 + 4.0 / 3.0 * t117 - 4.0 / 3.0 * t98 - t100;
-    real_type t121 = t120 * t2;
-    real_type t125 = t19 * t8 / t30 / t10;
-    real_type t128 = t19 * t31;
-    real_type t131 = t8 * t31;
-    real_type t136 = t115 * t7;
-    real_type t138 = t117 - t98;
-    real_type t140 = 3.0 / 2.0 * t138 * t6;
-    real_type t150 = 9.0 / 4.0 * t115 * t19 - 9.0 / 4.0 * t115 * t8 - 3.0 / 2.0 * t138 * t5;
-    real_type t157 = 9.0 / 4.0 * t136 + 7.0 / 2.0 * t95 - 7.0 / 3.0 * t98 + t140;
-    real_type t158 = t157 * t2;
-    result__[ 8   ] = (t11 * (-9 * t96 + t100) * t2 - 9 * t37 * t110 * t2 + 0.81e2 / 2.0 * t125 * t121 - 9.0 / 2.0 * t128 * t121 + 9.0 / 2.0 * t131 * t121) * t1 + (-t11 * (-9 * t136 - t140) * t2 + 9 * t37 * t150 * t2 - 0.81e2 / 2.0 * t125 * t158 + 9.0 / 2.0 * t128 * t158 - 9.0 / 2.0 * t131 * t158) * t15;
-    result__[ 9   ] = (t11 * t110 - 9.0 / 2.0 * t7 * t31 * t120) * t1 + (-t11 * t150 + 9.0 / 2.0 * t7 * t31 * t157) * t15;
+    result__[ 6   ] = t11 * (9.0 / 2.0 * t21 - 9.0 / 2.0 * t25) * t3 - t34 + t39;
+    result__[ 7   ] = -t57 - t11 * (9.0 / 2.0 * t58 - 9.0 / 2.0 * t62) * t16 + t69;
+    real_type t86  = t20 * t20;
+    real_type t87  = t86 * t7;
+    real_type t89  = U__[iU_u2];
+    real_type t91  = 3.0 / 2.0 * t89 * t6;
+    real_type t101 = 9.0 / 4.0 * t86 * t19 - 9.0 / 4.0 * t86 * t8 + 3.0 / 2.0 * t89 * t5;
+    real_type t106 = t54 * t54;
+    real_type t108 = U__[iU_u1];
+    real_type t111 = 9.0 / 4.0 * t87 + 2 * t106 + 4.0 / 3.0 * t108 - 4.0 / 3.0 * t89 - t91;
+    real_type t116 = t19 * t8 / t30 / t10;
+    real_type t119 = t31 * t111;
+    real_type t126 = t106 * t7;
+    real_type t128 = t108 - t89;
+    real_type t130 = 3.0 / 2.0 * t128 * t6;
+    real_type t140 = 9.0 / 4.0 * t106 * t19 - 9.0 / 4.0 * t106 * t8 - 3.0 / 2.0 * t128 * t5;
+    real_type t147 = 9.0 / 4.0 * t126 + 7.0 / 2.0 * t86 - 7.0 / 3.0 * t89 + t130;
+    real_type t151 = t31 * t147;
+    result__[ 8   ] = t11 * (-9 * t87 + t91) * t3 - 9 * t37 * t101 * t3 + 0.81e2 / 2.0 * t116 * t111 * t3 - 9.0 / 2.0 * t19 * t119 * t3 + 9.0 / 2.0 * t8 * t119 * t3 - t11 * (-9 * t126 - t130) * t16 + 9 * t37 * t140 * t16 - 0.81e2 / 2.0 * t116 * t147 * t16 + 9.0 / 2.0 * t19 * t151 * t16 - 9.0 / 2.0 * t8 * t151 * t16;
+    result__[ 9   ] = t11 * t101 * t1 - 9.0 / 2.0 * t37 * t111 * t1 - t11 * t140 * t15 + 9.0 / 2.0 * t37 * t147 * t15;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 10, i_segment );
   }

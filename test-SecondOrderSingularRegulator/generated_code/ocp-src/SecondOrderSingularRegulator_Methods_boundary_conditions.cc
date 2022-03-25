@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SecondOrderSingularRegulator_Methods_boundary_conditions.cc    |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,19 +89,19 @@ namespace SecondOrderSingularRegulatorDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SecondOrderSingularRegulator::DboundaryConditionsDxxp_numRows() const { return 2; }
-  integer SecondOrderSingularRegulator::DboundaryConditionsDxxp_numCols() const { return 4; }
-  integer SecondOrderSingularRegulator::DboundaryConditionsDxxp_nnz()     const { return 2; }
+  integer SecondOrderSingularRegulator::DbcDxxp_numRows() const { return 2; }
+  integer SecondOrderSingularRegulator::DbcDxxp_numCols() const { return 4; }
+  integer SecondOrderSingularRegulator::DbcDxxp_nnz()     const { return 2; }
 
   void
-  SecondOrderSingularRegulator::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  SecondOrderSingularRegulator::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
 
   void
-  SecondOrderSingularRegulator::DboundaryConditionsDxxp_sparse(
+  SecondOrderSingularRegulator::DbcDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -118,7 +118,31 @@ namespace SecondOrderSingularRegulatorDefine {
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 2, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 2, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer SecondOrderSingularRegulator::D2bcD2xxp_numRows() const { return 4; }
+  integer SecondOrderSingularRegulator::D2bcD2xxp_numCols() const { return 4; }
+  integer SecondOrderSingularRegulator::D2bcD2xxp_nnz()     const { return 0; }
+
+  void
+  SecondOrderSingularRegulator::D2bcD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  SecondOrderSingularRegulator::D2bcD2xxp_sparse(
+    NodeType const         & LEFT__,
+    NodeType const         & RIGHT__,
+    P_const_pointer_type     P__,
+    OMEGA_const_pointer_type OMEGA__,
+    real_type                result__[]
+  ) const {
+    // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

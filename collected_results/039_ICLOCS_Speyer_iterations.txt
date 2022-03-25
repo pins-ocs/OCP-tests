@@ -78,7 +78,7 @@ NewtonDumped --- start iterations ---
 [ 21, 1] (  0.0463  , 9.05e-06 ) [  0.0168  ,  0.0143  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 22, 2] ( 9.05e-06 , 6.77e-06 ) [  0.0114  , 0.00858  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
 [ 23, 6] ( 6.77e-06 , 6.72e-06 ) [  0.0551  ,  0.0547  ] 0.0105     [0:2:3:0:0:0:0:0:0:0:0:0]
-[ 24,10] ( 6.72e-06 , 6.72e-06 ) [  0.444   ,  0.444   ] 0.000262   [0:3:5:1:0:0:0:0:0:0:0:0]
+[ 24,10] ( 6.72e-06 , 6.72e-06 ) [  0.444   ,  0.444   ] 0.000262   [0:4:5:0:0:0:0:0:0:0:0:0]
 [ 25, 6] ( 6.72e-06 , 1.06e-05 ) [  0.683   ,  0.0758  ] 0.0102     [5:0:0:0:0:0:0:0:0:0:0:0]
 [ 26, 5] ( 1.06e-05 , 1.03e-05 ) [  0.0994  ,  0.0883  ] 0.0256     [4:0:0:0:0:0:0:0:0:0:0:0]
 [ 27, 3] ( 1.03e-05 , 8.45e-06 ) [  0.0113  , 0.00855  ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
@@ -99,10 +99,10 @@ dump_min       = 0.4           dump_max       = 0.9
 n_power        = 2             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
-ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 62.4[ms]      timeout        = 0 [ms]
+Elapsed Time   = 95.9[ms]      timeout        = 0 [ms]
 iteration      = 31            tolerance      = 1e-09
 max iterations = 300           N. Equations   = 4006
 max acc. iter. = 800           N. System pars = 1000
@@ -124,9 +124,11 @@ last ||f||_2   = 5.2607e-14    last ||d||_2   = 2.444e-11
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
+All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
+All controls solution are OK
 Check Controls End
 target [Lagrange,Mayer]       = [ -0.2388, 0 ]
 [Penalties/Barriers,Controls] = [ 0, 0 ]

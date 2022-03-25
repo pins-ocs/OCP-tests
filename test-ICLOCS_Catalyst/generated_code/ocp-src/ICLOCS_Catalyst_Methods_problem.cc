@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Catalyst_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -261,6 +261,29 @@ namespace ICLOCS_CatalystDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 4, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_Catalyst::D2mayerD2xxp_numRows() const { return 4; }
+  integer ICLOCS_Catalyst::D2mayerD2xxp_numCols() const { return 4; }
+  integer ICLOCS_Catalyst::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_Catalyst::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_Catalyst::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -290,53 +313,25 @@ namespace ICLOCS_CatalystDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_Catalyst::IPOPT_hess_numRows() const { return 3; }
-  integer ICLOCS_Catalyst::IPOPT_hess_numCols() const { return 3; }
-  integer ICLOCS_Catalyst::IPOPT_hess_nnz()     const { return 4; }
+  integer ICLOCS_Catalyst::D2lagrangeD2xup_numRows() const { return 3; }
+  integer ICLOCS_Catalyst::D2lagrangeD2xup_numCols() const { return 3; }
+  integer ICLOCS_Catalyst::D2lagrangeD2xup_nnz()     const { return 0; }
 
   void
-  ICLOCS_Catalyst::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 1   ;
+  ICLOCS_Catalyst::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  ICLOCS_Catalyst::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  ICLOCS_Catalyst::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda1__xo];
-    real_type t2   = L__[iL_lambda2__xo];
-    result__[ 0   ] = -t1 + t2;
-    result__[ 1   ] = 10 * t1 - 9 * t2;
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = result__[1];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 4, i_segment );
+    // EMPTY!
   }
 
   /*\
@@ -499,7 +494,7 @@ namespace ICLOCS_CatalystDefine {
    |                                                    |___/
   \*/
 
-  integer ICLOCS_Catalyst::post_numEqns() const { return 0; }
+  integer ICLOCS_Catalyst::post_numEqns() const { return 1; }
 
   void
   ICLOCS_Catalyst::post_eval(
@@ -508,7 +503,13 @@ namespace ICLOCS_CatalystDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = uControl(U__[iU_u], 0, 1);
+    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

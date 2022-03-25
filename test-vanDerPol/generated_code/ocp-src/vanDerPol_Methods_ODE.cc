@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_ODE.cc                                       |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -111,7 +111,7 @@ namespace vanDerPolDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     real_type t1   = X__[iX_x1];
-    result__[ 1   ] = -2 * t1 * X__[iX_x2] - 1;
+    result__[ 1   ] = -2 * X__[iX_x2] * t1 - 1;
     real_type t5   = t1 * t1;
     result__[ 2   ] = -t5 + 1;
     result__[ 3   ] = 1;

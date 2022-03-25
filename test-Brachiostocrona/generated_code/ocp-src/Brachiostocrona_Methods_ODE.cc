@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_ODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -129,7 +129,7 @@ namespace BrachiostocronaDefine {
     result__[ 1   ] = -t6 * t5;
     result__[ 2   ] = t3 * t4;
     result__[ 3   ] = t6 * t1;
-    result__[ 4   ] = t5 * t3;
+    result__[ 4   ] = t3 * t5;
     result__[ 5   ] = t6 * t4;
     real_type t8   = ModelPars[iM_g];
     result__[ 6   ] = -t3 * t8 * t1;

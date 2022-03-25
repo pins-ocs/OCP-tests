@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -91,13 +91,13 @@ namespace BikeSteeringDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[2];
-    real_type t2   = minimumTimeSize(-t1);
-    real_type t11  = ModelPars[iM_h];
-    real_type t16  = UM__[0];
+    real_type t2   = XM__[2];
+    real_type t10  = ModelPars[iM_h];
+    real_type t15  = UM__[0];
+    real_type t20  = minimumTimeSize(-t2);
     real_type t21  = ModelPars[iM_Fmax];
-    real_type t22  = FyControl(t16, -t21, t21);
-    real_type result__ = t2 + XM__[0] * t1 * LM__[0] + (ModelPars[iM_m] * t11 * ModelPars[iM_g] * t1 * XM__[1] - t11 * t1 * t16) * LM__[1] + t22 * t1;
+    real_type t22  = FyControl(t15, -t21, t21);
+    real_type result__ = XM__[0] * t2 * LM__[0] + (ModelPars[iM_m] * t10 * ModelPars[iM_g] * t2 * XM__[1] - t10 * t2 * t15) * LM__[1] + t20 + t22 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

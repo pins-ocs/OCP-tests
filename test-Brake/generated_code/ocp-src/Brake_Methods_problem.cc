@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_problem.cc                                       |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -57,6 +57,39 @@ using Mechatronix::MeshStd;
 namespace BrakeDefine {
 
   /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  Brake::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[2];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+    res = res && Tpositive.check_range(-P__[iP_T], m_max_penalty_value);
+    return res;
+  }
+
+  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -75,9 +108,8 @@ namespace BrakeDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = Tpositive(-t1);
-    real_type result__ = X__[iX_v] * t1 * L__[iL_lambda1__xo] + U__[iU_a] * t1 * L__[iL_lambda2__xo] + t2;
+    real_type t2   = P__[iP_T];
+    real_type result__ = X__[iX_v] * t2 * L__[iL_lambda1__xo] + U__[iU_a] * t2 * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -230,6 +262,29 @@ namespace BrakeDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 5, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Brake::D2mayerD2xxp_numRows() const { return 5; }
+  integer Brake::D2mayerD2xxp_numCols() const { return 5; }
+  integer Brake::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  Brake::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Brake::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -260,51 +315,25 @@ namespace BrakeDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brake::IPOPT_hess_numRows() const { return 4; }
-  integer Brake::IPOPT_hess_numCols() const { return 4; }
-  integer Brake::IPOPT_hess_nnz()     const { return 4; }
+  integer Brake::D2lagrangeD2xup_numRows() const { return 4; }
+  integer Brake::D2lagrangeD2xup_numCols() const { return 4; }
+  integer Brake::D2lagrangeD2xup_nnz()     const { return 0; }
 
   void
-  Brake::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 1   ; jIndex[0 ] = 3   ;
-    iIndex[1 ] = 2   ; jIndex[1 ] = 3   ;
-    iIndex[2 ] = 3   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 2   ;
+  Brake::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  Brake::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  Brake::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    result__[ 1   ] = L__[iL_lambda2__xo];
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = result__[1];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 4, i_segment );
+    // EMPTY!
   }
 
   /*\
@@ -467,7 +496,7 @@ namespace BrakeDefine {
    |                                                    |___/
   \*/
 
-  integer Brake::post_numEqns() const { return 0; }
+  integer Brake::post_numEqns() const { return 2; }
 
   void
   Brake::post_eval(
@@ -476,7 +505,14 @@ namespace BrakeDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = aControl(U__[iU_a], -1, 1);
+    result__[ 1   ] = Tpositive(-P__[iP_T]);
+    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

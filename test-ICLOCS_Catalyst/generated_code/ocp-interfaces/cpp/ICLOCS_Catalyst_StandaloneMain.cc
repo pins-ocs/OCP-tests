@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Catalyst_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_ctrl = 1e-05;
     real_type tol_ctrl = 1e-05;
+    real_type epsi_ctrl = 1e-05;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -165,8 +165,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_Catalyst_data.Mesh["s0"] = 0;
-ICLOCS_Catalyst_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS_Catalyst_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_Catalyst_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

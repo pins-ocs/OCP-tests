@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_AdjointODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -473,6 +473,30 @@ namespace ZermeloDefine {
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Zermelo::D2LTargsD2xup_numRows() const { return 6; }
+  integer Zermelo::D2LTargsD2xup_numCols() const { return 6; }
+  integer Zermelo::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  Zermelo::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Zermelo::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -585,20 +609,20 @@ namespace ZermeloDefine {
     real_type t8   = L__[iL_lambda2__xo];
     real_type t9   = t2 * t8;
     real_type t10  = velY_D_1_1(t4, t5);
-    result__[ 0   ] = t10 * t9 + t6 * t3;
+    result__[ 0   ] = t10 * t9 + t3 * t6;
     real_type t12  = velX_D_1_2(t4, t5);
     real_type t14  = velY_D_1_2(t4, t5);
     result__[ 1   ] = t12 * t3 + t14 * t9;
     real_type t16  = velX_D_1(t4, t5);
     real_type t18  = velY_D_1(t4, t5);
-    result__[ 2   ] = t16 * t1 + t18 * t8;
+    result__[ 2   ] = t1 * t16 + t18 * t8;
     result__[ 3   ] = result__[1];
     real_type t20  = velX_D_2_2(t4, t5);
     real_type t22  = velY_D_2_2(t4, t5);
     result__[ 4   ] = t20 * t3 + t22 * t9;
     real_type t24  = velX_D_2(t4, t5);
     real_type t26  = velY_D_2(t4, t5);
-    result__[ 5   ] = t24 * t1 + t26 * t8;
+    result__[ 5   ] = t1 * t24 + t26 * t8;
     result__[ 6   ] = t1;
     result__[ 7   ] = t8;
     result__[ 8   ] = result__[2];

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -65,6 +65,40 @@ namespace ICLOCS2_AlyChanDefine {
     real_type t2   = 1 - s;
     uControl.update_epsilon(ModelPars[iM_u_epsi_min] * s + t2 * ModelPars[iM_u_epsi_max]);
     uControl.update_tolerance(ModelPars[iM_u_tol_min] * s + t2 * ModelPars[iM_u_tol_max]);
+  }
+
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  ICLOCS2_AlyChan::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[3];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+
+    return res;
   }
 
   /*\
@@ -243,6 +277,29 @@ namespace ICLOCS2_AlyChanDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 6, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS2_AlyChan::D2mayerD2xxp_numRows() const { return 6; }
+  integer ICLOCS2_AlyChan::D2mayerD2xxp_numCols() const { return 6; }
+  integer ICLOCS2_AlyChan::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS2_AlyChan::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS2_AlyChan::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -273,48 +330,25 @@ namespace ICLOCS2_AlyChanDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS2_AlyChan::IPOPT_hess_numRows() const { return 4; }
-  integer ICLOCS2_AlyChan::IPOPT_hess_numCols() const { return 4; }
-  integer ICLOCS2_AlyChan::IPOPT_hess_nnz()     const { return 2; }
+  integer ICLOCS2_AlyChan::D2lagrangeD2xup_numRows() const { return 4; }
+  integer ICLOCS2_AlyChan::D2lagrangeD2xup_numCols() const { return 4; }
+  integer ICLOCS2_AlyChan::D2lagrangeD2xup_nnz()     const { return 0; }
 
   void
-  ICLOCS2_AlyChan::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+  ICLOCS2_AlyChan::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  ICLOCS2_AlyChan::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  ICLOCS2_AlyChan::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda3__xo];
-    result__[ 0   ] = -t1;
-    result__[ 1   ] = t1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 2, i_segment );
+    // EMPTY!
   }
 
   /*\
@@ -487,7 +521,7 @@ namespace ICLOCS2_AlyChanDefine {
    |                                                    |___/
   \*/
 
-  integer ICLOCS2_AlyChan::post_numEqns() const { return 0; }
+  integer ICLOCS2_AlyChan::post_numEqns() const { return 1; }
 
   void
   ICLOCS2_AlyChan::post_eval(
@@ -496,7 +530,13 @@ namespace ICLOCS2_AlyChanDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = uControl(U__[iU_u], -1, 1);
+    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

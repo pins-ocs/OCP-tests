@@ -10,12 +10,21 @@ loadDynamicSystem(
   controls  = cvars,
   states    = qvars
 );
-addBoundaryConditions(initial=[x=0,v=0],final=[v=0]);
+addBoundaryConditions(initial=[x=x_i,v=v_i],final=[v=v_f]);
 infoBoundaryConditions();
 setTarget( mayer = -x(zeta_f) );
 addControlBound( F, controlType="U_COS_LOGARITHMIC", maxabs=1 );
-PARS := [ x_i = 0, x_f=0, v_i=0, v_f=0 ];
-POST := [];
+addUserFunction(C1(v) = -(v__max - v));
+addUnilateralConstraint(
+  C1(v(zeta)) <= 0,
+  C1_constr,
+  barrier   = false,
+  epsilon   = 0.001,
+  tolerance = 0.025,
+  scale     = 1 
+);
+PARS := [ v__max=0.3, x_i = 0, v_i=0, v_f=0 ];
+POST := [[ C1(v(zeta)), "C1" ]];
 CONT := [];
 GUESS := [ v = zeta*(1-zeta) ];
 MESH_DEF := [length=1, n=100];

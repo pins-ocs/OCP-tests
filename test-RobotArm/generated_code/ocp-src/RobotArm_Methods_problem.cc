@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,6 +94,43 @@ namespace RobotArmDefine {
     u_thetaControl.update_tolerance(t11);
     u_phiControl.update_epsilon(t6);
     u_phiControl.update_tolerance(t11);
+  }
+
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  RobotArm::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[6];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
+    X__[4] = (XL__[4]+XR__[4])/2;
+    X__[5] = (XL__[5]+XR__[5])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+
+    return res;
   }
 
   /*\
@@ -284,6 +321,39 @@ namespace RobotArmDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 13, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer RobotArm::D2mayerD2xxp_numRows() const { return 13; }
+  integer RobotArm::D2mayerD2xxp_numCols() const { return 13; }
+  integer RobotArm::D2mayerD2xxp_nnz()     const { return 1; }
+
+  void
+  RobotArm::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 12  ; jIndex[0 ] = 12  ;
+  }
+
+
+  void
+  RobotArm::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = -2 * ModelPars[iM_W] + 2;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "D2mayerD2xxp_eval", 1, i_segment_left, i_segment_right );
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -320,84 +390,25 @@ namespace RobotArmDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 10, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer RobotArm::IPOPT_hess_numRows() const { return 10; }
-  integer RobotArm::IPOPT_hess_numCols() const { return 10; }
-  integer RobotArm::IPOPT_hess_nnz()     const { return 16; }
+  integer RobotArm::D2lagrangeD2xup_numRows() const { return 10; }
+  integer RobotArm::D2lagrangeD2xup_numCols() const { return 10; }
+  integer RobotArm::D2lagrangeD2xup_nnz()     const { return 0; }
 
   void
-  RobotArm::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 3   ; jIndex[4 ] = 9   ;
-    iIndex[5 ] = 4   ; jIndex[5 ] = 9   ;
-    iIndex[6 ] = 5   ; jIndex[6 ] = 9   ;
-    iIndex[7 ] = 6   ; jIndex[7 ] = 9   ;
-    iIndex[8 ] = 7   ; jIndex[8 ] = 9   ;
-    iIndex[9 ] = 8   ; jIndex[9 ] = 9   ;
-    iIndex[10] = 9   ; jIndex[10] = 3   ;
-    iIndex[11] = 9   ; jIndex[11] = 4   ;
-    iIndex[12] = 9   ; jIndex[12] = 5   ;
-    iIndex[13] = 9   ; jIndex[13] = 6   ;
-    iIndex[14] = 9   ; jIndex[14] = 7   ;
-    iIndex[15] = 9   ; jIndex[15] = 8   ;
+  RobotArm::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  RobotArm::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  RobotArm::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
-    real_type t2   = X__[iX_rho];
-    real_type t3   = X__[iX_phi];
-    real_type t4   = I_theta_D_1_1(t2, t3);
-    real_type t6   = V__[4];
-    real_type t8   = L__[iL_lambda3__xo];
-    real_type t9   = I_phi_DD(t2);
-    result__[ 0   ] = -t6 * t4 * t1 - V__[5] * t9 * t8;
-    real_type t13  = I_theta_D_1_2(t2, t3);
-    result__[ 1   ] = -t6 * t13 * t1;
-    result__[ 2   ] = result__[1];
-    real_type t16  = I_theta_D_2_2(t2, t3);
-    result__[ 3   ] = -t6 * t16 * t1;
-    result__[ 4   ] = L__[iL_lambda4__xo];
-    result__[ 5   ] = L__[iL_lambda5__xo];
-    result__[ 6   ] = L__[iL_lambda6__xo];
-    result__[ 7   ] = L__[iL_lambda1__xo];
-    result__[ 8   ] = t1;
-    result__[ 9   ] = t8;
-    result__[ 10  ] = result__[4];
-    result__[ 11  ] = result__[5];
-    result__[ 12  ] = result__[6];
-    result__[ 13  ] = result__[7];
-    result__[ 14  ] = result__[8];
-    result__[ 15  ] = result__[9];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 16, i_segment );
+    // EMPTY!
   }
 
   /*\
@@ -636,7 +647,7 @@ namespace RobotArmDefine {
    |                                                    |___/
   \*/
 
-  integer RobotArm::post_numEqns() const { return 0; }
+  integer RobotArm::post_numEqns() const { return 3; }
 
   void
   RobotArm::post_eval(
@@ -645,7 +656,15 @@ namespace RobotArmDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = u_rhoControl(U__[iU_u_rho], -1, 1);
+    result__[ 1   ] = u_thetaControl(U__[iU_u_theta], -1, 1);
+    result__[ 2   ] = u_phiControl(U__[iU_u_phi], -1, 1);
+    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

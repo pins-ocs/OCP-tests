@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04.cc                                             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -83,6 +83,7 @@ namespace LUUS_Singular04Define {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "uControl",
     nullptr
   };
 

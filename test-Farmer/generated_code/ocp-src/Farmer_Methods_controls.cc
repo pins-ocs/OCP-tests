@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -122,38 +122,38 @@ namespace FarmerDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[1];
-    real_type t2   = XM__[4];
-    real_type t4   = LimitX2X4(t1 + t2 - 0.12e0);
-    real_type t6   = ModelPars[iM_w1];
-    real_type t8   = XM__[0];
-    real_type t10  = ModelPars[iM_w2];
-    real_type t13  = ModelPars[iM_w3];
-    real_type t15  = XM__[2];
-    real_type t17  = ModelPars[iM_w4];
-    real_type t21  = Ptot(QM__[0]);
-    real_type t23  = pow(t8 / t6 + t1 / t10 + t15 / t13 + t2 / t17 - t21, 2);
+    real_type t2   = ModelPars[iM_w1];
+    real_type t4   = XM__[0];
+    real_type t6   = ModelPars[iM_w2];
+    real_type t8   = XM__[1];
+    real_type t10  = ModelPars[iM_w3];
+    real_type t12  = XM__[2];
+    real_type t14  = ModelPars[iM_w4];
+    real_type t16  = XM__[4];
+    real_type t19  = Ptot(QM__[0]);
+    real_type t21  = pow(t4 / t2 + t8 / t6 + t12 / t10 + t16 / t14 - t19, 2);
+    real_type t23  = t4 * t4;
     real_type t25  = t8 * t8;
-    real_type t27  = t1 * t1;
-    real_type t29  = t15 * t15;
-    real_type t31  = t2 * t2;
-    real_type t34  = UM__[0];
-    real_type t35  = -t8 + t34;
-    real_type t36  = t35 * t35;
-    real_type t39  = UM__[1];
-    real_type t40  = -t1 + t39;
-    real_type t41  = t40 * t40;
-    real_type t44  = UM__[2];
-    real_type t45  = -t15 + t44;
-    real_type t46  = t45 * t45;
-    real_type t49  = UM__[3];
-    real_type t50  = -t2 + t49;
-    real_type t51  = t50 * t50;
-    real_type t83  = x1__oControl(t34, -0.1e-2, 100);
-    real_type t84  = x2__oControl(t39, -0.1e-2, 100);
-    real_type t85  = x3__oControl(t44, -0.1e-2, 100);
-    real_type t86  = x4__oControl(t49, -0.1e-2, 100);
-    real_type result__ = t4 + t23 * ModelPars[iM_wP] + t25 * t6 + t10 * t27 + t29 * t13 + t31 * t17 + t36 * ModelPars[iM_wJ1] + t41 * ModelPars[iM_wJ2] + t46 * ModelPars[iM_wJ3] + t51 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t35 * LM__[0] + 1.0 / ModelPars[iM_tau__2] * t40 * LM__[1] + 1.0 / ModelPars[iM_tau__3] * t45 * LM__[2] - 1.0 / ModelPars[iM_tau__4] * (-t15 + t2) * LM__[3] + 1.0 / ModelPars[iM_tau__5] * t50 * LM__[4] + t83 + t84 + t85 + t86;
+    real_type t27  = t12 * t12;
+    real_type t29  = t16 * t16;
+    real_type t32  = UM__[0];
+    real_type t33  = -t4 + t32;
+    real_type t34  = t33 * t33;
+    real_type t37  = UM__[1];
+    real_type t38  = -t8 + t37;
+    real_type t39  = t38 * t38;
+    real_type t42  = UM__[2];
+    real_type t43  = -t12 + t42;
+    real_type t44  = t43 * t43;
+    real_type t47  = UM__[3];
+    real_type t48  = -t16 + t47;
+    real_type t49  = t48 * t48;
+    real_type t82  = LimitX2X4(t8 + t16 - 0.12e0);
+    real_type t83  = x1__oControl(t32, -0.1e-2, 100);
+    real_type t84  = x2__oControl(t37, -0.1e-2, 100);
+    real_type t85  = x3__oControl(t42, -0.1e-2, 100);
+    real_type t86  = x4__oControl(t47, -0.1e-2, 100);
+    real_type result__ = t21 * ModelPars[iM_wP] + t2 * t23 + t25 * t6 + t10 * t27 + t14 * t29 + t34 * ModelPars[iM_wJ1] + t39 * ModelPars[iM_wJ2] + t44 * ModelPars[iM_wJ3] + t49 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t33 * LM__[0] + 1.0 / ModelPars[iM_tau__2] * t38 * LM__[1] + 1.0 / ModelPars[iM_tau__3] * t43 * LM__[2] - 1.0 / ModelPars[iM_tau__4] * (-t12 + t16) * LM__[3] + 1.0 / ModelPars[iM_tau__5] * t48 * LM__[4] + t82 + t83 + t84 + t85 + t86;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

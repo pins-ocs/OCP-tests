@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_AdjointODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -639,11 +639,11 @@ namespace CNOCDefine {
     real_type t166 = t146 * t164 * t158;
     result__[ 6   ] = t140 * t154 * t150 - t140 * t161 * t158 + t166;
     real_type t172 = t139 * t146;
-    result__[ 7   ] = t139 * t141 * t150 * t151 * t153 - t141 * t158 * t160 * t172;
+    result__[ 7   ] = t139 * t141 * t153 * t151 * t150 - t141 * t172 * t160 * t158;
     real_type t175 = t164 * t157;
     result__[ 8   ] = t172 * t175;
     result__[ 9   ] = result__[7];
-    result__[ 10  ] = t142 * t150 * t154 - t142 * t158 * t161 + t166;
+    result__[ 10  ] = t142 * t154 * t150 - t142 * t161 * t158 + t166;
     result__[ 11  ] = t141 * t146 * t175;
     result__[ 12  ] = result__[1];
     real_type t181 = ModelPars[iM_as_max];
@@ -659,13 +659,13 @@ namespace CNOCDefine {
     real_type t195 = t25 * t194;
     real_type t198 = t8 * t8;
     real_type t199 = t64 * t198;
-    result__[ 13  ] = t1 * t185 * t188 + t1 * t188 * t191 + t16 * t195 + t195 * t45 + t199 * t58 + t199 * t78;
+    result__[ 13  ] = t188 * t185 * t1 + t188 * t191 * t1 + t195 * t16 + t195 * t45 + t199 * t58 + t199 * t78;
     real_type t202 = t5 * t99;
     real_type t205 = t8 * t106;
-    result__[ 14  ] = -t16 * t202 - t202 * t45 + t205 * t58 + t205 * t78;
+    result__[ 14  ] = -t202 * t16 - t202 * t45 + t205 * t58 + t205 * t78;
     real_type t208 = ALIAS_as_limit_min_D(t184);
     real_type t210 = ALIAS_as_limit_max_D(t190);
-    result__[ 15  ] = -t12 * t28 * t5 + t12 * t47 * t5 - t54 * t67 * t8 + t54 * t8 * t80 - t182 * t208 + t182 * t210;
+    result__[ 15  ] = -t12 * t5 * t28 + t12 * t5 * t47 - t54 * t8 * t67 + t54 * t8 * t80 - t182 * t208 + t182 * t210;
     result__[ 16  ] = result__[2];
     result__[ 17  ] = result__[14];
     real_type t220 = ModelPars[iM_an_max];
@@ -679,10 +679,10 @@ namespace CNOCDefine {
     real_type t230 = ALIAS_an_limit_max_DD(t229);
     real_type t233 = t25 * t198;
     real_type t236 = t64 * t194;
-    result__[ 18  ] = t1 * t224 * t227 + t1 * t227 * t230 + t16 * t233 + t233 * t45 + t236 * t58 + t236 * t78;
+    result__[ 18  ] = t227 * t224 * t1 + t227 * t230 * t1 + t233 * t16 + t233 * t45 + t236 * t58 + t236 * t78;
     real_type t239 = ALIAS_an_limit_min_D(t223);
     real_type t241 = ALIAS_an_limit_max_D(t229);
-    result__[ 19  ] = t12 * t28 * t8 - t12 * t47 * t8 - t5 * t54 * t67 + t5 * t54 * t80 - t221 * t239 + t221 * t241;
+    result__[ 19  ] = t12 * t8 * t28 - t12 * t8 * t47 - t54 * t5 * t67 + t54 * t5 * t80 - t221 * t239 + t221 * t241;
     result__[ 20  ] = result__[3];
     result__[ 21  ] = result__[5];
     result__[ 22  ] = result__[8];
@@ -941,6 +941,90 @@ namespace CNOCDefine {
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 21, i_segment );
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer CNOC::D2LTargsD2xup_numRows() const { return 9; }
+  integer CNOC::D2LTargsD2xup_numCols() const { return 9; }
+  integer CNOC::D2LTargsD2xup_nnz()     const { return 9; }
+
+  void
+  CNOC::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
+    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 3   ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 4   ; jIndex[7 ] = 0   ;
+    iIndex[8 ] = 5   ; jIndex[8 ] = 0   ;
+  }
+
+
+  void
+  CNOC::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_as];
+    real_type t2   = X__[iX_s];
+    real_type t3   = ALIAS_theta_DD(t2);
+    real_type t4   = t3 * t1;
+    real_type t5   = ALIAS_theta(t2);
+    real_type t6   = sin(t5);
+    real_type t8   = ALIAS_theta_D(t2);
+    real_type t9   = t8 * t8;
+    real_type t10  = t9 * t1;
+    real_type t11  = cos(t5);
+    real_type t13  = X__[iX_an];
+    real_type t14  = t3 * t13;
+    real_type t16  = t9 * t13;
+    real_type t20  = 1.0 / ModelPars[iM_ax_max];
+    real_type t21  = t20 * (-t11 * t10 - t11 * t14 + t6 * t16 - t6 * t4);
+    real_type t22  = OMEGA__[8];
+    real_type t24  = OMEGA__[9];
+    real_type t32  = 1.0 / ModelPars[iM_ay_max];
+    real_type t33  = t32 * (-t6 * t10 - t11 * t16 + t11 * t4 - t6 * t14);
+    real_type t34  = OMEGA__[10];
+    real_type t36  = OMEGA__[11];
+    result__[ 0   ] = -t22 * t21 + t24 * t21 - t34 * t33 + t36 * t33;
+    real_type t38  = t6 * t8;
+    real_type t39  = t22 * t20;
+    real_type t41  = t24 * t20;
+    real_type t43  = t11 * t8;
+    real_type t44  = t34 * t32;
+    real_type t46  = t36 * t32;
+    result__[ 1   ] = t39 * t38 - t41 * t38 - t44 * t43 + t46 * t43;
+    result__[ 2   ] = t44 * t38 - t46 * t38 + t39 * t43 - t41 * t43;
+    real_type t52  = X__[iX_vs];
+    real_type t53  = t52 * t52;
+    real_type t54  = X__[iX_vn];
+    real_type t55  = t54 * t54;
+    real_type t56  = t53 + t55;
+    real_type t57  = sqrt(t56);
+    real_type t60  = ALIAS_nominalFeed();
+    real_type t61  = 1.0 / t60;
+    real_type t62  = t61 / t57 / t56;
+    real_type t63  = OMEGA__[1];
+    real_type t68  = t63 * t61 / t57;
+    result__[ 3   ] = -t63 * t53 * t62 + t68;
+    result__[ 4   ] = -t54 * t63 * t52 * t62;
+    result__[ 5   ] = result__[4];
+    result__[ 6   ] = -t63 * t55 * t62 + t68;
+    result__[ 7   ] = result__[1];
+    result__[ 8   ] = result__[2];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2LTargsD2xup_sparse", 9, i_segment );
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -1016,7 +1100,7 @@ namespace CNOCDefine {
     result__[ 4   ] = t12 * t17 - t92 * t71;
     result__[ 5   ] = t12 * t30 + t92 * t68;
     real_type t111 = t78 * t78;
-    result__[ 6   ] = t82 * t111 + t20 * t3 + t18 * t104 + (t91 * t19 + t49) * t17 + (-t20 * t34 + t40) * t30 + (t91 * t41 + U__[iU_js]) * t39 + (-t91 * t50 + U__[iU_jn]) * t48;
+    result__[ 6   ] = t82 * t111 + t20 * t3 + t18 * t104 - (-t91 * t19 - t49) * t17 - (t20 * t34 - t40) * t30 - (-t91 * t41 - U__[iU_js]) * t39 - (t91 * t50 - U__[iU_jn]) * t48;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 7, i_segment );
   }
@@ -1158,13 +1242,8 @@ namespace CNOCDefine {
     result__[ 3   ] = -t13 * t163 * t27;
     result__[ 4   ] = -t13 * t145 * t75;
     result__[ 5   ] = -t13 * t163 * t62;
-    real_type t170 = t136 * t3;
     real_type t171 = t30 * t16;
-    real_type t174 = -t136 * t37 - t171 * t29;
-    real_type t178 = t30 * t107 + t136 * t55;
-    real_type t182 = -t136 * t68 - t171 * t64;
-    real_type t186 = t136 * t81 + t171 * t77;
-    result__[ 6   ] = -t174 * t27 - t178 * t48 - t182 * t62 - t186 * t75 + t170;
+    result__[ 6   ] = t136 * t3 - (-t136 * t37 - t171 * t29) * t27 - (t30 * t107 + t136 * t55) * t48 - (-t136 * t68 - t171 * t64) * t62 - (t136 * t81 + t171 * t77) * t75;
     real_type t188 = t2 * t27;
     real_type t189 = t28 * t188;
     real_type t191 = t16 * t13 * t108;
@@ -1231,7 +1310,7 @@ namespace CNOCDefine {
     result__[ 31  ] = result__[12];
     result__[ 32  ] = result__[19];
     result__[ 33  ] = t316 * t208 + t48;
-    result__[ 34  ] = -t174 * t27 - t178 * t48 - t182 * t62 - t186 * t75 + t170;
+    result__[ 34  ] = result__[6];
     result__[ 35  ] = result__[13];
     result__[ 36  ] = result__[20];
     result__[ 37  ] = result__[25];

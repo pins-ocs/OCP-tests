@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2.cc                                            |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -86,6 +86,7 @@ namespace Brachiostocrona2Define {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "TimePositive",
     nullptr
   };
 

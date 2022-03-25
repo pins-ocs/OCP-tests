@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_4_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 19/3/2022                                        #
+#  version: 1.0   date 25/3/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -21,14 +21,14 @@ include Mechatronix
 
 # Auxiliary values
 p_epsi0   = 0.1
+m         = 700
+up_epsi0  = 0.1
+kD        = 0.2500000000/m
 up_tol0   = 0.01
-road_tol0 = 0.01
+p_tol0    = 0.1
 wT0       = 0.01
 wT        = wT0
-m         = 700
-kD        = 0.2500000000/m
-p_tol0    = 0.1
-up_epsi0  = 0.1
+road_tol0 = 0.01
 
 mechatronix do |data|
 
@@ -42,6 +42,8 @@ mechatronix do |data|
   data.InfoLevel = 4
 
   data.Use_control_penalties_in_adjoint_equations = false
+
+  data.Max_penalty_value = 1000
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -214,13 +216,13 @@ mechatronix do |data|
       :check_angle  => 120,
 
       # check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
-      :check_ratio_norm_two_f => 1.4,
+      :check_ratio_norm_two_f => 2,
       # check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
-      :check_ratio_norm_two_d => 1.4,
+      :check_ratio_norm_two_d => 2,
       # check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
-      :check_ratio_norm_one_f => 1.4,
+      :check_ratio_norm_one_f => 2,
       # check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
-      :check_ratio_norm_one_d => 1.4,
+      :check_ratio_norm_one_d => 2,
     },
 
     :Hyness => {
@@ -346,7 +348,10 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
-  # ConstraintLT
+  #  _  _____
+  # | ||_   _|
+  # | |__| |
+  # |____|_|
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DLessThan
@@ -397,74 +402,74 @@ mechatronix do |data|
     :is_SAE   => false,
     :segments => [
       {
-        :curvature  => 0,
-        :length     => 190,
-        :rightWidth => 60,
+        :gridSize   => 1,
         :leftWidth  => 15/2.0,
-        :gridSize   => 1,
+        :length     => 190,
+        :curvature  => 0,
+        :rightWidth => 60,
       },
       {
-        :curvature  => 0.003225806452,
-        :length     => 973.8937227,
-        :rightWidth => 30,
+        :gridSize   => 1,
         :leftWidth  => 60,
-        :gridSize   => 1,
+        :length     => 973.8937227,
+        :curvature  => 0.003225806452,
+        :rightWidth => 30,
       },
       {
-        :curvature  => 0,
+        :gridSize   => 1,
+        :leftWidth  => 30,
         :length     => 180,
+        :curvature  => 0,
         :rightWidth => 30,
-        :leftWidth  => 30,
-        :gridSize   => 1,
       },
       {
-        :curvature  => 0.006666666667,
-        :length     => 235.619449,
-        :rightWidth => 15,
+        :gridSize   => 1,
         :leftWidth  => 20,
-        :gridSize   => 1,
-      },
-      {
-        :curvature  => 0,
-        :length     => 240,
-        :rightWidth => 30,
-        :leftWidth  => 30,
-        :gridSize   => 1,
-      },
-      {
-        :curvature  => -1/150.0,
         :length     => 235.619449,
-        :rightWidth => 30,
-        :leftWidth  => 30,
-        :gridSize   => 1,
+        :curvature  => 0.006666666667,
+        :rightWidth => 15,
       },
       {
+        :gridSize   => 1,
+        :leftWidth  => 30,
+        :length     => 240,
         :curvature  => 0,
+        :rightWidth => 30,
+      },
+      {
+        :gridSize   => 1,
+        :leftWidth  => 30,
+        :length     => 235.619449,
+        :curvature  => -1/150.0,
+        :rightWidth => 30,
+      },
+      {
+        :gridSize   => 1,
+        :leftWidth  => 30,
         :length     => 200,
+        :curvature  => 0,
         :rightWidth => 30,
-        :leftWidth  => 30,
-        :gridSize   => 1,
       },
       {
-        :curvature  => 0.025,
+        :gridSize   => 1,
+        :leftWidth  => 30,
         :length     => 125.6637062,
+        :curvature  => 0.025,
         :rightWidth => 30,
-        :leftWidth  => 30,
-        :gridSize   => 1,
       },
       {
-        :curvature  => 0,
+        :gridSize   => 1,
+        :leftWidth  => 30,
         :length     => 480,
+        :curvature  => 0,
         :rightWidth => 30,
-        :leftWidth  => 30,
-        :gridSize   => 1,
       },
       {
-        :curvature  => 0,
-        :length     => 10,
-        :rightWidth => 30,
-        :leftWidth  => 30,
         :gridSize   => 0.1,
+        :leftWidth  => 30,
+        :length     => 10,
+        :curvature  => 0,
+        :rightWidth => 30,
       },
     ],
   };

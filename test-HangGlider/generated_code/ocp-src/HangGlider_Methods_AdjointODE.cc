@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_AdjointODE.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -497,6 +497,30 @@ namespace HangGliderDefine {
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer HangGlider::D2LTargsD2xup_numRows() const { return 6; }
+  integer HangGlider::D2LTargsD2xup_numCols() const { return 6; }
+  integer HangGlider::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  HangGlider::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  HangGlider::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -523,48 +547,51 @@ namespace HangGliderDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda3__xo];
     real_type t2   = P__[iP_T];
-    real_type t5   = 1.0 / ModelPars[iM_m] * t2;
-    real_type t6   = X__[iX_x];
-    real_type t7   = X__[iX_vx];
-    real_type t8   = X__[iX_vy];
-    real_type t9   = v(t6, t7, t8);
-    real_type t10  = t9 * t9;
-    real_type t11  = 1.0 / t10;
-    real_type t13  = U__[iU_cL];
-    real_type t14  = t13 * t13;
-    real_type t17  = t14 * ModelPars[iM_c1] + ModelPars[iM_c0];
-    real_type t18  = Dfun(t6, t7, t8);
-    real_type t19  = t18 * t17;
-    real_type t21  = Lfun(t6, t7, t8);
-    real_type t22  = t21 * t13;
-    real_type t23  = w(t6, t8);
-    real_type t26  = (-t7 * t19 - t23 * t22) * t11;
-    real_type t27  = v_D_1(t6, t7, t8);
-    real_type t30  = 1.0 / t9;
-    real_type t31  = Dfun_D_1(t6, t7, t8);
-    real_type t32  = t31 * t17;
-    real_type t34  = Lfun_D_1(t6, t7, t8);
-    real_type t35  = t34 * t13;
-    real_type t37  = w_D_1(t6, t8);
+    real_type t3   = t2 * L__[iL_lambda3__xo];
+    real_type t5   = 1.0 / ModelPars[iM_m];
+    real_type t6   = t5 * t3;
+    real_type t7   = X__[iX_x];
+    real_type t8   = X__[iX_vx];
+    real_type t9   = X__[iX_vy];
+    real_type t10  = v(t7, t8, t9);
+    real_type t11  = t10 * t10;
+    real_type t12  = 1.0 / t11;
+    real_type t14  = U__[iU_cL];
+    real_type t15  = t14 * t14;
+    real_type t18  = t15 * ModelPars[iM_c1] + ModelPars[iM_c0];
+    real_type t19  = Dfun(t7, t8, t9);
+    real_type t20  = t19 * t18;
+    real_type t22  = Lfun(t7, t8, t9);
+    real_type t23  = t22 * t14;
+    real_type t24  = w(t7, t9);
+    real_type t27  = (-t8 * t20 - t24 * t23) * t12;
+    real_type t28  = v_D_1(t7, t8, t9);
+    real_type t31  = 1.0 / t10;
+    real_type t32  = t31 * t5;
+    real_type t33  = Dfun_D_1(t7, t8, t9);
+    real_type t34  = t33 * t18;
+    real_type t36  = Lfun_D_1(t7, t8, t9);
+    real_type t37  = t36 * t14;
+    real_type t39  = w_D_1(t7, t9);
     real_type t44  = L__[iL_lambda4__xo];
-    real_type t48  = (-t23 * t19 + t7 * t22) * t11;
-    result__[ 0   ] = (-t27 * t26 * t5 + (-t37 * t22 - t23 * t35 - t7 * t32) * t30 * t5) * t1 + (-t27 * t48 * t5 + (-t37 * t19 - t23 * t32 + t7 * t35) * t30 * t5) * t44;
+    real_type t45  = t5 * t2;
+    real_type t49  = (-t24 * t20 + t8 * t23) * t12;
+    result__[ 0   ] = -t28 * t27 * t6 + (-t39 * t23 - t24 * t37 - t8 * t34) * t32 * t3 + (-t28 * t49 * t45 + (-t39 * t20 - t24 * t34 + t8 * t37) * t31 * t45) * t44;
     result__[ 1   ] = 0;
-    real_type t61  = v_D_2(t6, t7, t8);
-    real_type t64  = Dfun_D_2(t6, t7, t8);
-    real_type t65  = t64 * t17;
-    real_type t67  = Lfun_D_2(t6, t7, t8);
-    real_type t68  = t67 * t13;
-    result__[ 2   ] = t2 * L__[iL_lambda1__xo] + (-t61 * t26 * t5 + (-t23 * t68 - t7 * t65 - t19) * t30 * t5) * t1 + (-t61 * t48 * t5 + (-t23 * t65 + t7 * t68 + t22) * t30 * t5) * t44;
-    real_type t86  = v_D_3(t6, t7, t8);
-    real_type t89  = Dfun_D_3(t6, t7, t8);
-    real_type t90  = t89 * t17;
-    real_type t92  = Lfun_D_3(t6, t7, t8);
-    real_type t93  = t92 * t13;
-    real_type t95  = w_D_2(t6, t8);
-    result__[ 3   ] = t2 * L__[iL_lambda2__xo] + (-t86 * t26 * t5 + (-t95 * t22 - t23 * t93 - t7 * t90) * t30 * t5) * t1 + (-t86 * t48 * t5 + (-t95 * t19 - t23 * t90 + t7 * t93) * t30 * t5) * t44;
+    real_type t62  = v_D_2(t7, t8, t9);
+    real_type t65  = Dfun_D_2(t7, t8, t9);
+    real_type t66  = t65 * t18;
+    real_type t68  = Lfun_D_2(t7, t8, t9);
+    real_type t69  = t68 * t14;
+    result__[ 2   ] = t2 * L__[iL_lambda1__xo] - t62 * t27 * t6 + (-t24 * t69 - t8 * t66 - t20) * t32 * t3 + (-t62 * t49 * t45 + (-t24 * t66 + t8 * t69 + t23) * t31 * t45) * t44;
+    real_type t85  = v_D_3(t7, t8, t9);
+    real_type t88  = Dfun_D_3(t7, t8, t9);
+    real_type t89  = t88 * t18;
+    real_type t91  = Lfun_D_3(t7, t8, t9);
+    real_type t92  = t91 * t14;
+    real_type t94  = w_D_2(t7, t9);
+    result__[ 3   ] = t2 * L__[iL_lambda2__xo] - t85 * t27 * t6 + (-t94 * t23 - t24 * t92 - t8 * t89) * t32 * t3 + (-t85 * t49 * t45 + (-t94 * t20 - t24 * t89 + t8 * t92) * t31 * t45) * t44;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 4, i_segment );
   }
@@ -599,7 +626,7 @@ namespace HangGliderDefine {
     real_type t23  = Lfun(t11, t2, t5);
     real_type t24  = t23 * t15;
     real_type t25  = w(t11, t5);
-    result__[ 0   ] = t2 * L__[iL_lambda1__xo] + t5 * L__[iL_lambda2__xo] + (-t2 * t21 - t25 * t24) * t13 * t9 * L__[iL_lambda3__xo] + ((t2 * t24 - t25 * t21) * t13 * t9 - ModelPars[iM_g]) * L__[iL_lambda4__xo];
+    result__[ 0   ] = t2 * L__[iL_lambda1__xo] + t5 * L__[iL_lambda2__xo] + (-t2 * t21 - t24 * t25) * t13 * t9 * L__[iL_lambda3__xo] + ((t2 * t24 - t21 * t25) * t13 * t9 - ModelPars[iM_g]) * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
@@ -641,115 +668,117 @@ namespace HangGliderDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = L__[iL_lambda3__xo];
-    real_type t4   = 1.0 / ModelPars[iM_m];
-    real_type t5   = t4 * P__[iP_T];
-    real_type t6   = X__[iX_x];
-    real_type t7   = X__[iX_vx];
-    real_type t8   = X__[iX_vy];
-    real_type t9   = v(t6, t7, t8);
-    real_type t10  = t9 * t9;
-    real_type t12  = 1.0 / t10 / t9;
-    real_type t14  = U__[iU_cL];
-    real_type t15  = t14 * t14;
-    real_type t18  = t15 * ModelPars[iM_c1] + ModelPars[iM_c0];
-    real_type t19  = Dfun(t6, t7, t8);
-    real_type t20  = t19 * t18;
-    real_type t22  = Lfun(t6, t7, t8);
-    real_type t23  = t22 * t14;
-    real_type t24  = w(t6, t8);
-    real_type t26  = -t7 * t20 - t24 * t23;
-    real_type t27  = t26 * t12;
-    real_type t28  = v_D_1(t6, t7, t8);
-    real_type t29  = t28 * t28;
-    real_type t33  = 1.0 / t10;
-    real_type t34  = Dfun_D_1(t6, t7, t8);
-    real_type t35  = t34 * t18;
-    real_type t37  = Lfun_D_1(t6, t7, t8);
-    real_type t38  = t37 * t14;
-    real_type t40  = w_D_1(t6, t8);
-    real_type t42  = -t40 * t23 - t24 * t38 - t7 * t35;
-    real_type t43  = t42 * t33;
-    real_type t47  = t26 * t33;
-    real_type t48  = v_D_1_1(t6, t7, t8);
-    real_type t51  = 1.0 / t9;
-    real_type t52  = Dfun_D_1_1(t6, t7, t8);
-    real_type t53  = t52 * t18;
-    real_type t55  = Lfun_D_1_1(t6, t7, t8);
-    real_type t56  = t55 * t14;
-    real_type t60  = w_D_1_1(t6, t8);
+    real_type t2   = P__[iP_T];
+    real_type t3   = t2 * t1;
+    real_type t5   = 1.0 / ModelPars[iM_m];
+    real_type t6   = t5 * t3;
+    real_type t7   = X__[iX_x];
+    real_type t8   = X__[iX_vx];
+    real_type t9   = X__[iX_vy];
+    real_type t10  = v(t7, t8, t9);
+    real_type t11  = t10 * t10;
+    real_type t13  = 1.0 / t11 / t10;
+    real_type t15  = U__[iU_cL];
+    real_type t16  = t15 * t15;
+    real_type t19  = t16 * ModelPars[iM_c1] + ModelPars[iM_c0];
+    real_type t20  = Dfun(t7, t8, t9);
+    real_type t21  = t20 * t19;
+    real_type t23  = Lfun(t7, t8, t9);
+    real_type t24  = t23 * t15;
+    real_type t25  = w(t7, t9);
+    real_type t27  = -t8 * t21 - t25 * t24;
+    real_type t28  = t27 * t13;
+    real_type t29  = v_D_1(t7, t8, t9);
+    real_type t30  = t29 * t29;
+    real_type t34  = 1.0 / t11;
+    real_type t35  = Dfun_D_1(t7, t8, t9);
+    real_type t36  = t35 * t19;
+    real_type t38  = Lfun_D_1(t7, t8, t9);
+    real_type t39  = t38 * t15;
+    real_type t41  = w_D_1(t7, t9);
+    real_type t43  = -t41 * t24 - t25 * t39 - t8 * t36;
+    real_type t44  = t43 * t34;
+    real_type t48  = t27 * t34;
+    real_type t49  = v_D_1_1(t7, t8, t9);
+    real_type t52  = 1.0 / t10;
+    real_type t53  = t52 * t5;
+    real_type t54  = Dfun_D_1_1(t7, t8, t9);
+    real_type t55  = t54 * t19;
+    real_type t57  = Lfun_D_1_1(t7, t8, t9);
+    real_type t58  = t57 * t15;
+    real_type t62  = w_D_1_1(t7, t9);
     real_type t67  = L__[iL_lambda4__xo];
-    real_type t70  = -t24 * t20 + t7 * t23;
-    real_type t71  = t70 * t12;
-    real_type t78  = -t40 * t20 - t24 * t35 + t7 * t38;
-    real_type t79  = t78 * t33;
-    real_type t83  = t70 * t33;
-    result__[ 0   ] = (2 * t29 * t27 * t5 - 2 * t28 * t43 * t5 - t48 * t47 * t5 + (-t60 * t23 - t24 * t56 - 2 * t40 * t38 - t7 * t53) * t51 * t5) * t1 + (2 * t29 * t71 * t5 - 2 * t28 * t79 * t5 - t48 * t83 * t5 + (-t60 * t20 - t24 * t53 - 2 * t40 * t35 + t7 * t56) * t51 * t5) * t67;
-    real_type t96  = t12 * t5;
-    real_type t97  = t28 * t26;
-    real_type t98  = v_D_2(t6, t7, t8);
-    real_type t102 = Dfun_D_2(t6, t7, t8);
-    real_type t103 = t102 * t18;
-    real_type t105 = Lfun_D_2(t6, t7, t8);
-    real_type t106 = t105 * t14;
-    real_type t108 = -t7 * t103 - t24 * t106 - t20;
-    real_type t109 = t108 * t33;
-    real_type t112 = v_D_1_2(t6, t7, t8);
-    real_type t117 = Dfun_D_1_2(t6, t7, t8);
-    real_type t118 = t117 * t18;
-    real_type t120 = Lfun_D_1_2(t6, t7, t8);
-    real_type t121 = t120 * t14;
-    real_type t129 = t28 * t70;
-    real_type t135 = -t24 * t103 + t7 * t106 + t23;
-    real_type t136 = t135 * t33;
-    result__[ 1   ] = (2 * t98 * t97 * t96 - t28 * t109 * t5 - t112 * t47 * t5 - t98 * t43 * t5 + (-t40 * t106 - t7 * t118 - t24 * t121 - t35) * t51 * t5) * t1 + (2 * t98 * t129 * t96 - t28 * t136 * t5 - t112 * t83 * t5 - t98 * t79 * t5 + (-t40 * t103 - t24 * t118 + t7 * t121 + t38) * t51 * t5) * t67;
-    real_type t151 = v_D_3(t6, t7, t8);
-    real_type t155 = Dfun_D_3(t6, t7, t8);
-    real_type t156 = t155 * t18;
-    real_type t158 = Lfun_D_3(t6, t7, t8);
-    real_type t159 = t158 * t14;
-    real_type t161 = w_D_2(t6, t8);
-    real_type t163 = -t7 * t156 - t24 * t159 - t161 * t23;
-    real_type t164 = t163 * t33;
-    real_type t167 = v_D_1_3(t6, t7, t8);
-    real_type t172 = Dfun_D_1_3(t6, t7, t8);
-    real_type t173 = t172 * t18;
-    real_type t175 = Lfun_D_1_3(t6, t7, t8);
-    real_type t176 = t175 * t14;
-    real_type t180 = w_D_1_2(t6, t8);
-    real_type t193 = -t24 * t156 + t7 * t159 - t161 * t20;
-    real_type t194 = t193 * t33;
-    result__[ 2   ] = (2 * t151 * t97 * t96 - t28 * t164 * t5 - t167 * t47 * t5 - t151 * t43 * t5 + (-t40 * t159 - t161 * t38 - t7 * t173 - t24 * t176 - t180 * t23) * t51 * t5) * t1 + (2 * t151 * t129 * t96 - t28 * t194 * t5 - t167 * t83 * t5 - t151 * t79 * t5 + (-t40 * t156 - t161 * t35 - t24 * t173 + t7 * t176 - t180 * t20) * t51 * t5) * t67;
-    real_type t211 = t33 * t4;
-    real_type t213 = t51 * t4;
-    result__[ 3   ] = (-t97 * t211 + t42 * t213) * t1 + (-t129 * t211 + t78 * t213) * t67;
+    real_type t68  = t5 * t2;
+    real_type t71  = -t25 * t21 + t8 * t24;
+    real_type t72  = t71 * t13;
+    real_type t79  = -t41 * t21 - t25 * t36 + t8 * t39;
+    real_type t80  = t79 * t34;
+    real_type t84  = t71 * t34;
+    result__[ 0   ] = 2 * t30 * t28 * t6 - 2 * t29 * t44 * t6 - t49 * t48 * t6 + (-t62 * t24 - t25 * t58 - 2 * t41 * t39 - t8 * t55) * t53 * t3 + (2 * t30 * t72 * t68 - 2 * t29 * t80 * t68 - t49 * t84 * t68 + (-t62 * t21 - t25 * t55 - 2 * t41 * t36 + t8 * t58) * t52 * t68) * t67;
+    real_type t97  = v_D_2(t7, t8, t9);
+    real_type t102 = Dfun_D_2(t7, t8, t9);
+    real_type t103 = t102 * t19;
+    real_type t105 = Lfun_D_2(t7, t8, t9);
+    real_type t106 = t105 * t15;
+    real_type t108 = -t8 * t103 - t25 * t106 - t21;
+    real_type t109 = t108 * t34;
+    real_type t112 = v_D_1_2(t7, t8, t9);
+    real_type t117 = Dfun_D_1_2(t7, t8, t9);
+    real_type t118 = t117 * t19;
+    real_type t120 = Lfun_D_1_2(t7, t8, t9);
+    real_type t121 = t120 * t15;
+    real_type t127 = t13 * t68;
+    real_type t128 = t29 * t71;
+    real_type t134 = -t25 * t103 + t8 * t106 + t24;
+    real_type t135 = t134 * t34;
+    result__[ 1   ] = 2 * t97 * t29 * t28 * t6 - t29 * t109 * t6 - t112 * t48 * t6 - t97 * t44 * t6 + (-t41 * t106 - t8 * t118 - t25 * t121 - t36) * t53 * t3 + (2 * t97 * t128 * t127 - t29 * t135 * t68 - t112 * t84 * t68 - t97 * t80 * t68 + (-t41 * t103 - t25 * t118 + t8 * t121 + t39) * t52 * t68) * t67;
+    real_type t150 = v_D_3(t7, t8, t9);
+    real_type t155 = Dfun_D_3(t7, t8, t9);
+    real_type t156 = t155 * t19;
+    real_type t158 = Lfun_D_3(t7, t8, t9);
+    real_type t159 = t158 * t15;
+    real_type t161 = w_D_2(t7, t9);
+    real_type t163 = -t8 * t156 - t25 * t159 - t161 * t24;
+    real_type t164 = t163 * t34;
+    real_type t167 = v_D_1_3(t7, t8, t9);
+    real_type t172 = Dfun_D_1_3(t7, t8, t9);
+    real_type t173 = t172 * t19;
+    real_type t175 = Lfun_D_1_3(t7, t8, t9);
+    real_type t176 = t175 * t15;
+    real_type t180 = w_D_1_2(t7, t9);
+    real_type t191 = -t25 * t156 + t8 * t159 - t161 * t21;
+    real_type t192 = t191 * t34;
+    result__[ 2   ] = 2 * t150 * t29 * t28 * t6 - t29 * t164 * t6 - t167 * t48 * t6 - t150 * t44 * t6 + (-t41 * t159 - t161 * t39 - t8 * t173 - t25 * t176 - t180 * t24) * t53 * t3 + (2 * t150 * t128 * t127 - t29 * t192 * t68 - t167 * t84 * t68 - t150 * t80 * t68 + (-t41 * t156 - t161 * t36 - t25 * t173 + t8 * t176 - t180 * t21) * t52 * t68) * t67;
+    real_type t209 = t5 * t1;
+    real_type t214 = t34 * t5;
+    result__[ 3   ] = -t29 * t48 * t209 + t43 * t52 * t209 + (-t128 * t214 + t79 * t53) * t67;
     result__[ 4   ] = result__[1];
-    real_type t221 = t98 * t98;
-    real_type t228 = v_D_2_2(t6, t7, t8);
-    real_type t231 = Dfun_D_2_2(t6, t7, t8);
-    real_type t232 = t231 * t18;
-    real_type t235 = Lfun_D_2_2(t6, t7, t8);
-    real_type t236 = t235 * t14;
-    result__[ 5   ] = (2 * t221 * t27 * t5 - 2 * t98 * t109 * t5 - t228 * t47 * t5 + (-t7 * t232 - t24 * t236 - 2 * t103) * t51 * t5) * t1 + (2 * t221 * t71 * t5 - 2 * t98 * t136 * t5 - t228 * t83 * t5 + (-t24 * t232 + t7 * t236 + 2 * t106) * t51 * t5) * t67;
-    real_type t259 = t98 * t26;
-    real_type t265 = v_D_2_3(t6, t7, t8);
-    real_type t270 = Dfun_D_2_3(t6, t7, t8);
-    real_type t271 = t270 * t18;
-    real_type t273 = Lfun_D_2_3(t6, t7, t8);
-    real_type t274 = t273 * t14;
-    real_type t282 = t98 * t70;
-    result__[ 6   ] = (2 * t151 * t259 * t96 - t98 * t164 * t5 - t265 * t47 * t5 - t151 * t109 * t5 + (-t161 * t106 - t24 * t274 - t7 * t271 - t156) * t51 * t5) * t1 + (2 * t151 * t282 * t96 - t98 * t194 * t5 - t265 * t83 * t5 - t151 * t136 * t5 + (-t161 * t103 - t24 * t271 + t7 * t274 + t159) * t51 * t5) * t67;
-    result__[ 7   ] = L__[iL_lambda1__xo] + (t108 * t213 - t259 * t211) * t1 + (t135 * t213 - t282 * t211) * t67;
+    real_type t219 = t97 * t97;
+    real_type t226 = v_D_2_2(t7, t8, t9);
+    real_type t229 = Dfun_D_2_2(t7, t8, t9);
+    real_type t230 = t229 * t19;
+    real_type t233 = Lfun_D_2_2(t7, t8, t9);
+    real_type t234 = t233 * t15;
+    result__[ 5   ] = 2 * t219 * t28 * t6 - 2 * t97 * t109 * t6 - t226 * t48 * t6 + (-t8 * t230 - t25 * t234 - 2 * t103) * t53 * t3 + (2 * t219 * t72 * t68 - 2 * t97 * t135 * t68 - t226 * t84 * t68 + (-t25 * t230 + t8 * t234 + 2 * t106) * t52 * t68) * t67;
+    real_type t261 = v_D_2_3(t7, t8, t9);
+    real_type t266 = Dfun_D_2_3(t7, t8, t9);
+    real_type t267 = t266 * t19;
+    real_type t269 = Lfun_D_2_3(t7, t8, t9);
+    real_type t270 = t269 * t15;
+    real_type t276 = t97 * t71;
+    result__[ 6   ] = 2 * t150 * t97 * t28 * t6 - t97 * t164 * t6 - t261 * t48 * t6 - t150 * t109 * t6 + (-t161 * t106 - t25 * t270 - t8 * t267 - t156) * t53 * t3 + (2 * t150 * t276 * t127 - t97 * t192 * t68 - t261 * t84 * t68 - t150 * t135 * t68 + (-t161 * t103 - t25 * t267 + t8 * t270 + t159) * t52 * t68) * t67;
+    result__[ 7   ] = L__[iL_lambda1__xo] - t97 * t48 * t209 + t108 * t52 * t209 + (t134 * t53 - t276 * t214) * t67;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
-    real_type t309 = t151 * t151;
-    real_type t316 = v_D_3_3(t6, t7, t8);
-    real_type t319 = Dfun_D_3_3(t6, t7, t8);
-    real_type t320 = t319 * t18;
-    real_type t322 = Lfun_D_3_3(t6, t7, t8);
-    real_type t323 = t322 * t14;
-    real_type t327 = w_D_2_2(t6, t8);
-    result__[ 10  ] = (2 * t309 * t27 * t5 - 2 * t151 * t164 * t5 - t316 * t47 * t5 + (-2 * t161 * t159 - t327 * t23 - t24 * t323 - t7 * t320) * t51 * t5) * t1 + (2 * t309 * t71 * t5 - 2 * t151 * t194 * t5 - t316 * t83 * t5 + (-2 * t161 * t156 - t327 * t20 - t24 * t320 + t7 * t323) * t51 * t5) * t67;
-    result__[ 11  ] = L__[iL_lambda2__xo] + (-t151 * t26 * t211 + t163 * t213) * t1 + (-t151 * t70 * t211 + t193 * t213) * t67;
+    real_type t303 = t150 * t150;
+    real_type t310 = v_D_3_3(t7, t8, t9);
+    real_type t313 = Dfun_D_3_3(t7, t8, t9);
+    real_type t314 = t313 * t19;
+    real_type t316 = Lfun_D_3_3(t7, t8, t9);
+    real_type t317 = t316 * t15;
+    real_type t321 = w_D_2_2(t7, t9);
+    result__[ 10  ] = 2 * t303 * t28 * t6 - 2 * t150 * t164 * t6 - t310 * t48 * t6 + (-2 * t161 * t159 - t321 * t24 - t25 * t317 - t8 * t314) * t53 * t3 + (2 * t303 * t72 * t68 - 2 * t150 * t192 * t68 - t310 * t84 * t68 + (-2 * t161 * t156 - t321 * t21 - t25 * t314 + t8 * t317) * t52 * t68) * t67;
+    result__[ 11  ] = L__[iL_lambda2__xo] - t150 * t48 * t209 + t163 * t52 * t209 + (-t150 * t71 * t214 + t191 * t53) * t67;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 12, i_segment );
   }
@@ -858,7 +887,7 @@ namespace HangGliderDefine {
     real_type t16  = Dfun(t7, t8, t9);
     real_type t20  = Lfun(t7, t8, t9);
     real_type t21  = w(t7, t9);
-    real_type t23  = -2 * t15 * t16 * t8 - t20 * t21;
+    real_type t23  = -2 * t8 * t16 * t15 - t21 * t20;
     real_type t24  = t23 * t12;
     real_type t25  = v_D_1(t7, t8, t9);
     real_type t28  = 1.0 / t10;
@@ -869,19 +898,19 @@ namespace HangGliderDefine {
     real_type t41  = L__[iL_lambda4__xo];
     real_type t42  = t2 * t41;
     real_type t43  = t5 * t42;
-    real_type t48  = -2 * t15 * t16 * t21 + t20 * t8;
+    real_type t48  = -2 * t21 * t16 * t15 + t8 * t20;
     real_type t49  = t48 * t12;
-    result__[ 0   ] = -t25 * t24 * t6 + (-2 * t15 * t30 * t8 - t20 * t36 - t21 * t34) * t29 * t3 - t25 * t49 * t43 + (-2 * t15 * t16 * t36 - 2 * t15 * t21 * t30 + t34 * t8) * t29 * t42;
+    result__[ 0   ] = -t25 * t24 * t6 + (-2 * t8 * t30 * t15 - t36 * t20 - t21 * t34) * t29 * t3 - t25 * t49 * t43 + (-2 * t36 * t16 * t15 - 2 * t21 * t30 * t15 + t8 * t34) * t29 * t42;
     real_type t62  = v_D_2(t7, t8, t9);
     real_type t65  = Dfun_D_2(t7, t8, t9);
     real_type t71  = Lfun_D_2(t7, t8, t9);
-    result__[ 1   ] = -t62 * t24 * t6 + (-2 * t15 * t65 * t8 - 2 * t15 * t16 - t21 * t71) * t29 * t3 - t62 * t49 * t43 + (-2 * t15 * t21 * t65 + t71 * t8 + t20) * t29 * t42;
+    result__[ 1   ] = -t62 * t24 * t6 + (-2 * t8 * t65 * t15 - 2 * t16 * t15 - t21 * t71) * t29 * t3 - t62 * t49 * t43 + (-2 * t21 * t65 * t15 + t8 * t71 + t20) * t29 * t42;
     real_type t85  = v_D_3(t7, t8, t9);
     real_type t88  = Dfun_D_3(t7, t8, t9);
     real_type t92  = Lfun_D_3(t7, t8, t9);
     real_type t94  = w_D_2(t7, t9);
-    result__[ 2   ] = -t85 * t24 * t6 + (-2 * t15 * t8 * t88 - t20 * t94 - t21 * t92) * t29 * t3 - t85 * t49 * t43 + (-2 * t94 * t16 * t15 - 2 * t21 * t88 * t15 + t8 * t92) * t29 * t42;
-    result__[ 3   ] = t1 * t23 * t28 * t5 + t28 * t41 * t48 * t5;
+    result__[ 2   ] = -t85 * t24 * t6 + (-2 * t8 * t88 * t15 - t94 * t20 - t21 * t92) * t29 * t3 - t85 * t49 * t43 + (-2 * t94 * t16 * t15 - 2 * t21 * t88 * t15 + t8 * t92) * t29 * t42;
+    result__[ 3   ] = t23 * t28 * t5 * t1 + t48 * t28 * t5 * t41;
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDxp_sparse", 4, i_segment );
   }

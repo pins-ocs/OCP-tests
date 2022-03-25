@@ -42,9 +42,9 @@ Used threads:         15
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1,10] ( 0.00156  , 0.00197  ) [   739    ,   739    ] 0.000262   [1:0:5:0:3:0:0:0:0:0:0:0]
-[  2, 7] ( 0.00197  , 0.00258  ) [   33.6   ,   33.4   ] 0.0041     [1:0:2:0:3:0:0:0:0:0:0:0]
-[  3, 1] ( 0.00258  , 0.000733 ) [   0.66   ,  0.147   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  4, 1] ( 0.000733 , 8.27e-18 ) [  0.147   , 9.51e-18 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 6] ( 0.00197  , 0.00358  ) [   33.6   ,    33    ] 0.0102     [1:0:1:0:3:0:0:0:0:0:0:0]
+[  3, 1] ( 0.00358  , 0.000126 ) [  0.982   ,  0.0252  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 1] ( 0.000126 , 1.78e-18 ) [  0.0252  , 2.01e-18 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -58,10 +58,10 @@ dump_min       = 0.4           dump_max       = 0.9
 n_power        = 2             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
-ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 8.84[ms]      timeout        = 0 [ms]
+Elapsed Time   = 6.04[ms]      timeout        = 0 [ms]
 iteration      = 4             tolerance      = 1e-09
 max iterations = 300           N. Equations   = 803
 max acc. iter. = 800           N. System pars = 400
@@ -71,21 +71,23 @@ Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 20            Jacobian       = 4
-Factorization  = 4             Inversion      = 23
+Function       = 19            Jacobian       = 4
+Factorization  = 4             Inversion      = 22
 ........................... last residuals ...........................
-last ||f||_inf = 1.3271e-16    last ||d||_inf = 9.4554e-17
-last ||f||_1   = 8.2669e-18    last ||d||_1   = 9.5121e-18
-last ||f||_2   = 1.7979e-17    last ||d||_2   = 1.8868e-17
+last ||f||_inf = 3.3827e-17    last ||d||_inf = 2.6877e-17
+last ||f||_1   = 1.778e-18     last ||d||_1   = 2.009e-18
+last ||f||_2   = 4.1395e-18    last ||d||_2   = 4.2618e-18
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
+All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
+All controls solution are OK
 Check Controls End
 target [Lagrange,Mayer]       = [ 0, -0.25 ]
 [Penalties/Barriers,Controls] = [ 0, 0.0001055 ]

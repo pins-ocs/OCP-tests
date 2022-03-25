@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Pars.hh                                 |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -30,7 +30,7 @@
 #define numOMEGAvars             2
 #define numQvars                 1
 #define numPvars                 0
-#define numPostProcess           0
+#define numPostProcess           2
 #define numIntegratedPostProcess 0
 #define numContinuationSteps     1
 

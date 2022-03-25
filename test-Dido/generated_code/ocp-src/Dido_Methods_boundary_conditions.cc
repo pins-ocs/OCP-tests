@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido_Methods_boundary_conditions.cc                            |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -79,12 +79,12 @@ namespace DidoDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Dido::DboundaryConditionsDxxp_numRows() const { return 3; }
-  integer Dido::DboundaryConditionsDxxp_numCols() const { return 4; }
-  integer Dido::DboundaryConditionsDxxp_nnz()     const { return 3; }
+  integer Dido::DbcDxxp_numRows() const { return 3; }
+  integer Dido::DbcDxxp_numCols() const { return 4; }
+  integer Dido::DbcDxxp_nnz()     const { return 3; }
 
   void
-  Dido::DboundaryConditionsDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  Dido::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
@@ -92,7 +92,7 @@ namespace DidoDefine {
 
 
   void
-  Dido::DboundaryConditionsDxxp_sparse(
+  Dido::DbcDxxp_sparse(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -110,7 +110,31 @@ namespace DidoDefine {
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DboundaryConditionsDxxp_sparse", 3, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 3, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Dido::D2bcD2xxp_numRows() const { return 4; }
+  integer Dido::D2bcD2xxp_numCols() const { return 4; }
+  integer Dido::D2bcD2xxp_nnz()     const { return 0; }
+
+  void
+  Dido::D2bcD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Dido::D2bcD2xxp_sparse(
+    NodeType const         & LEFT__,
+    NodeType const         & RIGHT__,
+    P_const_pointer_type     P__,
+    OMEGA_const_pointer_type OMEGA__,
+    real_type                result__[]
+  ) const {
+    // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

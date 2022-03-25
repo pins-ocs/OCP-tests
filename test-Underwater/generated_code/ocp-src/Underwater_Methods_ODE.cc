@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -166,10 +166,10 @@ namespace UnderwaterDefine {
     real_type t6   = X__[iX_vx];
     real_type t7   = sin(t3);
     real_type t9   = t4 * t2 - t7 * t6;
-    result__[ 0   ] = t1 * t9;
+    result__[ 0   ] = t9 * t1;
     result__[ 1   ] = t4 * t1;
     result__[ 2   ] = t7 * t1;
-    result__[ 3   ] = t7 * t2 + t4 * t6;
+    result__[ 3   ] = t7 * t2 + t6 * t4;
     result__[ 4   ] = -result__[3] * t1;
     result__[ 5   ] = -result__[2];
     result__[ 6   ] = result__[1];

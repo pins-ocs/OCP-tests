@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -191,48 +191,48 @@ namespace CNOCDefine {
     LM__[6] = (LL__[6]+LR__[6])/2;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = XM__[6];
-    real_type t2   = timePositive(-t1);
-    real_type t3   = XM__[2];
-    real_type t4   = t3 * t3;
-    real_type t5   = XM__[3];
-    real_type t6   = t5 * t5;
-    real_type t8   = sqrt(t4 + t6);
-    real_type t9   = ALIAS_nominalFeed();
-    real_type t13  = vLimit(1.0 / t9 * t8 - 0.101e1);
-    real_type t15  = XM__[1];
-    real_type t18  = 1.0 / ModelPars[iM_path_following_tolerance] * t15;
-    real_type t20  = PathFollowingTolerance_min(-1 - t18);
-    real_type t23  = PathFollowingTolerance_max(t18 - 1);
-    real_type t25  = XM__[4];
-    real_type t28  = 1.0 / ModelPars[iM_as_max] * t25;
-    real_type t30  = as_limit_min(-1 - t28);
-    real_type t33  = as_limit_max(t28 - 1);
-    real_type t35  = XM__[5];
-    real_type t38  = 1.0 / ModelPars[iM_an_max] * t35;
-    real_type t40  = an_limit_min(-1 - t38);
-    real_type t43  = an_limit_max(t38 - 1);
-    real_type t45  = XM__[0];
-    real_type t46  = ALIAS_theta(t45);
-    real_type t47  = cos(t46);
-    real_type t49  = sin(t46);
-    real_type t54  = 1.0 / ModelPars[iM_ax_max] * (t25 * t47 - t35 * t49);
-    real_type t56  = ax_limit_min(-1 - t54);
-    real_type t59  = ax_limit_max(t54 - 1);
-    real_type t67  = 1.0 / ModelPars[iM_ay_max] * (t25 * t49 + t35 * t47);
-    real_type t69  = ay_limit_min(-1 - t67);
-    real_type t72  = ay_limit_max(t67 - 1);
-    real_type t75  = pow(t8 - t9, 2);
-    real_type t78  = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
-    real_type t83  = ALIAS_kappa(t45);
-    real_type t86  = 1.0 / (-t83 * t15 + 1);
-    real_type t94  = t86 * t83;
-    real_type t106 = UM__[0];
-    real_type t113 = UM__[1];
-    real_type t121 = jsControl(t106, ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    real_type t2   = XM__[2];
+    real_type t3   = t2 * t2;
+    real_type t4   = XM__[3];
+    real_type t5   = t4 * t4;
+    real_type t7   = sqrt(t3 + t5);
+    real_type t8   = ALIAS_nominalFeed();
+    real_type t10  = pow(t7 - t8, 2);
+    real_type t13  = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
+    real_type t18  = XM__[1];
+    real_type t19  = XM__[0];
+    real_type t20  = ALIAS_kappa(t19);
+    real_type t23  = 1.0 / (-t20 * t18 + 1);
+    real_type t30  = XM__[4];
+    real_type t32  = t23 * t20;
+    real_type t38  = XM__[5];
+    real_type t45  = UM__[0];
+    real_type t52  = UM__[1];
+    real_type t58  = timePositive(-t1);
+    real_type t62  = vLimit(1.0 / t8 * t7 - 0.101e1);
+    real_type t66  = 1.0 / ModelPars[iM_path_following_tolerance] * t18;
+    real_type t68  = PathFollowingTolerance_min(-1 - t66);
+    real_type t72  = PathFollowingTolerance_max(t66 - 1);
+    real_type t76  = 1.0 / ModelPars[iM_as_max] * t30;
+    real_type t78  = as_limit_min(-1 - t76);
+    real_type t81  = as_limit_max(t76 - 1);
+    real_type t85  = 1.0 / ModelPars[iM_an_max] * t38;
+    real_type t87  = an_limit_min(-1 - t85);
+    real_type t90  = an_limit_max(t85 - 1);
+    real_type t92  = ALIAS_theta(t19);
+    real_type t93  = cos(t92);
+    real_type t95  = sin(t92);
+    real_type t100 = 1.0 / ModelPars[iM_ax_max] * (t93 * t30 - t95 * t38);
+    real_type t102 = ax_limit_min(-1 - t100);
+    real_type t105 = ax_limit_max(t100 - 1);
+    real_type t112 = 1.0 / ModelPars[iM_ay_max] * (t95 * t30 + t93 * t38);
+    real_type t114 = ay_limit_min(-1 - t112);
+    real_type t117 = ay_limit_max(t112 - 1);
+    real_type t121 = jsControl(t45, ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type t123 = ModelPars[iM_jn_max];
-    real_type t124 = jnControl(t113, -t123, t123);
-    real_type t126 = t69 * t1 + t72 * t1 + 1.0 / t78 * t75 * t1 + t1 * t86 * t3 * LM__[0] + t1 * t5 * LM__[1] - t1 * (-t94 * t5 * t3 - t25) * LM__[2] - t1 * (t86 * t83 * t4 - t35) * LM__[3] - t1 * (-t94 * t35 * t3 - t106) * LM__[4] - t1 * (t94 * t25 * t3 - t113) * LM__[5] + t121 * t1 + t124 * t1;
-    real_type result__ = t1 * t13 + t1 * t20 + t1 * t23 + t1 * t30 + t1 * t33 + t1 * t40 + t1 * t43 + t1 * t56 + t1 * t59 + t126 + t2;
+    real_type t124 = jnControl(t52, -t123, t123);
+    real_type t126 = t102 * t1 + t105 * t1 + t114 * t1 + t117 * t1 + t121 * t1 + t124 * t1 + t72 * t1 + t78 * t1 + t81 * t1 + t87 * t1 + t90 * t1;
+    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * LM__[0] + t1 * t4 * LM__[1] - t1 * (-t32 * t4 * t2 - t30) * LM__[2] - t1 * (t23 * t20 * t3 - t38) * LM__[3] - t1 * (-t32 * t38 * t2 - t45) * LM__[4] - t1 * (t32 * t30 * t2 - t52) * LM__[5] + t58 + t62 * t1 + t1 * t68 + t126;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

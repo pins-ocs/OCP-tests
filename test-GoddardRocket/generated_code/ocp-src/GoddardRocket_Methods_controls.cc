@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -95,18 +95,18 @@ namespace GoddardRocketDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[2];
-    real_type t2   = massPositive(-t1);
-    real_type t3   = XM__[1];
-    real_type t4   = vPositive(-t3);
-    real_type t5   = P__[iP_TimeSize];
-    real_type t6   = TSPositive(-t5);
-    real_type t12  = UM__[0];
-    real_type t13  = XM__[0];
-    real_type t14  = DD(t13, t3);
-    real_type t18  = gg(t13);
-    real_type t28  = TControl(t12, 0, ModelPars[iM_Tmax]);
-    real_type result__ = t2 + t4 + t6 + t3 * t5 * LM__[0] + (1.0 / t1 * (t12 - t14) - t18) * t5 * LM__[1] - 1.0 / ModelPars[iM_c] * t12 * t5 * LM__[2] + t28;
+    real_type t2   = P__[iP_TimeSize];
+    real_type t4   = XM__[1];
+    real_type t8   = UM__[0];
+    real_type t9   = XM__[0];
+    real_type t10  = DD(t9, t4);
+    real_type t12  = XM__[2];
+    real_type t15  = gg(t9);
+    real_type t24  = massPositive(-t12);
+    real_type t25  = vPositive(-t4);
+    real_type t26  = TSPositive(-t2);
+    real_type t28  = TControl(t8, 0, ModelPars[iM_Tmax]);
+    real_type result__ = t4 * t2 * LM__[0] + (1.0 / t12 * (t8 - t10) - t15) * t2 * LM__[1] - 1.0 / ModelPars[iM_c] * t8 * t2 * LM__[2] + t24 + t25 + t26 + t28;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -211,7 +211,7 @@ namespace GoddardRocketDefine {
     result__[ 3   ] = result__[0];
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[2];
-    result__[ 6   ] = t1 * t9 - t12 * LM__[2];
+    result__[ 6   ] = t9 * t1 - t12 * LM__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 7, i_segment );
   }
@@ -307,7 +307,7 @@ namespace GoddardRocketDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_c];
     real_type t5   = XM__[2];
-    U__[ iU_T ] = TControl.solve(-1.0 / t3 / t5 * (t3 * LM__[1] - LM__[2] * t5) * P__[iP_TimeSize], 0, ModelPars[iM_Tmax]);
+    U__[ iU_T ] = TControl.solve(-1.0 / t3 / t5 * (t3 * LM__[1] - t5 * LM__[2]) * P__[iP_TimeSize], 0, ModelPars[iM_Tmax]);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
@@ -357,7 +357,7 @@ namespace GoddardRocketDefine {
     real_type t3   = ModelPars[iM_c];
     real_type t5   = XM__[2];
     real_type t6   = LM__[2];
-    real_type t8   = t3 * LM__[1] - t5 * t6;
+    real_type t8   = t3 * LM__[1] - t6 * t5;
     real_type t9   = t8 * t1;
     real_type t10  = 1.0 / t5;
     real_type t11  = 1.0 / t3;

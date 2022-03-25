@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -623,20 +623,20 @@ namespace PointMassCarModel_1Define {
     real_type t5   = inv_zeta__dot_D_3_3(t1, t2, t3, t4);
     real_type t7   = v__fxControl(U__[iU_v__fx], -1, 1);
     real_type t10  = v__OmegaControl(U__[iU_v__Omega], -1, 1);
-    result__[ 0   ] = t10 * t5 + t5 * t7;
+    result__[ 0   ] = t10 * t5 + t7 * t5;
     real_type t12  = inv_zeta__dot_D_2_3(t1, t2, t3, t4);
-    result__[ 1   ] = t10 * t12 + t12 * t7;
+    result__[ 1   ] = t10 * t12 + t7 * t12;
     real_type t15  = inv_zeta__dot_D_1_3(t1, t2, t3, t4);
-    result__[ 2   ] = t10 * t15 + t15 * t7;
+    result__[ 2   ] = t10 * t15 + t7 * t15;
     result__[ 3   ] = result__[1];
     real_type t18  = inv_zeta__dot_D_2_2(t1, t2, t3, t4);
-    result__[ 4   ] = t10 * t18 + t18 * t7;
+    result__[ 4   ] = t10 * t18 + t7 * t18;
     real_type t21  = inv_zeta__dot_D_1_2(t1, t2, t3, t4);
-    result__[ 5   ] = t10 * t21 + t21 * t7;
+    result__[ 5   ] = t10 * t21 + t7 * t21;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
     real_type t24  = inv_zeta__dot_D_1_1(t1, t2, t3, t4);
-    result__[ 8   ] = t10 * t24 + t24 * t7;
+    result__[ 8   ] = t10 * t24 + t7 * t24;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJUxDxp_sparse", 9, i_segment );
   }
@@ -716,7 +716,7 @@ namespace PointMassCarModel_1Define {
     real_type t4   = Q__[iQ_Kappa];
     real_type t5   = inv_zeta__dot_D_3(t1, t2, t3, t4);
     real_type t7   = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
-    result__[ 0   ] = t5 * t7;
+    result__[ 0   ] = t7 * t5;
     real_type t8   = inv_zeta__dot_D_2(t1, t2, t3, t4);
     result__[ 1   ] = t7 * t8;
     real_type t9   = inv_zeta__dot_D_1(t1, t2, t3, t4);
@@ -845,6 +845,59 @@ namespace PointMassCarModel_1Define {
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 8, i_segment );
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer PointMassCarModel_1::D2LTargsD2xup_numRows() const { return 7; }
+  integer PointMassCarModel_1::D2LTargsD2xup_numCols() const { return 7; }
+  integer PointMassCarModel_1::D2LTargsD2xup_nnz()     const { return 7; }
+
+  void
+  PointMassCarModel_1::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 4   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 2   ;
+    iIndex[4 ] = 3   ; jIndex[4 ] = 3   ;
+    iIndex[5 ] = 4   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 4   ; jIndex[6 ] = 4   ;
+  }
+
+
+  void
+  PointMassCarModel_1::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_Omega];
+    real_type t2   = t1 * t1;
+    real_type t4   = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
+    real_type t5   = 1.0 / t4;
+    real_type t8   = ModelPars[iM_g] * ModelPars[iM_g];
+    real_type t9   = 1.0 / t8;
+    real_type t10  = OMEGA__[0];
+    real_type t11  = t10 * t9;
+    result__[ 0   ] = 2 * t11 * t5 * t2;
+    real_type t13  = X__[iX_V];
+    result__[ 1   ] = 4 * t10 * t9 * t5 * t13 * t1;
+    result__[ 2   ] = ModelPars[iM_m] / ModelPars[iM_Pmax] * OMEGA__[3];
+    result__[ 3   ] = result__[1];
+    real_type t23  = t13 * t13;
+    result__[ 4   ] = 2 * t11 * t5 * t23;
+    result__[ 5   ] = result__[2];
+    real_type t27  = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
+    result__[ 6   ] = 2 * t10 * t9 / t27;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2LTargsD2xup_sparse", 7, i_segment );
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -878,6 +931,7 @@ namespace PointMassCarModel_1Define {
     real_type t5   = Q__[iQ_Kappa];
     real_type t6   = inv_zeta__dot_D_3(t2, t3, t4, t5);
     real_type t8   = L__[iL_lambda1__xo];
+    real_type t9   = t2 * t8;
     real_type t10  = sin(t3);
     real_type t13  = L__[iL_lambda2__xo];
     real_type t15  = X__[iX_Omega] * t13;
@@ -889,16 +943,16 @@ namespace PointMassCarModel_1Define {
     real_type t28  = ModelPars[iM_v__Omega__max];
     real_type t33  = L__[iL_lambda5__xo] * U__[iU_v__fx];
     real_type t34  = ModelPars[iM_v__fx__max];
-    result__[ 0   ] = t6 * t10 * t2 * t8 + t23 * t6 * t17 + t6 * t28 * t27 + t6 * t34 * t33 + t6 * t1 + t6 * t15;
+    result__[ 0   ] = t6 * t10 * t9 + t23 * t6 * t17 + t6 * t28 * t27 + t6 * t34 * t33 + t6 * t1 + t6 * t15;
     real_type t37  = inv_zeta__dot_D_2(t2, t3, t4, t5);
     real_type t39  = cos(t3);
-    real_type t41  = inv_zeta__dot(t2, t3, t4, t5);
-    real_type t43  = t10 * t2;
-    result__[ 1   ] = t37 * t1 + (t41 * t39 * t2 + t37 * t43) * t8 + t37 * t15 + t23 * t37 * t17 + t37 * t28 * t27 + t37 * t34 * t33;
-    real_type t54  = inv_zeta__dot_D_1(t2, t3, t4, t5);
-    result__[ 2   ] = t54 * t1 + (t41 * t10 + t54 * t43) * t8 + t54 * t15 + (-2 * t2 * t19 * t41 + t23 * t54) * t17 + t54 * t28 * t27 + t54 * t34 * t33;
-    result__[ 3   ] = t41 * t13;
-    result__[ 4   ] = t41 * t17;
+    real_type t40  = inv_zeta__dot(t2, t3, t4, t5);
+    result__[ 1   ] = t37 * t10 * t9 + t23 * t37 * t17 + t37 * t28 * t27 + t37 * t34 * t33 + t40 * t39 * t9 + t37 * t1 + t37 * t15;
+    real_type t52  = inv_zeta__dot_D_1(t2, t3, t4, t5);
+    real_type t61  = t40 * t17;
+    result__[ 2   ] = t40 * t10 * t8 + t52 * t10 * t9 + t23 * t52 * t17 - 2 * t2 * t19 * t61 + t52 * t28 * t27 + t52 * t34 * t33 + t52 * t1 + t52 * t15;
+    result__[ 3   ] = t40 * t13;
+    result__[ 4   ] = t61;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 5, i_segment );
   }
@@ -984,48 +1038,34 @@ namespace PointMassCarModel_1Define {
     real_type t34  = ModelPars[iM_v__fx__max];
     result__[ 0   ] = t6 * t10 * t9 + t23 * t6 * t17 + t6 * t28 * t27 + t6 * t34 * t33 + t6 * t1 + t6 * t15;
     real_type t37  = inv_zeta__dot_D_2_3(t2, t3, t4, t5);
-    real_type t38  = t37 * t1;
     real_type t39  = cos(t3);
     real_type t40  = inv_zeta__dot_D_3(t2, t3, t4, t5);
-    real_type t45  = t37 * t15;
-    real_type t47  = t23 * t37 * t17;
-    real_type t49  = t37 * t28 * t27;
-    real_type t51  = t37 * t34 * t33;
-    result__[ 1   ] = t37 * t10 * t9 + t40 * t39 * t9 + t38 + t45 + t47 + t49 + t51;
+    result__[ 1   ] = t37 * t10 * t9 + t23 * t37 * t17 + t37 * t28 * t27 + t37 * t34 * t33 + t40 * t39 * t9 + t37 * t1 + t37 * t15;
     real_type t52  = inv_zeta__dot_D_1_3(t2, t3, t4, t5);
-    real_type t53  = t52 * t1;
-    real_type t58  = t52 * t15;
+    real_type t54  = t10 * t8;
     real_type t61  = t40 * t17;
     real_type t62  = t2 * t19;
-    real_type t66  = t52 * t28 * t27;
-    real_type t68  = t52 * t34 * t33;
-    result__[ 2   ] = t40 * t10 * t8 + t52 * t10 * t9 + t23 * t52 * t17 - 2 * t62 * t61 + t53 + t58 + t66 + t68;
+    result__[ 2   ] = t52 * t10 * t9 + t23 * t52 * t17 + t52 * t28 * t27 + t52 * t34 * t33 + t52 * t1 + t52 * t15 + t40 * t54 - 2 * t62 * t61;
     result__[ 3   ] = t40 * t13;
     result__[ 4   ] = t61;
-    real_type t69  = t39 * t2;
-    real_type t71  = t10 * t2;
-    result__[ 5   ] = t38 + (t37 * t71 + t40 * t69) * t8 + t45 + t47 + t49 + t51;
-    real_type t75  = inv_zeta__dot_D_2_2(t2, t3, t4, t5);
-    real_type t77  = inv_zeta__dot(t2, t3, t4, t5);
-    real_type t79  = inv_zeta__dot_D_2(t2, t3, t4, t5);
-    result__[ 6   ] = t75 * t1 + (2 * t79 * t69 + t75 * t71 - t77 * t71) * t8 + t75 * t15 + t23 * t75 * t17 + t75 * t28 * t27 + t75 * t34 * t33;
-    real_type t92  = inv_zeta__dot_D_1_2(t2, t3, t4, t5);
-    real_type t93  = t92 * t1;
-    real_type t95  = inv_zeta__dot_D_1(t2, t3, t4, t5);
-    real_type t100 = (t79 * t10 + t77 * t39 + t95 * t69 + t92 * t71) * t8;
-    real_type t101 = t92 * t15;
-    real_type t104 = t79 * t17;
-    real_type t108 = t92 * t28 * t27;
-    real_type t110 = t92 * t34 * t33;
-    result__[ 7   ] = t23 * t92 * t17 - 2 * t62 * t104 + t100 + t101 + t108 + t110 + t93;
-    result__[ 8   ] = t79 * t13;
-    result__[ 9   ] = t104;
-    result__[ 10  ] = t53 + (t40 * t10 + t52 * t71) * t8 + t58 + (-2 * t2 * t19 * t40 + t23 * t52) * t17 + t66 + t68;
-    result__[ 11  ] = t93 + t100 + t101 + (-2 * t2 * t19 * t79 + t23 * t92) * t17 + t108 + t110;
-    real_type t127 = inv_zeta__dot_D_1_1(t2, t3, t4, t5);
-    result__[ 12  ] = t127 * t1 + (2 * t95 * t10 + t127 * t71) * t8 + t127 * t15 + (-4 * t2 * t19 * t95 + t23 * t127 - 2 * t19 * t77) * t17 + t127 * t28 * t27 + t127 * t34 * t33;
-    result__[ 13  ] = t95 * t13;
-    result__[ 14  ] = t95 * t17;
+    result__[ 5   ] = result__[1];
+    real_type t69  = inv_zeta__dot_D_2_2(t2, t3, t4, t5);
+    real_type t71  = inv_zeta__dot(t2, t3, t4, t5);
+    real_type t74  = inv_zeta__dot_D_2(t2, t3, t4, t5);
+    result__[ 6   ] = t69 * t10 * t9 - t71 * t10 * t9 + t23 * t69 * t17 + t69 * t28 * t27 + t69 * t34 * t33 + 2 * t74 * t39 * t9 + t69 * t1 + t69 * t15;
+    real_type t87  = inv_zeta__dot_D_1_2(t2, t3, t4, t5);
+    real_type t91  = inv_zeta__dot_D_1(t2, t3, t4, t5);
+    real_type t100 = t74 * t17;
+    result__[ 7   ] = t87 * t10 * t9 + t23 * t87 * t17 + t87 * t28 * t27 + t87 * t34 * t33 + t71 * t39 * t8 + t91 * t39 * t9 + t87 * t1 - 2 * t62 * t100 + t87 * t15 + t74 * t54;
+    result__[ 8   ] = t74 * t13;
+    result__[ 9   ] = t100;
+    result__[ 10  ] = result__[2];
+    result__[ 11  ] = result__[7];
+    real_type t107 = inv_zeta__dot_D_1_1(t2, t3, t4, t5);
+    real_type t116 = t91 * t17;
+    result__[ 12  ] = t107 * t10 * t9 + t23 * t107 * t17 + t107 * t28 * t27 + t107 * t34 * t33 - 2 * t19 * t71 * t17 + t107 * t1 + t107 * t15 - 4 * t62 * t116 + 2 * t91 * t54;
+    result__[ 13  ] = t91 * t13;
+    result__[ 14  ] = t116;
     result__[ 15  ] = result__[3];
     result__[ 16  ] = result__[8];
     result__[ 17  ] = result__[13];

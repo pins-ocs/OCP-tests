@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 19/3/2022                                        #
+#  version: 1.0   date 25/3/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,13 +20,13 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+v_nom                    = 0.173
+mesh_segments            = 100
+jn_max                   = 65
+path_following_tolerance = 1.0e-05
 js_max                   = 30
 js_min                   = -50
-mesh_segments            = 100
-v_nom                    = 0.173
-path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
-jn_max                   = 65
 deltaFeed                = v_nom
 
 mechatronix do |data|
@@ -41,6 +41,8 @@ mechatronix do |data|
   data.InfoLevel = 4
 
   data.Use_control_penalties_in_adjoint_equations = false
+
+  data.Max_penalty_value = 1000
 
   #  _   _                        _
   # | |_| |__  _ __ ___  __ _  __| |___
@@ -213,13 +215,13 @@ mechatronix do |data|
       :check_angle  => 120,
 
       # check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
-      :check_ratio_norm_two_f => 1.4,
+      :check_ratio_norm_two_f => 2,
       # check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
-      :check_ratio_norm_two_d => 1.4,
+      :check_ratio_norm_two_d => 2,
       # check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
-      :check_ratio_norm_one_f => 1.4,
+      :check_ratio_norm_one_f => 2,
       # check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
-      :check_ratio_norm_one_d => 1.4,
+      :check_ratio_norm_one_d => 2,
     },
 
     :Hyness => {
@@ -299,18 +301,18 @@ mechatronix do |data|
     :vs_i => 0,
 
     # Post Processing Parameters
-    :pf_error => pf_error,
+    :an_max                   => 1.2,
+    :as_max                   => 2.1,
+    :ax_max                   => 2.1,
+    :ay_max                   => 2.1,
+    :pf_error                 => pf_error,
+    :path_following_tolerance => path_following_tolerance,
 
     # User Function Parameters
 
     # Continuation Parameters
 
     # Constraints Parameters
-    :an_max                   => 1.2,
-    :as_max                   => 2.1,
-    :ax_max                   => 2.1,
-    :ay_max                   => 2.1,
-    :path_following_tolerance => path_following_tolerance,
   }
 
   #                              _
@@ -352,7 +354,10 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
-  # ConstraintLT
+  #  _  _____
+  # | ||_   _|
+  # | |__| |
+  # |____|_|
   # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
   # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
   # PenaltyBarrier1DLessThan

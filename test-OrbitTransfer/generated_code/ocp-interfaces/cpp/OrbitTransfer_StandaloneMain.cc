@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,13 +50,13 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type m0 = 1;
     real_type mu = 1;
     real_type r0 = 1;
-    real_type tf = 16.60*(r0^3/mu)^(1/2.0);
-    real_type m0 = 1;
-    real_type T = 0.1405e-1*m0*mu/r0^2;
     real_type v0 = (mu/r0)^(1/2.0);
+    real_type T = 0.1405e-1*m0*mu/r0^2;
     real_type mdot = 0.533*T*(mu/r0)^(1/2.0);
+    real_type tf = 16.60*(r0^3/mu)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

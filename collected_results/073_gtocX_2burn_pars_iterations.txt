@@ -145,14 +145,14 @@ dump_min       = 0.4           dump_max       = 0.9
 n_power        = 2             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 1.4           ratio ||d||_2  = 1.4
-ratio ||f||_1  = 1.4           ratio ||d||_1  = 1.4
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 23.7[ms]      timeout        = 0 [ms]
+Elapsed Time   = 39.6[ms]      timeout        = 0 [ms]
 iteration      = 42            tolerance      = 1e-09
 max iterations = 300           N. Equations   = 315
 max acc. iter. = 800           N. System pars = 0
-Converged      = YES           Memory Used    = 66Kb (+87bytes)
+Converged      = YES           Memory Used    = 69Kb (+46bytes)
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
@@ -162,7 +162,7 @@ Function       = 76            Jacobian       = 42
 Factorization  = 42            Inversion      = 109
 ........................... last residuals ...........................
 last ||f||_inf = 4.5641e-10    last ||d||_inf = 4.7728e-09
-last ||f||_1   = 1.4492e-12    last ||d||_1   = 5.4556e-10
+last ||f||_1   = 1.4491e-12    last ||d||_1   = 5.4556e-10
 last ||f||_2   = 2.5716e-11    last ||d||_2   = 1.1304e-09
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
@@ -170,21 +170,22 @@ last ||f||_2   = 2.5716e-11    last ||d||_2   = 1.1304e-09
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
+All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-At cell 0, H = 5.7570667230509135e-06, ||g||_inf = 27
-At cell 1, H = 5.7570546338905675e-06, ||g||_inf = 27
-At cell 2, H = 5.757041928341633e-06, ||g||_inf = 27
-At cell 3, H = 5.75702854997895e-06, ||g||_inf = 27
-At cell 4, H = 5.7570144442495e-06, ||g||_inf = 27
-At cell 5, H = 5.756999562600599e-06, ||g||_inf = 27
+At cell 0, H = 5.7570667230509075e-06, ||g||_inf = 1.2213222331760985e-06
+At cell 1, H = 5.757054633890561e-06, ||g||_inf = 1.2213222331760985e-06
+At cell 2, H = 5.757041928341627e-06, ||g||_inf = 1.2213222331760985e-06
+At cell 3, H = 5.757028549978943e-06, ||g||_inf = 1.2213222331760985e-06
+At cell 4, H = 5.757014444249492e-06, ||g||_inf = 1.2213222331760985e-06
+At cell 5, H = 5.756999562600593e-06, ||g||_inf = 1.2213222331760985e-06
 skipping...
 Check Controls End
 target [Lagrange,Mayer]       = [ 0, 0 ]
 [Penalties/Barriers,Controls] = [ 0, 0 ]
 Optimization parameters:
-h: -0.0655370757577170282
-k: 2.6717035125056692e-33
+h: -0.0655370757577170421
+k: -2.9685594583396334e-33
 p: 1.85767113762416369
 All Done Folks!

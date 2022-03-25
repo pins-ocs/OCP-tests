@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -483,6 +483,30 @@ namespace Brachiostocrona2Define {
     result__[ 0   ] = -1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DLTargsDxup_sparse", 1, i_segment );
+  }
+
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Brachiostocrona2::D2LTargsD2xup_numRows() const { return 5; }
+  integer Brachiostocrona2::D2LTargsD2xup_numCols() const { return 5; }
+  integer Brachiostocrona2::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  Brachiostocrona2::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Brachiostocrona2::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
   /*\

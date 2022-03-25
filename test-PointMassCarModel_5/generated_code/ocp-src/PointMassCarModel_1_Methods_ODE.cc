@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -233,7 +233,7 @@ namespace PointMassCarModel_1Define {
     real_type t8   = cos(t2);
     real_type t10  = inv_zeta__dot(t1, t2, t5, t6);
     real_type t12  = inv_zeta__dot_D_2(t1, t2, t5, t6);
-    result__[ 1   ] = t1 * t10 * t8 + t12 * t4;
+    result__[ 1   ] = t10 * t8 * t1 + t12 * t4;
     real_type t15  = inv_zeta__dot_D_1(t1, t2, t5, t6);
     result__[ 2   ] = t10 * t3 + t15 * t4;
     real_type t17  = X__[iX_Omega];
@@ -243,10 +243,10 @@ namespace PointMassCarModel_1Define {
     result__[ 6   ] = t10;
     real_type t18  = ModelPars[iM_kD];
     real_type t19  = t1 * t1;
-    real_type t22  = -t18 * t19 + X__[iX_fx];
+    real_type t22  = -t19 * t18 + X__[iX_fx];
     result__[ 7   ] = t22 * t7;
     result__[ 8   ] = t22 * t12;
-    result__[ 9   ] = -2 * t1 * t18 * result__[6] + t15 * t22;
+    result__[ 9   ] = -2 * t1 * t18 * result__[6] + t22 * t15;
     result__[ 10  ] = result__[6];
     real_type t28  = ModelPars[iM_v__Omega__max];
     real_type t29  = t28 * U__[iU_v__Omega];

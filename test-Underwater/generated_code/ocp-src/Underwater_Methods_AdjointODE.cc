@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_AdjointODE.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -523,6 +523,30 @@ namespace UnderwaterDefine {
     // EMPTY!
   }
 
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Underwater::D2LTargsD2xup_numRows() const { return 10; }
+  integer Underwater::D2LTargsD2xup_numCols() const { return 10; }
+  integer Underwater::D2LTargsD2xup_nnz()     const { return 0; }
+
+  void
+  Underwater::D2LTargsD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Underwater::D2LTargsD2xup_sparse(
+    NodeType const     & NODE__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__,
+    real_const_ptr       OMEGA__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _   _        _   _
    |  | | | |_  __ | | | |_ __
@@ -657,14 +681,14 @@ namespace UnderwaterDefine {
     real_type t6   = sin(t5);
     real_type t8   = X__[iX_vx];
     real_type t9   = cos(t5);
-    real_type t11  = -t4 * t6 - t8 * t9;
+    real_type t11  = -t6 * t4 - t9 * t8;
     real_type t13  = L__[iL_lambda2__xo];
     real_type t14  = t2 * t13;
-    real_type t17  = -t4 * t9 + t6 * t8;
-    result__[ 0   ] = t11 * t3 + t14 * t17;
-    result__[ 1   ] = -t14 * t9 - t3 * t6;
-    result__[ 2   ] = -t14 * t6 + t3 * t9;
-    result__[ 3   ] = -t1 * t17 + t11 * t13;
+    real_type t17  = -t9 * t4 + t6 * t8;
+    result__[ 0   ] = t11 * t3 + t17 * t14;
+    result__[ 1   ] = -t9 * t14 - t6 * t3;
+    result__[ 2   ] = -t6 * t14 + t9 * t3;
+    result__[ 3   ] = -t17 * t1 + t11 * t13;
     result__[ 4   ] = result__[1];
     real_type t26  = L__[iL_lambda6__xo];
     real_type t28  = ModelPars[iM_m3];
@@ -675,16 +699,16 @@ namespace UnderwaterDefine {
     real_type t37  = 1.0 / t28 * t29;
     result__[ 6   ] = t37 * t2 * t34;
     real_type t40  = X__[iX_Omega];
-    result__[ 7   ] = t26 * t33 * t4 + t34 * t37 * t40 + t1 * t9 - t13 * t6;
+    result__[ 7   ] = t33 * t4 * t26 + t37 * t40 * t34 + t9 * t1 - t6 * t13;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[5];
     real_type t45  = L__[iL_lambda4__xo];
     real_type t48  = 1.0 / t29 * t28;
     result__[ 10  ] = -t48 * t2 * t45;
-    result__[ 11  ] = t26 * t33 * t8 - t40 * t45 * t48 + t1 * t6 + t13 * t9;
+    result__[ 11  ] = t33 * t8 * t26 - t48 * t40 * t45 + t6 * t1 + t9 * t13;
     result__[ 12  ] = result__[6];
     result__[ 13  ] = result__[10];
-    result__[ 14  ] = t34 * t37 * t8 - t4 * t45 * t48 + L__[iL_lambda3__xo];
+    result__[ 14  ] = t37 * t8 * t34 - t48 * t4 * t45 + L__[iL_lambda3__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 15, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_controls.cc                |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -87,11 +87,11 @@ namespace SingularConstrainedCalogeroDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = UM__[0];
     real_type t2   = QM__[0];
-    real_type t3   = UM__[0];
-    real_type t5   = uMaxBound(XM__[0] - t2 - t3 + 1);
-    real_type t10  = uControl(t3, 0, 2);
-    real_type result__ = t5 + (t2 - 4) * t3 + t3 * LM__[0] + t10;
+    real_type t9   = uMaxBound(XM__[0] - t2 - t1 + 1);
+    real_type t10  = uControl(t1, 0, 2);
+    real_type result__ = (t2 - 4) * t1 + t1 * LM__[0] + t9 + t10;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -126,11 +126,11 @@ namespace SingularConstrainedCalogeroDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = QM__[0];
-    real_type t3   = UM__[0];
-    real_type t5   = ALIAS_uMaxBound_D(XM__[0] - t2 - t3 + 1);
-    real_type t7   = ALIAS_uControl_D_1(t3, 0, 2);
-    result__[ 0   ] = -t5 + t2 - 4 + LM__[0] + t7;
+    real_type t1   = QM__[0];
+    real_type t4   = UM__[0];
+    real_type t6   = ALIAS_uMaxBound_D(XM__[0] - t1 - t4 + 1);
+    real_type t7   = ALIAS_uControl_D_1(t4, 0, 2);
+    result__[ 0   ] = t1 - 4 + LM__[0] - t6 + t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }

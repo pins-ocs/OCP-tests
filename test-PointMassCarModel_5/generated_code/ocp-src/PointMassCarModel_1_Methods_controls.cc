@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -194,34 +194,34 @@ namespace PointMassCarModel_1Define {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    real_type t1   = XM__[2];
-    real_type t2   = XM__[1];
-    real_type t3   = XM__[0];
-    real_type t4   = QM__[0];
-    real_type t5   = ALIAS_Kappa(t4);
-    real_type t6   = inv_zeta__dot(t1, t2, t3, t5);
-    real_type t7   = XM__[4];
-    real_type t8   = t7 * t7;
-    real_type t10  = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
-    real_type t14  = ModelPars[iM_g] * ModelPars[iM_g];
-    real_type t15  = 1.0 / t14;
-    real_type t17  = XM__[3];
-    real_type t18  = t17 * t17;
-    real_type t19  = t1 * t1;
-    real_type t22  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
-    real_type t27  = AdherenceEllipse(t15 / t10 * t8 + t15 / t22 * t19 * t18 - 1);
-    real_type t29  = ALIAS_leftWidth(t4);
-    real_type t31  = RoadLeftBorder(t3 - t29);
-    real_type t33  = ALIAS_rightWidth(t4);
-    real_type t35  = RoadRightBorder(-t3 - t33);
-    real_type t44  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t7 * t1 - 1);
-    real_type t46  = LimitMinSpeed(-t1);
-    real_type t52  = sin(t2);
-    real_type t66  = UM__[1];
-    real_type t72  = UM__[0];
-    real_type t77  = v__fxControl(t72, -1, 1);
-    real_type t79  = v__OmegaControl(t66, -1, 1);
-    real_type result__ = t27 * t6 + t31 * t6 + t35 * t6 + t44 * t6 + t46 * t6 + t6 * ModelPars[iM_wT] + t6 * t52 * t1 * LM__[0] + (t6 * t17 - t5) * LM__[1] + (-ModelPars[iM_kD] * t19 + t7) * t6 * LM__[2] + t6 * ModelPars[iM_v__Omega__max] * t66 * LM__[3] + t6 * ModelPars[iM_v__fx__max] * t72 * LM__[4] + t77 * t6 + t79 * t6;
+    real_type t2   = XM__[2];
+    real_type t3   = XM__[1];
+    real_type t4   = XM__[0];
+    real_type t5   = QM__[0];
+    real_type t6   = ALIAS_Kappa(t5);
+    real_type t7   = inv_zeta__dot(t2, t3, t4, t6);
+    real_type t11  = sin(t3);
+    real_type t15  = XM__[3];
+    real_type t21  = t2 * t2;
+    real_type t24  = XM__[4];
+    real_type t28  = UM__[1];
+    real_type t34  = UM__[0];
+    real_type t39  = t24 * t24;
+    real_type t41  = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
+    real_type t45  = ModelPars[iM_g] * ModelPars[iM_g];
+    real_type t46  = 1.0 / t45;
+    real_type t48  = t15 * t15;
+    real_type t51  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
+    real_type t56  = AdherenceEllipse(t46 / t41 * t39 + t46 / t51 * t21 * t48 - 1);
+    real_type t58  = ALIAS_leftWidth(t5);
+    real_type t60  = RoadLeftBorder(t4 - t58);
+    real_type t62  = ALIAS_rightWidth(t5);
+    real_type t64  = RoadRightBorder(-t4 - t62);
+    real_type t73  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t24 * t2 - 1);
+    real_type t75  = LimitMinSpeed(-t2);
+    real_type t77  = v__fxControl(t34, -1, 1);
+    real_type t79  = v__OmegaControl(t28, -1, 1);
+    real_type result__ = t7 * ModelPars[iM_wT] + t7 * t11 * t2 * LM__[0] + (t7 * t15 - t6) * LM__[1] + (-ModelPars[iM_kD] * t21 + t24) * t7 * LM__[2] + t7 * ModelPars[iM_v__Omega__max] * t28 * LM__[3] + t7 * ModelPars[iM_v__fx__max] * t34 * LM__[4] + t56 * t7 + t60 * t7 + t64 * t7 + t73 * t7 + t75 * t7 + t77 * t7 + t79 * t7;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -704,7 +704,7 @@ namespace PointMassCarModel_1Define {
     real_type t62  = pow(-t22 * t5 + t4 + V__[1], 2);
     real_type t69  = pow(V__[2] - (-t24 * ModelPars[iM_kD] + t12) * t5, 2);
     real_type t75  = pow(-t5 * t9 * ModelPars[iM_v__Omega__max] + V__[3], 2);
-    real_type t81  = pow(-t5 * ModelPars[iM_v__fx__max] * t6 + V__[4], 2);
+    real_type t81  = pow(-t5 * t6 * ModelPars[iM_v__fx__max] + V__[4], 2);
     real_type result__ = t10 * t5 + t32 * t5 + t36 * t5 + t40 * t5 + t49 * t5 + t5 * t51 + t5 * t7 + t58 + t62 + t69 + t75 + t81;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );

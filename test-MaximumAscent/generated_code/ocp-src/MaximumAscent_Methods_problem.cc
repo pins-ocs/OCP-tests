@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/3/2022                                        |
+ |  version: 1.0   date 25/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -55,6 +55,41 @@ namespace MaximumAscentDefine {
   }
 
   /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
+
+  bool
+  MaximumAscent::penalties_check_cell(
+    NodeType const &     LEFT__,
+    NodeType const &     RIGHT__,
+    U_const_pointer_type U__,
+    P_const_pointer_type P__
+  ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    // midpoint
+    real_type Q__[1], X__[4];
+    // Qvars
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool res = true;
+
+    return res;
+  }
+
+  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -87,7 +122,7 @@ namespace MaximumAscentDefine {
     real_type t28  = sin(t27);
     real_type t34  = t12 * t9;
     real_type t36  = cos(t27);
-    real_type result__ = t6 * t4 * L__[iL_lambda1__xo] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * L__[iL_lambda2__xo] + (-t34 * t4 * t6 + t26 * t36) * L__[iL_lambda3__xo] + t34 * t4 * L__[iL_lambda4__xo];
+    real_type result__ = t6 * t4 * L__[iL_lambda1__xo] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * L__[iL_lambda2__xo] + (-t34 * t6 * t4 + t36 * t26) * L__[iL_lambda3__xo] + t34 * t4 * L__[iL_lambda4__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -243,6 +278,29 @@ namespace MaximumAscentDefine {
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 8, i_segment_left, i_segment_right );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer MaximumAscent::D2mayerD2xxp_numRows() const { return 8; }
+  integer MaximumAscent::D2mayerD2xxp_numCols() const { return 8; }
+  integer MaximumAscent::D2mayerD2xxp_nnz()     const { return 0; }
+
+  void
+  MaximumAscent::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  MaximumAscent::D2mayerD2xxp_sparse(
+    NodeType const     & LEFT__,
+    NodeType const     & RIGHT__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
   /*\
    |   _
    |  | |    __ _  __ _ _ __ __ _ _ __   __ _  ___
@@ -274,83 +332,25 @@ namespace MaximumAscentDefine {
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 5, i_segment );
   }
 
-  /*\
-   |   ___ ____   ___  ____ _____
-   |  |_ _|  _ \ / _ \|  _ \_   _|
-   |   | || |_) | | | | |_) || |
-   |   | ||  __/| |_| |  __/ | |
-   |  |___|_|    \___/|_|    |_|
-  \*/
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MaximumAscent::IPOPT_hess_numRows() const { return 5; }
-  integer MaximumAscent::IPOPT_hess_numCols() const { return 5; }
-  integer MaximumAscent::IPOPT_hess_nnz()     const { return 9; }
+  integer MaximumAscent::D2lagrangeD2xup_numRows() const { return 5; }
+  integer MaximumAscent::D2lagrangeD2xup_numCols() const { return 5; }
+  integer MaximumAscent::D2lagrangeD2xup_nnz()     const { return 0; }
 
   void
-  MaximumAscent::IPOPT_hess_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 0   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 1   ;
-    iIndex[7 ] = 2   ; jIndex[7 ] = 2   ;
-    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
+  MaximumAscent::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
   }
 
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  MaximumAscent::IPOPT_hess_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
+  MaximumAscent::D2lagrangeD2xup_sparse(
+    NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
-    real_type            sigma__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
-    real_type t3   = tf(ModelPars[iM_days]);
-    real_type t4   = eta(t3);
-    real_type t5   = t4 * t1;
-    real_type t6   = X__[iX_v];
-    real_type t7   = t6 * t6;
-    real_type t8   = X__[iX_r];
-    real_type t9   = t8 * t8;
-    real_type t11  = 1.0 / t9 / t8;
-    real_type t14  = t9 * t9;
-    real_type t19  = L__[iL_lambda3__xo];
-    real_type t20  = t4 * t19;
-    real_type t21  = X__[iX_u];
-    real_type t27  = t4 * L__[iL_lambda4__xo];
-    result__[ 0   ] = (2 * t11 * t7 - 6 / t14) * t5 - 2 * t11 * t6 * t21 * t20 + 2 * t11 * t6 * t27;
-    real_type t31  = 1.0 / t9;
-    real_type t32  = t31 * t6;
-    result__[ 1   ] = t32 * t20;
-    result__[ 2   ] = t31 * t21 * t20 - t31 * t27 - 2 * t32 * t5;
-    result__[ 3   ] = result__[1];
-    real_type t38  = 1.0 / t8;
-    result__[ 4   ] = -t38 * t20;
-    result__[ 5   ] = result__[2];
-    result__[ 6   ] = result__[4];
-    result__[ 7   ] = 2 * t38 * t5;
-    real_type t41  = Tbar(t3);
-    real_type t49  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]);
-    real_type t50  = U__[iU_alpha];
-    real_type t51  = sin(t50);
-    real_type t55  = cos(t50);
-    result__[ 8   ] = -t51 * t49 * t41 * t1 - t55 * t49 * t41 * t19;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"IPOPT_hess_sparse", 9, i_segment );
+    // EMPTY!
   }
 
   /*\
