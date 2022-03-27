@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider.hh                                                    |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 27/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -139,28 +139,15 @@ namespace AlpRiderDefine {
     using Mechatronix::Discretized_Indirect_OCP::guess;
 
     using Mechatronix::Discretized_Indirect_OCP::num_active_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_initial_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_final_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_BC;
-
-    using Mechatronix::Discretized_Indirect_OCP::num_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_initial_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_final_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_OMEGA;
 
     using Mechatronix::Discretized_Indirect_OCP::bc_map;
     using Mechatronix::Discretized_Indirect_OCP::bc_inv_map;
-
-    using Mechatronix::Discretized_Indirect_OCP::omega_map;
-    using Mechatronix::Discretized_Indirect_OCP::omega_inv_map;
 
     using Mechatronix::Discretized_Indirect_OCP::dim_Q;
     using Mechatronix::Discretized_Indirect_OCP::dim_X;
     using Mechatronix::Discretized_Indirect_OCP::dim_U;
     using Mechatronix::Discretized_Indirect_OCP::dim_Pars;
-    using Mechatronix::Discretized_Indirect_OCP::dim_Omega;
     using Mechatronix::Discretized_Indirect_OCP::dim_BC;
-    using Mechatronix::Discretized_Indirect_OCP::dim_full_BC;
     using Mechatronix::Discretized_Indirect_OCP::num_nodes;
 
     using Mechatronix::Discretized_Indirect_OCP::num_equations;
@@ -244,19 +231,19 @@ namespace AlpRiderDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
-    ALPRIDER_API_DLL real_type p      ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type p_D_1  ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type p_D_1_1( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type p_D_1_2( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type p_D_1_3( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type p_D_2  ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type p_D_2_2( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type p_D_2_3( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type p_D_3  ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type p_D_3_3( real_type xo__t, real_type xo__a, real_type xo__b ) const;
-    ALPRIDER_API_DLL real_type q      ( real_type xo__t ) const;
-    ALPRIDER_API_DLL real_type q_D    ( real_type xo__t ) const;
-    ALPRIDER_API_DLL real_type q_DD   ( real_type xo__t ) const;
+    ALPRIDER_API_DLL real_type p_base       ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_base_D_1   ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_base_D_1_1 ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_base_D_1_2 ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_base_D_1_3 ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_base_D_2   ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_base_D_2_2 ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_base_D_2_3 ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_base_D_3   ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type p_base_D_3_3 ( real_type xo__t, real_type xo__a, real_type xo__b ) const;
+    ALPRIDER_API_DLL real_type q_lower      ( real_type xo__t ) const;
+    ALPRIDER_API_DLL real_type q_lower_D    ( real_type xo__t ) const;
+    ALPRIDER_API_DLL real_type q_lower_DD   ( real_type xo__t ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

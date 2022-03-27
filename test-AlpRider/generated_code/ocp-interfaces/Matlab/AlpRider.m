@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: AlpRider.m                                                     %
 %                                                                       %
-%  version: 1.0   date 25/3/2022                                        %
+%  version: 1.0   date 27/3/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -750,7 +750,7 @@ classdef AlpRider < handle
     % ---------------------------------------------------------------------
     function bc = eval_bc( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       bc = AlpRider_Mex( ...
-        'boundaryConditions', self.objectHandle, ...
+        'bc', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
@@ -762,10 +762,10 @@ classdef AlpRider < handle
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_D2bcD2xxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega )
+    function J = eval_D2bcD2xxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full )
       J = AlpRider_Mex( ...
         'D2bcD2xxp', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full ...
       );
     end
     % ---------------------------------------------------------------------
@@ -1107,30 +1107,6 @@ classdef AlpRider < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function bc = eval_adjointBC( self, iseg_L, q_L, x_L, ...
-                                        iseg_R, q_R, x_R, ...
-                                        pars, Omega )
-      %
-      % Compute `Gradient_{xxp} [ Omega . bc( x_L, x_R, p ) + Mayer( x_L, x_R, p ) ]`
-      %
-      bc = AlpRider_Mex( ...
-        'adjointBC', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, Omega ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DadjointBCDxxp( self, iseg_L, q_L, x_L, ...
-                                            iseg_R, q_R, x_R, ...
-                                            pars, Omega )
-      %
-      % Compute `Hessian_{xxp} [ Omega . bc( x_L, x_R, p ) + Mayer( x_L, x_R, p ) ]`
-      %
-      J = AlpRider_Mex( ...
-        'DadjointBCDxxp', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, Omega ...
-      );
-    end
-    % ---------------------------------------------------------------------
     function jmp = eval_jump( self, iseg_L, q_L, x_L, lambda_L, ...
                                     iseg_R, q_R, x_R, lambda_R, pars )
       jmp = AlpRider_Mex( ...
@@ -1194,10 +1170,6 @@ classdef AlpRider < handle
     % ---------------------------------------------------------------------
     function res = A_pattern( self )
       res = AlpRider_Mex('eval_A_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DadjointBCDxxp_pattern( self )
-      res = AlpRider_Mex('eval_DadjointBCDxxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DbcDxxp_pattern( self )
@@ -1302,56 +1274,56 @@ classdef AlpRider < handle
     % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
     %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
     % ---------------------------------------------------------------------
-    function res = p( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_1( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p_D_1', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base_D_1( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base_D_1', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_2( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p_D_2', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base_D_2( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base_D_2', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_3( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p_D_3', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base_D_3( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base_D_3', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_1_1( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p_D_1_1', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base_D_1_1( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base_D_1_1', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_1_2( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p_D_1_2', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base_D_1_2( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base_D_1_2', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_1_3( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p_D_1_3', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base_D_1_3( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base_D_1_3', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_2_2( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p_D_2_2', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base_D_2_2( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base_D_2_2', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_2_3( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p_D_2_3', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base_D_2_3( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base_D_2_3', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = p_D_3_3( self, xo__t, xo__a, xo__b )
-      res = AlpRider_Mex('p_D_3_3', self.objectHandle, xo__t, xo__a, xo__b );
+    function res = p_base_D_3_3( self, xo__t, xo__a, xo__b )
+      res = AlpRider_Mex('p_base_D_3_3', self.objectHandle, xo__t, xo__a, xo__b );
     end
     % ---------------------------------------------------------------------
-    function res = q( self, xo__t )
-      res = AlpRider_Mex('q', self.objectHandle, xo__t );
+    function res = q_lower( self, xo__t )
+      res = AlpRider_Mex('q_lower', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = q_D( self, xo__t )
-      res = AlpRider_Mex('q_D', self.objectHandle, xo__t );
+    function res = q_lower_D( self, xo__t )
+      res = AlpRider_Mex('q_lower_D', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
-    function res = q_DD( self, xo__t )
-      res = AlpRider_Mex('q_DD', self.objectHandle, xo__t );
+    function res = q_lower_DD( self, xo__t )
+      res = AlpRider_Mex('q_lower_DD', self.objectHandle, xo__t );
     end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION

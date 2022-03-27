@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 27/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -93,23 +93,20 @@ namespace AlpRiderDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_y1];
-    real_type t3   = q(Q__[iQ_zeta]);
-    real_type t4   = t1 * t1;
+    real_type t2   = q_lower(Q__[iQ_zeta]);
+    real_type t3   = X__[iX_y1];
+    real_type t4   = t3 * t3;
     real_type t5   = X__[iX_y2];
     real_type t6   = t5 * t5;
     real_type t7   = X__[iX_y3];
     real_type t8   = t7 * t7;
     real_type t9   = X__[iX_y4];
     real_type t10  = t9 * t9;
-    real_type t11  = t3 - t4 - t6 - t8 - t10;
-    real_type t12  = Ybound(t11);
-    real_type t15  = ALIAS_Ybound_D(t11);
-    real_type t16  = t15 * (t4 + t6 + t8 + t10 + 1);
-    result__[ 0   ] = 2 * t12 * t1 - 2 * t1 * t16;
-    result__[ 1   ] = 2 * t12 * t5 - 2 * t5 * t16;
-    result__[ 2   ] = 2 * t12 * t7 - 2 * t7 * t16;
-    result__[ 3   ] = 2 * t12 * t9 - 2 * t9 * t16;
+    real_type t12  = ALIAS_Ybound_D(t2 - t4 - t6 - t8 - t10);
+    result__[ 0   ] = -2 * t3 * t12;
+    result__[ 1   ] = -2 * t5 * t12;
+    result__[ 2   ] = -2 * t7 * t12;
+    result__[ 3   ] = -2 * t9 * t12;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "LTx_eval", 4, i_segment );
   }
@@ -257,7 +254,7 @@ namespace AlpRiderDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = q(Q__[iQ_zeta]);
+    real_type t2   = q_lower(Q__[iQ_zeta]);
     real_type t4   = X__[iX_y1] * X__[iX_y1];
     real_type t6   = X__[iX_y2] * X__[iX_y2];
     real_type t8   = X__[iX_y3] * X__[iX_y3];
@@ -326,7 +323,7 @@ namespace AlpRiderDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = q(Q__[iQ_zeta]);
+    real_type t2   = q_lower(Q__[iQ_zeta]);
     real_type t3   = X__[iX_y1];
     real_type t4   = t3 * t3;
     real_type t5   = X__[iX_y2];
@@ -336,31 +333,27 @@ namespace AlpRiderDefine {
     real_type t9   = X__[iX_y4];
     real_type t10  = t9 * t9;
     real_type t11  = t2 - t4 - t6 - t8 - t10;
-    real_type t12  = Ybound(t11);
-    real_type t13  = 2 * t12;
-    real_type t14  = ALIAS_Ybound_D(t11);
-    real_type t17  = t4 + t6 + t8 + t10 + 1;
-    real_type t18  = ALIAS_Ybound_DD(t11);
-    real_type t19  = t18 * t17;
-    real_type t23  = 2 * t14 * t17;
-    result__[ 0   ] = -8 * t14 * t4 + 4 * t4 * t19 + t13 - t23;
-    real_type t24  = t14 * t3;
-    result__[ 1   ] = 4 * t3 * t5 * t19 - 8 * t5 * t24;
-    result__[ 2   ] = 4 * t3 * t7 * t19 - 8 * t7 * t24;
-    result__[ 3   ] = 4 * t3 * t9 * t19 - 8 * t9 * t24;
+    real_type t12  = ALIAS_Ybound_DD(t11);
+    real_type t15  = ALIAS_Ybound_D(t11);
+    real_type t16  = 2 * t15;
+    result__[ 0   ] = 4 * t4 * t12 - t16;
+    result__[ 1   ] = 4 * t3 * t5 * t12;
+    real_type t19  = t7 * t12;
+    result__[ 2   ] = 4 * t3 * t19;
+    real_type t21  = t9 * t12;
+    result__[ 3   ] = 4 * t3 * t21;
     result__[ 4   ] = result__[1];
-    result__[ 5   ] = -8 * t14 * t6 + 4 * t6 * t19 + t13 - t23;
-    real_type t44  = t14 * t5;
-    result__[ 6   ] = 4 * t5 * t7 * t19 - 8 * t7 * t44;
-    result__[ 7   ] = 4 * t5 * t9 * t19 - 8 * t9 * t44;
+    result__[ 5   ] = 4 * t6 * t12 - t16;
+    result__[ 6   ] = 4 * t5 * t19;
+    result__[ 7   ] = 4 * t5 * t21;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
-    result__[ 10  ] = -8 * t14 * t8 + 4 * t8 * t19 + t13 - t23;
-    result__[ 11  ] = -8 * t9 * t14 * t7 + 4 * t7 * t9 * t19;
+    result__[ 10  ] = 4 * t8 * t12 - t16;
+    result__[ 11  ] = 4 * t7 * t21;
     result__[ 12  ] = result__[3];
     result__[ 13  ] = result__[7];
     result__[ 14  ] = result__[11];
-    result__[ 15  ] = -8 * t14 * t10 + 4 * t10 * t19 + t13 - t23;
+    result__[ 15  ] = 4 * t10 * t12 - t16;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DLTxDxp_sparse", 16, i_segment );
   }

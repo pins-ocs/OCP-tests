@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 27/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -86,13 +86,13 @@ namespace AlpRiderDefine {
   \*/
   // user defined functions which has a body defined in MAPLE
   real_type
-  AlpRider::p( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t2   = pow(xo__t - xo__a, 2);
     real_type result__ = exp(-t2 * xo__b);
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -100,7 +100,7 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::p_D_1( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base_D_1( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t1   = xo__t - xo__a;
     real_type t3   = t1 * t1;
     real_type t5   = exp(-t3 * xo__b);
@@ -108,7 +108,7 @@ namespace AlpRiderDefine {
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p_D_1( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base_D_1( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -116,7 +116,7 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::p_D_1_1( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base_D_1_1( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t2   = pow(xo__t - xo__a, 2);
     real_type t4   = exp(-t2 * xo__b);
     real_type t7   = xo__b * xo__b;
@@ -124,7 +124,7 @@ namespace AlpRiderDefine {
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p_D_1_1( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base_D_1_1( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -132,7 +132,7 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::p_D_1_2( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base_D_1_2( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t2   = pow(xo__t - xo__a, 2);
     real_type t4   = exp(-t2 * xo__b);
     real_type t7   = xo__b * xo__b;
@@ -140,7 +140,7 @@ namespace AlpRiderDefine {
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p_D_1_2( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base_D_1_2( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -148,7 +148,7 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::p_D_1_3( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base_D_1_3( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t1   = xo__t - xo__a;
     real_type t2   = t1 * t1;
     real_type t4   = exp(-t2 * xo__b);
@@ -156,7 +156,7 @@ namespace AlpRiderDefine {
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p_D_1_3( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base_D_1_3( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -164,7 +164,7 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::p_D_2( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base_D_2( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t1   = xo__t - xo__a;
     real_type t3   = t1 * t1;
     real_type t5   = exp(-t3 * xo__b);
@@ -172,7 +172,7 @@ namespace AlpRiderDefine {
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p_D_2( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base_D_2( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -180,7 +180,7 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::p_D_2_2( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base_D_2_2( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t2   = pow(xo__t - xo__a, 2);
     real_type t4   = exp(-t2 * xo__b);
     real_type t7   = xo__b * xo__b;
@@ -188,7 +188,7 @@ namespace AlpRiderDefine {
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p_D_2_2( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base_D_2_2( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -196,7 +196,7 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::p_D_2_3( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base_D_2_3( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t1   = xo__t - xo__a;
     real_type t2   = t1 * t1;
     real_type t4   = exp(-t2 * xo__b);
@@ -204,7 +204,7 @@ namespace AlpRiderDefine {
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p_D_2_3( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base_D_2_3( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -212,14 +212,14 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::p_D_3( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base_D_3( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t2   = pow(xo__t - xo__a, 2);
     real_type t4   = exp(-t2 * xo__b);
     real_type result__ = -t4 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p_D_3( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base_D_3( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -227,7 +227,7 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::p_D_3_3( real_type xo__t, real_type xo__a, real_type xo__b ) const {
+  AlpRider::p_base_D_3_3( real_type xo__t, real_type xo__a, real_type xo__b ) const {
     real_type t2   = pow(xo__t - xo__a, 2);
     real_type t3   = t2 * t2;
     real_type t5   = exp(-t2 * xo__b);
@@ -235,7 +235,7 @@ namespace AlpRiderDefine {
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_p_D_3_3( t={}, a={}, b={} ) return {}\n",
+        "UserFunctions_p_base_D_3_3( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
     }
@@ -243,16 +243,16 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::q( real_type xo__t ) const {
-    real_type t1   = p(xo__t, 3, 12);
-    real_type t3   = p(xo__t, 6, 10);
-    real_type t5   = p(xo__t, 10, 6);
-    real_type t7   = p(xo__t, 15, 4);
+  AlpRider::q_lower( real_type xo__t ) const {
+    real_type t1   = p_base(xo__t, 3, 12);
+    real_type t3   = p_base(xo__t, 6, 10);
+    real_type t5   = p_base(xo__t, 10, 6);
+    real_type t7   = p_base(xo__t, 15, 4);
     real_type result__ = 3 * t1 + 3 * t3 + 3 * t5 + 8 * t7 + 0.1e-1;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_q( t={} ) return {}\n",
+        "UserFunctions_q_lower( t={} ) return {}\n",
         xo__t, result__
       );
     }
@@ -260,16 +260,16 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::q_D( real_type xo__t ) const {
-    real_type t1   = p_D_1(xo__t, 3, 12);
-    real_type t3   = p_D_1(xo__t, 6, 10);
-    real_type t5   = p_D_1(xo__t, 10, 6);
-    real_type t7   = p_D_1(xo__t, 15, 4);
+  AlpRider::q_lower_D( real_type xo__t ) const {
+    real_type t1   = p_base_D_1(xo__t, 3, 12);
+    real_type t3   = p_base_D_1(xo__t, 6, 10);
+    real_type t5   = p_base_D_1(xo__t, 10, 6);
+    real_type t7   = p_base_D_1(xo__t, 15, 4);
     real_type result__ = 3 * t1 + 3 * t3 + 3 * t5 + 8 * t7;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_q_D( t={} ) return {}\n",
+        "UserFunctions_q_lower_D( t={} ) return {}\n",
         xo__t, result__
       );
     }
@@ -277,16 +277,16 @@ namespace AlpRiderDefine {
   }
 
   real_type
-  AlpRider::q_DD( real_type xo__t ) const {
-    real_type t1   = p_D_1_1(xo__t, 3, 12);
-    real_type t3   = p_D_1_1(xo__t, 6, 10);
-    real_type t5   = p_D_1_1(xo__t, 10, 6);
-    real_type t7   = p_D_1_1(xo__t, 15, 4);
+  AlpRider::q_lower_DD( real_type xo__t ) const {
+    real_type t1   = p_base_D_1_1(xo__t, 3, 12);
+    real_type t3   = p_base_D_1_1(xo__t, 6, 10);
+    real_type t5   = p_base_D_1_1(xo__t, 10, 6);
+    real_type t7   = p_base_D_1_1(xo__t, 15, 4);
     real_type result__ = 3 * t1 + 3 * t3 + 3 * t5 + 8 * t7;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
-        "UserFunctions_q_DD( t={} ) return {}\n",
+        "UserFunctions_q_lower_DD( t={} ) return {}\n",
         xo__t, result__
       );
     }

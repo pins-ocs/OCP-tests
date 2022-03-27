@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 27/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -96,9 +96,9 @@ namespace AlpRiderDefine {
     real_type t13  = t12 * t12;
     real_type t15  = UM__[1];
     real_type t16  = t15 * t15;
-    real_type t40  = q(QM__[0]);
-    real_type t42  = Ybound(t40 - t3 - t5 - t7 - t9);
-    real_type result__ = (t3 + t5 + t7 + t9) * ModelPars[iM_W] + t13 / 100 + t16 / 100 + (-10 * t2 + t12 + t15) * LM__[0] + (-2 * t4 + t12 + 2 * t15) * LM__[1] + (-3 * t6 + 5 * t8 + t12 - t15) * LM__[2] + (5 * t6 - 3 * t8 + t12 + 3 * t15) * LM__[3] + t42 * (t3 + t5 + t7 + t9 + 1);
+    real_type t39  = q_lower(QM__[0]);
+    real_type t41  = Ybound(t39 - t3 - t5 - t7 - t9);
+    real_type result__ = (t3 + t5 + t7 + t9) * ModelPars[iM_W] + t13 / 100 + t16 / 100 + (-10 * t2 + t12 + t15) * LM__[0] + (-2 * t4 + t12 + 2 * t15) * LM__[1] + (-3 * t6 + 5 * t8 + t12 - t15) * LM__[2] + (5 * t6 - 3 * t8 + t12 + 3 * t15) * LM__[3] + t41;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -459,23 +459,23 @@ namespace AlpRiderDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_y1];
-    real_type t2   = t1 * t1;
-    real_type t3   = X__[iX_y2];
+    real_type t2   = q_lower(Q__[iQ_zeta]);
+    real_type t3   = X__[iX_y1];
     real_type t4   = t3 * t3;
-    real_type t5   = X__[iX_y3];
+    real_type t5   = X__[iX_y2];
     real_type t6   = t5 * t5;
-    real_type t7   = X__[iX_y4];
+    real_type t7   = X__[iX_y3];
     real_type t8   = t7 * t7;
-    real_type t11  = q(Q__[iQ_zeta]);
-    real_type t13  = Ybound(t11 - t2 - t4 - t6 - t8);
-    real_type t17  = U__[iU_u1];
-    real_type t18  = U__[iU_u2];
-    real_type t20  = pow(V__[0] + 10 * t1 - t17 - t18, 2);
-    real_type t25  = pow(V__[1] + 2 * t3 - t17 - 2 * t18, 2);
-    real_type t30  = pow(V__[2] + 3 * t5 - 5 * t7 - t17 + t18, 2);
-    real_type t36  = pow(V__[3] - 5 * t5 + 3 * t7 - t17 - 3 * t18, 2);
-    real_type result__ = t13 * (t2 + t4 + t6 + t8 + 1) + t20 + t25 + t30 + t36;
+    real_type t9   = X__[iX_y4];
+    real_type t10  = t9 * t9;
+    real_type t12  = Ybound(t2 - t4 - t6 - t8 - t10);
+    real_type t15  = U__[iU_u1];
+    real_type t16  = U__[iU_u2];
+    real_type t18  = pow(V__[0] + 10 * t3 - t15 - t16, 2);
+    real_type t23  = pow(V__[1] + 2 * t5 - t15 - 2 * t16, 2);
+    real_type t28  = pow(V__[2] + 3 * t7 - 5 * t9 - t15 + t16, 2);
+    real_type t34  = pow(V__[3] - 5 * t7 + 3 * t9 - t15 - 3 * t16, 2);
+    real_type result__ = t12 + t18 + t23 + t28 + t34;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }

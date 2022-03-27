@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 27/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -92,7 +92,7 @@ namespace AlpRiderDefine {
     X__[3] = (XL__[3]+XR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     bool res = true;
-    real_type t2   = q(Q__[iQ_zeta]);
+    real_type t2   = q_lower(Q__[iQ_zeta]);
     real_type t4   = X__[iX_y1] * X__[iX_y1];
     real_type t6   = X__[iX_y2] * X__[iX_y2];
     real_type t8   = X__[iX_y3] * X__[iX_y3];
@@ -194,13 +194,12 @@ namespace AlpRiderDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_y1] * X__[iX_y1];
-    real_type t4   = X__[iX_y2] * X__[iX_y2];
-    real_type t6   = X__[iX_y3] * X__[iX_y3];
-    real_type t8   = X__[iX_y4] * X__[iX_y4];
-    real_type t11  = q(Q__[iQ_zeta]);
-    real_type t13  = Ybound(t11 - t2 - t4 - t6 - t8);
-    real_type result__ = t13 * (t2 + t4 + t6 + t8 + 1);
+    real_type t2   = q_lower(Q__[iQ_zeta]);
+    real_type t4   = X__[iX_y1] * X__[iX_y1];
+    real_type t6   = X__[iX_y2] * X__[iX_y2];
+    real_type t8   = X__[iX_y3] * X__[iX_y3];
+    real_type t10  = X__[iX_y4] * X__[iX_y4];
+    real_type result__ = Ybound(t2 - t4 - t6 - t8 - t10);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
     }
@@ -587,7 +586,7 @@ namespace AlpRiderDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = q(Q__[iQ_zeta]);
+    real_type t2   = q_lower(Q__[iQ_zeta]);
     real_type t4   = X__[iX_y1] * X__[iX_y1];
     real_type t6   = X__[iX_y2] * X__[iX_y2];
     real_type t8   = X__[iX_y3] * X__[iX_y3];
@@ -595,7 +594,6 @@ namespace AlpRiderDefine {
     result__[ 0   ] = Ybound(t2 - t4 - t6 - t8 - t10);
     result__[ 1   ] = t4 + t6 + t8 + t10;
     result__[ 2   ] = t2;
-    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

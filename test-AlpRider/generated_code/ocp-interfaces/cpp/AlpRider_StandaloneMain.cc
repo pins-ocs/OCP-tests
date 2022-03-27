@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 27/3/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -178,7 +178,7 @@ main() {
     GenericContainer & data_Constraints = gc_data["Constraints"];
     // PenaltyBarrier1DLessThan
     GenericContainer & data_Ybound = data_Constraints["Ybound"];
-    data_Ybound["subType"]   = "PENALTY_REGULAR";
+    data_Ybound["subType"]   = "BARRIER_LOG";
     data_Ybound["epsilon"]   = epsi;
     data_Ybound["tolerance"] = tol;
     data_Ybound["active"]    = true;
