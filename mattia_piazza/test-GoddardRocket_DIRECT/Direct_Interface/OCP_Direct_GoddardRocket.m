@@ -17,7 +17,7 @@
 %                                                                         %
 %-------------------------------------------------------------------------%
 %
-classdef OCP_Direct_BangBangF < OCP_NLP
+classdef OCP_Direct_GoddardRocket < OCP_NLP
 %
   properties 
     pins_dims
@@ -25,27 +25,28 @@ classdef OCP_Direct_BangBangF < OCP_NLP
     pins_data
     guess
     sol
-    w__tv = 0.0001; % total variation weigth
+    pins_sol
+    w__tv = 0E-8; % total variation weigth
   end
   %
   methods
     %
-    function this = OCP_Direct_BangBangF( )
+    function this = OCP_Direct_GoddardRocket( )
       % Constructor
-      addpath('../generated_code/ocp-interfaces/Matlab');         % add path to the interface folder
-      tmp_pins = BangBangF( 'BangBangF' );                        % initialise the object from PINS
-      tmp_pins.setup('../generated_code/data/BangBangF_Data.rb'); % setup the object with the ruby data file
-      dims = tmp_pins.dims();                                     % get dimension structure
-      nx  = double(dims.dim_x) ;                                  % number of states
-      nu  = double(dims.dim_u) ;                                  % number of controls
-      np  = double(dims.dim_pars) ;                               % number of free parameters
-      npc = double(dims.dim_ineq) ;                               % number of path constraints
-      nbc = double(dims.num_active_BC);                           % number of boundary conditions
-      this@OCP_NLP( nx, nu, np, npc, nbc ) ;                      % initialise the NLP object
-      this.pins = tmp_pins;                                       % copy of the PINS object
-      this.pins_data = tmp_pins.get_ocp_data();                   % copy of the DATA
-      this.pins.set_guess();                                      % use default guess generated in MAPLE
-      this.pins_dims = dims;                                      % copy the dimension
+      addpath('../generated_code/ocp-interfaces/Matlab');             % add path to the interface folder
+      tmp_pins = GoddardRocket( 'GoddardRocket' );                    % initialise the object from PINS
+      tmp_pins.setup('../generated_code/data/GoddardRocket_Data.rb'); % setup the object with the ruby data file
+      dims = tmp_pins.dims();                                         % get dimension structure
+      nx  = double(dims.dim_x) ;                                      % number of states
+      nu  = double(dims.dim_u) ;                                      % number of controls
+      np  = double(dims.dim_pars) ;                                   % number of free parameters
+      npc = double(dims.dim_ineq) ;                                   % number of path constraints
+      nbc = double(dims.num_active_BC);                               % number of boundary conditions
+      this@OCP_NLP( nx, nu, np, npc, nbc ) ;                          % initialise the NLP object
+      this.pins = tmp_pins;                                           % copy of the PINS object
+      this.pins_data = tmp_pins.get_ocp_data();                       % copy of the DATA
+      this.pins.set_guess();                                          % use default guess generated in MAPLE
+      this.pins_dims = dims;                                          % copy the dimension
     end
     % 
     function setup( this, varargin )
@@ -242,24 +243,19 @@ classdef OCP_Direct_BangBangF < OCP_NLP
     % | |_) | (_) | |_| | | | | (_| \__ \
     % |____/ \___/ \__,_|_| |_|\__,_|___/
     %
-    function [x_lb,x_ub,u_lb,u_ub] = bounds(this, varargin)
+    function [x_lb,x_ub,u_lb,u_ub,p_lb,p_ub] = bounds(this, varargin)
       % bounds() define bounds for all states and controls
       % Vector of ones
-      oneN      = ones(1,this.N);
-      oneN_1    = ones(1,(this.N-1));
-      % states bounds
-      x_ub     = +inf * oneN;
-      x_lb     =    0 * oneN; %%% -inf * oneN;
-      v_ub     = +inf * oneN;
-      v_lb     =    0 * oneN; %%% -inf * oneN;
-      % control bounds
-      F_lb     = -1 * oneN_1;
-      F_ub     = +1 * oneN_1;
-      % reshape vectors
-      x_lb = reshape([x_lb; v_lb], 1, this.N*this.nx );
-      x_ub = reshape([x_ub; v_ub], 1, this.N*this.nx );
-      u_lb = F_lb;
-      u_ub = F_ub;
+      oneNx      = ones(1,this.N*this.nx);
+      oneNu      = ones(1,(this.N-1)*this.nu);
+      oneNp      = ones(1,this.np);
+      % states and control bounds
+      x_lb = -inf * oneNx; %%%   0 * oneNx; %%% -inf * oneNx; %%%
+      x_ub = +inf * oneNx;
+      u_lb =    0 * oneNu; %%% -inf * oneNu; %%%
+      u_ub = this.pins_data.Parameters.Tmax * oneNu;
+      p_lb = -inf * oneNp; %%%   0 * oneNp; %%% -inf * oneNp; %%%
+      p_ub = +inf * oneNp;
     end
     %
     function [c_lb,c_ub] = Constraint_bounds(this, varargin)
@@ -288,22 +284,28 @@ classdef OCP_Direct_BangBangF < OCP_NLP
     % \____|\__,_|\___||___/___/
     %
     function x0 = standard_Guess(this)
-      % Define the guess
-      % zeta
-      zeta = this.nodes / this.nodes(end);
-      % define states guesses
-      x_g = zeta*0;
-      v_g = zeta.*(1-zeta);
-      % Vector of ones
-      oneN      = ones(1,this.N);
-      oneN_1    = ones(1,(this.N-1));
-      % define control guess
-      F_g      = 0 * oneN_1;
-      % reshape vector
-      XGUESS = reshape([x_g; v_g], 1, this.N*this.nx );
-      UGUESS = reshape([F_g], 1,(this.N-1)*this.nu);
-      % build output guess
-      x0 = [  XGUESS , UGUESS ] ;
+%       % Define the guess
+%       % zeta
+%       zeta = this.nodes / this.nodes(end);
+%       % Vector of zeros
+%       zerosNx      = zeros(1,this.N*this.nx);
+%       zerosNu      = zeros(1,(this.N-1)*this.nu);
+%       zerosNp      = zeros(1,this.nu);
+% %       % define states guesses
+% %       x_g = zeta*0;
+% %       v_g = zeta.*(1-zeta);
+%       % Vector of ones
+%       % reshape vector
+%       XGUESS = zerosNx;
+%       UGUESS = zerosNu;
+%       PGUESS = zerosNp;
+%       % build output guess
+%       x0 = [  XGUESS , UGUESS, PGUESS ] ;
+      raw = this.pins.get_raw_solution();
+      [XGUESS, ~, PGUESS, ~] = this.pins.unpack(raw);
+      XGUESS = reshape(XGUESS,1,[]);
+      UGUESS = zeros(1,(this.N-1)*this.nu);
+      x0     = [  XGUESS , UGUESS, PGUESS ] ;
     end
     %
     %  ____        _
@@ -315,20 +317,20 @@ classdef OCP_Direct_BangBangF < OCP_NLP
     function info = solve( this, varargin )
       % Solve function
       % Set upper and lower bound for states and controls
-      [x_lb,x_ub,u_lb,u_ub] = this.bounds();
+      [x_lb,x_ub,u_lb,u_ub,p_lb,p_ub] = this.bounds();
       % The constraint functions are bounded to [0,0] for equality and
       % [-inf,0] for inequality
       [c_lb,c_ub] = this.Constraint_bounds();
       % Store in option structure
-      options.lb = [ x_lb, u_lb ] ;  % Lower bound on the variables.
-      options.ub = [ x_ub, u_ub ] ;  % Upper bound on the variables.
+      options.lb = [ x_lb, u_lb, p_lb ] ;  % Lower bound on the variables.
+      options.ub = [ x_ub, u_ub, p_ub ] ;  % Upper bound on the variables.
       options.cl = c_lb;             % Lower bound constraints.
       options.cu = c_ub;             % Upper bound constraints.
       % Set the IPOPT options.
       options.ipopt.jac_d_constant   = 'no';
       options.ipopt.hessian_constant = 'no';
       options.ipopt.mu_strategy      = 'adaptive'; 
-      options.ipopt.max_iter         = 500; 
+      options.ipopt.max_iter         = 1000; 
       options.ipopt.tol              = 1e-8;
       options.ipopt.linear_solver    = 'mumps'; % 'ma57' % 'pardiso'
       options.ipopt.derivative_test  = 'none'; 
@@ -375,6 +377,24 @@ classdef OCP_Direct_BangBangF < OCP_NLP
       elapsed = toc ;
     end
     %
+    %                   _                _       _   _
+    %  _ __   __ _  ___| | __  ___  ___ | |_   _| |_(_) ___  _ __
+    % | '_ \ / _` |/ __| |/ / / __|/ _ \| | | | | __| |/ _ \| '_ \
+    % | |_) | (_| | (__|   <  \__ \ (_) | | |_| | |_| | (_) | | | |
+    % | .__/ \__,_|\___|_|\_\ |___/\___/|_|\__,_|\__|_|\___/|_| |_|
+    % |_|
+    function pack_sol(this)
+      Nx = this.N*this.nx;
+      Nu = (this.N-1)*this.nu;
+      X = this.sol(1:Nx);
+      U = this.sol(Nx+(1:Nu));
+      P = this.sol(Nx+Nu+(1:this.np));
+      X = reshape(X,3,[]);
+      this.pins_sol = this.pins.pack(X,0*X,P,zeros(1,this.nbc));
+      this.pins.set_raw_solution(this.pins_sol,U);
+     end
+
+    %
     %  ____  _       _
     % |  _ \| | ___ | |_
     % | |_) | |/ _ \| __|
@@ -385,41 +405,34 @@ classdef OCP_Direct_BangBangF < OCP_NLP
       % set Latex Interpreter
       set(0,'defaultTextInterpreter','latex');
       % Unpack the solution
-      Nx_sol   = this.N*this.nx;
-      % Number of each state and control
-      n_x  = 1;
-      n_v  = 2;
-      n_F  = 1;
-      % build solution vectors
-      x    = this.sol( n_x:this.nx:Nx_sol);
-      v    = this.sol( n_v:this.nx:Nx_sol);
-      F    = this.sol( Nx_sol+n_F:this.nu:end);
-      % get nodes
-      nodes = this.nodes;
+      this.pack_sol();
+      this.pins.plot_states();
+
       % initialize figures
       figure('WindowStyle', 'Docked','Name','SOLUTION')
       %
+      zeta = this.pins.solution('zeta');
+      h    = this.pins.solution('h');
+      m    = this.pins.solution('m');
+      v    = this.pins.solution('v');
+      %
       subplot( 4, 1, 1 );
-      hold on
-      plot( nodes, x, 'Linewidth', 2 );
-      plot( nodes, v, 'Linewidth', 2 );
-      title('x v') ;
+      plot( zeta, h, 'Linewidth', 2 );
+      legend('h') ;
       %
       subplot( 4, 1, 2 );
-      hold on
-      plot( nodes, v, 'Linewidth', 2 );
+      plot( zeta, v, 'Linewidth', 2 );
       legend('v') ;
       %
       subplot( 4, 1, 3 );
+      plot( zeta, m, 'Linewidth', 2 );
+      legend('m') ;
       %
       subplot( 4, 1, 4 );
-      % trick to plot constant control in a cell
       hold on
-      F_ = reshape( [1;1] * F, 1, 2*(this.N-1) ) ;
-      nn = reshape( [ nodes(1:end-1) ; nodes(2:end)], 1, 2*(this.N-1) ) ;
-      plot( nn, F_, 'Linewidth', 2 ) ;
       title('Controls') ;
-      legend(["F"]);
+      this.pins.plot_controls();
+      % legend('');
       hold off
     end
     %
