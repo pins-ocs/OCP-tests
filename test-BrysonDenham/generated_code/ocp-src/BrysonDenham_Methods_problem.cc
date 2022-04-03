@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -508,7 +508,8 @@ namespace BrysonDenhamDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = X1bound(X__[iX_x] - 1.0 / 9.0);
-    Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

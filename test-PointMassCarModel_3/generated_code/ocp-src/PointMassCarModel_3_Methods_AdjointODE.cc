@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -208,14 +208,14 @@ namespace PointMassCarModel_3Define {
     real_type t5   = ALIAS_leftWidth(t4);
     real_type t6   = t3 - t5;
     real_type t7   = ALIAS_RoadLeftBorder_D(t6);
-    real_type t8   = t7 * t2;
+    real_type t8   = t2 * t7;
     real_type t9   = ALIAS_leftWidth_D(t4);
     real_type t11  = ALIAS_rightWidth(t4);
     real_type t12  = -t3 - t11;
     real_type t13  = ALIAS_RoadRightBorder_D(t12);
     real_type t14  = t13 * t2;
     real_type t15  = ALIAS_rightWidth_D(t4);
-    result__[ 0   ] = -t15 * t14 - t9 * t8;
+    result__[ 0   ] = -t14 * t15 - t8 * t9;
     result__[ 1   ] = t8 - t14;
     result__[ 2   ] = 0;
     real_type t17  = X__[iX_fx];
@@ -230,22 +230,22 @@ namespace PointMassCarModel_3Define {
     real_type t30  = t29 * t29;
     real_type t33  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
     real_type t34  = 1.0 / t33;
-    real_type t37  = t25 * t34 * t30 * t28 + t25 * t21 * t18 - 1;
+    real_type t37  = t25 * t28 * t30 * t34 + t18 * t21 * t25 - 1;
     real_type t38  = ALIAS_AdherenceEllipse_D(t37);
     real_type t39  = t38 * t2;
     real_type t46  = ModelPars[iM_m];
     real_type t48  = 1.0 / ModelPars[iM_Pmax];
-    real_type t51  = t48 * t46 * t17 * t29 - 1;
+    real_type t51  = t17 * t29 * t46 * t48 - 1;
     real_type t52  = ALIAS_PowerLimit_D(t51);
     real_type t53  = t52 * t2;
-    result__[ 3   ] = 2 * t25 * t34 * t29 * t28 * t39 + t48 * t46 * t17 * t53;
+    result__[ 3   ] = 2 * t25 * t28 * t29 * t34 * t39 + t17 * t46 * t48 * t53;
     result__[ 4   ] = 2 * t25 * t34 * t30 * t27 * t39;
-    result__[ 5   ] = 2 * t25 * t21 * t17 * t39 + t48 * t46 * t29 * t53;
+    result__[ 5   ] = 2 * t17 * t21 * t25 * t39 + t29 * t46 * t48 * t53;
     real_type t68  = AdherenceEllipse(t37);
     real_type t70  = RoadLeftBorder(t6);
     real_type t72  = RoadRightBorder(t12);
     real_type t74  = PowerLimit(t51);
-    result__[ 6   ] = 2 * t68 * t1 + 2 * t70 * t1 + 2 * t72 * t1 + 2 * t74 * t1;
+    result__[ 6   ] = 2 * t1 * t68 + 2 * t1 * t70 + 2 * t1 * t72 + 2 * t1 * t74;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "LTx_eval", 7, i_segment );
   }
@@ -510,11 +510,11 @@ namespace PointMassCarModel_3Define {
     real_type t21  = t20 * t20;
     real_type t23  = ALIAS_RoadRightBorder_D(t17);
     real_type t25  = ALIAS_rightWidth_DD(t4);
-    result__[ 0   ] = -t12 * t14 * t2 - t2 * t23 * t25 + t10 * t8 + t19 * t21;
-    result__[ 1   ] = t19 * t20 - t8 * t9;
+    result__[ 0   ] = -t14 * t12 * t2 - t25 * t23 * t2 + t10 * t8 + t21 * t19;
+    result__[ 1   ] = t20 * t19 - t9 * t8;
     real_type t29  = t12 * t1;
     real_type t31  = t23 * t1;
-    result__[ 2   ] = -2 * t20 * t31 - 2 * t29 * t9;
+    result__[ 2   ] = -2 * t20 * t31 - 2 * t9 * t29;
     result__[ 3   ] = result__[1];
     result__[ 4   ] = t8 + t19;
     result__[ 5   ] = 2 * t29 - 2 * t31;
@@ -530,7 +530,7 @@ namespace PointMassCarModel_3Define {
     real_type t48  = t47 * t47;
     real_type t51  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
     real_type t52  = 1.0 / t51;
-    real_type t55  = t43 * t46 * t48 * t52 + t36 * t39 * t43 - 1;
+    real_type t55  = t43 * t52 * t48 * t46 + t43 * t39 * t36 - 1;
     real_type t56  = ALIAS_AdherenceEllipse_DD(t55);
     real_type t57  = t56 * t2;
     real_type t58  = t46 * t46;
@@ -544,35 +544,35 @@ namespace PointMassCarModel_3Define {
     real_type t76  = ModelPars[iM_Pmax];
     real_type t77  = 1.0 / t76;
     real_type t78  = t77 * t75;
-    real_type t80  = t35 * t47 * t78 - 1;
+    real_type t80  = t78 * t35 * t47 - 1;
     real_type t81  = ALIAS_PowerLimit_DD(t80);
     real_type t82  = t81 * t2;
     real_type t83  = t75 * t75;
     real_type t85  = t76 * t76;
     real_type t86  = 1.0 / t85;
-    result__[ 6   ] = 4 * t48 * t57 * t58 * t61 * t64 + t36 * t82 * t83 * t86 + 2 * t43 * t46 * t52 * t69;
+    result__[ 6   ] = 4 * t64 * t61 * t48 * t58 * t57 + t86 * t83 * t36 * t82 + 2 * t43 * t52 * t46 * t69;
     real_type t96  = t52 * t47;
     real_type t97  = t43 * t96;
-    result__[ 7   ] = 4 * t45 * t46 * t47 * t48 * t57 * t61 * t64 + 4 * t45 * t69 * t97;
+    result__[ 7   ] = 4 * t64 * t61 * t48 * t47 * t46 * t45 * t57 + 4 * t97 * t45 * t69;
     real_type t100 = t39 * t35;
     real_type t101 = t100 * t57;
     real_type t110 = ALIAS_PowerLimit_D(t80);
-    result__[ 8   ] = t35 * t47 * t82 * t83 * t86 + 4 * t101 * t46 * t64 * t96 + t110 * t2 * t78;
+    result__[ 8   ] = t35 * t86 * t83 * t47 * t82 + 4 * t96 * t46 * t64 * t101 + t78 * t110 * t2;
     real_type t113 = t68 * t1;
     real_type t117 = t110 * t1;
-    result__[ 9   ] = 2 * t117 * t35 * t75 * t77 + 4 * t113 * t46 * t97;
+    result__[ 9   ] = 2 * t77 * t75 * t35 * t117 + 4 * t97 * t46 * t113;
     result__[ 10  ] = result__[7];
     real_type t123 = t48 * t48;
     real_type t128 = t52 * t48;
     real_type t129 = t43 * t128;
-    result__[ 11  ] = 4 * t123 * t46 * t57 * t61 * t64 + 2 * t129 * t69;
+    result__[ 11  ] = 4 * t64 * t61 * t123 * t46 * t57 + 2 * t129 * t69;
     result__[ 12  ] = 4 * t128 * t45 * t64 * t101;
     result__[ 13  ] = 4 * t129 * t45 * t113;
     result__[ 14  ] = result__[8];
     result__[ 15  ] = result__[12];
     real_type t137 = t38 * t38;
     result__[ 16  ] = 4 * t64 / t137 * t36 * t57 + 2 * t43 * t39 * t69 + t86 * t83 * t48 * t82;
-    result__[ 17  ] = 2 * t117 * t47 * t75 * t77 + 4 * t100 * t113 * t43;
+    result__[ 17  ] = 2 * t77 * t75 * t47 * t117 + 4 * t43 * t100 * t113;
     result__[ 18  ] = result__[2];
     result__[ 19  ] = result__[5];
     result__[ 20  ] = result__[9];

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -163,10 +163,10 @@ namespace PointMassCarModel_4Define {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer PointMassCarModel_4::boundaryConditions_numEqns() const { return 8; }
+  integer PointMassCarModel_4::bc_numEqns() const { return 8; }
 
   void
-  PointMassCarModel_4::boundaryConditions_eval(
+  PointMassCarModel_4::bc_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -190,7 +190,7 @@ namespace PointMassCarModel_4Define {
     result__[ 6   ] = XR__[iX_fx] - XL__[iX_fx];
     result__[ 7   ] = XR__[iX_Omega] - XL__[iX_Omega];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 8, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "bc_eval", 8, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -263,79 +263,16 @@ namespace PointMassCarModel_4Define {
 
   void
   PointMassCarModel_4::D2bcD2xxp_sparse(
-    NodeType const         & LEFT__,
-    NodeType const         & RIGHT__,
-    P_const_pointer_type     P__,
-    OMEGA_const_pointer_type OMEGA__,
-    real_type                result__[]
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
+    P_const_pointer_type          P__,
+    OMEGA_full_const_pointer_type OMEGA__,
+    real_type                     result__[]
   ) const {
     // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer PointMassCarModel_4::adjointBC_numEqns() const { return 14; }
-
-  void
-  PointMassCarModel_4::adjointBC_eval(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[1];
-    real_type t1   = OMEGA__[3];
-    result__[ 1   ] = -t1;
-    real_type t2   = OMEGA__[4];
-    result__[ 2   ] = -t2;
-    real_type t4   = OMEGA__[5];
-    result__[ 3   ] = OMEGA__[0] - t4;
-    real_type t5   = OMEGA__[7];
-    result__[ 4   ] = -t5;
-    real_type t6   = OMEGA__[6];
-    result__[ 5   ] = -t6;
-    result__[ 6   ] = 0;
-    result__[ 7   ] = OMEGA__[2];
-    result__[ 8   ] = t1;
-    result__[ 9   ] = t2;
-    result__[ 10  ] = t4;
-    result__[ 11  ] = t5;
-    result__[ 12  ] = t6;
-    result__[ 13  ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 14, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer PointMassCarModel_4::DadjointBCDxxp_numRows() const { return 14; }
-  integer PointMassCarModel_4::DadjointBCDxxp_numCols() const { return 14; }
-  integer PointMassCarModel_4::DadjointBCDxxp_nnz()     const { return 0; }
-
-  void
-  PointMassCarModel_4::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  PointMassCarModel_4::DadjointBCDxxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
 }
 
 // EOF: PointMassCarModel_4_Methods_boundary_conditions.cc

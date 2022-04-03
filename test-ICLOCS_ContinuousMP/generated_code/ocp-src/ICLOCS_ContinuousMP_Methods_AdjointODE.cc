@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -493,9 +493,9 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t56  = ALIAS_xx11Limitation_max_D(t52 - t1);
     result__[ 50  ] = -t54 + t56;
     real_type t57  = X__[iX_xx12];
-    real_type t59  = ALIAS_xx12Limitation_min_D(-t1 - t57);
-    real_type t61  = ALIAS_xx12Limitation_max_D(t57 - t1);
-    result__[ 51  ] = -t59 + t61;
+    real_type t59  = ALIAS_xx12Limitation_max_D(t57 - t1);
+    real_type t61  = ALIAS_xx12Limitation_min_D(-t1 - t57);
+    result__[ 51  ] = t59 - t61;
     real_type t62  = X__[iX_xx13];
     real_type t64  = ALIAS_xx13Limitation_min_D(-t1 - t62);
     real_type t66  = ALIAS_xx13Limitation_max_D(t62 - t1);
@@ -802,9 +802,9 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t45  = ALIAS_u9Limitation_max_D(t41 - 10);
     result__[ 8   ] = -t43 + t45;
     real_type t46  = P__[iP_u10];
-    real_type t48  = ALIAS_u10Limitation_max_D(t46 - 10);
-    real_type t50  = ALIAS_u10Limitation_min_D(-10 - t46);
-    result__[ 9   ] = t48 - t50;
+    real_type t48  = ALIAS_u10Limitation_min_D(-10 - t46);
+    real_type t50  = ALIAS_u10Limitation_max_D(t46 - 10);
+    result__[ 9   ] = -t48 + t50;
     real_type t51  = P__[iP_u11];
     real_type t53  = ALIAS_u11Limitation_min_D(-10 - t51);
     real_type t55  = ALIAS_u11Limitation_max_D(t51 - 10);
@@ -1259,8 +1259,8 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t56  = ALIAS_xx11Limitation_max_DD(t52 - t1);
     result__[ 10  ] = t54 + t56;
     real_type t57  = X__[iX_xx12];
-    real_type t59  = ALIAS_xx12Limitation_min_DD(-t1 - t57);
-    real_type t61  = ALIAS_xx12Limitation_max_DD(t57 - t1);
+    real_type t59  = ALIAS_xx12Limitation_max_DD(t57 - t1);
+    real_type t61  = ALIAS_xx12Limitation_min_DD(-t1 - t57);
     result__[ 11  ] = t59 + t61;
     real_type t62  = X__[iX_xx13];
     real_type t64  = ALIAS_xx13Limitation_min_DD(-t1 - t62);
@@ -1561,8 +1561,8 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t45  = ALIAS_u9Limitation_max_DD(t41 - 10);
     result__[ 8   ] = t43 + t45;
     real_type t46  = P__[iP_u10];
-    real_type t48  = ALIAS_u10Limitation_max_DD(t46 - 10);
-    real_type t50  = ALIAS_u10Limitation_min_DD(-10 - t46);
+    real_type t48  = ALIAS_u10Limitation_min_DD(-10 - t46);
+    real_type t50  = ALIAS_u10Limitation_max_DD(t46 - 10);
     result__[ 9   ] = t48 + t50;
     real_type t51  = P__[iP_u11];
     real_type t53  = ALIAS_u11Limitation_min_DD(-10 - t51);
@@ -2105,26 +2105,26 @@ namespace ICLOCS_ContinuousMPDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda61__xo] + L__[iL_lambda21__xo];
-    result__[ 1   ] = L__[iL_lambda62__xo] + L__[iL_lambda22__xo];
-    result__[ 2   ] = L__[iL_lambda63__xo] + L__[iL_lambda23__xo];
-    result__[ 3   ] = L__[iL_lambda64__xo] + L__[iL_lambda24__xo];
-    result__[ 4   ] = L__[iL_lambda65__xo] + L__[iL_lambda25__xo];
-    result__[ 5   ] = L__[iL_lambda66__xo] + L__[iL_lambda26__xo];
-    result__[ 6   ] = L__[iL_lambda67__xo] + L__[iL_lambda27__xo];
-    result__[ 7   ] = L__[iL_lambda68__xo] + L__[iL_lambda28__xo];
-    result__[ 8   ] = L__[iL_lambda69__xo] + L__[iL_lambda29__xo];
-    result__[ 9   ] = L__[iL_lambda70__xo] + L__[iL_lambda30__xo];
-    result__[ 10  ] = L__[iL_lambda71__xo] + L__[iL_lambda31__xo];
-    result__[ 11  ] = L__[iL_lambda72__xo] + L__[iL_lambda32__xo];
-    result__[ 12  ] = L__[iL_lambda73__xo] + L__[iL_lambda33__xo];
-    result__[ 13  ] = L__[iL_lambda74__xo] + L__[iL_lambda34__xo];
-    result__[ 14  ] = L__[iL_lambda75__xo] + L__[iL_lambda35__xo];
-    result__[ 15  ] = L__[iL_lambda76__xo] + L__[iL_lambda36__xo];
-    result__[ 16  ] = L__[iL_lambda77__xo] + L__[iL_lambda37__xo];
-    result__[ 17  ] = L__[iL_lambda78__xo] + L__[iL_lambda38__xo];
-    result__[ 18  ] = L__[iL_lambda79__xo] + L__[iL_lambda39__xo];
-    result__[ 19  ] = L__[iL_lambda80__xo] + L__[iL_lambda40__xo];
+    result__[ 0   ] = L__[iL_lambda21__xo] + L__[iL_lambda61__xo];
+    result__[ 1   ] = L__[iL_lambda22__xo] + L__[iL_lambda62__xo];
+    result__[ 2   ] = L__[iL_lambda23__xo] + L__[iL_lambda63__xo];
+    result__[ 3   ] = L__[iL_lambda24__xo] + L__[iL_lambda64__xo];
+    result__[ 4   ] = L__[iL_lambda25__xo] + L__[iL_lambda65__xo];
+    result__[ 5   ] = L__[iL_lambda26__xo] + L__[iL_lambda66__xo];
+    result__[ 6   ] = L__[iL_lambda27__xo] + L__[iL_lambda67__xo];
+    result__[ 7   ] = L__[iL_lambda28__xo] + L__[iL_lambda68__xo];
+    result__[ 8   ] = L__[iL_lambda29__xo] + L__[iL_lambda69__xo];
+    result__[ 9   ] = L__[iL_lambda30__xo] + L__[iL_lambda70__xo];
+    result__[ 10  ] = L__[iL_lambda31__xo] + L__[iL_lambda71__xo];
+    result__[ 11  ] = L__[iL_lambda32__xo] + L__[iL_lambda72__xo];
+    result__[ 12  ] = L__[iL_lambda33__xo] + L__[iL_lambda73__xo];
+    result__[ 13  ] = L__[iL_lambda34__xo] + L__[iL_lambda74__xo];
+    result__[ 14  ] = L__[iL_lambda35__xo] + L__[iL_lambda75__xo];
+    result__[ 15  ] = L__[iL_lambda36__xo] + L__[iL_lambda76__xo];
+    result__[ 16  ] = L__[iL_lambda37__xo] + L__[iL_lambda77__xo];
+    result__[ 17  ] = L__[iL_lambda38__xo] + L__[iL_lambda78__xo];
+    result__[ 18  ] = L__[iL_lambda39__xo] + L__[iL_lambda79__xo];
+    result__[ 19  ] = L__[iL_lambda40__xo] + L__[iL_lambda80__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 20, i_segment );
   }

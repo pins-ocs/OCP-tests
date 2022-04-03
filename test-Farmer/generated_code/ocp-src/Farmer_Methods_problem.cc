@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -732,7 +732,8 @@ namespace FarmerDefine {
     result__[ 4   ] = LimitX2X4(t5 + t6 - 0.12e0);
     result__[ 5   ] = 1.0 / ModelPars[iM_w1] * X__[iX_x1] + t5 / ModelPars[iM_w2] + 1.0 / ModelPars[iM_w3] * X__[iX_x3] + t6 / ModelPars[iM_w4];
     result__[ 6   ] = Ptot(Q__[iQ_zeta]);
-    Mechatronix::check_in_segment( result__, "post_eval", 7, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

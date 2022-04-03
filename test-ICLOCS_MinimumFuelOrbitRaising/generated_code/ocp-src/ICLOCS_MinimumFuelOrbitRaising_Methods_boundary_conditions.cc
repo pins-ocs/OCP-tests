@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_boundary_conditions.cc  |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -54,10 +54,10 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer ICLOCS_MinimumFuelOrbitRaising::boundaryConditions_numEqns() const { return 5; }
+  integer ICLOCS_MinimumFuelOrbitRaising::bc_numEqns() const { return 5; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::boundaryConditions_eval(
+  ICLOCS_MinimumFuelOrbitRaising::bc_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -78,7 +78,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t5   = XR__[iX_vt] * XR__[iX_vt];
     result__[ 4   ] = t5 * XR__[iX_r] - 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 5, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "bc_eval", 5, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -140,79 +140,6 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   void
   ICLOCS_MinimumFuelOrbitRaising::D2bcD2xxp_sparse(
-    NodeType const         & LEFT__,
-    NodeType const         & RIGHT__,
-    P_const_pointer_type     P__,
-    OMEGA_const_pointer_type OMEGA__,
-    real_type                result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = 1;
-    result__[ 1   ] = 1;
-    result__[ 2   ] = 1;
-    result__[ 3   ] = 1;
-    real_type t1   = XR__[iX_vt];
-    result__[ 4   ] = t1 * t1;
-    result__[ 5   ] = 2 * t1 * XR__[iX_r];
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "D2bcD2xxp_sparse", 3, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer ICLOCS_MinimumFuelOrbitRaising::adjointBC_numEqns() const { return 6; }
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::adjointBC_eval(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0];
-    result__[ 1   ] = OMEGA__[1];
-    result__[ 2   ] = OMEGA__[2];
-    real_type t1   = OMEGA__[4];
-    real_type t2   = XR__[iX_vt];
-    real_type t3   = t2 * t2;
-    result__[ 3   ] = t3 * t1;
-    result__[ 4   ] = OMEGA__[3];
-    result__[ 5   ] = 2 * t2 * XR__[iX_r] * t1;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 6, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_MinimumFuelOrbitRaising::DadjointBCDxxp_numRows() const { return 6; }
-  integer ICLOCS_MinimumFuelOrbitRaising::DadjointBCDxxp_numCols() const { return 6; }
-  integer ICLOCS_MinimumFuelOrbitRaising::DadjointBCDxxp_nnz()     const { return 3; }
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 3   ; jIndex[0 ] = 5   ;
-    iIndex[1 ] = 5   ; jIndex[1 ] = 3   ;
-    iIndex[2 ] = 5   ; jIndex[2 ] = 5   ;
-  }
-
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::DadjointBCDxxp_sparse(
     NodeType const              & LEFT__,
     NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
@@ -232,8 +159,10 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     result__[ 1   ] = result__[0];
     result__[ 2   ] = 2 * t1 * XR__[iX_r];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 3, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "D2bcD2xxp_sparse", 3, i_segment_left, i_segment_right );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 
 // EOF: ICLOCS_MinimumFuelOrbitRaising_Methods_boundary_conditions.cc

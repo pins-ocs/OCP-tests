@@ -20,31 +20,30 @@ Model Parameters
 .....................................y_i = 1.5
 INFO CLASS = HyperSensitive
   #nodes      = 51
-  dim         = u=1, q=1, x=1, p=0, omega=2, bc=2, full_bc=4
-  BC          = Inital=2, Final=2, Cyclic=0
-  OMEGA       = Inital=1, Final=1, Cyclic=0
+  dim         = u=1, q=1, x=1, p=0, bc(active/total)=(2/2)
   total       = nZ=104, UC=50, Q=51
   index start = omega=102, p=104
-  FD jacobian = ANALYTIC
 END INFO
-Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton
-Jacobian evaluation:  Analitic Jacobian
-Initializer Controls: Quasi-Newton
-Used threads:         15
+Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:        Newton
+Jacobian evaluation:    Analitic Jacobian
+Jacobian BC evaluation: Analitic Jacobian
+Initializer Controls:   Quasi-Newton
+Used threads:           15
 
 
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 2] (  0.024   ,  0.0207  ) [  0.453   ,  0.258   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[  2, 2] (  0.0207  ,  0.0192  ) [  0.217   ,  0.128   ] 0.491      [0:0:0:0:1:0:0:0:0:0:0:0]
-[  3, 1] (  0.0192  ,  0.0111  ) [  0.166   ,  0.0411  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  4, 1] (  0.0111  , 0.000197 ) [  0.038   , 0.000348 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  5, 1] ( 0.000197 , 2.02e-07 ) [ 0.000355 , 4.67e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  6, 2] ( 2.02e-07 , 2.02e-08 ) [ 4.68e-07 , 4.68e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
-[  7, 2] ( 2.02e-08 , 2.02e-09 ) [ 4.68e-08 , 4.68e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
-[  8, 2] ( 2.02e-09 , 2.02e-10 ) [ 4.68e-09 , 4.68e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
-[  9, 1] ( 2.02e-10 , 2.16e-17 ) [ 4.68e-10 , 3.77e-17 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 2] (  0.0207  ,  0.018   ) [  0.217   ,   0.14   ] 0.4        [0:0:0:0:1:0:0:0:0:0:0:0]
+[  3, 1] (  0.018   ,  0.0141  ) [  0.176   ,  0.0514  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 1] (  0.0141  , 0.000406 ) [  0.0484  , 0.000662 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 1] ( 0.000406 , 8.94e-07 ) [ 0.000736 , 2.2e-06  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 2] ( 8.94e-07 , 8.94e-08 ) [ 2.21e-06 , 2.21e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  7, 2] ( 8.94e-08 , 8.94e-09 ) [ 2.21e-07 , 2.21e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  8, 2] ( 8.94e-09 , 8.94e-10 ) [ 2.21e-08 , 2.21e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 2] ( 8.94e-10 , 8.94e-11 ) [ 2.21e-09 , 2.21e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 10, 1] ( 8.94e-11 , 2.35e-17 ) [ 2.21e-10 , 2.26e-17 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -55,34 +54,35 @@ dump_min       = 0.4           dump_max       = 0.9
 
 .................... BIG nonlinear system solver .....................
 ---------------------------- NewtonDumped ----------------------------
-n_power        = 2             check_angle    = 120 [degree]
-c1             = 0.01          lambda_min     = 1e-10
-dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 2             ratio ||d||_2  = 2
-ratio ||f||_1  = 2             ratio ||d||_1  = 2
+Converged      = YES           tolerance      = 1e-09     
+N. Equations   = 104           N. System pars = 50
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 6.02[ms]      timeout        = 0 [ms]
-iteration      = 9             tolerance      = 1e-09
-max iterations = 300           N. Equations   = 104
-max acc. iter. = 800           N. System pars = 50
-Converged      = YES           Memory Used    = 23Kb (+69bytes)
+Elapsed Time   = 4.68[ms]      timeout        = 0 [ms]
+iteration      = 10            Memory Used    = 23Kb (+46bytes)
+max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 15            Jacobian       = 9
-Factorization  = 9             Inversion      = 23
+Function       = 17            Jacobian       = 10
+Factorization  = 10            Inversion      = 26
+------------------------- SOLVER PARAMETERS --------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 3.3307e-16    last ||d||_inf = 7.2281e-16
-last ||f||_1   = 2.1612e-17    last ||d||_1   = 3.7665e-17
-last ||f||_2   = 5.7942e-17    last ||d||_2   = 1.3049e-16
+last ||f||_inf = 5.5511e-16    last ||d||_inf = 3.5116e-16
+last ||f||_1   = 2.3518e-17    last ||d||_1   = 2.264e-17
+last ||f||_2   = 6.8203e-17    last ||d||_2   = 6.2805e-17
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin
+Check Jacobian Begin (disabling penalties)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

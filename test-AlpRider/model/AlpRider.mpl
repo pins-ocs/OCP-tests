@@ -1,16 +1,6 @@
-
-# 
-# XOPTIMA Automatic Code Generationfor Optimal Control Problems 
-# 
-# Optimal Control Problem: Alp Rider 
-# Authors: E. Bertolazzi, F. Biral
-# 
-# A Collection of Optimal Control Test Problems
-# John T. Betts 1 November 17, 2015
 restart:
 with(XOptima):
 XOptimaInfo();
-# Equations of motion
 EQ1    := diff(y1(t),t) = -10*y1(t) + u1(t)   + u2(t):
 EQ2    := diff(y2(t),t) = -2*y2(t)  + u1(t)   + 2*u2(t):
 EQ3    := diff(y3(t),t) = -3*y3(t)  + 5*y4(t) + u1(t) - u2(t):
@@ -18,15 +8,12 @@ EQ4    := diff(y4(t),t) =  5*y3(t)  - 3*y4(t) + u1(t) + 3*u2(t):
 EQNS_T := subs(t=zeta,[ EQ||(1..4) ]):<%>;
 qvars := map([y1,y2,y3,y4],(zeta));
 cvars := map([u1,u2],(zeta));
-# Optimal Control: problem definition
-# Load dynamical system
 #infoRegisteredObjects() ;
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
   states    = qvars
 );
-# Boundary conditions
 addBoundaryConditions(
   initial = [ y1, y2, y3, y4 ],
   final   = [ y1, y2, y3, y4 ]
@@ -37,8 +24,11 @@ qq := 3*pp(t,3,12)+3*pp(t,6,10)+3*pp(t,10,6)+8*pp(t,15,4)+0.01;
 plot(qq,t=0..20);
 100*int(qq,t=0..20);
 addUserFunction(p_base(t,a,b)=exp(-b*(t-a)^2));
-addUserFunction(q_lower(t)=3*p_base(t,3,12)                          +3*p_base(t,6,10)                          +3*p_base(t,10,6)                          +8*p_base(t,15,4)                          +0.01);
-# Constraints on control
+addUserFunction(q_lower(t)=3*p_base(t,3,12)
+                          +3*p_base(t,6,10)
+                          +3*p_base(t,10,6)
+                          +8*p_base(t,15,4)
+                          +0.01);
 SUMQ := y1(zeta)^2+y2(zeta)^2+y3(zeta)^2+y4(zeta)^2;
 addUnilateralConstraint(
   SUMQ >= q_lower(zeta),
@@ -47,8 +37,8 @@ addUnilateralConstraint(
   epsilon   = epsi,
   tolerance = tol,
   scale     = 1, #+SUMQ,
-  barrier   = true);
-# Cost function: target
+  barrier   = true
+);
 TARGET1 := SUMQ;
 TARGET2 := u1(zeta)^2+u2(zeta)^2;
 setTarget( lagrange = W*TARGET1 + TARGET2/100 );
@@ -78,7 +68,6 @@ CONT := [
     W = (1-s)*W0+s*W1
   ]
 ];
-# Problem generation
 #Describe(generateOCProblem);
 POST := [
   [ SUMQ,          "sumy^2" ],
@@ -90,7 +79,8 @@ Mesh := [
   [length=1,  n=400]
 ];
 Mesh2 := [length=20, n=4000];
-project_dir  := "../generated_code";project_name := "AlpRider";
+project_dir  := "../generated_code";
+project_name := "AlpRider";
 generateOCProblem(
   "AlpRider", clean=true,
   parameters           = PARS,
@@ -103,39 +93,4 @@ generateOCProblem(
   max_step_iter         = 20,
   max_accumulated_iter  = 10000
 );
-# Execute Code and Numerical Solution
-# if used in batch mode use the comment to quit
-# quit
-# Compile and execute
-#launchSolver(project_dir,project_name);
-compileSolver(project_dir,project_name);
-runSolver(project_dir);
-# Solution analysis
-with(plots):
-XOptimaPlots:-loadSolution(project_dir,project_name); # # load solution
-hhdrs := XOptimaPlots:-getHeaders(): nops(%);
-XOptimaPlots:-plotSolution(
-  zeta,["sumy^2","q"],
-  line_opts  = [[color="Blue",thickness=3], [color="Red",thickness=1]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = project_name
-);
-XOptimaPlots:-plotSolution(
-  zeta,["y1","y2","y3","y4"],
-  line_opts  = [[color="Blue",thickness=3], [color="Red",thickness=1], [color="Green",thickness=1], [color="Orange",thickness=1]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = project_name
-);
-XOptimaPlots:-plotSolution(
-  zeta,["q"],
-  line_opts  = [[color="Blue",thickness=3]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = project_name
-);
-XOptimaPlots:-plotSolution(
-  zeta,["u1","u2"],
-  line_opts  = [[color="Blue",thickness=3], [color="Red",thickness=1]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = project_name
-);
-
+# if used in batch mode use the comment to quit;

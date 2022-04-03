@@ -96,18 +96,16 @@ Model Parameters
 ..............................v__fx__max = 30
 INFO CLASS = PointMassCarModel_1
   #nodes      = 2968
-  dim         = u=2, q=11, x=5, p=0, omega=6, bc=6, full_bc=16
-  BC          = Inital=6, Final=5, Cyclic=5
-  OMEGA       = Inital=1, Final=0, Cyclic=5
+  dim         = u=2, q=11, x=5, p=0, bc(active/total)=(6/6)
   total       = nZ=29686, UC=5934, Q=32648
   index start = omega=29680, p=29686
-  FD jacobian = ANALYTIC
 END INFO
-Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton
-Jacobian evaluation:  Analitic Jacobian
-Initializer Controls: Quasi-Newton
-Used threads:         15
+Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:        Newton
+Jacobian evaluation:    Analitic Jacobian
+Jacobian BC evaluation: Analitic Jacobian
+Initializer Controls:   Quasi-Newton
+Used threads:           15
 
 
 NewtonDumped --- start iterations ---
@@ -118,1246 +116,1294 @@ NewtonDumped --- start iterations ---
 [  4, 4] ( 0.00118  , 0.000972 ) [   2.62   ,   3.45   ] 0.25       [0:0:0:0:0:0:0:0:2:0:0:0]
 [  5, 6] ( 0.000972 , 0.000962 ) [   3.31   ,   3.28   ] 0.0125     [0:1:0:0:0:0:0:0:3:0:0:0]
 Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -0.025280715893775785
+fail 0 < -0.025280715603450687
 Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.7111401279631124
+fail 0 < -2.71114012763009
 Failed check on node=2262 segment=7: 0 < V(zeta)
-fail 0 < -0.1613962433598548
+fail 0 < -0.1613962431242797
 Failed check on node=2287 segment=7: 0 < V(zeta)
-fail 0 < -0.08843940428629793
+fail 0 < -0.0884394040466372
 [  6,13] ( 0.000962 , 0.000962 ) [   79.7   ,   79.7   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
 [  7,11] ( 0.000962 , 0.000962 ) [   30.4   ,   30.4   ] 0.00025    [0:2:0:1:0:0:0:0:6:0:0:0]
 Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.3998376750751058
+fail 0 < -0.3998376739513052
 Failed check on node=2262 segment=7: 0 < V(zeta)
-fail 0 < -0.5716574053195576
+fail 0 < -0.5716574043091347
 [  8, 9] ( 0.000962 , 0.000962 ) [   12.8   ,   12.8   ] 0.0008     [0:3:1:0:0:0:0:2:1:0:0:0]
 [  9,10] ( 0.000962 , 0.000961 ) [   15.5   ,   15.5   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
 Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.5143342400323654
+fail 0 < -2.514334221776431
 Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.578579689147178
+fail 0 < -1.5785796743352902
 Failed check on node=2345 segment=7: 0 < V(zeta)
-fail 0 < -0.021673135702591217
+fail 0 < -0.021673124536151
 [ 10,11] ( 0.000961 , 0.000961 ) [   24.1   ,   24.1   ] 0.000162   [0:4:1:0:0:0:0:3:1:0:0:0]
 [ 11,13] ( 0.000961 , 0.000961 ) [   62.7   ,   62.7   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
 Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.8802978395307317
+fail 0 < -2.8919601235378822
 Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.43619396453031456
+fail 0 < -0.44413044153324144
 Failed check on node=2302 segment=7: 0 < V(zeta)
-fail 0 < -0.05174036533998372
-[ 12,11] ( 0.000961 , 0.000961 ) [   33.3   ,   33.3   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[ 13,11] ( 0.000961 , 0.000961 ) [   22.1   ,   22.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+fail 0 < -0.05891577080932198
+[ 12,11] ( 0.000961 , 0.000961 ) [   33.4   ,   33.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[ 13,11] ( 0.000961 , 0.000961 ) [    22    ,    22    ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
 Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.1493921594843313
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -2.167640929163481
+fail 0 < -2.249025159241816
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.005073402078658695
 Failed check on node=2307 segment=7: 0 < V(zeta)
-fail 0 < -0.012162999932546548
-[ 14,11] ( 0.000961 , 0.000961 ) [   31.4   ,   31.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[ 15,11] ( 0.000961 , 0.000961 ) [   25.3   ,   25.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+fail 0 < -0.07689204656392512
+[ 14,11] ( 0.000961 , 0.000961 ) [   31.6   ,   31.6   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[ 15,11] ( 0.000961 , 0.000961 ) [   24.8   ,   24.8   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
 Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.23881349304584631
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.965513548672898
-[ 16,10] ( 0.000961 , 0.000961 ) [   19.7   ,   19.7   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[ 17,10] ( 0.000961 , 0.00096  ) [   16.9   ,   16.9   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.356621546290146
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.4436235024760968
-[ 18,10] ( 0.00096  , 0.00096  ) [   17.1   ,   17.1   ] 0.000322   [0:4:1:0:0:0:0:2:1:0:0:0]
-[ 19,12] ( 0.00096  , 0.00096  ) [   45.7   ,   45.7   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.6349993457496526
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.7977220681524511
-[ 20, 9] ( 0.00096  , 0.00096  ) [    16    ,    16    ] 0.0008     [0:3:1:0:0:0:0:2:1:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 21, 9] ( 0.00096  , 0.000959 ) [   9.41   ,   9.4    ] 0.00125    [0:2:0:0:0:0:0:0:5:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.621726354446449
+fail 0 < -0.8349289773995867
 Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.644395504353688
-Failed check on node=2341 segment=7: 0 < V(zeta)
-fail 0 < -0.003960629294023299
-[ 22,11] ( 0.000959 , 0.000959 ) [   24.4   ,   24.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[ 23,13] ( 0.000959 , 0.000959 ) [   62.5   ,   62.5   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
+fail 0 < -0.21175327023466295
+[ 16,10] ( 0.000961 , 0.000961 ) [   20.9   ,   20.9   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[ 17,10] ( 0.000961 , 0.00096  ) [   14.9   ,   14.9   ] 0.0005     [0:3:0:0:0:0:0:0:5:0:0:0]
 Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -3.0215041949316994
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.5150123802025499
-Failed check on node=2301 segment=7: 0 < V(zeta)
-fail 0 < -0.04137586120312875
-[ 24,11] ( 0.000959 , 0.000958 ) [   33.7   ,   33.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[ 25,11] ( 0.000958 , 0.000958 ) [   21.6   ,   21.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -3.3855888165832813
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.7607331069966321
-Failed check on node=2299 segment=7: 0 < V(zeta)
-fail 0 < -0.07463589867018694
-[ 26,11] ( 0.000958 , 0.000958 ) [   34.7   ,   34.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[ 27,11] ( 0.000958 , 0.000958 ) [   20.4   ,   20.4   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -3.0491844232115666
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.9508337017618071
-Failed check on node=2278 segment=7: 0 < V(zeta)
-fail 0 < -0.12453515428950457
-Failed check on node=2344 segment=7: 0 < V(zeta)
-fail 0 < -0.023522980998338383
-[ 28,12] ( 0.000958 , 0.000958 ) [   47.3   ,   47.3   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[ 29,12] ( 0.000958 , 0.000958 ) [   30.5   ,   30.5   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -2.702762985714198
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -1.4198531019305998
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.43370330877614993
-Failed check on node=2272 segment=7: 0 < V(zeta)
-fail 0 < -0.03837464479031727
-Failed check on node=2327 segment=7: 0 < V(zeta)
-fail 0 < -0.02347598402345863
-[ 30,13] ( 0.000958 , 0.000958 ) [   102    ,   102    ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
-[ 31,11] ( 0.000958 , 0.000958 ) [   21.3   ,   21.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.47785235597049525
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.4792198741317275
-Failed check on node=2293 segment=7: 0 < V(zeta)
-fail 0 < -0.08633469046511344
-[ 32,12] ( 0.000958 , 0.000958 ) [   37.5   ,   37.5   ] 8e-05      [0:5:0:0:0:0:0:3:2:0:0:0]
-[ 33,13] ( 0.000958 , 0.000958 ) [   58.7   ,   58.7   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.8358886843948481
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.8235919374844265
-Failed check on node=2290 segment=7: 0 < V(zeta)
-fail 0 < -0.041709895568163624
-[ 34,12] ( 0.000958 , 0.000958 ) [   38.9   ,   38.9   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[ 35,13] ( 0.000958 , 0.000958 ) [   51.5   ,   51.5   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.7770868744203128
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.6438945469242157
-Failed check on node=2268 segment=7: 0 < V(zeta)
-fail 0 < -0.07157095658568391
-Failed check on node=2316 segment=7: 0 < V(zeta)
-fail 0 < -0.029092879214601908
-[ 36,12] ( 0.000958 , 0.000957 ) [   56.4   ,   56.4   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[ 37,11] ( 0.000957 , 0.000957 ) [    22    ,    22    ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.367168701909047
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.06344145913762311
-Failed check on node=2306 segment=7: 0 < V(zeta)
-fail 0 < -0.0657226217679936
-[ 38,11] ( 0.000957 , 0.000957 ) [    32    ,    32    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[ 39,11] ( 0.000957 , 0.000957 ) [   24.3   ,   24.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.5342359222370616
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.7529966407309505
-[ 40,10] ( 0.000957 , 0.000957 ) [   22.3   ,   22.3   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 41,10] ( 0.000957 , 0.000956 ) [   13.1   ,   13.1   ] 0.000551   [0:3:0:0:0:0:0:0:5:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.9794698075832562
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.8395484809038622
-Failed check on node=2267 segment=7: 0 < V(zeta)
-fail 0 < -0.024975499848812532
-Failed check on node=2314 segment=7: 0 < V(zeta)
-fail 0 < -0.02848610227884496
-[ 42,12] ( 0.000956 , 0.000956 ) [   57.4   ,   57.4   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[ 43,11] ( 0.000956 , 0.000956 ) [   21.4   ,   21.4   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.24454950360248962
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.237875959163433
-Failed check on node=2295 segment=7: 0 < V(zeta)
-fail 0 < -0.09478414096191212
-[ 44,12] ( 0.000956 , 0.000956 ) [   36.6   ,   36.6   ] 8e-05      [0:5:0:0:0:0:0:3:2:0:0:0]
-[ 45,13] ( 0.000956 , 0.000956 ) [   65.2   ,   65.2   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.977747668702559
+fail 0 < -1.8481705057403248
 Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.966932192374239
-Failed check on node=2309 segment=7: 0 < V(zeta)
-fail 0 < -0.054987725524414444
-[ 46,11] ( 0.000956 , 0.000956 ) [    31    ,    31    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[ 47,11] ( 0.000956 , 0.000956 ) [   26.3   ,   26.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.7470881840326262
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.7670372621613666
-[ 48,10] ( 0.000956 , 0.000956 ) [   17.8   ,   17.8   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
-[ 49,12] ( 0.000956 , 0.000956 ) [   38.3   ,   38.3   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.0013465495653326
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.1203897464096455
-[ 50,11] ( 0.000956 , 0.000956 ) [   23.3   ,   23.3   ] 0.000165   [0:4:1:0:0:0:0:2:2:0:0:0]
-[ 51,10] ( 0.000956 , 0.000955 ) [   77.1   ,   77.1   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -2.628986950212213
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.0181101308918779
-Failed check on node=2264 segment=7: 0 < V(zeta)
-fail 0 < -0.23877549899907802
-Failed check on node=2300 segment=7: 0 < V(zeta)
-fail 0 < -0.004660751637549865
-[ 52,12] ( 0.000955 , 0.000955 ) [   66.6   ,   66.6   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[ 53,10] ( 0.000955 , 0.000955 ) [   17.2   ,   17.2   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.7220951536685343
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.8500960536268138
-[ 54,10] ( 0.000955 , 0.000955 ) [   16.3   ,   16.3   ] 0.000339   [0:4:1:0:0:0:0:2:1:0:0:0]
-[ 55,13] ( 0.000955 , 0.000955 ) [   53.4   ,   53.4   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -3.9634894520280177
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.5755777068904173
-Failed check on node=2274 segment=7: 0 < V(zeta)
-fail 0 < -0.0863479384518584
-Failed check on node=2330 segment=7: 0 < V(zeta)
-fail 0 < -0.03772882381423681
-[ 56,12] ( 0.000955 , 0.000955 ) [   50.7   ,   50.7   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[ 57,11] ( 0.000955 , 0.000955 ) [   26.6   ,   26.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.417049693978937
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.4661515339183344
-[ 58,10] ( 0.000955 , 0.000954 ) [   17.3   ,   17.3   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
-[ 59,12] ( 0.000954 , 0.000954 ) [   44.2   ,   44.2   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.292285528874114
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.3535435132739133
-[ 60,10] ( 0.000954 , 0.000954 ) [   17.2   ,   17.2   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 61,13] ( 0.000954 , 0.000954 ) [   47.1   ,   47.1   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -0.313408825583811
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.8833663947510084
-Failed check on node=2262 segment=7: 0 < V(zeta)
-fail 0 < -0.12455823315411951
-Failed check on node=2286 segment=7: 0 < V(zeta)
-fail 0 < -0.005505936144344581
-[ 62,13] ( 0.000954 , 0.000954 ) [   80.7   ,   80.7   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
-[ 63,12] ( 0.000954 , 0.000954 ) [   30.1   ,   30.1   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -4.482910099482235
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -2.7428962702556925
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.422030054104236
-Failed check on node=2266 segment=7: 0 < V(zeta)
-fail 0 < -0.013034460828169614
-Failed check on node=2312 segment=7: 0 < V(zeta)
-fail 0 < -0.05631615720670968
-[ 64,13] ( 0.000954 , 0.000954 ) [   116    ,   116    ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
-[ 65,11] ( 0.000954 , 0.000954 ) [   18.1   ,   18.1   ] 0.000274   [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -0.977661528669465
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.05923810955977693
-Failed check on node=2262 segment=7: 0 < V(zeta)
-fail 0 < -0.6360644258116332
-Failed check on node=2282 segment=7: 0 < V(zeta)
-fail 0 < -0.040465413538878
-[ 66,13] ( 0.000954 , 0.000954 ) [   86.3   ,   86.3   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
-[ 67,11] ( 0.000954 , 0.000954 ) [   27.1   ,   27.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.9731602941149928
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.065758208950717
-[ 68,10] ( 0.000954 , 0.000953 ) [   16.7   ,   16.7   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
-[ 69,13] ( 0.000953 , 0.000953 ) [   56.8   ,   56.8   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.8541069203396319
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.07072909214609524
-Failed check on node=2284 segment=7: 0 < V(zeta)
-fail 0 < -0.04380663351644909
-[ 70,12] ( 0.000953 , 0.000953 ) [   42.7   ,   42.7   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[ 71,12] ( 0.000953 , 0.000953 ) [   39.2   ,   39.2   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.3936908934974328
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.6139211333004528
-[ 72,10] ( 0.000953 , 0.000953 ) [   22.1   ,   22.1   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[ 73,10] ( 0.000953 , 0.000953 ) [   13.4   ,   13.4   ] 0.000508   [0:3:0:0:0:0:0:0:5:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -4.360678898311421
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.2719592102904294
-Failed check on node=2263 segment=7: 0 < V(zeta)
-fail 0 < -0.6056689577348733
-Failed check on node=2291 segment=7: 0 < V(zeta)
-fail 0 < -0.09600523814385209
-[ 74,13] ( 0.000953 , 0.000953 ) [    76    ,    76    ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
-[ 75,12] ( 0.000953 , 0.000953 ) [   33.3   ,   33.3   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -1.2906881254871827
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.005870213898659493
-Failed check on node=2267 segment=7: 0 < V(zeta)
-fail 0 < -0.17055415315650535
-Failed check on node=2312 segment=7: 0 < V(zeta)
-fail 0 < -0.06294947374013216
-[ 76,12] ( 0.000953 , 0.000953 ) [   58.9   ,   58.9   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[ 77,11] ( 0.000953 , 0.000952 ) [   20.7   ,   20.7   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.4159352904319054
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.4613274514381258
-Failed check on node=2281 segment=7: 0 < V(zeta)
-fail 0 < -0.03778796782936311
-[ 78,12] ( 0.000952 , 0.000952 ) [   44.8   ,   44.8   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[ 79,12] ( 0.000952 , 0.000952 ) [   34.7   ,   34.7   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.6519413617674088
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.6430724829457812
-Failed check on node=2312 segment=7: 0 < V(zeta)
-fail 0 < -0.06763307770701754
-[ 80,11] ( 0.000952 , 0.000952 ) [   30.1   ,   30.1   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 81,11] ( 0.000952 , 0.000952 ) [   28.4   ,   28.4   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.9828459533207115
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.0007175613984040652
-[ 82, 9] ( 0.000952 , 0.000952 ) [   14.9   ,   14.9   ] 0.0008     [0:3:1:0:0:0:0:2:1:0:0:0]
-[ 83, 9] ( 0.000952 , 0.000951 ) [   10.9   ,   10.9   ] 0.00125    [0:2:0:0:0:0:0:0:5:0:0:0]
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.7490572502597175
-Failed check on node=2263 segment=7: 0 < V(zeta)
-fail 0 < -0.4445066111530478
-[ 84, 9] ( 0.000951 , 0.00095  ) [   11.4   ,   11.4   ] 0.0008     [0:3:1:0:0:0:0:2:1:0:0:0]
-[ 85,11] ( 0.00095  , 0.00095  ) [   23.9   ,   23.9   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.2873947176516944
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.3108102840874976
-Failed check on node=2346 segment=7: 0 < V(zeta)
-fail 0 < -0.003527433855398776
-[ 86,11] ( 0.00095  , 0.00095  ) [   23.9   ,   23.9   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[ 87, 9] ( 0.00095  , 0.00095  ) [   72.8   ,   72.8   ] 6.25e-05   [0:3:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -2.300401463067624
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.223132731946591
-[ 88,10] ( 0.00095  , 0.00095  ) [   18.8   ,   18.8   ] 0.0004     [0:4:0:0:0:0:0:2:2:0:0:0]
-[ 89,11] ( 0.00095  , 0.00095  ) [   19.3   ,   19.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -4.289910258034416
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.188275856721405
-Failed check on node=2263 segment=7: 0 < V(zeta)
-fail 0 < -0.4768669373155392
-Failed check on node=2291 segment=7: 0 < V(zeta)
-fail 0 < -0.00129383795589888
-[ 90,13] ( 0.00095  , 0.00095  ) [   75.3   ,   75.3   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
-[ 91,12] ( 0.00095  , 0.00095  ) [   34.1   ,   34.1   ] 0.0001     [0:3:1:0:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.40008623685184475
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.125621588705962
-Failed check on node=2271 segment=7: 0 < V(zeta)
-fail 0 < -0.05187152193655198
-Failed check on node=2322 segment=7: 0 < V(zeta)
-fail 0 < -0.04068999633758441
-[ 92,12] ( 0.00095  , 0.000949 ) [   53.7   ,   53.7   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[ 93,11] ( 0.000949 , 0.000949 ) [   24.1   ,   24.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.8924595197385612
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.9870919443633488
-[ 94,11] ( 0.000949 , 0.000949 ) [   23.2   ,   23.2   ] 0.00016    [0:4:1:0:0:0:0:2:2:0:0:0]
-[ 95,10] ( 0.000949 , 0.000949 ) [   93.5   ,   93.5   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.9222033823873383
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.08921939969149939
-Failed check on node=2284 segment=7: 0 < V(zeta)
-fail 0 < -0.041960148354191595
-[ 96,12] ( 0.000949 , 0.000949 ) [   42.9   ,   42.9   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[ 97,12] ( 0.000949 , 0.000949 ) [    39    ,    39    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.531413761359703
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.695161262820422
-[ 98,11] ( 0.000949 , 0.000949 ) [   22.5   ,   22.5   ] 0.000166   [0:4:1:0:0:0:0:2:2:0:0:0]
-[ 99,10] ( 0.000949 , 0.000949 ) [   103    ,   103    ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -3.6896623575454193
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.9073118575575538
-Failed check on node=2297 segment=7: 0 < V(zeta)
-fail 0 < -0.028591464856605242
-[100,11] ( 0.000949 , 0.000949 ) [   35.6   ,   35.6   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[101,11] ( 0.000949 , 0.000949 ) [   19.7   ,   19.7   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -2.2377181430997783
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.670605386003448
-Failed check on node=2265 segment=7: 0 < V(zeta)
-fail 0 < -0.22375042304377502
-Failed check on node=2304 segment=7: 0 < V(zeta)
-fail 0 < -0.0107548983538992
-[102,12] ( 0.000949 , 0.000949 ) [   63.9   ,   63.9   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[103,11] ( 0.000949 , 0.000948 ) [   18.4   ,   18.4   ] 0.000252   [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2252 segment=6: 0 < V(zeta)
-fail 0 < -1.2090195443108094
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -0.3274794310656617
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.5652324140928195
-Failed check on node=2264 segment=7: 0 < V(zeta)
-fail 0 < -0.26838120267691856
-Failed check on node=2300 segment=7: 0 < V(zeta)
-fail 0 < -0.058373667397499496
-[104,14] ( 0.000948 , 0.000948 ) [   133    ,   133    ] 1.6e-05    [0:5:1:0:0:0:0:5:1:0:0:0]
-[105,12] ( 0.000948 , 0.000948 ) [   43.8   ,   43.8   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.5155688381530004
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.5173353603295654
-[106,10] ( 0.000948 , 0.000948 ) [   17.7   ,   17.7   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
-[107,12] ( 0.000948 , 0.000948 ) [    41    ,    41    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.32277780428524316
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.940674208117268
-[108,10] ( 0.000948 , 0.000948 ) [   20.1   ,   20.1   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[109,10] ( 0.000948 , 0.000948 ) [   16.4   ,   16.4   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.08801263202220788
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.666259001223949
-[110,10] ( 0.000948 , 0.000947 ) [   19.7   ,   19.7   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[111,10] ( 0.000947 , 0.000947 ) [   17.3   ,   17.3   ] 0.0005     [0:2:1:0:0:0:0:0:5:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.5378593642701386
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.6432706671490793
-[112,10] ( 0.000947 , 0.000947 ) [   16.2   ,   16.2   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
-[113,10] ( 0.000947 , 0.000947 ) [   75.8   ,   75.8   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -3.5730680634954606
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.6342146331440217
-Failed check on node=2264 segment=7: 0 < V(zeta)
-fail 0 < -0.6154638120526581
-Failed check on node=2296 segment=7: 0 < V(zeta)
-fail 0 < -0.06147895103152656
-[114,13] ( 0.000947 , 0.000947 ) [   71.1   ,   71.1   ] 3.2e-05    [0:5:1:0:0:0:0:4:1:0:0:0]
-[115,13] ( 0.000947 , 0.000947 ) [   54.1   ,   54.1   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -3.639046591039385
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.2814077333973746
-Failed check on node=2276 segment=7: 0 < V(zeta)
-fail 0 < -0.05813628495147505
-Failed check on node=2334 segment=7: 0 < V(zeta)
-fail 0 < -0.008942357006676893
-[116,12] ( 0.000947 , 0.000947 ) [   49.3   ,   49.3   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[117,11] ( 0.000947 , 0.000947 ) [   28.5   ,   28.5   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.9198366907274007
-Failed check on node=2262 segment=7: 0 < V(zeta)
-fail 0 < -1.8836885734672206
-[118, 9] ( 0.000947 , 0.000946 ) [    15    ,    15    ] 0.0008     [0:3:1:0:0:0:0:2:1:0:0:0]
-[119, 9] ( 0.000946 , 0.000945 ) [   10.9   ,   10.9   ] 0.00125    [0:2:0:0:0:0:0:0:5:0:0:0]
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.7898747249871443
-Failed check on node=2263 segment=7: 0 < V(zeta)
-fail 0 < -0.4678723954807351
-[120, 9] ( 0.000945 , 0.000945 ) [   11.6   ,   11.6   ] 0.0008     [0:3:1:0:0:0:0:2:1:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[121,11] ( 0.000945 , 0.000945 ) [   22.8   ,   22.8   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.0713484671917808
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.0626139005248847
-Failed check on node=2317 segment=7: 0 < V(zeta)
-fail 0 < -0.033812269303553855
-[122,11] ( 0.000945 , 0.000945 ) [   28.7   ,   28.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[123,12] ( 0.000945 , 0.000944 ) [   33.2   ,   33.2   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -1.9407426527076828
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.41684256719065527
-Failed check on node=2266 segment=7: 0 < V(zeta)
-fail 0 < -0.2153747929910752
-Failed check on node=2307 segment=7: 0 < V(zeta)
-fail 0 < -0.01273706133224728
-[124,12] ( 0.000944 , 0.000944 ) [   61.9   ,   61.9   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[125,11] ( 0.000944 , 0.000944 ) [   19.4   ,   19.4   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -4.471146558134259
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.2675613798972405
-Failed check on node=2263 segment=7: 0 < V(zeta)
-fail 0 < -0.43400487071116434
-Failed check on node=2291 segment=7: 0 < V(zeta)
-fail 0 < -0.007828055075930429
-[126,13] ( 0.000944 , 0.000944 ) [   75.7   ,   75.7   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
-[127,12] ( 0.000944 , 0.000944 ) [    34    ,    34    ] 0.0001     [0:3:1:0:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.7358706439916665
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.3900672404988725
-Failed check on node=2270 segment=7: 0 < V(zeta)
-fail 0 < -0.05610062726885623
-Failed check on node=2319 segment=7: 0 < V(zeta)
-fail 0 < -0.05368914726356433
-[128,12] ( 0.000944 , 0.000944 ) [   55.3   ,   55.3   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[129,11] ( 0.000944 , 0.000944 ) [   23.2   ,   23.2   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.4223349700631198
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.49215364532645367
-Failed check on node=2324 segment=7: 0 < V(zeta)
-fail 0 < -0.009898669853064312
-[130,11] ( 0.000944 , 0.000944 ) [    27    ,    27    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[131,12] ( 0.000944 , 0.000944 ) [    41    ,    41    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.3725022327185217
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.9549195952142338
-[132,10] ( 0.000944 , 0.000944 ) [   20.3   ,   20.3   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[133,10] ( 0.000944 , 0.000943 ) [   16.2   ,   16.2   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.770811753871973
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.04548223729649781
-[134,10] ( 0.000943 , 0.000943 ) [   21.1   ,   21.1   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[135,10] ( 0.000943 , 0.000943 ) [   14.9   ,   14.9   ] 0.0005     [0:3:0:0:0:0:0:0:5:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.35687099731176
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -2.161047371277453
-Failed check on node=2306 segment=7: 0 < V(zeta)
-fail 0 < -0.042098317927769635
-[136,11] ( 0.000943 , 0.000943 ) [   32.1   ,   32.1   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[137,11] ( 0.000943 , 0.000942 ) [   24.6   ,   24.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.224232897904824
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.4027035566730639
-[138,11] ( 0.000942 , 0.000942 ) [    22    ,    22    ] 0.000162   [0:4:1:0:0:0:0:2:2:0:0:0]
-[139,11] ( 0.000942 , 0.000942 ) [   158    ,   158    ] 1.25e-05   [0:4:0:0:0:0:0:0:5:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.3830680132012088
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.36453823382520767
-Failed check on node=2282 segment=7: 0 < V(zeta)
-fail 0 < -0.020069672200020428
-[140,12] ( 0.000942 , 0.000942 ) [   44.5   ,   44.5   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[141,12] ( 0.000942 , 0.000942 ) [   35.9   ,   35.9   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.7933175377276775
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.7988060902747867
-Failed check on node=2320 segment=7: 0 < V(zeta)
-fail 0 < -0.041619239011589926
-[142,11] ( 0.000942 , 0.000942 ) [    28    ,    28    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[143,12] ( 0.000942 , 0.000942 ) [   36.1   ,   36.1   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.6357948093338486
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.660524372959185
-Failed check on node=2322 segment=7: 0 < V(zeta)
-fail 0 < -0.05450334740487239
-[144,11] ( 0.000942 , 0.000942 ) [   27.6   ,   27.6   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[145,12] ( 0.000942 , 0.000942 ) [    38    ,    38    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.2972992386315205
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.2563299399348749
-Failed check on node=2343 segment=7: 0 < V(zeta)
-fail 0 < -0.011163572380578302
-[146,11] ( 0.000942 , 0.000942 ) [   24.2   ,   24.2   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[147,10] ( 0.000942 , 0.000942 ) [   70.9   ,   70.9   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -1.6904250998847177
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.4892256569275819
-Failed check on node=2262 segment=7: 0 < V(zeta)
-fail 0 < -0.7490460857461034
-Failed check on node=2281 segment=7: 0 < V(zeta)
-fail 0 < -0.10775028117321472
-[148,13] ( 0.000942 , 0.000942 ) [   89.8   ,   89.9   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
-[149,11] ( 0.000942 , 0.000942 ) [   25.9   ,   25.9   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -2.3656216187449726
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.227050011052931
-[150,10] ( 0.000942 , 0.000941 ) [   19.1   ,   19.1   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[151,11] ( 0.000941 , 0.000941 ) [   18.8   ,   18.8   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -4.659551308689904
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -2.723466286892134
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.0419887182498
-Failed check on node=2268 segment=7: 0 < V(zeta)
-fail 0 < -0.0932926371245264
-Failed check on node=2314 segment=7: 0 < V(zeta)
-fail 0 < -0.02450722851008358
-[152,14] ( 0.000941 , 0.000941 ) [   114    ,   114    ] 1.6e-05    [0:5:1:0:0:0:0:5:1:0:0:0]
-[153,13] ( 0.000941 , 0.000941 ) [   58.1   ,   58.1   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.4659895014211148
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.2186577907075753
-Failed check on node=2288 segment=7: 0 < V(zeta)
-fail 0 < -0.11593529604690023
-[154,12] ( 0.000941 , 0.000941 ) [   41.1   ,   41.1   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[155,13] ( 0.000941 , 0.000941 ) [   44.7   ,   44.7   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -4.288854849785789
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -2.4424350731387285
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.8185788952533128
-Failed check on node=2269 segment=7: 0 < V(zeta)
-fail 0 < -0.04573603339486354
-Failed check on node=2317 segment=7: 0 < V(zeta)
-fail 0 < -0.03297439880462072
-[156,13] ( 0.000941 , 0.000941 ) [   111    ,   111    ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
-[157,11] ( 0.000941 , 0.000941 ) [   19.5   ,   19.5   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -4.053822607533012
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.9285776196024358
-Failed check on node=2263 segment=7: 0 < V(zeta)
-fail 0 < -0.1039630460610601
-Failed check on node=2294 segment=7: 0 < V(zeta)
-fail 0 < -0.037005920459757036
-[158,13] ( 0.000941 , 0.000941 ) [   73.1   ,   73.1   ] 4e-05      [0:5:0:0:0:0:0:4:2:0:0:0]
-[159,12] ( 0.000941 , 0.000941 ) [   36.4   ,   36.4   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.4160616309806491
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.45884683901679413
-Failed check on node=2324 segment=7: 0 < V(zeta)
-fail 0 < -0.016447798198468533
-[160,11] ( 0.000941 , 0.000941 ) [    27    ,    27    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[161,12] ( 0.000941 , 0.000941 ) [   41.1   ,   41.1   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.31379070659352326
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.8563167188012795
-[162,10] ( 0.000941 , 0.00094  ) [   20.3   ,   20.3   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[163,10] ( 0.00094  , 0.00094  ) [   16.3   ,   16.3   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.3870458635867031
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.9340973606830616
-[164,10] ( 0.00094  , 0.00094  ) [   20.4   ,   20.4   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[165,10] ( 0.00094  , 0.00094  ) [   16.1   ,   16.1   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.138286326634141
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.3137283802954123
-[166,11] ( 0.00094  , 0.000939 ) [   21.9   ,   21.9   ] 0.00016    [0:4:1:0:0:0:0:2:2:0:0:0]
-[167,11] ( 0.000939 , 0.000939 ) [   201    ,   201    ] 1.25e-05   [0:4:0:0:0:0:0:0:5:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.183057256148664
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.976036535684207
-Failed check on node=2307 segment=7: 0 < V(zeta)
-fail 0 < -0.014428049971331625
-[168,11] ( 0.000939 , 0.000939 ) [   31.7   ,   31.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[169,11] ( 0.000939 , 0.000939 ) [   25.5   ,   25.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.12334939856519611
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.6257185330252417
-[170,10] ( 0.000939 , 0.000939 ) [   19.9   ,   19.9   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[171,10] ( 0.000939 , 0.000939 ) [    17    ,    17    ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.244023901739154
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.2198295918208073
-[172,10] ( 0.000939 , 0.000938 ) [   17.5   ,   17.5   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
-[173,13] ( 0.000938 , 0.000938 ) [   44.6   ,   44.6   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2252 segment=6: 0 < V(zeta)
-fail 0 < -0.13480001555960275
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -2.881236225983246
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.0861562833116416
-Failed check on node=2268 segment=7: 0 < V(zeta)
-fail 0 < -0.14184639812076938
-Failed check on node=2313 segment=7: 0 < V(zeta)
-fail 0 < -0.0272962379359436
-[174,14] ( 0.000938 , 0.000938 ) [   115    ,   115    ] 1.6e-05    [0:5:1:0:0:0:0:5:1:0:0:0]
-[175,13] ( 0.000938 , 0.000938 ) [   57.1   ,   57.1   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.044168032673727
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.09801907218901462
-Failed check on node=2284 segment=7: 0 < V(zeta)
-fail 0 < -0.0013968521965139757
-[176,12] ( 0.000938 , 0.000938 ) [   43.2   ,   43.2   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[177,12] ( 0.000938 , 0.000938 ) [    39    ,    39    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.5854770696879878
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.661203900641695
-[178,11] ( 0.000938 , 0.000938 ) [   22.9   ,   22.9   ] 0.00016    [0:4:1:0:0:0:0:2:2:0:0:0]
-[179,10] ( 0.000938 , 0.000938 ) [   115    ,   115    ] 2.5e-05    [0:3:0:1:0:0:0:0:4:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.7262363379219252
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.5677800396082313
-Failed check on node=2311 segment=7: 0 < V(zeta)
-fail 0 < -0.045758308243455836
-[180,11] ( 0.000938 , 0.000938 ) [   30.5   ,   30.5   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[181,12] ( 0.000938 , 0.000938 ) [   28.2   ,   28.2   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2209 segment=6: 0 < V(zeta)
-fail 0 < -0.13551612657134626
-Failed check on node=2236 segment=6: 0 < V(zeta)
-fail 0 < -0.033520889484616845
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.2198340861229324
-[182,11] ( 0.000938 , 0.000938 ) [   372    ,   372    ] 1e-05      [0:4:1:0:0:0:0:3:1:0:0:0]
-[183,11] ( 0.000938 , 0.000938 ) [    21    ,    21    ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.0172536214418857
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.07522245053648202
-Failed check on node=2285 segment=7: 0 < V(zeta)
-fail 0 < -0.10130853602845491
-[184,12] ( 0.000938 , 0.000938 ) [   43.1   ,   43.1   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[185,12] ( 0.000938 , 0.000938 ) [   39.3   ,   39.3   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.389421414703774
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.5010337547535899
-[186,11] ( 0.000938 , 0.000938 ) [   22.5   ,   22.5   ] 0.00016    [0:4:1:0:0:0:0:2:2:0:0:0]
-[187,11] ( 0.000938 , 0.000938 ) [   140    ,   140    ] 1.25e-05   [0:4:0:0:0:0:0:0:5:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.8872549671454246
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.4394500118612825
-Failed check on node=2270 segment=7: 0 < V(zeta)
-fail 0 < -0.02770928884477808
-Failed check on node=2318 segment=7: 0 < V(zeta)
-fail 0 < -0.03100892441651748
-[188,12] ( 0.000938 , 0.000938 ) [   55.7   ,   55.7   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[189,11] ( 0.000938 , 0.000937 ) [   23.1   ,   23.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.6763062171197101
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.6536663697215053
-Failed check on node=2321 segment=7: 0 < V(zeta)
-fail 0 < -0.035232879098497705
-[190,11] ( 0.000937 , 0.000937 ) [   27.8   ,   27.8   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[191,12] ( 0.000937 , 0.000937 ) [   37.6   ,   37.6   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.7078047355407566
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.5475308641684844
-Failed check on node=2335 segment=7: 0 < V(zeta)
-fail 0 < -0.019282449350681574
-[192,11] ( 0.000937 , 0.000937 ) [   25.1   ,   25.1   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[193,13] ( 0.000937 , 0.000937 ) [   57.7   ,   57.7   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.779423691101691
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.4595866246040137
-Failed check on node=2286 segment=7: 0 < V(zeta)
-fail 0 < -0.05379748467444312
-[194,12] ( 0.000937 , 0.000937 ) [   42.2   ,   42.2   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[195,12] ( 0.000937 , 0.000937 ) [   41.7   ,   41.7   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.0325564545590078
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.5013421777990033
-[196,10] ( 0.000937 , 0.000937 ) [   19.8   ,   19.8   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[197,10] ( 0.000937 , 0.000936 ) [   17.4   ,   17.4   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.5371558022238752
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.5850236847020867
-[198,10] ( 0.000936 , 0.000936 ) [   16.5   ,   16.5   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
-[199,10] ( 0.000936 , 0.000936 ) [   68.8   ,   68.8   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -3.3461356202270798
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -1.6780173695353078
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.09731405690823358
-Failed check on node=2274 segment=7: 0 < V(zeta)
-fail 0 < -0.07500962122250598
-Failed check on node=2327 segment=7: 0 < V(zeta)
-fail 0 < -0.019135413120780598
-[200,13] ( 0.000936 , 0.000936 ) [   102    ,   102    ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[201,11] ( 0.000936 , 0.000936 ) [   21.8   ,   21.8   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -3.565145167421244
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.7385556895849525
-Failed check on node=2298 segment=7: 0 < V(zeta)
-fail 0 < -0.01617821615717485
-[202,11] ( 0.000936 , 0.000936 ) [   35.5   ,   35.5   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[203,11] ( 0.000936 , 0.000936 ) [   20.3   ,   20.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.6653793966645374
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.185383213380616
-Failed check on node=2272 segment=7: 0 < V(zeta)
-fail 0 < -0.11751094692252906
-Failed check on node=2321 segment=7: 0 < V(zeta)
-fail 0 < -0.048623009529540795
-[204,12] ( 0.000936 , 0.000936 ) [   54.4   ,   54.4   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[205,11] ( 0.000936 , 0.000936 ) [   24.1   ,   24.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.1057530278165766
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.055788834519353
-Failed check on node=2345 segment=7: 0 < V(zeta)
-fail 0 < -0.011252808297283146
-[206,11] ( 0.000936 , 0.000936 ) [    24    ,    24    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[207,10] ( 0.000936 , 0.000936 ) [   77.4   ,   77.4   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -3.308374016889341
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.3334956163753224
-Failed check on node=2264 segment=7: 0 < V(zeta)
-fail 0 < -0.1437361150650487
-Failed check on node=2299 segment=7: 0 < V(zeta)
-fail 0 < -0.02362458229792086
-[208,13] ( 0.000936 , 0.000936 ) [   68.6   ,   68.6   ] 3.2e-05    [0:5:1:0:0:0:0:4:1:0:0:0]
-[209,13] ( 0.000936 , 0.000935 ) [   60.5   ,   60.5   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.5682170460024052
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.3038001320546622
-Failed check on node=2294 segment=7: 0 < V(zeta)
-fail 0 < -0.0768425702269866
-[210,12] ( 0.000935 , 0.000935 ) [   37.7   ,   37.7   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[211,13] ( 0.000935 , 0.000935 ) [   61.2   ,   61.2   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.31773481970136963
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.06849372517315
-Failed check on node=2296 segment=7: 0 < V(zeta)
-fail 0 < -0.0945996197337271
-[212,12] ( 0.000935 , 0.000935 ) [   36.8   ,   36.8   ] 8e-05      [0:5:0:0:0:0:0:3:2:0:0:0]
-[213, 9] ( 0.000935 , 0.000935 ) [    68    ,   68.1   ] 6.25e-05   [0:3:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.849933096091247
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.05479193667625015
-[214,11] ( 0.000935 , 0.000935 ) [   21.5   ,   21.5   ] 0.00016    [0:4:1:0:0:0:0:2:2:0:0:0]
-[215,12] ( 0.000935 , 0.000935 ) [   345    ,   345    ] 6.25e-06   [0:4:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -3.462092745121221
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.66373562288575
-Failed check on node=2299 segment=7: 0 < V(zeta)
-fail 0 < -0.05419983935575878
-[216,11] ( 0.000935 , 0.000935 ) [   35.2   ,   35.2   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[217,11] ( 0.000935 , 0.000935 ) [   20.6   ,   20.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -3.6275715232030095
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.1784440651410089
-Failed check on node=2277 segment=7: 0 < V(zeta)
-fail 0 < -0.025156442722450656
-Failed check on node=2335 segment=7: 0 < V(zeta)
-fail 0 < -0.022330580409556156
-[218,12] ( 0.000935 , 0.000935 ) [   49.1   ,   49.1   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[219,12] ( 0.000935 , 0.000935 ) [   29.3   ,   29.3   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2251 segment=6: 0 < V(zeta)
-fail 0 < -0.5257594518672501
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -3.252587334017279
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.33781701927168584
-Failed check on node=2262 segment=7: 0 < V(zeta)
-fail 0 < -0.6043110665279103
-Failed check on node=2282 segment=7: 0 < V(zeta)
-fail 0 < -0.10990618573177002
-[220,14] ( 0.000935 , 0.000935 ) [   177    ,   177    ] 2e-05      [0:4:1:0:0:0:0:5:2:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[221,11] ( 0.000935 , 0.000935 ) [   23.6   ,   23.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -3.1199821928886813
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.038199451652380034
-Failed check on node=2330 segment=7: 0 < V(zeta)
-fail 0 < -0.05086824274860913
-[222,11] ( 0.000935 , 0.000935 ) [    26    ,    26    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[223,13] ( 0.000935 , 0.000935 ) [   49.1   ,   49.1   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -3.804751362588698
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.6845030137987846
-Failed check on node=2264 segment=7: 0 < V(zeta)
-fail 0 < -0.4203420901114514
-Failed check on node=2297 segment=7: 0 < V(zeta)
-fail 0 < -0.10089269455442018
-[224,13] ( 0.000935 , 0.000935 ) [   71.2   ,   71.2   ] 3.2e-05    [1:5:0:0:0:0:0:4:1:0:0:0]
-[225,13] ( 0.000935 , 0.000935 ) [   55.1   ,   55.1   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -3.3439443469223695
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.9769171012137132
-Failed check on node=2279 segment=7: 0 < V(zeta)
-fail 0 < -0.1280027841582525
-Failed check on node=2339 segment=7: 0 < V(zeta)
-fail 0 < -0.016653716145870412
-[226,12] ( 0.000935 , 0.000934 ) [    48    ,    48    ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[227,12] ( 0.000934 , 0.000934 ) [   30.7   ,   30.7   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -4.014939467566515
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -2.158362610396779
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.4184000808677455
-Failed check on node=2272 segment=7: 0 < V(zeta)
-fail 0 < -0.12585203220077457
-Failed check on node=2321 segment=7: 0 < V(zeta)
-fail 0 < -0.014219816835387533
-[228,13] ( 0.000934 , 0.000934 ) [   107    ,   107    ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
-[229,11] ( 0.000934 , 0.000934 ) [   20.6   ,   20.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -3.725848137334932
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.24110104592478
-Failed check on node=2277 segment=7: 0 < V(zeta)
-fail 0 < -0.0729548392917252
-Failed check on node=2334 segment=7: 0 < V(zeta)
-fail 0 < -0.03359259164849515
-[230,12] ( 0.000934 , 0.000934 ) [   49.4   ,   49.4   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[231,12] ( 0.000934 , 0.000934 ) [   28.9   ,   28.9   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2237 segment=6: 0 < V(zeta)
-fail 0 < -0.07698592136682958
-Failed check on node=2252 segment=6: 0 < V(zeta)
-fail 0 < -1.3296855475897251
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.23509824222175624
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.7106884603844978
-Failed check on node=2270 segment=7: 0 < V(zeta)
-fail 0 < -0.07908780393654968
-Failed check on node=2318 segment=7: 0 < V(zeta)
-fail 0 < -0.03242075739524619
-[232,15] ( 0.000934 , 0.000934 ) [   219    ,   219    ] 8e-06      [0:5:1:0:0:0:0:6:1:0:0:0]
-[233,13] ( 0.000934 , 0.000934 ) [   49.9   ,   49.9   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -2.985752671436008
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.0860180235071448
-Failed check on node=2265 segment=7: 0 < V(zeta)
-fail 0 < -0.3399320637397798
-Failed check on node=2301 segment=7: 0 < V(zeta)
-fail 0 < -0.0004580936460980567
-[234,13] ( 0.000934 , 0.000934 ) [   66.8   ,   66.8   ] 3.2e-05    [0:5:1:0:0:0:0:4:1:0:0:0]
-[235,13] ( 0.000934 , 0.000934 ) [   65.4   ,   65.4   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.194403012826628
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.9292503201911204
-Failed check on node=2307 segment=7: 0 < V(zeta)
-fail 0 < -0.020262522238675196
-[236,11] ( 0.000934 , 0.000934 ) [   31.9   ,   31.9   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[237,11] ( 0.000934 , 0.000934 ) [   25.6   ,   25.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.1369457608511251
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.5879754910199493
-[238,10] ( 0.000934 , 0.000934 ) [   20.1   ,   20.1   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[239,10] ( 0.000934 , 0.000933 ) [   16.9   ,   16.9   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.6802080072755041
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.5704835816716347
-[240,10] ( 0.000933 , 0.000933 ) [   18.3   ,   18.3   ] 0.0004     [0:4:0:0:0:0:0:2:2:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[241,11] ( 0.000933 , 0.000933 ) [   21.5   ,   21.5   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.6626736086569194
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.360752548178744
-Failed check on node=2293 segment=7: 0 < V(zeta)
-fail 0 < -0.018428679632290113
-[242,12] ( 0.000933 , 0.000933 ) [   38.1   ,   38.1   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[243,13] ( 0.000933 , 0.000933 ) [   59.4   ,   59.4   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.0688785785807555
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.7385414271984958
-Failed check on node=2291 segment=7: 0 < V(zeta)
-fail 0 < -0.09646330709307893
-[244,12] ( 0.000933 , 0.000933 ) [   39.6   ,   39.6   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[245,13] ( 0.000933 , 0.000933 ) [   51.6   ,   51.6   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -1.6631525234255973
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.11555772948964549
-Failed check on node=2268 segment=7: 0 < V(zeta)
-fail 0 < -0.15973200627848794
-Failed check on node=2311 segment=7: 0 < V(zeta)
-fail 0 < -0.005010744044628979
-[246,12] ( 0.000933 , 0.000933 ) [   59.6   ,   59.6   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[247,11] ( 0.000933 , 0.000933 ) [   20.9   ,   20.9   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -2.6429237431911403
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.4725720691545927
-Failed check on node=2282 segment=7: 0 < V(zeta)
-fail 0 < -0.06849180664333598
-[248,12] ( 0.000933 , 0.000933 ) [   45.4   ,   45.4   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[249,12] ( 0.000933 , 0.000932 ) [    35    ,    35    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.818462791716085
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.5890363849556355
+fail 0 < -1.8927977813716508
 Failed check on node=2310 segment=7: 0 < V(zeta)
-fail 0 < -0.030024811594172363
-[250,11] ( 0.000932 , 0.000932 ) [   30.9   ,   30.9   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[251,12] ( 0.000932 , 0.000932 ) [   27.7   ,   27.7   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2162 segment=6: 0 < V(zeta)
-fail 0 < -0.08775642928182315
-Failed check on node=2186 segment=6: 0 < V(zeta)
-fail 0 < -0.10268908963674317
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -1.2738092548913293
-Failed check on node=2308 segment=7: 0 < V(zeta)
-fail 0 < -0.07088047147674104
-[252,13] ( 0.000932 , 0.000932 ) [   974    ,   974    ] 2e-06      [0:5:1:0:0:0:0:4:1:0:0:0]
-[253,12] ( 0.000932 , 0.000932 ) [   38.6   ,   38.6   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.9533411220339092
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -0.9084386107919347
-Failed check on node=2347 segment=7: 0 < V(zeta)
-fail 0 < -0.0030051540441631275
-[254,11] ( 0.000932 , 0.000932 ) [   23.8   ,   23.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[255,10] ( 0.000932 , 0.000932 ) [   83.9   ,   83.9   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.9864398636671767
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.4494158683246647
-Failed check on node=2271 segment=7: 0 < V(zeta)
-fail 0 < -0.13241835627900134
-Failed check on node=2318 segment=7: 0 < V(zeta)
-fail 0 < -0.04741375321535113
-[256,12] ( 0.000932 , 0.000932 ) [   55.9   ,   55.9   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[257,11] ( 0.000932 , 0.000932 ) [   23.2   ,   23.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -0.7079567172011103
+fail 0 < -0.04911997637348087
+[ 18,11] ( 0.00096  , 0.00096  ) [   30.6   ,   30.6   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[ 19,11] ( 0.00096  , 0.00096  ) [    27    ,    27    ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
 Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.6302434431851562
-Failed check on node=2320 segment=7: 0 < V(zeta)
-fail 0 < -0.010496381175927993
-[258,11] ( 0.000932 , 0.000932 ) [    28    ,    28    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[259,12] ( 0.000932 , 0.000932 ) [   37.3   ,   37.3   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -3.061564934697312
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.7834952936965003
-Failed check on node=2330 segment=7: 0 < V(zeta)
-fail 0 < -0.04212449876644708
-[260,11] ( 0.000932 , 0.000932 ) [    26    ,    26    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+fail 0 < -1.022486734866348
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.1438211768962079
+[ 20,10] ( 0.00096  , 0.00096  ) [   16.6   ,   16.6   ] 0.000342   [0:4:1:0:0:0:0:2:1:0:0:0]
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[261,13] ( 0.000932 , 0.000932 ) [   49.8   ,   49.8   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -3.2013340932829593
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.2184893468024622
-Failed check on node=2265 segment=7: 0 < V(zeta)
-fail 0 < -0.4110971055909074
-Failed check on node=2301 segment=7: 0 < V(zeta)
-fail 0 < -0.09499201186429751
-[262,13] ( 0.000932 , 0.000932 ) [   67.7   ,   67.7   ] 3.2e-05    [0:5:1:0:0:0:0:4:1:0:0:0]
-[263,13] ( 0.000932 , 0.000932 ) [   63.2   ,   63.2   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -3.140026815447613
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.4239236928954586
-Failed check on node=2301 segment=7: 0 < V(zeta)
-fail 0 < -0.052629086747264076
-[264,11] ( 0.000932 , 0.000931 ) [   34.4   ,   34.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[265,11] ( 0.000931 , 0.000931 ) [   21.7   ,   21.7   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.4217653700296644
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -1.1172303925877554
-Failed check on node=2295 segment=7: 0 < V(zeta)
-fail 0 < -0.03879150185495739
-[266,12] ( 0.000931 , 0.000931 ) [   37.2   ,   37.2   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
-[267,13] ( 0.000931 , 0.000931 ) [   65.9   ,   65.9   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.065822222605706
+[ 21,12] ( 0.00096  , 0.00096  ) [   44.6   ,   44.6   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
 Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.7889929569387713
-Failed check on node=2308 segment=7: 0 < V(zeta)
-fail 0 < -0.023960675404794074
-[268,11] ( 0.000931 , 0.000931 ) [   31.6   ,   31.6   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[269,11] ( 0.000931 , 0.000931 ) [   26.3   ,   26.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.9015147833418435
+fail 0 < -1.100942589728204
 Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.749928565296333
-[270,10] ( 0.000931 , 0.000931 ) [   18.7   ,   18.7   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[271,11] ( 0.000931 , 0.000931 ) [   20.3   ,   20.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -0.7803919363155023
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.217884235701189
-Failed check on node=2272 segment=7: 0 < V(zeta)
-fail 0 < -0.09392579119365063
-Failed check on node=2320 segment=7: 0 < V(zeta)
-fail 0 < -0.01896938921267033
-[272,12] ( 0.000931 , 0.000931 ) [   54.7   ,   54.7   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[273,11] ( 0.000931 , 0.00093  ) [   24.1   ,   24.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.2745181295255668
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.149195121489055
-Failed check on node=2340 segment=7: 0 < V(zeta)
-fail 0 < -0.018467219714043637
-[274,11] ( 0.00093  , 0.00093  ) [   24.4   ,   24.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[275,10] ( 0.00093  , 0.00093  ) [   69.3   ,   69.3   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -3.394137224813293
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -1.6475339072921926
-Failed check on node=2262 segment=7: 0 < V(zeta)
-fail 0 < -1.5325492076427647
-Failed check on node=2275 segment=7: 0 < V(zeta)
-fail 0 < -0.06786190481048493
-Failed check on node=2329 segment=7: 0 < V(zeta)
-fail 0 < -0.04976655246040895
-[276,13] ( 0.00093  , 0.00093  ) [   101    ,   101    ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
-[277,11] ( 0.00093  , 0.00093  ) [   22.3   ,   22.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.524201101308133
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -0.003271092202066228
-Failed check on node=2305 segment=7: 0 < V(zeta)
-fail 0 < -0.05063802964848829
-[278,11] ( 0.00093  , 0.00093  ) [   32.8   ,   32.8   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[279,11] ( 0.00093  , 0.00093  ) [   24.1   ,   24.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2257 segment=6: 0 < V(zeta)
-fail 0 < -2.259648745935623
-Failed check on node=2259 segment=6: 0 < V(zeta)
-fail 0 < -1.133320127652028
-Failed check on node=2340 segment=7: 0 < V(zeta)
-fail 0 < -0.01489030932660107
-[280,11] ( 0.00093  , 0.00093  ) [   24.4   ,   24.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[281,10] ( 0.00093  , 0.00093  ) [   69.7   ,   69.7   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -3.1271600738980103
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -1.4428378266068522
-Failed check on node=2262 segment=7: 0 < V(zeta)
-fail 0 < -1.3235930140980967
-Failed check on node=2276 segment=7: 0 < V(zeta)
-fail 0 < -0.03232944651910241
-Failed check on node=2332 segment=7: 0 < V(zeta)
-fail 0 < -0.03336909924560594
-[282,13] ( 0.00093  , 0.00093  ) [   98.9   ,   98.9   ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
-[283,11] ( 0.00093  , 0.00093  ) [    23    ,    23    ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -1.0581636956227474
+fail 0 < -1.2122564131528506
+[ 22,10] ( 0.00096  , 0.000959 ) [   16.8   ,   16.8   ] 0.000335   [0:4:1:0:0:0:0:2:1:0:0:0]
+[ 23,12] ( 0.000959 , 0.000959 ) [   45.5   ,   45.5   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
 Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.9090483488253671
-Failed check on node=2317 segment=7: 0 < V(zeta)
-fail 0 < -0.059481082341173774
-[284,11] ( 0.00093  , 0.00093  ) [   28.9   ,   28.9   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[285,12] ( 0.00093  , 0.000929 ) [   33.5   ,   33.5   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -2.1273589341556765
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -0.4228439310658354
-Failed check on node=2267 segment=7: 0 < V(zeta)
-fail 0 < -0.20732904385007966
-Failed check on node=2308 segment=7: 0 < V(zeta)
-fail 0 < -0.026430512532979122
-[286,12] ( 0.000929 , 0.000929 ) [   61.9   ,   61.9   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
-[287,11] ( 0.000929 , 0.000929 ) [   19.8   ,   19.8   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -3.087603954166232
-Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.1141364321422875
-Failed check on node=2265 segment=7: 0 < V(zeta)
-fail 0 < -0.27481088115062846
-Failed check on node=2302 segment=7: 0 < V(zeta)
-fail 0 < -0.08782008917232353
-[288,13] ( 0.000929 , 0.000929 ) [    67    ,    67    ] 3.2e-05    [0:5:1:0:0:0:0:4:1:0:0:0]
-[289,13] ( 0.000929 , 0.000929 ) [   65.7   ,   65.7   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
-Failed check on node=2256 segment=6: 0 < V(zeta)
-fail 0 < -2.170068741255359
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -1.8570208063776006
-Failed check on node=2307 segment=7: 0 < V(zeta)
-fail 0 < -0.004509227858483733
-[290,11] ( 0.000929 , 0.000929 ) [   31.9   ,   31.9   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
-[291,11] ( 0.000929 , 0.000929 ) [   25.8   ,   25.8   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
-Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -2.5977922399047184
+fail 0 < -0.7064116155186912
 Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -2.3461969461856897
-[292,10] ( 0.000929 , 0.000929 ) [   19.9   ,   19.9   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
-[293,10] ( 0.000929 , 0.000929 ) [   17.5   ,   17.5   ] 0.0005     [0:2:1:0:0:0:0:0:5:0:0:0]
+fail 0 < -0.8585217140090355
+[ 24,10] ( 0.000959 , 0.000959 ) [   16.2   ,   16.2   ] 0.00036    [0:4:1:0:0:0:0:2:1:0:0:0]
+[ 25,12] ( 0.000959 , 0.000959 ) [   44.2   ,   44.2   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
 Failed check on node=2258 segment=6: 0 < V(zeta)
-fail 0 < -0.3690114625306604
+fail 0 < -1.3015625911149655
 Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -0.3926253972297893
-[294,10] ( 0.000929 , 0.000928 ) [   16.5   ,   16.5   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
-[295,10] ( 0.000928 , 0.000928 ) [   73.4   ,   73.4   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -1.0583264633745264
+fail 0 < -1.3880098449952687
+[ 26,10] ( 0.000959 , 0.000959 ) [   17.1   ,   17.1   ] 0.000321   [0:4:1:0:0:0:0:2:1:0:0:0]
+[ 27,13] ( 0.000959 , 0.000959 ) [   47.6   ,   47.6   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -4.276951972290008
 Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -3.1850008323688144
+fail 0 < -2.270463082540105
 Failed check on node=2263 segment=7: 0 < V(zeta)
-fail 0 < -0.8013633631564501
-Failed check on node=2287 segment=7: 0 < V(zeta)
-fail 0 < -0.039504133726722124
-[296,13] ( 0.000928 , 0.000928 ) [   82.2   ,   82.2   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
-[297,12] ( 0.000928 , 0.000928 ) [   30.3   ,   30.3   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
-Failed check on node=2252 segment=6: 0 < V(zeta)
-fail 0 < -1.321766999950163
-Failed check on node=2253 segment=6: 0 < V(zeta)
-fail 0 < -0.21259778505319016
-Failed check on node=2261 segment=7: 0 < V(zeta)
-fail 0 < -1.6230113149308538
-Failed check on node=2266 segment=7: 0 < V(zeta)
-fail 0 < -0.21819902239285316
-Failed check on node=2306 segment=7: 0 < V(zeta)
-fail 0 < -0.05924822691941767
-[298,14] ( 0.000928 , 0.000928 ) [   126    ,   126    ] 1.6e-05    [0:5:1:0:0:0:0:5:1:0:0:0]
-[299,13] ( 0.000928 , 0.000928 ) [   49.7   ,   49.7   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+fail 0 < -0.7244659833517799
+Failed check on node=2290 segment=7: 0 < V(zeta)
+fail 0 < -0.04978871262795703
+[ 28,13] ( 0.000959 , 0.000959 ) [   76.2   ,   76.2   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[ 29,12] ( 0.000959 , 0.000959 ) [   32.9   ,   32.9   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
 Failed check on node=2254 segment=6: 0 < V(zeta)
-fail 0 < -3.5023509340307823
+fail 0 < -1.6969022176875104
 Failed check on node=2255 segment=6: 0 < V(zeta)
-fail 0 < -1.4023422955500546
+fail 0 < -0.3550502706344938
+Failed check on node=2265 segment=7: 0 < V(zeta)
+fail 0 < -0.09869083892348396
+Failed check on node=2307 segment=7: 0 < V(zeta)
+fail 0 < -0.037314196526958554
+[ 30,12] ( 0.000959 , 0.000959 ) [   61.6   ,   61.7   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[ 31,11] ( 0.000959 , 0.000958 ) [   19.2   ,   19.2   ] 0.000257   [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -2.8621263298074684
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.2177845113617822
 Failed check on node=2264 segment=7: 0 < V(zeta)
-fail 0 < -0.060082234603735074
+fail 0 < -0.4705371750573937
+Failed check on node=2298 segment=7: 0 < V(zeta)
+fail 0 < -0.011999013360535216
+[ 32,12] ( 0.000958 , 0.000958 ) [   68.2   ,   68.2   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[ 33,10] ( 0.000958 , 0.000958 ) [   16.6   ,   16.6   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -2.1075641115523363
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.1017853267124735
+[ 34,10] ( 0.000958 , 0.000958 ) [   18.3   ,   18.3   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[ 35,12] ( 0.000958 , 0.000958 ) [   33.6   ,   33.6   ] 0.0001     [0:3:1:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.735209801300627
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -2.6059502464691127
+Failed check on node=2268 segment=7: 0 < V(zeta)
+fail 0 < -0.04772170337130355
+Failed check on node=2316 segment=7: 0 < V(zeta)
+fail 0 < -0.0016800190642110024
+[ 36,12] ( 0.000958 , 0.000958 ) [   56.2   ,   56.2   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[ 37,11] ( 0.000958 , 0.000958 ) [   22.2   ,   22.2   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -2.0699541709882237
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -2.063570036931951
+Failed check on node=2308 segment=7: 0 < V(zeta)
+fail 0 < -0.03659408789601759
+[ 38,11] ( 0.000958 , 0.000958 ) [   31.2   ,   31.2   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[ 39,11] ( 0.000958 , 0.000957 ) [   25.8   ,   25.8   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -2.397301519350256
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.3556266763111573
+[ 40,10] ( 0.000957 , 0.000957 ) [   18.8   ,   18.8   ] 0.0004     [0:4:0:0:0:0:0:2:2:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 41,11] ( 0.000957 , 0.000957 ) [   19.2   ,   19.2   ] 0.000252   [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -3.9848992448920493
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -2.036057259980666
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.4993293537181369
+Failed check on node=2292 segment=7: 0 < V(zeta)
+fail 0 < -0.0632047679436667
+[ 42,13] ( 0.000957 , 0.000957 ) [   74.4   ,   74.4   ] 4e-05      [0:5:0:0:0:0:0:4:2:0:0:0]
+[ 43,12] ( 0.000957 , 0.000957 ) [   34.5   ,   34.5   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.8258376034354225
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.8406100642583887
+Failed check on node=2310 segment=7: 0 < V(zeta)
+fail 0 < -0.031911992091249175
+[ 44,11] ( 0.000957 , 0.000957 ) [   30.5   ,   30.5   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[ 45,11] ( 0.000957 , 0.000957 ) [   27.2   ,   27.2   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.8210367604077629
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -0.9463075732187232
+[ 46,10] ( 0.000957 , 0.000956 ) [   16.4   ,   16.4   ] 0.00034    [0:4:1:0:0:0:0:2:1:0:0:0]
+[ 47,13] ( 0.000956 , 0.000956 ) [   50.2   ,   50.2   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.7684127601581796
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.3889953651812288
+Failed check on node=2265 segment=7: 0 < V(zeta)
+fail 0 < -0.09189725143090222
+Failed check on node=2307 segment=7: 0 < V(zeta)
+fail 0 < -0.05471934755891983
+[ 48,12] ( 0.000956 , 0.000956 ) [   61.9   ,   61.9   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[ 49,11] ( 0.000956 , 0.000956 ) [   19.1   ,   19.1   ] 0.000252   [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -4.596396762387893
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -2.4807914663983137
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.8416900554205222
+Failed check on node=2289 segment=7: 0 < V(zeta)
+fail 0 < -0.07115944058750934
+[ 50,13] ( 0.000956 , 0.000956 ) [   77.7   ,   77.7   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[ 51,12] ( 0.000956 , 0.000956 ) [   31.9   ,   31.9   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -3.849911668364814
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.9273234778906572
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.39425182067078435
+Failed check on node=2293 segment=7: 0 < V(zeta)
+fail 0 < -0.07324862141553545
+[ 52,13] ( 0.000956 , 0.000956 ) [   73.5   ,   73.5   ] 4e-05      [0:5:0:0:0:0:0:4:2:0:0:0]
+[ 53,12] ( 0.000956 , 0.000956 ) [   35.3   ,   35.3   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.1211813049141472
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.2111636136177957
+Failed check on node=2317 segment=7: 0 < V(zeta)
+fail 0 < -0.052495756894145984
+[ 54,11] ( 0.000956 , 0.000956 ) [   28.7   ,   28.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[ 55,12] ( 0.000956 , 0.000956 ) [   32.5   ,   32.5   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -2.676187760905645
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.0561398464734015
+Failed check on node=2264 segment=7: 0 < V(zeta)
+fail 0 < -0.2785341302373725
+Failed check on node=2300 segment=7: 0 < V(zeta)
+fail 0 < -0.03911927873446608
+[ 56,12] ( 0.000956 , 0.000956 ) [   66.9   ,   66.9   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[ 57,10] ( 0.000956 , 0.000955 ) [   17.1   ,   17.1   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.9521020091875645
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.0566847240522073
+[ 58,10] ( 0.000955 , 0.000955 ) [   16.6   ,   16.6   ] 0.000326   [0:4:1:0:0:0:0:2:1:0:0:0]
+[ 59,13] ( 0.000955 , 0.000955 ) [   53.7   ,   53.7   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -3.7228313556021666
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.4078136741794811
+Failed check on node=2275 segment=7: 0 < V(zeta)
+fail 0 < -0.08949116017853598
+Failed check on node=2333 segment=7: 0 < V(zeta)
+fail 0 < -0.03718508519505015
+[ 60,12] ( 0.000955 , 0.000955 ) [   49.8   ,   49.8   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 61,11] ( 0.000955 , 0.000955 ) [   27.5   ,   27.5   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.498909209820531
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -0.6508632276091548
+[ 62,10] ( 0.000955 , 0.000955 ) [   15.9   ,   15.9   ] 0.000354   [0:4:1:0:0:0:0:2:1:0:0:0]
+[ 63,13] ( 0.000955 , 0.000955 ) [   52.1   ,   52.1   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.47849732298081094
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -2.2877193615207805
+Failed check on node=2270 segment=7: 0 < V(zeta)
+fail 0 < -0.08143722212155513
+Failed check on node=2320 segment=7: 0 < V(zeta)
+fail 0 < -0.031361584921715924
+[ 64,12] ( 0.000955 , 0.000955 ) [   54.5   ,   54.5   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[ 65,11] ( 0.000955 , 0.000955 ) [   23.4   ,   23.4   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -3.130254317968504
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.1483154595880789
+Failed check on node=2332 segment=7: 0 < V(zeta)
+fail 0 < -0.0004368492558670667
+[ 66,11] ( 0.000955 , 0.000954 ) [   25.5   ,   25.5   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[ 67,13] ( 0.000954 , 0.000954 ) [   50.4   ,   50.4   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.6647061866942776
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.2961927854617503
+Failed check on node=2266 segment=7: 0 < V(zeta)
+fail 0 < -0.26239088993142
+Failed check on node=2308 segment=7: 0 < V(zeta)
+fail 0 < -0.03783782523950041
+[ 68,12] ( 0.000954 , 0.000954 ) [   61.1   ,   61.1   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[ 69,11] ( 0.000954 , 0.000954 ) [   19.5   ,   19.5   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -2.9026426139749386
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.2092414769494075
+Failed check on node=2264 segment=7: 0 < V(zeta)
+fail 0 < -0.38421490778614054
 Failed check on node=2299 segment=7: 0 < V(zeta)
-fail 0 < -0.02544689897665453
-[300,13] ( 0.000928 , 0.000928 ) [   69.1   ,   69.1   ] 3.2e-05    [0:5:1:0:0:0:0:4:1:0:0:0]
+fail 0 < -0.0636935503623981
+[ 70,12] ( 0.000954 , 0.000954 ) [    68    ,    68    ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[ 71,10] ( 0.000954 , 0.000954 ) [   16.8   ,   16.8   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.787359394542368
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.7908292206947882
+[ 72,10] ( 0.000954 , 0.000954 ) [   17.9   ,   17.9   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[ 73,12] ( 0.000954 , 0.000954 ) [   37.4   ,   37.4   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.723063570535989
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.6877477234050344
+Failed check on node=2338 segment=7: 0 < V(zeta)
+fail 0 < -0.006529192271466755
+[ 74,11] ( 0.000954 , 0.000953 ) [   24.7   ,   24.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[ 75,13] ( 0.000953 , 0.000953 ) [   59.2   ,   59.2   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.7322332306307802
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.6742497257828983
+Failed check on node=2291 segment=7: 0 < V(zeta)
+fail 0 < -0.03256149840584488
+[ 76,12] ( 0.000953 , 0.000953 ) [   38.5   ,   38.5   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[ 77,13] ( 0.000953 , 0.000953 ) [   54.2   ,   54.2   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -3.4212032582405074
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.1795126858975946
+Failed check on node=2276 segment=7: 0 < V(zeta)
+fail 0 < -0.021092716695157776
+Failed check on node=2337 segment=7: 0 < V(zeta)
+fail 0 < -0.01727951369972125
+[ 78,12] ( 0.000953 , 0.000953 ) [   48.6   ,   48.6   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[ 79,11] ( 0.000953 , 0.000953 ) [    29    ,    29    ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.4533652553284035
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -1.489098426794035
+[ 80, 9] ( 0.000953 , 0.000953 ) [   14.3   ,   14.3   ] 0.0008     [0:3:1:0:0:0:0:2:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 81, 9] ( 0.000953 , 0.000952 ) [   11.9   ,   11.9   ] 0.00125    [0:2:0:0:0:0:0:0:5:0:0:0]
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -1.2157761449318745
+Failed check on node=2273 segment=7: 0 < V(zeta)
+fail 0 < -0.1430485029579378
+Failed check on node=2315 segment=7: 0 < V(zeta)
+fail 0 < -0.04071771379099598
+[ 82,10] ( 0.000952 , 0.000951 ) [   8.27   ,   8.26   ] 0.0016     [0:3:1:0:0:0:0:3:1:0:0:0]
+[ 83,10] ( 0.000951 , 0.000951 ) [   15.9   ,   15.9   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.522621280776785
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.6986308700040276
+[ 84,10] ( 0.000951 , 0.00095  ) [   22.4   ,   22.4   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[ 85,10] ( 0.00095  , 0.00095  ) [   13.1   ,   13.1   ] 0.000519   [0:3:0:0:0:0:0:0:5:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -2.0273034733168274
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.824599134713992
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -1.3109778526538607
+Failed check on node=2277 segment=7: 0 < V(zeta)
+fail 0 < -0.04533308539760483
+Failed check on node=2341 segment=7: 0 < V(zeta)
+fail 0 < -0.02147388047998522
+[ 86,13] ( 0.00095  , 0.00095  ) [   94.4   ,   94.4   ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
+[ 87,11] ( 0.00095  , 0.00095  ) [   23.9   ,   23.9   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.334864671633487
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.346531582111698
+Failed check on node=2345 segment=7: 0 < V(zeta)
+fail 0 < -0.010890375077965864
+[ 88,11] ( 0.00095  , 0.00095  ) [    24    ,    24    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[ 89, 9] ( 0.00095  , 0.00095  ) [   70.9   ,   70.9   ] 6.25e-05   [0:3:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.09029183819951214
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.688866862477676
+[ 90,10] ( 0.00095  , 0.000949 ) [   19.6   ,   19.6   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[ 91,10] ( 0.000949 , 0.000949 ) [   17.4   ,   17.4   ] 0.0005     [0:2:1:0:0:0:0:0:5:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.464028520161734
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -0.5889729795050531
+[ 92,10] ( 0.000949 , 0.000949 ) [    16    ,    16    ] 0.000331   [0:4:1:0:0:0:0:2:1:0:0:0]
+[ 93, 9] ( 0.000949 , 0.000949 ) [   69.8   ,   69.8   ] 6.25e-05   [0:3:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.3530456029008411
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.9826988940001726
+[ 94,10] ( 0.000949 , 0.000949 ) [   20.2   ,   20.2   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[ 95,10] ( 0.000949 , 0.000948 ) [   16.3   ,   16.3   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.31385115639632843
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.9322730765955027
+[ 96,10] ( 0.000948 , 0.000948 ) [   20.1   ,   20.1   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[ 97,10] ( 0.000948 , 0.000948 ) [   16.5   ,   16.5   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -2.694744354487673
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.5582727219216705
+[ 98,10] ( 0.000948 , 0.000947 ) [   19.5   ,   19.5   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[ 99,11] ( 0.000947 , 0.000947 ) [   17.8   ,   17.8   ] 0.00027    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -2.061988285625027
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -0.9759772749625082
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.4037081738063648
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.21295465884692621
+Failed check on node=2294 segment=7: 0 < V(zeta)
+fail 0 < -0.036280404464779537
+[100,14] ( 0.000947 , 0.000947 ) [   144    ,   144    ] 1.6e-05    [1:5:0:0:0:0:0:5:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[101,12] ( 0.000947 , 0.000947 ) [    39    ,    39    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.514824968932511
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.6691028904369185
+[102,11] ( 0.000947 , 0.000947 ) [   22.5   ,   22.5   ] 0.000163   [0:4:1:0:0:0:0:2:2:0:0:0]
+[103,10] ( 0.000947 , 0.000947 ) [   115    ,   115    ] 2.5e-05    [0:3:0:1:0:0:0:0:4:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.6231564025429348
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.5673609681012213
+Failed check on node=2312 segment=7: 0 < V(zeta)
+fail 0 < -0.048200154641381054
+[104,11] ( 0.000947 , 0.000947 ) [   30.1   ,   30.1   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[105,12] ( 0.000947 , 0.000947 ) [   28.7   ,   28.7   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2251 segment=6: 0 < V(zeta)
+fail 0 < -1.7461372659159125
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -0.5896599730116634
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.05495128686321671
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -0.6031223329680868
+Failed check on node=2271 segment=7: 0 < V(zeta)
+fail 0 < -0.07043035408770759
+Failed check on node=2323 segment=7: 0 < V(zeta)
+fail 0 < -0.05591723269481541
+[106,14] ( 0.000947 , 0.000947 ) [   210    ,   210    ] 2e-05      [0:4:1:0:0:0:0:6:1:0:0:0]
+[107,11] ( 0.000947 , 0.000947 ) [   19.1   ,   19.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -1.3930241334734959
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.31198770806045584
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -0.7082605919141294
+Failed check on node=2281 segment=7: 0 < V(zeta)
+fail 0 < -0.03330884251459576
+[108,13] ( 0.000947 , 0.000947 ) [   88.4   ,   88.4   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[109,11] ( 0.000947 , 0.000947 ) [   26.3   ,   26.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.7765836837030147
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.7379621527992626
+[110,10] ( 0.000947 , 0.000946 ) [   18.1   ,   18.1   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[111,12] ( 0.000946 , 0.000946 ) [   36.5   ,   36.5   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -0.2655365618567105
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.37615631978123965
+Failed check on node=2327 segment=7: 0 < V(zeta)
+fail 0 < -0.05007347804321505
+[112,11] ( 0.000946 , 0.000946 ) [   26.5   ,   26.5   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[113,12] ( 0.000946 , 0.000946 ) [   43.5   ,   43.6   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.6384086901354324
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.6129329739970402
+[114,10] ( 0.000946 , 0.000946 ) [   17.9   ,   17.9   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[115,12] ( 0.000946 , 0.000946 ) [   38.6   ,   38.6   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.8565565497293575
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.9335931444192935
+[116,11] ( 0.000946 , 0.000946 ) [   23.2   ,   23.2   ] 0.00016    [0:4:1:0:0:0:0:2:2:0:0:0]
+[117,10] ( 0.000946 , 0.000946 ) [    95    ,    95    ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.6563372300632455
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.459908655147582
+Failed check on node=2286 segment=7: 0 < V(zeta)
+fail 0 < -0.06124212221090364
+[118,12] ( 0.000946 , 0.000946 ) [   41.8   ,   41.8   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[119,12] ( 0.000946 , 0.000946 ) [    42    ,    42    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -2.504805545644932
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.376476808167867
+[120,10] ( 0.000946 , 0.000945 ) [   19.2   ,   19.2   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[121,11] ( 0.000945 , 0.000945 ) [   18.4   ,   18.4   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -3.209504954728536
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -1.8389156322390363
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.0696845603246246
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.8947386403063105
+Failed check on node=2288 segment=7: 0 < V(zeta)
+fail 0 < -0.05962409884814868
+[122,14] ( 0.000945 , 0.000945 ) [   158    ,   158    ] 2e-05      [0:4:1:0:0:0:0:5:2:0:0:0]
+[123,11] ( 0.000945 , 0.000945 ) [   26.7   ,   26.7   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.3255999303834924
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.3297700734462223
+[124,10] ( 0.000945 , 0.000945 ) [   17.4   ,   17.4   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[125,13] ( 0.000945 , 0.000945 ) [   44.3   ,   44.3   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -0.08625872186868655
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -2.9665436573458024
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.3389002771370517
+Failed check on node=2267 segment=7: 0 < V(zeta)
+fail 0 < -0.1730639574091919
+Failed check on node=2311 segment=7: 0 < V(zeta)
+fail 0 < -0.016758288378069253
+[126,14] ( 0.000945 , 0.000945 ) [   117    ,   117    ] 1.6e-05    [0:5:1:0:0:0:0:5:1:0:0:0]
+[127,13] ( 0.000945 , 0.000945 ) [   54.8   ,   54.8   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -3.2320131236671727
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -0.9799481538311445
+Failed check on node=2278 segment=7: 0 < V(zeta)
+fail 0 < -0.061291562149905054
+Failed check on node=2341 segment=7: 0 < V(zeta)
+fail 0 < -0.02624414197545022
+[128,12] ( 0.000945 , 0.000945 ) [   47.7   ,   47.7   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[129,12] ( 0.000945 , 0.000945 ) [   30.5   ,   30.5   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -3.6533967826982936
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -2.0045084188387126
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -0.5717643258874343
+Failed check on node=2271 segment=7: 0 < V(zeta)
+fail 0 < -0.08909822864990158
+Failed check on node=2321 segment=7: 0 < V(zeta)
+fail 0 < -0.00678514123204188
+[130,13] ( 0.000945 , 0.000945 ) [   107    ,   107    ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
+[131,11] ( 0.000945 , 0.000944 ) [   20.4   ,   20.4   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -3.9063498547368223
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.4519074868753998
+Failed check on node=2275 segment=7: 0 < V(zeta)
+fail 0 < -0.042752715272487585
+Failed check on node=2331 segment=7: 0 < V(zeta)
+fail 0 < -0.01792210247818904
+[132,12] ( 0.000944 , 0.000944 ) [   50.3   ,   50.3   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[133,11] ( 0.000944 , 0.000944 ) [   27.5   ,   27.5   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.5602406556562327
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -0.6486819550440028
+[134,10] ( 0.000944 , 0.000944 ) [   16.3   ,   16.3   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[135,10] ( 0.000944 , 0.000944 ) [   72.6   ,   72.6   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -0.6802896520199084
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -3.098948328213253
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -0.07834851456456438
+Failed check on node=2286 segment=7: 0 < V(zeta)
+fail 0 < -0.04104801960322835
+[136,13] ( 0.000944 , 0.000944 ) [   81.9   ,   81.9   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[137,12] ( 0.000944 , 0.000944 ) [   29.7   ,   29.7   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -1.7843956885236913
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -0.728013284593878
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.09611459952273815
+Failed check on node=2264 segment=7: 0 < V(zeta)
+fail 0 < -0.5035013348297657
+Failed check on node=2297 segment=7: 0 < V(zeta)
+fail 0 < -0.040150314572570345
+[138,14] ( 0.000944 , 0.000944 ) [   139    ,   139    ] 1.6e-05    [0:5:1:0:0:0:0:5:1:0:0:0]
+[139,12] ( 0.000944 , 0.000944 ) [   41.4   ,   41.4   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.13843854123154387
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.689333396580114
+[140,10] ( 0.000944 , 0.000944 ) [   19.8   ,   19.8   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[141,10] ( 0.000944 , 0.000943 ) [   17.1   ,   17.1   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.132095035205558
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.148888556993179
+[142,10] ( 0.000943 , 0.000943 ) [   17.2   ,   17.2   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[143,13] ( 0.000943 , 0.000943 ) [   48.5   ,   48.5   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -3.961161189087175
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.8837064553756777
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.1130494235178725
+Failed check on node=2294 segment=7: 0 < V(zeta)
+fail 0 < -0.02183545290656763
+[144,13] ( 0.000943 , 0.000943 ) [   72.8   ,   72.8   ] 4e-05      [0:5:0:0:0:0:0:4:2:0:0:0]
+[145,12] ( 0.000943 , 0.000943 ) [   36.6   ,   36.6   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -0.27719948187816623
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.3582795916095911
+Failed check on node=2326 segment=7: 0 < V(zeta)
+fail 0 < -0.016135571829155815
+[146,11] ( 0.000943 , 0.000943 ) [   26.6   ,   26.6   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[147,12] ( 0.000943 , 0.000943 ) [   43.4   ,   43.4   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.7203686544948908
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.6656118726813336
+[148,10] ( 0.000943 , 0.000943 ) [   18.1   ,   18.1   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[149,12] ( 0.000943 , 0.000943 ) [   36.8   ,   36.8   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -0.10969961239061554
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.20900544794906928
+Failed check on node=2329 segment=7: 0 < V(zeta)
+fail 0 < -0.05032316804582759
+[150,11] ( 0.000943 , 0.000942 ) [   26.2   ,   26.2   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[151,13] ( 0.000942 , 0.000942 ) [   46.6   ,   46.6   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -1.5075443632489467
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.3585917037737705
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -0.6407284784598755
+Failed check on node=2282 segment=7: 0 < V(zeta)
+fail 0 < -0.12570638273860624
+[152,13] ( 0.000942 , 0.000942 ) [   88.5   ,   88.5   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[153,11] ( 0.000942 , 0.000942 ) [   26.4   ,   26.4   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.664432698525717
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.612702059778531
+[154,10] ( 0.000942 , 0.000942 ) [    18    ,    18    ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[155,12] ( 0.000942 , 0.000942 ) [   37.6   ,   37.6   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.667104938132085
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.553390098056882
+Failed check on node=2337 segment=7: 0 < V(zeta)
+fail 0 < -0.03071274558137027
+[156,11] ( 0.000942 , 0.000942 ) [   24.9   ,   24.9   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[157,13] ( 0.000942 , 0.000942 ) [   59.4   ,   59.4   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.8882685669293586
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.683573162122129
+Failed check on node=2291 segment=7: 0 < V(zeta)
+fail 0 < -0.044376087726342384
+[158,12] ( 0.000942 , 0.000942 ) [   38.9   ,   38.9   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[159,13] ( 0.000942 , 0.000942 ) [   53.3   ,   53.3   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.23112720860518365
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.83608663587244
+Failed check on node=2273 segment=7: 0 < V(zeta)
+fail 0 < -0.04487103642485124
+Failed check on node=2325 segment=7: 0 < V(zeta)
+fail 0 < -0.01216242493211439
+[160,12] ( 0.000942 , 0.000942 ) [   52.4   ,   52.4   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[161,11] ( 0.000942 , 0.000942 ) [   25.6   ,   25.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.0885832771281585
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.610235147587855
+[162,10] ( 0.000942 , 0.000941 ) [   19.8   ,   19.8   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[163,10] ( 0.000941 , 0.000941 ) [   17.2   ,   17.2   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.7885359141693264
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -0.8324678401476397
+[164,10] ( 0.000941 , 0.000941 ) [   16.7   ,   16.7   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[165,13] ( 0.000941 , 0.000941 ) [   59.2   ,   59.2   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.994952044163429
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.771214087924787
+Failed check on node=2290 segment=7: 0 < V(zeta)
+fail 0 < -0.001714268785685924
+[166,12] ( 0.000941 , 0.000941 ) [   39.3   ,   39.3   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[167,13] ( 0.000941 , 0.000941 ) [   51.6   ,   51.6   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.3352793739845517
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -2.9502207075273956
+Failed check on node=2268 segment=7: 0 < V(zeta)
+fail 0 < -0.11325815130497574
+Failed check on node=2313 segment=7: 0 < V(zeta)
+fail 0 < -0.026624040185011744
+[168,12] ( 0.000941 , 0.000941 ) [   58.3   ,   58.3   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[169,11] ( 0.000941 , 0.000941 ) [   21.3   ,   21.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.928361869563612
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.7049625293710706
+Failed check on node=2291 segment=7: 0 < V(zeta)
+fail 0 < -0.062164661690781386
+[170,12] ( 0.000941 , 0.00094  ) [   39.1   ,   39.1   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[171,13] ( 0.00094  , 0.00094  ) [   52.8   ,   52.8   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.5641019731662738
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -2.15668146936474
+Failed check on node=2272 segment=7: 0 < V(zeta)
+fail 0 < -0.13828335578467144
+Failed check on node=2321 segment=7: 0 < V(zeta)
+fail 0 < -0.015440774257418077
+[172,12] ( 0.00094  , 0.00094  ) [   54.1   ,   54.1   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[173,11] ( 0.00094  , 0.00094  ) [   24.2   ,   24.2   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.9592793989630932
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.9746456031786144
+Failed check on node=2352 segment=7: 0 < V(zeta)
+fail 0 < -0.0036433663383546033
+[174,11] ( 0.00094  , 0.00094  ) [   23.5   ,   23.5   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[175,10] ( 0.00094  , 0.00094  ) [   86.4   ,   86.4   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.06611099432689382
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.6427161787886426
+Failed check on node=2274 segment=7: 0 < V(zeta)
+fail 0 < -0.020770178688096053
+Failed check on node=2328 segment=7: 0 < V(zeta)
+fail 0 < -0.032789624402508544
+[176,12] ( 0.00094  , 0.00094  ) [   51.4   ,   51.4   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[177,11] ( 0.00094  , 0.00094  ) [   26.5   ,   26.5   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.556623499042142
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.503472642837293
+[178,10] ( 0.00094  , 0.00094  ) [   17.9   ,   17.9   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[179,12] ( 0.00094  , 0.00094  ) [   38.9   ,   38.9   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.6750703976561567
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.7435404501413876
+[180,11] ( 0.00094  , 0.00094  ) [    23    ,    23    ] 0.00016    [0:4:1:0:0:0:0:2:2:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[181,10] ( 0.00094  , 0.00094  ) [   107    ,   107    ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -3.0866162307702787
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.4408385072414589
+Failed check on node=2301 segment=7: 0 < V(zeta)
+fail 0 < -0.03408284072045653
+[182,11] ( 0.00094  , 0.000939 ) [   34.1   ,   34.1   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[183,11] ( 0.000939 , 0.000939 ) [   21.7   ,   21.7   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.011495331488625027
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.8271758153731295
+Failed check on node=2298 segment=7: 0 < V(zeta)
+fail 0 < -0.08198188427092923
+[184,11] ( 0.000939 , 0.000939 ) [   35.7   ,   35.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[185,11] ( 0.000939 , 0.000939 ) [   19.9   ,   19.9   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.7772047935920101
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.25261602543161477
+Failed check on node=2267 segment=7: 0 < V(zeta)
+fail 0 < -0.20208690294165077
+Failed check on node=2310 segment=7: 0 < V(zeta)
+fail 0 < -0.078888329200141
+[186,12] ( 0.000939 , 0.000939 ) [   60.6   ,   60.6   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[187,11] ( 0.000939 , 0.000939 ) [   20.1   ,   20.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.922804867243805
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -2.497755385307589
+Failed check on node=2270 segment=7: 0 < V(zeta)
+fail 0 < -0.08434246949192037
+Failed check on node=2317 segment=7: 0 < V(zeta)
+fail 0 < -9.200499512385107e-05
+[188,12] ( 0.000939 , 0.000939 ) [    56    ,    56    ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[189,11] ( 0.000939 , 0.000939 ) [   22.9   ,   22.9   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.0543158155715942
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.9927532217735955
+Failed check on node=2317 segment=7: 0 < V(zeta)
+fail 0 < -0.031452617583037856
+[190,11] ( 0.000939 , 0.000939 ) [   28.7   ,   28.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[191,12] ( 0.000939 , 0.000938 ) [   33.5   ,   33.5   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.7579625178411984
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.2339153483629186
+Failed check on node=2267 segment=7: 0 < V(zeta)
+fail 0 < -0.17485241113733352
+Failed check on node=2310 segment=7: 0 < V(zeta)
+fail 0 < -0.058891981098046386
+[192,12] ( 0.000938 , 0.000938 ) [   60.5   ,   60.5   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[193,11] ( 0.000938 , 0.000938 ) [   20.2   ,   20.2   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.6325394802551401
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -2.1928940567309922
+Failed check on node=2272 segment=7: 0 < V(zeta)
+fail 0 < -0.14667489256809674
+Failed check on node=2321 segment=7: 0 < V(zeta)
+fail 0 < -0.046658123615705094
+[194,12] ( 0.000938 , 0.000938 ) [   54.4   ,   54.4   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[195,11] ( 0.000938 , 0.000938 ) [   24.1   ,   24.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.176760810956405
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.1319311086831192
+Failed check on node=2345 segment=7: 0 < V(zeta)
+fail 0 < -0.026279696899215388
+[196,11] ( 0.000938 , 0.000938 ) [    24    ,    24    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[197,10] ( 0.000938 , 0.000938 ) [    75    ,    75    ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -4.430559983627982
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -2.1747755070090697
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.23898519453404266
+Failed check on node=2293 segment=7: 0 < V(zeta)
+fail 0 < -0.09300471402297283
+[198,13] ( 0.000938 , 0.000938 ) [   74.9   ,   74.9   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[199,12] ( 0.000938 , 0.000938 ) [    35    ,    35    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.6587217751253371
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.5078016920576474
+Failed check on node=2312 segment=7: 0 < V(zeta)
+fail 0 < -0.07847190887417188
+[200,11] ( 0.000938 , 0.000938 ) [   30.4   ,   30.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[201,12] ( 0.000938 , 0.000938 ) [   28.6   ,   28.6   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2230 segment=6: 0 < V(zeta)
+fail 0 < -0.17660375718676313
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -2.5336929859736435
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.301887555334134
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.9485021328184873
+Failed check on node=2265 segment=7: 0 < V(zeta)
+fail 0 < -0.15158945830029769
+Failed check on node=2305 segment=7: 0 < V(zeta)
+fail 0 < -0.07133838659116876
+[202,15] ( 0.000938 , 0.000938 ) [   252    ,   252    ] 8e-06      [0:5:1:0:0:0:0:6:1:0:0:0]
+[203,12] ( 0.000938 , 0.000938 ) [   41.2   ,   41.2   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.27210493989771756
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.780100926349614
+[204,10] ( 0.000938 , 0.000937 ) [   20.3   ,   20.3   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[205,10] ( 0.000937 , 0.000937 ) [   16.5   ,   16.5   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.15052891204176166
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.636985902478547
+[206,10] ( 0.000937 , 0.000937 ) [    20    ,    20    ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[207,10] ( 0.000937 , 0.000937 ) [   16.9   ,   16.9   ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.5993433226994762
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.520517899613175
+[208,10] ( 0.000937 , 0.000936 ) [   18.1   ,   18.1   ] 0.00032    [0:4:1:0:0:0:0:2:1:0:0:0]
+[209,12] ( 0.000936 , 0.000936 ) [   37.7   ,   37.7   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.6526531610816084
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.496915139975136
+Failed check on node=2336 segment=7: 0 < V(zeta)
+fail 0 < -0.03376762803860878
+[210,11] ( 0.000936 , 0.000936 ) [    25    ,    25    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[211,13] ( 0.000936 , 0.000936 ) [    59    ,    59    ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.1760316022628476
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.8830351143497648
+Failed check on node=2290 segment=7: 0 < V(zeta)
+fail 0 < -0.0909631547137355
+[212,12] ( 0.000936 , 0.000936 ) [    40    ,    40    ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[213,13] ( 0.000936 , 0.000936 ) [   49.4   ,   49.4   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -3.42236974111574
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.42293504787264
+Failed check on node=2264 segment=7: 0 < V(zeta)
+fail 0 < -0.2319031152273645
+Failed check on node=2298 segment=7: 0 < V(zeta)
+fail 0 < -0.0020307947793440917
+[214,13] ( 0.000936 , 0.000936 ) [   69.3   ,   69.3   ] 3.2e-05    [0:5:1:0:0:0:0:4:1:0:0:0]
+[215,13] ( 0.000936 , 0.000936 ) [   58.9   ,   58.9   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.226211309026949
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.928417340943188
+Failed check on node=2289 segment=7: 0 < V(zeta)
+fail 0 < -0.010359145348952659
+[216,12] ( 0.000936 , 0.000936 ) [   40.2   ,   40.2   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[217,13] ( 0.000936 , 0.000936 ) [   48.7   ,   48.7   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -4.2367464025711135
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -2.0133045604985105
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.07533094787317296
+Failed check on node=2294 segment=7: 0 < V(zeta)
+fail 0 < -0.05765521090154557
+[218,13] ( 0.000936 , 0.000936 ) [   73.7   ,   73.7   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[219,12] ( 0.000936 , 0.000936 ) [   36.2   ,   36.2   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -0.6430568325590933
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.6119286695606698
+Failed check on node=2321 segment=7: 0 < V(zeta)
+fail 0 < -0.013329298345507112
+[220,11] ( 0.000936 , 0.000936 ) [   27.7   ,   27.7   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[221,12] ( 0.000936 , 0.000936 ) [    38    ,    38    ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.3499891924624903
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.2513859287695004
+Failed check on node=2340 segment=7: 0 < V(zeta)
+fail 0 < -0.00658644799877095
+[222,11] ( 0.000936 , 0.000936 ) [   24.4   ,   24.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[223,13] ( 0.000936 , 0.000936 ) [   67.9   ,   67.9   ] 5e-05      [0:3:1:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.333753764863154
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.2046043258637757
+Failed check on node=2314 segment=7: 0 < V(zeta)
+fail 0 < -0.013052286778680866
+[224,11] ( 0.000936 , 0.000935 ) [   29.5   ,   29.5   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[225,12] ( 0.000935 , 0.000935 ) [   31.1   ,   31.1   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -2.6948034877828277
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.182097662497359
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -1.2466982436066063
+Failed check on node=2277 segment=7: 0 < V(zeta)
+fail 0 < -0.07059494486613627
+Failed check on node=2336 segment=7: 0 < V(zeta)
+fail 0 < -0.03880824699801355
+[226,13] ( 0.000935 , 0.000935 ) [   96.7   ,   96.7   ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
+[227,11] ( 0.000935 , 0.000935 ) [   23.5   ,   23.5   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -0.06107138171902182
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.10477854436028444
+Failed check on node=2329 segment=7: 0 < V(zeta)
+fail 0 < -0.048266221036685764
+[228,11] ( 0.000935 , 0.000935 ) [   26.2   ,   26.2   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[229,13] ( 0.000935 , 0.000935 ) [   47.6   ,   47.6   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -0.8058931877116002
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -3.0572456541521715
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.8567802701121359
+Failed check on node=2287 segment=7: 0 < V(zeta)
+fail 0 < -0.02835337169795693
+[230,13] ( 0.000935 , 0.000935 ) [   81.4   ,   81.4   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[231,12] ( 0.000935 , 0.000935 ) [   30.5   ,   30.5   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -0.1583525881691541
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -2.837833516681065
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -0.9591691100113406
+Failed check on node=2268 segment=7: 0 < V(zeta)
+fail 0 < -0.030803747437661677
+Failed check on node=2314 segment=7: 0 < V(zeta)
+fail 0 < -0.029328625950526543
+[232,14] ( 0.000935 , 0.000935 ) [   114    ,   114    ] 1.6e-05    [0:5:1:0:0:0:0:5:1:0:0:0]
+[233,13] ( 0.000935 , 0.000935 ) [   58.4   ,   58.4   ] 5e-05      [0:3:0:1:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.496305598360383
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.1675524310620604
+Failed check on node=2288 segment=7: 0 < V(zeta)
+fail 0 < -0.07514180960838068
+[234,12] ( 0.000935 , 0.000935 ) [   41.2   ,   41.2   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[235,13] ( 0.000935 , 0.000935 ) [   45.2   ,   45.2   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -4.03365826050263
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -2.1798952142154278
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -0.4512906269359611
+Failed check on node=2271 segment=7: 0 < V(zeta)
+fail 0 < -0.00872221839034193
+Failed check on node=2321 segment=7: 0 < V(zeta)
+fail 0 < -0.034993647344079726
+[236,13] ( 0.000935 , 0.000935 ) [   107    ,   107    ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
+[237,11] ( 0.000935 , 0.000935 ) [   20.5   ,   20.5   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -4.06937294846898
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.4859162425933068
+Failed check on node=2276 segment=7: 0 < V(zeta)
+fail 0 < -0.13856501210381023
+Failed check on node=2330 segment=7: 0 < V(zeta)
+fail 0 < -0.03410564893158963
+[238,12] ( 0.000935 , 0.000935 ) [   50.7   ,   50.7   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[239,12] ( 0.000935 , 0.000935 ) [   27.5   ,   27.5   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2136 segment=6: 0 < V(zeta)
+fail 0 < -0.2619255022292375
+Failed check on node=2154 segment=6: 0 < V(zeta)
+fail 0 < -0.10096596812282854
+Failed check on node=2251 segment=6: 0 < V(zeta)
+fail 0 < -0.5014050716342267
+Failed check on node=2265 segment=7: 0 < V(zeta)
+fail 0 < -0.0656172926880565
+Failed check on node=2306 segment=7: 0 < V(zeta)
+fail 0 < -0.08678361868366924
+[240,14] ( 0.000935 , 0.000935 ) [ 1.99e+03 , 1.99e+03 ] 1e-06      [0:5:1:0:0:0:0:5:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[241,12] ( 0.000935 , 0.000935 ) [   36.9   ,   36.9   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -0.1359933295393576
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.16344143886086737
+Failed check on node=2327 segment=7: 0 < V(zeta)
+fail 0 < -0.00045467073570737426
+[242,11] ( 0.000935 , 0.000934 ) [   26.4   ,   26.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[243,13] ( 0.000934 , 0.000934 ) [   46.1   ,   46.1   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -2.644300950232707
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.133912110643589
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -1.1717291975105262
+Failed check on node=2277 segment=7: 0 < V(zeta)
+fail 0 < -0.009596546680837648
+Failed check on node=2337 segment=7: 0 < V(zeta)
+fail 0 < -0.03148313987294227
+[244,13] ( 0.000934 , 0.000934 ) [   96.1   ,   96.1   ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
+[245,11] ( 0.000934 , 0.000934 ) [   23.8   ,   23.8   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.7674727930473093
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.5718823463207965
+Failed check on node=2334 segment=7: 0 < V(zeta)
+fail 0 < -0.03549153625030055
+[246,11] ( 0.000934 , 0.000934 ) [   25.3   ,   25.3   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[247,13] ( 0.000934 , 0.000934 ) [    56    ,    56    ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -2.806985919264961
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -0.6001202589942842
+Failed check on node=2281 segment=7: 0 < V(zeta)
+fail 0 < -0.061261904940860035
+Failed check on node=2351 segment=7: 0 < V(zeta)
+fail 0 < -0.008647962751975768
+[248,12] ( 0.000934 , 0.000934 ) [    46    ,    46    ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[249,12] ( 0.000934 , 0.000934 ) [   33.7   ,   33.7   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.5107236789413898
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.01699497369835612
+Failed check on node=2268 segment=7: 0 < V(zeta)
+fail 0 < -0.08383140274421308
+Failed check on node=2313 segment=7: 0 < V(zeta)
+fail 0 < -0.07259108510758328
+[250,12] ( 0.000934 , 0.000934 ) [   58.8   ,   58.8   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[251,11] ( 0.000934 , 0.000934 ) [   21.2   ,   21.2   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -1.4282070219308443
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.088578389120931
+Failed check on node=2288 segment=7: 0 < V(zeta)
+fail 0 < -0.015334775097843867
+[252,12] ( 0.000934 , 0.000934 ) [   40.9   ,   40.9   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[253,13] ( 0.000934 , 0.000934 ) [   46.2   ,   46.2   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -2.545542355291551
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.052850977802752
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -1.0744000968470342
+Failed check on node=2278 segment=7: 0 < V(zeta)
+fail 0 < -0.06408362506894516
+Failed check on node=2339 segment=7: 0 < V(zeta)
+fail 0 < -0.03394856608822305
+[254,13] ( 0.000934 , 0.000934 ) [   95.1   ,   95.1   ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
+[255,11] ( 0.000934 , 0.000934 ) [   24.1   ,   24.1   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -2.1600162034467214
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -1.083996710299517
+Failed check on node=2343 segment=7: 0 < V(zeta)
+fail 0 < -0.007877401080198965
+[256,11] ( 0.000934 , 0.000933 ) [   24.1   ,   24.1   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[257,10] ( 0.000933 , 0.000933 ) [   74.6   ,   74.6   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -0.2934949124165209
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -2.4682588739865494
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.3728685365480091
+Failed check on node=2291 segment=7: 0 < V(zeta)
+fail 0 < -0.049519031351938025
+[258,13] ( 0.000933 , 0.000933 ) [    77    ,    77    ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[259,12] ( 0.000933 , 0.000933 ) [   33.6   ,   33.6   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -1.848226823750604
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.2562353041112271
+Failed check on node=2267 segment=7: 0 < V(zeta)
+fail 0 < -0.1139169604761543
+Failed check on node=2310 segment=7: 0 < V(zeta)
+fail 0 < -0.057395130556508356
+[260,12] ( 0.000933 , 0.000933 ) [   60.6   ,   60.6   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[261,11] ( 0.000933 , 0.000933 ) [   20.3   ,   20.3   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.6465559256379532
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -2.1265236648356405
+Failed check on node=2272 segment=7: 0 < V(zeta)
+fail 0 < -0.04845599246980559
+Failed check on node=2321 segment=7: 0 < V(zeta)
+fail 0 < -0.009124602316139097
+[262,12] ( 0.000933 , 0.000933 ) [   54.2   ,   54.2   ] 8e-05      [0:4:1:0:0:0:0:4:1:0:0:0]
+[263,11] ( 0.000933 , 0.000933 ) [   24.4   ,   24.4   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.6815434607173927
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.6996855238375641
+[264,11] ( 0.000933 , 0.000933 ) [   23.2   ,   23.2   ] 0.00016    [0:4:1:0:0:0:0:2:2:0:0:0]
+[265,10] ( 0.000933 , 0.000933 ) [   103    ,   103    ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.35685207774163086
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -1.076971967047979
+Failed check on node=2296 segment=7: 0 < V(zeta)
+fail 0 < -0.10667818962291165
+[266,12] ( 0.000933 , 0.000933 ) [   36.9   ,   36.9   ] 8e-05      [0:4:1:0:0:0:0:3:2:0:0:0]
+[267,13] ( 0.000933 , 0.000933 ) [   67.5   ,   67.5   ] 5e-05      [0:3:1:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.4970100607811236
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.3179573207922157
+Failed check on node=2313 segment=7: 0 < V(zeta)
+fail 0 < -0.053217721760139725
+[268,11] ( 0.000933 , 0.000933 ) [    30    ,    30    ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[269,12] ( 0.000933 , 0.000933 ) [   29.9   ,   29.8   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -2.5387687214639243
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -1.1838736009324649
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.13281821177287423
+Failed check on node=2264 segment=7: 0 < V(zeta)
+fail 0 < -0.527729677000246
+Failed check on node=2296 segment=7: 0 < V(zeta)
+fail 0 < -0.07485251299517426
+[270,14] ( 0.000933 , 0.000933 ) [   143    ,   143    ] 1.6e-05    [1:5:0:0:0:0:0:5:1:0:0:0]
+[271,12] ( 0.000933 , 0.000933 ) [   40.4   ,   40.4   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.7736338654360866
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -3.294130729707917
+[272,11] ( 0.000933 , 0.000932 ) [   21.4   ,   21.4   ] 0.00016    [0:4:1:0:0:0:0:2:2:0:0:0]
+[273,12] ( 0.000932 , 0.000932 ) [   445    ,   445    ] 6.25e-06   [0:4:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -0.06978361445269687
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.08848823087587565
+Failed check on node=2328 segment=7: 0 < V(zeta)
+fail 0 < -0.01555843585810468
+[274,11] ( 0.000932 , 0.000932 ) [   26.2   ,   26.2   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[275,13] ( 0.000932 , 0.000932 ) [   47.4   ,   47.4   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -1.156710213327198
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.0006239462927730699
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -0.03285781397849341
+Failed check on node=2286 segment=7: 0 < V(zeta)
+fail 0 < -0.09965567630466055
+[276,13] ( 0.000932 , 0.000932 ) [   83.7   ,   83.7   ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[277,12] ( 0.000932 , 0.000932 ) [   29.2   ,   29.2   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2251 segment=6: 0 < V(zeta)
+fail 0 < -1.3221195994341777
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -0.14600630395128444
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -0.8175172462716276
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -1.11811476279727
+Failed check on node=2278 segment=7: 0 < V(zeta)
+fail 0 < -0.07959244956845879
+Failed check on node=2338 segment=7: 0 < V(zeta)
+fail 0 < -8.027947482158737e-05
+[278,14] ( 0.000932 , 0.000932 ) [   189    ,   189    ] 2e-05      [0:4:1:0:0:0:0:6:1:0:0:0]
+[279,11] ( 0.000932 , 0.000932 ) [   21.8   ,   21.8   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.07435281781391812
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.8045983345896239
+Failed check on node=2298 segment=7: 0 < V(zeta)
+fail 0 < -0.08458813531126541
+[280,11] ( 0.000932 , 0.000932 ) [   35.9   ,   35.9   ] 0.00016    [1:4:0:0:0:0:0:3:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[281,11] ( 0.000932 , 0.000932 ) [   19.9   ,   19.9   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -2.2876839561900457
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.5611488557205764
+Failed check on node=2266 segment=7: 0 < V(zeta)
+fail 0 < -0.1392080499961308
+Failed check on node=2307 segment=7: 0 < V(zeta)
+fail 0 < -0.07604001658993198
+[282,13] ( 0.000932 , 0.000932 ) [   62.9   ,   62.9   ] 3.2e-05    [0:5:1:0:0:0:0:4:1:0:0:0]
+[283,10] ( 0.000932 , 0.000932 ) [   79.4   ,   79.4   ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -2.5920052690373137
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -0.7810475486611512
+Failed check on node=2265 segment=7: 0 < V(zeta)
+fail 0 < -0.028624982669511745
+Failed check on node=2304 segment=7: 0 < V(zeta)
+fail 0 < -0.0031508939550848325
+[284,13] ( 0.000932 , 0.000932 ) [   64.5   ,   64.5   ] 3.2e-05    [0:5:1:0:0:0:0:4:1:0:0:0]
+[285,10] ( 0.000932 , 0.000932 ) [    73    ,    73    ] 2.5e-05    [0:4:0:0:0:0:0:0:4:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -1.0809019127732507
+Failed check on node=2255 segment=6: 0 < V(zeta)
+fail 0 < -3.2867611151372778
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.958923707558176
+Failed check on node=2286 segment=7: 0 < V(zeta)
+fail 0 < -0.02922673978181667
+[286,13] ( 0.000932 , 0.000932 ) [    83    ,    83    ] 4e-05      [0:4:1:0:0:0:0:4:2:0:0:0]
+[287,12] ( 0.000932 , 0.000932 ) [   29.6   ,   29.6   ] 0.0001     [0:3:0:1:0:0:0:0:6:0:0:0]
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -3.6954251566104306
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -2.05066770242885
+Failed check on node=2259 segment=6: 0 < V(zeta)
+fail 0 < -0.7954353299437136
+Failed check on node=2263 segment=7: 0 < V(zeta)
+fail 0 < -0.5755338995254844
+Failed check on node=2290 segment=7: 0 < V(zeta)
+fail 0 < -0.10740481693897852
+[288,14] ( 0.000932 , 0.000932 ) [   156    ,   156    ] 2e-05      [0:4:1:0:0:0:0:5:2:0:0:0]
+[289,12] ( 0.000932 , 0.000932 ) [   27.5   ,   27.5   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2134 segment=6: 0 < V(zeta)
+fail 0 < -0.18209416750942076
+Failed check on node=2152 segment=6: 0 < V(zeta)
+fail 0 < -0.12922468033935441
+Failed check on node=2251 segment=6: 0 < V(zeta)
+fail 0 < -0.9674032607341161
+Failed check on node=2265 segment=7: 0 < V(zeta)
+fail 0 < -0.4239508674095127
+Failed check on node=2301 segment=7: 0 < V(zeta)
+fail 0 < -0.015938110724255772
+[290,14] ( 0.000932 , 0.000932 ) [ 2.1e+03  , 2.1e+03  ] 1e-06      [0:5:1:0:0:0:0:5:1:0:0:0]
+[291,12] ( 0.000932 , 0.000932 ) [   35.2   ,   35.2   ] 0.000125   [0:3:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2256 segment=6: 0 < V(zeta)
+fail 0 < -1.6373501762598188
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.4260403989712787
+Failed check on node=2312 segment=7: 0 < V(zeta)
+fail 0 < -0.07144714583986644
+[292,11] ( 0.000932 , 0.000931 ) [   30.4   ,   30.4   ] 0.00016    [0:4:1:0:0:0:0:3:1:0:0:0]
+[293,12] ( 0.000931 , 0.000931 ) [   28.9   ,   28.9   ] 0.0001     [0:4:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2234 segment=6: 0 < V(zeta)
+fail 0 < -0.1290534562920138
+Failed check on node=2252 segment=6: 0 < V(zeta)
+fail 0 < -1.8987041302142051
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.5844414954114177
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.0832751090698336
+Failed check on node=2268 segment=7: 0 < V(zeta)
+fail 0 < -0.11958639165126783
+Failed check on node=2313 segment=7: 0 < V(zeta)
+fail 0 < -0.05355314153413371
+[294,15] ( 0.000931 , 0.000931 ) [   231    ,   231    ] 8e-06      [0:5:1:0:0:0:0:6:1:0:0:0]
+[295,13] ( 0.000931 , 0.000931 ) [   46.6   ,   46.6   ] 5e-05      [0:4:0:0:0:0:0:0:7:0:0:0]
+Failed check on node=2253 segment=6: 0 < V(zeta)
+fail 0 < -2.1349357610792357
+Failed check on node=2254 segment=6: 0 < V(zeta)
+fail 0 < -0.7215524643199149
+Failed check on node=2262 segment=7: 0 < V(zeta)
+fail 0 < -0.6917095351768374
+Failed check on node=2281 segment=7: 0 < V(zeta)
+fail 0 < -0.12916981027361274
+Failed check on node=2349 segment=7: 0 < V(zeta)
+fail 0 < -0.013394682456207896
+[296,13] ( 0.000931 , 0.000931 ) [   91.4   ,   91.4   ] 4e-05      [0:4:1:0:0:0:0:5:1:0:0:0]
+[297,11] ( 0.000931 , 0.000931 ) [   25.6   ,   25.6   ] 0.00025    [0:3:0:0:0:0:0:0:6:0:0:0]
+Failed check on node=2257 segment=6: 0 < V(zeta)
+fail 0 < -0.10725727180388134
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -2.5296531932378743
+[298,10] ( 0.000931 , 0.000931 ) [   20.1   ,   20.1   ] 0.0004     [0:3:1:0:0:0:0:2:2:0:0:0]
+[299,10] ( 0.000931 , 0.000931 ) [    17    ,    17    ] 0.0005     [0:2:0:1:0:0:0:0:5:0:0:0]
+Failed check on node=2258 segment=6: 0 < V(zeta)
+fail 0 < -1.5230409158014995
+Failed check on node=2261 segment=7: 0 < V(zeta)
+fail 0 < -1.4169332542140483
+[300,10] ( 0.000931 , 0.000931 ) [   18.2   ,   18.2   ] 0.00032    [1:4:0:0:0:0:0:2:1:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -1368,54 +1414,55 @@ dump_min       = 0.4           dump_max       = 0.9
 
 .................... BIG nonlinear system solver .....................
 ---------------------------- NewtonDumped ----------------------------
-n_power        = 2             check_angle    = 120 [degree]
-c1             = 0.01          lambda_min     = 1e-10
-dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 2             ratio ||d||_2  = 2
-ratio ||f||_1  = 2             ratio ||d||_1  = 2
------------------------------ STATISTIC ------------------------------
-Elapsed Time   = 7.32[sec]     timeout        = 0 [ms]
-iteration      = 301           tolerance      = 1e-09
-max iterations = 300           N. Equations   = 29686
-max acc. iter. = 800           N. System pars = 5934
-Converged      = NO            Memory Used    = 3Mb (+32Kb)
+Converged      = NO            tolerance      = 1e-09     
+N. Equations   = 29686         N. System pars = 5934
 Convergence failed due to:
 NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 301, maxIter = 300, tolerance = 1e-09
-||d||_inf = 5897.7, ||f||_inf = 0.020888
+||d||_inf = 1530.6, ||f||_inf = 0.020522
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 3.9[sec]      timeout        = 0 [ms]
+iteration      = 301           Memory Used    = 3Mb (+32Kb)
+max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 1826          Jacobian       = 301
-Factorization  = 301           Inversion      = 2126
+Function       = 1839          Jacobian       = 301
+Factorization  = 301           Inversion      = 2139
+------------------------- SOLVER PARAMETERS --------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 0.02089       last ||d||_inf = 5129.6
-last ||f||_1   = 0.00092812    last ||d||_1   = 60.455
-last ||f||_2   = 0.0022973     last ||d||_2   = 416.44
+last ||f||_inf = 0.020538      last ||d||_inf = 3190
+last ||f||_1   = 0.0009305     last ||d||_1   = 37.837
+last ||f||_2   = 0.0022964     last ||d||_2   = 259.24
 ----------------------------------------------------------------------
           __  ___     __   __             ___  __   __   ___  __      
     |\ | /  \  |     /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \     
     | \| \__/  |     \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/     
                                                                       
-Check Jacobian Begin
+Check Jacobian Begin (disabling penalties)
 All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-At cell 190, H = 0.005021445352224867, ||g||_inf = 0.00010329666619906782
-At cell 1164, H = 0.004368144579179784, ||g||_inf = 4.6808328862752897e-05
-At cell 1345, H = 0.005020172693251616, ||g||_inf = 3.419889617607103e-05
-At cell 1581, H = 0.00455994098084601, ||g||_inf = 1.1781799368991428e-05
-At cell 1822, H = 0.004996477396872195, ||g||_inf = 9.668501611772821e-06
-At cell 2058, H = 0.004236608644237836, ||g||_inf = 9.503069715488401e-06
+At cell 190, H = 0.005032278081486667, ||g||_inf = 0.00010325470826368401
+At cell 1164, H = 0.004378102011252029, ||g||_inf = 4.662678720102425e-05
+At cell 1345, H = 0.005030771426054248, ||g||_inf = 3.408719340753029e-05
+At cell 1581, H = 0.004570043933272224, ||g||_inf = 1.1731587398787805e-05
+At cell 1822, H = 0.0050070127975958625, ||g||_inf = 9.70929549982284e-06
+At cell 2058, H = 0.004245682790671285, ||g||_inf = 9.533278457356238e-06
 skipping...
 Check Controls End
 NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 301, maxIter = 300, tolerance = 1e-09
-||d||_inf = 5897.7, ||f||_inf = 0.020888
+||d||_inf = 1530.6, ||f||_inf = 0.020522
 
-target [Lagrange,Mayer]       = [ 4.546, 0 ]
-[Penalties/Barriers,Controls] = [ 0, 0.0004386 ]
+target [Lagrange,Mayer]       = [ 4.555, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0.0004325 ]
 All Done Folks!

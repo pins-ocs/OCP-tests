@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -606,7 +606,7 @@ namespace gtocX_2burnDefine {
     real_type t52  = t50 * t33 * t28;
     real_type t55  = t39 * t48;
     real_type t60  = t19 * L__[iL_lambda6__xo];
-    real_type t63  = t29 * t50 + t30 * t34 + 1;
+    real_type t63  = t50 * t29 + t34 * t30 + 1;
     real_type t64  = t63 * t63;
     real_type t65  = t3 * t3;
     result__[ 0   ] = 2 * t12 * (t12 * t3 - 1) * t2 + t36 * t22 * t20 / 2 + t34 * t43 * t42 * t40 - t52 * t22 * t48 / 2 - t50 * t43 * t42 * t55 - 3.0 / 2.0 * t25 / t21 / t65 * t64 * t60;

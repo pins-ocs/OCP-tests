@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_problem.cc                                  |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -627,7 +627,8 @@ namespace UnderwaterDefine {
     result__[ 0   ] = u1Control(U__[iU_u1], -1, 1);
     result__[ 1   ] = u2Control(U__[iU_u2], -1, 1);
     result__[ 2   ] = u3Control(U__[iU_u3], -1, 1);
-    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

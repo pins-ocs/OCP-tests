@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -171,7 +171,7 @@ namespace PointMassCarModel_2Define {
     result__[ 0   ] = t3 * t1;
     real_type t5   = Q__[iQ_Kappa];
     real_type t7   = zeta__dot(t1, t2, X__[iX_n], t5);
-    result__[ 1   ] = -t5 * t7 + X__[iX_Omega];
+    result__[ 1   ] = -t7 * t5 + X__[iX_Omega];
     real_type t10  = t1 * t1;
     result__[ 2   ] = -t10 * ModelPars[iM_kD] + X__[iX_fx];
     result__[ 3   ] = U__[iU_v__fx] * ModelPars[iM_v__fx__max];

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -84,8 +84,9 @@ namespace BangBangFtminDefine {
     V__[0] = __INV_DZETA*(XR__[0]-XL__[0]);
     V__[1] = __INV_DZETA*(XR__[1]-XL__[1]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
+    real_type t1   = P__[iP_T];
+    result__[ 0   ] = -XM__[1] * t1 + V__[0];
+    result__[ 1   ] = -UM__[0] * t1 + V__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 2, i_segment );
   }
@@ -93,14 +94,19 @@ namespace BangBangFtminDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer BangBangFtmin::Dfd_odeDxxup_numRows() const { return 2; }
   integer BangBangFtmin::Dfd_odeDxxup_numCols() const { return 6; }
-  integer BangBangFtmin::Dfd_odeDxxup_nnz()     const { return 4; }
+  integer BangBangFtmin::Dfd_odeDxxup_nnz()     const { return 9; }
 
   void
   BangBangFtmin::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
+    iIndex[4 ] = 0   ; jIndex[4 ] = 5   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 1   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 4   ;
+    iIndex[8 ] = 1   ; jIndex[8 ] = 5   ;
   }
 
 
@@ -129,11 +135,17 @@ namespace BangBangFtminDefine {
     V__[1] = __INV_DZETA*(XR__[1]-XL__[1]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -__INV_DZETA;
-    result__[ 1   ] = __INV_DZETA;
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = __INV_DZETA;
+    real_type t1   = P__[iP_T];
+    result__[ 1   ] = -0.5e0 * t1;
+    result__[ 2   ] = __INV_DZETA;
+    result__[ 3   ] = result__[1];
+    result__[ 4   ] = -XM__[1];
+    result__[ 5   ] = result__[0];
+    result__[ 6   ] = __INV_DZETA;
+    result__[ 7   ] = -t1;
+    result__[ 8   ] = -UM__[0];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -141,11 +153,16 @@ namespace BangBangFtminDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer BangBangFtmin::D2fd_odeD2xxup_numRows() const { return 6; }
   integer BangBangFtmin::D2fd_odeD2xxup_numCols() const { return 6; }
-  integer BangBangFtmin::D2fd_odeD2xxup_nnz()     const { return 0; }
+  integer BangBangFtmin::D2fd_odeD2xxup_nnz()     const { return 6; }
 
   void
   BangBangFtmin::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
+    iIndex[0 ] = 1   ; jIndex[0 ] = 5   ;
+    iIndex[1 ] = 3   ; jIndex[1 ] = 5   ;
+    iIndex[2 ] = 4   ; jIndex[2 ] = 5   ;
+    iIndex[3 ] = 5   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 5   ; jIndex[4 ] = 3   ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 4   ;
   }
 
 
@@ -158,6 +175,30 @@ namespace BangBangFtminDefine {
     L_const_pointer_type LM__,
     real_ptr             result__
   ) const {
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_type QM__[1], XM__[2], V__[2];
+    // Qvars
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    // Xvars
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    real_type __INV_DZETA = 1/(QR__[0] - QL__[0]);
+    // Vvars
+    V__[0] = __INV_DZETA*(XR__[0]-XL__[0]);
+    V__[1] = __INV_DZETA*(XR__[1]-XL__[1]);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -LM__[0] / 2;
+    result__[ 1   ] = result__[0];
+    result__[ 2   ] = -LM__[1];
+    result__[ 3   ] = result__[1];
+    result__[ 4   ] = result__[3];
+    result__[ 5   ] = result__[2];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

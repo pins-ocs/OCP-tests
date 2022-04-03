@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_Guess.cc                            |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -114,12 +114,12 @@ namespace BangBangFredundantDefine {
     V__[4] = __INV_DZETA*(XR__[4]-XL__[4]);
     V__[5] = __INV_DZETA*(XR__[5]-XL__[5]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    result__[ 2   ] = V__[2];
-    result__[ 3   ] = V__[3];
-    result__[ 4   ] = V__[4];
-    result__[ 5   ] = V__[5];
+    result__[ 0   ] = V__[0] - XM__[1];
+    result__[ 1   ] = V__[1] - XM__[2] - XM__[3];
+    result__[ 2   ] = V__[2] - XM__[4];
+    result__[ 3   ] = V__[3] - XM__[5];
+    result__[ 4   ] = V__[4] - UM__[0];
+    result__[ 5   ] = V__[5] - UM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 6, i_segment );
   }
@@ -127,22 +127,34 @@ namespace BangBangFredundantDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer BangBangFredundant::Dfd_odeDxxup_numRows() const { return 6; }
   integer BangBangFredundant::Dfd_odeDxxup_numCols() const { return 14; }
-  integer BangBangFredundant::Dfd_odeDxxup_nnz()     const { return 12; }
+  integer BangBangFredundant::Dfd_odeDxxup_nnz()     const { return 24; }
 
   void
   BangBangFredundant::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 7   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 8   ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 9   ;
-    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
-    iIndex[9 ] = 4   ; jIndex[9 ] = 10  ;
-    iIndex[10] = 5   ; jIndex[10] = 5   ;
-    iIndex[11] = 5   ; jIndex[11] = 11  ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 7   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 7   ;
+    iIndex[8 ] = 1   ; jIndex[8 ] = 8   ;
+    iIndex[9 ] = 1   ; jIndex[9 ] = 9   ;
+    iIndex[10] = 2   ; jIndex[10] = 2   ;
+    iIndex[11] = 2   ; jIndex[11] = 4   ;
+    iIndex[12] = 2   ; jIndex[12] = 8   ;
+    iIndex[13] = 2   ; jIndex[13] = 10  ;
+    iIndex[14] = 3   ; jIndex[14] = 3   ;
+    iIndex[15] = 3   ; jIndex[15] = 5   ;
+    iIndex[16] = 3   ; jIndex[16] = 9   ;
+    iIndex[17] = 3   ; jIndex[17] = 11  ;
+    iIndex[18] = 4   ; jIndex[18] = 4   ;
+    iIndex[19] = 4   ; jIndex[19] = 10  ;
+    iIndex[20] = 4   ; jIndex[20] = 12  ;
+    iIndex[21] = 5   ; jIndex[21] = 5   ;
+    iIndex[22] = 5   ; jIndex[22] = 11  ;
+    iIndex[23] = 5   ; jIndex[23] = 13  ;
   }
 
 
@@ -179,19 +191,31 @@ namespace BangBangFredundantDefine {
     V__[5] = __INV_DZETA*(XR__[5]-XL__[5]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -__INV_DZETA;
-    result__[ 1   ] = __INV_DZETA;
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = __INV_DZETA;
-    result__[ 4   ] = result__[2];
-    result__[ 5   ] = __INV_DZETA;
-    result__[ 6   ] = result__[4];
+    result__[ 1   ] = -0.500000000000000000e0;
+    result__[ 2   ] = __INV_DZETA;
+    result__[ 3   ] = -0.500000000000000000e0;
+    result__[ 4   ] = result__[0];
+    result__[ 5   ] = -0.500000000000000000e0;
+    result__[ 6   ] = -0.500000000000000000e0;
     result__[ 7   ] = __INV_DZETA;
-    result__[ 8   ] = result__[6];
-    result__[ 9   ] = __INV_DZETA;
-    result__[ 10  ] = result__[8];
-    result__[ 11  ] = __INV_DZETA;
+    result__[ 8   ] = -0.500000000000000000e0;
+    result__[ 9   ] = -0.500000000000000000e0;
+    result__[ 10  ] = result__[4];
+    result__[ 11  ] = -0.500000000000000000e0;
+    result__[ 12  ] = __INV_DZETA;
+    result__[ 13  ] = -0.500000000000000000e0;
+    result__[ 14  ] = result__[10];
+    result__[ 15  ] = -0.500000000000000000e0;
+    result__[ 16  ] = __INV_DZETA;
+    result__[ 17  ] = -0.500000000000000000e0;
+    result__[ 18  ] = result__[14];
+    result__[ 19  ] = __INV_DZETA;
+    result__[ 20  ] = -1.0;
+    result__[ 21  ] = result__[18];
+    result__[ 22  ] = __INV_DZETA;
+    result__[ 23  ] = -1.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 12, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 24, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Data.lua                               |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
+u_epsi = 0.01
 theta0 = 1
 theta  = theta0
 u_tol  = 0.01
-u_epsi = 0.01
 
 content = {
 
@@ -57,13 +57,16 @@ content = {
 
   -- Enable check jacobian and controls
   ControlsCheck         = true,
-  ControlsCheck_epsilon = 1e-8,
+  ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
   JacobianDiscretization = 'ANALYTIC,
+
+  -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
+  JacobianDiscretizationBC = 'ANALYTIC',
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "SingularLuus04_FreeTime_dump",
@@ -98,8 +101,8 @@ content = {
     NewtonDumped = {
       -- "MERIT_D2", "MERIT_F2"
       -- "MERIT_LOG_D2", "MERIT_LOG_F2"
-      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      merit                = "MERIT_D2",
+      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      merit                = "MERIT_LOG_F2_and_D2",
       max_iter             = 50,
       max_step_iter        = 10,
       max_accumulated_iter = 150,
@@ -165,8 +168,8 @@ content = {
     NewtonDumped = {
       -- "MERIT_D2", "MERIT_F2"
       -- "MERIT_LOG_D2", "MERIT_LOG_F2"
-      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      merit                = "MERIT_F2_and_D2",
+      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      merit                = "MERIT_LOG_F2_and_D2",
       max_iter             = 300,
       max_step_iter        = 40,
       max_accumulated_iter = 800,

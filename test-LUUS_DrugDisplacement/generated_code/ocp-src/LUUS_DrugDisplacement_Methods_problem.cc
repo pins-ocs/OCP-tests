@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_problem.cc                       |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -530,7 +530,8 @@ namespace LUUS_DrugDisplacementDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = uControl(U__[iU_u], 0, 8);
     result__[ 1   ] = Q__[iQ_zeta] * P__[iP_T];
-    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

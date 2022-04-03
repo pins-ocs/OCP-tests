@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -164,8 +164,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HangingChain_data.Mesh["s0"] = 0;
-HangingChain_data.Mesh["segments"][0]["length"] = 1;
 HangingChain_data.Mesh["segments"][0]["n"] = 400;
+HangingChain_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

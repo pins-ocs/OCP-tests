@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -110,7 +110,7 @@ namespace HangGliderDefine {
     real_type t33  = w(t19, t13);
     real_type t49  = Tbound(-t7);
     real_type t52  = cLControl(t2, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
-    real_type result__ = t4 * ModelPars[iM_W] + t9 * t7 * LM__[0] + t13 * t7 * LM__[1] + (-t29 * t9 - t32 * t33) * t21 * t18 * t7 * LM__[2] + ((-t29 * t33 + t32 * t9) * t21 * t18 * t7 - ModelPars[iM_g] * t7) * LM__[3] + t49 + t52;
+    real_type result__ = t4 * ModelPars[iM_W] + t9 * t7 * LM__[0] + t13 * t7 * LM__[1] + (-t29 * t9 - t32 * t33) * t21 * t18 * t7 * LM__[2] + ((-t33 * t29 + t9 * t32) * t21 * t18 * t7 - ModelPars[iM_g] * t7) * LM__[3] + t49 + t52;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

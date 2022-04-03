@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: AlpRider.m                                                     %
 %                                                                       %
-%  version: 1.0   date 27/3/2022                                        %
+%  version: 1.0   date 3/4/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -904,6 +904,26 @@ classdef AlpRider < handle
       Hc = AlpRider_Mex(...
         'D2LTargsD2xup', self.objectHandle, iseg, q, x, u, pars, omega ...
       );
+    end
+    % ---------------------------------------------------------------------
+    function HcBIG = eval_D2fd_cD2xup( self, iseg_L, q_L, x_L, ...
+                                             iseg_R, q_R, x_R, ...
+                                             u, pars, omega )
+      %
+      % Evaluate hessian of constraints omega . c(x,u,p) <= 0
+      %
+      q_M = (q_R+q_L)/2;
+      x_M = (x_R+x_L)/2;
+      Hc = BangBangF_Mex(...
+        'D2LTargsD2xup', self.objectHandle, iseg_L, q_M, x_M, u, pars, omega ...
+      );
+      nx = length(x_L);
+      A  = Hc(1:nx,1:nx)./4;
+      B  = Hc(1:nx,nx+1:end)./2;
+      C  = Hc(nx+1:end,nx+1:end);
+      HcBIG = [ A,   A,   B; ...
+                A,   A,   B; ...
+                B.', B.', C ];
     end
     %
     %

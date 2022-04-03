@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Catalyst_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -333,7 +333,7 @@ namespace ICLOCS_CatalystDefine {
     real_type t2   = XM__[0];
     real_type t4   = XM__[1];
     real_type t7   = LM__[1];
-    real_type t12  = uControl.solve_rhs(t1 * t2 - 10 * t1 * t4 - t2 * t7 + 9 * t4 * t7, 0, 1);
+    real_type t12  = uControl.solve_rhs(t2 * t1 - 10 * t4 * t1 - t2 * t7 + 9 * t4 * t7, 0, 1);
     real_type tmp_0_0 = 0.5e0 * (t1 - t7) * t12;
     real_type tmp_0_1 = 0.5e0 * (-10 * t1 + 9 * t7) * t12;
     real_type tmp_0_2 = 0.5e0 * (t2 - 10 * t4) * t12;

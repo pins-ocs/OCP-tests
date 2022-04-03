@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,14 +50,14 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_tol0 = 0.1;
-    real_type u_epsi0 = 0.1;
-    real_type x1_i = 1;
-    real_type u_epsi = u_epsi0;
     real_type x2_i = 2;
+    real_type u_epsi0 = 0.1;
+    real_type u_epsi = u_epsi0;
+    real_type x1_i = 1;
     real_type l1_i = -1/x1_i/x2_i;
     real_type t0 = -ln(x1_i/x2_i)/x2_i;
     real_type l2_i = l1_i*(x1_i*t0+exp(-t0*x2_i));
+    real_type u_tol0 = 0.1;
     real_type u_tol = u_tol0;
     integer InfoLevel = 4;
 
@@ -190,8 +190,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 EconomicGrowthModel_data.Mesh["s0"] = 0;
-EconomicGrowthModel_data.Mesh["segments"][0]["length"] = 1;
 EconomicGrowthModel_data.Mesh["segments"][0]["n"] = 1000;
+EconomicGrowthModel_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

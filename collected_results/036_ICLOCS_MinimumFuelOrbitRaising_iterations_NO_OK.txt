@@ -24,18 +24,16 @@ Model Parameters
 ...............................theta_max = 3.141592653589793
 INFO CLASS = ICLOCS_MinimumFuelOrbitRaising
   #nodes      = 401
-  dim         = u=1, q=1, x=3, p=0, omega=5, bc=5, full_bc=11
-  BC          = Inital=6, Final=5, Cyclic=0
-  OMEGA       = Inital=3, Final=2, Cyclic=0
+  dim         = u=1, q=1, x=3, p=0, bc(active/total)=(5/5)
   total       = nZ=2411, UC=400, Q=401
   index start = omega=2406, p=2411
-  FD jacobian = ANALYTIC
 END INFO
-Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton
-Jacobian evaluation:  Analitic Jacobian
-Initializer Controls: Quasi-Newton
-Used threads:         15
+Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:        Newton
+Jacobian evaluation:    Analitic Jacobian
+Jacobian BC evaluation: Analitic Jacobian
+Initializer Controls:   Quasi-Newton
+Used threads:           15
 
 
 NewtonDumped --- start iterations ---
@@ -67,12 +65,12 @@ NewtonDumped --- start iterations ---
 [ 24,14] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 2.27e-13   [0:0:0:0:0:0:0:0:12:0:0:0]
 [ 25,15] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 1.14e-13   [0:0:0:0:0:0:0:0:13:0:0:0]
 [ 26,16] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 5.68e-14   [0:0:0:0:0:0:0:0:14:0:0:0]
-[ 27,17] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 2.84e-14   [0:0:0:0:0:0:0:0:15:0:0:0]
-[ 28,19] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 7.11e-15   [0:0:0:0:0:0:0:0:17:0:0:0]
-[ 29,20] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 3.55e-15   [0:0:0:0:0:0:0:0:18:0:0:0]
-[ 30,10] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 8.88e-16   [0:0:0:0:0:0:0:0:8:0:0:0]
-[ 31,12] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 2.22e-16   [0:0:0:0:0:0:0:0:10:0:0:0]
-[ 32,14] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 5.55e-17   [0:0:0:0:0:0:0:0:12:0:0:0]
+[ 27,18] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 1.42e-14   [0:0:0:0:0:0:0:0:16:0:0:0]
+[ 28,21] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 1.78e-15   [0:0:0:0:0:0:0:0:19:0:0:0]
+[ 29,11] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 4.44e-16   [0:0:0:0:0:0:0:0:9:0:0:0]
+[ 30,12] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 2.22e-16   [0:0:0:0:0:0:0:0:10:0:0:0]
+[ 31,13] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 1.11e-16   [0:0:0:0:0:0:0:0:11:0:0:0]
+[ 32,15] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 2.78e-17   [0:0:0:0:0:0:0:0:13:0:0:0]
 [ 33,15] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 2.78e-17   [0:0:0:0:0:0:0:0:13:0:0:0]
 [ 34,17] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 6.94e-18   [0:0:0:0:0:0:0:0:15:0:0:0]
 [ 35,17] ( 0.000361 , 0.000361 ) [  0.0398  ,  0.0398  ] 6.94e-18   [0:0:0:0:0:0:0:0:15:0:0:0]
@@ -364,21 +362,16 @@ dump_min       = 0.4           dump_max       = 0.9
 
 .................... BIG nonlinear system solver .....................
 ---------------------------- NewtonDumped ----------------------------
-n_power        = 2             check_angle    = 120 [degree]
-c1             = 0.01          lambda_min     = 1e-10
-dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 2             ratio ||d||_2  = 2
-ratio ||f||_1  = 2             ratio ||d||_1  = 2
------------------------------ STATISTIC ------------------------------
-Elapsed Time   = 8.94[sec]     timeout        = 0 [ms]
-iteration      = 301           tolerance      = 1e-09
-max iterations = 300           N. Equations   = 2411
-max acc. iter. = 800           N. System pars = 400
-Converged      = NO            Memory Used    = 236Kb (+66bytes)
+Converged      = NO            tolerance      = 1e-09     
+N. Equations   = 2411          N. System pars = 400
 Convergence failed due to:
 NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 301, maxIter = 300, tolerance = 1e-09
 ||d||_inf = 0.23219, ||f||_inf = 0.032417
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 5.36[sec]     timeout        = 0 [ms]
+iteration      = 301           Memory Used    = 236Kb (+29bytes)
+max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
@@ -386,6 +379,12 @@ Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
 Function       = 672           Jacobian       = 301
 Factorization  = 301           Inversion      = 972
+------------------------- SOLVER PARAMETERS --------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
 last ||f||_inf = 0.032417      last ||d||_inf = 0.23219
 last ||f||_1   = 0.00036099    last ||d||_1   = 0.039843
@@ -395,7 +394,7 @@ last ||f||_2   = 0.001056      last ||d||_2   = 0.061318
     |\ | /  \  |     /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \     
     | \| \__/  |     \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/     
                                                                       
-Check Jacobian Begin
+Check Jacobian Begin (disabling penalties)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

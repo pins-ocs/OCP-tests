@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -221,7 +221,7 @@ namespace PointMassCarModel_1Define {
     real_type t75  = LimitMinSpeed(-t2);
     real_type t77  = v__fxControl(t34, -1, 1);
     real_type t79  = v__OmegaControl(t28, -1, 1);
-    real_type result__ = t7 * ModelPars[iM_wT] + t7 * t11 * t2 * LM__[0] + (t7 * t15 - t6) * LM__[1] + (-t21 * ModelPars[iM_kD] + t24) * t7 * LM__[2] + t7 * ModelPars[iM_v__Omega__max] * t28 * LM__[3] + t7 * ModelPars[iM_v__fx__max] * t34 * LM__[4] + t56 * t7 + t60 * t7 + t64 * t7 + t73 * t7 + t75 * t7 + t77 * t7 + t79 * t7;
+    real_type result__ = t7 * ModelPars[iM_wT] + t7 * t11 * t2 * LM__[0] + (t7 * t15 - t6) * LM__[1] + (-ModelPars[iM_kD] * t21 + t24) * t7 * LM__[2] + t7 * ModelPars[iM_v__Omega__max] * t28 * LM__[3] + t7 * ModelPars[iM_v__fx__max] * t34 * LM__[4] + t56 * t7 + t60 * t7 + t64 * t7 + t73 * t7 + t75 * t7 + t77 * t7 + t79 * t7;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -705,7 +705,7 @@ namespace PointMassCarModel_1Define {
     real_type t69  = pow(V__[2] - (-t24 * ModelPars[iM_kD] + t12) * t5, 2);
     real_type t75  = pow(-t5 * ModelPars[iM_v__Omega__max] * t9 + V__[3], 2);
     real_type t81  = pow(-t5 * ModelPars[iM_v__fx__max] * t6 + V__[4], 2);
-    real_type result__ = t10 * t5 + t32 * t5 + t36 * t5 + t40 * t5 + t49 * t5 + t51 * t5 + t7 * t5 + t58 + t62 + t69 + t75 + t81;
+    real_type result__ = t10 * t5 + t32 * t5 + t36 * t5 + t40 * t5 + t49 * t5 + t51 * t5 + t5 * t7 + t58 + t62 + t69 + t75 + t81;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -732,11 +732,11 @@ namespace PointMassCarModel_1Define {
     real_type t6   = U__[iU_v__fx];
     real_type t7   = ALIAS_v__fxControl_D_1(t6, -1, 1);
     real_type t10  = ModelPars[iM_v__fx__max];
-    result__[ 0   ] = t7 * t5 - 2 * t5 * t10 * (-t10 * t5 * t6 + V__[4]);
+    result__[ 0   ] = t5 * t7 - 2 * t5 * t10 * (-t5 * t10 * t6 + V__[4]);
     real_type t17  = U__[iU_v__Omega];
     real_type t18  = ALIAS_v__OmegaControl_D_1(t17, -1, 1);
     real_type t21  = ModelPars[iM_v__Omega__max];
-    result__[ 1   ] = t18 * t5 - 2 * t5 * t21 * (-t17 * t21 * t5 + V__[3]);
+    result__[ 1   ] = t18 * t5 - 2 * t5 * t21 * (-t5 * t21 * t17 + V__[3]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
   }

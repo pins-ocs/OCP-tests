@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -534,7 +534,8 @@ namespace BikeSteeringDefine {
     result__[ 2   ] = t3;
     real_type t12  = sqrt(ModelPars[iM_m] * ModelPars[iM_g] * ModelPars[iM_h] / ModelPars[iM_Ix]);
     result__[ 3   ] = t12 * result__[2];
-    Mechatronix::check_in_segment( result__, "post_eval", 4, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

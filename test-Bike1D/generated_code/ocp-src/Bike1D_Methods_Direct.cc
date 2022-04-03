@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -102,7 +102,7 @@ namespace Bike1DDefine {
     // Vvars
     V__[0] = __INV_DZETA*(XR__[0]-XL__[0]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = XM__[0] * V__[0];
+    result__[ 0   ] = XM__[0] * V__[0] - ModelPars[iM_g] * (UM__[0] + UM__[1]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 1, i_segment );
   }
@@ -110,12 +110,14 @@ namespace Bike1DDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Bike1D::Dfd_odeDxxup_numRows() const { return 1; }
   integer Bike1D::Dfd_odeDxxup_numCols() const { return 4; }
-  integer Bike1D::Dfd_odeDxxup_nnz()     const { return 2; }
+  integer Bike1D::Dfd_odeDxxup_nnz()     const { return 4; }
 
   void
   Bike1D::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
   }
 
 
@@ -145,8 +147,10 @@ namespace Bike1DDefine {
     real_type t4   = __INV_DZETA * XM__[0];
     result__[ 0   ] = t2 - t4;
     result__[ 1   ] = t2 + t4;
+    result__[ 2   ] = -ModelPars[iM_g];
+    result__[ 3   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -700,12 +700,12 @@ namespace PointMassCarModel_1Define {
     real_type t49  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t12 * t1 - 1);
     real_type t51  = LimitMinSpeed(-t1);
     real_type t54  = sin(t2);
-    real_type t58  = pow(-t1 * t5 * t54 + V__[0], 2);
-    real_type t62  = pow(-t22 * t5 + t4 + V__[1], 2);
+    real_type t58  = pow(-t5 * t54 * t1 + V__[0], 2);
+    real_type t62  = pow(-t5 * t22 + t4 + V__[1], 2);
     real_type t69  = pow(V__[2] - (-t24 * ModelPars[iM_kD] + t12) * t5, 2);
-    real_type t75  = pow(-t5 * t9 * ModelPars[iM_v__Omega__max] + V__[3], 2);
-    real_type t81  = pow(-t5 * t6 * ModelPars[iM_v__fx__max] + V__[4], 2);
-    real_type result__ = t10 * t5 + t32 * t5 + t36 * t5 + t40 * t5 + t49 * t5 + t5 * t51 + t5 * t7 + t58 + t62 + t69 + t75 + t81;
+    real_type t75  = pow(-t5 * ModelPars[iM_v__Omega__max] * t9 + V__[3], 2);
+    real_type t81  = pow(-t5 * ModelPars[iM_v__fx__max] * t6 + V__[4], 2);
+    real_type result__ = t10 * t5 + t32 * t5 + t36 * t5 + t40 * t5 + t49 * t5 + t51 * t5 + t5 * t7 + t58 + t62 + t69 + t75 + t81;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }

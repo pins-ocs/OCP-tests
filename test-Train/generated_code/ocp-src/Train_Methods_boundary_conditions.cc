@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_boundary_conditions.cc                           |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -74,10 +74,10 @@ namespace TrainDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer Train::boundaryConditions_numEqns() const { return 4; }
+  integer Train::bc_numEqns() const { return 4; }
 
   void
-  Train::boundaryConditions_eval(
+  Train::bc_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -96,7 +96,7 @@ namespace TrainDefine {
     result__[ 2   ] = XR__[iX_x] - ModelPars[iM_x_f];
     result__[ 3   ] = XR__[iX_v] - ModelPars[iM_v_f];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 4, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "bc_eval", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -151,64 +151,16 @@ namespace TrainDefine {
 
   void
   Train::D2bcD2xxp_sparse(
-    NodeType const         & LEFT__,
-    NodeType const         & RIGHT__,
-    P_const_pointer_type     P__,
-    OMEGA_const_pointer_type OMEGA__,
-    real_type                result__[]
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
+    P_const_pointer_type          P__,
+    OMEGA_full_const_pointer_type OMEGA__,
+    real_type                     result__[]
   ) const {
     // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Train::adjointBC_numEqns() const { return 4; }
-
-  void
-  Train::adjointBC_eval(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0];
-    result__[ 1   ] = OMEGA__[1];
-    result__[ 2   ] = OMEGA__[2];
-    result__[ 3   ] = OMEGA__[3];
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Train::DadjointBCDxxp_numRows() const { return 4; }
-  integer Train::DadjointBCDxxp_numCols() const { return 4; }
-  integer Train::DadjointBCDxxp_nnz()     const { return 0; }
-
-  void
-  Train::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Train::DadjointBCDxxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
 }
 
 // EOF: Train_Methods_boundary_conditions.cc

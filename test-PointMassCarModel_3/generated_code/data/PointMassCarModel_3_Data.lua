@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-up_tol0   = 0.01
 p_epsi0   = 0.1
-up_epsi0  = 0.1
-wT0       = 0.01
-road_tol0 = 0.01
-p_tol0    = 0.1
 m         = 700
+p_tol0    = 0.1
+wT0       = 0.01
 kD        = 0.2500000000/m
 wT        = wT0
+road_tol0 = 0.01
+up_epsi0  = 0.1
+up_tol0   = 0.01
 
 content = {
 
@@ -62,13 +62,16 @@ content = {
 
   -- Enable check jacobian and controls
   ControlsCheck         = true,
-  ControlsCheck_epsilon = 1e-8,
+  ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
   JacobianDiscretization = 'ANALYTIC,
+
+  -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
+  JacobianDiscretizationBC = 'ANALYTIC',
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "PointMassCarModel_3_dump",
@@ -103,8 +106,8 @@ content = {
     NewtonDumped = {
       -- "MERIT_D2", "MERIT_F2"
       -- "MERIT_LOG_D2", "MERIT_LOG_F2"
-      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      merit                = "MERIT_D2",
+      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      merit                = "MERIT_LOG_F2_and_D2",
       max_iter             = 50,
       max_step_iter        = 10,
       max_accumulated_iter = 150,
@@ -170,8 +173,8 @@ content = {
     NewtonDumped = {
       -- "MERIT_D2", "MERIT_F2"
       -- "MERIT_LOG_D2", "MERIT_LOG_F2"
-      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      merit                = "MERIT_F2_and_D2",
+      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      merit                = "MERIT_LOG_F2_and_D2",
       max_iter             = 300,
       max_step_iter        = 40,
       max_accumulated_iter = 800,
@@ -367,83 +370,83 @@ content = {
     segments = {
       
       {
+        length     = 190,
+        gridSize   = 1,
         leftWidth  = 15/2.0,
         curvature  = 0,
         rightWidth = 60,
-        length     = 190,
-        gridSize   = 1,
       },
       
       {
+        length     = 973.8937227,
+        gridSize   = 1,
         leftWidth  = 60,
         curvature  = 0.003225806452,
         rightWidth = 30,
-        length     = 973.8937227,
-        gridSize   = 1,
       },
       
       {
+        length     = 180,
+        gridSize   = 1,
         leftWidth  = 30,
         curvature  = 0,
         rightWidth = 30,
-        length     = 180,
-        gridSize   = 1,
       },
       
       {
+        length     = 235.619449,
+        gridSize   = 1,
         leftWidth  = 20,
         curvature  = 0.006666666667,
         rightWidth = 15,
-        length     = 235.619449,
-        gridSize   = 1,
       },
       
       {
+        length     = 240,
+        gridSize   = 1,
         leftWidth  = 30,
         curvature  = 0,
         rightWidth = 30,
-        length     = 240,
-        gridSize   = 1,
       },
       
       {
+        length     = 235.619449,
+        gridSize   = 1,
         leftWidth  = 30,
         curvature  = -1/150.0,
         rightWidth = 30,
-        length     = 235.619449,
-        gridSize   = 1,
       },
       
       {
+        length     = 200,
+        gridSize   = 1,
         leftWidth  = 30,
         curvature  = 0,
         rightWidth = 30,
-        length     = 200,
-        gridSize   = 1,
       },
       
       {
+        length     = 125.6637062,
+        gridSize   = 1,
         leftWidth  = 30,
         curvature  = 0.025,
         rightWidth = 30,
-        length     = 125.6637062,
-        gridSize   = 1,
       },
       
       {
-        leftWidth  = 30,
-        curvature  = 0,
-        rightWidth = 30,
         length     = 480,
         gridSize   = 1,
-      },
-      
-      {
         leftWidth  = 30,
         curvature  = 0,
         rightWidth = 30,
+      },
+      
+      {
         length     = 10,
         gridSize   = 0.1,
+        leftWidth  = 30,
+        curvature  = 0,
+        rightWidth = 30,
       },
     },
   },

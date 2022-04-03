@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Methods_boundary_conditions.cc                         |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -54,10 +54,10 @@ namespace Dadebo1Define {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer Dadebo1::boundaryConditions_numEqns() const { return 3; }
+  integer Dadebo1::bc_numEqns() const { return 3; }
 
   void
-  Dadebo1::boundaryConditions_eval(
+  Dadebo1::bc_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -75,7 +75,7 @@ namespace Dadebo1Define {
     result__[ 1   ] = XL__[iX_y];
     result__[ 2   ] = XR__[iX_x] - 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 3, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "bc_eval", 3, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -128,64 +128,16 @@ namespace Dadebo1Define {
 
   void
   Dadebo1::D2bcD2xxp_sparse(
-    NodeType const         & LEFT__,
-    NodeType const         & RIGHT__,
-    P_const_pointer_type     P__,
-    OMEGA_const_pointer_type OMEGA__,
-    real_type                result__[]
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
+    P_const_pointer_type          P__,
+    OMEGA_full_const_pointer_type OMEGA__,
+    real_type                     result__[]
   ) const {
     // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Dadebo1::adjointBC_numEqns() const { return 4; }
-
-  void
-  Dadebo1::adjointBC_eval(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0];
-    result__[ 1   ] = OMEGA__[1];
-    result__[ 2   ] = OMEGA__[2];
-    result__[ 3   ] = 1;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Dadebo1::DadjointBCDxxp_numRows() const { return 4; }
-  integer Dadebo1::DadjointBCDxxp_numCols() const { return 4; }
-  integer Dadebo1::DadjointBCDxxp_nnz()     const { return 0; }
-
-  void
-  Dadebo1::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Dadebo1::DadjointBCDxxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
 }
 
 // EOF: Dadebo1_Methods_boundary_conditions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3.cc                                         |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -232,12 +232,6 @@ namespace PointMassCarModel_3Define {
     );
     //m_solver = &m_solver_NewtonDumped;
     m_solver = &m_solver_Hyness;
-
-    #ifdef LAPACK_WRAPPER_USE_OPENBLAS
-    openblas_set_num_threads(1);
-    goto_set_num_threads(1);
-    m_console->message( lapack_wrapper::openblas_info(), 1 );
-    #endif
   }
 
   PointMassCarModel_3::~PointMassCarModel_3() {

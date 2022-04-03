@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Mex.cc                                          |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -78,26 +78,26 @@ static char const help_msg[] =
     "{} |U| = {} expected to be {}\n", CMD, nU, this->dim_U()  \
   );
 
-#define GET_ARG_OMEGA(ARG)                                            \
-  mwSize nO;                                                          \
-  string msg_nO = fmt::format( "{} argument pars", CMD );             \
-  OMEGA_const_pointer_type Omega(Utils::mex_vector_pointer(           \
-    ARG, nO, msg_nO.c_str()                                           \
-  ));                                                                 \
-  UTILS_MEX_ASSERT(                                                   \
-    nO == this->dim_Omega(),                                          \
-    "{} |Omega| = {} expected to be {}\n", CMD, nO, this->dim_Omega() \
+#define GET_ARG_OMEGA(ARG)                                                \
+  mwSize nO;                                                              \
+  string msg_nO = fmt::format( "{} argument pars", CMD );                 \
+  OMEGA_const_pointer_type Omega(Utils::mex_vector_pointer(               \
+    ARG, nO, msg_nO.c_str()                                               \
+  ));                                                                     \
+  UTILS_MEX_ASSERT(                                                       \
+    nO == this->num_active_BC(),                                          \
+    "{} |Omega| = {} expected to be {}\n", CMD, nO, this->num_active_BC() \
   );
 
-#define GET_ARG_OMEGA_FULL(ARG)                                             \
-  mwSize nOmega;                                                            \
-  string msg_Omega = fmt::format( "{} argument pars", CMD );                \
-  OMEGA_full_const_pointer_type Omega( Utils::mex_vector_pointer(           \
-    ARG, nOmega,  msg_Omega.c_str()                                         \
-  ));                                                                       \
-  UTILS_MEX_ASSERT(                                                         \
-    nOmega == this->dim_full_BC(),                                          \
-    "{} |Omega| = {} expected to be {}\n", CMD, nOmega, this->dim_full_BC() \
+#define GET_ARG_OMEGA_FULL(ARG)                                        \
+  mwSize nOmega;                                                       \
+  string msg_Omega = fmt::format( "{} argument pars", CMD );           \
+  OMEGA_full_const_pointer_type Omega( Utils::mex_vector_pointer(      \
+    ARG, nOmega,  msg_Omega.c_str()                                    \
+  ));                                                                  \
+  UTILS_MEX_ASSERT(                                                    \
+    nOmega == this->dim_BC(),                                          \
+    "{} |Omega| = {} expected to be {}\n", CMD, nOmega, this->dim_BC() \
   );
 
 #define GET_ARG_V(ARG)                                         \
@@ -476,15 +476,21 @@ public:
     UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dims'" );
     CHECK_IN_OUT( 2, 1 );
     GenericContainer gc;
-    gc["dim_q"]       = MODEL_CLASS::dim_Q();
-    gc["dim_x"]       = MODEL_CLASS::dim_X();
-    gc["dim_u"]       = MODEL_CLASS::dim_U();
-    gc["dim_pars"]    = MODEL_CLASS::dim_Pars();
-    gc["dim_omega"]   = MODEL_CLASS::dim_Omega();
-    gc["dim_bc"]      = MODEL_CLASS::dim_BC();
-    gc["dim_full_bc"] = MODEL_CLASS::dim_full_BC();
-    gc["num_nodes"]   = MODEL_CLASS::num_nodes();
-    gc["neq"]         = MODEL_CLASS::num_equations();
+    gc["dim_q"]             = MODEL_CLASS::dim_Q();
+    gc["dim_x"]             = MODEL_CLASS::dim_X();
+    gc["dim_u"]             = MODEL_CLASS::dim_U();
+    gc["dim_pars"]          = MODEL_CLASS::dim_Pars();
+    gc["num_defined_bc"]    = MODEL_CLASS::dim_BC();
+    gc["num_active_BC"]     = MODEL_CLASS::num_active_BC();
+    gc["dim_full_bc"]       = 2*MODEL_CLASS::dim_X()+MODEL_CLASS::num_active_BC();
+    gc["num_nodes"]         = MODEL_CLASS::num_nodes();
+    gc["neq"]               = MODEL_CLASS::num_equations();
+    gc["num_equations"]     = MODEL_CLASS::num_equations();
+    gc["num_segments"]      = MODEL_CLASS::num_segments();
+    gc["dim_post"]          = MODEL_CLASS::dim_Post();
+    gc["dim_Ipost"]         = MODEL_CLASS::dim_Ipost();
+    gc["dim_ineq"]          = MODEL_CLASS::LTargs_numEqns();
+
     GenericContainer_to_mxArray( gc, arg_out_0 );
     #undef CMD
   }
@@ -650,9 +656,9 @@ public:
       CMD "use 'set_guess' before to use 'check_jacobian'"
     );
     CHECK_IN_OUT( 5, 0 );
-    mwSize dimx,dimu;
+    mwSize dimx, dimu;
     real_const_ptr x = Utils::mex_vector_pointer( arg_in_2, dimx, CMD "argument x" );
-    real_const_ptr u = Utils::mex_vector_pointer( arg_in_3, dimx, CMD "argument u" );
+    real_const_ptr u = Utils::mex_vector_pointer( arg_in_3, dimu, CMD "argument u" );
     real_type epsi = Utils::mex_get_scalar_value( arg_in_4, CMD "argument epsi" );
     mwSize neq = this->num_equations();
     UTILS_MEX_ASSERT(
@@ -1052,9 +1058,9 @@ public:
       CMD, nP, this->dim_Pars()
     );
     UTILS_ASSERT(
-      nO == mwSize(this->dim_Omega()),
+      nO == mwSize(this->num_active_BC()),
       "{} length(omega) = {} expected to be {}\n",
-      CMD, nO, this->dim_Omega()
+      CMD, nO, this->num_active_BC()
     );
     real_ptr Z = Utils::mex_create_matrix_value( arg_out_0, 1, this->num_equations() );
     this->pack( X, L, P, O, Z );
@@ -1126,7 +1132,7 @@ public:
     X_pointer_type     X(Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), nn ));
     L_pointer_type     L(Utils::mex_create_matrix_value( arg_out_1, this->dim_X(), nn ));
     P_pointer_type     P(Utils::mex_create_matrix_value( arg_out_2, 1, this->dim_Pars() ));
-    OMEGA_pointer_type O(Utils::mex_create_matrix_value( arg_out_3, 1, this->dim_Omega() ));
+    OMEGA_pointer_type O(Utils::mex_create_matrix_value( arg_out_3, 1, this->num_active_BC() ));
 
     this->unpack( Z, X, L, P, O );
     #undef CMD
@@ -1202,7 +1208,7 @@ public:
     );
 
     L_pointer_type     L(Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), nn ));
-    OMEGA_pointer_type OMEGA(Utils::mex_create_matrix_value( arg_out_1, this->dim_Omega(), 1 ));
+    OMEGA_pointer_type OMEGA(Utils::mex_create_matrix_value( arg_out_1, this->num_active_BC(), 1 ));
 
     this->estimate_multipliers( X, U, P, L, OMEGA );
 
@@ -2455,13 +2461,13 @@ public:
   // --------------------------------------------------------------------------
 
   void
-  do_boundaryConditions(
+  do_bc(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   )
   {
     #define CMD MODEL_NAME \
-    "_Mex('boundaryConditions', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+    "_Mex('bc', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
 
     CHECK_IN_OUT( 9, 1 );
 
@@ -2471,7 +2477,7 @@ public:
 
     real_ptr bc = Utils::mex_create_matrix_value( arg_out_0, this->dim_BC(), 1 );
 
-    this->boundaryConditions_eval( L, R, P, bc );
+    this->bc_eval( L, R, P, bc );
 
     #undef CMD
   }
@@ -2505,74 +2511,16 @@ public:
     int nrhs, mxArray const *prhs[]
   )
   {
-    #define CMD MODEL_NAME "_Mex('D2bcD2xxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega ): "
+    #define CMD MODEL_NAME "_Mex('D2bcD2xxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full ): "
 
     CHECK_IN_OUT( 10, 1 );
 
     NodeType L, R;
     get_LR( CMD, nrhs, prhs, L, R );
     GET_ARG_P( arg_in_8 );
-    GET_ARG_OMEGA( arg_in_9 );
+    GET_ARG_OMEGA_FULL( arg_in_9 );
 
     RETURN_SPARSE( D2bcD2xxp, L, R, P, Omega );
-
-    #undef CMD
-  }
-
-  /*\
-   |           _  _     _     _   ___  ___
-   |   __ _ __| |(_)___(_)_ _| |_| _ )/ __|
-   |  / _` / _` || / _ \ | ' \  _| _ \ (__
-   |  \__,_\__,_|/ \___/_|_||_\__|___/\___|
-   |           |__/
-  \*/
-  void
-  do_adjointBC(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  )
-  {
-    #define CMD MODEL_NAME \
-    "_Mex('adjointBC', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, Omega ): "
-
-    CHECK_IN_OUT( 10, 1 );
-
-    NodeType L, R;
-    get_LR( CMD, nrhs, prhs, L, R );
-    GET_ARG_P( arg_in_8 );
-    GET_ARG_OMEGA_FULL( arg_in_9 );
-
-    real_ptr res = Utils::mex_create_matrix_value( arg_out_0, this->adjointBC_numEqns(), 1 );
-    this->adjointBC_eval( L, R, P, Omega, res );
-
-    #undef CMD
-  }
-
-  /*\
-   |   ____            _  _       _       _   ____   ____ ____
-   |  |  _ \  __ _  __| |(_) ___ (_)_ __ | |_| __ ) / ___|  _ \__  ____  ___ __
-   |  | | | |/ _` |/ _` || |/ _ \| | '_ \| __|  _ \| |   | | | \ \/ /\ \/ / '_ \
-   |  | |_| | (_| | (_| || | (_) | | | | | |_| |_) | |___| |_| |>  <  >  <| |_) |
-   |  |____/ \__,_|\__,_|/ |\___/|_|_| |_|\__|____/ \____|____//_/\_\/_/\_\ .__/
-   |                   |__/                                               |_|
-  \*/
-  void
-  do_DadjointBCDxxp(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  )
-  {
-    #define CMD MODEL_NAME \
-    "_Mex('DadjointBCDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, Omega ): "
-
-    CHECK_IN_OUT( 10, 1 );
-
-    NodeType L, R;
-    get_LR( CMD, nrhs, prhs, L, R );
-    GET_ARG_P( arg_in_8 );
-    GET_ARG_OMEGA_FULL( arg_in_9 );
-
-    RETURN_SPARSE( DadjointBCDxxp, L, R, P, Omega );
 
     #undef CMD
   }
@@ -3010,42 +2958,6 @@ public:
     integer_ptr i_row = mem( nnz );
     integer_ptr j_col = mem( nnz );
     MODEL_CLASS::A_pattern( i_row, j_col );
-    for ( integer i = 0; i < nnz; ++i ) {
-      I[i] = i_row[i]+1;
-      J[i] = j_col[i]+1;
-    }
-    int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
-    UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
-    #undef CMD
-  }
-
-  //---------------------------------------------------------------------
-
-  void
-  do_eval_DadjointBCDxxp_pattern(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  )
-  {
-    #define CMD MODEL_NAME "_Mex('eval_DadjointBCDxxp_pattern',obj): "
-    UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_DadjointBCDxxp_pattern'" );
-    CHECK_IN_OUT( 2, 1 );
-
-    integer nnz = DadjointBCDxxp_nnz();
-    integer nr  = DadjointBCDxxp_numRows();
-    integer nc  = DadjointBCDxxp_numCols();
-    mxArray *args[5];
-    real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-    real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-    Utils::mex_set_scalar_value( args[2], 1  );
-    Utils::mex_set_scalar_value( args[3], nr );
-    Utils::mex_set_scalar_value( args[4], nc );
-
-    Mechatronix::Malloc<integer> mem("mex_DadjointBCDxxp");
-    mem.allocate( 2*nnz, "DadjointBCDxxp" );
-    integer_ptr i_row = mem( nnz );
-    integer_ptr j_col = mem( nnz );
-    MODEL_CLASS::DadjointBCDxxp_pattern( i_row, j_col );
     for ( integer i = 0; i < nnz; ++i ) {
       I[i] = i_row[i]+1;
       J[i] = j_col[i]+1;
@@ -4961,15 +4873,15 @@ do_D2LTargsD2xup(
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 static
 void
-do_boundaryConditions(
+do_bc(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
   UTILS_MEX_ASSERT(
     nrhs >= 2,
-    MODEL_NAME "_Mex('boundaryConditions',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
+    MODEL_NAME "_Mex('bc',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
-  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_boundaryConditions( nlhs, plhs, nrhs, prhs );
+  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_bc( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -4998,34 +4910,6 @@ do_D2bcD2xxp(
     MODEL_NAME "_Mex('D2bcD2xxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
   Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_D2bcD2xxp( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_adjointBC(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  UTILS_MEX_ASSERT(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('adjointBC',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_adjointBC( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_DadjointBCDxxp(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  UTILS_MEX_ASSERT(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('DadjointBCDxxp',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_DadjointBCDxxp( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -5264,20 +5148,6 @@ do_eval_A_pattern(
     MODEL_NAME "_Mex('eval_A_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
   );
   Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_eval_A_pattern( nlhs, plhs, nrhs, prhs );
-}
-
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-static
-void
-do_eval_DadjointBCDxxp_pattern(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-) {
-  UTILS_MEX_ASSERT(
-    nrhs >= 2,
-    MODEL_NAME "_Mex('eval_DadjointBCDxxp_pattern',...): Expected at least {} argument(s), nrhs = {}\n", nrhs
-  );
-  Utils::mex_convert_mx_to_ptr<ProblemStorage>(arg_in_1)->do_eval_DadjointBCDxxp_pattern( nlhs, plhs, nrhs, prhs );
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -5683,11 +5553,9 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"DJUpDp",do_DJUpDp},
   {"DLTargsDxup",do_DLTargsDxup},
   {"D2LTargsD2xup",do_D2LTargsD2xup},
-  {"boundaryConditions",do_boundaryConditions},
+  {"bc",do_bc},
   {"DbcDxxp",do_DbcDxxp},
   {"D2bcD2xxp",do_D2bcD2xxp},
-  {"adjointBC",do_adjointBC},
-  {"DadjointBCDxxp",do_DadjointBCDxxp},
   {"jump",do_jump},
   {"DjumpDxlxlp",do_DjumpDxlxlp},
   {"JP",do_JP},
@@ -5705,7 +5573,6 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"nodes",do_nodes},
   {"node_to_segment",do_node_to_segment},
   {"eval_A_pattern",do_eval_A_pattern},
-  {"eval_DadjointBCDxxp_pattern",do_eval_DadjointBCDxxp_pattern},
   {"eval_DbcDxxp_pattern",do_eval_DbcDxxp_pattern},
   {"eval_D2bcD2xxp_pattern",do_eval_D2bcD2xxp_pattern},
   {"eval_Drhs_odeDxup_pattern",do_eval_Drhs_odeDxup_pattern},

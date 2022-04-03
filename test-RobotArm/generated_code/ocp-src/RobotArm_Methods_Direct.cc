@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -110,15 +110,16 @@ namespace RobotArmDefine {
     V__[4] = __INV_DZETA*(XR__[4]-XL__[4]);
     V__[5] = __INV_DZETA*(XR__[5]-XL__[5]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ModelPars[iM_L] * V__[3];
-    real_type t3   = XM__[0];
-    real_type t5   = I_theta(t3, XM__[2]);
-    result__[ 1   ] = V__[4] * t5;
-    real_type t7   = I_phi(t3);
-    result__[ 2   ] = V__[5] * t7;
-    result__[ 3   ] = V__[0];
-    result__[ 4   ] = V__[1];
-    result__[ 5   ] = V__[2];
+    real_type t1   = P__[iP_T];
+    result__[ 0   ] = -t1 * UM__[0] + V__[3] * ModelPars[iM_L];
+    real_type t7   = XM__[0];
+    real_type t9   = I_theta(t7, XM__[2]);
+    result__[ 1   ] = -t1 * UM__[1] + t9 * V__[4];
+    real_type t14  = I_phi(t7);
+    result__[ 2   ] = -t1 * UM__[2] + t14 * V__[5];
+    result__[ 3   ] = -t1 * XM__[3] + V__[0];
+    result__[ 4   ] = -t1 * XM__[4] + V__[1];
+    result__[ 5   ] = -t1 * XM__[5] + V__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 6, i_segment );
   }
@@ -126,28 +127,43 @@ namespace RobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer RobotArm::Dfd_odeDxxup_numRows() const { return 6; }
   integer RobotArm::Dfd_odeDxxup_numCols() const { return 16; }
-  integer RobotArm::Dfd_odeDxxup_nnz()     const { return 18; }
+  integer RobotArm::Dfd_odeDxxup_nnz()     const { return 33; }
 
   void
   RobotArm::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 9   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 4   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 6   ;
-    iIndex[6 ] = 1   ; jIndex[6 ] = 8   ;
-    iIndex[7 ] = 1   ; jIndex[7 ] = 10  ;
-    iIndex[8 ] = 2   ; jIndex[8 ] = 0   ;
-    iIndex[9 ] = 2   ; jIndex[9 ] = 5   ;
-    iIndex[10] = 2   ; jIndex[10] = 6   ;
-    iIndex[11] = 2   ; jIndex[11] = 11  ;
-    iIndex[12] = 3   ; jIndex[12] = 0   ;
-    iIndex[13] = 3   ; jIndex[13] = 6   ;
-    iIndex[14] = 4   ; jIndex[14] = 1   ;
-    iIndex[15] = 4   ; jIndex[15] = 7   ;
-    iIndex[16] = 5   ; jIndex[16] = 2   ;
-    iIndex[17] = 5   ; jIndex[17] = 8   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 12  ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 15  ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 0   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 4   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 6   ;
+    iIndex[8 ] = 1   ; jIndex[8 ] = 8   ;
+    iIndex[9 ] = 1   ; jIndex[9 ] = 10  ;
+    iIndex[10] = 1   ; jIndex[10] = 13  ;
+    iIndex[11] = 1   ; jIndex[11] = 15  ;
+    iIndex[12] = 2   ; jIndex[12] = 0   ;
+    iIndex[13] = 2   ; jIndex[13] = 5   ;
+    iIndex[14] = 2   ; jIndex[14] = 6   ;
+    iIndex[15] = 2   ; jIndex[15] = 11  ;
+    iIndex[16] = 2   ; jIndex[16] = 14  ;
+    iIndex[17] = 2   ; jIndex[17] = 15  ;
+    iIndex[18] = 3   ; jIndex[18] = 0   ;
+    iIndex[19] = 3   ; jIndex[19] = 3   ;
+    iIndex[20] = 3   ; jIndex[20] = 6   ;
+    iIndex[21] = 3   ; jIndex[21] = 9   ;
+    iIndex[22] = 3   ; jIndex[22] = 15  ;
+    iIndex[23] = 4   ; jIndex[23] = 1   ;
+    iIndex[24] = 4   ; jIndex[24] = 4   ;
+    iIndex[25] = 4   ; jIndex[25] = 7   ;
+    iIndex[26] = 4   ; jIndex[26] = 10  ;
+    iIndex[27] = 4   ; jIndex[27] = 15  ;
+    iIndex[28] = 5   ; jIndex[28] = 2   ;
+    iIndex[29] = 5   ; jIndex[29] = 5   ;
+    iIndex[30] = 5   ; jIndex[30] = 8   ;
+    iIndex[31] = 5   ; jIndex[31] = 11  ;
+    iIndex[32] = 5   ; jIndex[32] = 15  ;
   }
 
 
@@ -186,34 +202,50 @@ namespace RobotArmDefine {
     real_type t2   = __INV_DZETA * ModelPars[iM_L];
     result__[ 0   ] = -t2;
     result__[ 1   ] = t2;
-    real_type t3   = XM__[0];
-    real_type t4   = XM__[2];
-    real_type t5   = I_theta_D_1(t3, t4);
-    real_type t6   = V__[4];
-    result__[ 2   ] = 0.5e0 * t6 * t5;
-    real_type t8   = I_theta_D_2(t3, t4);
-    result__[ 3   ] = 0.5e0 * t6 * t8;
-    real_type t10  = I_theta(t3, t4);
-    real_type t11  = t10 * __INV_DZETA;
-    result__[ 4   ] = -t11;
-    result__[ 5   ] = result__[2];
-    result__[ 6   ] = result__[3];
-    result__[ 7   ] = t11;
-    real_type t12  = I_phi_D(t3);
-    result__[ 8   ] = 0.5e0 * V__[5] * t12;
-    real_type t15  = I_phi(t3);
-    real_type t16  = t15 * __INV_DZETA;
-    result__[ 9   ] = -t16;
-    result__[ 10  ] = result__[8];
-    result__[ 11  ] = t16;
-    result__[ 12  ] = -__INV_DZETA;
-    result__[ 13  ] = __INV_DZETA;
+    real_type t3   = P__[iP_T];
+    result__[ 2   ] = -t3;
+    result__[ 3   ] = -UM__[0];
+    real_type t5   = XM__[0];
+    real_type t6   = XM__[2];
+    real_type t7   = I_theta_D_1(t5, t6);
+    real_type t8   = V__[4];
+    result__[ 4   ] = 0.5e0 * t8 * t7;
+    real_type t10  = I_theta_D_2(t5, t6);
+    result__[ 5   ] = 0.5e0 * t8 * t10;
+    real_type t12  = I_theta(t5, t6);
+    real_type t13  = t12 * __INV_DZETA;
+    result__[ 6   ] = -t13;
+    result__[ 7   ] = result__[4];
+    result__[ 8   ] = result__[5];
+    result__[ 9   ] = t13;
+    result__[ 10  ] = result__[2];
+    result__[ 11  ] = -UM__[1];
+    real_type t15  = I_phi_D(t5);
+    result__[ 12  ] = 0.5e0 * V__[5] * t15;
+    real_type t18  = I_phi(t5);
+    real_type t19  = t18 * __INV_DZETA;
+    result__[ 13  ] = -t19;
     result__[ 14  ] = result__[12];
-    result__[ 15  ] = __INV_DZETA;
-    result__[ 16  ] = result__[14];
-    result__[ 17  ] = __INV_DZETA;
+    result__[ 15  ] = t19;
+    result__[ 16  ] = result__[10];
+    result__[ 17  ] = -UM__[2];
+    result__[ 18  ] = -__INV_DZETA;
+    result__[ 19  ] = -0.5e0 * t3;
+    result__[ 20  ] = __INV_DZETA;
+    result__[ 21  ] = result__[19];
+    result__[ 22  ] = -XM__[3];
+    result__[ 23  ] = result__[18];
+    result__[ 24  ] = result__[21];
+    result__[ 25  ] = __INV_DZETA;
+    result__[ 26  ] = result__[24];
+    result__[ 27  ] = -XM__[4];
+    result__[ 28  ] = result__[23];
+    result__[ 29  ] = result__[26];
+    result__[ 30  ] = __INV_DZETA;
+    result__[ 31  ] = result__[29];
+    result__[ 32  ] = -XM__[5];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 18, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 33, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -221,7 +253,7 @@ namespace RobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer RobotArm::D2fd_odeD2xxup_numRows() const { return 16; }
   integer RobotArm::D2fd_odeD2xxup_numCols() const { return 16; }
-  integer RobotArm::D2fd_odeD2xxup_nnz()     const { return 16; }
+  integer RobotArm::D2fd_odeD2xxup_nnz()     const { return 34; }
 
   void
   RobotArm::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
@@ -233,14 +265,32 @@ namespace RobotArmDefine {
     iIndex[5 ] = 2   ; jIndex[5 ] = 2   ;
     iIndex[6 ] = 2   ; jIndex[6 ] = 6   ;
     iIndex[7 ] = 2   ; jIndex[7 ] = 8   ;
-    iIndex[8 ] = 6   ; jIndex[8 ] = 0   ;
-    iIndex[9 ] = 6   ; jIndex[9 ] = 2   ;
-    iIndex[10] = 6   ; jIndex[10] = 6   ;
-    iIndex[11] = 6   ; jIndex[11] = 8   ;
-    iIndex[12] = 8   ; jIndex[12] = 0   ;
-    iIndex[13] = 8   ; jIndex[13] = 2   ;
-    iIndex[14] = 8   ; jIndex[14] = 6   ;
-    iIndex[15] = 8   ; jIndex[15] = 8   ;
+    iIndex[8 ] = 3   ; jIndex[8 ] = 15  ;
+    iIndex[9 ] = 4   ; jIndex[9 ] = 15  ;
+    iIndex[10] = 5   ; jIndex[10] = 15  ;
+    iIndex[11] = 6   ; jIndex[11] = 0   ;
+    iIndex[12] = 6   ; jIndex[12] = 2   ;
+    iIndex[13] = 6   ; jIndex[13] = 6   ;
+    iIndex[14] = 6   ; jIndex[14] = 8   ;
+    iIndex[15] = 8   ; jIndex[15] = 0   ;
+    iIndex[16] = 8   ; jIndex[16] = 2   ;
+    iIndex[17] = 8   ; jIndex[17] = 6   ;
+    iIndex[18] = 8   ; jIndex[18] = 8   ;
+    iIndex[19] = 9   ; jIndex[19] = 15  ;
+    iIndex[20] = 10  ; jIndex[20] = 15  ;
+    iIndex[21] = 11  ; jIndex[21] = 15  ;
+    iIndex[22] = 12  ; jIndex[22] = 15  ;
+    iIndex[23] = 13  ; jIndex[23] = 15  ;
+    iIndex[24] = 14  ; jIndex[24] = 15  ;
+    iIndex[25] = 15  ; jIndex[25] = 3   ;
+    iIndex[26] = 15  ; jIndex[26] = 4   ;
+    iIndex[27] = 15  ; jIndex[27] = 5   ;
+    iIndex[28] = 15  ; jIndex[28] = 9   ;
+    iIndex[29] = 15  ; jIndex[29] = 10  ;
+    iIndex[30] = 15  ; jIndex[30] = 11  ;
+    iIndex[31] = 15  ; jIndex[31] = 12  ;
+    iIndex[32] = 15  ; jIndex[32] = 13  ;
+    iIndex[33] = 15  ; jIndex[33] = 14  ;
   }
 
 
@@ -282,8 +332,9 @@ namespace RobotArmDefine {
     real_type t9   = XR__[iX_phi] / 2 + XL__[iX_phi] / 2;
     real_type t10  = I_theta_D_1_1(t5, t9);
     real_type t12  = V__[4];
+    real_type t14  = LM__[2];
     real_type t15  = I_phi_DD(t5);
-    result__[ 0   ] = t12 * t10 * t1 / 4 + V__[5] * t15 * LM__[2] / 4;
+    result__[ 0   ] = t12 * t10 * t1 / 4 + V__[5] * t15 * t14 / 4;
     real_type t20  = I_theta_D_1_2(t5, t9);
     result__[ 1   ] = t12 * t20 * t1 / 4;
     result__[ 2   ] = result__[0];
@@ -293,16 +344,34 @@ namespace RobotArmDefine {
     result__[ 5   ] = t12 * t23 * t1 / 4;
     result__[ 6   ] = result__[4];
     result__[ 7   ] = result__[5];
-    result__[ 8   ] = result__[2];
-    result__[ 9   ] = result__[6];
-    result__[ 10  ] = result__[8];
-    result__[ 11  ] = result__[9];
-    result__[ 12  ] = result__[11];
-    result__[ 13  ] = result__[7];
+    result__[ 8   ] = -LM__[3] / 2;
+    result__[ 9   ] = -LM__[4] / 2;
+    result__[ 10  ] = -LM__[5] / 2;
+    result__[ 11  ] = result__[2];
+    result__[ 12  ] = result__[6];
+    result__[ 13  ] = result__[11];
     result__[ 14  ] = result__[12];
-    result__[ 15  ] = result__[13];
+    result__[ 15  ] = result__[14];
+    result__[ 16  ] = result__[7];
+    result__[ 17  ] = result__[15];
+    result__[ 18  ] = result__[16];
+    result__[ 19  ] = result__[8];
+    result__[ 20  ] = result__[9];
+    result__[ 21  ] = result__[10];
+    result__[ 22  ] = -LM__[0];
+    result__[ 23  ] = -t1;
+    result__[ 24  ] = -t14;
+    result__[ 25  ] = result__[19];
+    result__[ 26  ] = result__[20];
+    result__[ 27  ] = result__[21];
+    result__[ 28  ] = result__[25];
+    result__[ 29  ] = result__[26];
+    result__[ 30  ] = result__[27];
+    result__[ 31  ] = result__[22];
+    result__[ 32  ] = result__[23];
+    result__[ 33  ] = result__[24];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 16, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 34, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

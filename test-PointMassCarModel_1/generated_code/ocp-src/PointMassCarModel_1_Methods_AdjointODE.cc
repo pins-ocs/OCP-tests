@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -208,7 +208,7 @@ namespace PointMassCarModel_1Define {
     real_type t18  = t1 * t1;
     real_type t21  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
     real_type t22  = 1.0 / t21;
-    real_type t25  = t14 * t22 * t18 * t17 + t14 * t10 * t7 - 1;
+    real_type t25  = t14 * t17 * t18 * t22 + t10 * t14 * t7 - 1;
     real_type t26  = AdherenceEllipse(t25);
     real_type t29  = t3 - Q__[iQ_leftWidth];
     real_type t30  = RoadLeftBorder(t29);
@@ -219,10 +219,10 @@ namespace PointMassCarModel_1Define {
     real_type t39  = ALIAS_RoadRightBorder_D(t36);
     real_type t42  = ModelPars[iM_m];
     real_type t44  = 1.0 / ModelPars[iM_Pmax];
-    real_type t47  = t44 * t42 * t6 * t1 - 1;
+    real_type t47  = t1 * t42 * t44 * t6 - 1;
     real_type t48  = PowerLimit(t47);
     real_type t50  = LimitMinSpeed(-t1);
-    result__[ 0   ] = t26 * t5 + t30 * t5 + t33 * t32 - t39 * t32 + t37 * t5 + t48 * t5 + t50 * t5;
+    result__[ 0   ] = t26 * t5 + t30 * t5 + t32 * t33 - t32 * t39 + t37 * t5 + t48 * t5 + t5 * t50;
     real_type t52  = inv_zeta__dot_D_2(t1, t2, t3, t4);
     result__[ 1   ] = t26 * t52 + t30 * t52 + t37 * t52 + t48 * t52 + t50 * t52;
     real_type t58  = inv_zeta__dot_D_1(t1, t2, t3, t4);
@@ -231,9 +231,9 @@ namespace PointMassCarModel_1Define {
     real_type t70  = ALIAS_PowerLimit_D(t47);
     real_type t71  = t70 * t32;
     real_type t76  = ALIAS_LimitMinSpeed_D(-t1);
-    result__[ 2   ] = 2 * t14 * t22 * t1 * t17 * t61 + t44 * t42 * t6 * t71 + t26 * t58 + t30 * t58 - t76 * t32 + t37 * t58 + t48 * t58 + t50 * t58;
+    result__[ 2   ] = 2 * t1 * t14 * t17 * t22 * t61 + t42 * t44 * t6 * t71 + t26 * t58 + t30 * t58 - t32 * t76 + t37 * t58 + t48 * t58 + t50 * t58;
     result__[ 3   ] = 2 * t14 * t22 * t18 * t16 * t61;
-    result__[ 4   ] = t44 * t42 * t1 * t71 + 2 * t14 * t10 * t6 * t61;
+    result__[ 4   ] = t1 * t42 * t44 * t71 + 2 * t10 * t14 * t6 * t61;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "LTx_eval", 5, i_segment );
   }

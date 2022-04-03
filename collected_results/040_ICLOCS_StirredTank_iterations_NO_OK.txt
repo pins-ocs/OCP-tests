@@ -84,1908 +84,206 @@ Model Parameters
 ..............................w_time_min = 0.01
 INFO CLASS = ICLOCS_StirredTank
   #nodes      = 401
-  dim         = u=1, q=1, x=2, p=1, omega=4, bc=4, full_bc=8
-  BC          = Inital=4, Final=4, Cyclic=0
-  OMEGA       = Inital=2, Final=2, Cyclic=0
+  dim         = u=1, q=1, x=2, p=1, bc(active/total)=(4/4)
   total       = nZ=1609, UC=400, Q=401
   index start = omega=1604, p=1608
-  FD jacobian = ANALYTIC
 END INFO
-Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton
-Jacobian evaluation:  Analitic Jacobian
-Initializer Controls: Quasi-Newton
-Used threads:         15
+Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:        Newton
+Jacobian evaluation:    Analitic Jacobian
+Jacobian BC evaluation: Analitic Jacobian
+Initializer Controls:   Quasi-Newton
+Used threads:           15
 
 
 NewtonDumped --- start iterations ---
 Failed check on parameter: T_min <= TimeSize
-fail 10 <= -90136504.4409312
+fail 10 <= -404.94619388921774
 Failed check on parameter: T_min <= TimeSize
-fail 10 <= -45068207.2204656
+fail 10 <= -157.47309694460887
 Failed check on parameter: T_min <= TimeSize
-fail 10 <= -5633447.1525582
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -175958.03601744375
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1285.3752813862793
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -597.6876406931397
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -253.84382034656983
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -81.92191017328491
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 4.039044913357543
+fail 10 <= -33.736548472304435
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[  1,11] ( 0.00403  , 0.00365  ) [ 9.9e+04  , 8.73e+04 ] 4.77e-07   [0:0:0:0:0:0:0:9:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -18232160.616898328
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -9116056.798687937
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1139465.9577538425
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -35562.76101742767
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -231.1818880111677
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -92.08118277724446
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -22.530830160282846
-[  2, 9] ( 0.00365  ,  0.0029  ) [ 3.67e+04 , 2.65e+04 ] 1.91e-06   [0:0:0:0:0:0:0:7:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1064934.365438807
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -532461.0605463294
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -66546.9187654115
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -2067.7295010880425
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -4.005449533335167
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 4.119448307431398
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.18189722781468
-[  3, 9] (  0.0029  , 0.00276  ) [ 1.15e+04 , 1.08e+04 ] 1.91e-06   [0:0:0:0:0:0:0:7:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -604205.6377869752
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -302097.7123326436
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -37753.277560103445
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1169.8959621179765
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 0.99351947077208
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 5.603320579389201
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.9082211336977615
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.060671410852041
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.636896549429181
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.925009118717751
-[  4,12] ( 0.00276  , 0.00269  ) [ 9.25e+03 , 8.94e+03 ] 2.38e-07   [0:0:0:0:0:0:0:10:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -558378.8754126166
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -279184.4031736066
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -34889.23996447289
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1080.5343417802708
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 1.5487262847399048
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 5.80889584405097
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.938980623706502
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.004023013534269
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.536544208448152
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.802804805905094
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.935935104633565
-[  5,14] ( 0.00269  , 0.00263  ) [ 8.82e+03 , 8.56e+03 ] 4.77e-08   [1:0:0:0:0:0:0:11:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -537362.8298379333
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -268676.39369929483
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -33575.76207798619
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1039.5139518229403
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 1.8427800376276178
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 5.942609690621979
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.9925245171191595
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.017481930367751
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.529960636992046
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.786199990304192
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.914319666960267
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.978379505288304
-[  6,14] ( 0.00263  , 0.00218  ) [ 8.54e+03 , 6.52e+03 ] 5.96e-08   [0:0:0:0:0:0:0:12:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -405416.68958520505
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -202703.33958789028
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -25329.15834023989
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -781.8386140025584
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 3.8240889289288003
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.998326767234502
-[  7, 8] ( 0.00218  , 0.00135  ) [ 6.5e+03  , 2.82e+03 ] 1.49e-08   [0:0:0:0:0:0:0:6:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -173982.58262700407
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -86986.2891294541
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -10864.5323190979
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -329.8249033789611
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.349451912446501
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999182712672713
-[  8, 9] ( 0.00135  , 0.000907 ) [ 2.81e+03 ,   842    ] 5.96e-09   [1:0:0:0:0:0:0:6:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -50262.95487810419
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -25126.47577354249
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -3132.056557051003
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -88.18604048298486
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.23622655434838
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.619778786778825
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.811554902994049
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.90744296110166
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.955386990155466
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.979359004682369
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991345011945821
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997338015577546
-[  9,17] ( 0.000907 , 0.000793 ) [   842    ,   334    ] 3.81e-09   [3:0:0:0:0:0:0:12:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -18443.86242323888
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -9216.929641997893
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1143.3634584120302
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -26.039566933629548
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.721555601087411
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.862347422090233
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.932743332591645
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.96794128784235
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.985540265467703
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.994339754280379
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.998739498686717
-[ 10,17] ( 0.000793 , 0.000757 ) [   334    ,   173    ] 3.05e-09   [4:0:0:0:0:0:0:11:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -8348.870948960535
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -4169.433933017085
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -512.4265440665666
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -6.322842917164447
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.875536630712084
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.93930977853837
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.971196352451512
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.987139639408085
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99511128288637
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999097104625513
-[ 11,16] ( 0.000757 , 0.000723 ) [   173    ,   38.5   ] 6.1e-09    [4:0:0:0:0:0:0:10:0:0:0:0]
-[ 12,21] ( 0.000723 , 0.000731 ) [   38.5   ,   64.5   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1173.6418419560744
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -581.8193989230518
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -63.97476126915726
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.6912376918727965
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.984983122329151
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.994013616149847
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.998528863060193
-[ 13,14] ( 0.000731 , 0.000725 ) [   64.5   ,   27.4   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[ 14,22] ( 0.000725 , 0.000725 ) [   27.4   ,   44.1   ] 4.4e-09    [20:1:0:0:0:0:0:0:0:0:0:0]
-[ 15,21] ( 0.000725 , 0.000729 ) [   44.1   ,   56.6   ] 1.1e-08    [1:1:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -558.9918662628356
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -274.4944127160648
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -25.559140862640273
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.891722652789014
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99435865744111
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.9986997440736
-[ 16,13] ( 0.000729 , 0.000727 ) [   56.6   ,    28    ] 3.91e-08   [4:0:0:1:0:0:0:6:0:0:0:0]
-[ 17,22] ( 0.000727 , 0.000725 ) [    28    ,   43.3   ] 4.4e-09    [20:1:0:0:0:0:0:0:0:0:0:0]
-[ 18,21] ( 0.000725 , 0.00073  ) [   43.3   ,   57.6   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -637.4214018656824
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -313.70918030798936
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -30.460986445008004
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.738540384243883
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.993162336692217
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.998101793197918
-[ 19,13] ( 0.00073  , 0.000728 ) [   57.6   ,   30.7   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 20,22] ( 0.000728 , 0.000725 ) [   30.7   ,   42.5   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
+[  1, 6] ( 0.00403  , 0.00475  ) [   3.46   ,   3.33   ] 0.05       [0:0:0:0:1:0:0:3:0:0:0:0]
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= -272.6077064538474
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= -103.67750807415413
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= -19.212408884307507
+[  2, 7] ( 0.00475  , 0.00921  ) [   5.57   ,   5.27   ] 0.101      [0:0:0:0:2:0:0:3:0:0:0:0]
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= -106.76726367717694
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= -37.86146927176285
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= -3.4085720690558077
+[  3, 5] ( 0.00921  ,  0.0147  ) [   13.6   ,   12.7   ] 0.125      [0:0:0:0:0:0:0:3:0:0:0:0]
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= -32.59759905847423
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= -9.389861263088257
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 2.2140076346047284
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 8.015942083451222
+[  4, 6] (  0.0147  ,  0.0146  ) [   46.8   ,   44.7   ] 0.0625     [0:0:0:0:0:0:0:4:0:0:0:0]
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= -7.892929755888373
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 1.5119897759930474
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 9.74129436638929
+[  5, 5] (  0.0146  ,  0.0144  ) [   66.6   ,   64.5   ] 0.0312     [0:0:0:0:0:0:0:3:0:0:0:0]
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 3.3629251590647797
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 6.846013498098329
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 9.893715794752685
+[  6, 5] (  0.0144  ,  0.0141  ) [   62.2   ,   60.1   ] 0.0312     [0:0:0:0:0:0:0:3:0:0:0:0]
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 9.07090576696812
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 9.5911572914552
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 9.851283053698742
+Failed check on parameter: T_min <= TimeSize
+fail 10 <= 9.981345934820512
+[  7, 6] (  0.0141  ,  0.014   ) [   55.3   ,   51.7   ] 0.0625     [0:0:0:0:0:0:0:4:0:0:0:0]
+[  8,14] (  0.014   ,  0.0252  ) [   51.4   ,   41.4   ] 0.215      [0:0:7:0:6:0:0:0:0:0:0:0]
+Failed check on node=46 segment=0: x1(zeta) <= 1
+fail 1.0003803809226381 <= 1
+[  9,12] (  0.0252  ,  0.045   ) [   72.6   ,   65.6   ] 0.194      [0:0:7:0:2:0:0:1:0:0:0:0]
+Failed check on node=55 segment=0: x1(zeta) <= 1
+fail 1.0002458122317912 <= 1
+[ 10, 4] (  0.045   ,  0.0833  ) [   139    ,   109    ] 0.2        [0:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=57 segment=0: x1(zeta) <= 1
+fail 1.0002306361940503 <= 1
+[ 11, 4] (  0.0833  ,   0.12   ) [   130    ,   108    ] 0.2        [0:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=64 segment=0: x1(zeta) <= 1
+fail 1.0002356561933123 <= 1
+[ 12, 4] (   0.12   ,  0.182   ) [   185    ,   150    ] 0.2        [0:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=75 segment=0: x1(zeta) <= 1
+fail 1.000070619746006 <= 1
+[ 13, 4] (  0.182   ,  0.264   ) [   237    ,   188    ] 0.2        [0:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=94 segment=0: x1(zeta) <= 1
+fail 1.0000375817485463 <= 1
+[ 14, 4] (  0.264   ,  0.354   ) [   281    ,   218    ] 0.2        [0:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=131 segment=0: x1(zeta) <= 1
+fail 1.0000334415732253 <= 1
+[ 15, 4] (  0.354   ,  0.444   ) [   311    ,   236    ] 0.2        [1:0:0:0:0:0:0:1:0:0:0:0]
+Failed check on node=216 segment=0: x1(zeta) <= 1
+fail 1.0001333445296372 <= 1
+[ 16, 5] (  0.444   ,  0.499   ) [   332    ,   262    ] 0.18       [1:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=260 segment=0: x1(zeta) <= 1
+fail 1.0001619221928582 <= 1
+[ 17, 5] (  0.499   ,  0.553   ) [   366    ,   287    ] 0.18       [1:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=282 segment=0: x1(zeta) <= 1
+fail 1.0001853586857747 <= 1
+[ 18, 5] (  0.553   ,  0.602   ) [   411    ,   320    ] 0.18       [1:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=298 segment=0: x1(zeta) <= 1
+fail 1.002296895179257 <= 1
+[ 19, 4] (  0.602   ,  0.667   ) [   447    ,   332    ] 0.2        [1:0:0:0:0:0:0:1:0:0:0:0]
+Failed check on node=312 segment=0: x1(zeta) <= 1
+fail 1.0034079917140277 <= 1
+[ 20, 4] (  0.667   ,  0.703   ) [   468    ,   351    ] 0.2        [1:0:0:0:0:0:0:1:0:0:0:0]
+Failed check on node=322 segment=0: x1(zeta) <= 1
+fail 1.001134775145177 <= 1
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 21,21] ( 0.000725 , 0.00073  ) [   42.5   ,   58.7   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -723.5793996130361
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -356.78817895148705
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -35.84586087263161
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.570263504352845
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991848130329918
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997444920195969
-[ 22,13] ( 0.00073  , 0.00073  ) [   58.7   ,   36.3   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 23,22] ( 0.00073  , 0.000724 ) [   36.3   ,   41.7   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 24,21] ( 0.000724 , 0.00073  ) [   41.7   ,   59.9   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -817.3541889851147
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -403.6755733869441
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -41.70678473854487
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.3871101190461
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990417741756294
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996729976491375
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999886093858914
-[ 25,14] ( 0.00073  , 0.000721 ) [   59.9   ,   30.3   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[ 26,22] ( 0.000721 , 0.000726 ) [   30.3   ,   45.7   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[ 27,20] ( 0.000726 , 0.000733 ) [   45.7   ,   69.6   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1552.781181967863
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -771.3890679132877
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -87.67096811553449
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.950733195761717
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.979199946400481
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991123043843942
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99708459256567
-[ 28,14] ( 0.000733 , 0.000729 ) [   69.6   ,   31.2   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[ 29,22] ( 0.000729 , 0.000725 ) [   31.2   ,   42.4   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 30,21] ( 0.000725 , 0.00073  ) [   42.4   ,   58.8   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -734.8218760794588
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -362.40941715356206
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -36.54851559340243
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.548305604655377
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991676646024667
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997359209179665
-[ 31,13] ( 0.00073  , 0.000731 ) [   58.8   ,   37.1   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 32,22] ( 0.000731 , 0.000724 ) [   37.1   ,   41.6   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 33,21] ( 0.000724 , 0.00073  ) [   41.6   ,   60.1   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -829.6386661168037
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -409.81781191884255
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -42.47456449562644
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.363117067407929
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990230363402224
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99663632126047
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999839300189592
-[ 34,14] ( 0.00073  , 0.000722 ) [   60.1   ,   30.1   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[ 35,22] ( 0.000722 , 0.000726 ) [   30.1   ,   45.6   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[ 36,20] ( 0.000726 , 0.000733 ) [   45.6   ,   69.9   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1575.7520213918071
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -782.874487562492
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -89.10664546184128
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.905868400302338
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.978849564740907
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990947915782003
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996997091302552
-[ 37,14] ( 0.000733 , 0.000729 ) [   69.9   ,   31.8   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[ 38,22] ( 0.000729 , 0.000725 ) [   31.8   ,   42.3   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 39,21] ( 0.000725 , 0.00073  ) [   42.3   ,    59    ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -745.4595733166924
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -367.72826574265
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -37.21337161536302
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.527528911181165
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991514386703118
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997278109047691
-[ 40,13] ( 0.00073  , 0.000731 ) [    59    ,    38    ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
+[ 21, 4] (  0.703   ,  0.708   ) [   461    ,   351    ] 0.2        [0:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=331 segment=0: x1(zeta) <= 1
+fail 1.0046285637069607 <= 1
+[ 22, 4] (  0.708   ,  0.703   ) [   591    ,   445    ] 0.2        [0:0:1:0:0:0:0:1:0:0:0:0]
+Failed check on node=339 segment=0: x1(zeta) <= 1
+fail 1.0063719284646377 <= 1
+[ 23, 3] (  0.703   ,   1.03   ) [   605    ,   90.9   ] 0.5        [0:0:0:0:0:0:0:1:0:0:0:0]
+[ 24, 2] (   1.03   ,  0.869   ) [   520    ,   50.9   ] 0.725      [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 25, 4] (  0.869   ,  0.411   ) [   284    ,   34.5   ] 0.729      [3:0:0:0:0:0:0:0:0:0:0:0]
+[ 26, 1] (  0.411   ,  0.0142  ) [   29.5   ,   8.6    ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 27, 1] (  0.0142  , 0.00018  ) [   9.88   ,  0.055   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 28, 1] ( 0.00018  , 7.84e-09 ) [  0.0555  , 3.68e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 29, 2] ( 7.84e-09 , 7.84e-10 ) [ 3.68e-06 , 3.68e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 30, 1] ( 7.84e-10 , 9.69e-14 ) [ 3.68e-07 , 2.47e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.2, ds=0.2, old_s=    0
+NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 41,22] ( 0.000731 , 0.000724 ) [    38    ,   41.5   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 42,21] ( 0.000724 , 0.00073  ) [   41.5   ,   60.2   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -841.2580456391257
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -415.6275016478258
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -43.200775655438335
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.340423031008145
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99005313009552
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996547736784839
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.9997950401295
-[ 43,14] ( 0.00073  , 0.000722 ) [   60.2   ,   29.9   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[ 44,22] ( 0.000722 , 0.000726 ) [   29.9   ,   45.6   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[ 45,20] ( 0.000726 , 0.000733 ) [   45.6   ,   70.2   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1597.487784958944
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -793.742369286583
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -90.46513057326695
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.863415855808029
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.978518022262797
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990782204020494
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99691429489934
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999980340338766
-[ 46,15] ( 0.000733 , 0.000722 ) [   70.2   ,   36.5   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[ 47,21] ( 0.000722 , 0.000732 ) [   36.5   ,   67.8   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1419.6168565537118
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -704.8069055595479
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -79.34819843965455
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.2108190635449745
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.981231166091936
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99213830035393
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99759186748493
-[ 48,14] ( 0.000732 , 0.000727 ) [   67.8   ,   28.8   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[ 49,22] ( 0.000727 , 0.000725 ) [   28.8   ,    43    ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[ 50,21] ( 0.000725 , 0.00073  ) [    43    ,   58.1   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -673.6591867921361
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -331.8280726705673
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -32.72584781419451
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.667763661464223
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99260959327084
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997825522136221
-[ 51,13] ( 0.00073  , 0.000729 ) [   58.1   ,   32.8   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 52,22] ( 0.000729 , 0.000725 ) [   32.8   ,   42.2   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 53,21] ( 0.000725 , 0.00073  ) [   42.2   ,   59.2   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -763.5047458542625
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -376.75085196151974
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -38.34119480536988
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.492284533204435
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991239139050942
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997140535136952
-[ 54,13] ( 0.00073  , 0.000731 ) [   59.2   ,   39.5   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 55,22] ( 0.000731 , 0.000724 ) [   39.5   ,   41.3   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 56,21] ( 0.000724 , 0.00073  ) [   41.3   ,   60.5   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -860.9242186385933
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -425.46058809327064
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -44.429911366113394
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.30201264523426
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.989753156686165
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996397804369046
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999720128210486
-[ 57,14] ( 0.00073  , 0.000722 ) [   60.5   ,   29.7   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[ 58,22] ( 0.000722 , 0.000726 ) [   29.7   ,   45.5   ] 4.4e-09    [4:1:12:4:0:0:0:0:0:0:0:0]
-[ 59,20] ( 0.000726 , 0.000733 ) [   45.5   ,   70.7   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1634.2192427745708
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -812.1080980940623
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -92.76084649861714
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.791674927538208
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.977957745361223
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990502165903834
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99677437617514
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999910481310792
-[ 60,15] ( 0.000733 , 0.000722 ) [   70.7   ,   36.2   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
+[ 31, 1] ( 0.000322 , 1.74e-08 ) [  0.0588  , 3.52e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 32, 2] ( 1.74e-08 , 1.74e-09 ) [ 3.52e-06 , 3.52e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 33, 1] ( 1.74e-09 , 9.42e-14 ) [ 3.52e-07 , 4.03e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
+NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 61,21] ( 0.000722 , 0.000732 ) [   36.2   ,   68.2   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1451.5404889606239
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -720.7687216756443
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -81.34342530128734
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.148468393378142
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.98074422483543
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991894917085261
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997470263210177
-[ 62,14] ( 0.000732 , 0.000728 ) [   68.2   ,   29.2   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[ 63,22] ( 0.000728 , 0.000725 ) [   29.2   ,   42.9   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[ 64,21] ( 0.000725 , 0.00073  ) [   42.9   ,   58.3   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -688.5404387288537
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -339.2686985974806
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -33.65592598252908
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.638698799004388
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99238260627625
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997712070084406
-[ 65,13] ( 0.00073  , 0.000729 ) [   58.3   ,   33.8   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 66,22] ( 0.000729 , 0.000725 ) [   33.8   ,    42    ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 67,21] ( 0.000725 , 0.00073  ) [    42    ,   59.4   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -779.8751206811605
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -384.9360393295083
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -39.36434314681257
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.460311235614071
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990989437874196
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99701573000908
-[ 68,13] ( 0.00073  , 0.000732 ) [   59.4   ,   40.9   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 69,22] ( 0.000732 , 0.000724 ) [   40.9   ,   41.1   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 70,21] ( 0.000724 , 0.00073  ) [   41.1   ,   60.7   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -878.7568068343093
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -434.3768821417186
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -45.544448035701755
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.267183470041648
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.989481151803092
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996261851337586
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999652201104832
-[ 71,14] ( 0.00073  , 0.000722 ) [   60.7   ,   29.4   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[ 72,22] ( 0.000722 , 0.000726 ) [   29.4   ,   45.4   ] 4.4e-09    [17:1:0:3:0:0:0:0:0:0:0:0]
-[ 73,20] ( 0.000726 , 0.000733 ) [   45.4   ,   71.2   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1667.5511885394446
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -828.7740708852295
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -94.84409293779137
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.726573653148735
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.977449322768038
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990248045876776
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996647407431144
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999847088208329
-[ 74,15] ( 0.000733 , 0.000722 ) [   71.2   ,    36    ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[ 75,21] ( 0.000722 , 0.000733 ) [    36    ,   68.6   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1480.4149456859636
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -735.2059499590823
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -83.14807869806117
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.0920731282408624
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.980303794052444
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991674780925718
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997360274362356
-[ 76,14] ( 0.000733 , 0.000728 ) [   68.6   ,   29.7   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[ 77,22] ( 0.000728 , 0.000725 ) [   29.7   ,   42.7   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[ 78,21] ( 0.000725 , 0.00073  ) [   42.7   ,   58.4   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -701.9990370009579
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -345.9979976958714
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -34.49708830392076
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.612412549429553
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992177319685474
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99760946445026
-[ 79,13] ( 0.00073  , 0.00073  ) [   58.4   ,   34.7   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 80,22] ( 0.00073  , 0.000724 ) [   34.7   ,   41.9   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
+[ 34, 1] ( 0.000392 , 2.63e-08 ) [  0.0707  , 5.75e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 35, 2] ( 2.63e-08 , 2.63e-09 ) [ 5.75e-06 , 5.75e-07 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 36, 1] ( 2.63e-09 , 1.04e-13 ) [ 5.75e-07 , 4.21e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
+NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 81,21] ( 0.000724 , 0.00073  ) [   41.9   ,   59.6   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -794.6804107853117
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -392.3386843402877
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -40.289673700891726
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.4313947358104
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990763609666542
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996902857201409
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999972480968841
-[ 82,14] ( 0.00073  , 0.000721 ) [   59.6   ,   30.6   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[ 83,22] ( 0.000721 , 0.000726 ) [   30.6   ,   45.8   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[ 84,20] ( 0.000726 , 0.000733 ) [   45.8   ,   69.1   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1512.4432744940634
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -751.2201142761351
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -85.14984908544787
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.029517972191876
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.979815254530648
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991430598161902
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99723826997753
-[ 85,14] ( 0.000733 , 0.000728 ) [   69.1   ,   30.3   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[ 86,22] ( 0.000728 , 0.000725 ) [   30.3   ,   42.6   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 87,21] ( 0.000725 , 0.00073  ) [   42.6   ,   58.6   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -716.8485555570225
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -353.4227569331351
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -35.42518313723362
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.583409664877747
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991950815550162
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997496253151233
-[ 88,13] ( 0.00073  , 0.00073  ) [   58.6   ,   35.8   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 89,22] ( 0.00073  , 0.000724 ) [   35.8   ,   41.7   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 90,21] ( 0.000724 , 0.00073  ) [   41.7   ,   59.8   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -810.9164013965525
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -400.456679601406
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -41.30442303065274
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.39968390547829
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99051595711353
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996779075427055
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999910634583818
-[ 91,14] ( 0.00073  , 0.000721 ) [   59.8   ,   30.4   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[ 92,22] ( 0.000721 , 0.000726 ) [   30.4   ,   45.7   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[ 93,20] ( 0.000726 , 0.000733 ) [   45.7   ,   69.5   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1542.7751871786015
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -766.3860705359244
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -87.04559347358185
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.97027611986734
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.979352591230255
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991199348991527
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997122727872162
-[ 94,14] ( 0.000733 , 0.000728 ) [   69.5   ,    31    ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[ 95,22] ( 0.000728 , 0.000725 ) [    31    ,   42.5   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 96,21] ( 0.000725 , 0.00073  ) [   42.5   ,   58.8   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -730.8990944753285
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -360.44802635364357
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -36.303341747169256
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.55596728319103
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991736498628468
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997389133334915
-[ 97,13] ( 0.00073  , 0.00073  ) [   58.8   ,   36.8   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[ 98,22] ( 0.00073  , 0.000724 ) [   36.8   ,   41.6   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[ 99,21] ( 0.000724 , 0.00073  ) [   41.6   ,    60    ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -826.2647907846714
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -408.1308742533238
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -42.26369728839455
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.36970666657333
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99028184355945
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996662060791678
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999852169407792
-[100,14] ( 0.00073  , 0.000722 ) [    60    ,   30.1   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
+[ 37, 1] ( 0.00038  , 2.54e-08 ) [  0.0677  , 6.02e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 38, 1] ( 2.54e-08 , 9.65e-14 ) [ 6.02e-06 , 5.26e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+solve_with_continuation() at phase 0 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() cant compute initial parameters
+
+
+Continuation step N.1 s=0.975, ds=0.025, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+solve_with_continuation() at phase 0 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() cant compute initial parameters
+
+
+Continuation step N.1 s=0.9625, ds=0.0125, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+solve_with_continuation() at phase 0 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() cant compute initial parameters
+
+
+Continuation step N.1 s=0.95625, ds=0.00625, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+solve_with_continuation() at phase 0 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() cant compute initial parameters
+
+
+Continuation step N.1 s=0.95313, ds=0.003125, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
+solve_with_continuation() at phase 0 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() cant compute initial parameters
+
+
+Continuation step N.1 s=0.95156, ds=0.0015625, old_s=0.9500000000000001
+NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[101,22] ( 0.000722 , 0.000726 ) [   30.1   ,   45.6   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[102,20] ( 0.000726 , 0.000733 ) [   45.6   ,   69.9   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1571.4496169239349
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -780.7232853305267
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -88.83774518629461
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.914271530094649
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.978915210281503
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990980736581452
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997013499731425
-[103,14] ( 0.000733 , 0.000729 ) [   69.9   ,   31.6   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[104,22] ( 0.000729 , 0.000725 ) [   31.6   ,   42.3   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[105,21] ( 0.000725 , 0.00073  ) [   42.3   ,    59    ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -744.1716663981814
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -367.08431227849434
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -37.1328774237681
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.530044364162762
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991534048403492
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997287944798142
-[106,13] ( 0.00073  , 0.000731 ) [    59    ,   37.9   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[107,22] ( 0.000731 , 0.000724 ) [   37.9   ,   41.5   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[108,21] ( 0.000724 , 0.00073  ) [   41.5   ,   60.2   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -840.7520737877138
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -415.37451571499395
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -43.16915240136407
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.341411271504345
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.9900608648648
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996551611295354
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99979698451063
-[109,14] ( 0.00073  , 0.000722 ) [   60.2   ,   29.9   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[110,22] ( 0.000722 , 0.000726 ) [   29.9   ,   45.6   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[111,20] ( 0.000726 , 0.000733 ) [   45.6   ,   70.2   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1598.5186653414494
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -794.257809465498
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -90.52956057404066
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.861402442187821
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.97850231695118
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990774363702219
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996910387077737
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999978398765496
-[112,15] ( 0.000733 , 0.000722 ) [   70.2   ,   36.5   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[113,21] ( 0.000722 , 0.000732 ) [   36.5   ,   67.8   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1417.3237517970003
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -703.6603531780089
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -79.2048793863914
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.215297790127096
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.981266162460223
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992155801721376
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997600621351953
-[114,14] ( 0.000732 , 0.000727 ) [   67.8   ,   28.7   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[115,22] ( 0.000727 , 0.000725 ) [   28.7   ,    43    ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[116,21] ( 0.000725 , 0.00073  ) [    43    ,   58.1   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -673.2108498801184
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -331.60390420752094
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -32.69782674399814
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.668639333542956
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992616448423934
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997828956750237
-[117,13] ( 0.00073  , 0.000729 ) [   58.1   ,   32.7   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[118,22] ( 0.000729 , 0.000725 ) [   32.7   ,   42.2   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[119,21] ( 0.000725 , 0.00073  ) [   42.2   ,   59.2   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -763.810028517903
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -376.90349328416073
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -38.36027495463625
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.491688296324721
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991234499165458
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997138224373492
-[120,13] ( 0.00073  , 0.000731 ) [   59.2   ,   39.5   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
+[ 49, 1] ( 7.92e-07 , 1.69e-13 ) [ 0.00014  , 2.7e-11  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95391, ds=0.0023437, old_s=0.9515625000000001
+NewtonDumped --- start iterations ---
+solve_with_continuation() at phase 0 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() cant compute initial parameters
+
+
+Continuation step N.1 s=0.95273, ds=0.0011719, old_s=0.9515625000000001
+NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[121,22] ( 0.000731 , 0.000724 ) [   39.5   ,   41.3   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[122,21] ( 0.000724 , 0.00073  ) [   41.3   ,   60.5   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -862.1629060985942
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -426.0799318114574
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -44.507329310212626
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.29959335737036
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.989734279442699
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996388377561095
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999715426620291
-[123,14] ( 0.00073  , 0.000722 ) [   60.5   ,   29.6   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[124,22] ( 0.000722 , 0.000726 ) [   29.6   ,   45.5   ] 4.4e-09    [4:1:12:4:0:0:0:0:0:0:0:0]
-[125,20] ( 0.000726 , 0.000733 ) [   45.5   ,   70.8   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1638.519681827935
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -814.2583175995962
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -93.02962389979962
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.783275674725802
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.977892168164495
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990469398453623
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996758013598187
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999902321170469
-[126,15] ( 0.000733 , 0.000722 ) [   70.8   ,   36.2   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[127,21] ( 0.000722 , 0.000732 ) [   36.2   ,   68.3   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1452.069283758893
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -721.033119063998
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -81.3764749559647
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.147435612557765
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.980736177628923
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99189090426306
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99746826758013
-[128,14] ( 0.000732 , 0.000728 ) [   68.3   ,   29.2   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[129,22] ( 0.000728 , 0.000725 ) [   29.2   ,   42.8   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[130,21] ( 0.000725 , 0.00073  ) [   42.8   ,   58.3   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -689.4117780420061
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -339.7043682434752
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -33.71038466976075
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.636996985530093
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992369331856187
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997705443455896
-[131,13] ( 0.00073  , 0.000729 ) [   58.3   ,   33.8   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[132,22] ( 0.000729 , 0.000725 ) [   33.8   ,    42    ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[133,21] ( 0.000725 , 0.00073  ) [    42    ,   59.5   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -781.6360530450455
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -385.8165054983606
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -39.47440139501126
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.456871940720113
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990962594358693
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997002321341522
-[134,13] ( 0.00073  , 0.000732 ) [   59.5   ,   41.1   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[135,22] ( 0.000732 , 0.000724 ) [   41.1   ,   41.1   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[136,21] ( 0.000724 , 0.00073  ) [   41.1   ,   60.7   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -881.5836195017016
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -435.7902884593321
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -45.721123797258784
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.261662383653146
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.989438050229712
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996240316633557
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99964144983548
-[137,14] ( 0.00073  , 0.000722 ) [   60.7   ,   29.4   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[138,22] ( 0.000722 , 0.000726 ) [   29.4   ,   45.4   ] 4.4e-09    [17:1:0:3:0:0:0:0:0:0:0:0]
-[139,20] ( 0.000726 , 0.000733 ) [   45.4   ,   71.3   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1674.8231223572852
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -832.4100377649902
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -95.29858874673202
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.712370715616201
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.977338420182285
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99019262374357
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996619725524212
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999833276414533
-[140,15] ( 0.000733 , 0.000722 ) [   71.3   ,   35.9   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[141,21] ( 0.000722 , 0.000733 ) [   35.9   ,   68.7   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1483.5054620144635
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -736.7512081056508
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -83.34123593543976
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.086036998830528
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.980256671877989
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991651237519909
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997348520340868
-[142,14] ( 0.000733 , 0.000728 ) [   68.7   ,   29.7   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[143,22] ( 0.000728 , 0.000725 ) [   29.7   ,   42.7   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[144,21] ( 0.000725 , 0.00073  ) [   42.7   ,   58.5   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -704.0651271206486
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -347.03104274192555
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -34.62621891054289
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.6083772446931
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992145821234171
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99759372901583
-[145,13] ( 0.00073  , 0.00073  ) [   58.5   ,   34.8   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[146,22] ( 0.00073  , 0.000724 ) [   34.8   ,   41.8   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[147,21] ( 0.000724 , 0.00073  ) [   41.8   ,   59.7   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -797.7553745195971
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -393.8761661908084
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -40.48185890311831
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.42538898044595
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990716722687043
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996879430333662
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99996078415697
-[148,14] ( 0.00073  , 0.000721 ) [   59.7   ,   30.5   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[149,22] ( 0.000721 , 0.000726 ) [   30.5   ,   45.7   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[150,20] ( 0.000726 , 0.000733 ) [   45.7   ,   69.2   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1519.998916402635
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -754.9979352007364
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -85.62207664907514
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.01476091834226
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.979700023952645
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99137301255741
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997209506859793
-[151,14] ( 0.000733 , 0.000728 ) [   69.2   ,   30.4   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[152,22] ( 0.000728 , 0.000725 ) [   30.4   ,   42.5   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[153,21] ( 0.000725 , 0.00073  ) [   42.5   ,   58.7   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -720.9848902855347
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -355.4909242780503
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -35.683704021501434
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.575330924717383
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991887738772268
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997464734103193
-[154,13] ( 0.00073  , 0.00073  ) [   58.7   ,    36    ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[155,22] ( 0.00073  , 0.000724 ) [    36    ,   41.7   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[156,21] ( 0.000724 , 0.00073  ) [   41.7   ,   59.9   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -816.253559457288
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -403.1252586090849
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -41.637995366907205
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.38925981392989
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.9904345639214
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996738401519792
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999890320318988
-[157,14] ( 0.00073  , 0.000721 ) [   59.9   ,   30.3   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[158,22] ( 0.000721 , 0.000726 ) [   30.3   ,   45.7   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[159,20] ( 0.000726 , 0.000733 ) [   45.7   ,   69.6   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1554.5573379863333
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -772.2771458987395
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -87.78197782209502
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.947264188512033
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.979172891976523
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991109540415358
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997077864634777
-[160,14] ( 0.000733 , 0.000729 ) [   69.6   ,   31.2   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[161,22] ( 0.000729 , 0.000725 ) [   31.2   ,   42.4   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[162,21] ( 0.000725 , 0.00073  ) [   42.4   ,   58.9   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -736.9893166851207
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -363.49313743395953
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -36.68398058919347
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.544072367001835
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991643618371997
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997342717786841
-[163,13] ( 0.00073  , 0.000731 ) [   58.9   ,   37.3   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[164,22] ( 0.000731 , 0.000724 ) [   37.3   ,   41.5   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[165,21] ( 0.000724 , 0.00073  ) [   41.5   ,   60.1   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -833.7302568798847
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -411.86360727253214
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -42.73028886609859
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.355125734791761
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990167986382756
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99660516060162
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99982374771105
-[166,14] ( 0.00073  , 0.000722 ) [   60.1   ,    30    ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[167,22] ( 0.000722 , 0.000726 ) [    30    ,   45.6   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[168,20] ( 0.000726 , 0.000733 ) [   45.6   ,   70.1   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1587.2027279057459
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -788.5998407696982
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -89.82231452565634
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.883503838474452
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.978674940350613
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990860653350126
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996953509849881
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99999993809976
-[169,15] ( 0.000733 , 0.000722 ) [   70.1   ,   36.5   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[170,21] ( 0.000722 , 0.000732 ) [   36.5   ,   67.6   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1404.5516860909725
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -697.2743203511533
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -78.4066253288116
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.240243178744607
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.981460996400767
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992253192533271
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997649290599522
-[171,14] ( 0.000732 , 0.000727 ) [   67.6   ,   28.5   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[172,22] ( 0.000727 , 0.000725 ) [   28.5   ,    43    ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[173,21] ( 0.000725 , 0.00073  ) [    43    ,    58    ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -667.8157114822361
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -328.9063350158894
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -32.36063060783604
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.679176698635631
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99269875708369
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997870103770495
-[174,13] ( 0.00073  , 0.000729 ) [    58    ,   32.4   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[175,22] ( 0.000729 , 0.000725 ) [   32.4   ,   42.2   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[176,21] ( 0.000725 , 0.00073  ) [   42.2   ,   59.2   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -758.597690385772
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -374.29732422480805
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -38.03450383396466
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.50186863083956
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991314019708042
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997177977931935
-[177,13] ( 0.00073  , 0.000731 ) [   59.2   ,    39    ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[178,22] ( 0.000731 , 0.000724 ) [    39    ,   41.3   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[179,21] ( 0.000724 , 0.00073  ) [   41.3   ,   60.4   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -857.3076622868001
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -423.652309911201
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -44.20387658255168
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.309076244181037
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.989808353302776
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996425408850499
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99973393662436
-[180,14] ( 0.00073  , 0.000722 ) [   60.4   ,   29.7   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[181,22] ( 0.000722 , 0.000726 ) [   29.7   ,   45.5   ] 4.4e-09    [3:1:13:4:0:0:0:0:0:0:0:0]
-[182,20] ( 0.000726 , 0.000733 ) [   45.5   ,   70.7   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1631.2659225582838
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -810.6314379758962
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -92.57626396630714
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.79744315109136
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.978002829495999
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990524717993656
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996785662242484
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999916134366897
-[183,15] ( 0.000733 , 0.000722 ) [   70.7   ,   36.2   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[184,21] ( 0.000722 , 0.000732 ) [   36.2   ,   68.1   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1442.8247060350716
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -716.4108302187651
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -80.79868887949709
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.165491395133753
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.98087720533489
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991961401438045
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997503499489621
-[185,14] ( 0.000732 , 0.000727 ) [   68.1   ,   29.1   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[186,22] ( 0.000727 , 0.000725 ) [   29.1   ,   42.9   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[187,21] ( 0.000725 , 0.00073  ) [   42.9   ,   58.2   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -685.670935899316
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -337.8339471750043
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -33.476582041231595
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.644303312103021
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992426406829205
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997733978068284
-[188,13] ( 0.00073  , 0.000729 ) [   58.2   ,   33.5   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[189,22] ( 0.000729 , 0.000725 ) [   33.5   ,    42    ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[190,21] ( 0.000725 , 0.00073  ) [    42    ,   59.4   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -778.2539083623865
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -384.12543315883494
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -39.263017355727264
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.463477688452814
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991014198183377
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997028121450033
-[191,13] ( 0.00073  , 0.000732 ) [   59.4   ,   40.8   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[192,22] ( 0.000732 , 0.000724 ) [   40.8   ,   41.1   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[193,21] ( 0.000724 , 0.00073  ) [   41.1   ,   60.7   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -878.7323652845486
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -434.36466135101875
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -45.542920409180155
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.267231239020717
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.98948155639005
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996262069450559
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999652325980813
-[194,14] ( 0.00073  , 0.000722 ) [   60.7   ,   29.4   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[195,22] ( 0.000722 , 0.000726 ) [   29.4   ,   45.4   ] 4.4e-09    [17:1:0:3:0:0:0:0:0:0:0:0]
-[196,20] ( 0.000726 , 0.000733 ) [   45.4   ,   71.2   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1671.31910092281
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -830.6580270487883
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -95.07958740901913
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.719214505413207
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.977391885235008
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990219355234307
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996633090233956
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99983995773378
-[197,15] ( 0.000733 , 0.000722 ) [   71.2   ,   35.9   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[198,21] ( 0.000722 , 0.000733 ) [   35.9   ,   68.6   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1477.5147054123086
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -733.7558298125032
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -82.96681366267345
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.097737679490487
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.980348067709947
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991696927506087
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997371357404157
-[199,14] ( 0.000733 , 0.000728 ) [   68.6   ,   29.6   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[200,22] ( 0.000728 , 0.000725 ) [   29.6   ,   42.7   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[201,21] ( 0.000725 , 0.00073  ) [   42.7   ,   58.4   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -701.8453343614128
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -345.92114636110244
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -34.48748186083093
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.612712779831647
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992179694993983
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997610667100922
-[202,13] ( 0.00073  , 0.00073  ) [   58.4   ,   34.6   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[203,22] ( 0.00073  , 0.000724 ) [   34.6   ,   41.8   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[204,21] ( 0.000724 , 0.00073  ) [   41.8   ,   59.6   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -796.050205415796
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -393.0235816362123
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -40.37528582907662
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.428719394232342
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990742746893693
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996892445132517
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999967294251928
-[205,14] ( 0.00073  , 0.000721 ) [   59.6   ,   30.6   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[206,22] ( 0.000721 , 0.000726 ) [   30.6   ,   45.7   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[207,20] ( 0.000726 , 0.000733 ) [   45.7   ,   69.2   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1518.4273195671583
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -754.212136779048
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -85.52385183945151
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.017830451296218
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.979724012517227
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99138501078975
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997215509926011
-[208,14] ( 0.000733 , 0.000728 ) [   69.2   ,   30.4   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[209,22] ( 0.000728 , 0.000725 ) [   30.4   ,   42.5   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[210,21] ( 0.000725 , 0.00073  ) [   42.5   ,   58.7   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -720.8223229660235
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -355.4096406115739
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -35.673543551430505
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.575648452428625
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991890232794077
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997465987834886
-[211,13] ( 0.00073  , 0.00073  ) [   58.7   ,    36    ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[212,22] ( 0.00073  , 0.000724 ) [    36    ,   41.6   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[213,21] ( 0.000724 , 0.00073  ) [   41.6   ,   59.9   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -816.8061019469324
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -403.40152984515606
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -41.67252925610178
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.38818064684769
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990426150293906
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99673420345708
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999888230038668
-[214,14] ( 0.00073  , 0.000721 ) [   59.9   ,   30.3   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[215,22] ( 0.000721 , 0.000726 ) [   30.3   ,   45.6   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[216,20] ( 0.000726 , 0.000733 ) [   45.6   ,   69.7   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1557.2140405038133
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -773.6054971421584
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -87.94802170071038
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.94207534699
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.979132384555008
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991089302025737
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.9970677607611
-[217,14] ( 0.000733 , 0.000729 ) [   69.7   ,   31.2   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[218,22] ( 0.000729 , 0.000725 ) [   31.2   ,   42.4   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[219,21] ( 0.000725 , 0.00073  ) [   42.4   ,   58.9   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -738.788415645286
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -364.3926869020607
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -36.79642425173851
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.540558525761433
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99161619026307
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997329015713865
-[220,13] ( 0.00073  , 0.000731 ) [   58.9   ,   37.4   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[221,22] ( 0.000731 , 0.000724 ) [   37.4   ,   41.5   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[222,21] ( 0.000724 , 0.00073  ) [   41.5   ,   60.2   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -836.4277145499693
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -413.21233609306887
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -42.89887994328097
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.349857291734324
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99012685545583
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996584609643712
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99981348673765
-[223,14] ( 0.00073  , 0.000722 ) [   60.2   ,    30    ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[224,22] ( 0.000722 , 0.000726 ) [    30    ,   45.6   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[225,20] ( 0.000726 , 0.000733 ) [   45.6   ,   70.2   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1593.8697190838443
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -791.9333363326372
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -90.2390014253309
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.870482423448088
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.9785732623581
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990809840464046
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996928129517018
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999987274043505
-[226,15] ( 0.000733 , 0.000722 ) [   70.2   ,   36.5   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[227,21] ( 0.000722 , 0.000732 ) [   36.5   ,   67.7   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1407.6920094448312
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -698.8444820116582
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -78.60289550763171
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.23410976747909
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.981413111717767
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992229266616345
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997637344065634
-[228,14] ( 0.000732 , 0.000727 ) [   67.7   ,   28.6   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[229,22] ( 0.000727 , 0.000725 ) [   28.6   ,    43    ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[230,21] ( 0.000725 , 0.00073  ) [    43    ,    58    ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -669.7869656820994
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -329.891962103467
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -32.48383397216354
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.675326617436495
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99266870283952
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997855089002524
-[231,13] ( 0.00073  , 0.000729 ) [    58    ,   32.5   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[232,22] ( 0.000729 , 0.000725 ) [   32.5   ,   42.1   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[233,21] ( 0.000725 , 0.00073  ) [   42.1   ,   59.2   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -761.4230437916302
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -375.71000091298515
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -38.2110883941707
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.496350391915229
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991270937740055
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997156451699995
-[234,13] ( 0.00073  , 0.000731 ) [   59.2   ,   39.2   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[235,22] ( 0.000731 , 0.000724 ) [   39.3   ,   41.2   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[236,21] ( 0.000724 , 0.00073  ) [   41.2   ,   60.5   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -861.1340193201789
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -425.5654884103358
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -44.443023864222994
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.301602925640827
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.989750002836569
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996396251171985
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999719375339692
-[237,14] ( 0.00073  , 0.000722 ) [   60.5   ,   29.6   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[238,22] ( 0.000722 , 0.000726 ) [   29.6   ,   45.4   ] 4.4e-09    [3:1:13:4:0:0:0:0:0:0:0:0]
-[239,20] ( 0.000726 , 0.000733 ) [   45.4   ,   70.8   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1640.0652145309366
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -815.0310839303357
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -93.12621965480999
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.780257097606523
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.977868626728725
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990457648496921
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996752159381021
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99989941482307
-[240,15] ( 0.000733 , 0.000722 ) [   70.8   ,   36.2   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[241,21] ( 0.000722 , 0.000732 ) [   36.2   ,   68.2   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1447.7671693327204
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -718.8820618462867
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -81.10759279565715
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.155838189028184
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.9808018319352
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991923736041134
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997484688094099
-[242,14] ( 0.000732 , 0.000727 ) [   68.2   ,   29.1   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[243,22] ( 0.000727 , 0.000725 ) [   29.1   ,   42.8   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[244,21] ( 0.000725 , 0.00073  ) [   42.8   ,   58.3   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -688.4887919866921
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -339.24287520405284
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -33.65269801924346
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.638799716154272
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992383439036205
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99771250881133
-[245,13] ( 0.00073  , 0.000729 ) [   58.3   ,   33.7   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[246,22] ( 0.000729 , 0.000725 ) [   33.7   ,    42    ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[247,21] ( 0.000725 , 0.00073  ) [    42    ,   59.5   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -782.0176735295863
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -386.0073157251484
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -39.49825264626518
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.456126619115981
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99095680225696
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996999440773262
-[248,13] ( 0.00073  , 0.000732 ) [   59.5   ,   41.1   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[249,22] ( 0.000732 , 0.000724 ) [   41.1   ,    41    ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[250,21] ( 0.000724 , 0.00073  ) [    41    ,   60.8   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -883.5865476000804
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -436.79175248845286
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -45.84630676577869
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.257750454769965
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.989407528109098
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996225075641929
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999633849408346
-[251,14] ( 0.00073  , 0.000722 ) [   60.8   ,   29.3   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[252,22] ( 0.000722 , 0.000726 ) [   29.3   ,   45.3   ] 4.4e-09    [17:1:0:3:0:0:0:0:0:0:0:0]
-[253,20] ( 0.000726 , 0.000733 ) [   45.3   ,   71.4   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1682.056186556391
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -836.0265698284387
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -95.75065519148063
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.698243709169809
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.977228124588812
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990137512051092
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996592205782232
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999819552647802
-[254,15] ( 0.000733 , 0.000722 ) [   71.4   ,   35.9   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[255,21] ( 0.000722 , 0.000733 ) [   35.9   ,   68.7   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1484.0926588435068
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -737.0448065023697
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -83.37793570387478
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.08489016555979
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.980247747570422
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99164679316889
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997346315968123
-[256,14] ( 0.000733 , 0.000728 ) [   68.7   ,   29.7   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[257,22] ( 0.000728 , 0.000725 ) [   29.7   ,   42.7   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[258,21] ( 0.000725 , 0.00073  ) [   42.7   ,   58.5   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -705.4290812074656
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -347.71301976742086
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -34.711466007381745
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.605713307623672
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992125044772282
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997583358698064
-[259,13] ( 0.00073  , 0.00073  ) [   58.5   ,   34.9   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[260,22] ( 0.00073  , 0.000724 ) [   34.9   ,   41.8   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[261,21] ( 0.000724 , 0.00073  ) [   41.8   ,   59.7   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -800.6600609738961
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -395.32850939568976
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -40.66340176475924
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.419715809164172
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990672445224726
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996857313870633
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999949748193588
-[262,14] ( 0.00073  , 0.000721 ) [   59.7   ,   30.5   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[263,22] ( 0.000721 , 0.000726 ) [   30.5   ,   45.7   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[264,20] ( 0.000726 , 0.000733 ) [   45.7   ,   69.3   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1528.582107463526
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -759.2895306918579
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -86.15852601664831
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.997996951795879
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.979569133497595
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991307606653901
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997176843232054
-[265,14] ( 0.000733 , 0.000728 ) [   69.3   ,   30.6   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[266,22] ( 0.000728 , 0.000725 ) [   30.6   ,   42.5   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[267,21] ( 0.000725 , 0.00073  ) [   42.5   ,   58.8   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -726.0669733719151
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -358.0319657933477
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -36.00133416210129
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.56540503686585
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991810248123114
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99742601667137
-[268,13] ( 0.00073  , 0.00073  ) [   58.8   ,   36.4   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[269,22] ( 0.00073  , 0.000724 ) [   36.4   ,   41.6   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[270,21] ( 0.000724 , 0.00073  ) [   41.6   ,    60    ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -823.2337872468081
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -406.6153724706335
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -42.0742595414806
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.375626622821805
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990328120519992
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996685213030615
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999863759285926
-[271,14] ( 0.00073  , 0.000721 ) [    60    ,   30.1   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[272,22] ( 0.000721 , 0.000726 ) [   30.1   ,   45.6   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[273,20] ( 0.000726 , 0.000733 ) [   45.6   ,   69.9   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1570.7776057045862
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -780.3872796979786
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -88.79574444219685
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.915584097665798
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.978925510105958
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990985909367534
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997016108998322
-[274,14] ( 0.000733 , 0.000729 ) [   69.9   ,   31.6   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[275,22] ( 0.000729 , 0.000725 ) [   31.6   ,   42.3   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[276,21] ( 0.000725 , 0.00073  ) [   42.3   ,    59    ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -745.6100802165531
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -367.8035191622825
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -37.222778239795765
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.52723501286981
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991512150744942
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997277021366497
-[277,13] ( 0.00073  , 0.000731 ) [    59    ,   37.9   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[278,22] ( 0.000731 , 0.000724 ) [   37.9   ,   41.4   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[279,21] ( 0.000724 , 0.00073  ) [   41.4   ,   60.3   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -844.5745004551806
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -417.2857290165901
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -43.40805400782344
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.333945658568373
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990002603536055
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99652251276821
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99978246738429
-[280,14] ( 0.00073  , 0.000722 ) [   60.3   ,   29.8   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[281,22] ( 0.000722 , 0.000726 ) [   29.8   ,   45.5   ] 4.4e-09    [2:1:14:4:0:0:0:0:0:0:0:0]
-[282,20] ( 0.000726 , 0.000733 ) [   45.5   ,   70.4   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1610.6510976637373
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -800.324025569336
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -91.28783748673479
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.837706399696634
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.978317305335946
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990681915200668
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996864220133029
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99995537259921
-[283,15] ( 0.000733 , 0.000722 ) [   70.4   ,   36.4   ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[284,21] ( 0.000722 , 0.000732 ) [   36.4   ,   67.9   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1419.7197292873943
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -704.8583418926926
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -79.3546279223284
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.210618207498772
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.981229663770963
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992137582890145
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997591542449737
-[285,14] ( 0.000732 , 0.000727 ) [   67.9   ,   28.7   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[286,22] ( 0.000727 , 0.000725 ) [   28.7   ,   42.9   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
-[287,21] ( 0.000725 , 0.00073  ) [   42.9   ,   58.1   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -675.8814110783122
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -332.9391847781942
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -32.86473676559099
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.663423450438916
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.992575755740276
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997808638832014
-[288,13] ( 0.00073  , 0.000729 ) [   58.1   ,   32.9   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[289,22] ( 0.000729 , 0.000725 ) [   32.9   ,   42.1   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[290,21] ( 0.000725 , 0.00073  ) [   42.1   ,   59.3   ] 1.1e-08    [1:0:13:6:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -768.7584864121663
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -379.37772219643557
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -38.66955350767113
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.482023409077515
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991159061402888
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99710054034905
-[291,13] ( 0.00073  , 0.000731 ) [   59.3   ,   39.9   ] 3.91e-08   [5:0:0:0:0:0:0:6:0:0:0:0]
-[292,22] ( 0.000731 , 0.000724 ) [   39.9   ,   41.1   ] 4.4e-09    [20:0:1:0:0:0:0:0:0:0:0:0]
-[293,21] ( 0.000724 , 0.00073  ) [   41.1   ,   60.6   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -869.8433561515235
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -429.9201567953832
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -44.98735735876047
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 8.284592563272144
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.989617170151716
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99632986545439
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.99968621310573
-[294,14] ( 0.00073  , 0.000722 ) [   60.6   ,   29.5   ] 1.95e-08   [4:0:0:1:0:0:0:7:0:0:0:0]
-[295,22] ( 0.000722 , 0.000726 ) [   29.5   ,   45.4   ] 4.4e-09    [15:1:1:4:0:0:0:0:0:0:0:0]
-[296,20] ( 0.000726 , 0.000733 ) [   45.4   ,   71.1   ] 2.75e-08   [1:0:13:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1657.9222105522294
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -823.959581884778
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -94.24228180075787
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 6.745380264441351
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.977596262999894
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.990321522836739
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.996684152755162
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.999865467714374
-[297,15] ( 0.000733 , 0.000722 ) [   71.1   ,    36    ] 9.77e-09   [5:0:0:0:0:0:0:8:0:0:0:0]
-[298,21] ( 0.000722 , 0.000733 ) [    36    ,   68.4   ] 1.1e-08    [1:0:14:5:0:0:0:0:0:0:0:0]
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -1460.6542428665362
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -725.3255985705846
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= -81.91303481162687
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 7.13066820858603
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.980605276017238
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.991825500692165
-Failed check on parameter: T_min <= TimeSize
-fail 10 <= 9.997435613029628
-[299,14] ( 0.000733 , 0.000728 ) [   68.4   ,   29.3   ] 1.95e-08   [5:0:0:0:0:0:0:7:0:0:0:0]
-[300,22] ( 0.000728 , 0.000725 ) [   29.3   ,   42.7   ] 4.4e-09    [21:0:0:0:0:0:0:0:0:0:0:0]
+[ 51, 1] ( 5.9e-07  , 1.3e-13  ) [ 0.000104 , 2.26e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95449, ds=0.0017578, old_s=0.9527343750000001
+NewtonDumped --- start iterations ---
+solve_with_continuation() at phase 0 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() cant compute initial parameters
+
+
+Continuation step N.1 s=0.95361, ds=0.00087891, old_s=0.9527343750000001
+NewtonDumped --- start iterations ---
+solve_with_continuation() at phase 0 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() cant compute initial parameters
+
+NonlinearSolverBase::solve_with_continuation, error
+
+NonlinearSolverBase::solve_with_continuation, continuation step too short
+ds_interp = 0.0008789062499999988 < ds_min_step = 0.001
+
+On File:NonlinearSystem.cc:285
+
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -1996,74 +294,56 @@ dump_min       = 0.4           dump_max       = 0.9
 
 .................... BIG nonlinear system solver .....................
 ---------------------------- NewtonDumped ----------------------------
-n_power        = 2             check_angle    = 120 [degree]
-c1             = 0.01          lambda_min     = 1e-10
-dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 2             ratio ||d||_2  = 2
-ratio ||f||_1  = 2             ratio ||d||_1  = 2
------------------------------ STATISTIC ------------------------------
-Elapsed Time   = 13.1[sec]     timeout        = 0 [ms]
-iteration      = 301           tolerance      = 1e-09
-max iterations = 300           N. Equations   = 1609
-max acc. iter. = 800           N. System pars = 400
-Converged      = NO            Memory Used    = 205Kb (+1bytes)
+Converged      = NO            tolerance      = 1e-09     
+N. Equations   = 1609          N. System pars = 400
 Convergence failed due to:
-NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
-Iter = 301, maxIter = 300, tolerance = 1e-09
-||d||_inf = 3939.3, ||f||_inf = 0.71679
+
+NonlinearSolverBase::solve_with_continuation, continuation step too short
+ds_interp = 0.0008789062499999988 < ds_min_step = 0.001
+
+On File:NonlinearSystem.cc:285
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 174[ms]       timeout        = 0 [ms]
+iteration      = 53            Memory Used    = 204Kb (+82bytes)
+max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 4753          Jacobian       = 301
-Factorization  = 301           Inversion      = 5053
+Function       = 116           Jacobian       = 40
+Factorization  = 40            Inversion      = 150
+------------------------- SOLVER PARAMETERS --------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 0.71679       last ||d||_inf = 663.98
-last ||f||_1   = 0.00072484    last ||d||_1   = 42.748
-last ||f||_2   = 0.019027      last ||d||_2   = 68.012
+last ||f||_inf = 2.0322e-12    last ||d||_inf = 1.2827e-10
+last ||f||_1   = 1.2986e-13    last ||d||_1   = 2.2599e-11
+last ||f||_2   = 3.3618e-13    last ||d||_2   = 4.6915e-11
 ----------------------------------------------------------------------
           __  ___     __   __             ___  __   __   ___  __      
     |\ | /  \  |     /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \     
     | \| \__/  |     \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/     
                                                                       
-Check Jacobian Begin
-#ERR 1 Jacobian block N. 0 type: FD [(x+l+p) x (2*(x+l)+p+u) = (2+2+1) x (8+1+1) = 5 x 10]
-
-jac[  4,  8] =       2.7155 / 2.7166       [A/FD] ---    0.0010825 / 0.039847     [err/err(%)]
-
-#ERR 2 Jacobian block N. 1 type: FD [(x+l+p) x (2*(x+l)+p+u) = (2+2+1) x (8+1+1) = 5 x 10]
-
-jac[  4,  8] =       2.7155 / 2.7166       [A/FD] ---    0.0010825 / 0.039847     [err/err(%)]
-
-#ERR 3 Jacobian block N. 2 type: FD [(x+l+p) x (2*(x+l)+p+u) = (2+2+1) x (8+1+1) = 5 x 10]
-
-jac[  4,  8] =       2.7155 / 2.7166       [A/FD] ---    0.0010825 / 0.039847     [err/err(%)]
-
-#ERR 4 Jacobian block N. 3 type: FD [(x+l+p) x (2*(x+l)+p+u) = (2+2+1) x (8+1+1) = 5 x 10]
-
-jac[  4,  8] =       2.7155 / 2.7166       [A/FD] ---    0.0010825 / 0.039847     [err/err(%)]
-
-#ERR 5 Jacobian block N. 4 type: FD [(x+l+p) x (2*(x+l)+p+u) = (2+2+1) x (8+1+1) = 5 x 10]
-
-jac[  4,  8] =       2.7155 / 2.7166       [A/FD] ---    0.0010825 / 0.039847     [err/err(%)]
-
-#ERR 6 Jacobian block N. 5 type: FD [(x+l+p) x (2*(x+l)+p+u) = (2+2+1) x (8+1+1) = 5 x 10]
-
-jac[  4,  8] =       2.7155 / 2.7166       [A/FD] ---    0.0010825 / 0.039847     [err/err(%)]
-
-skipping...
+Check Jacobian Begin (disabling penalties)
+All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-All controls solution are OK
+At cell 180, H = -102.16730125146294, ||g||_inf = 88.85004351023144
+At cell 197, H = -102.16778456884894, ||g||_inf = 90.22608536630014
 Check Controls End
-NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
-Iter = 301, maxIter = 300, tolerance = 1e-09
-||d||_inf = 3939.3, ||f||_inf = 0.71679
 
-target [Lagrange,Mayer]       = [ 23.04, 0 ]
-[Penalties/Barriers,Controls] = [ 0, 0.003423 ]
+NonlinearSolverBase::solve_with_continuation, continuation step too short
+ds_interp = 0.0008789062499999988 < ds_min_step = 0.001
+
+On File:NonlinearSystem.cc:285
+
+target [Lagrange,Mayer]       = [ 588.5, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0.01677 ]
 Optimization parameters:
-TimeSize: 10.0030343269976854
+TimeSize: 102.154966634183225
 All Done Folks!

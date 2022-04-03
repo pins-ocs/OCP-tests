@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: TwoPhaseSchwartz.m                                             %
 %                                                                       %
-%  version: 1.0   date 25/3/2022                                        %
+%  version: 1.0   date 3/4/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -756,7 +756,7 @@ classdef TwoPhaseSchwartz < handle
     % ---------------------------------------------------------------------
     function bc = eval_bc( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
       bc = TwoPhaseSchwartz_Mex( ...
-        'boundaryConditions', self.objectHandle, ...
+        'bc', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
@@ -768,10 +768,10 @@ classdef TwoPhaseSchwartz < handle
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_D2bcD2xxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega )
+    function J = eval_D2bcD2xxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full )
       J = TwoPhaseSchwartz_Mex( ...
         'D2bcD2xxp', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full ...
       );
     end
     % ---------------------------------------------------------------------
@@ -910,6 +910,26 @@ classdef TwoPhaseSchwartz < handle
       Hc = TwoPhaseSchwartz_Mex(...
         'D2LTargsD2xup', self.objectHandle, iseg, q, x, u, pars, omega ...
       );
+    end
+    % ---------------------------------------------------------------------
+    function HcBIG = eval_D2fd_cD2xup( self, iseg_L, q_L, x_L, ...
+                                             iseg_R, q_R, x_R, ...
+                                             u, pars, omega )
+      %
+      % Evaluate hessian of constraints omega . c(x,u,p) <= 0
+      %
+      q_M = (q_R+q_L)/2;
+      x_M = (x_R+x_L)/2;
+      Hc = BangBangF_Mex(...
+        'D2LTargsD2xup', self.objectHandle, iseg_L, q_M, x_M, u, pars, omega ...
+      );
+      nx = length(x_L);
+      A  = Hc(1:nx,1:nx)./4;
+      B  = Hc(1:nx,nx+1:end)./2;
+      C  = Hc(nx+1:end,nx+1:end);
+      HcBIG = [ A,   A,   B; ...
+                A,   A,   B; ...
+                B.', B.', C ];
     end
     %
     %
@@ -1113,30 +1133,6 @@ classdef TwoPhaseSchwartz < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function bc = eval_adjointBC( self, iseg_L, q_L, x_L, ...
-                                        iseg_R, q_R, x_R, ...
-                                        pars, Omega )
-      %
-      % Compute `Gradient_{xxp} [ Omega . bc( x_L, x_R, p ) + Mayer( x_L, x_R, p ) ]`
-      %
-      bc = TwoPhaseSchwartz_Mex( ...
-        'adjointBC', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, Omega ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DadjointBCDxxp( self, iseg_L, q_L, x_L, ...
-                                            iseg_R, q_R, x_R, ...
-                                            pars, Omega )
-      %
-      % Compute `Hessian_{xxp} [ Omega . bc( x_L, x_R, p ) + Mayer( x_L, x_R, p ) ]`
-      %
-      J = TwoPhaseSchwartz_Mex( ...
-        'DadjointBCDxxp', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, Omega ...
-      );
-    end
-    % ---------------------------------------------------------------------
     function jmp = eval_jump( self, iseg_L, q_L, x_L, lambda_L, ...
                                     iseg_R, q_R, x_R, lambda_R, pars )
       jmp = TwoPhaseSchwartz_Mex( ...
@@ -1200,10 +1196,6 @@ classdef TwoPhaseSchwartz < handle
     % ---------------------------------------------------------------------
     function res = A_pattern( self )
       res = TwoPhaseSchwartz_Mex('eval_A_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DadjointBCDxxp_pattern( self )
-      res = TwoPhaseSchwartz_Mex('eval_DadjointBCDxxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DbcDxxp_pattern( self )

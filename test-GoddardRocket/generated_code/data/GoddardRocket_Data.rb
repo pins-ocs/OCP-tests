@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 25/3/2022                                        #
+#  version: 1.0   date 3/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -21,22 +21,22 @@ include Mechatronix
 
 # Auxiliary values
 tol_mass  = 0.01
-h_i       = 1
-mc        = 0.6
-tol_TS    = 0.01
-tol_T     = 0.01
-epsi_v    = 0.01
+vc        = 620
 epsi_mass = 0.01
 epsi_T    = 0.01
-m_i       = 1
-m_f       = mc*m_i
+h_i       = 1
+tol_T     = 0.01
 g0        = 1
 c         = 0.5*(g0*h_i)**(1/2.0)
-tol_v     = 0.01
+epsi_v    = 0.01
+mc        = 0.6
+tol_TS    = 0.01
+m_i       = 1
 Tmax      = 3.5*g0*m_i
-epsi_TS   = 0.01
-vc        = 620
 Dc        = 0.5*vc*m_i/g0
+m_f       = mc*m_i
+tol_v     = 0.01
+epsi_TS   = 0.01
 
 mechatronix do |data|
 
@@ -68,13 +68,16 @@ mechatronix do |data|
 
   # Enable check jacobian and controls
   data.ControlsCheck         = true
-  data.ControlsCheck_epsilon = 1e-8
+  data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
   # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
   data.JacobianDiscretization = 'ANALYTIC'
+
+  # jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretizationBC = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "GoddardRocket_dump"
@@ -109,7 +112,7 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
       :merit                => "MERIT_D2",
       :max_iter             => 50,
       :max_step_iter        => 10,
@@ -188,8 +191,8 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      :merit                => "MERIT_F2_and_D2",
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      :merit                => "MERIT_LOG_F2_and_D2",
       :max_iter             => 300,
       :max_step_iter        => 40,
       :max_accumulated_iter => 800,
@@ -389,8 +392,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 1000,
+        :length => 1,
       },
     ],
   };

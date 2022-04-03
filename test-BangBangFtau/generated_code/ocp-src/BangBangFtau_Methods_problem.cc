@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -584,7 +584,8 @@ namespace BangBangFtauDefine {
     result__[ 4   ] = vsTBInterval_max(t1 - t2 - 1);
     result__[ 5   ] = X__[iX_sT] - X__[iX_sB];
     result__[ 6   ] = clip(result__[5], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    Mechatronix::check_in_segment( result__, "post_eval", 7, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

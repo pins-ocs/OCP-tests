@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -564,7 +564,8 @@ namespace GoddardRocketDefine {
     result__[ 3   ] = TSPositive(-t5);
     result__[ 4   ] = t5 * Q__[iQ_zeta];
     result__[ 5   ] = t4 * t5;
-    Mechatronix::check_in_segment( result__, "post_eval", 6, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

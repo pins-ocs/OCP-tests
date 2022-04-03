@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: LUUS_Singular02_ffi_structs.rb                                    #
 #                                                                          #
-#  version: 1.0   date 25/3/2022                                           #
+#  version: 1.0   date 3/4/2022                                            #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #

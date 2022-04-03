@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -54,10 +54,10 @@ namespace MaximumAscentDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer MaximumAscent::boundaryConditions_numEqns() const { return 6; }
+  integer MaximumAscent::bc_numEqns() const { return 6; }
 
   void
-  MaximumAscent::boundaryConditions_eval(
+  MaximumAscent::bc_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -79,7 +79,7 @@ namespace MaximumAscentDefine {
     real_type t13  = sqrt(XR__[iX_r]);
     result__[ 5   ] = t13 * XR__[iX_v] - 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 6, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "bc_eval", 6, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -143,81 +143,6 @@ namespace MaximumAscentDefine {
 
   void
   MaximumAscent::D2bcD2xxp_sparse(
-    NodeType const         & LEFT__,
-    NodeType const         & RIGHT__,
-    P_const_pointer_type     P__,
-    OMEGA_const_pointer_type OMEGA__,
-    real_type                result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = 1;
-    result__[ 1   ] = 1;
-    result__[ 2   ] = 1;
-    result__[ 3   ] = 1;
-    result__[ 4   ] = 1;
-    real_type t3   = sqrt(XR__[iX_r]);
-    result__[ 5   ] = 1.0 / t3 * XR__[iX_v] / 2;
-    result__[ 6   ] = t3;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "D2bcD2xxp_sparse", 3, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer MaximumAscent::adjointBC_numEqns() const { return 8; }
-
-  void
-  MaximumAscent::adjointBC_eval(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0];
-    result__[ 1   ] = OMEGA__[1];
-    result__[ 2   ] = OMEGA__[2];
-    result__[ 3   ] = OMEGA__[3];
-    real_type t1   = OMEGA__[5];
-    real_type t5   = sqrt(XR__[iX_r]);
-    result__[ 4   ] = -1 + 1.0 / t5 * XR__[iX_v] * t1 / 2;
-    result__[ 5   ] = OMEGA__[4];
-    result__[ 6   ] = t5 * t1;
-    result__[ 7   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 8, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MaximumAscent::DadjointBCDxxp_numRows() const { return 8; }
-  integer MaximumAscent::DadjointBCDxxp_numCols() const { return 8; }
-  integer MaximumAscent::DadjointBCDxxp_nnz()     const { return 3; }
-
-  void
-  MaximumAscent::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
-    iIndex[1 ] = 4   ; jIndex[1 ] = 6   ;
-    iIndex[2 ] = 6   ; jIndex[2 ] = 4   ;
-  }
-
-
-  void
-  MaximumAscent::DadjointBCDxxp_sparse(
     NodeType const              & LEFT__,
     NodeType const              & RIGHT__,
     P_const_pointer_type          P__,
@@ -239,8 +164,10 @@ namespace MaximumAscentDefine {
     result__[ 1   ] = 1.0 / t5 * t1 / 2;
     result__[ 2   ] = result__[1];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 3, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "D2bcD2xxp_sparse", 3, i_segment_left, i_segment_right );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 
 // EOF: MaximumAscent_Methods_boundary_conditions.cc

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Main.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_max = 0.01;
-    real_type epsi_max = 0.01;
     real_type ubMax = 2;
     real_type uaMax = 10;
+    real_type tol_max = 0.01;
+    real_type epsi_max = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
