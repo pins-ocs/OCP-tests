@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 4/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,7 +94,7 @@ namespace GoddardRocketDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_TimeSize];
     real_type t2   = XM__[1];
-    result__[ 0   ] = -t2 * t1 + V__[0];
+    result__[ 0   ] = -t1 * t2 + V__[0];
     real_type t6   = UM__[0];
     real_type t7   = XM__[0];
     real_type t8   = DD(t7, t2);

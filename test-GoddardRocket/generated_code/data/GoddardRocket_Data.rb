@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 4/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,23 +20,23 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol_mass  = 0.01
-vc        = 620
-epsi_mass = 0.01
-epsi_T    = 0.01
-h_i       = 1
-tol_T     = 0.01
-g0        = 1
-c         = 0.5*(g0*h_i)**(1/2.0)
-epsi_v    = 0.01
-mc        = 0.6
-tol_TS    = 0.01
+epsi_TS   = 0.025
 m_i       = 1
-Tmax      = 3.5*g0*m_i
-Dc        = 0.5*vc*m_i/g0
+epsi_T    = 0.025
+mc        = 0.6
 m_f       = mc*m_i
+tol_TS    = 0.01
+vc        = 620
+tol_T     = 0.01
+tol_mass  = 0.01
+epsi_mass = 0.025
 tol_v     = 0.01
-epsi_TS   = 0.01
+epsi_v    = 0.025
+g0        = 1
+Dc        = 0.5*vc*m_i/g0
+Tmax      = 3.5*g0*m_i
+h_i       = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
 
 mechatronix do |data|
 
@@ -336,7 +336,7 @@ mechatronix do |data|
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:TControl] = {
-    :type      => 'QUADRATIC',
+    :type      => 'COS_LOGARITHMIC',
     :epsilon   => epsi_T,
     :tolerance => tol_T
   }
@@ -364,7 +364,7 @@ mechatronix do |data|
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:vPositive] = {
-    :subType   => "PENALTY_REGULAR",
+    :subType   => "BARRIER_LOG",
     :epsilon   => epsi_v,
     :tolerance => tol_v,
     :active    => true
@@ -392,7 +392,7 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 1000,
+        :n      => 400,
         :length => 1,
       },
     ],
