@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_problem.cc              |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -524,7 +524,8 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t5   = floor(1.0 / 0.314159265358979323846264338328e1 * t1 / 2);
     result__[ 0   ] = -2 * 0.314159265358979323846264338328e1 * t5 + t1;
     result__[ 1   ] = mass(Q__[iQ_zeta]);
-    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

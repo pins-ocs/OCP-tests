@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_problem.cc                                       |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -512,7 +512,8 @@ namespace BrakeDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = aControl(U__[iU_a], -1, 1);
     result__[ 1   ] = Tpositive(-P__[iP_T]);
-    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

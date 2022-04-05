@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_problem.cc                 |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -513,7 +513,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_type t3   = Q__[iQ_zeta];
     result__[ 1   ] = uMaxBound(t2 - t3 - t1 + 1);
     result__[ 2   ] = t2 + 1 - t3;
-    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -533,7 +534,8 @@ namespace SingularConstrainedCalogeroDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = U__[iU_u] * (Q__[iQ_zeta] - 4);
-    Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 
 }

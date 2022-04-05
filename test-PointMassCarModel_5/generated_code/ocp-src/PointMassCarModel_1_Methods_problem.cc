@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -308,7 +308,7 @@ namespace PointMassCarModel_1Define {
     real_type t5   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     real_type t7   = v__fxControl(U__[iU_v__fx], -1, 1);
     real_type t10  = v__OmegaControl(U__[iU_v__Omega], -1, 1);
-    real_type result__ = t10 * t5 + t7 * t5;
+    real_type result__ = t10 * t5 + t5 * t7;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
@@ -802,7 +802,8 @@ namespace PointMassCarModel_1Define {
     result__[ 11  ] = t39 / t18 * result__[9];
     result__[ 12  ] = inv_zeta__dot(t15, X__[iX_alpha], t24, Q__[iQ_Kappa]);
     result__[ 13  ] = 1.0 / result__[12];
-    Mechatronix::check_in_segment( result__, "post_eval", 14, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 14, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -822,7 +823,8 @@ namespace PointMassCarModel_1Define {
     real_const_ptr L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
-    Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 
 }

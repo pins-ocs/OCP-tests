@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -210,7 +210,7 @@ namespace PointMassCarModel_2Define {
     real_type t20  = t1 * t1;
     real_type t23  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
     real_type t24  = 1.0 / t23;
-    real_type t27  = t16 * t19 * t20 * t24 + t12 * t16 * t9 - 1;
+    real_type t27  = t16 * t24 * t20 * t19 + t16 * t12 * t9 - 1;
     real_type t28  = AdherenceEllipse(t27);
     real_type t29  = t28 * t7;
     real_type t30  = zeta__dot_D_3(t1, t2, t3, t4);
@@ -225,23 +225,23 @@ namespace PointMassCarModel_2Define {
     real_type t45  = ALIAS_RoadRightBorder_D(t41);
     real_type t48  = ModelPars[iM_m];
     real_type t50  = 1.0 / ModelPars[iM_Pmax];
-    real_type t53  = t1 * t48 * t50 * t8 - 1;
+    real_type t53  = t50 * t48 * t8 * t1 - 1;
     real_type t54  = PowerLimit(t53);
     real_type t55  = t54 * t7;
     real_type t57  = LimitMinSpeed(-t1);
     real_type t58  = t57 * t7;
-    result__[ 0   ] = -t29 * t30 - t30 * t35 - t30 * t43 - t30 * t55 - t30 * t58 + t37 * t38 - t37 * t45;
+    result__[ 0   ] = -t30 * t29 - t30 * t35 - t30 * t43 - t30 * t55 - t30 * t58 + t38 * t37 - t45 * t37;
     real_type t60  = zeta__dot_D_2(t1, t2, t3, t4);
-    result__[ 1   ] = -t29 * t60 - t35 * t60 - t43 * t60 - t55 * t60 - t58 * t60;
+    result__[ 1   ] = -t60 * t29 - t60 * t35 - t60 * t43 - t60 * t55 - t60 * t58;
     real_type t66  = zeta__dot_D_1(t1, t2, t3, t4);
     real_type t68  = ALIAS_AdherenceEllipse_D(t27);
     real_type t69  = t68 * t37;
     real_type t78  = ALIAS_PowerLimit_D(t53);
     real_type t79  = t78 * t37;
     real_type t84  = ALIAS_LimitMinSpeed_D(-t1);
-    result__[ 2   ] = 2 * t1 * t16 * t19 * t24 * t69 + t48 * t50 * t79 * t8 - t29 * t66 - t35 * t66 - t37 * t84 - t43 * t66 - t55 * t66 - t58 * t66;
+    result__[ 2   ] = 2 * t16 * t24 * t1 * t19 * t69 + t50 * t48 * t8 * t79 - t66 * t29 - t66 * t35 - t84 * t37 - t66 * t43 - t66 * t55 - t66 * t58;
     result__[ 3   ] = 2 * t16 * t24 * t20 * t18 * t69;
-    result__[ 4   ] = t1 * t48 * t50 * t79 + 2 * t12 * t16 * t69 * t8;
+    result__[ 4   ] = t50 * t48 * t1 * t79 + 2 * t16 * t12 * t8 * t69;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "LTx_eval", 5, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -119,11 +119,13 @@ namespace FarmerDefine {
     V__[3] = __INV_DZETA*(XR__[3]-XL__[3]);
     V__[4] = __INV_DZETA*(XR__[4]-XL__[4]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    result__[ 2   ] = V__[2];
-    result__[ 3   ] = V__[3];
-    result__[ 4   ] = V__[4];
+    result__[ 0   ] = V__[0] + (XM__[0] - UM__[0]) / ModelPars[iM_tau__1];
+    result__[ 1   ] = V__[1] + (XM__[1] - UM__[1]) / ModelPars[iM_tau__2];
+    real_type t16  = XM__[2];
+    result__[ 2   ] = V__[2] + 1.0 / ModelPars[iM_tau__3] * (t16 - UM__[2]);
+    real_type t23  = XM__[4];
+    result__[ 3   ] = V__[3] + 1.0 / ModelPars[iM_tau__4] * (-t16 + t23);
+    result__[ 4   ] = V__[4] + 1.0 / ModelPars[iM_tau__5] * (t23 - UM__[3]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 5, i_segment );
   }
@@ -131,20 +133,28 @@ namespace FarmerDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Farmer::Dfd_odeDxxup_numRows() const { return 5; }
   integer Farmer::Dfd_odeDxxup_numCols() const { return 14; }
-  integer Farmer::Dfd_odeDxxup_nnz()     const { return 10; }
+  integer Farmer::Dfd_odeDxxup_nnz()     const { return 18; }
 
   void
   Farmer::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 6   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 7   ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 8   ;
-    iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
-    iIndex[9 ] = 4   ; jIndex[9 ] = 9   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 10  ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 6   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 11  ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 7   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 12  ;
+    iIndex[9 ] = 3   ; jIndex[9 ] = 2   ;
+    iIndex[10] = 3   ; jIndex[10] = 3   ;
+    iIndex[11] = 3   ; jIndex[11] = 4   ;
+    iIndex[12] = 3   ; jIndex[12] = 7   ;
+    iIndex[13] = 3   ; jIndex[13] = 8   ;
+    iIndex[14] = 3   ; jIndex[14] = 9   ;
+    iIndex[15] = 4   ; jIndex[15] = 4   ;
+    iIndex[16] = 4   ; jIndex[16] = 9   ;
+    iIndex[17] = 4   ; jIndex[17] = 13  ;
   }
 
 
@@ -178,18 +188,35 @@ namespace FarmerDefine {
     V__[3] = __INV_DZETA*(XR__[3]-XL__[3]);
     V__[4] = __INV_DZETA*(XR__[4]-XL__[4]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = -__INV_DZETA;
-    result__[ 1   ] = __INV_DZETA;
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = __INV_DZETA;
-    result__[ 4   ] = result__[2];
-    result__[ 5   ] = __INV_DZETA;
-    result__[ 6   ] = result__[4];
-    result__[ 7   ] = __INV_DZETA;
-    result__[ 8   ] = result__[6];
-    result__[ 9   ] = __INV_DZETA;
+    real_type t2   = 1.0 / ModelPars[iM_tau__1];
+    real_type t3   = 0.5e0 * t2;
+    result__[ 0   ] = t3 - __INV_DZETA;
+    result__[ 1   ] = t3 + __INV_DZETA;
+    result__[ 2   ] = -t2;
+    real_type t5   = 1.0 / ModelPars[iM_tau__2];
+    real_type t6   = 0.5e0 * t5;
+    result__[ 3   ] = t6 - __INV_DZETA;
+    result__[ 4   ] = t6 + __INV_DZETA;
+    result__[ 5   ] = -t5;
+    real_type t8   = 1.0 / ModelPars[iM_tau__3];
+    real_type t9   = 0.5e0 * t8;
+    result__[ 6   ] = t9 - __INV_DZETA;
+    result__[ 7   ] = t9 + __INV_DZETA;
+    result__[ 8   ] = -t8;
+    real_type t12  = 0.5e0 / ModelPars[iM_tau__4];
+    result__[ 9   ] = -t12;
+    result__[ 10  ] = -__INV_DZETA;
+    result__[ 11  ] = t12;
+    result__[ 12  ] = result__[9];
+    result__[ 13  ] = __INV_DZETA;
+    result__[ 14  ] = result__[11];
+    real_type t14  = 1.0 / ModelPars[iM_tau__5];
+    real_type t15  = 0.5e0 * t14;
+    result__[ 15  ] = t15 + result__[10];
+    result__[ 16  ] = t15 + __INV_DZETA;
+    result__[ 17  ] = -t14;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 10, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 18, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

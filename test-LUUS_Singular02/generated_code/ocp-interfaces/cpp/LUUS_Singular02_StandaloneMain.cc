@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular02_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,8 +51,8 @@ main() {
 
     // Auxiliary values
     real_type Tf = 5;
-    real_type epsi_x1 = 0.0001;
     real_type u_epsilon0 = 0.01;
+    real_type epsi_x1 = 0.0001;
     real_type u_tolerance0 = 0.01;
     integer InfoLevel = 4;
 
@@ -172,8 +172,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 LUUS_Singular02_data.Mesh["s0"] = 0;
-LUUS_Singular02_data.Mesh["segments"][0]["length"] = Tf;
 LUUS_Singular02_data.Mesh["segments"][0]["n"] = 1000;
+LUUS_Singular02_data.Mesh["segments"][0]["length"] = Tf;
 
 
     // alias for user object classes passed as pointers

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 4/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,23 +50,23 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_mass = 0.01;
-    real_type h_i = 1;
-    real_type mc = 0.6;
-    real_type tol_TS = 0.01;
-    real_type tol_T = 0.01;
-    real_type epsi_v = 0.01;
-    real_type epsi_mass = 0.01;
-    real_type epsi_T = 0.01;
+    real_type epsi_TS = 0.025;
     real_type m_i = 1;
+    real_type epsi_T = 0.025;
+    real_type mc = 0.6;
     real_type m_f = mc*m_i;
-    real_type g0 = 1;
-    real_type c = 0.5*(g0*h_i)^(1/2.0);
-    real_type tol_v = 0.01;
-    real_type Tmax = 3.5*g0*m_i;
-    real_type epsi_TS = 0.01;
+    real_type tol_TS = 0.01;
     real_type vc = 620;
+    real_type tol_T = 0.01;
+    real_type tol_mass = 0.01;
+    real_type epsi_mass = 0.025;
+    real_type tol_v = 0.01;
+    real_type epsi_v = 0.025;
+    real_type g0 = 1;
     real_type Dc = 0.5*vc*m_i/g0;
+    real_type Tmax = 3.5*g0*m_i;
+    real_type h_i = 1;
+    real_type c = 0.5*(g0*h_i)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -202,7 +202,7 @@ main() {
     data_massPositive["active"]    = true;
     // PenaltyBarrier1DLessThan
     GenericContainer & data_vPositive = data_Constraints["vPositive"];
-    data_vPositive["subType"]   = "PENALTY_REGULAR";
+    data_vPositive["subType"]   = "BARRIER_LOG";
     data_vPositive["epsilon"]   = epsi_v;
     data_vPositive["tolerance"] = tol_v;
     data_vPositive["active"]    = true;
@@ -218,8 +218,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 GoddardRocket_data.Mesh["s0"] = 0;
+GoddardRocket_data.Mesh["segments"][0]["n"] = 400;
 GoddardRocket_data.Mesh["segments"][0]["length"] = 1;
-GoddardRocket_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

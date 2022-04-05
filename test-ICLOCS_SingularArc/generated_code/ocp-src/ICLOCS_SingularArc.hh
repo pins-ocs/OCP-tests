@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc.hh                                          |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -140,28 +140,15 @@ namespace ICLOCS_SingularArcDefine {
     using Mechatronix::Discretized_Indirect_OCP::guess;
 
     using Mechatronix::Discretized_Indirect_OCP::num_active_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_initial_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_final_BC;
-    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_BC;
-
-    using Mechatronix::Discretized_Indirect_OCP::num_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_initial_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_final_OMEGA;
-    using Mechatronix::Discretized_Indirect_OCP::num_cyclic_OMEGA;
 
     using Mechatronix::Discretized_Indirect_OCP::bc_map;
     using Mechatronix::Discretized_Indirect_OCP::bc_inv_map;
-
-    using Mechatronix::Discretized_Indirect_OCP::omega_map;
-    using Mechatronix::Discretized_Indirect_OCP::omega_inv_map;
 
     using Mechatronix::Discretized_Indirect_OCP::dim_Q;
     using Mechatronix::Discretized_Indirect_OCP::dim_X;
     using Mechatronix::Discretized_Indirect_OCP::dim_U;
     using Mechatronix::Discretized_Indirect_OCP::dim_Pars;
-    using Mechatronix::Discretized_Indirect_OCP::dim_Omega;
     using Mechatronix::Discretized_Indirect_OCP::dim_BC;
-    using Mechatronix::Discretized_Indirect_OCP::dim_full_BC;
     using Mechatronix::Discretized_Indirect_OCP::num_nodes;
 
     using Mechatronix::Discretized_Indirect_OCP::num_equations;

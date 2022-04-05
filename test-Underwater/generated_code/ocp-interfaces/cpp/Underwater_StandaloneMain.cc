@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_penalty = 0.01;
     real_type epsi_penalty = 0.1;
+    real_type tol_penalty = 0.01;
     real_type epsi_max = epsi_penalty;
     integer InfoLevel = 4;
 
@@ -200,8 +200,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Underwater_data.Mesh["s0"] = 0;
-Underwater_data.Mesh["segments"][0]["n"] = 1000;
 Underwater_data.Mesh["segments"][0]["length"] = 1;
+Underwater_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_1_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 25/3/2022                                        #
+#  version: 1.0   date 3/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -21,14 +21,14 @@ include Mechatronix
 
 # Auxiliary values
 p_epsi0   = 0.1
-p_tol0    = 0.1
-up_tol0   = 0.01
-up_epsi0  = 0.1
-wT0       = 0.01
 road_tol0 = 0.01
-wT        = wT0
+p_tol0    = 0.1
 m         = 700
+wT0       = 0.01
+wT        = wT0
 kD        = 0.2500000000/m
+up_epsi0  = 0.1
+up_tol0   = 0.01
 
 mechatronix do |data|
 
@@ -60,13 +60,16 @@ mechatronix do |data|
 
   # Enable check jacobian and controls
   data.ControlsCheck         = true
-  data.ControlsCheck_epsilon = 1e-8
+  data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
   # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
   data.JacobianDiscretization = 'ANALYTIC'
+
+  # jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretizationBC = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "PointMassCarModel_1_dump"
@@ -101,7 +104,7 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
       :merit                => "MERIT_D2",
       :max_iter             => 50,
       :max_step_iter        => 10,
@@ -180,8 +183,8 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      :merit                => "MERIT_F2_and_D2",
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      :merit                => "MERIT_LOG_F2_and_D2",
       :max_iter             => 300,
       :max_step_iter        => 40,
       :max_accumulated_iter => 800,
@@ -406,74 +409,74 @@ mechatronix do |data|
     :is_SAE   => false,
     :segments => [
       {
+        :length     => 190,
         :gridSize   => 1,
         :leftWidth  => 15/2.0,
         :curvature  => 0,
         :rightWidth => 60,
-        :length     => 190,
       },
       {
+        :length     => 973.8937227,
         :gridSize   => 1,
         :leftWidth  => 60,
         :curvature  => 0.003225806452,
         :rightWidth => 30,
-        :length     => 973.8937227,
       },
       {
+        :length     => 180,
         :gridSize   => 1,
         :leftWidth  => 30,
         :curvature  => 0,
         :rightWidth => 30,
-        :length     => 180,
       },
       {
+        :length     => 235.619449,
         :gridSize   => 1,
         :leftWidth  => 20,
         :curvature  => 0.006666666667,
         :rightWidth => 15,
-        :length     => 235.619449,
       },
       {
+        :length     => 240,
         :gridSize   => 1,
         :leftWidth  => 30,
         :curvature  => 0,
         :rightWidth => 30,
-        :length     => 240,
       },
       {
+        :length     => 235.619449,
         :gridSize   => 1,
         :leftWidth  => 30,
         :curvature  => -1/150.0,
         :rightWidth => 30,
-        :length     => 235.619449,
       },
       {
+        :length     => 200,
         :gridSize   => 1,
         :leftWidth  => 30,
         :curvature  => 0,
         :rightWidth => 30,
-        :length     => 200,
       },
       {
+        :length     => 125.6637062,
         :gridSize   => 1,
         :leftWidth  => 30,
         :curvature  => 0.025,
         :rightWidth => 30,
-        :length     => 125.6637062,
       },
       {
+        :length     => 480,
         :gridSize   => 1,
         :leftWidth  => 30,
         :curvature  => 0,
         :rightWidth => 30,
-        :length     => 480,
       },
       {
+        :length     => 10,
         :gridSize   => 0.1,
         :leftWidth  => 30,
         :curvature  => 0,
         :rightWidth => 30,
-        :length     => 10,
       },
     ],
   };

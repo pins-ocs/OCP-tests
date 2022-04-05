@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BrysonDenham_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 25/3/2022                                        #
+#  version: 1.0   date 3/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi = 0.0001
 tol  = 0.0001
+epsi = 0.0001
 
 mechatronix do |data|
 
@@ -53,13 +53,16 @@ mechatronix do |data|
 
   # Enable check jacobian and controls
   data.ControlsCheck         = true
-  data.ControlsCheck_epsilon = 1e-8
+  data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
   # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
   data.JacobianDiscretization = 'ANALYTIC'
+
+  # jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretizationBC = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "BrysonDenham_dump"
@@ -94,7 +97,7 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
       :merit                => "MERIT_D2",
       :max_iter             => 50,
       :max_step_iter        => 10,
@@ -173,8 +176,8 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      :merit                => "MERIT_F2_and_D2",
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      :merit                => "MERIT_LOG_F2_and_D2",
       :max_iter             => 300,
       :max_step_iter        => 40,
       :max_accumulated_iter => 800,

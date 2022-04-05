@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Methods_problem.cc                          |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -548,7 +548,8 @@ namespace ICLOCS_SingularArcDefine {
     real_type t2   = P__[iP_T];
     result__[ 1   ] = tfbound(-t2);
     result__[ 2   ] = t2 * Q__[iQ_zeta];
-    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -570,7 +571,8 @@ namespace ICLOCS_SingularArcDefine {
     real_type t2   = X__[iX_x1] * X__[iX_x1];
     real_type t4   = X__[iX_x2] * X__[iX_x2];
     result__[ 0   ] = t2 + t4;
-    Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 
 }

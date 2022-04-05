@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular03_Methods_boundary_conditions.cc                 |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -65,10 +65,10 @@ namespace LUUS_Singular03Define {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer LUUS_Singular03::boundaryConditions_numEqns() const { return 2; }
+  integer LUUS_Singular03::bc_numEqns() const { return 2; }
 
   void
-  LUUS_Singular03::boundaryConditions_eval(
+  LUUS_Singular03::bc_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -85,7 +85,7 @@ namespace LUUS_Singular03Define {
     result__[ 0   ] = XL__[iX_x1] - ModelPars[iM_x1_i];
     result__[ 1   ] = XL__[iX_x2] - ModelPars[iM_x2_i];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 2, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "bc_eval", 2, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -136,64 +136,16 @@ namespace LUUS_Singular03Define {
 
   void
   LUUS_Singular03::D2bcD2xxp_sparse(
-    NodeType const         & LEFT__,
-    NodeType const         & RIGHT__,
-    P_const_pointer_type     P__,
-    OMEGA_const_pointer_type OMEGA__,
-    real_type                result__[]
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
+    P_const_pointer_type          P__,
+    OMEGA_full_const_pointer_type OMEGA__,
+    real_type                     result__[]
   ) const {
     // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer LUUS_Singular03::adjointBC_numEqns() const { return 4; }
-
-  void
-  LUUS_Singular03::adjointBC_eval(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0];
-    result__[ 1   ] = OMEGA__[1];
-    result__[ 2   ] = 0;
-    result__[ 3   ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 4, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer LUUS_Singular03::DadjointBCDxxp_numRows() const { return 4; }
-  integer LUUS_Singular03::DadjointBCDxxp_numCols() const { return 4; }
-  integer LUUS_Singular03::DadjointBCDxxp_nnz()     const { return 0; }
-
-  void
-  LUUS_Singular03::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  LUUS_Singular03::DadjointBCDxxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    // EMPTY!
-  }
 }
 
 // EOF: LUUS_Singular03_Methods_boundary_conditions.cc

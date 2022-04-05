@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Pugliese_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 25/3/2022                                        #
+#  version: 1.0   date 3/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-t__M = 38.15
+g__M = 1.5
 t__S = 45.15
 YEAR = 365.25
-g__M = 1.5
+t__M = 38.15
 C__M = (1-1/t__M)*g__M*p__M
 g__S = 3.5
 C__S = (1-1/t__S)*g__S*p__S
@@ -58,13 +58,16 @@ mechatronix do |data|
 
   # Enable check jacobian and controls
   data.ControlsCheck         = true
-  data.ControlsCheck_epsilon = 1e-8
+  data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
   # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
   data.JacobianDiscretization = 'ANALYTIC'
+
+  # jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretizationBC = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "Pugliese_dump"
@@ -99,7 +102,7 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
       :merit                => "MERIT_D2",
       :max_iter             => 50,
       :max_step_iter        => 10,
@@ -178,8 +181,8 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      :merit                => "MERIT_F2_and_D2",
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      :merit                => "MERIT_LOG_F2_and_D2",
       :max_iter             => 300,
       :max_step_iter        => 40,
       :max_accumulated_iter => 800,
@@ -357,8 +360,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 400,
         :length => 5*YEAR,
+        :n      => 400,
       },
     ],
   };

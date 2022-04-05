@@ -34,18 +34,16 @@ Model Parameters
 ...................................FpMax = 10
 INFO CLASS = BangBangFmodule
   #nodes      = 101
-  dim         = u=2, q=1, x=2, p=0, omega=4, bc=4, full_bc=8
-  BC          = Inital=4, Final=4, Cyclic=0
-  OMEGA       = Inital=2, Final=2, Cyclic=0
+  dim         = u=2, q=1, x=2, p=0, bc(active/total)=(4/4)
   total       = nZ=408, UC=200, Q=101
   index start = omega=404, p=408
-  FD jacobian = ANALYTIC
 END INFO
-Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton
-Jacobian evaluation:  Analitic Jacobian
-Initializer Controls: Quasi-Newton
-Used threads:         15
+Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:        Newton
+Jacobian evaluation:    Analitic Jacobian
+Jacobian BC evaluation: Analitic Jacobian
+Initializer Controls:   Quasi-Newton
+Used threads:           15
 
 
 NewtonDumped --- start iterations ---
@@ -70,17 +68,12 @@ dump_min       = 0.4           dump_max       = 0.9
 
 .................... BIG nonlinear system solver .....................
 ---------------------------- NewtonDumped ----------------------------
-n_power        = 2             check_angle    = 120 [degree]
-c1             = 0.01          lambda_min     = 1e-10
-dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 2             ratio ||d||_2  = 2
-ratio ||f||_1  = 2             ratio ||d||_1  = 2
+Converged      = YES           tolerance      = 1e-09     
+N. Equations   = 408           N. System pars = 200
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 27.5[ms]      timeout        = 0 [ms]
-iteration      = 10            tolerance      = 1e-09
-max iterations = 300           N. Equations   = 408
-max acc. iter. = 800           N. System pars = 200
-Converged      = YES           Memory Used    = 78Kb (+73bytes)
+Elapsed Time   = 21.4[ms]      timeout        = 0 [ms]
+iteration      = 10            Memory Used    = 79Kb (+60bytes)
+max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
@@ -88,16 +81,22 @@ Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
 Function       = 123           Jacobian       = 10
 Factorization  = 10            Inversion      = 132
+------------------------- SOLVER PARAMETERS --------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
 last ||f||_inf = 2.7515e-12    last ||d||_inf = 6.0008e-12
-last ||f||_1   = 5.1709e-14    last ||d||_1   = 2.7297e-13
-last ||f||_2   = 2.7938e-13    last ||d||_2   = 6.7359e-13
+last ||f||_1   = 5.171e-14     last ||d||_1   = 2.7299e-13
+last ||f||_2   = 2.7939e-13    last ||d||_2   = 6.7359e-13
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin
+Check Jacobian Begin (disabling penalties)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

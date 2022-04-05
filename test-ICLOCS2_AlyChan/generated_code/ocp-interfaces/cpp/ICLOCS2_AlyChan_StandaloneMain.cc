@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,8 +51,8 @@ main() {
 
     // Auxiliary values
     real_type u_epsi_max = 1e-06;
-    real_type u_tol_max = 1e-06;
     real_type u_epsi = u_epsi_max;
+    real_type u_tol_max = 1e-06;
     real_type u_tol = u_tol_max;
     integer InfoLevel = 4;
 

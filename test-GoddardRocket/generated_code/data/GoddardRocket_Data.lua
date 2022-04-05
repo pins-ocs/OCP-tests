@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 4/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,23 +20,23 @@
 -- User Header
 
 -- Auxiliary values
-tol_mass  = 0.01
-h_i       = 1
-mc        = 0.6
-tol_TS    = 0.01
-tol_T     = 0.01
-epsi_v    = 0.01
-epsi_mass = 0.01
-epsi_T    = 0.01
+epsi_TS   = 0.025
 m_i       = 1
+epsi_T    = 0.025
+mc        = 0.6
 m_f       = mc*m_i
-g0        = 1
-c         = 0.5*(g0*h_i)**(1/2.0)
-tol_v     = 0.01
-Tmax      = 3.5*g0*m_i
-epsi_TS   = 0.01
+tol_TS    = 0.01
 vc        = 620
+tol_T     = 0.01
+tol_mass  = 0.01
+epsi_mass = 0.025
+tol_v     = 0.01
+epsi_v    = 0.025
+g0        = 1
 Dc        = 0.5*vc*m_i/g0
+Tmax      = 3.5*g0*m_i
+h_i       = 1
+c         = 0.5*(g0*h_i)**(1/2.0)
 
 content = {
 
@@ -70,13 +70,16 @@ content = {
 
   -- Enable check jacobian and controls
   ControlsCheck         = true,
-  ControlsCheck_epsilon = 1e-8,
+  ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
   JacobianDiscretization = 'ANALYTIC,
+
+  -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
+  JacobianDiscretizationBC = 'ANALYTIC',
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "GoddardRocket_dump",
@@ -111,8 +114,8 @@ content = {
     NewtonDumped = {
       -- "MERIT_D2", "MERIT_F2"
       -- "MERIT_LOG_D2", "MERIT_LOG_F2"
-      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      merit                = "MERIT_D2",
+      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      merit                = "MERIT_LOG_F2_and_D2",
       max_iter             = 50,
       max_step_iter        = 10,
       max_accumulated_iter = 150,
@@ -178,8 +181,8 @@ content = {
     NewtonDumped = {
       -- "MERIT_D2", "MERIT_F2"
       -- "MERIT_LOG_D2", "MERIT_LOG_F2"
-      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      merit                = "MERIT_F2_and_D2",
+      -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      merit                = "MERIT_LOG_F2_and_D2",
       max_iter             = 300,
       max_step_iter        = 40,
       max_accumulated_iter = 800,
@@ -333,7 +336,7 @@ content = {
     massPositiveactive    = true
 
     -- PenaltyBarrier1DLessThan
-    vPositivesubType   = "PENALTY_REGULAR",
+    vPositivesubType   = "BARRIER_LOG",
     vPositiveepsilon   = epsi_v,
     vPositivetolerance = tol_v,
     vPositiveactive    = true
@@ -356,8 +359,8 @@ content = {
     segments = {
       
       {
+        n      = 400,
         length = 1,
-        n      = 1000,
       },
     },
   },

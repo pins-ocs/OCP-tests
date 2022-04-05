@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_problem.cc                                 |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -688,7 +688,8 @@ namespace gtocX_2burnDefine {
     result__[ 18  ] = VX_end(result__[1]);
     result__[ 19  ] = VY_end(result__[1]);
     result__[ 20  ] = VZ_end(result__[1]);
-    Mechatronix::check_in_segment( result__, "post_eval", 21, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 21, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -542,7 +542,8 @@ namespace Bike1DDefine {
     result__[ 1   ] = mufControl(U__[iU_muf], ModelPars[iM_muf_min], 0);
     result__[ 2   ] = vMinLimit(ModelPars[iM_v_min] - t3);
     result__[ 3   ] = t4;
-    Mechatronix::check_in_segment( result__, "post_eval", 4, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -562,7 +563,8 @@ namespace Bike1DDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1.0 / X__[iX_v];
-    Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 
 }

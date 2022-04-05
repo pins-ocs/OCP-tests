@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Mex.cc                                                |
  |                                                                       |
- |  version: 1.0   date 27/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -656,9 +656,9 @@ public:
       CMD "use 'set_guess' before to use 'check_jacobian'"
     );
     CHECK_IN_OUT( 5, 0 );
-    mwSize dimx,dimu;
+    mwSize dimx, dimu;
     real_const_ptr x = Utils::mex_vector_pointer( arg_in_2, dimx, CMD "argument x" );
-    real_const_ptr u = Utils::mex_vector_pointer( arg_in_3, dimx, CMD "argument u" );
+    real_const_ptr u = Utils::mex_vector_pointer( arg_in_3, dimu, CMD "argument u" );
     real_type epsi = Utils::mex_get_scalar_value( arg_in_4, CMD "argument epsi" );
     mwSize neq = this->num_equations();
     UTILS_MEX_ASSERT(

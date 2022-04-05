@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Methods_problem.cc                      |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -551,7 +551,8 @@ namespace ICLOCS_PathConstrainedDefine {
     result__[ 0   ] = uControl(U__[iU_u], -20, 20);
     real_type t4   = pow(Q__[iQ_zeta] - 0.5e0, 2);
     result__[ 1   ] = x2bound(0.5e0 - 8 * t4 + X__[iX_x2]);
-    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

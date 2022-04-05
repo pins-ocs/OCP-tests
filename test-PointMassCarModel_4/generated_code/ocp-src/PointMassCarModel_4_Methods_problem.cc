@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -801,7 +801,8 @@ namespace PointMassCarModel_4Define {
     real_type t44  = exp(-t42);
     result__[ 22  ] = t44 * Q__[iQ_L];
     result__[ 23  ] = zeta__dot(t15, X__[iX_alpha], t24, result__[6]);
-    Mechatronix::check_in_segment( result__, "post_eval", 24, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 24, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -821,7 +822,8 @@ namespace PointMassCarModel_4Define {
     real_const_ptr L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = exp(X__[iX_log_inv_Vseg]);
-    Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 
 }

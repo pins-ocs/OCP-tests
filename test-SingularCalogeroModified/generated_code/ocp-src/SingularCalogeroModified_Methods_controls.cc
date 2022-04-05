@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_controls.cc                   |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -180,7 +180,7 @@ namespace SingularCalogeroModifiedDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = QM__[0] * QM__[0];
     real_type t9   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = 0.5e0 * t9 * (2 * ModelPars[iM_C] * t2 + 2 * XM__[0] - 2);
+    result__[ 0   ] = 0.5e0 * t9 * (2 * t2 * ModelPars[iM_C] + 2 * XM__[0] - 2);
     result__[ 1   ] = 0.5e0;
     result__[ 2   ] = result__[0];
     result__[ 3   ] = 0.5e0;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -543,7 +543,7 @@ namespace BikeSteeringDefine {
     real_type t7   = ModelPars[iM_m] * ModelPars[iM_g];
     real_type t8   = ModelPars[iM_h];
     result__[ 1   ] = t8 * t7 * t2 * t3;
-    result__[ 2   ] = X__[iX_omega] * t1 + (t7 * t8 * X__[iX_phi] - U__[iU_Fy] * t8) * t3;
+    result__[ 2   ] = X__[iX_omega] * t1 + (X__[iX_phi] * t8 * t7 - U__[iU_Fy] * t8) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }

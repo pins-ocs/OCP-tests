@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -69,10 +69,10 @@ namespace TwoPhaseSchwartzDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer TwoPhaseSchwartz::boundaryConditions_numEqns() const { return 4; }
+  integer TwoPhaseSchwartz::bc_numEqns() const { return 4; }
 
   void
-  TwoPhaseSchwartz::boundaryConditions_eval(
+  TwoPhaseSchwartz::bc_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -91,7 +91,7 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 2   ] = XR__[iX_x1] - XL__[iX_x3];
     result__[ 3   ] = XR__[iX_x2] - XL__[iX_x4];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 4, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "bc_eval", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -150,82 +150,16 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::D2bcD2xxp_sparse(
-    NodeType const         & LEFT__,
-    NodeType const         & RIGHT__,
-    P_const_pointer_type     P__,
-    OMEGA_const_pointer_type OMEGA__,
-    real_type                result__[]
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
+    P_const_pointer_type          P__,
+    OMEGA_full_const_pointer_type OMEGA__,
+    real_type                     result__[]
   ) const {
     // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer TwoPhaseSchwartz::adjointBC_numEqns() const { return 8; }
-
-  void
-  TwoPhaseSchwartz::adjointBC_eval(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0];
-    result__[ 1   ] = OMEGA__[1];
-    real_type t1   = OMEGA__[2];
-    result__[ 2   ] = -t1;
-    real_type t2   = OMEGA__[3];
-    result__[ 3   ] = -t2;
-    result__[ 4   ] = t1;
-    result__[ 5   ] = t2;
-    result__[ 6   ] = 10 * XR__[iX_x3];
-    result__[ 7   ] = 10 * XR__[iX_x4];
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 8, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoPhaseSchwartz::DadjointBCDxxp_numRows() const { return 8; }
-  integer TwoPhaseSchwartz::DadjointBCDxxp_numCols() const { return 8; }
-  integer TwoPhaseSchwartz::DadjointBCDxxp_nnz()     const { return 2; }
-
-  void
-  TwoPhaseSchwartz::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 6   ; jIndex[0 ] = 6   ;
-    iIndex[1 ] = 7   ; jIndex[1 ] = 7   ;
-  }
-
-
-  void
-  TwoPhaseSchwartz::DadjointBCDxxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = 10;
-    result__[ 1   ] = 10;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 2, i_segment_left, i_segment_right );
-  }
 }
 
 // EOF: TwoPhaseSchwartz_Methods_boundary_conditions.cc

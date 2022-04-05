@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -625,7 +625,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t3   = cos(t2);
     real_type t5   = X__[iX_g];
     real_type t6   = sin(t2);
-    result__[ 0   ] = ray_positive(-t1 * t3 - t5 * t6 - 1);
+    result__[ 0   ] = ray_positive(-t3 * t1 - t6 * t5 - 1);
     real_type t9   = Q__[iQ_zeta];
     result__[ 1   ] = ModelPars[iM_time_i] * (1 - t9) + ModelPars[iM_time_f] * t9;
     real_type t15  = P__[iP_p];
@@ -651,7 +651,8 @@ namespace gtocX_2burn_parsDefine {
     result__[ 18  ] = VX_end(result__[1]);
     result__[ 19  ] = VY_end(result__[1]);
     result__[ 20  ] = VZ_end(result__[1]);
-    Mechatronix::check_in_segment( result__, "post_eval", 21, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 21, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

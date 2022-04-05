@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -545,7 +545,8 @@ namespace EconomicGrowthModelDefine {
     result__[ 4   ] = (Q__[iQ_zeta] * X__[iX_T] < ModelPars[iM_t0] ? l1L(Q__[iQ_zeta] * X__[iX_T]) : l1R(Q__[iQ_zeta] * X__[iX_T]));
     result__[ 5   ] = (Q__[iQ_zeta] * X__[iX_T] < ModelPars[iM_t0] ? l2L(Q__[iQ_zeta] * X__[iX_T]) : l2R(Q__[iQ_zeta] * X__[iX_T]));
     result__[ 6   ] = (Q__[iQ_zeta] * X__[iX_T] < ModelPars[iM_t0] ? 1 : 0.5e0);
-    Mechatronix::check_in_segment( result__, "post_eval", 7, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

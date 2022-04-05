@@ -25,18 +25,16 @@ Model Parameters
 ......................................u0 = 2
 INFO CLASS = HangingChain
   #nodes      = 401
-  dim         = u=1, q=1, x=2, p=0, omega=3, bc=3, full_bc=7
-  BC          = Inital=4, Final=3, Cyclic=0
-  OMEGA       = Inital=2, Final=1, Cyclic=0
+  dim         = u=1, q=1, x=2, p=0, bc(active/total)=(3/3)
   total       = nZ=1607, UC=400, Q=401
   index start = omega=1604, p=1607
-  FD jacobian = ANALYTIC
 END INFO
-Solver Master System: CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:      Newton
-Jacobian evaluation:  Analitic Jacobian
-Initializer Controls: Quasi-Newton
-Used threads:         15
+Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
+Solver Controls:        Newton
+Jacobian evaluation:    Analitic Jacobian
+Jacobian BC evaluation: Analitic Jacobian
+Initializer Controls:   Quasi-Newton
+Used threads:           15
 
 
 NewtonDumped --- start iterations ---
@@ -84,7 +82,7 @@ NewtonDumped --- start iterations ---
 [ 27, 1] ( 0.000224 , 2.38e-05 ) [ 0.00473  , 0.00102  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 28, 1] ( 2.38e-05 , 3.69e-07 ) [ 0.00129  , 1.83e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 29, 1] ( 3.69e-07 , 9.96e-11 ) [ 1.88e-05 , 4.59e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 30, 1] ( 9.96e-11 ,  5e-15   ) [ 4.59e-09 , 2.7e-13  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 30, 1] ( 9.96e-11 ,  5e-15   ) [ 4.59e-09 , 2.71e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
 NewtonDumped --- start iterations ---
@@ -102,17 +100,12 @@ dump_min       = 0.4           dump_max       = 0.9
 
 .................... BIG nonlinear system solver .....................
 ---------------------------- NewtonDumped ----------------------------
-n_power        = 2             check_angle    = 120 [degree]
-c1             = 0.01          lambda_min     = 1e-10
-dump_min       = 0.4           dump_max       = 0.9
-ratio ||f||_2  = 2             ratio ||d||_2  = 2
-ratio ||f||_1  = 2             ratio ||d||_1  = 2
+Converged      = YES           tolerance      = 1e-09     
+N. Equations   = 1607          N. System pars = 400
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 58.7[ms]      timeout        = 0 [ms]
-iteration      = 33            tolerance      = 1e-09
-max iterations = 300           N. Equations   = 1607
-max acc. iter. = 800           N. System pars = 400
-Converged      = YES           Memory Used    = 162Kb (+19bytes)
+Elapsed Time   = 39.4[ms]      timeout        = 0 [ms]
+iteration      = 33            Memory Used    = 162Kb (+12bytes)
+max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
@@ -120,16 +113,22 @@ Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
 Function       = 49            Jacobian       = 33
 Factorization  = 33            Inversion      = 77
+------------------------- SOLVER PARAMETERS --------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 1.8623e-11    last ||d||_inf = 1.1615e-10
-last ||f||_1   = 1.0772e-12    last ||d||_1   = 5.4678e-11
-last ||f||_2   = 3.0769e-12    last ||d||_2   = 6.443e-11
+last ||f||_inf = 1.8623e-11    last ||d||_inf = 1.1616e-10
+last ||f||_1   = 1.0772e-12    last ||d||_1   = 5.4681e-11
+last ||f||_2   = 3.0769e-12    last ||d||_2   = 6.4433e-11
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin
+Check Jacobian Begin (disabling penalties)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

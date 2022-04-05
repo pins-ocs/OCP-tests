@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_controls.cc                      |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -416,7 +416,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t20  = pow(V__[0] - ((0.2e-1 - t6) * t10 + 0.464e2 * t14 * t6) * t9, 2);
     real_type t22  = g3(t6, t7);
     real_type t28  = pow(V__[1] - (t14 * t22 + 0.928e0 - 0.464e2 * t6) * t9, 2);
-    real_type result__ = t3 * t1 + t20 + t28;
+    real_type result__ = t1 * t3 + t20 + t28;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -449,7 +449,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t10  = g4(t6, t7);
     real_type t14  = t2 - 2 * t7;
     real_type t25  = g3(t6, t7);
-    result__[ 0   ] = t3 * t1 - 0.928e2 * t6 * t8 * t1 * (V__[0] - ((0.2e-1 - t6) * t10 + 0.464e2 * t14 * t6) * t9) - 2 * t25 * t8 * t1 * (V__[1] - (t14 * t25 + 0.928e0 - 0.464e2 * t6) * t9);
+    result__[ 0   ] = t1 * t3 - 0.928e2 * t6 * t8 * t1 * (V__[0] - ((0.2e-1 - t6) * t10 + 0.464e2 * t14 * t6) * t9) - 2 * t25 * t8 * t1 * (V__[1] - (t14 * t25 + 0.928e0 - 0.464e2 * t6) * t9);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

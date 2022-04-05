@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_boundary_conditions.cc              |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -87,10 +87,10 @@ namespace BangBangFredundantDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer BangBangFredundant::boundaryConditions_numEqns() const { return 3; }
+  integer BangBangFredundant::bc_numEqns() const { return 3; }
 
   void
-  BangBangFredundant::boundaryConditions_eval(
+  BangBangFredundant::bc_eval(
     NodeType const     & LEFT__,
     NodeType const     & RIGHT__,
     P_const_pointer_type P__,
@@ -108,7 +108,7 @@ namespace BangBangFredundantDefine {
     result__[ 1   ] = XL__[iX_v];
     result__[ 2   ] = XR__[iX_v];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "boundaryConditions_eval", 3, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "bc_eval", 3, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -161,96 +161,16 @@ namespace BangBangFredundantDefine {
 
   void
   BangBangFredundant::D2bcD2xxp_sparse(
-    NodeType const         & LEFT__,
-    NodeType const         & RIGHT__,
-    P_const_pointer_type     P__,
-    OMEGA_const_pointer_type OMEGA__,
-    real_type                result__[]
+    NodeType const              & LEFT__,
+    NodeType const              & RIGHT__,
+    P_const_pointer_type          P__,
+    OMEGA_full_const_pointer_type OMEGA__,
+    real_type                     result__[]
   ) const {
     // EMPTY
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer BangBangFredundant::adjointBC_numEqns() const { return 12; }
-
-  void
-  BangBangFredundant::adjointBC_eval(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = OMEGA__[0];
-    result__[ 1   ] = OMEGA__[1];
-    result__[ 2   ] = Flim_D(XL__[iX_F1] + XL__[iX_F2]);
-    result__[ 3   ] = result__[2];
-    result__[ 4   ] = 0;
-    result__[ 5   ] = 0;
-    result__[ 6   ] = -1;
-    result__[ 7   ] = OMEGA__[2];
-    result__[ 8   ] = Flim_D(XR__[iX_F1] + XR__[iX_F2]);
-    result__[ 9   ] = result__[8];
-    result__[ 10  ] = 0;
-    result__[ 11  ] = 0;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "adjointBC_eval", 12, i_segment_left, i_segment_right );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFredundant::DadjointBCDxxp_numRows() const { return 12; }
-  integer BangBangFredundant::DadjointBCDxxp_numCols() const { return 12; }
-  integer BangBangFredundant::DadjointBCDxxp_nnz()     const { return 8; }
-
-  void
-  BangBangFredundant::DadjointBCDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
-    iIndex[1 ] = 2   ; jIndex[1 ] = 3   ;
-    iIndex[2 ] = 3   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 3   ;
-    iIndex[4 ] = 8   ; jIndex[4 ] = 8   ;
-    iIndex[5 ] = 8   ; jIndex[5 ] = 9   ;
-    iIndex[6 ] = 9   ; jIndex[6 ] = 8   ;
-    iIndex[7 ] = 9   ; jIndex[7 ] = 9   ;
-  }
-
-
-  void
-  BangBangFredundant::DadjointBCDxxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
-  ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = Flim_DD(XL__[iX_F1] + XL__[iX_F2]);
-    result__[ 1   ] = result__[0];
-    result__[ 2   ] = result__[1];
-    result__[ 3   ] = result__[2];
-    result__[ 4   ] = Flim_DD(XR__[iX_F1] + XR__[iX_F2]);
-    result__[ 5   ] = result__[4];
-    result__[ 6   ] = result__[5];
-    result__[ 7   ] = result__[6];
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DadjointBCDxxp_sparse", 8, i_segment_left, i_segment_right );
-  }
 }
 
 // EOF: BangBangFredundant_Methods_boundary_conditions.cc

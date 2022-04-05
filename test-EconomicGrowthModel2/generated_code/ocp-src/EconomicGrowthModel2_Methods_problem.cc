@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_problem.cc                        |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -569,7 +569,8 @@ namespace EconomicGrowthModel2Define {
     result__[ 0   ] = uControl(U__[iU_u], 0, 1);
     result__[ 1   ] = Tpositive(-X__[iX_T]);
     result__[ 2   ] = L__[iL_lambda4__xo] - L__[iL_lambda2__xo];
-    Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

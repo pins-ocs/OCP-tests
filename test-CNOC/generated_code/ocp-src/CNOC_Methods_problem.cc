@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_problem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -330,10 +330,10 @@ namespace CNOCDefine {
     real_type t46  = ALIAS_theta(X__[iX_s]);
     real_type t47  = cos(t46);
     real_type t49  = sin(t46);
-    real_type t54  = 1.0 / ModelPars[iM_ax_max] * (t47 * t25 - t49 * t35);
+    real_type t54  = 1.0 / ModelPars[iM_ax_max] * (t25 * t47 - t35 * t49);
     real_type t56  = ax_limit_min(-1 - t54);
     real_type t59  = ax_limit_max(t54 - 1);
-    real_type t66  = 1.0 / ModelPars[iM_ay_max] * (t49 * t25 + t47 * t35);
+    real_type t66  = 1.0 / ModelPars[iM_ay_max] * (t25 * t49 + t35 * t47);
     real_type t68  = ay_limit_min(-1 - t66);
     real_type t71  = ay_limit_max(t66 - 1);
     real_type result__ = t1 * t13 + t1 * t20 + t1 * t23 + t1 * t30 + t1 * t33 + t1 * t40 + t1 * t43 + t1 * t56 + t1 * t59 + t1 * t68 + t1 * t71 + t2;
@@ -877,7 +877,8 @@ namespace CNOCDefine {
     result__[ 28  ] = ALIAS_yLimitLeft(t35, t69);
     result__[ 29  ] = ALIAS_xLimitRight(t35, t69);
     result__[ 30  ] = ALIAS_yLimitRight(t35, t69);
-    Mechatronix::check_in_segment( result__, "post_eval", 31, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 31, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -897,7 +898,8 @@ namespace CNOCDefine {
     real_const_ptr L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_coV];
-    Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );
   }
 
 }

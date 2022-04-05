@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 27/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -21,8 +21,8 @@
 
 -- Auxiliary values
 W0    = 0
-W     = W0
 epsi0 = 0.1
+W     = W0
 epsi  = epsi0
 tol0  = 0.1
 tol   = tol0
@@ -59,13 +59,16 @@ content = {
 
   -- Enable check jacobian and controls
   ControlsCheck         = true,
-  ControlsCheck_epsilon = 1e-8,
+  ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
   JacobianDiscretization = 'ANALYTIC,
+
+  -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
+  JacobianDiscretizationBC = 'ANALYTIC',
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "AlpRider_dump",

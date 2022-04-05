@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 25/3/2022                                        |
+ |  version: 1.0   date 3/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -547,7 +547,8 @@ namespace BangBangFclipDefine {
     real_type t2   = ModelPars[iM_vFmax];
     result__[ 0   ] = controlForce(U__[iU_vF], -t2, t2);
     result__[ 1   ] = clip(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
-    Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
+    // do not check
+    // Mechatronix::check_in_segment( result__, "post_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

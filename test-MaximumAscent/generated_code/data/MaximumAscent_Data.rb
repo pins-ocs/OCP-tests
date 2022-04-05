@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 25/3/2022                                        #
+#  version: 1.0   date 3/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,18 +20,18 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-days1  = 30
-u0     = 0
-Isp    = 1500
-g0     = 9.80665
 T      = 0.68
+days   = 1
+tf     = 86400*days
+days1  = 30
+g0     = 9.80665
+Isp    = 1500
 mdot   = T/g0/Isp
 mu     = 398600441800000
+u0     = 0
 r0     = 6678140
 v0     = (mu/r0)**(1/2.0)
 u0_bar = u0/v0
-days   = 1
-tf     = 86400*days
 
 mechatronix do |data|
 
@@ -63,13 +63,16 @@ mechatronix do |data|
 
   # Enable check jacobian and controls
   data.ControlsCheck         = true
-  data.ControlsCheck_epsilon = 1e-8
+  data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
   # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
   data.JacobianDiscretization = 'ANALYTIC'
+
+  # jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
+  data.JacobianDiscretizationBC = 'ANALYTIC'
 
   # Dump Function and Jacobian if uncommented
   #data.DumpFile = "MaximumAscent_dump"
@@ -104,7 +107,7 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
       :merit                => "MERIT_D2",
       :max_iter             => 50,
       :max_step_iter        => 10,
@@ -183,8 +186,8 @@ mechatronix do |data|
     :NewtonDumped => {
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
-      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2"
-      :merit                => "MERIT_F2_and_D2",
+      # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
+      :merit                => "MERIT_LOG_F2_and_D2",
       :max_iter             => 300,
       :max_step_iter        => 40,
       :max_accumulated_iter => 800,
