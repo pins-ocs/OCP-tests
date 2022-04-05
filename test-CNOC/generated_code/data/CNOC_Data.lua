@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Data.lua                                                  |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,14 +20,14 @@
 -- User Header
 
 -- Auxiliary values
-mesh_segments            = 100
-v_nom                    = 0.173
-jn_max                   = 65
-deltaFeed                = v_nom
+js_max                   = 30
 path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
+mesh_segments            = 100
+jn_max                   = 65
 js_min                   = -50
-js_max                   = 30
+v_nom                    = 0.173
+deltaFeed                = v_nom
 
 content = {
 

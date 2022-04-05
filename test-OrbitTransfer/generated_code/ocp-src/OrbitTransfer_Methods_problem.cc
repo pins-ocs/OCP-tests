@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -110,7 +110,7 @@ namespace OrbitTransferDefine {
     real_type t19  = sin(t18);
     real_type t22  = 1.0 / X__[iX_m];
     real_type t30  = cos(t18);
-    real_type result__ = t4 * t2 * L__[iL_lambda1__xo] + (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t2 * L__[iL_lambda2__xo] + (-t11 * t4 * t8 + t22 * t30 * t17) * t2 * L__[iL_lambda3__xo] - ModelPars[iM_mdot] * t2 * L__[iL_lambda4__xo] + t11 * t8 * t2 * L__[iL_lambda5__xo];
+    real_type result__ = t4 * t2 * L__[iL_lambda1__xo] + (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t2 * L__[iL_lambda2__xo] + (-t11 * t4 * t8 + t17 * t22 * t30) * t2 * L__[iL_lambda3__xo] - ModelPars[iM_mdot] * t2 * L__[iL_lambda4__xo] + t11 * t8 * t2 * L__[iL_lambda5__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }

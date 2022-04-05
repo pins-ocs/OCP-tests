@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Main.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type maxEpsi = 0.1;
     real_type maxTol = 0.1;
+    real_type maxEpsi = 0.1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -173,8 +173,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 MinimumEnergyProblem_data.Mesh["s0"] = 0;
-MinimumEnergyProblem_data.Mesh["segments"][0]["n"] = 20000;
 MinimumEnergyProblem_data.Mesh["segments"][0]["length"] = 1;
+MinimumEnergyProblem_data.Mesh["segments"][0]["n"] = 20000;
 
 
     // alias for user object classes passed as pointers

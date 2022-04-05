@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_Catalyst_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_ctrl = 1e-05
 tol_ctrl  = 1e-05
+epsi_ctrl = 1e-05
 
 mechatronix do |data|
 

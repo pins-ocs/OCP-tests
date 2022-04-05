@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFmodule_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-FpMax = 10
 FmMax = 10
+FpMax = 10
 
 mechatronix do |data|
 
@@ -342,8 +342,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :length => 1,
         :n      => 100,
+        :length => 1,
       },
     ],
   };

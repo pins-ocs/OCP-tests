@@ -20,22 +20,22 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-eps_l    = 0.01
+v__0     = 10
+TT__max  = 800
 tol_c0   = 0.1
 tol_c    = tol_c0
-rw       = 0.3
-eps_c0   = 0.1
-eps_c    = eps_c0
-tol_l    = 0.01
+h__b     = 1
+E__pow   = 60*TT__max
 w__t0    = 1
 w__t     = w__t0
+tol_l    = 0.01
+eps_l    = 0.01
 L        = 300
-mesh_np  = 2.000000000*L
-h__b     = 1
-v__0     = 10
+eps_c0   = 0.1
+eps_c    = eps_c0
+rw       = 0.3
 omega__0 = 1/rw*v__0
-TT__max  = 800
-E__pow   = 60*TT__max
+mesh_np  = 2.000000000*L
 
 mechatronix do |data|
 
@@ -367,7 +367,7 @@ mechatronix do |data|
   data.MappedObjects[:clipSup] = { :h => 0.01 }
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clipInt] = { :delta => 0, :delta2 => 0, :h => 0.01 }
+  data.MappedObjects[:clipInt] = { :delta => 0, :h => 0.01, :delta2 => 0 }
 
   # SignRegularizedWithErf
   data.MappedObjects[:sign_reg] = { :h => 0.01 }
@@ -462,16 +462,16 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 0.4*mesh_np,
         :length => 0.1*L,
+        :n      => 0.4*mesh_np,
       },
       {
-        :n      => 0.8*mesh_np,
         :length => 0.8*L,
+        :n      => 0.8*mesh_np,
       },
       {
-        :n      => 0.4*mesh_np,
         :length => 0.1*L,
+        :n      => 0.4*mesh_np,
       },
     ],
   };

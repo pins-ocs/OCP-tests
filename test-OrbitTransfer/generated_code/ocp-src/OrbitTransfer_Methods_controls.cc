@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,7 +94,7 @@ namespace OrbitTransferDefine {
     real_type t19  = sin(t18);
     real_type t22  = 1.0 / XM__[0];
     real_type t30  = cos(t18);
-    real_type result__ = t4 * t2 * LM__[0] + (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t2 * LM__[1] + (-t11 * t4 * t8 + t22 * t30 * t17) * t2 * LM__[2] - ModelPars[iM_mdot] * t2 * LM__[3] + t11 * t8 * t2 * LM__[4];
+    real_type result__ = t4 * t2 * LM__[0] + (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t2 * LM__[1] + (-t11 * t4 * t8 + t17 * t22 * t30) * t2 * LM__[2] - ModelPars[iM_mdot] * t2 * LM__[3] + t11 * t8 * t2 * LM__[4];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -164,8 +164,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFwork_data.Mesh["s0"] = 0;
-BangBangFwork_data.Mesh["segments"][0]["n"] = 100;
 BangBangFwork_data.Mesh["segments"][0]["length"] = 1;
+BangBangFwork_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

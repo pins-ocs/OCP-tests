@@ -409,7 +409,7 @@ namespace TyreDynamicDefine {
     real_type t33  = ALIAS_v_min_D(t28);
     real_type t36  = 1.0 / t1;
     real_type t37  = ALIAS_v_min_DD(t28);
-    result__[ 0   ] = 2 * t13 * t4 + 2 * t21 * t4 + 2 * t25 * t4 + 2 * t29 * t4 + 2 * t33 * t32 + t37 * t36 + 2 * t8 * t4;
+    result__[ 0   ] = 2 * t13 * t4 + 2 * t21 * t4 + 2 * t25 * t4 + 2 * t29 * t4 + 2 * t33 * t32 + t37 * t36 + 2 * t4 * t8;
     real_type t39  = ALIAS_LongSlipRear_min_D(t20);
     real_type t42  = ALIAS_LongSlipRear_max_D(t24);
     result__[ 1   ] = t17 * t39 * t32 - t17 * t42 * t32;

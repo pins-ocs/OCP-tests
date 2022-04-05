@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Data.lua                                            |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -21,10 +21,10 @@
 
 -- Auxiliary values
 W0       = 1000
-W        = W0
-tol_max  = 0.01
-cL_min   = 0
 epsi_max = 0.01
+W        = W0
+cL_min   = 0
+tol_max  = 0.01
 cL_max   = 1.4
 
 content = {
@@ -347,8 +347,8 @@ content = {
     segments = {
       
       {
-        n      = 400,
         length = 1,
+        n      = 400,
       },
     },
   },

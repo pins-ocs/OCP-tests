@@ -82,21 +82,43 @@ Used threads:           15
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1,15] (  0.0262  ,  0.0468  ) [   15.2   ,   15.2   ] 0.00176    [2:0:12:0:0:0:0:0:0:0:0:0]
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
 [  2, 7] (  0.0468  ,  0.0608  ) [   22.1   ,   21.8   ] 0.0064     [1:0:3:0:0:0:2:0:2:0:0:0]
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
 [  3, 7] (  0.0608  ,  0.0661  ) [   3.15   ,   3.04   ] 0.016      [0:0:3:0:0:0:0:0:2:0:0:0]
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
 [  4, 5] (  0.0661  ,  0.0749  ) [  0.501   ,  0.428   ] 0.08       [1:0:1:0:0:0:0:0:1:0:0:0]
 [  5, 2] (  0.0749  ,  0.0691  ) [   0.24   ,  0.155   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
 [  6, 1] (  0.0691  ,  0.0528  ) [  0.148   ,  0.0674  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  7, 2] (  0.0528  ,  0.0385  ) [  0.0675  ,  0.0346  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
 [  8, 3] (  0.0385  ,  0.0371  ) [  0.0375  ,  0.0261  ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
 [  9, 4] (  0.0371  ,  0.0296  ) [  0.0311  ,  0.0206  ] 0.1        [1:0:0:0:0:0:2:0:2:0:0:0]
+WARNING eval_NewtonDumped FAILED
 [ 10, 4] (  0.0296  ,  0.0251  ) [  0.0288  ,  0.0204  ] 0.205      [2:0:0:0:0:0:1:0:1:0:0:0]
 [ 11, 2] (  0.0251  ,  0.0225  ) [  0.0183  ,  0.0249  ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+WARNING eval_NewtonDumped FAILED
 [ 12, 3] (  0.0225  ,  0.0171  ) [  0.0232  ,  0.0208  ] 0.2        [1:0:0:0:0:0:1:0:1:0:0:0]
+WARNING eval_NewtonDumped FAILED
 [ 13, 4] (  0.0171  ,  0.0143  ) [  0.0198  ,  0.0162  ] 0.147      [2:0:0:0:0:0:1:0:1:0:0:0]
 [ 14, 3] (  0.0143  ,  0.012   ) [  0.0119  ,  0.0162  ] 0.186      [1:0:0:1:0:0:0:0:0:0:0:0]
 [ 15, 2] (  0.012   ,  0.0101  ) [  0.0104  ,  0.0288  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
 [ 16, 2] (  0.0101  ,  0.0101  ) [  0.0158  ,  0.0144  ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+WARNING eval_NewtonDumped FAILED
 [ 17, 4] (  0.0101  , 0.00681  ) [  0.0129  , 0.00845  ] 0.167      [2:0:0:0:0:0:1:0:1:0:0:0]
 [ 18, 3] ( 0.00681  , 0.00513  ) [  0.0128  , 0.00935  ] 0.249      [2:0:0:0:0:0:0:0:0:0:0:0]
 [ 19, 3] ( 0.00513  , 0.00446  ) [ 0.00768  ,  0.005   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
@@ -123,7 +145,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 3213          N. System pars = 800
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 244[ms]       timeout        = 0 [ms]
+Elapsed Time   = 249[ms]       timeout        = 0 [ms]
 iteration      = 28            Memory Used    = 392Kb (+90bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------

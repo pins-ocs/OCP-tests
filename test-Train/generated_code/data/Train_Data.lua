@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Data.lua                                                 |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
+epsi_max = 0.01
 ubMax    = 2
 uaMax    = 10
 tol_max  = 0.01
-epsi_max = 0.01
 
 content = {
 
@@ -324,18 +324,18 @@ content = {
     segments = {
       
       {
-        n      = 25,
         length = 0.25,
+        n      = 25,
       },
       
       {
-        n      = 3000,
         length = 0.75,
+        n      = 3000,
       },
       
       {
-        n      = 100,
         length = 3.8,
+        n      = 100,
       },
     },
   },

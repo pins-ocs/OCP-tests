@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SlidingMode_Data.rb                                            #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -334,8 +334,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 100,
         :length => 3,
+        :n      => 100,
       },
     ],
   };

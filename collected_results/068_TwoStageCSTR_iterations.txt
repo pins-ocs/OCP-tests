@@ -51,9 +51,33 @@ Used threads:           15
 
 
 NewtonDumped --- start iterations ---
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 4] ( 0.000435 , 0.000329 ) [  0.0562  ,  0.0425  ] 0.25       [0:0:0:0:0:0:0:0:2:0:0:0]
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
 [  2, 3] ( 0.000329 , 0.000171 ) [  0.0443  ,  0.0227  ] 0.5        [0:0:0:0:0:0:0:0:1:0:0:0]
+WARNING eval_NewtonDumped FAILED
 [  3, 3] ( 0.000171 , 8.7e-05  ) [  0.0234  ,  0.0118  ] 0.5        [0:0:0:0:0:0:0:0:1:0:0:0]
 [  4, 1] ( 8.7e-05  , 2.76e-06 ) [  0.0118  , 0.000178 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  5, 1] ( 2.76e-06 , 2.78e-09 ) [ 0.000173 , 1.97e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
@@ -71,7 +95,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 3212          N. System pars = 800
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 35.9[ms]      timeout        = 0 [ms]
+Elapsed Time   = 35.6[ms]      timeout        = 0 [ms]
 iteration      = 6             Memory Used    = 394Kb (+98bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------

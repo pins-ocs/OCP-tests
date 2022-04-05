@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_boundary_conditions.cc                     |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -529,11 +529,11 @@ namespace gtocX_2burnDefine {
     real_type t254 = x_position_D_5_5(t138, t139, t140, t141, t142, t143, t8);
     real_type t256 = y_position_D_5_5(t138, t139, t140, t141, t142, t143, t8);
     real_type t258 = z_position_D_5_5(t138, t139, t140, t141, t142, t143, t8);
-    result__[ 64  ] = t254 * t137 + t256 * t146 + t258 * t149;
+    result__[ 64  ] = t137 * t254 + t146 * t256 + t149 * t258;
     real_type t260 = x_position_D_5_6(t138, t139, t140, t141, t142, t143, t8);
     real_type t262 = y_position_D_5_6(t138, t139, t140, t141, t142, t143, t8);
     real_type t264 = z_position_D_5_6(t138, t139, t140, t141, t142, t143, t8);
-    result__[ 65  ] = t260 * t137 + t262 * t146 + t264 * t149;
+    result__[ 65  ] = t137 * t260 + t146 * t262 + t149 * t264;
     result__[ 66  ] = result__[41];
     result__[ 67  ] = result__[47];
     result__[ 68  ] = result__[53];

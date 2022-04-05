@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -255,7 +255,7 @@ namespace Brachiostocrona2Define {
     real_type t7   = UM__[0];
     real_type t8   = cos(t7);
     real_type t13  = sin(t7);
-    result__[ 0   ] = -t13 * t4 * t6 * LM__[1] + t13 * t4 * LM__[2] * ModelPars[iM_g] - t4 * t6 * t8 * LM__[0] + 2 * ModelPars[iM_epsi];
+    result__[ 0   ] = -t13 * t6 * t4 * LM__[1] + t13 * ModelPars[iM_g] * t4 * LM__[2] - t8 * t6 * t4 * LM__[0] + 2 * ModelPars[iM_epsi];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

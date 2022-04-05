@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_AdjointODE.cc                 |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -383,7 +383,7 @@ namespace SingularCalogeroModifiedDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = Q__[iQ_zeta] * Q__[iQ_zeta];
     real_type t9   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
-    result__[ 0   ] = t9 * (2 * t2 * ModelPars[iM_C] + 2 * X__[iX_x] - 2);
+    result__[ 0   ] = t9 * (2 * ModelPars[iM_C] * t2 + 2 * X__[iX_x] - 2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJUuDxp_sparse", 1, i_segment );
   }

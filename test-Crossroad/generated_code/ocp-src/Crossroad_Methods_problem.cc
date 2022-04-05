@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -350,7 +350,7 @@ namespace CrossroadDefine {
     real_type t1   = ModelPars[iM_wJ];
     real_type t2   = U__[iU_jerk];
     real_type t3   = t2 * t2;
-    result__[ 3   ] = t1 * t3 + ModelPars[iM_wT];
+    result__[ 3   ] = t3 * t1 + ModelPars[iM_wT];
     result__[ 4   ] = 2 * X__[iX_Ts] * t1 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 5, i_segment );

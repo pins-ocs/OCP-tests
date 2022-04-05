@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_ContinuousMP_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol_ctrl  = 0.01
-xy_eps0   = 0.1
-xy_eps    = xy_eps0
 epsi_ctrl = 0.01
+xy_eps0   = 0.1
+tol_ctrl  = 0.01
+xy_eps    = xy_eps0
 xy_tol0   = 0.1
 xy_tol    = xy_tol0
 

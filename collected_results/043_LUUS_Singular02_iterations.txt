@@ -520,7 +520,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 4006          N. System pars = 1000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 1.02[sec]     timeout        = 0 [ms]
+Elapsed Time   = 0.796[sec]    timeout        = 0 [ms]
 iteration      = 378           Memory Used    = 372Kb (+91bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
@@ -550,10 +550,10 @@ All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-At cell 0, H = -2.5916730827377903e-06, ||g||_inf = 4.970725745079285e-05
-At cell 2, H = -2.591386413589378e-06, ||g||_inf = 1.1428486497155887e-06
-At cell 3, H = -2.5911161352968578e-06, ||g||_inf = 2.9849472731324767e-06
-At cell 4, H = -2.59076675585119e-06, ||g||_inf = 1.5106271284981432e-06
+At cell 0, H=-2.5916730827377903e-06, ||g||_inf=4.970725745079285e-05, u=[-0.9999999999996518 ]
+At cell 2, H=-2.591386413589378e-06, ||g||_inf=1.1428486497155887e-06, u=[-0.999999999991291 ]
+At cell 3, H=-2.5911161352968578e-06, ||g||_inf=2.9849472731324767e-06, u=[-0.9999999999829277 ]
+At cell 4, H=-2.59076675585119e-06, ||g||_inf=1.5106271284981432e-06, u=[-0.999999999971775 ]
 Check Controls End
 target [Lagrange,Mayer]       = [ 0.2684, 0 ]
 [Penalties/Barriers,Controls] = [ 0, 3.209e-07 ]

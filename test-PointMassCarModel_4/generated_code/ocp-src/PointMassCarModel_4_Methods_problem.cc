@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -313,7 +313,7 @@ namespace PointMassCarModel_4Define {
     real_type t2   = exp(X__[iX_log_inv_Vseg]);
     real_type t4   = v__fxControl(U__[iU_v__fx], -1, 1);
     real_type t7   = v__OmegaControl(U__[iU_v__Omega], -1, 1);
-    real_type result__ = t2 * t4 + t2 * t7;
+    real_type result__ = t4 * t2 + t7 * t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }
@@ -350,7 +350,7 @@ namespace PointMassCarModel_4Define {
     real_type t32  = ALIAS_rightWidth(t27);
     real_type t34  = RoadRightBorder(-t26 - t32);
     real_type t43  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t3 * t15 - 1);
-    real_type result__ = t24 * t2 + t30 * t2 + t34 * t2 + t43 * t2;
+    real_type result__ = t2 * t24 + t2 * t30 + t2 * t34 + t2 * t43;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
     }

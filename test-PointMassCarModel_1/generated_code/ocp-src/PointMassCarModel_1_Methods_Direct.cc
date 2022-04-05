@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -308,7 +308,7 @@ namespace PointMassCarModel_1Define {
     real_type t11  = cos(t2);
     real_type t13  = inv_zeta__dot(t1, t2, t5, t7);
     real_type t16  = inv_zeta__dot_D_2(t1, t2, t5, t7);
-    result__[ 1   ] = -0.5e0 * t11 * t13 * t1 - 0.5e0 * t16 * t4;
+    result__[ 1   ] = -0.5e0 * t13 * t11 * t1 - 0.5e0 * t16 * t4;
     real_type t21  = inv_zeta__dot_D_1(t1, t2, t5, t7);
     result__[ 2   ] = -0.5e0 * t13 * t3 - 0.5e0 * t21 * t4;
     result__[ 3   ] = -t10 + __INV_DZETA;

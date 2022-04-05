@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: EconomicGrowthModel_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,15 +20,15 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-x2_i    = 2
-u_epsi0 = 0.1
-u_epsi  = u_epsi0
 x1_i    = 1
-l1_i    = -1/x1_i/x2_i
-t0      = -Math::Math::log(x1_i/x2_i)/x2_i
-l2_i    = l1_i*(x1_i*t0+Math::exp(-t0*x2_i))
 u_tol0  = 0.1
 u_tol   = u_tol0
+x2_i    = 2
+l1_i    = -1/x1_i/x2_i
+t0      = -Math::Math::log(x1_i/x2_i)/x2_i
+u_epsi0 = 0.1
+u_epsi  = u_epsi0
+l2_i    = l1_i*(x1_i*t0+Math::exp(-t0*x2_i))
 
 mechatronix do |data|
 

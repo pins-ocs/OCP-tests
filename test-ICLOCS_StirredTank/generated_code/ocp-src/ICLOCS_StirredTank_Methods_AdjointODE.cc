@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -686,7 +686,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type t40  = t8 * t8;
     real_type t41  = 1.0 / t40;
     real_type t45  = t20 * t4;
-    result__[ 4   ] = result__[0] + 2 * t13 * t33 * t6 * t20 * t5 - t13 * t41 * t38 * t20 * t5 + (-2 * t13 * t33 * t45 * t6 + t13 * t38 * t41 * t45) * t17;
+    result__[ 4   ] = result__[0] + 2 * t13 * t33 * t6 * t20 * t5 - t13 * t41 * t38 * t20 * t5 + (-2 * t13 * t33 * t6 * t45 + t13 * t41 * t38 * t45) * t17;
     result__[ 5   ] = 2 * t7 - 2 * ModelPars[iM_x2_f] - t14 * t20 * t4 * t2 + (t14 * t45 - ModelPars[iM_a] * U__[iU_u] - t25) * t16;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 6, i_segment );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -699,13 +699,13 @@ namespace PointMassCarModel_3Define {
     real_type t54  = zeta__dot(t21, t52, t32, t53);
     real_type t57  = pow(-t2 * t54 + V__[0], 2);
     real_type t59  = sin(t52);
-    real_type t63  = pow(-t2 * t59 * t21 + V__[1], 2);
+    real_type t63  = pow(-t2 * t21 * t59 + V__[1], 2);
     real_type t69  = pow(V__[2] - (-t53 * t54 + t19) * t2, 2);
     real_type t76  = pow(V__[3] - (-t22 * ModelPars[iM_kD] + t9) * t2, 2);
-    real_type t82  = pow(-t2 * ModelPars[iM_v__Omega__max] * t6 + V__[4], 2);
-    real_type t88  = pow(-t2 * ModelPars[iM_v__fx__max] * t3 + V__[5], 2);
+    real_type t82  = pow(-t2 * t6 * ModelPars[iM_v__Omega__max] + V__[4], 2);
+    real_type t88  = pow(-t2 * t3 * ModelPars[iM_v__fx__max] + V__[5], 2);
     real_type t90  = V__[6] * V__[6];
-    real_type result__ = t30 * t2 + t36 * t2 + t2 * t4 + t40 * t2 + t49 * t2 + t2 * t7 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
+    real_type result__ = t2 * t30 + t2 * t36 + t2 * t4 + t2 * t40 + t2 * t49 + t2 * t7 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }

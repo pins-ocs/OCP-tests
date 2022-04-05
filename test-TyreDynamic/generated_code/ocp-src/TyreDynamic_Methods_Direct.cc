@@ -147,8 +147,8 @@ namespace TyreDynamicDefine {
     result__[ 1   ] = V__[1] * t1 * ModelPars[iM_Iw] + ModelPars[iM_rw] * t7 - t16 - t19 - t22;
     real_type t27  = kappa__w(t1, t15);
     result__[ 2   ] = V__[2] * ModelPars[iM_l__x] * t1 - (t27 - t6) * t1;
-    result__[ 3   ] = V__[3] * ModelPars[iM_tau__p] * t1 + t13 - UM__[0];
-    result__[ 4   ] = V__[4] * ModelPars[iM_tau__b] * t1 + t17 - UM__[1];
+    result__[ 3   ] = ModelPars[iM_tau__p] * t1 * V__[3] + t13 - UM__[0];
+    result__[ 4   ] = ModelPars[iM_tau__b] * t1 * V__[4] + t17 - UM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 5, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Main.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -192,8 +192,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_TwoLinkRobotArm_data.Mesh["s0"] = 0;
-ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 800;
 ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 800;
 
 
     // alias for user object classes passed as pointers

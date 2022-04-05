@@ -608,9 +608,9 @@ namespace TyreDynamicDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = 1.0 / X__[iX_v];
     real_type t4   = ALIAS_p__oControl_D_1_1(U__[iU_p__o], -1, 1);
-    result__[ 0   ] = t4 * t2 + 2;
+    result__[ 0   ] = t2 * t4 + 2;
     real_type t7   = ALIAS_b__oControl_D_1_1(U__[iU_b__o], -1, 1);
-    result__[ 1   ] = t7 * t2 + 2;
+    result__[ 1   ] = t2 * t7 + 2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 2, i_segment );
   }
