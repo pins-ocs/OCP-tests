@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type jerk_max = 10;
-    real_type wJ = 1/jerk_max^2;
     real_type L = 100;
     real_type jerk_min = -10;
     real_type s_f = L;
+    real_type jerk_max = 10;
+    real_type wJ = 1/jerk_max^2;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

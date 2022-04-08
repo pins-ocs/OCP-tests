@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-muf_min = -1
 mur_min = -1
+muf_min = -1
 mur_max = 1
 
 content = {

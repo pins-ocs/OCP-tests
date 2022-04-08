@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,16 +20,16 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-T      = 0.68
 days   = 1
 tf     = 86400*days
-days1  = 30
 g0     = 9.80665
-Isp    = 1500
-mdot   = T/g0/Isp
-mu     = 398600441800000
 u0     = 0
+mu     = 398600441800000
+Isp    = 1500
+T      = 0.68
+mdot   = T/g0/Isp
 r0     = 6678140
+days1  = 30
 v0     = (mu/r0)**(1/2.0)
 u0_bar = u0/v0
 

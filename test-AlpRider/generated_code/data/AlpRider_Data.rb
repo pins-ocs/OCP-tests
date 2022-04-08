@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: AlpRider_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-W0    = 0
 epsi0 = 0.1
+W0    = 0
 W     = W0
 epsi  = epsi0
 tol0  = 0.1

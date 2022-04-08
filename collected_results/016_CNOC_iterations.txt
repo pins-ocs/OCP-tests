@@ -228,7 +228,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 28292         N. System pars = 4038
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 354[ms]       timeout        = 0 [ms]
+Elapsed Time   = 364[ms]       timeout        = 0 [ms]
 iteration      = 35            Memory Used    = 2Mb (+91Kb)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
@@ -296,12 +296,12 @@ skipping...
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-At cell 100, H = -44.799164759187335, ||g||_inf = 0.11439646406911022
-At cell 201, H = -21.200868520857366, ||g||_inf = 0.09280144870877713
-At cell 302, H = -26.46240633474646, ||g||_inf = 0.1368659400265464
-At cell 403, H = -42.51957765550779, ||g||_inf = 0.10921782496445465
-At cell 504, H = 6.247277365155385, ||g||_inf = 0.17736788636970646
-At cell 605, H = 5.112291902629786, ||g||_inf = 0.19588668300789625
+At cell 100, H=-44.799164759187335, ||g||_inf=0.11439646406911022, u=[       0        0 ]
+At cell 201, H=-21.200868520857366, ||g||_inf=0.09280144870877713, u=[       0        0 ]
+At cell 302, H=-26.46240633474646, ||g||_inf=0.1368659400265464, u=[       0        0 ]
+At cell 403, H=-42.51957765550779, ||g||_inf=0.10921782496445465, u=[       0        0 ]
+At cell 504, H=6.247277365155385, ||g||_inf=0.17736788636970646, u=[       0        0 ]
+At cell 605, H=5.112291902629786, ||g||_inf=0.19588668300789625, u=[       0        0 ]
 skipping...
 Check Controls End
 target [Lagrange,Mayer]       = [ 1.053, 0 ]

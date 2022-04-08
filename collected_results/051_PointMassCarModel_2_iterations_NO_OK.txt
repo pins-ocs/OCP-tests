@@ -1415,7 +1415,7 @@ NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 301, maxIter = 300, tolerance = 1e-09
 ||d||_inf = 2164.3, ||f||_inf = 0.10203
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 4.28[sec]     timeout        = 0 [ms]
+Elapsed Time   = 4.77[sec]     timeout        = 0 [ms]
 iteration      = 301           Memory Used    = 3Mb (+32Kb)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
@@ -1445,12 +1445,12 @@ All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-At cell 190, H = 0.004899765233273904, ||g||_inf = 0.00010088555529221002
-At cell 1164, H = 0.0042754590065463985, ||g||_inf = 5.1426353121733926e-05
-At cell 1345, H = 0.004932276841276611, ||g||_inf = 3.936111220653163e-05
-At cell 1581, H = 0.004485706197189376, ||g||_inf = 1.905432143315886e-05
-At cell 1822, H = 0.004916947900685202, ||g||_inf = 1.5026804075722598e-05
-At cell 2058, H = 0.004162153264214084, ||g||_inf = 1.5213287390134905e-05
+At cell 190, H=0.004899765233273904, ||g||_inf=0.00010088555529221002, u=[       0        0 ]
+At cell 1164, H=0.0042754590065463985, ||g||_inf=5.1426353121733926e-05, u=[       0        0 ]
+At cell 1345, H=0.004932276841276611, ||g||_inf=3.936111220653163e-05, u=[       0        0 ]
+At cell 1581, H=0.004485706197189376, ||g||_inf=1.905432143315886e-05, u=[       0        0 ]
+At cell 1822, H=0.004916947900685202, ||g||_inf=1.5026804075722598e-05, u=[       0        0 ]
+At cell 2058, H=0.004162153264214084, ||g||_inf=1.5213287390134905e-05, u=[       0        0 ]
 skipping...
 Check Controls End
 NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!

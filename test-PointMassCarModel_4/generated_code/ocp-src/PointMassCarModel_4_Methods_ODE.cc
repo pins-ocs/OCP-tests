@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -180,7 +180,7 @@ namespace PointMassCarModel_4Define {
     result__[ 0   ] = t8 * t2;
     real_type t10  = sin(t4);
     result__[ 1   ] = t10 * t3 * t2;
-    result__[ 2   ] = -t2 * (t8 * t7 - X__[iX_Omega]);
+    result__[ 2   ] = -t2 * (t7 * t8 - X__[iX_Omega]);
     real_type t16  = t3 * t3;
     result__[ 3   ] = t2 * (-t16 * ModelPars[iM_kD] + X__[iX_fx]);
     result__[ 4   ] = ModelPars[iM_v__Omega__max] * U__[iU_v__Omega] * t2;

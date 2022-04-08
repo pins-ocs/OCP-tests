@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: GoddardRocket.m                                                %
 %                                                                       %
-%  version: 1.0   date 4/4/2022                                         %
+%  version: 1.0   date 5/4/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -21,7 +21,7 @@ classdef GoddardRocket < handle
     dim_x;
     dim_u;
     dim_pars;
-    dim_omega;
+    num_active_BC;
     dim_ineq;
     objectHandle; % Handle to the underlying C++ class instance
   end
@@ -60,12 +60,12 @@ classdef GoddardRocket < handle
       %
       GoddardRocket_Mex( 'setup', self.objectHandle, fname_or_struct );
       res = GoddardRocket_Mex( 'dims', self.objectHandle );
-      self.dim_q     = res.dim_q;
-      self.dim_x     = res.dim_x;
-      self.dim_u     = res.dim_u;
-      self.dim_pars  = res.dim_pars;
-      self.dim_omega = res.dim_omega;
-      self.dim_ineq  = res.dim_ineq;
+      self.dim_q         = res.dim_q;
+      self.dim_x         = res.dim_x;
+      self.dim_u         = res.dim_u;
+      self.dim_pars      = res.dim_pars;
+      self.num_active_BC = res.num_active_BC;
+      self.dim_ineq      = res.dim_ineq;
     end
     % ---------------------------------------------------------------------
     function n = names( self )
@@ -88,14 +88,14 @@ classdef GoddardRocket < handle
     function res = dims( self )
       %
       % Return a MATLAB structures collecting the dimension of the OCP problem:
-      % res.dim_q     = number of mesh variables (variables computed ad mesh nodes)
-      % res.dim_x     = number of states
-      % res.dim_u     = number of controls
-      % res.dim_pars  = number of parameters
-      % res.dim_omega = number of mutipliers associated to BC
-      % res.dim_bc    = number of BC
-      % res.num_nodes = number of nodes of the discretization grid
-      % res.neq       = number of equations
+      % res.dim_q         = number of mesh variables (variables computed ad mesh nodes)
+      % res.dim_x         = number of states
+      % res.dim_u         = number of controls
+      % res.dim_pars      = number of parameters
+      % res.num_active_BC = number of mutipliers associated to BC
+      % res.dim_bc        = number of BC
+      % res.num_nodes     = number of nodes of the discretization grid
+      % res.neq           = number of equations
       %
       res = GoddardRocket_Mex( 'dims', self.objectHandle );
     end
@@ -602,11 +602,25 @@ classdef GoddardRocket < handle
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function [q_L,q_R] = eval_q_LR( self, iseg_L, t_L, iseg_R, t_R )
+      if length( t_L ) == 1
+        q_L = self.eval_q( iseg_L, t_L(1) );
+      else
+        q_L = t_L;
+      end
+      if length( t_R ) == 1
+        q_R = self.eval_q( iseg_R, t_R(1) );
+      else
+        q_R = t_R;
+      end
+    end
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % DISCRETIZED PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function [a,c] = eval_ac( self, iseg_L, q_L, x_L, lambda_L, ...
-                                    iseg_R, q_R, x_R, lambda_R, ...
+    function [a,c] = eval_ac( self, iseg_L, t_L, x_L, lambda_L, ...
+                                    iseg_R, t_R, x_R, lambda_R, ...
                                     pars, U )
       %
       % Compute the block of the nonlinear system
@@ -614,14 +628,15 @@ classdef GoddardRocket < handle
       %
       % <<FD1.jpg>>
       %
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       [a,c] = GoddardRocket_Mex( 'ac', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
     % ---------------------------------------------------------------------
     function [ DaDxlxlp, DaDu, DcDxlxlp, DcDu ] = ...
-      eval_DacDxlxlpu( self, iseg_L, q_L, x_L, lambda_L, ...
-                             iseg_R, q_R, x_R, lambda_R, ...
+      eval_DacDxlxlpu( self, iseg_L, t_L, x_L, lambda_L, ...
+                             iseg_R, t_R, x_R, lambda_R, ...
                              pars, U )
       %
       % Compute the block of the nonlinear system
@@ -629,33 +644,36 @@ classdef GoddardRocket < handle
       %
       % <<FD2.jpg>>
       %
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       [DaDxlxlp, DaDu, DcDxlxlp, DcDu] = GoddardRocket_Mex( ...
         'DacDxlxlpu', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
     % ---------------------------------------------------------------------
-    function [h,c] = eval_hc( self, iseg_L, q_L, x_L, lambda_L, ...
-                                    iseg_R, q_R, x_R, lambda_R, pars )
+    function [h,c] = eval_hc( self, iseg_L, t_L, x_L, lambda_L, ...
+                                    iseg_R, t_R, x_R, lambda_R, pars )
       %
       % Compute the block of the BC of the nonlinear
       % system given left and right states.
       %
       % <<FD3.jpg>>
       %
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       [h,c] = GoddardRocket_Mex( 'hc', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function [Jh,Jc] = eval_DhcDxlxlop( self, iseg_L, q_L, x_L, lambda_L, ...
-                                              iseg_R, q_R, x_R, lambda_R, pars )
+    function [Jh,Jc] = eval_DhcDxlxlop( self, iseg_L, t_L, x_L, lambda_L, ...
+                                              iseg_R, t_R, x_R, lambda_R, pars )
       %
       % Compute the block of the BC of the nonlinear system
       % given left and right states.
       %
       % <<FD4.jpg>>
       %
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       [Jh,Jc] = GoddardRocket_Mex( 'DhcDxlxlop', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
@@ -665,13 +683,14 @@ classdef GoddardRocket < handle
     % CONTINUOUS PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function u = eval_u( self, iseg_L, q_L, x_L, lambda_L, ...
-                               iseg_R, q_R, x_R, lambda_R, ...
+    function u = eval_u( self, iseg_L, t_L, x_L, lambda_L, ...
+                               iseg_R, t_R, x_R, lambda_R, ...
                                pars )
       %
       % Compute the control given states and multiplyers.
       %
       if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         u = GoddardRocket_Mex( 'u', self.objectHandle, ...
           iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
         );
@@ -680,13 +699,14 @@ classdef GoddardRocket < handle
       end
     end
     % ---------------------------------------------------------------------
-    function DuDxlxlp = eval_DuDxlxlp( self, iseg_L, q_L, x_L, lambda_L, ...
-                                             iseg_R, q_R, x_R, lambda_R, ...
+    function DuDxlxlp = eval_DuDxlxlp( self, iseg_L, t_L, x_L, lambda_L, ...
+                                             iseg_R, t_R, x_R, lambda_R, ...
                                              pars )
       %
       % Compute the jacobian of controls given states and multiplyers.
       %
       if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         DuDxlxlp = GoddardRocket_Mex( 'DuDxlxlp', self.objectHandle, ...
           iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
         );
@@ -767,21 +787,24 @@ classdef GoddardRocket < handle
       J = GoddardRocket_Mex( 'DnuDxp', self.objectHandle, iseg, q, x, V, pars );
     end
     % ---------------------------------------------------------------------
-    function bc = eval_bc( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+    function bc = eval_bc( self, iseg_L, t_L, x_L, iseg_R, t_R, x_R, pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       bc = GoddardRocket_Mex( ...
         'bc', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DbcDxxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+    function J = eval_DbcDxxp( self, iseg_L, t_L, x_L, iseg_R, t_R, x_R, pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       J = GoddardRocket_Mex( ...
         'DbcDxxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_D2bcD2xxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full )
+    function J = eval_D2bcD2xxp( self, iseg_L, t_L, x_L, iseg_R, t_R, x_R, pars, omega_full )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       J = GoddardRocket_Mex( ...
         'D2bcD2xxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full ...
@@ -813,10 +836,11 @@ classdef GoddardRocket < handle
     %  |____/|_|_|  \___|\___|\__|
     %
     % ---------------------------------------------------------------------
-    function fd_ode = eval_fd_ode( self, iseg_L, q_L, x_L, ...
-                                         iseg_R, q_R, x_R, ...
+    function fd_ode = eval_fd_ode( self, iseg_L, t_L, x_L, ...
+                                         iseg_R, t_R, x_R, ...
                                          U, pars )
       if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         fd_ode = GoddardRocket_Mex( ...
           'fd_ode', self.objectHandle, ...
           iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
@@ -827,10 +851,11 @@ classdef GoddardRocket < handle
       end
     end
     % ---------------------------------------------------------------------
-    function Dfd_odeDxxup = eval_Dfd_odeDxxup( self, iseg_L, q_L, x_L, ...
-                                                     iseg_R, q_R, x_R, ...
+    function Dfd_odeDxxup = eval_Dfd_odeDxxup( self, iseg_L, t_L, x_L, ...
+                                                     iseg_R, t_R, x_R, ...
                                                      U, pars )
       if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         Dfd_odeDxxup = GoddardRocket_Mex( ...
           'Dfd_odeDxxup', self.objectHandle, ...
           iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
@@ -839,14 +864,16 @@ classdef GoddardRocket < handle
         % per ora codizione di continuità
         nx = self.dim_x;
         np = self.dim_pars;
-        Dfd_odeDxxup = [ -eye(nx,nx), eye(nx,nx), zeros(nx,np) ];
+        nu = self.dim_u;
+        Dfd_odeDxxup = [ -eye(nx,nx), eye(nx,nx), zeros(nx,nu+np) ];
       end
     end
     % ---------------------------------------------------------------------
-    function D2fd_odeD2xxup = eval_D2fd_odeD2xxup( self, iseg_L, q_L, x_L, ...
-                                                         iseg_R, q_R, x_R, ...
+    function D2fd_odeD2xxup = eval_D2fd_odeD2xxup( self, iseg_L, t_L, x_L, ...
+                                                         iseg_R, t_R, x_R, ...
                                                          U, pars, lambda )
       if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         D2fd_odeD2xxup = GoddardRocket_Mex( ...
           'D2fd_odeD2xxup', self.objectHandle, ...
           iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ...
@@ -854,48 +881,39 @@ classdef GoddardRocket < handle
       else
         nx = self.dim_x;
         np = self.dim_pars;
-        D2fd_odeD2xxup = zeros( 2*nx+np );
+        nu = self.dim_u;
+        D2fd_odeD2xxup = zeros( 2*nx+nu+np );
       end
     end
     % ---------------------------------------------------------------------
-    function target = eval_mayer_target( self, iseg_L, q_L, x_L, ...
-                                               iseg_R, q_R, x_R, ...
+    function target = eval_mayer_target( self, iseg_L, t_L, x_L, ...
+                                               iseg_R, t_R, x_R, ...
                                                pars )
-      if iseg_L == iseg_R
-        target = GoddardRocket_Mex( ...
-          'mayer_target', self.objectHandle, ...
-          iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-        );
-      else
-         target = 0;
-      end
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+      target = GoddardRocket_Mex( ...
+        'mayer_target', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
     end
     % ---------------------------------------------------------------------
-    function DmayerDxxp = eval_DmayerDxxp( self, iseg_L, q_L, x_L, ...
-                                                 iseg_R, q_R, x_R, ...
+    function DmayerDxxp = eval_DmayerDxxp( self, iseg_L, t_L, x_L, ...
+                                                 iseg_R, t_R, x_R, ...
                                                  pars )
-      if iseg_L == iseg_R
-        DmayerDxxp = GoddardRocket_Mex( ...
-          'DmayerDxxp', self.objectHandle, ...
-          iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-        );
-      else
-        DmayerDxxp = zeros( 2*self.dim_x+seld.dim_pars, 1 );
-      end
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+      DmayerDxxp = GoddardRocket_Mex( ...
+        'DmayerDxxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
     end
     % ---------------------------------------------------------------------
-    function D2mayerD2xxp = eval_D2mayerD2xxp( self, iseg_L, q_L, x_L, ...
-                                                     iseg_R, q_R, x_R, ...
+    function D2mayerD2xxp = eval_D2mayerD2xxp( self, iseg_L, t_L, x_L, ...
+                                                     iseg_R, t_R, x_R, ...
                                                      pars )
-      if iseg_L == iseg_R
-        D2mayerD2xxp = GoddardRocket_Mex( ...
-          'D2mayerD2xxp', self.objectHandle, ...
-          iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-        );
-      else
-        nn = 2*self.dim_x+seld.dim_pars;
-        D2mayerD2xxp = zeros( nn, nn );
-      end
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+      D2mayerD2xxp = GoddardRocket_Mex( ...
+        'D2mayerD2xxp', self.objectHandle, ...
+        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
+      );
     end
     % ---------------------------------------------------------------------
     function c = eval_c( self, iseg, q, x, u, pars )
@@ -907,13 +925,14 @@ classdef GoddardRocket < handle
       );
     end
     % ---------------------------------------------------------------------
-    function c = eval_fd_c( self, iseg_L, q_L, x_L, ...
-                                  iseg_R, q_R, x_R, ...
+    function c = eval_fd_c( self, iseg_L, t_L, x_L, ...
+                                  iseg_R, t_R, x_R, ...
                                   u, pars )
       %
       % Evaluate contraints c(x_M,u,p) <= 0
       %
       if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         q = (q_L+q_R)./2;
         x = (x_L+x_R)./2;
         c = self.eval_c(iseg_L,q,x,u,pars);
@@ -926,32 +945,28 @@ classdef GoddardRocket < handle
       %
       % Evaluate jacobian of constraints c(x,u,p) <= 0
       %
-      if iseg_L == iseg_R
-        Jc = GoddardRocket_Mex(...
-          'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars ...
-        );
-      else
-        nn = self.dim_x + self.dim_u + self.dim_pars;
-        Jc = zeros( nn, nn );
-      end
+      Jc = GoddardRocket_Mex(...
+        'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars ...
+      );
     end
     % ---------------------------------------------------------------------
-    function Jc = eval_Dfd_cDxxup( self, iseg_L, q_L, x_L, ...
-                                         iseg_R, q_R, x_R, ...
+    function Jc = eval_Dfd_cDxxup( self, iseg_L, t_L, x_L, ...
+                                         iseg_R, t_R, x_R, ...
                                          u, pars )
       %
       % Evaluate jacobian of constraints c(x,u,p) <= 0
       %
+      nx = self.dim_x;
       if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         q      = (q_L+q_R)./2;
         x      = (x_L+x_R)./2;
         Jc_pre = self.eval_DcDxup( iseg_L, q, x, u, pars );
-        nx     = self.dim_x;
         Jx     = 0.5*Jc_pre(:,1:nx);
         Jc     = [Jx,Jx,Jc_pre(:,nx+1:end)];
       else
-        nn = 2*self.dim_x + self.dim_u + self.dim_pars;
-        Jc = zeros( nn, nn );
+        nn = 2*nx + self.dim_u + self.dim_pars;
+        Jc = zeros( self.dim_ineq, nn );
       end
     end
     % ---------------------------------------------------------------------
@@ -964,13 +979,14 @@ classdef GoddardRocket < handle
       );
     end
     % ---------------------------------------------------------------------
-    function HcBIG = eval_D2fd_cD2xxup( self, iseg_L, q_L, x_L, ...
-                                              iseg_R, q_R, x_R, ...
+    function HcBIG = eval_D2fd_cD2xxup( self, iseg_L, t_L, x_L, ...
+                                              iseg_R, t_R, x_R, ...
                                               u, pars, omega )
       %
       % Evaluate hessian of constraints omega . c(x,u,p) <= 0
       %
       if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         q_M = (q_R+q_L)/2;
         x_M = (x_R+x_L)/2;
         Hc = self.eval_D2cD2xup( iseg_L, q_M, x_M, u, pars, omega );
@@ -1188,8 +1204,9 @@ classdef GoddardRocket < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function jmp = eval_jump( self, iseg_L, q_L, x_L, lambda_L, ...
-                                    iseg_R, q_R, x_R, lambda_R, pars )
+    function jmp = eval_jump( self, iseg_L, t_L, x_L, lambda_L, ...
+                                    iseg_R, t_R, x_R, lambda_R, pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       jmp = GoddardRocket_Mex( ...
         'jump', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, ...
@@ -1198,8 +1215,9 @@ classdef GoddardRocket < handle
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DjumpDxlxlp( self, iseg_L, q_L, x_L, lambda_L, ...
-                                         iseg_R, q_R, x_R, lambda_R, pars )
+    function J = eval_DjumpDxlxlp( self, iseg_L, t_L, x_L, lambda_L, ...
+                                         iseg_R, t_R, x_R, lambda_R, pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       J = GoddardRocket_Mex( ...
         'DjumpDxlxlp', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, ...
@@ -1212,10 +1230,11 @@ classdef GoddardRocket < handle
     % omega*Jump(x_l,lambda_L,x_R,lambda_R,pars)
     %
     function H = eval_Hessian_jump_xlxlp( self, ...
-      iseg_L, q_L, x_L, lambda_L, ...
-      iseg_R, q_R, x_R, lambda_R, ...
+      iseg_L, t_L, x_L, lambda_L, ...
+      iseg_R, t_R, x_R, lambda_R, ...
       pars, omega                 ...
     )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       H = GoddardRocket_Mex( ...
         'Hessian_jump_xlxlp', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, ...

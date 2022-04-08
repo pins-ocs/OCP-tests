@@ -1,5 +1,5 @@
-# Date:             17:05:45 2022-04-03
-# MX Version:       1.5.1-d015dirty-osx_12.3.1 hash: a2359a3d Sun Apr 3 16:20:57 2022
+# Date:             19:26:41 2022-04-05
+# MX Version:       1.5.1-d019dirty-osx_12.3.1 hash: b481b68e Tue Apr 5 18:59:58 2022
 # Computation type: Optimal control solution
 # Model name:       PointMassCarModel_2
 #
@@ -14,7 +14,7 @@
 # max_accumulated_iter = 800
 # tolerance            = 9.999999999999999e-10
 # iterations           = 301
-# cpu_time             = 4.2777579999999995 s
+# cpu_time             = 4.7737750000000005 s
 # solver_type          = CyclicReduction+LU and LastBlock LUPQ
 # lapack version       = Accelerate
 #

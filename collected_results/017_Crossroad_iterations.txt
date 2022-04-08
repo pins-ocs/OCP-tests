@@ -91,10 +91,100 @@ Used threads:           15
 
 
 NewtonDumped --- start iterations ---
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1,12] (  0.0388  ,  0.0747  ) [ 2.58e+05 , 2.58e+05 ] 1.53e-05   [0:0:0:0:0:0:0:0:10:0:0:0]
 [  2, 7] (  0.0747  ,  0.0789  ) [   6.68   ,    11    ] 0.111      [2:0:0:2:0:0:0:0:1:0:0:0]
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
 [  3, 7] (  0.0789  ,  0.0776  ) [   17.6   ,   17.5   ] 0.00781    [0:0:0:0:0:0:0:0:5:0:0:0]
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
+WARNING eval_NewtonDumped FAILED
 [  4, 9] (  0.0776  ,  0.0775  ) [   14.2   ,   14.1   ] 0.00156    [1:0:0:0:0:0:0:0:6:0:0:0]
 [  5, 9] (  0.0775  ,  0.0833  ) [   12.2   ,   7.34   ] 0.00156    [1:0:0:0:0:0:0:0:6:0:0:0]
 [  6, 6] (  0.0833  ,  0.0834  ) [   7.2    ,   6.74   ] 0.05       [0:0:1:0:0:0:0:0:3:0:0:0]
@@ -159,7 +249,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 1622          N. System pars = 201
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 159[ms]       timeout        = 0 [ms]
+Elapsed Time   = 218[ms]       timeout        = 0 [ms]
 iteration      = 52            Memory Used    = 178Kb (+88bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
@@ -189,7 +279,7 @@ All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-At cell 100, H = 0.5103437718854208, ||g||_inf = 0.5014285316605216
+At cell 100, H=0.5103437718854208, ||g||_inf=0.5014285316605216, u=[       0 ]
 Check Controls End
 target [Lagrange,Mayer]       = [ 162.3, 0 ]
 [Penalties/Barriers,Controls] = [ 0, 0.001151 ]

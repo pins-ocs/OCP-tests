@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: LUUS_Singular03_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -21,10 +21,10 @@ include Mechatronix
 
 # Auxiliary values
 epsi_x0      = 0.0001
-Tf           = 5
 epsi_x       = epsi_x0
-u_tolerance0 = 0.01
 u_epsilon0   = 0.01
+Tf           = 5
+u_tolerance0 = 0.01
 
 mechatronix do |data|
 

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Pugliese_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,13 +20,13 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-g__M = 1.5
-t__S = 45.15
 YEAR = 365.25
 t__M = 38.15
-C__M = (1-1/t__M)*g__M*p__M
+t__S = 45.15
+g__M = 1.5
 g__S = 3.5
 C__S = (1-1/t__S)*g__S*p__S
+C__M = (1-1/t__M)*g__M*p__M
 
 mechatronix do |data|
 

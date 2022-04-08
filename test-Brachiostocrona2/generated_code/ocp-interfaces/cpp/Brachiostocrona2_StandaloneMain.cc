@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,13 +50,13 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type xf = 5;
-    real_type g = 9.81;
     real_type yf = -2;
-    real_type theta0 = atan2(yf,xf);
+    real_type xf = 5;
+    real_type epsi0 = 1;
+    real_type g = 9.81;
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
     real_type Tf = (-2.0*yf/g)^(1/2.0);
-    real_type epsi0 = 1;
+    real_type theta0 = atan2(yf,xf);
     real_type epsi = epsi0;
     integer InfoLevel = 4;
 
@@ -182,8 +182,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Brachiostocrona2_data.Mesh["s0"] = 0;
-Brachiostocrona2_data.Mesh["segments"][0]["n"] = 500;
 Brachiostocrona2_data.Mesh["segments"][0]["length"] = 1;
+Brachiostocrona2_data.Mesh["segments"][0]["n"] = 500;
 
 
     // alias for user object classes passed as pointers

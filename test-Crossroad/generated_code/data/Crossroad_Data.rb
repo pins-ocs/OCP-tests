@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Crossroad_Data.rb                                              #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,11 +20,11 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-jerk_max = 10
-wJ       = 1/jerk_max**2
 L        = 100
 jerk_min = -10
 s_f      = L
+jerk_max = 10
+wJ       = 1/jerk_max**2
 
 mechatronix do |data|
 

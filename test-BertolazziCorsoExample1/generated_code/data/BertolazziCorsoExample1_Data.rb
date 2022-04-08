@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BertolazziCorsoExample1_Data.rb                                #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #

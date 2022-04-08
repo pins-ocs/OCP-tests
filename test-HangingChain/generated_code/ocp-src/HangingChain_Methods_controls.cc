@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -117,9 +117,9 @@ namespace HangingChainDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = UM__[0];
-    real_type t3   = t2 * t2;
-    real_type t5   = sqrt(t3 + 1);
-    result__[ 0   ] = 1.0 / t5 * (t2 * LM__[1] + t2 * XM__[0] + t5 * LM__[0]);
+    real_type t5   = t2 * t2;
+    real_type t7   = sqrt(t5 + 1);
+    result__[ 0   ] = 1.0 / t7 * (t2 * LM__[1] + t2 * XM__[0] + t7 * LM__[0]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -220,15 +220,15 @@ namespace HangingChainDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = LM__[0];
-    real_type t2   = UM__[0];
-    real_type t3   = t2 * t2;
-    real_type t4   = t3 + 1;
-    real_type t5   = sqrt(t4);
-    real_type t6   = 1.0 / t5;
-    real_type t9   = LM__[1];
+    real_type t1   = LM__[1];
+    real_type t2   = LM__[0];
+    real_type t3   = UM__[0];
+    real_type t4   = t3 * t3;
+    real_type t5   = t4 + 1;
+    real_type t6   = sqrt(t5);
+    real_type t7   = 1.0 / t6;
     real_type t10  = XM__[0];
-    result__[ 0   ] = t6 * (t2 * t6 * t1 + t10 + t9) - t2 / t5 / t4 * (t5 * t1 + t2 * t10 + t2 * t9);
+    result__[ 0   ] = t7 * (t3 * t7 * t2 + t1 + t10) - t3 / t6 / t5 * (t3 * t1 + t3 * t10 + t6 * t2);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

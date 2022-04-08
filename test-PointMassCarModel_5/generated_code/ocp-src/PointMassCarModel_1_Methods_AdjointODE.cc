@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -1171,7 +1171,7 @@ namespace PointMassCarModel_1Define {
     result__[ 2   ] = t10 * t3;
     real_type t13  = ModelPars[iM_v__Omega__max] * L__[iL_lambda4__xo];
     result__[ 3   ] = t8 * t13;
-    result__[ 4   ] = t13 * t9;
+    result__[ 4   ] = t9 * t13;
     result__[ 5   ] = t10 * t13;
     if ( m_debug )
       Mechatronix::check_in_segment( result__,"DHuDxp_sparse", 6, i_segment );

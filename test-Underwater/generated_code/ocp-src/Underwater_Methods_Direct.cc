@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -228,7 +228,7 @@ namespace UnderwaterDefine {
     real_type t4   = cos(t3);
     real_type t6   = XM__[3];
     real_type t7   = sin(t3);
-    real_type t9   = t4 * t2 - t7 * t6;
+    real_type t9   = t2 * t4 - t6 * t7;
     result__[ 1   ] = -0.5e0 * t9 * t1;
     result__[ 2   ] = -0.5e0 * t4 * t1;
     real_type t15  = 0.5e0 * t7 * t1;

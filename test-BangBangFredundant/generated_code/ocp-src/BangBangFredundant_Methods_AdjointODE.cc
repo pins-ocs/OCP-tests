@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -131,7 +131,7 @@ namespace BangBangFredundantDefine {
     real_type t3   = X__[iX_F2];
     real_type t5   = ALIAS_Flim_min_D(-1 - t2 - t3);
     real_type t8   = ALIAS_Flim_max_D(t2 + t3 - 1);
-    result__[ 2   ] = -t1 * t5 + t1 * t8;
+    result__[ 2   ] = -t5 * t1 + t8 * t1;
     result__[ 3   ] = result__[2];
     result__[ 4   ] = 0;
     result__[ 5   ] = 0;

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona2_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,13 +20,13 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-xf     = 5
-g      = 9.81
 yf     = -2
-theta0 = Math::atan2(yf,xf)
+xf     = 5
+epsi0  = 1
+g      = 9.81
 Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 Tf     = (-2.0*yf/g)**(1/2.0)
-epsi0  = 1
+theta0 = Math::atan2(yf,xf)
 epsi   = epsi0
 
 mechatronix do |data|
@@ -355,8 +355,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 500,
         :length => 1,
+        :n      => 500,
       },
     ],
   };

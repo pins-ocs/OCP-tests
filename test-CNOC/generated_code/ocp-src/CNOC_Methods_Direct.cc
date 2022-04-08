@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_Guess.cc                                          |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -633,7 +633,7 @@ namespace CNOCDefine {
     real_type t10  = XR__[iX_n] / 2 + XL__[iX_n] / 2;
     real_type t14  = XR__[iX_s] / 2 + XL__[iX_s] / 2;
     real_type t15  = ALIAS_kappa(t14);
-    real_type t17  = -t10 * t15 + 1;
+    real_type t17  = -t15 * t10 + 1;
     real_type t18  = t17 * t17;
     real_type t20  = 1.0 / t18 / t17;
     real_type t21  = t20 * t6;

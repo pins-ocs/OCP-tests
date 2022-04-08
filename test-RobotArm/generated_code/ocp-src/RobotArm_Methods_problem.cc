@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -275,9 +275,9 @@ namespace RobotArmDefine {
     real_const_ptr     XR__ = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    real_type t1   = ModelPars[iM_W];
-    real_type t3   = P__[iP_T];
-    real_type result__ = -t3 * (t3 * (t1 - 1) - t1);
+    real_type t1   = P__[iP_T];
+    real_type t2   = ModelPars[iM_W];
+    real_type result__ = -(t1 * (t2 - 1) - t2) * t1;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
     }

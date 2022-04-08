@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -624,7 +624,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t73  = ray_D_4(t18, t3, t26, t27);
     real_type t78  = t25 * t22;
     real_type t79  = acceleration_r(t28, t20);
-    result__[ 2   ] = (2 * t27 - 2 * t69) * t2 + t32 * t73 * t30 * t24 + t39 * t79 * t78 * t19 * t17 - t39 * t73 * t30 * t38 + t32 * t79 * t78 * t19 * t37 + 2 * (t26 * t39 - t32 * t3) * t51 * t48;
+    result__[ 2   ] = (2 * t27 - 2 * t69) * t2 + t32 * t73 * t30 * t24 + t39 * t79 * t78 * t19 * t17 - t39 * t73 * t30 * t38 + t32 * t79 * t78 * t19 * t37 + 2 * (t26 * t39 - t3 * t32) * t51 * t48;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 3, i_segment );
   }

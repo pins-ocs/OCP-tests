@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_StirredTank_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 3/4/2022                                         #
+#  version: 1.0   date 5/4/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,16 +20,16 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_ctrl0 = 0.1
-tol_T      = 1
 tol_ctrl0  = 0.1
-tol_ctrl   = tol_ctrl0
-epsi_T     = 0.01
+epsi_ctrl0 = 0.1
 epsi_ctrl  = epsi_ctrl0
-x_epsi     = 0.01
+tol_ctrl   = tol_ctrl0
 w_time_max = 1
-w_time     = w_time_max
+epsi_T     = 0.01
+x_epsi     = 0.01
+tol_T      = 1
 x_tol      = 0.01
+w_time     = w_time_max
 
 mechatronix do |data|
 

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_TwoLinkRobotArm.m                                       %
 %                                                                       %
-%  version: 1.0   date 3/4/2022                                         %
+%  version: 1.0   date 5/4/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -17,6 +17,12 @@
 
 classdef ICLOCS_TwoLinkRobotArm < handle
   properties (SetAccess = private, Hidden = true)
+    dim_q;
+    dim_x;
+    dim_u;
+    dim_pars;
+    num_active_BC;
+    dim_ineq;
     objectHandle; % Handle to the underlying C++ class instance
   end
 
@@ -32,7 +38,7 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       ICLOCS_TwoLinkRobotArm_Mex( 'delete', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function help( self )
+    function help( ~ )
       %% print help for the class usage
       ICLOCS_TwoLinkRobotArm_Mex('help');
     end
@@ -53,6 +59,13 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       % Initialize an OCP problem reading data from a file or a MATLAB stucture
       %
       ICLOCS_TwoLinkRobotArm_Mex( 'setup', self.objectHandle, fname_or_struct );
+      res = ICLOCS_TwoLinkRobotArm_Mex( 'dims', self.objectHandle );
+      self.dim_q         = res.dim_q;
+      self.dim_x         = res.dim_x;
+      self.dim_u         = res.dim_u;
+      self.dim_pars      = res.dim_pars;
+      self.num_active_BC = res.num_active_BC;
+      self.dim_ineq      = res.dim_ineq;
     end
     % ---------------------------------------------------------------------
     function n = names( self )
@@ -75,14 +88,14 @@ classdef ICLOCS_TwoLinkRobotArm < handle
     function res = dims( self )
       %
       % Return a MATLAB structures collecting the dimension of the OCP problem:
-      % res.dim_q     = number of mesh variables (variables computed ad mesh nodes)
-      % res.dim_x     = number of states
-      % res.dim_u     = number of controls
-      % res.dim_pars  = number of parameters
-      % res.dim_omega = number of mutipliers associated to BC
-      % res.dim_bc    = number of BC
-      % res.num_nodes = number of nodes of the discretization grid
-      % res.neq       = number of equations
+      % res.dim_q         = number of mesh variables (variables computed ad mesh nodes)
+      % res.dim_x         = number of states
+      % res.dim_u         = number of controls
+      % res.dim_pars      = number of parameters
+      % res.num_active_BC = number of mutipliers associated to BC
+      % res.dim_bc        = number of BC
+      % res.num_nodes     = number of nodes of the discretization grid
+      % res.neq           = number of equations
       %
       res = ICLOCS_TwoLinkRobotArm_Mex( 'dims', self.objectHandle );
     end
@@ -250,9 +263,7 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       % depends on the stage `n` and parameter `s` of
       % the continuation.
       %
-      ICLOCS_TwoLinkRobotArm_Mex( ...
-        'update_continuation', self.objectHandle, n, old_s, s ...
-      );
+      ICLOCS_TwoLinkRobotArm_Mex( 'update_continuation', self.objectHandle, n, old_s, s );
     end
 
     % ---------------------------------------------------------------------
@@ -399,7 +410,7 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       %
       %  method = 'least_squares' ...
       %
-      sol = ICLOCS_TwoLinkRobotArm_Mex( 'estimate_multipliers', self.objectHandle, X, U, Pars, method );
+      [Lambda,Omega] = ICLOCS_TwoLinkRobotArm_Mex( 'estimate_multipliers', self.objectHandle, X, U, Pars, method );
     end
 
     % ---------------------------------------------------------------------
@@ -591,11 +602,25 @@ classdef ICLOCS_TwoLinkRobotArm < handle
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    function [q_L,q_R] = eval_q_LR( self, iseg_L, t_L, iseg_R, t_R )
+      if length( t_L ) == 1
+        q_L = self.eval_q( iseg_L, t_L(1) );
+      else
+        q_L = t_L;
+      end
+      if length( t_R ) == 1
+        q_R = self.eval_q( iseg_R, t_R(1) );
+      else
+        q_R = t_R;
+      end
+    end
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
     % DISCRETIZED PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function [a,c] = eval_ac( self, iseg_L, q_L, x_L, lambda_L, ...
-                                    iseg_R, q_R, x_R, lambda_R, ...
+    function [a,c] = eval_ac( self, iseg_L, t_L, x_L, lambda_L, ...
+                                    iseg_R, t_R, x_R, lambda_R, ...
                                     pars, U )
       %
       % Compute the block of the nonlinear system
@@ -603,14 +628,15 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       %
       % <<FD1.jpg>>
       %
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       [a,c] = ICLOCS_TwoLinkRobotArm_Mex( 'ac', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
     % ---------------------------------------------------------------------
     function [ DaDxlxlp, DaDu, DcDxlxlp, DcDu ] = ...
-      eval_DacDxlxlpu( self, iseg_L, q_L, x_L, lambda_L, ...
-                             iseg_R, q_R, x_R, lambda_R, ...
+      eval_DacDxlxlpu( self, iseg_L, t_L, x_L, lambda_L, ...
+                             iseg_R, t_R, x_R, lambda_R, ...
                              pars, U )
       %
       % Compute the block of the nonlinear system
@@ -618,33 +644,36 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       %
       % <<FD2.jpg>>
       %
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       [DaDxlxlp, DaDu, DcDxlxlp, DcDu] = ICLOCS_TwoLinkRobotArm_Mex( ...
         'DacDxlxlpu', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
     % ---------------------------------------------------------------------
-    function [h,c] = eval_hc( self, iseg_L, q_L, x_L, lambda_L, ...
-                                    iseg_R, q_R, x_R, lambda_R, pars )
+    function [h,c] = eval_hc( self, iseg_L, t_L, x_L, lambda_L, ...
+                                    iseg_R, t_R, x_R, lambda_R, pars )
       %
       % Compute the block of the BC of the nonlinear
       % system given left and right states.
       %
       % <<FD3.jpg>>
       %
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       [h,c] = ICLOCS_TwoLinkRobotArm_Mex( 'hc', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function [Jh,Jc] = eval_DhcDxlxlop( self, iseg_L, q_L, x_L, lambda_L, ...
-                                              iseg_R, q_R, x_R, lambda_R, pars )
+    function [Jh,Jc] = eval_DhcDxlxlop( self, iseg_L, t_L, x_L, lambda_L, ...
+                                              iseg_R, t_R, x_R, lambda_R, pars )
       %
       % Compute the block of the BC of the nonlinear system
       % given left and right states.
       %
       % <<FD4.jpg>>
       %
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       [Jh,Jc] = ICLOCS_TwoLinkRobotArm_Mex( 'DhcDxlxlop', self.objectHandle, ...
         iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
       );
@@ -654,26 +683,36 @@ classdef ICLOCS_TwoLinkRobotArm < handle
     % CONTINUOUS PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function u = eval_u( self, iseg_L, q_L, x_L, lambda_L, ...
-                               iseg_R, q_R, x_R, lambda_R, ...
+    function u = eval_u( self, iseg_L, t_L, x_L, lambda_L, ...
+                               iseg_R, t_R, x_R, lambda_R, ...
                                pars )
       %
       % Compute the control given states and multiplyers.
       %
-      u = ICLOCS_TwoLinkRobotArm_Mex( 'u', self.objectHandle, ...
-        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
-      );
+      if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+        u = ICLOCS_TwoLinkRobotArm_Mex( 'u', self.objectHandle, ...
+          iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+        );
+      else
+        u = zeros(self.dim_u,1);
+      end
     end
     % ---------------------------------------------------------------------
-    function DuDxlxlp = eval_DuDxlxlp( self, iseg_L, q_L, x_L, lambda_L, ...
-                                             iseg_R, q_R, x_R, lambda_R, ...
+    function DuDxlxlp = eval_DuDxlxlp( self, iseg_L, t_L, x_L, lambda_L, ...
+                                             iseg_R, t_R, x_R, lambda_R, ...
                                              pars )
       %
       % Compute the jacobian of controls given states and multiplyers.
       %
-      DuDxlxlp = ICLOCS_TwoLinkRobotArm_Mex( 'DuDxlxlp', self.objectHandle, ...
-        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
-      );
+      if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+        DuDxlxlp = ICLOCS_TwoLinkRobotArm_Mex( 'DuDxlxlp', self.objectHandle, ...
+          iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
+        );
+      else
+        DuDxlxlp = zeros( self.dim_u, 4*self.dim_x+self.dim_pars );
+      end
     end
     % ---------------------------------------------------------------------
     %   ____ ___ ____  _____ ____ _____
@@ -748,21 +787,24 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       J = ICLOCS_TwoLinkRobotArm_Mex( 'DnuDxp', self.objectHandle, iseg, q, x, V, pars );
     end
     % ---------------------------------------------------------------------
-    function bc = eval_bc( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+    function bc = eval_bc( self, iseg_L, t_L, x_L, iseg_R, t_R, x_R, pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       bc = ICLOCS_TwoLinkRobotArm_Mex( ...
         'bc', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DbcDxxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars )
+    function J = eval_DbcDxxp( self, iseg_L, t_L, x_L, iseg_R, t_R, x_R, pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       J = ICLOCS_TwoLinkRobotArm_Mex( ...
         'DbcDxxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_D2bcD2xxp( self, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full )
+    function J = eval_D2bcD2xxp( self, iseg_L, t_L, x_L, iseg_R, t_R, x_R, pars, omega_full )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       J = ICLOCS_TwoLinkRobotArm_Mex( ...
         'D2bcD2xxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full ...
@@ -794,54 +836,80 @@ classdef ICLOCS_TwoLinkRobotArm < handle
     %  |____/|_|_|  \___|\___|\__|
     %
     % ---------------------------------------------------------------------
-    function fd_ode = eval_fd_ode( self, iseg_L, q_L, x_L, ...
-                                         iseg_R, q_R, x_R, ...
+    function fd_ode = eval_fd_ode( self, iseg_L, t_L, x_L, ...
+                                         iseg_R, t_R, x_R, ...
                                          U, pars )
-      fd_ode = ICLOCS_TwoLinkRobotArm_Mex( ...
-        'fd_ode', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
-      );
+      if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+        fd_ode = ICLOCS_TwoLinkRobotArm_Mex( ...
+          'fd_ode', self.objectHandle, ...
+          iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
+        );
+      else
+        % per ora solo condizione di continuità
+        fd_ode = x_R - x_L;
+      end
     end
     % ---------------------------------------------------------------------
-    function Dfd_odeDxxup = eval_Dfd_odeDxxup( self, iseg_L, q_L, x_L, ...
-                                                     iseg_R, q_R, x_R, ...
+    function Dfd_odeDxxup = eval_Dfd_odeDxxup( self, iseg_L, t_L, x_L, ...
+                                                     iseg_R, t_R, x_R, ...
                                                      U, pars )
-      Dfd_odeDxxup = ICLOCS_TwoLinkRobotArm_Mex( ...
-        'Dfd_odeDxxup', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
-      );
+      if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+        Dfd_odeDxxup = ICLOCS_TwoLinkRobotArm_Mex( ...
+          'Dfd_odeDxxup', self.objectHandle, ...
+          iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
+        );
+      else
+        % per ora codizione di continuità
+        nx = self.dim_x;
+        np = self.dim_pars;
+        nu = self.dim_u;
+        Dfd_odeDxxup = [ -eye(nx,nx), eye(nx,nx), zeros(nx,nu+np) ];
+      end
     end
     % ---------------------------------------------------------------------
-    function D2fd_odeD2xxup = eval_D2fd_odeD2xxup( self, iseg_L, q_L, x_L, ...
-                                                         iseg_R, q_R, x_R, ...
+    function D2fd_odeD2xxup = eval_D2fd_odeD2xxup( self, iseg_L, t_L, x_L, ...
+                                                         iseg_R, t_R, x_R, ...
                                                          U, pars, lambda )
-      D2fd_odeD2xxup = ICLOCS_TwoLinkRobotArm_Mex( ...
-        'D2fd_odeD2xxup', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ...
-      );
+      if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+        D2fd_odeD2xxup = ICLOCS_TwoLinkRobotArm_Mex( ...
+          'D2fd_odeD2xxup', self.objectHandle, ...
+          iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ...
+        );
+      else
+        nx = self.dim_x;
+        np = self.dim_pars;
+        nu = self.dim_u;
+        D2fd_odeD2xxup = zeros( 2*nx+nu+np );
+      end
     end
     % ---------------------------------------------------------------------
-    function target = eval_mayer_target( self, iseg_L, q_L, x_L, ...
-                                               iseg_R, q_R, x_R, ...
+    function target = eval_mayer_target( self, iseg_L, t_L, x_L, ...
+                                               iseg_R, t_R, x_R, ...
                                                pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       target = ICLOCS_TwoLinkRobotArm_Mex( ...
         'mayer_target', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function DmayerDxxp = eval_DmayerDxxp( self, iseg_L, q_L, x_L, ...
-                                                 iseg_R, q_R, x_R, ...
+    function DmayerDxxp = eval_DmayerDxxp( self, iseg_L, t_L, x_L, ...
+                                                 iseg_R, t_R, x_R, ...
                                                  pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       DmayerDxxp = ICLOCS_TwoLinkRobotArm_Mex( ...
         'DmayerDxxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function D2mayerD2xxp = eval_D2mayerD2xxp( self, iseg_L, q_L, x_L, ...
-                                                     iseg_R, q_R, x_R, ...
+    function D2mayerD2xxp = eval_D2mayerD2xxp( self, iseg_L, t_L, x_L, ...
+                                                     iseg_R, t_R, x_R, ...
                                                      pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       D2mayerD2xxp = ICLOCS_TwoLinkRobotArm_Mex( ...
         'D2mayerD2xxp', self.objectHandle, ...
         iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
@@ -857,18 +925,20 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       );
     end
     % ---------------------------------------------------------------------
-    function c = eval_fd_c( self, iseg_L, q_L, x_L, ...
-                                  iseg_R, q_R, x_R, ...
+    function c = eval_fd_c( self, iseg_L, t_L, x_L, ...
+                                  iseg_R, t_R, x_R, ...
                                   u, pars )
       %
       % Evaluate contraints c(x_M,u,p) <= 0
       %
-      if iseg_L ~= iseg_R
-        error('in eval_fd_c iseg_L(%d) must be equal to iseg_R(%d)',iseg_L,iseg_R);
+      if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+        q = (q_L+q_R)./2;
+        x = (x_L+x_R)./2;
+        c = self.eval_c(iseg_L,q,x,u,pars);
+      else
+        c = zeros( self.dim_ineq, 1 );
       end
-      q = (q_L+q_R)./2;
-      x = (x_L+x_R)./2;
-      c = self.eval_c(iseg_L,q,x,u,pars);
     end
     % ---------------------------------------------------------------------
     function Jc = eval_DcDxup( self, iseg, q, x, u, pars )
@@ -880,21 +950,24 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       );
     end
     % ---------------------------------------------------------------------
-    function Jc = eval_Dfd_cDxxup( self, iseg_L, q_L, x_L, ...
-                                         iseg_R, q_R, x_R, ...
+    function Jc = eval_Dfd_cDxxup( self, iseg_L, t_L, x_L, ...
+                                         iseg_R, t_R, x_R, ...
                                          u, pars )
       %
       % Evaluate jacobian of constraints c(x,u,p) <= 0
       %
-      if iseg_L ~= iseg_R
-        error('in eval_Dfd_cDxxup iseg_L(%d) must be equal to iseg_R(%d)',iseg_L,iseg_R);
+      nx = self.dim_x;
+      if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+        q      = (q_L+q_R)./2;
+        x      = (x_L+x_R)./2;
+        Jc_pre = self.eval_DcDxup( iseg_L, q, x, u, pars );
+        Jx     = 0.5*Jc_pre(:,1:nx);
+        Jc     = [Jx,Jx,Jc_pre(:,nx+1:end)];
+      else
+        nn = 2*nx + self.dim_u + self.dim_pars;
+        Jc = zeros( self.dim_ineq, nn );
       end
-      q      = (q_L+q_R)./2;
-      x      = (x_L+x_R)./2;
-      Jc_pre = self.eval_DcDxup( iseg_L, q, x, u, pars );
-      nx     = length(x);
-      Jx     = 0.5*Jc_pre(:,1:nx);
-      Jc     = [Jx,Jx,Jc_pre(:,nx+1:end)];
     end
     % ---------------------------------------------------------------------
     function Hc = eval_D2cD2xup( self, iseg, q, x, u, pars, omega )
@@ -906,24 +979,28 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       );
     end
     % ---------------------------------------------------------------------
-    function HcBIG = eval_D2fd_cD2xup( self, iseg_L, q_L, x_L, ...
-                                             iseg_R, q_R, x_R, ...
-                                             u, pars, omega )
+    function HcBIG = eval_D2fd_cD2xxup( self, iseg_L, t_L, x_L, ...
+                                              iseg_R, t_R, x_R, ...
+                                              u, pars, omega )
       %
       % Evaluate hessian of constraints omega . c(x,u,p) <= 0
       %
-      q_M = (q_R+q_L)/2;
-      x_M = (x_R+x_L)/2;
-      Hc = BangBangF_Mex(...
-        'D2LTargsD2xup', self.objectHandle, iseg_L, q_M, x_M, u, pars, omega ...
-      );
-      nx = length(x_L);
-      A  = Hc(1:nx,1:nx)./4;
-      B  = Hc(1:nx,nx+1:end)./2;
-      C  = Hc(nx+1:end,nx+1:end);
-      HcBIG = [ A,   A,   B; ...
-                A,   A,   B; ...
-                B.', B.', C ];
+      if iseg_L == iseg_R
+        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
+        q_M = (q_R+q_L)/2;
+        x_M = (x_R+x_L)/2;
+        Hc = self.eval_D2cD2xup( iseg_L, q_M, x_M, u, pars, omega );
+        nx = self.dim_x;
+        A  = Hc(1:nx,1:nx)./4;
+        B  = Hc(1:nx,nx+1:end)./2;
+        C  = Hc(nx+1:end,nx+1:end);
+        HcBIG = [ A,   A,   B; ...
+                  A,   A,   B; ...
+                  B.', B.', C ];
+      else
+        nn    = 2*self.dim_x + self.dim_u + self.dim_pars;
+        HcBIG = zeros( nn, nn );
+      end
     end
     %
     %
@@ -1127,8 +1204,9 @@ classdef ICLOCS_TwoLinkRobotArm < handle
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function jmp = eval_jump( self, iseg_L, q_L, x_L, lambda_L, ...
-                                    iseg_R, q_R, x_R, lambda_R, pars )
+    function jmp = eval_jump( self, iseg_L, t_L, x_L, lambda_L, ...
+                                    iseg_R, t_R, x_R, lambda_R, pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       jmp = ICLOCS_TwoLinkRobotArm_Mex( ...
         'jump', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, ...
@@ -1137,8 +1215,9 @@ classdef ICLOCS_TwoLinkRobotArm < handle
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DjumpDxlxlp( self, iseg_L, q_L, x_L, lambda_L, ...
-                                         iseg_R, q_R, x_R, lambda_R, pars )
+    function J = eval_DjumpDxlxlp( self, iseg_L, t_L, x_L, lambda_L, ...
+                                         iseg_R, t_R, x_R, lambda_R, pars )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       J = ICLOCS_TwoLinkRobotArm_Mex( ...
         'DjumpDxlxlp', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, ...
@@ -1151,10 +1230,11 @@ classdef ICLOCS_TwoLinkRobotArm < handle
     % omega*Jump(x_l,lambda_L,x_R,lambda_R,pars)
     %
     function H = eval_Hessian_jump_xlxlp( self, ...
-      iseg_L, q_L, x_L, lambda_L, ...
-      iseg_R, q_R, x_R, lambda_R, ...
+      iseg_L, t_L, x_L, lambda_L, ...
+      iseg_R, t_R, x_R, lambda_R, ...
       pars, omega                 ...
     )
+      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
       H = ICLOCS_TwoLinkRobotArm_Mex( ...
         'Hessian_jump_xlxlp', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, ...

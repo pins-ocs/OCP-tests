@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -241,13 +241,13 @@ namespace HangGliderDefine {
     result__[ 18  ] = 0.5e0 * t27 * t87 * t7 - 0.5e0 * (-t38 * t19 - t23 * t33 + t3 * t36) * t31 * t7;
     result__[ 19  ] = 0.5e0 * t44 * t87 * t7 - 0.5e0 * (-t23 * t49 + t3 * t52 + t22) * t31 * t7;
     real_type t109 = 0.5e0 * t58 * t87 * t7;
-    real_type t116 = 0.5e0 * (-t19 * t68 - t23 * t63 + t3 * t66) * t31 * t7;
+    real_type t116 = 0.5e0 * (-t68 * t19 - t23 * t63 + t3 * t66) * t31 * t7;
     result__[ 20  ] = t109 - t116 + result__[5];
     result__[ 21  ] = result__[18];
     result__[ 22  ] = result__[19];
     result__[ 23  ] = t109 - t116 + __INV_DZETA;
-    result__[ 24  ] = -(-2 * t18 * t23 * t74 + t21 * t3) * t31 * t7;
-    result__[ 25  ] = -t82 * t86 + ModelPars[iM_g];
+    result__[ 24  ] = -(-2 * t23 * t18 * t74 + t3 * t21) * t31 * t7;
+    result__[ 25  ] = -t86 * t82 + ModelPars[iM_g];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 26, i_segment );
   }

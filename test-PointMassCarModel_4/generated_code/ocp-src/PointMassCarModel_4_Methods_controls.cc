@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 3/4/2022                                         |
+ |  version: 1.0   date 5/4/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -704,7 +704,7 @@ namespace PointMassCarModel_4Define {
     real_type t82  = pow(-ModelPars[iM_v__Omega__max] * t6 * t2 + V__[4], 2);
     real_type t88  = pow(-ModelPars[iM_v__fx__max] * t3 * t2 + V__[5], 2);
     real_type t90  = V__[6] * V__[6];
-    real_type result__ = t30 * t2 + t36 * t2 + t2 * t4 + t40 * t2 + t49 * t2 + t2 * t7 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
+    real_type result__ = t2 * t30 + t36 * t2 + t4 * t2 + t40 * t2 + t49 * t2 + t7 * t2 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -731,7 +731,7 @@ namespace PointMassCarModel_4Define {
     real_type t3   = U__[iU_v__fx];
     real_type t4   = ALIAS_v__fxControl_D_1(t3, -1, 1);
     real_type t8   = ModelPars[iM_v__fx__max];
-    result__[ 0   ] = t2 * t4 - 2 * t8 * t2 * (-t8 * t3 * t2 + V__[5]);
+    result__[ 0   ] = t4 * t2 - 2 * t8 * t2 * (-t8 * t3 * t2 + V__[5]);
     real_type t14  = U__[iU_v__Omega];
     real_type t15  = ALIAS_v__OmegaControl_D_1(t14, -1, 1);
     real_type t19  = ModelPars[iM_v__Omega__max];
