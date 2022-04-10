@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,15 +50,15 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type x1_i = 1;
-    real_type u_tol0 = 0.1;
-    real_type u_tol = u_tol0;
-    real_type x2_i = 2;
-    real_type l1_i = -1/x1_i/x2_i;
-    real_type t0 = -ln(x1_i/x2_i)/x2_i;
     real_type u_epsi0 = 0.1;
-    real_type u_epsi = u_epsi0;
+    real_type u_tol0 = 0.1;
+    real_type x2_i = 2;
+    real_type x1_i = 1;
+    real_type t0 = -ln(x1_i/x2_i)/x2_i;
+    real_type l1_i = -1/x1_i/x2_i;
     real_type l2_i = l1_i*(x1_i*t0+exp(-t0*x2_i));
+    real_type u_tol = u_tol0;
+    real_type u_epsi = u_epsi0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

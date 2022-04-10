@@ -20,16 +20,16 @@
 -- User Header
 
 -- Auxiliary values
+epsi_T     = 0.01
+tol_ctrl0  = 0.1
+x_tol      = 0.01
+x_epsi     = 0.01
+tol_ctrl   = tol_ctrl0
+w_time_max = 1
+w_time     = w_time_max
+tol_T      = 1
 epsi_ctrl0 = 0.1
 epsi_ctrl  = epsi_ctrl0
-epsi_T     = 0.01
-w_time_max = 1
-x_epsi     = 0.01
-tol_T      = 1
-x_tol      = 0.01
-w_time     = w_time_max
-tol_ctrl0  = 0.1
-tol_ctrl   = tol_ctrl0
 
 content = {
 

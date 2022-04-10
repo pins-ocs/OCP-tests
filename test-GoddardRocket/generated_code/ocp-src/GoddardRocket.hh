@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket.hh                                               |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -108,7 +108,7 @@ namespace GoddardRocketDefine {
   class GoddardRocket : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[17];
+    real_type ModelPars[25];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU TControl;

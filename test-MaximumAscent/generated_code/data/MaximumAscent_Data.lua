@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,18 +20,18 @@
 -- User Header
 
 -- Auxiliary values
+mu     = 398600441800000
+T      = 0.68
 days   = 1
 tf     = 86400*days
-g0     = 9.80665
 u0     = 0
-mu     = 398600441800000
-Isp    = 1500
-T      = 0.68
-mdot   = T/g0/Isp
-r0     = 6678140
 days1  = 30
+r0     = 6678140
 v0     = (mu/r0)**(1/2.0)
 u0_bar = u0/v0
+Isp    = 1500
+g0     = 9.80665
+mdot   = T/g0/Isp
 
 content = {
 
@@ -93,17 +93,14 @@ content = {
 
   -- setup solver for controls
   ControlSolver = {
-    -- 'LM' = Levenberg-Marquard'
-    -- 'YS' = Yixun Shi
-    -- 'QN' = Quasi Newton
-    -- 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
+    -- 'Hyness', 'NewtonDumped', 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     solver = 'NewtonDumped',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
     Iterative = true,
     InfoLevel = -1, -- suppress all messages
-    -- 'LM', 'YS', 'QN'
-    initialize_control_solver = 'QN',
+    -- 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
+    initialize_control_solver = 'QuasiNewton',
 
     -- solver parameters
     NewtonDumped = {
@@ -133,20 +130,14 @@ content = {
 
     Hyness = { max_iter = 50, tolerance = 1e-9 },
 
-    -- 'LM' = Levenberg-Marquard'
-    LM = { max_iter = 50, tolerance = 1e-9 },
-
-    -- 'YS' = Yixun Shi
-    YS = { max_iter = 50, tolerance = 1e-9 },
-
-    -- 'QN' = Quasi Newton
-    QN = {
-      max_iter  = 50,
-      tolerance = 1e-9,
-      -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
-      update = 'BFGS',
-      -- 'EXACT', 'ARMIJO'
-      linesearch = 'EXACT',
+    LevenbergMarquardt = { max_iter = 50, tolerance = 1e-9, low_tolerance = 1e-6 },
+    YixunShi           = { max_iter = 50, tolerance = 1e-9, low_tolerance = 1e-6 },
+    QuasiNewton = {
+      max_iter      = 50,
+      tolerance     = 1e-9,
+      low_tolerance = 1e-6,
+      update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
+      linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
   }
 
@@ -320,8 +311,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 1000*days1,
+        length = 1,
       },
     },
   },

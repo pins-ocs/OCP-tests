@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -173,8 +173,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS2_AlyChan_data.Mesh["s0"] = 0;
-ICLOCS2_AlyChan_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS2_AlyChan_data.Mesh["segments"][0]["length"] = 1/2*Pi;
+ICLOCS2_AlyChan_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

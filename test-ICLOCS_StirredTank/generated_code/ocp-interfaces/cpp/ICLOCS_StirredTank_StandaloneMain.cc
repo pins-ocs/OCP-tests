@@ -50,16 +50,16 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type epsi_T = 0.01;
+    real_type tol_ctrl0 = 0.1;
+    real_type x_tol = 0.01;
+    real_type x_epsi = 0.01;
+    real_type tol_ctrl = tol_ctrl0;
+    real_type w_time_max = 1;
+    real_type w_time = w_time_max;
+    real_type tol_T = 1;
     real_type epsi_ctrl0 = 0.1;
     real_type epsi_ctrl = epsi_ctrl0;
-    real_type epsi_T = 0.01;
-    real_type w_time_max = 1;
-    real_type x_epsi = 0.01;
-    real_type tol_T = 1;
-    real_type x_tol = 0.01;
-    real_type w_time = w_time_max;
-    real_type tol_ctrl0 = 0.1;
-    real_type tol_ctrl = tol_ctrl0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-up_epsi0  = 0.1
-wT0       = 0.01
-up_tol0   = 0.01
-wT        = wT0
+m         = 700
+p_tol0    = 0.1
 road_tol0 = 0.01
 p_epsi0   = 0.1
-m         = 700
+up_epsi0  = 0.1
+up_tol0   = 0.01
 kD        = 0.2500000000/m
-p_tol0    = 0.1
+wT0       = 0.01
+wT        = wT0
 
 content = {
 
@@ -90,17 +90,14 @@ content = {
 
   -- setup solver for controls
   ControlSolver = {
-    -- 'LM' = Levenberg-Marquard'
-    -- 'YS' = Yixun Shi
-    -- 'QN' = Quasi Newton
-    -- 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
+    -- 'Hyness', 'NewtonDumped', 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     solver = 'NewtonDumped',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
     Iterative = false,
     InfoLevel = -1, -- suppress all messages
-    -- 'LM', 'YS', 'QN'
-    initialize_control_solver = 'QN',
+    -- 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
+    initialize_control_solver = 'QuasiNewton',
 
     -- solver parameters
     NewtonDumped = {
@@ -130,20 +127,14 @@ content = {
 
     Hyness = { max_iter = 50, tolerance = 1e-9 },
 
-    -- 'LM' = Levenberg-Marquard'
-    LM = { max_iter = 50, tolerance = 1e-9 },
-
-    -- 'YS' = Yixun Shi
-    YS = { max_iter = 50, tolerance = 1e-9 },
-
-    -- 'QN' = Quasi Newton
-    QN = {
-      max_iter  = 50,
-      tolerance = 1e-9,
-      -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
-      update = 'BFGS',
-      -- 'EXACT', 'ARMIJO'
-      linesearch = 'EXACT',
+    LevenbergMarquardt = { max_iter = 50, tolerance = 1e-9, low_tolerance = 1e-6 },
+    YixunShi           = { max_iter = 50, tolerance = 1e-9, low_tolerance = 1e-6 },
+    QuasiNewton = {
+      max_iter      = 50,
+      tolerance     = 1e-9,
+      low_tolerance = 1e-6,
+      update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
+      linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
   }
 
@@ -375,81 +366,81 @@ content = {
       {
         rightWidth = 60,
         gridSize   = 1,
-        length     = 190,
+        curvature  = 0,
         leftWidth  = 15/2.0,
-        curvature  = 0,
+        length     = 190,
       },
       
       {
         rightWidth = 30,
         gridSize   = 1,
-        length     = 973.8937227,
-        leftWidth  = 60,
         curvature  = 0.003225806452,
+        leftWidth  = 60,
+        length     = 973.8937227,
       },
       
       {
         rightWidth = 30,
         gridSize   = 1,
-        length     = 180,
-        leftWidth  = 30,
         curvature  = 0,
+        leftWidth  = 30,
+        length     = 180,
       },
       
       {
         rightWidth = 15,
         gridSize   = 1,
-        length     = 235.619449,
-        leftWidth  = 20,
         curvature  = 0.006666666667,
-      },
-      
-      {
-        rightWidth = 30,
-        gridSize   = 1,
-        length     = 240,
-        leftWidth  = 30,
-        curvature  = 0,
-      },
-      
-      {
-        rightWidth = 30,
-        gridSize   = 1,
+        leftWidth  = 20,
         length     = 235.619449,
+      },
+      
+      {
+        rightWidth = 30,
+        gridSize   = 1,
+        curvature  = 0,
         leftWidth  = 30,
+        length     = 240,
+      },
+      
+      {
+        rightWidth = 30,
+        gridSize   = 1,
         curvature  = -1/150.0,
+        leftWidth  = 30,
+        length     = 235.619449,
       },
       
       {
         rightWidth = 30,
         gridSize   = 1,
+        curvature  = 0,
+        leftWidth  = 30,
         length     = 200,
-        leftWidth  = 30,
-        curvature  = 0,
       },
       
       {
         rightWidth = 30,
         gridSize   = 1,
-        length     = 125.6637062,
-        leftWidth  = 30,
         curvature  = 0.025,
+        leftWidth  = 30,
+        length     = 125.6637062,
       },
       
       {
         rightWidth = 30,
         gridSize   = 1,
-        length     = 480,
-        leftWidth  = 30,
         curvature  = 0,
+        leftWidth  = 30,
+        length     = 480,
       },
       
       {
         rightWidth = 30,
         gridSize   = 0.1,
-        length     = 10,
-        leftWidth  = 30,
         curvature  = 0,
+        leftWidth  = 30,
+        length     = 10,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -196,12 +196,12 @@ namespace PointMassCarModel_2Define {
     real_type t5   = ALIAS_Kappa(QM__[0]);
     real_type t6   = zeta__dot(t1, t2, XM__[0], t5);
     real_type t9   = sin(t2);
-    result__[ 0   ] = -t1 * t9 + t6 * V__[0];
-    result__[ 1   ] = t5 * t6 + t6 * V__[1] - XM__[3];
+    result__[ 0   ] = -t9 * t1 + V__[0] * t6;
+    result__[ 1   ] = t6 * t5 + V__[1] * t6 - XM__[3];
     real_type t19  = t1 * t1;
-    result__[ 2   ] = t19 * ModelPars[iM_kD] + t6 * V__[2] - XM__[4];
-    result__[ 3   ] = t6 * V__[4] - UM__[0] * ModelPars[iM_v__fx__max];
-    result__[ 4   ] = t6 * V__[3] - UM__[1] * ModelPars[iM_v__Omega__max];
+    result__[ 2   ] = t19 * ModelPars[iM_kD] + V__[2] * t6 - XM__[4];
+    result__[ 3   ] = V__[4] * t6 - UM__[0] * ModelPars[iM_v__fx__max];
+    result__[ 4   ] = V__[3] * t6 - UM__[1] * ModelPars[iM_v__Omega__max];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 5, i_segment );
   }
@@ -469,7 +469,7 @@ namespace PointMassCarModel_2Define {
     real_type t43  = zeta__dot_D_2_3(t5, t9, t13, t15);
     result__[ 1   ] = t18 * t43 * t1 / 4 + (t43 * t15 / 4 + t22 * t43 / 4) * t21 + t30 * t43 * t28 / 4 + t35 * t43 * t33 / 4 + t40 * t43 * t38 / 4;
     real_type t61  = zeta__dot_D_1_3(t5, t9, t13, t15);
-    result__[ 2   ] = t18 * t61 * t1 / 4 + (t61 * t15 / 4 + t22 * t61 / 4) * t21 + t30 * t61 * t28 / 4 + t35 * t61 * t33 / 4 + t40 * t61 * t38 / 4;
+    result__[ 2   ] = t18 * t61 * t1 / 4 + (t61 * t15 / 4 + t61 * t22 / 4) * t21 + t30 * t61 * t28 / 4 + t35 * t61 * t33 / 4 + t40 * t61 * t38 / 4;
     result__[ 3   ] = result__[0];
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[2];

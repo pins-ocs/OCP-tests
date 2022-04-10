@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket.cc                                               |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -102,20 +102,28 @@ namespace GoddardRocketDefine {
     "Dc",
     "Tmax",
     "c",
-    "epsi_T",
-    "epsi_TS",
     "g0",
     "h_i",
     "hc",
     "m_f",
     "m_i",
-    "tol_T",
-    "tol_TS",
     "v_i",
-    "epsi_TSmin",
-    "epsi_Tmin",
-    "tol_TSmin",
-    "tol_Tmin",
+    "epsi_TS_max",
+    "epsi_TS_min",
+    "epsi_T_max",
+    "epsi_T_min",
+    "epsi_mass_max",
+    "epsi_mass_min",
+    "epsi_v_max",
+    "epsi_v_min",
+    "tol_TS_max",
+    "tol_TS_min",
+    "tol_T_max",
+    "tol_T_min",
+    "tol_mass_max",
+    "tol_mass_min",
+    "tol_v_max",
+    "tol_v_min",
     nullptr
   };
 

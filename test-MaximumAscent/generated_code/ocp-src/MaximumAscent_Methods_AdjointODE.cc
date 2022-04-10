@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -581,7 +581,7 @@ namespace MaximumAscentDefine {
     real_type t31  = 1.0 / t9;
     real_type t32  = t31 * t6;
     result__[ 1   ] = t32 * t20;
-    result__[ 2   ] = t31 * t21 * t20 - t31 * t27 - 2 * t32 * t5;
+    result__[ 2   ] = t20 * t21 * t31 - t27 * t31 - 2 * t32 * t5;
     result__[ 3   ] = result__[1];
     real_type t38  = 1.0 / t8;
     result__[ 4   ] = -t38 * t20;

@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "AlpRider_Mex"
-DESCRIPTION  'Mex file for AlpRider'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

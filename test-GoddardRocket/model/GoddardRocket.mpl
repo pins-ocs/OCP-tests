@@ -60,19 +60,30 @@ PARS := [
   hc         = 500,
   vc         = 620,
   Dc         = 0.5*vc*m_i/g0,
-  epsi_v     = 0.025, tol_v      = 0.01,
 
 
-  epsi_T     = 0.025, tol_T      = 0.01,
-  epsi_Tmin  = 1e-7,  tol_Tmin   = 1e-4,
+  epsi_v_min = 0.0001,     tol_v_min = 1e-4,
+  epsi_v_max = 0.1,        tol_v_max = 0.01,
+  epsi_v     = epsi_v_max, tol_v     = tol_v_max,
 
+  epsi_T_max = 0.1,        tol_T_max = 0.01,
+  epsi_T_min = 1e-7,       tol_T_min = 1e-4,
+  epsi_T     = epsi_T_max, tol_T     = tol_T_max,
 
-  epsi_mass  = 0.025, tol_mass   = 0.01,
-  epsi_h     = 0.025, tol_h      = 0.01,
+  epsi_TS_min = 1e-10,       tol_TS_min = 1e-3,
+  epsi_TS_max = 0.025,       tol_TS_max = 0.0001,
 
+  epsi_TS     = epsi_TS_max, tol_TS     = tol_TS_max,
 
-  epsi_TS    = 0.025, tol_TS     = 0.01,
-  epsi_TSmin = 1e-10, tol_TSmin  = 1e-3,
+  epsi_mass_max = 0.025,         tol_mass_max = 0.01,
+
+  epsi_mass_min = 0.0001,        tol_mass_min = 0.0001,
+  epsi_mass     = epsi_mass_max, tol_mass     = tol_mass_max,
+
+  #epsi_h_max   = 0.025,          tol_h_max  = 0.01,
+  #epsi_h_min   = 0.0001,         tol_h_min  = 0.0001,
+  #epsi_h       = epsi_h_max,     tol_h      = tol_h_max,
+
   tf         = 1
 ];
 POST := [
@@ -80,10 +91,15 @@ POST := [
   [v(zeta)*TimeSize,"target"]
 ];
 CONT :=[
-  [ [T,"epsilon"]            = explog(s,epsi_T,epsi_Tmin),
-    [T,"tolerance"]          = explog(s,tol_T,tol_Tmin),
-    [TSPositive,"epsilon"]   = explog(s,epsi_TS,epsi_TSmin),
-    [TSPositive,"tolerance"] = explog(s,tol_TS,tol_TSmin) ]
+  [ [T,"epsilon"]              = explog(s,epsi_T_max,epsi_T_min),
+    [T,"tolerance"]            = explog(s,tol_T_max,tol_T_min),
+    [TSPositive,"epsilon"]     = explog(s,epsi_TS_max,epsi_TS_min),
+    [TSPositive,"tolerance"]   = explog(s,tol_TS_max,tol_TS_min),
+    [vPositive,"epsilon"]      = explog(s,epsi_v_max,epsi_v_min),
+    [vPositive,"tolerance"]    = explog(s,tol_v_max,tol_v_min),
+    [massPositive,"epsilon"]   = explog(s,epsi_mass_max,epsi_mass_min),
+    [massPositive,"tolerance"] = explog(s,tol_mass_max,tol_mass_min)
+  ]
  ];
 GUESS := [
   h = h_i,

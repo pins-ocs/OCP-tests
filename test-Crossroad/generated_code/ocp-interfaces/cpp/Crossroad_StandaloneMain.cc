@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,10 +51,10 @@ main() {
 
     // Auxiliary values
     real_type L = 100;
-    real_type jerk_min = -10;
     real_type s_f = L;
     real_type jerk_max = 10;
     real_type wJ = 1/jerk_max^2;
+    real_type jerk_min = -10;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -215,10 +215,10 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Crossroad_data.Mesh["s0"] = 0;
-Crossroad_data.Mesh["segments"][0]["n"] = 100;
 Crossroad_data.Mesh["segments"][0]["length"] = 0.5;
-Crossroad_data.Mesh["segments"][1]["n"] = 100;
+Crossroad_data.Mesh["segments"][0]["n"] = 100;
 Crossroad_data.Mesh["segments"][1]["length"] = 0.5;
+Crossroad_data.Mesh["segments"][1]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

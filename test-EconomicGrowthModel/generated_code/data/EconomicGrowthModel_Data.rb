@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: EconomicGrowthModel_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 5/4/2022                                         #
+#  version: 1.0   date 10/4/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,29 +20,22 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-x1_i    = 1
-u_tol0  = 0.1
-u_tol   = u_tol0
-x2_i    = 2
-l1_i    = -1/x1_i/x2_i
-t0      = -Math::Math::log(x1_i/x2_i)/x2_i
 u_epsi0 = 0.1
-u_epsi  = u_epsi0
+u_tol0  = 0.1
+x2_i    = 2
+x1_i    = 1
+t0      = -Math::Math::log(x1_i/x2_i)/x2_i
+l1_i    = -1/x1_i/x2_i
 l2_i    = l1_i*(x1_i*t0+Math::exp(-t0*x2_i))
+u_tol   = u_tol0
+u_epsi  = u_epsi0
 
 mechatronix do |data|
 
-  # activate run time debug
-  data.Debug = false
-
-  # Enable doctor
-  data.Doctor = false
-
-  # Level of message
-  data.InfoLevel = 4
-
+  data.Debug     = false  # activate run time debug
+  data.Doctor    = false  # Enable doctor
+  data.InfoLevel = 4      # Level of message
   data.Use_control_penalties_in_adjoint_equations = false
-
   data.Max_penalty_value = 1000
 
   #  _   _                        _
@@ -85,20 +78,17 @@ mechatronix do |data|
 
   # setup solver for controls
   data.ControlSolver = {
-    # 'LM' = Levenberg-Marquard'
-    # 'YS' = Yixun Shi
-    # 'QN' = Quasi Newton
     # ==============================================================
-    # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
+    # 'Hyness', 'NewtonDumped', 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
     :Iterative => false,
-    :InfoLevel => -1,     # suppress all messages
+    :InfoLevel => -1, # suppress all messages
     # ==============================================================
-    # 'LM', 'YS', 'QN'
-    :initialize_control_solver => 'QN',
+    # 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
+    :initialize_control_solver => 'QuasiNewton',
 
     # solver parameters
     :NewtonDumped => {
@@ -131,20 +121,17 @@ mechatronix do |data|
       :tolerance => 1e-9
     },
 
-    # 'LM' = Levenberg-Marquard'
-    :LM => {
+    :LevenbergMarquardt => {
       :max_iter  => 50,
       :tolerance => 1e-9
     },
 
-    # 'YS' = Yixun Shi
-    :YS => {
+    :YixunShi => {
       :max_iter  => 50,
       :tolerance => 1e-9
     },
 
-    # 'QN' = Quasi Newton
-    :QN => {
+    :QuasiNewton => {
       :max_iter  => 50,
       :tolerance => 1e-9,
       # 'BFGS', 'DFP', 'SR1' for Quasi Newton

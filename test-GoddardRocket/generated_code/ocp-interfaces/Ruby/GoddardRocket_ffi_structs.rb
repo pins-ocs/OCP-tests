@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: GoddardRocket_ffi_structs.rb                                      #
 #                                                                          #
-#  version: 1.0   date 5/4/2022                                            #
+#  version: 1.0   date 10/4/2022                                           #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #
@@ -40,39 +40,55 @@ module GoddardRocket
   class GoddardRocket_model_params < FFI::Struct
     layout(
 
-      :Dc,         :data_t,
+      :Dc,            :data_t,
 
-      :Tmax,       :data_t,
+      :Tmax,          :data_t,
 
-      :c,          :data_t,
+      :c,             :data_t,
 
-      :epsi_T,     :data_t,
+      :g0,            :data_t,
 
-      :epsi_TS,    :data_t,
+      :h_i,           :data_t,
 
-      :g0,         :data_t,
+      :hc,            :data_t,
 
-      :h_i,        :data_t,
+      :m_f,           :data_t,
 
-      :hc,         :data_t,
+      :m_i,           :data_t,
 
-      :m_f,        :data_t,
+      :v_i,           :data_t,
 
-      :m_i,        :data_t,
+      :epsi_TS_max,   :data_t,
 
-      :tol_T,      :data_t,
+      :epsi_TS_min,   :data_t,
 
-      :tol_TS,     :data_t,
+      :epsi_T_max,    :data_t,
 
-      :v_i,        :data_t,
+      :epsi_T_min,    :data_t,
 
-      :epsi_TSmin, :data_t,
+      :epsi_mass_max, :data_t,
 
-      :epsi_Tmin,  :data_t,
+      :epsi_mass_min, :data_t,
 
-      :tol_TSmin,  :data_t,
+      :epsi_v_max,    :data_t,
 
-      :tol_Tmin,   :data_t,
+      :epsi_v_min,    :data_t,
+
+      :tol_TS_max,    :data_t,
+
+      :tol_TS_min,    :data_t,
+
+      :tol_T_max,     :data_t,
+
+      :tol_T_min,     :data_t,
+
+      :tol_mass_max,  :data_t,
+
+      :tol_mass_min,  :data_t,
+
+      :tol_v_max,     :data_t,
+
+      :tol_v_min,     :data_t,
 
     )
 

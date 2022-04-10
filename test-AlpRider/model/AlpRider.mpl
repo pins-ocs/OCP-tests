@@ -5,7 +5,7 @@ EQ1    := diff(y1(t),t) = -10*y1(t) + u1(t)   + u2(t):
 EQ2    := diff(y2(t),t) = -2*y2(t)  + u1(t)   + 2*u2(t):
 EQ3    := diff(y3(t),t) = -3*y3(t)  + 5*y4(t) + u1(t) - u2(t):
 EQ4    := diff(y4(t),t) =  5*y3(t)  - 3*y4(t) + u1(t) + 3*u2(t):
-EQNS_T := subs(t=zeta,[ EQ||(1..4) ]):<%>;
+EQNS_T := subs(t=zeta,[ EQ||(1..4) ]):%;
 qvars := map([y1,y2,y3,y4],(zeta));
 cvars := map([u1,u2],(zeta));
 #infoRegisteredObjects() ;
@@ -19,7 +19,7 @@ addBoundaryConditions(
   final   = [ y1, y2, y3, y4 ]
 );
 infoBoundaryConditions() ;
-pp := (t,a,b)->exp(-b*(t-a)^2);
+pp := (t,a,b)-exp(-b*(t-a)^2);
 qq := 3*pp(t,3,12)+3*pp(t,6,10)+3*pp(t,10,6)+8*pp(t,15,4)+0.01;
 plot(qq,t=0..20);
 100*int(qq,t=0..20);
@@ -31,7 +31,7 @@ addUserFunction(q_lower(t)=3*p_base(t,3,12)
                           +0.01);
 SUMQ := y1(zeta)^2+y2(zeta)^2+y3(zeta)^2+y4(zeta)^2;
 addUnilateralConstraint(
-  SUMQ >= q_lower(zeta),
+  SUMQ = q_lower(zeta),
   Ybound,
   barrier   = true,
   epsilon   = epsi,
@@ -63,15 +63,15 @@ GUESS := [
 ];
 CONT := [
   [
-    ["Ybound","epsilon"]   = epsi0*(1-s)+epsi1*s,
-    ["Ybound","tolerance"] = tol0*(1-s)+tol1*s,
+    [Ybound,epsilon]   = epsi0*(1-s)+epsi1*s,
+    [Ybound,tolerance] = tol0*(1-s)+tol1*s,
     W = (1-s)*W0+s*W1
   ]
 ];
 #Describe(generateOCProblem);
 POST := [
-  [ SUMQ,          "sumy^2" ],
-  [ q_lower(zeta), "q" ]
+  [ SUMQ,          sumy^2 ],
+  [ q_lower(zeta), q ]
 ];
 Mesh := [
   [length=1,  n=400],
@@ -79,10 +79,10 @@ Mesh := [
   [length=1,  n=400]
 ];
 Mesh2 := [length=20, n=4000];
-project_dir  := "../generated_code";
-project_name := "AlpRider";
+project_dir  := ../generated_code;
+project_name := AlpRider;
 generateOCProblem(
-  "AlpRider", clean=true,
+  AlpRider, clean=true,
   parameters           = PARS,
   mesh                 = Mesh2,
   states_guess         = GUESS,

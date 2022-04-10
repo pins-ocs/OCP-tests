@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_TwoLinkRobotArm_main.m                                  %
 %                                                                       %
-%  version: 1.0   date 5/4/2022                                         %
+%  version: 1.0   date 10/4/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods_Guess.cc                                |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -73,7 +73,7 @@ namespace HyperSensitiveDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[0];
     real_type t2   = t1 * t1;
-    result__[ 0   ] = t1 * t2 - UM__[0] + V__[0];
+    result__[ 0   ] = t2 * t1 - UM__[0] + V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 1, i_segment );
   }

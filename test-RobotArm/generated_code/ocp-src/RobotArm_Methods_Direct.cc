@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -111,15 +111,15 @@ namespace RobotArmDefine {
     V__[5] = __INV_DZETA*(XR__[5]-XL__[5]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    result__[ 0   ] = -t1 * UM__[0] + V__[3] * ModelPars[iM_L];
+    result__[ 0   ] = -UM__[0] * t1 + V__[3] * ModelPars[iM_L];
     real_type t7   = XM__[0];
     real_type t9   = I_theta(t7, XM__[2]);
-    result__[ 1   ] = -t1 * UM__[1] + t9 * V__[4];
+    result__[ 1   ] = -UM__[1] * t1 + V__[4] * t9;
     real_type t14  = I_phi(t7);
-    result__[ 2   ] = -t1 * UM__[2] + t14 * V__[5];
-    result__[ 3   ] = -t1 * XM__[3] + V__[0];
-    result__[ 4   ] = -t1 * XM__[4] + V__[1];
-    result__[ 5   ] = -t1 * XM__[5] + V__[2];
+    result__[ 2   ] = -UM__[2] * t1 + V__[5] * t14;
+    result__[ 3   ] = -XM__[3] * t1 + V__[0];
+    result__[ 4   ] = -XM__[4] * t1 + V__[1];
+    result__[ 5   ] = -XM__[5] * t1 + V__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 6, i_segment );
   }

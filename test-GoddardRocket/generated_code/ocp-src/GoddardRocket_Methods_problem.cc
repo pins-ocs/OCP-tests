@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -68,14 +68,22 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::continuation_step_0( real_type s ) {
-    real_type t3   = explog(s, ModelPars[iM_epsi_T], ModelPars[iM_epsi_Tmin]);
+    real_type t3   = explog(s, ModelPars[iM_epsi_T_max], ModelPars[iM_epsi_T_min]);
     TControl.update_epsilon(t3);
-    real_type t6   = explog(s, ModelPars[iM_tol_T], ModelPars[iM_tol_Tmin]);
+    real_type t6   = explog(s, ModelPars[iM_tol_T_max], ModelPars[iM_tol_T_min]);
     TControl.update_tolerance(t6);
-    real_type t9   = explog(s, ModelPars[iM_epsi_TS], ModelPars[iM_epsi_TSmin]);
+    real_type t9   = explog(s, ModelPars[iM_epsi_TS_max], ModelPars[iM_epsi_TS_min]);
     TSPositive.update_epsilon(t9);
-    real_type t12  = explog(s, ModelPars[iM_tol_TS], ModelPars[iM_tol_TSmin]);
+    real_type t12  = explog(s, ModelPars[iM_tol_TS_max], ModelPars[iM_tol_TS_min]);
     TSPositive.update_tolerance(t12);
+    real_type t15  = explog(s, ModelPars[iM_epsi_v_max], ModelPars[iM_epsi_v_min]);
+    vPositive.update_epsilon(t15);
+    real_type t18  = explog(s, ModelPars[iM_tol_v_max], ModelPars[iM_tol_v_min]);
+    vPositive.update_tolerance(t18);
+    real_type t21  = explog(s, ModelPars[iM_epsi_mass_max], ModelPars[iM_epsi_mass_min]);
+    massPositive.update_epsilon(t21);
+    real_type t24  = explog(s, ModelPars[iM_tol_mass_max], ModelPars[iM_tol_mass_min]);
+    massPositive.update_tolerance(t24);
   }
 
   /*\

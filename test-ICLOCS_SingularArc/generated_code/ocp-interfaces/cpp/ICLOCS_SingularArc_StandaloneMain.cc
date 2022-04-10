@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_T = 0.1;
-    real_type epsi_T = 0.01;
     real_type tol_ctrl0 = 0.01;
+    real_type tol_T = 0.1;
     real_type epsi_ctrl0 = 0.01;
+    real_type epsi_T = 0.01;
     real_type epsi_ctrl = epsi_ctrl0;
     real_type tol_ctrl = tol_ctrl0;
     integer InfoLevel = 4;

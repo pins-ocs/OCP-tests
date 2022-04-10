@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,23 +50,31 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_v = 0.01;
-    real_type h_i = 1;
-    real_type epsi_mass = 0.025;
-    real_type tol_mass = 0.01;
-    real_type mc = 0.6;
-    real_type m_i = 1;
-    real_type epsi_TS = 0.025;
-    real_type tol_TS = 0.01;
-    real_type tol_T = 0.01;
-    real_type g0 = 1;
-    real_type Tmax = 3.5*g0*m_i;
-    real_type c = 0.5*(g0*h_i)^(1/2.0);
+    real_type epsi_mass_max = 0.025;
     real_type vc = 620;
-    real_type Dc = 0.5*vc*m_i/g0;
+    real_type m_i = 1;
+    real_type h_i = 1;
+    real_type tol_mass_max = 0.01;
+    real_type tol_T_max = 0.01;
+    real_type tol_T = tol_T_max;
+    real_type mc = 0.6;
+    real_type epsi_T_max = 0.1;
+    real_type epsi_T = epsi_T_max;
+    real_type tol_TS_max = 0.0001;
     real_type m_f = mc*m_i;
-    real_type epsi_v = 0.025;
-    real_type epsi_T = 0.025;
+    real_type epsi_TS_max = 0.025;
+    real_type epsi_TS = epsi_TS_max;
+    real_type epsi_v_max = 0.1;
+    real_type tol_TS = tol_TS_max;
+    real_type tol_mass = tol_mass_max;
+    real_type epsi_mass = epsi_mass_max;
+    real_type g0 = 1;
+    real_type c = 0.5*(g0*h_i)^(1/2.0);
+    real_type Dc = 0.5*vc*m_i/g0;
+    real_type Tmax = 3.5*g0*m_i;
+    real_type epsi_v = epsi_v_max;
+    real_type tol_v_max = 0.01;
+    real_type tol_v = tol_v_max;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -166,14 +174,22 @@ main() {
     data_Parameters["hc"] = 500;
 
     // Continuation Parameters
-    data_Parameters["epsi_T"] = epsi_T;
-    data_Parameters["epsi_TS"] = epsi_TS;
-    data_Parameters["tol_T"] = tol_T;
-    data_Parameters["tol_TS"] = tol_TS;
-    data_Parameters["epsi_TSmin"] = 1e-10;
-    data_Parameters["epsi_Tmin"] = 1e-07;
-    data_Parameters["tol_TSmin"] = 0.001;
-    data_Parameters["tol_Tmin"] = 0.0001;
+    data_Parameters["epsi_TS_max"] = epsi_TS_max;
+    data_Parameters["epsi_TS_min"] = 1e-10;
+    data_Parameters["epsi_T_max"] = epsi_T_max;
+    data_Parameters["epsi_T_min"] = 1e-07;
+    data_Parameters["epsi_mass_max"] = epsi_mass_max;
+    data_Parameters["epsi_mass_min"] = 0.0001;
+    data_Parameters["epsi_v_max"] = epsi_v_max;
+    data_Parameters["epsi_v_min"] = 0.0001;
+    data_Parameters["tol_TS_max"] = tol_TS_max;
+    data_Parameters["tol_TS_min"] = 0.001;
+    data_Parameters["tol_T_max"] = tol_T_max;
+    data_Parameters["tol_T_min"] = 0.0001;
+    data_Parameters["tol_mass_max"] = tol_mass_max;
+    data_Parameters["tol_mass_min"] = 0.0001;
+    data_Parameters["tol_v_max"] = tol_v_max;
+    data_Parameters["tol_v_min"] = 0.0001;
 
     // Constraints Parameters
 
@@ -218,8 +234,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 GoddardRocket_data.Mesh["s0"] = 0;
-GoddardRocket_data.Mesh["segments"][0]["n"] = 400;
 GoddardRocket_data.Mesh["segments"][0]["length"] = 1;
+GoddardRocket_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

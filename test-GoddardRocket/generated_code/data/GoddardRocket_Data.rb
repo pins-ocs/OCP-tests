@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 5/4/2022                                         #
+#  version: 1.0   date 10/4/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,37 +20,38 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol_v     = 0.01
-h_i       = 1
-epsi_mass = 0.025
-tol_mass  = 0.01
-mc        = 0.6
-m_i       = 1
-epsi_TS   = 0.025
-tol_TS    = 0.01
-tol_T     = 0.01
-g0        = 1
-Tmax      = 3.5*g0*m_i
-c         = 0.5*(g0*h_i)**(1/2.0)
-vc        = 620
-Dc        = 0.5*vc*m_i/g0
-m_f       = mc*m_i
-epsi_v    = 0.025
-epsi_T    = 0.025
+epsi_mass_max = 0.025
+vc            = 620
+m_i           = 1
+h_i           = 1
+tol_mass_max  = 0.01
+tol_T_max     = 0.01
+tol_T         = tol_T_max
+mc            = 0.6
+epsi_T_max    = 0.1
+epsi_T        = epsi_T_max
+tol_TS_max    = 0.0001
+m_f           = mc*m_i
+epsi_TS_max   = 0.025
+epsi_TS       = epsi_TS_max
+epsi_v_max    = 0.1
+tol_TS        = tol_TS_max
+tol_mass      = tol_mass_max
+epsi_mass     = epsi_mass_max
+g0            = 1
+c             = 0.5*(g0*h_i)**(1/2.0)
+Dc            = 0.5*vc*m_i/g0
+Tmax          = 3.5*g0*m_i
+epsi_v        = epsi_v_max
+tol_v_max     = 0.01
+tol_v         = tol_v_max
 
 mechatronix do |data|
 
-  # activate run time debug
-  data.Debug = false
-
-  # Enable doctor
-  data.Doctor = false
-
-  # Level of message
-  data.InfoLevel = 4
-
+  data.Debug     = false  # activate run time debug
+  data.Doctor    = false  # Enable doctor
+  data.InfoLevel = 4      # Level of message
   data.Use_control_penalties_in_adjoint_equations = false
-
   data.Max_penalty_value = 1000
 
   #  _   _                        _
@@ -93,20 +94,17 @@ mechatronix do |data|
 
   # setup solver for controls
   data.ControlSolver = {
-    # 'LM' = Levenberg-Marquard'
-    # 'YS' = Yixun Shi
-    # 'QN' = Quasi Newton
     # ==============================================================
-    # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
+    # 'Hyness', 'NewtonDumped', 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
     :Iterative => false,
-    :InfoLevel => -1,     # suppress all messages
+    :InfoLevel => -1, # suppress all messages
     # ==============================================================
-    # 'LM', 'YS', 'QN'
-    :initialize_control_solver => 'QN',
+    # 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
+    :initialize_control_solver => 'QuasiNewton',
 
     # solver parameters
     :NewtonDumped => {
@@ -139,20 +137,17 @@ mechatronix do |data|
       :tolerance => 1e-9
     },
 
-    # 'LM' = Levenberg-Marquard'
-    :LM => {
+    :LevenbergMarquardt => {
       :max_iter  => 50,
       :tolerance => 1e-9
     },
 
-    # 'YS' = Yixun Shi
-    :YS => {
+    :YixunShi => {
       :max_iter  => 50,
       :tolerance => 1e-9
     },
 
-    # 'QN' = Quasi Newton
-    :QN => {
+    :QuasiNewton => {
       :max_iter  => 50,
       :tolerance => 1e-9,
       # 'BFGS', 'DFP', 'SR1' for Quasi Newton
@@ -304,14 +299,22 @@ mechatronix do |data|
     :hc => 500,
 
     # Continuation Parameters
-    :epsi_T     => epsi_T,
-    :epsi_TS    => epsi_TS,
-    :tol_T      => tol_T,
-    :tol_TS     => tol_TS,
-    :epsi_TSmin => 1e-10,
-    :epsi_Tmin  => 1e-07,
-    :tol_TSmin  => 0.001,
-    :tol_Tmin   => 0.0001,
+    :epsi_TS_max   => epsi_TS_max,
+    :epsi_TS_min   => 1e-10,
+    :epsi_T_max    => epsi_T_max,
+    :epsi_T_min    => 1e-07,
+    :epsi_mass_max => epsi_mass_max,
+    :epsi_mass_min => 0.0001,
+    :epsi_v_max    => epsi_v_max,
+    :epsi_v_min    => 0.0001,
+    :tol_TS_max    => tol_TS_max,
+    :tol_TS_min    => 0.001,
+    :tol_T_max     => tol_T_max,
+    :tol_T_min     => 0.0001,
+    :tol_mass_max  => tol_mass_max,
+    :tol_mass_min  => 0.0001,
+    :tol_v_max     => tol_v_max,
+    :tol_v_min     => 0.0001,
 
     # Constraints Parameters
   }
@@ -392,8 +395,8 @@ mechatronix do |data|
     :s0       => 0,
     :segments => [
       {
-        :n      => 400,
         :length => 1,
+        :n      => 400,
       },
     ],
   };

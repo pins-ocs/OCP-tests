@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_controls.cc             |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -342,7 +342,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t4   = t3 * t3;
     real_type t5   = t1 * t1;
     real_type t6   = 1.0 / t5;
-    real_type t9   = 1.0 / (t6 * t4 + 1);
+    real_type t9   = 1.0 / (t4 * t6 + 1);
     real_type tmp_0_4 = 0.5e0 * t9 / t1;
     real_type tmp_0_5 = -0.5e0 * t9 * t6 * t3;
     real_type tmp_0_6 = 0.0e0;
@@ -399,7 +399,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t19  = 1.0 / t18;
     real_type t22  = pow(V__[1] - t9 * t7 + 1.0 / t11 - t19 * t15 * t13, 2);
     real_type t26  = cos(t14);
-    real_type t30  = pow(-t19 * t26 * t13 + t9 * t6 * t2 + V__[2], 2);
+    real_type t30  = pow(-t19 * t26 * t13 + t2 * t6 * t9 + V__[2], 2);
     real_type result__ = t4 + t22 + t30;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );

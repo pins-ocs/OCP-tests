@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -307,7 +307,7 @@ namespace GoddardRocketDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_c];
     real_type t5   = XM__[2];
-    U__[ iU_T ] = TControl.solve(-1.0 / t3 / t5 * (t3 * LM__[1] - t5 * LM__[2]) * P__[iP_TimeSize], 0, ModelPars[iM_Tmax]);
+    U__[ iU_T ] = TControl.solve(-1.0 / t3 / t5 * (t3 * LM__[1] - LM__[2] * t5) * P__[iP_TimeSize], 0, ModelPars[iM_Tmax]);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }

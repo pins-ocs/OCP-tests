@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -653,7 +653,7 @@ namespace GoddardRocketDefine {
     real_type t7   = X__[iX_m];
     real_type t8   = 1.0 / t7;
     real_type t10  = gg_DD(t4);
-    result__[ 0   ] = (-t8 * t6 - t10) * t3;
+    result__[ 0   ] = (-t6 * t8 - t10) * t3;
     real_type t12  = DD_D_1_2(t4, t5);
     result__[ 1   ] = -t8 * t12 * t3;
     real_type t15  = DD_D_1(t4, t5);
@@ -661,13 +661,13 @@ namespace GoddardRocketDefine {
     real_type t17  = 1.0 / t16;
     result__[ 2   ] = t17 * t15 * t3;
     real_type t20  = gg_D(t4);
-    result__[ 3   ] = (-t8 * t15 - t20) * t1;
+    result__[ 3   ] = (-t15 * t8 - t20) * t1;
     result__[ 4   ] = result__[1];
     real_type t22  = DD_D_2_2(t4, t5);
     result__[ 5   ] = -t8 * t22 * t3;
     real_type t25  = DD_D_2(t4, t5);
     result__[ 6   ] = t17 * t25 * t3;
-    result__[ 7   ] = -t8 * t25 * t1 + L__[iL_lambda1__xo];
+    result__[ 7   ] = -t1 * t25 * t8 + L__[iL_lambda1__xo];
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
     real_type t31  = DD(t4, t5);

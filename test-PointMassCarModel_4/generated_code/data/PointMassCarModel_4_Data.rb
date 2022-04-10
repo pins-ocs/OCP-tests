@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_4_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 5/4/2022                                         #
+#  version: 1.0   date 10/4/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,29 +20,22 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-road_tol0 = 0.01
 m         = 700
+up_epsi0  = 0.1
+up_tol0   = 0.01
 p_epsi0   = 0.1
 wT0       = 0.01
-up_epsi0  = 0.1
-p_tol0    = 0.1
-kD        = 0.2500000000/m
-up_tol0   = 0.01
 wT        = wT0
+kD        = 0.2500000000/m
+p_tol0    = 0.1
+road_tol0 = 0.01
 
 mechatronix do |data|
 
-  # activate run time debug
-  data.Debug = false
-
-  # Enable doctor
-  data.Doctor = false
-
-  # Level of message
-  data.InfoLevel = 4
-
+  data.Debug     = false  # activate run time debug
+  data.Doctor    = false  # Enable doctor
+  data.InfoLevel = 4      # Level of message
   data.Use_control_penalties_in_adjoint_equations = false
-
   data.Max_penalty_value = 1000
 
   #  _   _                        _
@@ -85,20 +78,17 @@ mechatronix do |data|
 
   # setup solver for controls
   data.ControlSolver = {
-    # 'LM' = Levenberg-Marquard'
-    # 'YS' = Yixun Shi
-    # 'QN' = Quasi Newton
     # ==============================================================
-    # 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
+    # 'Hyness', 'NewtonDumped', 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     :solver => 'NewtonDumped',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
     :Iterative => false,
-    :InfoLevel => -1,     # suppress all messages
+    :InfoLevel => -1, # suppress all messages
     # ==============================================================
-    # 'LM', 'YS', 'QN'
-    :initialize_control_solver => 'QN',
+    # 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
+    :initialize_control_solver => 'QuasiNewton',
 
     # solver parameters
     :NewtonDumped => {
@@ -131,20 +121,17 @@ mechatronix do |data|
       :tolerance => 1e-9
     },
 
-    # 'LM' = Levenberg-Marquard'
-    :LM => {
+    :LevenbergMarquardt => {
       :max_iter  => 50,
       :tolerance => 1e-9
     },
 
-    # 'YS' = Yixun Shi
-    :YS => {
+    :YixunShi => {
       :max_iter  => 50,
       :tolerance => 1e-9
     },
 
-    # 'QN' = Quasi Newton
-    :QN => {
+    :QuasiNewton => {
       :max_iter  => 50,
       :tolerance => 1e-9,
       # 'BFGS', 'DFP', 'SR1' for Quasi Newton
@@ -406,72 +393,72 @@ mechatronix do |data|
     :segments => [
       {
         :rightWidth => 60,
-        :gridSize   => 1,
-        :leftWidth  => 15/2.0,
         :curvature  => 0,
+        :leftWidth  => 15/2.0,
+        :gridSize   => 1,
         :length     => 190,
       },
       {
         :rightWidth => 30,
-        :gridSize   => 1,
-        :leftWidth  => 60,
         :curvature  => 0.003225806452,
+        :leftWidth  => 60,
+        :gridSize   => 1,
         :length     => 973.8937227,
       },
       {
         :rightWidth => 30,
-        :gridSize   => 1,
-        :leftWidth  => 30,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 180,
       },
       {
         :rightWidth => 15,
-        :gridSize   => 1,
-        :leftWidth  => 20,
         :curvature  => 0.006666666667,
+        :leftWidth  => 20,
+        :gridSize   => 1,
         :length     => 235.619449,
       },
       {
         :rightWidth => 30,
-        :gridSize   => 1,
-        :leftWidth  => 30,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 240,
       },
       {
         :rightWidth => 30,
-        :gridSize   => 1,
-        :leftWidth  => 30,
         :curvature  => -1/150.0,
+        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 235.619449,
       },
       {
         :rightWidth => 30,
-        :gridSize   => 1,
-        :leftWidth  => 30,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 200,
       },
       {
         :rightWidth => 30,
-        :gridSize   => 1,
-        :leftWidth  => 30,
         :curvature  => 0.025,
+        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 125.6637062,
       },
       {
         :rightWidth => 30,
-        :gridSize   => 1,
-        :leftWidth  => 30,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :gridSize   => 1,
         :length     => 480,
       },
       {
         :rightWidth => 30,
-        :gridSize   => 0.1,
-        :leftWidth  => 30,
         :curvature  => 0,
+        :leftWidth  => 30,
+        :gridSize   => 0.1,
         :length     => 10,
       },
     ],

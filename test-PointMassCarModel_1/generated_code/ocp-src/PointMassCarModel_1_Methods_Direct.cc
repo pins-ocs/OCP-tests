@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -196,12 +196,12 @@ namespace PointMassCarModel_1Define {
     real_type t4   = sin(t3);
     real_type t8   = ALIAS_Kappa(QM__[0]);
     real_type t9   = inv_zeta__dot(t2, t3, XM__[0], t8);
-    result__[ 0   ] = -t9 * t4 * t2 + V__[0];
+    result__[ 0   ] = -t2 * t4 * t9 + V__[0];
     result__[ 1   ] = -t9 * XM__[3] + t8 + V__[1];
     real_type t15  = t2 * t2;
-    result__[ 2   ] = V__[2] - (-ModelPars[iM_kD] * t15 + XM__[4]) * t9;
-    result__[ 3   ] = -t9 * ModelPars[iM_v__Omega__max] * UM__[1] + V__[3];
-    result__[ 4   ] = -t9 * ModelPars[iM_v__fx__max] * UM__[0] + V__[4];
+    result__[ 2   ] = V__[2] - (-t15 * ModelPars[iM_kD] + XM__[4]) * t9;
+    result__[ 3   ] = -t9 * UM__[1] * ModelPars[iM_v__Omega__max] + V__[3];
+    result__[ 4   ] = -t9 * UM__[0] * ModelPars[iM_v__fx__max] + V__[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 5, i_segment );
   }
@@ -308,7 +308,7 @@ namespace PointMassCarModel_1Define {
     real_type t11  = cos(t2);
     real_type t13  = inv_zeta__dot(t1, t2, t5, t7);
     real_type t16  = inv_zeta__dot_D_2(t1, t2, t5, t7);
-    result__[ 1   ] = -0.5e0 * t13 * t11 * t1 - 0.5e0 * t16 * t4;
+    result__[ 1   ] = -0.5e0 * t11 * t13 * t1 - 0.5e0 * t16 * t4;
     real_type t21  = inv_zeta__dot_D_1(t1, t2, t5, t7);
     result__[ 2   ] = -0.5e0 * t13 * t3 - 0.5e0 * t21 * t4;
     result__[ 3   ] = -t10 + __INV_DZETA;

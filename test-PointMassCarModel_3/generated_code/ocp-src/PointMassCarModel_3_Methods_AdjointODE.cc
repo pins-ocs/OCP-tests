@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -215,7 +215,7 @@ namespace PointMassCarModel_3Define {
     real_type t13  = ALIAS_RoadRightBorder_D(t12);
     real_type t14  = t13 * t2;
     real_type t15  = ALIAS_rightWidth_D(t4);
-    result__[ 0   ] = -t15 * t14 - t9 * t8;
+    result__[ 0   ] = -t14 * t15 - t8 * t9;
     result__[ 1   ] = t8 - t14;
     result__[ 2   ] = 0;
     real_type t17  = X__[iX_fx];
@@ -230,7 +230,7 @@ namespace PointMassCarModel_3Define {
     real_type t30  = t29 * t29;
     real_type t33  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
     real_type t34  = 1.0 / t33;
-    real_type t37  = t25 * t34 * t30 * t28 + t25 * t21 * t18 - 1;
+    real_type t37  = t25 * t28 * t30 * t34 + t18 * t21 * t25 - 1;
     real_type t38  = ALIAS_AdherenceEllipse_D(t37);
     real_type t39  = t38 * t2;
     real_type t46  = ModelPars[iM_m];
@@ -908,24 +908,24 @@ namespace PointMassCarModel_3Define {
     real_type t14  = L__[iL_lambda3__xo];
     real_type t15  = t11 * t14;
     real_type t18  = zeta__dot(t2, t3, t4, t6);
-    result__[ 0   ] = t11 * t9 * t7 * t1 + (-t6 * t7 * t9 - t18 * t9) * t15;
+    result__[ 0   ] = t11 * t9 * t7 * t1 + (-t6 * t9 * t7 - t9 * t18) * t15;
     real_type t22  = zeta__dot_D_3(t2, t3, t4, t6);
-    result__[ 1   ] = t1 * t11 * t22 - t15 * t22 * t6;
+    result__[ 1   ] = t11 * t22 * t1 - t6 * t22 * t15;
     real_type t27  = zeta__dot_D_2(t2, t3, t4, t6);
     real_type t30  = L__[iL_lambda2__xo];
     real_type t31  = t2 * t30;
     real_type t32  = cos(t3);
-    result__[ 2   ] = t1 * t11 * t27 + t11 * t31 * t32 - t15 * t27 * t6;
+    result__[ 2   ] = t11 * t27 * t1 + t11 * t32 * t31 - t6 * t27 * t15;
     real_type t37  = zeta__dot_D_1(t2, t3, t4, t6);
     real_type t40  = sin(t3);
     real_type t45  = L__[iL_lambda4__xo];
     real_type t46  = t11 * t45;
     real_type t47  = ModelPars[iM_kD];
-    result__[ 3   ] = t1 * t11 * t37 + t11 * t30 * t40 - t15 * t37 * t6 - 2 * t2 * t46 * t47;
+    result__[ 3   ] = t11 * t37 * t1 + t11 * t40 * t30 - t6 * t37 * t15 - 2 * t2 * t47 * t46;
     result__[ 4   ] = t15;
     result__[ 5   ] = t46;
     real_type t63  = t2 * t2;
-    result__[ 6   ] = 2 * t10 * ModelPars[iM_wT] + 2 * t10 * t18 * t1 + 2 * t10 * t40 * t31 + 2 * (-t18 * t6 + X__[iX_Omega]) * t10 * t14 + 2 * (-t47 * t63 + X__[iX_fx]) * t10 * t45 + 2 * t10 * ModelPars[iM_v__Omega__max] * L__[iL_lambda5__xo] * U__[iU_v__Omega] + 2 * t10 * ModelPars[iM_v__fx__max] * L__[iL_lambda6__xo] * U__[iU_v__fx];
+    result__[ 6   ] = 2 * t10 * ModelPars[iM_wT] + 2 * t10 * t18 * t1 + 2 * t10 * t40 * t31 + 2 * (-t6 * t18 + X__[iX_Omega]) * t10 * t14 + 2 * (-t63 * t47 + X__[iX_fx]) * t10 * t45 + 2 * t10 * ModelPars[iM_v__Omega__max] * L__[iL_lambda5__xo] * U__[iU_v__Omega] + 2 * t10 * ModelPars[iM_v__fx__max] * L__[iL_lambda6__xo] * U__[iU_v__fx];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 7, i_segment );
   }

@@ -54,28 +54,48 @@ Used threads:           15
 
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[  1,13] ( 0.00247  ,  0.0021  ) [ 9.82e+03 , 5.52e+03 ] 0.000118   [6:0:4:0:0:0:0:0:1:0:0:0]
-[  2, 5] (  0.0021  , 0.00176  ) [  0.966   ,  0.785   ] 0.27       [0:0:4:0:0:0:0:0:0:0:0:0]
-[  3, 2] ( 0.00176  , 0.00142  ) [  0.588   ,  0.424   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
-[  4, 1] ( 0.00142  , 0.000977 ) [  0.236   ,  0.0822  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  5, 1] ( 0.000977 , 9.93e-07 ) [  0.0513  ,  0.0212  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  6, 1] ( 9.93e-07 , 2.08e-07 ) [  0.0449  , 0.00731  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  7, 1] ( 2.08e-07 , 7.25e-09 ) [  0.0104  , 0.000344 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  8, 1] ( 7.25e-09 , 8.52e-12 ) [ 0.000368 , 4.26e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  1,13] ( 0.00247  , 0.00211  ) [ 9.82e+03 , 5.57e+03 ] 0.000118   [0:0:10:0:0:0:0:0:1:0:0:0]
+[  2, 5] ( 0.00211  , 0.00178  ) [  0.978   ,  0.798   ] 0.266      [0:0:4:0:0:0:0:0:0:0:0:0]
+[  3, 2] ( 0.00178  , 0.00145  ) [  0.625   ,  0.441   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[  4, 1] ( 0.00145  , 0.000922 ) [  0.234   ,  0.0773  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 1] ( 0.000922 , 9.95e-06 ) [  0.287   ,  0.217   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 1] ( 9.95e-06 , 1.65e-05 ) [   5.94   ,   4.66   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  7, 1] ( 1.65e-05 , 6.41e-06 ) [   40.7   ,   17.3   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  8, 1] ( 6.41e-06 , 5.35e-07 ) [   39.4   ,   3.19   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 1] ( 5.35e-07 , 2.29e-09 ) [   3.7    ,  0.0153  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 10, 1] ( 2.29e-09 , 4.74e-14 ) [  0.0154  , 2.55e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1
 
 Continuation step N.1 s=0.2, ds=0.2, old_s=    0
 NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 11, 1] ( 2.01e-06 , 4.32e-08 ) [   19.8   ,  0.423   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 1] ( 4.32e-08 , 2.01e-11 ) [   0.44   , 0.00017  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 13, 1] ( 2.01e-11 , 1.12e-12 ) [ 0.00017  , 2.13e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
 NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 14, 1] ( 2.86e-06 , 1.15e-07 ) [   52.5   ,   2.43   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 15, 1] ( 1.15e-07 , 2.5e-10  ) [   2.65   , 0.00415  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 16, 1] ( 2.5e-10  , 9.59e-11 ) [ 0.00416  , 1.18e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
 NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 17, 1] ( 3.86e-06 , 2.98e-07 ) [   366    ,   70.9   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 18, 1] ( 2.98e-07 , 5.88e-09 ) [   100    ,   1.83   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 19, 1] ( 5.88e-09 , 9.32e-11 ) [   1.89   , 0.000544 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 20, 1] ( 9.32e-11 , 2.07e-12 ) [ 0.000544 , 3.76e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
 NewtonDumped --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 21, 1] ( 4.77e-07 , 1.8e-08  ) [   273    ,   11.5   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 22, 1] ( 1.8e-08  , 1.1e-09  ) [   12.4   ,  0.0163  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 23, 1] ( 1.1e-09  , 8.72e-10 ) [  0.0163  , 1.55e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 24, 1] ( 8.72e-10 , 3.01e-10 ) [ 1.55e-07 , 6.63e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -89,16 +109,16 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 1204          N. System pars = 600
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 31.4[ms]      timeout        = 0 [ms]
-iteration      = 8             Memory Used    = 130Kb (+61bytes)
+Elapsed Time   = 40.9[ms]      timeout        = 0 [ms]
+iteration      = 24            Memory Used    = 130Kb (+61bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 29            Jacobian       = 12
-Factorization  = 12            Inversion      = 36
+Function       = 45            Jacobian       = 24
+Factorization  = 24            Inversion      = 64
 ------------------------- SOLVER PARAMETERS --------------------------
 n_power        = 2             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
@@ -106,57 +126,21 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 3.9672e-11    last ||d||_inf = 2.6776e-06
-last ||f||_1   = 3.9934e-12    last ||d||_1   = 4.2661e-07
-last ||f||_2   = 7.0281e-12    last ||d||_2   = 7.7651e-07
+last ||f||_inf = 8.2893e-10    last ||d||_inf = 1.4816e-07
+last ||f||_1   = 3.0061e-10    last ||d||_1   = 6.6262e-08
+last ||f||_2   = 4.5025e-10    last ||d||_2   = 9.4133e-08
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin (disabling penalties)
-#ERR 1 Jacobian block N. 0 type: FD [(x+l+p) x (2*(x+l)+p+u) = (1+1+0) x (4+0+1) = 2 x 5]
-
-jac[  1,  0] =            5 / 5.0064       [A/FD] ---    0.0064173 / 0.12818      [err/err(%)]
-jac[  1,  2] =            5 / 5.0064       [A/FD] ---    0.0064173 / 0.12818      [err/err(%)]
-jac[  1,  4] =          -10 / -10.099      [A/FD] ---     0.099356 / 0.98379      [err/err(%)]
-
-#ERR 2 Jacobian block N. 1 type: FD [(x+l+p) x (2*(x+l)+p+u) = (1+1+0) x (4+0+1) = 2 x 5]
-
-jac[  1,  0] =            5 / 5.0064       [A/FD] ---    0.0064173 / 0.12818      [err/err(%)]
-jac[  1,  2] =            5 / 5.0064       [A/FD] ---    0.0064173 / 0.12818      [err/err(%)]
-jac[  1,  4] =          -10 / -10.099      [A/FD] ---     0.099356 / 0.98379      [err/err(%)]
-
-#ERR 3 Jacobian block N. 2 type: FD [(x+l+p) x (2*(x+l)+p+u) = (1+1+0) x (4+0+1) = 2 x 5]
-
-jac[  1,  0] =            5 / 5.0064       [A/FD] ---    0.0064174 / 0.12818      [err/err(%)]
-jac[  1,  2] =            5 / 5.0064       [A/FD] ---    0.0064174 / 0.12818      [err/err(%)]
-jac[  1,  4] =          -10 / -10.099      [A/FD] ---     0.099357 / 0.9838       [err/err(%)]
-
-#ERR 4 Jacobian block N. 3 type: FD [(x+l+p) x (2*(x+l)+p+u) = (1+1+0) x (4+0+1) = 2 x 5]
-
-jac[  1,  0] =            5 / 5.0064       [A/FD] ---    0.0064174 / 0.12818      [err/err(%)]
-jac[  1,  2] =            5 / 5.0064       [A/FD] ---    0.0064174 / 0.12818      [err/err(%)]
-jac[  1,  4] =          -10 / -10.099      [A/FD] ---     0.099357 / 0.9838       [err/err(%)]
-
-#ERR 5 Jacobian block N. 4 type: FD [(x+l+p) x (2*(x+l)+p+u) = (1+1+0) x (4+0+1) = 2 x 5]
-
-jac[  1,  0] =            5 / 5.0064       [A/FD] ---    0.0064175 / 0.12819      [err/err(%)]
-jac[  1,  2] =            5 / 5.0064       [A/FD] ---    0.0064175 / 0.12819      [err/err(%)]
-jac[  1,  4] =          -10 / -10.099      [A/FD] ---     0.099357 / 0.9838       [err/err(%)]
-
-#ERR 6 Jacobian block N. 5 type: FD [(x+l+p) x (2*(x+l)+p+u) = (1+1+0) x (4+0+1) = 2 x 5]
-
-jac[  1,  0] =            5 / 5.0064       [A/FD] ---    0.0064175 / 0.12819      [err/err(%)]
-jac[  1,  2] =            5 / 5.0064       [A/FD] ---    0.0064175 / 0.12819      [err/err(%)]
-jac[  1,  4] =          -10 / -10.099      [A/FD] ---     0.099358 / 0.98381      [err/err(%)]
-
-skipping...
+All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
 All controls solution are OK
 Check Controls End
-target [Lagrange,Mayer]       = [ -7.5, 0 ]
-[Penalties/Barriers,Controls] = [ 0, 1.389e-20 ]
+target [Lagrange,Mayer]       = [ -7.499, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 2.945e-09 ]
 All Done Folks!

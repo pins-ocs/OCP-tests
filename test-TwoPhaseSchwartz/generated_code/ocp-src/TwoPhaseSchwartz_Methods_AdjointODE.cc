@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -326,7 +326,7 @@ namespace TwoPhaseSchwartzDefine {
     real_type t12  = -18 * t2;
     real_type t13  = t12 * t12;
     real_type t15  = ALIAS_bound1_D(t9);
-    result__[ 0   ] = t10 * t13 - 18 * t15;
+    result__[ 0   ] = t13 * t10 - 18 * t15;
     real_type t18  = -0.2222222222e2 * t5 + 0.8888888886e1;
     result__[ 1   ] = t12 * t18 * t10;
     result__[ 2   ] = result__[1];

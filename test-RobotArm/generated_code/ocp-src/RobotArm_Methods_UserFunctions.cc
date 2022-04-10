@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -241,7 +241,7 @@ namespace RobotArmDefine {
     real_type t3   = t2 * t2;
     real_type t5   = sin(xo__phi);
     real_type t6   = t5 * t5;
-    real_type result__ = 2 * t3 * t1 - 2 * t6 * t1;
+    real_type result__ = 2 * t1 * t3 - 2 * t1 * t6;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

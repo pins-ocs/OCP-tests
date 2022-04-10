@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -313,7 +313,7 @@ namespace PointMassCarModel_3Define {
     real_type t2   = X__[iX_sqrt_inv_Vseg] * X__[iX_sqrt_inv_Vseg];
     real_type t4   = v__fxControl(U__[iU_v__fx], -1, 1);
     real_type t7   = v__OmegaControl(U__[iU_v__Omega], -1, 1);
-    real_type result__ = t4 * t2 + t7 * t2;
+    real_type result__ = t2 * t4 + t2 * t7;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
     }

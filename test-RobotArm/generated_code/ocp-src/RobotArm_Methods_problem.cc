@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -153,7 +153,7 @@ namespace RobotArmDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
-    real_type result__ = U__[iU_u_rho] * t2 * L__[iL_lambda1__xo] + U__[iU_u_theta] * t2 * L__[iL_lambda2__xo] + U__[iU_u_phi] * t2 * L__[iL_lambda3__xo] + X__[iX_rho1] * t2 * L__[iL_lambda4__xo] + X__[iX_theta1] * t2 * L__[iL_lambda5__xo] + X__[iX_phi1] * t2 * L__[iL_lambda6__xo];
+    real_type result__ = t2 * L__[iL_lambda1__xo] * U__[iU_u_rho] + t2 * L__[iL_lambda2__xo] * U__[iU_u_theta] + t2 * L__[iL_lambda3__xo] * U__[iU_u_phi] + t2 * L__[iL_lambda4__xo] * X__[iX_rho1] + t2 * L__[iL_lambda5__xo] * X__[iX_theta1] + t2 * L__[iL_lambda6__xo] * X__[iX_phi1];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
