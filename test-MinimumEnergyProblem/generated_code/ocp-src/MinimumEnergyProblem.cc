@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -91,14 +91,15 @@ namespace MinimumEnergyProblemDefine {
   };
 
   char const *namesModelPars[numModelPars+1] = {
-    "maxEpsi",
-    "maxTol",
-    "minEpsi",
-    "minTol",
+    "c",
+    "max_tol",
+    "min_tol",
     "x1_f",
     "x1_i",
     "x2_f",
     "x2_i",
+    "max_epsi",
+    "min_epsi",
     nullptr
   };
 

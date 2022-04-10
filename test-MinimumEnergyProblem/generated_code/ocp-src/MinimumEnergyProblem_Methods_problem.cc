@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_problem.cc                        |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -55,9 +55,9 @@ namespace MinimumEnergyProblemDefine {
 
   void
   MinimumEnergyProblem::continuation_step_0( real_type s ) {
-    real_type t3   = interpLog(s, ModelPars[iM_maxEpsi], ModelPars[iM_minEpsi]);
+    real_type t3   = interpLog(s, ModelPars[iM_max_epsi], ModelPars[iM_min_epsi]);
     x1Limitation.update_epsilon(t3);
-    real_type t6   = interpLog(s, ModelPars[iM_maxTol], ModelPars[iM_minTol]);
+    real_type t6   = interpLog(s, ModelPars[iM_max_tol], ModelPars[iM_min_tol]);
     x1Limitation.update_tolerance(t6);
   }
 
@@ -115,7 +115,8 @@ namespace MinimumEnergyProblemDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u];
     real_type t2   = t1 * t1;
-    real_type result__ = t2 / 2 + L__[iL_lambda1__xo] * X__[iX_x2] + t1 * L__[iL_lambda2__xo];
+    real_type t6   = X__[iX_x1] * X__[iX_x1];
+    real_type result__ = t2 / 2 + t6 * ModelPars[iM_c] / 2 + L__[iL_lambda1__xo] * X__[iX_x2] + t1 * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -204,8 +205,9 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = U__[iU_u] * U__[iU_u];
-    real_type result__ = t2 / 2;
+    real_type t3   = X__[iX_x1] * X__[iX_x1];
+    real_type t6   = U__[iU_u] * U__[iU_u];
+    real_type result__ = t3 * ModelPars[iM_c] / 2 + t6 / 2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
     }
@@ -313,7 +315,7 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
+    result__[ 0   ] = ModelPars[iM_c] * X__[iX_x1];
     result__[ 1   ] = 0;
     result__[ 2   ] = U__[iU_u];
     if ( m_debug )
@@ -323,11 +325,12 @@ namespace MinimumEnergyProblemDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer MinimumEnergyProblem::D2lagrangeD2xup_numRows() const { return 3; }
   integer MinimumEnergyProblem::D2lagrangeD2xup_numCols() const { return 3; }
-  integer MinimumEnergyProblem::D2lagrangeD2xup_nnz()     const { return 1; }
+  integer MinimumEnergyProblem::D2lagrangeD2xup_nnz()     const { return 2; }
 
   void
   MinimumEnergyProblem::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 2   ; jIndex[1 ] = 2   ;
   }
 
 
@@ -342,9 +345,10 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1;
+    result__[ 0   ] = ModelPars[iM_c];
+    result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 2, i_segment );
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Main.cc                                   |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type maxEpsi = 0.1;
-    real_type maxTol = 0.1;
+    real_type max_epsi = 0.1;
+    real_type epsi = max_epsi;
+    real_type max_tol = 0.1;
+    real_type tol = max_tol;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -132,6 +134,7 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
+    data_Parameters["c"] = 0;
 
     // Guess Parameters
 
@@ -146,10 +149,10 @@ main() {
     // User Function Parameters
 
     // Continuation Parameters
-    data_Parameters["maxEpsi"] = maxEpsi;
-    data_Parameters["maxTol"] = maxTol;
-    data_Parameters["minEpsi"] = 1e-08;
-    data_Parameters["minTol"] = 1e-08;
+    data_Parameters["max_tol"] = max_tol;
+    data_Parameters["min_tol"] = 1e-08;
+    data_Parameters["max_epsi"] = max_epsi;
+    data_Parameters["min_epsi"] = 1e-08;
 
     // Constraints Parameters
 
@@ -164,8 +167,8 @@ main() {
     // PenaltyBarrier1DLessThan
     GenericContainer & data_x1Limitation = data_Constraints["x1Limitation"];
     data_x1Limitation["subType"]   = "PENALTY_REGULAR";
-    data_x1Limitation["epsilon"]   = maxEpsi;
-    data_x1Limitation["tolerance"] = maxTol;
+    data_x1Limitation["epsilon"]   = epsi;
+    data_x1Limitation["tolerance"] = tol;
     data_x1Limitation["active"]    = true;
     // Constraint1D: none defined
     // Constraint2D: none defined
@@ -174,7 +177,7 @@ main() {
     // User defined classes: M E S H
 MinimumEnergyProblem_data.Mesh["s0"] = 0;
 MinimumEnergyProblem_data.Mesh["segments"][0]["length"] = 1;
-MinimumEnergyProblem_data.Mesh["segments"][0]["n"] = 20000;
+MinimumEnergyProblem_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

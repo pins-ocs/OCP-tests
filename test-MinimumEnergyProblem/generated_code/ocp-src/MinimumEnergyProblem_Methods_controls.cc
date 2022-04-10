@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_controls.cc                       |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -82,8 +82,10 @@ namespace MinimumEnergyProblemDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
     real_type t2   = t1 * t1;
-    real_type t11  = x1Limitation(XM__[0] - 1.0 / 9.0);
-    real_type result__ = t2 / 2 + LM__[0] * XM__[1] + t1 * LM__[1] + t11;
+    real_type t5   = XM__[0];
+    real_type t6   = t5 * t5;
+    real_type t15  = x1Limitation(t5 - 1.0 / 9.0);
+    real_type result__ = t2 / 2 + t6 * ModelPars[iM_c] / 2 + LM__[0] * XM__[1] + t1 * LM__[1] + t15;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }

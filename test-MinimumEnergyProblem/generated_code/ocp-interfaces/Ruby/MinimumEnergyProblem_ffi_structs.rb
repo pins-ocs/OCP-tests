@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: MinimumEnergyProblem_ffi_structs.rb                               #
 #                                                                          #
-#  version: 1.0   date 10/4/2022                                           #
+#  version: 1.0   date 11/4/2022                                           #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #
@@ -40,21 +40,23 @@ module MinimumEnergyProblem
   class MinimumEnergyProblem_model_params < FFI::Struct
     layout(
 
-      :maxEpsi, :data_t,
+      :c,        :data_t,
 
-      :maxTol,  :data_t,
+      :max_tol,  :data_t,
 
-      :minEpsi, :data_t,
+      :min_tol,  :data_t,
 
-      :minTol,  :data_t,
+      :x1_f,     :data_t,
 
-      :x1_f,    :data_t,
+      :x1_i,     :data_t,
 
-      :x1_i,    :data_t,
+      :x2_f,     :data_t,
 
-      :x2_f,    :data_t,
+      :x2_i,     :data_t,
 
-      :x2_i,    :data_t,
+      :max_epsi, :data_t,
+
+      :min_epsi, :data_t,
 
     )
 

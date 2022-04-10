@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Pars.hh                                   |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define MINIMUMENERGYPROBLEMPARS_DOT_HH
 
 #define numBc                    4
-#define numModelPars             8
+#define numModelPars             9
 #define numConstraintLT          1
 #define numConstraint1D          0
 #define numConstraint2D          0
@@ -51,14 +51,15 @@
 // Pvars
 
 // ModelPars Maps
-#define iM_maxEpsi     0
-#define iM_maxTol      1
-#define iM_minEpsi     2
-#define iM_minTol      3
-#define iM_x1_f        4
-#define iM_x1_i        5
-#define iM_x2_f        6
-#define iM_x2_i        7
+#define iM_c           0
+#define iM_max_tol     1
+#define iM_min_tol     2
+#define iM_x1_f        3
+#define iM_x1_i        4
+#define iM_x2_f        5
+#define iM_x2_i        6
+#define iM_max_epsi    7
+#define iM_min_epsi    8
 
 #endif
 

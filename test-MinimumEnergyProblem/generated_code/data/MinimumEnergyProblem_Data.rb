@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MinimumEnergyProblem_Data.rb                                   #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 11/4/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,8 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-maxEpsi = 0.1
-maxTol  = 0.1
+max_epsi = 0.1
+epsi     = max_epsi
+max_tol  = 0.1
+tol      = max_tol
 
 mechatronix do |data|
 
@@ -257,6 +259,7 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
+    :c => 0,
 
     # Guess Parameters
 
@@ -271,10 +274,10 @@ mechatronix do |data|
     # User Function Parameters
 
     # Continuation Parameters
-    :maxEpsi => maxEpsi,
-    :maxTol  => maxTol,
-    :minEpsi => 1e-08,
-    :minTol  => 1e-08,
+    :max_tol  => max_tol,
+    :min_tol  => 1e-08,
+    :max_epsi => max_epsi,
+    :min_epsi => 1e-08,
 
     # Constraints Parameters
   }
@@ -313,8 +316,8 @@ mechatronix do |data|
   # PenaltyBarrier1DLessThan
   data.Constraints[:x1Limitation] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => maxEpsi,
-    :tolerance => maxTol,
+    :epsilon   => epsi,
+    :tolerance => tol,
     :active    => true
   }
   # Constraint1D: none defined
@@ -334,7 +337,7 @@ mechatronix do |data|
     :segments => [
       {
         :length => 1,
-        :n      => 20000,
+        :n      => 1000,
       },
     ],
   };

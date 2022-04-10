@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_AdjointODE.cc                     |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -513,7 +513,7 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0;
+    result__[ 0   ] = ModelPars[iM_c] * X__[iX_x1];
     result__[ 1   ] = L__[iL_lambda1__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hx_eval", 2, i_segment );
@@ -538,11 +538,11 @@ namespace MinimumEnergyProblemDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer MinimumEnergyProblem::DHxDxp_numRows() const { return 2; }
   integer MinimumEnergyProblem::DHxDxp_numCols() const { return 2; }
-  integer MinimumEnergyProblem::DHxDxp_nnz()     const { return 0; }
+  integer MinimumEnergyProblem::DHxDxp_nnz()     const { return 1; }
 
   void
   MinimumEnergyProblem::DHxDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
 
@@ -554,7 +554,14 @@ namespace MinimumEnergyProblemDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ModelPars[iM_c];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DHxDxp_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

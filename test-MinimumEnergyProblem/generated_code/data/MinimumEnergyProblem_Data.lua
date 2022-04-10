@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Data.lua                                  |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,10 @@
 -- User Header
 
 -- Auxiliary values
-maxEpsi = 0.1
-maxTol  = 0.1
+max_epsi = 0.1
+epsi     = max_epsi
+max_tol  = 0.1
+tol      = max_tol
 
 content = {
 
@@ -252,6 +254,7 @@ content = {
   Parameters = {
 
     -- Model Parameters
+    c = 0,
 
     -- Guess Parameters
 
@@ -266,10 +269,10 @@ content = {
     -- User Function Parameters
 
     -- Continuation Parameters
-    maxEpsi = maxEpsi,
-    maxTol  = maxTol,
-    minEpsi = 1e-08,
-    minTol  = 1e-08,
+    max_tol  = max_tol,
+    min_tol  = 1e-08,
+    max_epsi = max_epsi,
+    min_epsi = 1e-08,
 
     -- Constraints Parameters
   },
@@ -289,8 +292,8 @@ content = {
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DLessThan
     x1LimitationsubType   = "PENALTY_REGULAR",
-    x1Limitationepsilon   = maxEpsi,
-    x1Limitationtolerance = maxTol,
+    x1Limitationepsilon   = epsi,
+    x1Limitationtolerance = tol,
     x1Limitationactive    = true
 
   -- Constraint1D: none defined
@@ -306,7 +309,7 @@ content = {
       
       {
         length = 1,
-        n      = 20000,
+        n      = 1000,
       },
     },
   },
