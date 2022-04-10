@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Data.lua                                    |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,16 +20,16 @@
 -- User Header
 
 -- Auxiliary values
-tol_ctrl0  = 0.1
 epsi_ctrl0 = 0.1
 epsi_ctrl  = epsi_ctrl0
-tol_ctrl   = tol_ctrl0
-w_time_max = 1
 epsi_T     = 0.01
+w_time_max = 1
 x_epsi     = 0.01
 tol_T      = 1
 x_tol      = 0.01
 w_time     = w_time_max
+tol_ctrl0  = 0.1
+tol_ctrl   = tol_ctrl0
 
 content = {
 
@@ -91,17 +91,14 @@ content = {
 
   -- setup solver for controls
   ControlSolver = {
-    -- 'LM' = Levenberg-Marquard'
-    -- 'YS' = Yixun Shi
-    -- 'QN' = Quasi Newton
-    -- 'Hyness', 'NewtonDumped', 'LM', 'YS', 'QN'
+    -- 'Hyness', 'NewtonDumped', 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     solver = 'NewtonDumped',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
     Iterative = true,
     InfoLevel = -1, -- suppress all messages
-    -- 'LM', 'YS', 'QN'
-    initialize_control_solver = 'QN',
+    -- 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
+    initialize_control_solver = 'QuasiNewton',
 
     -- solver parameters
     NewtonDumped = {
@@ -131,20 +128,14 @@ content = {
 
     Hyness = { max_iter = 50, tolerance = 1e-9 },
 
-    -- 'LM' = Levenberg-Marquard'
-    LM = { max_iter = 50, tolerance = 1e-9 },
-
-    -- 'YS' = Yixun Shi
-    YS = { max_iter = 50, tolerance = 1e-9 },
-
-    -- 'QN' = Quasi Newton
-    QN = {
-      max_iter  = 50,
-      tolerance = 1e-9,
-      -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
-      update = 'BFGS',
-      -- 'EXACT', 'ARMIJO'
-      linesearch = 'EXACT',
+    LevenbergMarquardt = { max_iter = 50, tolerance = 1e-9, low_tolerance = 1e-6 },
+    YixunShi           = { max_iter = 50, tolerance = 1e-9, low_tolerance = 1e-6 },
+    QuasiNewton = {
+      max_iter      = 50,
+      tolerance     = 1e-9,
+      low_tolerance = 1e-6,
+      update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
+      linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
   }
 
@@ -270,7 +261,6 @@ content = {
 
     -- Model Parameters
     En     = 5,
-    T_min  = 10,
     Tc     = 0.38158,
     Tf     = 0.3947,
     a      = 0.117,
@@ -289,6 +279,7 @@ content = {
     x2_i = 0.39,
 
     -- Post Processing Parameters
+    T_min = 10,
 
     -- User Function Parameters
 

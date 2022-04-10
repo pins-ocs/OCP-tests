@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,16 +50,16 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_ctrl0 = 0.1;
     real_type epsi_ctrl0 = 0.1;
     real_type epsi_ctrl = epsi_ctrl0;
-    real_type tol_ctrl = tol_ctrl0;
-    real_type w_time_max = 1;
     real_type epsi_T = 0.01;
+    real_type w_time_max = 1;
     real_type x_epsi = 0.01;
     real_type tol_T = 1;
     real_type x_tol = 0.01;
     real_type w_time = w_time_max;
+    real_type tol_ctrl0 = 0.1;
+    real_type tol_ctrl = tol_ctrl0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -141,7 +141,6 @@ main() {
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
     data_Parameters["En"] = 5;
-    data_Parameters["T_min"] = 10;
     data_Parameters["Tc"] = 0.38158;
     data_Parameters["Tf"] = 0.3947;
     data_Parameters["a"] = 0.117;
@@ -160,6 +159,7 @@ main() {
     data_Parameters["x2_i"] = 0.39;
 
     // Post Processing Parameters
+    data_Parameters["T_min"] = 10;
 
     // User Function Parameters
 

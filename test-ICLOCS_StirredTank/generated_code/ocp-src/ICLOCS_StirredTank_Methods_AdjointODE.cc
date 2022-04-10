@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -618,18 +618,16 @@ namespace ICLOCS_StirredTankDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_w_time];
-    real_type t3   = log(P__[iP_TimeSize]);
-    real_type t5   = X__[iX_x1];
-    real_type t8   = pow(t5 - ModelPars[iM_x1_f], 2);
-    real_type t9   = X__[iX_x2];
-    real_type t12  = pow(t9 - ModelPars[iM_x2_f], 2);
-    real_type t13  = U__[iU_u];
-    real_type t16  = pow(t13 - ModelPars[iM_u_f], 2);
-    real_type t20  = 1.0 / ModelPars[iM_theta];
-    real_type t27  = exp(-1.0 / t9 * ModelPars[iM_En]);
-    real_type t28  = t27 * t5 * ModelPars[iM_k];
-    result__[ 0   ] = t3 * t1 + t8 + t12 + t16 + t1 + (t20 * (1 - t5) - t28) * L__[iL_lambda1__xo] + (t20 * (ModelPars[iM_Tf] - t9) + t28 - (t9 - ModelPars[iM_Tc]) * t13 * ModelPars[iM_a]) * L__[iL_lambda2__xo];
+    real_type t2   = X__[iX_x1];
+    real_type t5   = pow(t2 - ModelPars[iM_x1_f], 2);
+    real_type t6   = X__[iX_x2];
+    real_type t9   = pow(t6 - ModelPars[iM_x2_f], 2);
+    real_type t10  = U__[iU_u];
+    real_type t13  = pow(t10 - ModelPars[iM_u_f], 2);
+    real_type t17  = 1.0 / ModelPars[iM_theta];
+    real_type t24  = exp(-1.0 / t6 * ModelPars[iM_En]);
+    real_type t25  = t24 * t2 * ModelPars[iM_k];
+    result__[ 0   ] = ModelPars[iM_w_time] + t5 + t9 + t13 + (t17 * (1 - t2) - t25) * L__[iL_lambda1__xo] + (t17 * (ModelPars[iM_Tf] - t6) + t25 - (t6 - ModelPars[iM_Tc]) * t10 * ModelPars[iM_a]) * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hp_eval", 1, i_segment );
   }
@@ -695,11 +693,11 @@ namespace ICLOCS_StirredTankDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer ICLOCS_StirredTank::DHpDp_numRows() const { return 1; }
   integer ICLOCS_StirredTank::DHpDp_numCols() const { return 1; }
-  integer ICLOCS_StirredTank::DHpDp_nnz()     const { return 1; }
+  integer ICLOCS_StirredTank::DHpDp_nnz()     const { return 0; }
 
   void
   ICLOCS_StirredTank::DHpDp_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    // EMPTY!
   }
 
 
@@ -711,14 +709,7 @@ namespace ICLOCS_StirredTankDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ModelPars[iM_w_time] / P__[iP_TimeSize];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHpDp_sparse", 1, i_segment );
+    // EMPTY!
   }
 
   /*\

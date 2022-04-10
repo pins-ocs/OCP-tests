@@ -18,7 +18,7 @@ addBoundaryConditions(
 infoBoundaryConditions();
 setTarget(
   mayer    = 0,
-  lagrange = TimeSize*(w_time*log(TimeSize)+(x1(zeta)-x1_f)^2+(x2(zeta)-x2_f)^2+(u(zeta)-u_f)^2)
+  lagrange = TimeSize*(w_time+(x1(zeta)-x1_f)^2+(x2(zeta)-x2_f)^2+(u(zeta)-u_f)^2)
 );
 addControlBound(
   u,
@@ -102,12 +102,12 @@ POST := [
   [TimeSize*zeta, "time"]
 ];
 CONT := [
+  [
+    w_time = w_time_max + s*(w_time_min-w_time_max)
+  ],
   [ 
     ["u","epsilon"]   = epsi_ctrl0+s*(epsi_ctrl1-epsi_ctrl0),
     ["u","tolerance"] = tol_ctrl0+s*(tol_ctrl1-tol_ctrl0)
-  ],
-  [
-    w_time = w_time_max + s*(w_time_min-w_time_max)
   ]
 ];
 GUESS := [
@@ -116,11 +116,11 @@ GUESS := [
 ];
 PGUESS := [ TimeSize = T_guess ];
 REGION := [
-  [ x1(zeta) >= 0,     "node" ],
-  [ x1(zeta) <= 1,     "node" ],
-  [ x2(zeta) >= 0,     "node" ],
-  [ x2(zeta) <= 1,     "node" ],
-  [ TimeSize >= T_min, "pars" ]
+#  [ x1(zeta) >= 0,     "node" ],
+#  [ x1(zeta) <= 1,     "node" ],
+#  [ x2(zeta) >= 0,     "node" ],
+#  [ x2(zeta) <= 1,     "node" ],
+#  [ TimeSize >= T_min, "pars" ]
 ];
 MESHP_DEF := [length=1, n=100];
 project_dir  := "../generated_code";

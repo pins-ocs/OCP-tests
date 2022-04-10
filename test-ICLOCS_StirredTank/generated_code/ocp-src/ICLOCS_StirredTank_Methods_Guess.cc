@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_Guess.cc                            |
  |                                                                       |
- |  version: 1.0   date 5/4/2022                                         |
+ |  version: 1.0   date 10/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -215,20 +215,10 @@ namespace ICLOCS_StirredTankDefine {
   }
 
 
-  // node_check_strings
-  #define Xoptima__message_node_check_0 "0 <= x1(zeta)"
-  #define Xoptima__message_node_check_2 "0 <= x2(zeta)"
-  #define Xoptima__message_node_check_1 "x1(zeta) <= 1"
-  #define Xoptima__message_node_check_3 "x2(zeta) <= 1"
-
-  // pars_check_strings
-  #define Xoptima__message_pars_check_0 "T_min <= TimeSize"
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   ICLOCS_StirredTank::p_check( P_const_pointer_type P__ ) const {
-    Xoptima__check__pars__le(ModelPars[iM_T_min], P__[iP_TimeSize], Xoptima__message_pars_check_0);
     return true;
   }
 
@@ -240,17 +230,6 @@ namespace ICLOCS_StirredTankDefine {
     NodeType2 const    & NODE__,
     P_const_pointer_type P__
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_x1];
-    Xoptima__check__node__le(0, t1, Xoptima__message_node_check_0);
-    real_type t2   = X__[iX_x2];
-    Xoptima__check__node__le(0, t2, Xoptima__message_node_check_2);
-    Xoptima__check__node__le(t1, 1, Xoptima__message_node_check_1);
-    Xoptima__check__node__le(t2, 1, Xoptima__message_node_check_3);
     return true;
   }
 
