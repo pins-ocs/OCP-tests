@@ -90,7 +90,7 @@ task :maple do
           next unless check_maple_input( link )
           line = link.content.strip
           line += ';' if line[-1] != ';' # add missing ;
-          break if line =~ /\#\s*quit\s*;?$/ 
+          break if line =~ /\#\s*quit\s*;?$/
           f.puts line
         end
       end
@@ -144,3 +144,26 @@ task :all do
   Rake::Task[:main].invoke
   Rake::Task[:run].invoke
 end
+
+desc "Remove all the ingnored files and reset the commit"
+task :cleanup do
+  #sh "git clean -d -x -f"
+  sh "git reset --hard"
+  sh "git submodule foreach --recursive git reset --hard"
+  sh "git submodule foreach --recursive git clean -d -x -f"
+  # estrae i sottomoduli alla corretta versione!
+  sh "git submodule update --checkout --recursive"
+end
+
+task :clean do
+  Dir.glob("test-*/*.txt").each          { |f| FileUtils.rm_rf f }
+  Dir.glob("test-*/*.rb").each           { |f| FileUtils.rm_rf f }
+  Dir.glob("test-*/CMakeLists.txt").each { |f| FileUtils.rm_rf f }
+  Dir.glob("test-*/iterations.txt").each { |f| FileUtils.rm_rf f }
+  Dir.glob("test-*/lib").each            { |f| FileUtils.rm_rf f }
+  Dir.glob("test-*/bin").each            { |f| FileUtils.rm_rf f }
+  Dir.glob("test-*/data").each           { |f| FileUtils.rm_rf f }
+  Dir.glob("test-*/ocp-*").each          { |f| FileUtils.rm_rf f }
+end
+
+
