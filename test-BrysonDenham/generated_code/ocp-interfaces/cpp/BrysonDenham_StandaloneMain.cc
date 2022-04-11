@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -165,8 +165,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BrysonDenham_data.Mesh["s0"] = 0;
-BrysonDenham_data.Mesh["segments"][0]["length"] = 1;
 BrysonDenham_data.Mesh["segments"][0]["n"] = 400;
+BrysonDenham_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

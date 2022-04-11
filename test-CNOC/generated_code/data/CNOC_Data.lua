@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Data.lua                                                  |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,14 +20,24 @@
 -- User Header
 
 -- Auxiliary values
-js_min                   = -50
-js_max                   = 30
+jn_max                   = 65
 path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
 v_nom                    = 0.173
+tol_COV                  = 0.01
+epsi_COV                 = 0.01
+epsi_VMAX                = 0.01
 deltaFeed                = v_nom
+tol_ACC                  = 0.01
+tol_CTRL                 = 0.01
+js_min                   = -50
+epsi_PATH                = 0.01
+epsi_CTRL                = 0.01
+tol_VMAX                 = 0.01
+js_max                   = 30
+tol_PATH                 = 0.01
+epsi_ACC                 = 0.01
 mesh_segments            = 100
-jn_max                   = 65
 
 content = {
 
@@ -310,13 +320,13 @@ content = {
   Controls = {
     jsControl = {
       type      = ,
-      epsilon   = 0.01,
-      tolerance = 0.01,
+      epsilon   = epsi_CTRL,
+      tolerance = tol_CTRL,
     },
     jnControl = {
       type      = ,
-      epsilon   = 0.01,
-      tolerance = 0.01,
+      epsilon   = epsi_CTRL,
+      tolerance = tol_CTRL,
     },
   },
 
@@ -329,74 +339,74 @@ content = {
   -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
     -- PenaltyBarrier1DLessThan
     timePositivesubType   = "BARRIER_LOG",
-    timePositiveepsilon   = 0.01,
-    timePositivetolerance = 0.01,
+    timePositiveepsilon   = epsi_COV,
+    timePositivetolerance = tol_COV,
     timePositiveactive    = true
 
     -- PenaltyBarrier1DLessThan
     vLimitsubType   = "PENALTY_PIECEWISE",
-    vLimitepsilon   = 0.01,
-    vLimittolerance = 0.01,
+    vLimitepsilon   = epsi_VMAX,
+    vLimittolerance = tol_VMAX,
     vLimitactive    = true
 
     -- PenaltyBarrier1DLessThan
     PathFollowingTolerance_minsubType   = "PENALTY_REGULAR",
-    PathFollowingTolerance_minepsilon   = 0.01,
-    PathFollowingTolerance_mintolerance = 0.1,
+    PathFollowingTolerance_minepsilon   = epsi_PATH,
+    PathFollowingTolerance_mintolerance = tol_PATH,
     PathFollowingTolerance_minactive    = true
 
     -- PenaltyBarrier1DLessThan
     PathFollowingTolerance_maxsubType   = "PENALTY_REGULAR",
-    PathFollowingTolerance_maxepsilon   = 0.01,
-    PathFollowingTolerance_maxtolerance = 0.1,
+    PathFollowingTolerance_maxepsilon   = epsi_PATH,
+    PathFollowingTolerance_maxtolerance = tol_PATH,
     PathFollowingTolerance_maxactive    = true
 
     -- PenaltyBarrier1DLessThan
     as_limit_minsubType   = "PENALTY_REGULAR",
-    as_limit_minepsilon   = 0.01,
-    as_limit_mintolerance = 0.01,
+    as_limit_minepsilon   = epsi_ACC,
+    as_limit_mintolerance = tol_ACC,
     as_limit_minactive    = true
 
     -- PenaltyBarrier1DLessThan
     as_limit_maxsubType   = "PENALTY_REGULAR",
-    as_limit_maxepsilon   = 0.01,
-    as_limit_maxtolerance = 0.01,
+    as_limit_maxepsilon   = epsi_ACC,
+    as_limit_maxtolerance = tol_ACC,
     as_limit_maxactive    = true
 
     -- PenaltyBarrier1DLessThan
     an_limit_minsubType   = "PENALTY_REGULAR",
-    an_limit_minepsilon   = 0.01,
-    an_limit_mintolerance = 0.01,
+    an_limit_minepsilon   = epsi_ACC,
+    an_limit_mintolerance = tol_ACC,
     an_limit_minactive    = true
 
     -- PenaltyBarrier1DLessThan
     an_limit_maxsubType   = "PENALTY_REGULAR",
-    an_limit_maxepsilon   = 0.01,
-    an_limit_maxtolerance = 0.01,
+    an_limit_maxepsilon   = epsi_ACC,
+    an_limit_maxtolerance = tol_ACC,
     an_limit_maxactive    = true
 
     -- PenaltyBarrier1DLessThan
     ax_limit_minsubType   = "PENALTY_REGULAR",
-    ax_limit_minepsilon   = 0.01,
-    ax_limit_mintolerance = 0.01,
+    ax_limit_minepsilon   = epsi_ACC,
+    ax_limit_mintolerance = tol_ACC,
     ax_limit_minactive    = true
 
     -- PenaltyBarrier1DLessThan
     ax_limit_maxsubType   = "PENALTY_REGULAR",
-    ax_limit_maxepsilon   = 0.01,
-    ax_limit_maxtolerance = 0.01,
+    ax_limit_maxepsilon   = epsi_ACC,
+    ax_limit_maxtolerance = tol_ACC,
     ax_limit_maxactive    = true
 
     -- PenaltyBarrier1DLessThan
     ay_limit_minsubType   = "PENALTY_REGULAR",
-    ay_limit_minepsilon   = 0.01,
-    ay_limit_mintolerance = 0.01,
+    ay_limit_minepsilon   = epsi_ACC,
+    ay_limit_mintolerance = tol_ACC,
     ay_limit_minactive    = true
 
     -- PenaltyBarrier1DLessThan
     ay_limit_maxsubType   = "PENALTY_REGULAR",
-    ay_limit_maxepsilon   = 0.01,
-    ay_limit_maxtolerance = 0.01,
+    ay_limit_maxepsilon   = epsi_ACC,
+    ay_limit_maxtolerance = tol_ACC,
     ay_limit_maxactive    = true
 
   -- Constraint1D: none defined

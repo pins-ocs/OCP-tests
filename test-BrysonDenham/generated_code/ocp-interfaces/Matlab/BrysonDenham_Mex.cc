@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Mex.cc                                            |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -1520,7 +1520,7 @@ public:
     U_pointer_type U( Utils::mex_create_matrix_value( arg_out_0, this->dim_U(), 1 ) );
     if ( m_U_solve_iterative ) {
       this->u_guess_eval( L, R, P, U );
-      US.eval( m_console, L, R, P, U, U );
+      US.u_eval( m_console, L, R, P, U );
     } else {
       this->u_eval_analytic( L, R, P, U );
     }

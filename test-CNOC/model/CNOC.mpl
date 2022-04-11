@@ -50,8 +50,8 @@ setTarget(lagrange=lgr,mayer=myr);
 addUnilateralConstraint(
   coV(zeta) > 0,
   timePositive,
-  epsilon   = 0.01, 
-  tolerance = 0.01,
+  epsilon   = epsi_COV, 
+  tolerance = tol_COV,
   barrier   = true
 );
 addUnilateralConstraint(
@@ -59,59 +59,59 @@ addUnilateralConstraint(
   vLimit,
   subtype   = "PENALTY_PIECEWISE",
   scale     = penScale,
-  epsilon   = 0.01,
-  tolerance = 0.01
+  epsilon   = epsi_VMAX,
+  tolerance = tol_VMAX
 );
 addBilateralConstraint(
   n(zeta)/path_following_tolerance,
   PathFollowingTolerance,
   scale     = penScale,
-  epsilon   = 0.01,
-  tolerance = 0.1
+  epsilon   = epsi_PATH,
+  tolerance = tol_PATH
 );
 addBilateralConstraint(
   as(zeta)/as_max,
   as_limit,
   scale     = penScale,
-  epsilon   = 0.01,
-  tolerance = 0.01
+  epsilon   = epsi_ACC,
+  tolerance = tol_ACC
 );
 addBilateralConstraint(
   an(zeta)/an_max,
   an_limit,
   scale     = penScale,
-  epsilon   = 0.01,
-  tolerance = 0.01
+  epsilon   = epsi_ACC,
+  tolerance = tol_ACC
 );
 addBilateralConstraint(
   AX/ax_max,
   ax_limit,
   scale     = penScale,
-  epsilon   = 0.01,
-  tolerance = 0.01
+  epsilon   = epsi_ACC,
+  tolerance = tol_ACC
 );
 addBilateralConstraint(
   AY/ay_max,
   ay_limit,
   scale     = penScale,
-  epsilon   = 0.01,
-  tolerance = 0.01
+  epsilon   = epsi_ACC,
+  tolerance = tol_ACC
 );
 addControlBound(
   js(zeta),
   scale       = penScale,
   max         = js_max, # 30.0,
   min         = js_min, #-50.0,
-  epsilon     = 0.01,
-  tolerance   = 0.01,
+  epsilon     = epsi_CTRL,
+  tolerance   = tol_CTRL,
   controlType = "U_LOGARITHMIC"
 ):
 addControlBound(
   jn(zeta),
   scale       = penScale,
   maxabs      = jn_max, # 65,
-  epsilon     = 0.01,
-  tolerance   = 0.01,
+  epsilon     = epsi_CTRL,
+  tolerance   = tol_CTRL,
   controlType = "U_LOGARITHMIC"
 ):;
 PTS := [[0,0],[-10,0], [20,2], [50,0 ,0],[50,10,3.1415],[20,12],[-10,10],
@@ -218,7 +218,22 @@ dataOCP := [
   jn_max    = 65,
   mesh_segments            = 100,
   path_following_tolerance = 10e-6,
-  pf_error                 = path_following_tolerance
+  pf_error                 = path_following_tolerance,
+
+  epsi_COV  = 0.01,
+  tol_COV   = 0.01,
+
+  epsi_VMAX = 0.01,
+  tol_VMAX  = 0.01,
+
+  epsi_PATH = 0.01,
+  tol_PATH  = 0.01,
+
+  epsi_ACC  = 0.01,
+  tol_ACC   = 0.01,
+
+  epsi_CTRL = 0.01,
+  tol_CTRL  = 0.01
 ];
 post_int_list := [ [coV(zeta),"time"] ] ;
 post_list := [
@@ -243,14 +258,16 @@ post_list := [
   [xLimitRight(s(zeta),pf_error), "X-right"],
   [yLimitRight(s(zeta),pf_error), "Y-right"]
 ];
+project_dir  := "../generated_code";
+project_name := "CNOC";
 #Describe(generateOCProblem):;
 generateOCProblem(
-  "CNOC", 
-  integral_post_processing  = post_int_list,
-  post_processing           = post_list,
-  parameters                = dataOCP,
-  #controls_guess           = [js=0,jn=0],
-  states_guess              = guess_list,
-  clean                     = false
+  project_name, 
+  integral_post_processing = post_int_list,
+  post_processing          = post_list,
+  parameters               = dataOCP,
+  #controls_guess          = [js=0,jn=0],
+  states_guess             = guess_list,
+  clean                    = false
 );
-;
+# if used in batch mode use the comment to quit;

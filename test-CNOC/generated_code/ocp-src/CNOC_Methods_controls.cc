@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -232,7 +232,7 @@ namespace CNOCDefine {
     real_type t123 = ModelPars[iM_jn_max];
     real_type t124 = jnControl(t52, -t123, t123);
     real_type t126 = t102 * t1 + t105 * t1 + t114 * t1 + t117 * t1 + t121 * t1 + t124 * t1 + t72 * t1 + t78 * t1 + t81 * t1 + t87 * t1 + t90 * t1;
-    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * LM__[0] + t1 * t4 * LM__[1] - t1 * (-t32 * t4 * t2 - t30) * LM__[2] - t1 * (t23 * t20 * t3 - t38) * LM__[3] - t1 * (-t32 * t38 * t2 - t45) * LM__[4] - t1 * (t32 * t30 * t2 - t52) * LM__[5] + t58 + t62 * t1 + t1 * t68 + t126;
+    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * LM__[0] + t1 * t4 * LM__[1] - t1 * (-t2 * t32 * t4 - t30) * LM__[2] - t1 * (t20 * t23 * t3 - t38) * LM__[3] - t1 * (-t2 * t32 * t38 - t45) * LM__[4] - t1 * (t2 * t30 * t32 - t52) * LM__[5] + t58 + t62 * t1 + t68 * t1 + t126;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -738,11 +738,11 @@ namespace CNOCDefine {
     real_type t8   = X__[iX_vs];
     real_type t12  = ALIAS_kappa(X__[iX_s]);
     real_type t17  = 1.0 / (-t12 * X__[iX_n] + 1) * t12;
-    result__[ 0   ] = t5 * t1 - 2 * t1 * (V__[4] + t1 * (-t17 * X__[iX_an] * t8 - t2));
+    result__[ 0   ] = t5 * t1 - 2 * t1 * (V__[4] + t1 * (-t17 * t8 * X__[iX_an] - t2));
     real_type t24  = U__[iU_jn];
     real_type t25  = ModelPars[iM_jn_max];
     real_type t26  = ALIAS_jnControl_D_1(t24, -t25, t25);
-    result__[ 1   ] = t26 * t1 - 2 * t1 * (V__[5] + t1 * (t17 * X__[iX_as] * t8 - t24));
+    result__[ 1   ] = t26 * t1 - 2 * t1 * (V__[5] + t1 * (t17 * t8 * X__[iX_as] - t24));
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
   }

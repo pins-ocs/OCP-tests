@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 11/4/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,14 +20,24 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-js_min                   = -50
-js_max                   = 30
+jn_max                   = 65
 path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
 v_nom                    = 0.173
+tol_COV                  = 0.01
+epsi_COV                 = 0.01
+epsi_VMAX                = 0.01
 deltaFeed                = v_nom
+tol_ACC                  = 0.01
+tol_CTRL                 = 0.01
+js_min                   = -50
+epsi_PATH                = 0.01
+epsi_CTRL                = 0.01
+tol_VMAX                 = 0.01
+js_max                   = 30
+tol_PATH                 = 0.01
+epsi_ACC                 = 0.01
 mesh_segments            = 100
-jn_max                   = 65
 
 mechatronix do |data|
 
@@ -326,14 +336,14 @@ mechatronix do |data|
   data.Controls = {}
   data.Controls[:jsControl] = {
     :type      => 'LOGARITHMIC',
-    :epsilon   => 0.01,
-    :tolerance => 0.01
+    :epsilon   => epsi_CTRL,
+    :tolerance => tol_CTRL
   }
 
   data.Controls[:jnControl] = {
     :type      => 'LOGARITHMIC',
-    :epsilon   => 0.01,
-    :tolerance => 0.01
+    :epsilon   => epsi_CTRL,
+    :tolerance => tol_CTRL
   }
 
 
@@ -353,85 +363,85 @@ mechatronix do |data|
   # PenaltyBarrier1DLessThan
   data.Constraints[:timePositive] = {
     :subType   => "BARRIER_LOG",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_COV,
+    :tolerance => tol_COV,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:vLimit] = {
     :subType   => "PENALTY_PIECEWISE",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_VMAX,
+    :tolerance => tol_VMAX,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:PathFollowingTolerance_min] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.1,
+    :epsilon   => epsi_PATH,
+    :tolerance => tol_PATH,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:PathFollowingTolerance_max] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.1,
+    :epsilon   => epsi_PATH,
+    :tolerance => tol_PATH,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:as_limit_min] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_ACC,
+    :tolerance => tol_ACC,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:as_limit_max] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_ACC,
+    :tolerance => tol_ACC,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:an_limit_min] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_ACC,
+    :tolerance => tol_ACC,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:an_limit_max] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_ACC,
+    :tolerance => tol_ACC,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:ax_limit_min] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_ACC,
+    :tolerance => tol_ACC,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:ax_limit_max] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_ACC,
+    :tolerance => tol_ACC,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:ay_limit_min] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_ACC,
+    :tolerance => tol_ACC,
     :active    => true
   }
   # PenaltyBarrier1DLessThan
   data.Constraints[:ay_limit_max] = {
     :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
+    :epsilon   => epsi_ACC,
+    :tolerance => tol_ACC,
     :active    => true
   }
   # Constraint1D: none defined

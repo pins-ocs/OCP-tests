@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_problem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -243,7 +243,7 @@ namespace CNOCDefine {
     real_type t30  = X__[iX_as];
     real_type t32  = t23 * t20;
     real_type t38  = X__[iX_an];
-    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * L__[iL_lambda1__xo] + t1 * t4 * L__[iL_lambda2__xo] - t1 * (-t32 * t4 * t2 - t30) * L__[iL_lambda3__xo] - t1 * (t23 * t20 * t3 - t38) * L__[iL_lambda4__xo] - t1 * (-t32 * t38 * t2 - U__[iU_js]) * L__[iL_lambda5__xo] - t1 * (t32 * t30 * t2 - U__[iU_jn]) * L__[iL_lambda6__xo];
+    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * L__[iL_lambda1__xo] + t1 * t4 * L__[iL_lambda2__xo] - t1 * (-t2 * t32 * t4 - t30) * L__[iL_lambda3__xo] - t1 * (t20 * t23 * t3 - t38) * L__[iL_lambda4__xo] - t1 * (-t2 * t32 * t38 - U__[iU_js]) * L__[iL_lambda5__xo] - t1 * (t2 * t30 * t32 - U__[iU_jn]) * L__[iL_lambda6__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -330,13 +330,13 @@ namespace CNOCDefine {
     real_type t46  = ALIAS_theta(X__[iX_s]);
     real_type t47  = cos(t46);
     real_type t49  = sin(t46);
-    real_type t54  = 1.0 / ModelPars[iM_ax_max] * (t25 * t47 - t35 * t49);
+    real_type t54  = 1.0 / ModelPars[iM_ax_max] * (t47 * t25 - t49 * t35);
     real_type t56  = ax_limit_min(-1 - t54);
     real_type t59  = ax_limit_max(t54 - 1);
-    real_type t66  = 1.0 / ModelPars[iM_ay_max] * (t25 * t49 + t35 * t47);
+    real_type t66  = 1.0 / ModelPars[iM_ay_max] * (t49 * t25 + t47 * t35);
     real_type t68  = ay_limit_min(-1 - t66);
     real_type t71  = ay_limit_max(t66 - 1);
-    real_type result__ = t1 * t13 + t1 * t20 + t1 * t23 + t1 * t30 + t1 * t33 + t1 * t40 + t1 * t43 + t1 * t56 + t1 * t59 + t1 * t68 + t1 * t71 + t2;
+    real_type result__ = t13 * t1 + t20 * t1 + t23 * t1 + t30 * t1 + t33 * t1 + t40 * t1 + t43 * t1 + t56 * t1 + t59 * t1 + t68 * t1 + t71 * t1 + t2;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
     }
@@ -558,12 +558,12 @@ namespace CNOCDefine {
     real_type t20  = t19 * t11;
     real_type t23  = 1.0 / t14;
     real_type t25  = t23 * t11 * t17;
-    result__[ 0   ] = 2 * t11 * t3 * t8 - 2 * t3 * t20 * t17 + 2 * t25;
-    result__[ 1   ] = -2 * t4 * t2 * t19 * t11 * t17 + 2 * t2 * t11 * t4 * t8;
+    result__[ 0   ] = 2 * t11 * t3 * t8 - 2 * t17 * t20 * t3 + 2 * t25;
+    result__[ 1   ] = -2 * t11 * t17 * t19 * t2 * t4 + 2 * t11 * t2 * t4 * t8;
     real_type t35  = t11 * t16;
     result__[ 2   ] = 2 * t2 * t23 * t35;
     result__[ 3   ] = result__[1];
-    result__[ 4   ] = 2 * t11 * t5 * t8 - 2 * t5 * t20 * t17 + 2 * t25;
+    result__[ 4   ] = 2 * t11 * t5 * t8 - 2 * t17 * t20 * t5 + 2 * t25;
     result__[ 5   ] = 2 * t4 * t23 * t35;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];

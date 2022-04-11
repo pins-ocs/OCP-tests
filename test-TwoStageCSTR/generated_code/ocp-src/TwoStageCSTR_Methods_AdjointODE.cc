@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 11/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -529,7 +529,7 @@ namespace TwoStageCSTRDefine {
     real_type t10  = L__[iL_lambda3__xo];
     real_type t11  = ModelPars[iM_tau];
     real_type t15  = L__[iL_lambda4__xo];
-    result__[ 0   ] = 2 * t1 + t6 * t3 + t5 * t8 + (-t11 * t6 + 1) * t10 - t5 * t11 * t15;
+    result__[ 0   ] = 2 * t1 + t6 * t3 + t5 * t8 + (-t6 * t11 + 1) * t10 - t5 * t11 * t15;
     real_type t19  = R1_D_2(t1, t4);
     real_type t22  = t19 - 2 - U__[iU_u1];
     result__[ 1   ] = 2 * t4 - t19 * t3 + t22 * t8 + t19 * t11 * t10 + (-t22 * t11 + 1) * t15;
