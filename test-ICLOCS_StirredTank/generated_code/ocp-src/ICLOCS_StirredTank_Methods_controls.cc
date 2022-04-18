@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 18/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -154,7 +154,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type t1   = P__[iP_TimeSize];
     real_type t2   = UM__[0];
     real_type t15  = ALIAS_uControl_D_1(t2, 0, 2);
-    result__[ 0   ] = (2 * t2 - 2 * ModelPars[iM_u_f]) * t1 - (XM__[1] - ModelPars[iM_Tc]) * ModelPars[iM_a] * t1 * LM__[1] + t15;
+    result__[ 0   ] = (2 * t2 - 2 * ModelPars[iM_u_f]) * t1 - ModelPars[iM_a] * (XM__[1] - ModelPars[iM_Tc]) * t1 * LM__[1] + t15;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }

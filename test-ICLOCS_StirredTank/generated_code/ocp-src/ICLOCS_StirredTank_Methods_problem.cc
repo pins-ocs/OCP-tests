@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_problem.cc                          |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 18/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -164,77 +164,6 @@ namespace ICLOCS_StirredTankDefine {
     }
     return result__;
   }
-
-  /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  ICLOCS_StirredTank::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ICLOCS_StirredTank::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = uControl(U__[iU_u], 0, 2);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ICLOCS_StirredTank::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = tfbound(ModelPars[iM_T_min] - P__[iP_TimeSize]);
-    real_type t5   = X__[iX_x1];
-    real_type t6   = x1bound_min(-t5);
-    real_type t8   = x1bound_max(t5 - 1);
-    real_type t9   = X__[iX_x2];
-    real_type t10  = x2bound_min(-t9);
-    real_type t12  = x2bound_max(t9 - 1);
-    real_type result__ = t4 + t6 + t8 + t10 + t12;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _

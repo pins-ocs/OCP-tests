@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_StirredTank.m                                           %
 %                                                                       %
-%  version: 1.0   date 10/4/2022                                        %
+%  version: 1.0   date 18/4/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -613,7 +613,7 @@ classdef ICLOCS_StirredTank < handle
     % DISCRETIZED PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function [a,c] = eval_ac( self, iseg_L, t_L, x_L, lambda_L, ...
+    function [ac] = eval_ac( self, iseg_L, t_L, x_L, lambda_L, ...
                                     iseg_R, t_R, x_R, lambda_R, ...
                                     pars, U )
       %
@@ -623,12 +623,12 @@ classdef ICLOCS_StirredTank < handle
       % <<FD1.jpg>>
       %
       [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      [a,c] = ICLOCS_StirredTank_Mex( 'ac', self.objectHandle, ...
+      ac = ICLOCS_StirredTank_Mex( 'ac', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
     % ---------------------------------------------------------------------
-    function [ DaDxlxlp, DaDu, DcDxlxlp, DcDu ] = ...
+    function [ DacDxlxlp, DacDu ] = ...
       eval_DacDxlxlpu( self, iseg_L, t_L, x_L, lambda_L, ...
                              iseg_R, t_R, x_R, lambda_R, ...
                              pars, U )
@@ -639,7 +639,7 @@ classdef ICLOCS_StirredTank < handle
       % <<FD2.jpg>>
       %
       [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      [DaDxlxlp, DaDu, DcDxlxlp, DcDu] = ICLOCS_StirredTank_Mex( ...
+      [DacDxlxlp, DacDu] = ICLOCS_StirredTank_Mex( ...
         'DacDxlxlpu', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
@@ -1004,25 +1004,25 @@ classdef ICLOCS_StirredTank < handle
     %   | || |\  | |_| | ||  _ <| |__| |___  | |
     %  |___|_| \_|____/___|_| \_\_____\____| |_|
     % ---------------------------------------------------------------------
-    function Hx = eval_Hx( self, iseg, q, x, lambda, V, u, pars )
+    function Hxp = eval_Hxp( self, iseg, q, x, lambda, V, u, pars )
       %
       % Derivative of H(x,V,lambda,u,pars,zeta) =
       %   J(x,u,pars,zeta) + lambda.(f(x,u,pars,zeta)-A(x,pars,zeta)*V)
       %
-      % Hx(x,V,lambda,u,p,zeta) = partial_x H(...)
+      % Hxp(x,V,lambda,u,p,zeta) = partial_{xp} H(...)
       %
-      Hx = ICLOCS_StirredTank_Mex(...
-        'Hx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      Hxp = ICLOCS_StirredTank_Mex(...
+        'Hxp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DHxDxp( self, iseg, q, x, lambda, V, u, pars )
+    function J = eval_DHxpDxp( self, iseg, q, x, lambda, V, u, pars )
       %
-      % Compute the jacobian of `Hx(q,x,lambda,V,pars)`
+      % Compute the jacobian of `Hxp(q,x,lambda,V,pars)`
       % respect to `x` and `pars`.
       %
       J = ICLOCS_StirredTank_Mex(...
-        'DHxDxp', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
+        'DHxpDxp', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
@@ -1048,22 +1048,6 @@ classdef ICLOCS_StirredTank < handle
       );
     end
     % ---------------------------------------------------------------------
-    function Hp = eval_Hp( self, iseg, q, x, lambda, V, u, pars )
-      Hp = ICLOCS_StirredTank_Mex(...
-        'Hp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DHpDp( self, q, x, lambda, V, u, pars )
-      %
-      % Compute the jacobian of `Hp(q,x,lambda,V,u,pars)`
-      % respect to `pars`.
-      %
-      J = ICLOCS_StirredTank_Mex(...
-        'DHpDp', self.objectHandle, q, x, lambda, V, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     function J = eval_penalties( self, iseg, q, x, u, pars )
@@ -1082,75 +1066,21 @@ classdef ICLOCS_StirredTank < handle
       J = ICLOCS_StirredTank_Mex( 'JU', self.objectHandle, iseg, q, x, u, pars );
     end
     % ---------------------------------------------------------------------
-    function JPx = eval_JPx( self, iseg, q, x, u, pars )
-      JPx = ICLOCS_StirredTank_Mex(...
-        'JPx', self.objectHandle, iseg, q, x, u, pars...
+    function DJPxpDxp = eval_DJPxpDxp( self, iseg, q, x, u, pars )
+      DJPxpDxp = ICLOCS_StirredTank_Mex(...
+        'DJPxpDxp', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
-    function JUx = eval_JUx( self, iseg, q, x, u, pars )
-      JUx = ICLOCS_StirredTank_Mex(...
-        'JUx', self.objectHandle, iseg, q, x, u, pars...
+    function DJUxpDxp = eval_DJUxpDxp( self, iseg, q, x, u, pars )
+      DJUxpDxp = ICLOCS_StirredTank_Mex(...
+        'DJUxpDxp', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
-    function LTx = eval_LTx( self, iseg, q, x, u, pars )
-      LTx = ICLOCS_StirredTank_Mex(...
-        'LTx', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function JPu = eval_JPu( self, iseg, q, x, u, pars )
-      JPu = ICLOCS_StirredTank_Mex(...
-        'JPu', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function JUu = eval_JUu( self, iseg, q, x, u, pars )
-      JUu = ICLOCS_StirredTank_Mex(...
-        'JUu', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function LTu = eval_LTu( self, iseg, q, x, u, pars )
-      LTu = ICLOCS_StirredTank_Mex(...
-        'LTu', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function JPp = eval_JPp( self, iseg, q, x, u, pars )
-      JPp = ICLOCS_StirredTank_Mex(...
-        'JPp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function JUp = eval_JUp( self, iseg, q, x, u, pars )
-      JUp = ICLOCS_StirredTank_Mex(...
-        'JUp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function LTp = eval_LTp( self, iseg, q, x, u, pars )
-      LTp = ICLOCS_StirredTank_Mex(...
-        'LTp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DJPxDxp = eval_DJPxDxp( self, iseg, q, x, u, pars )
-      DJPxDxp = ICLOCS_StirredTank_Mex(...
-        'DJPxDxp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DJUxDxp = eval_DJUxDxp( self, iseg, q, x, u, pars )
-      DJUxDxp = ICLOCS_StirredTank_Mex(...
-        'DJUxDxp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DLTxDxp = eval_DLTxDxp( self, iseg, q, x, u, pars )
-      DLTxDxp = ICLOCS_StirredTank_Mex(...
-        'DLTxDxp', self.objectHandle, iseg, q, x, u, pars...
+    function DLTxpDxp = eval_DLTxpDxp( self, iseg, q, x, u, pars )
+      DLTxpDxp = ICLOCS_StirredTank_Mex(...
+        'DLTxpDxp', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
@@ -1172,21 +1102,21 @@ classdef ICLOCS_StirredTank < handle
       );
     end
     % ---------------------------------------------------------------------
-    function DJPpDp = eval_DJPpDp( self, iseg, q, x, u, pars )
-      DJPpDp = ICLOCS_StirredTank_Mex(...
-        'DJPpDp', self.objectHandle, iseg, q, x, u, pars...
+    function LT = eval_LT( self, iseg, q, x, u, pars )
+      LT = ICLOCS_StirredTank_Mex(...
+        'LT', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
-    function DJUpDp = eval_DJUpDp( self, iseg, q, x, u, pars )
-      DJUpDp = ICLOCS_StirredTank_Mex(...
-        'DJUpDp', self.objectHandle, iseg, q, x, u, pars...
+    function JP = eval_JP( self, iseg, q, x, u, pars )
+      JP = ICLOCS_StirredTank_Mex(...
+        'JP', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
-    function DLTpDp = eval_DLTpDp( self, iseg, q, x, u, pars )
-      DLTpDp = ICLOCS_StirredTank_Mex(...
-        'DLTpDp', self.objectHandle, iseg, q, x, u, pars...
+    function JU = eval_JU( self, iseg, q, x, u, pars )
+      JU = ICLOCS_StirredTank_Mex(...
+        'JU', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
@@ -1286,20 +1216,20 @@ classdef ICLOCS_StirredTank < handle
       res = ICLOCS_StirredTank_Mex('eval_DjumpDxlxlp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DHxDxp_pattern( self )
-      res = ICLOCS_StirredTank_Mex('eval_DHxDxp_pattern', self.objectHandle );
+    function res = DHxpDxp_pattern( self )
+      res = ICLOCS_StirredTank_Mex('eval_DHxpDxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DJPxDxp_pattern( self )
-      res = ICLOCS_StirredTank_Mex('eval_DJPxDxp_pattern', self.objectHandle );
+    function res = DJPxpDxp_pattern( self )
+      res = ICLOCS_StirredTank_Mex('eval_DJPxpDxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DLTxDxp_pattern( self )
-      res = ICLOCS_StirredTank_Mex('eval_DLTxDxp_pattern', self.objectHandle );
+    function res = DLTxpDxp_pattern( self )
+      res = ICLOCS_StirredTank_Mex('eval_DLTxpDxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DJUxDxp_pattern( self )
-      res = ICLOCS_StirredTank_Mex('eval_DJUxDxp_pattern', self.objectHandle );
+    function res = DJUxpDxp_pattern( self )
+      res = ICLOCS_StirredTank_Mex('eval_DJUxpDxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DHuDxp_pattern( self )
@@ -1318,20 +1248,16 @@ classdef ICLOCS_StirredTank < handle
       res = ICLOCS_StirredTank_Mex('eval_DJUuDxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DHpDp_pattern( self )
-      res = ICLOCS_StirredTank_Mex('eval_DHpDp_pattern', self.objectHandle );
+    function res = DJPDxpu_pattern( self )
+      res = ICLOCS_StirredTank_Mex('eval_DJPDxpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DJPpDp_pattern( self )
-      res = ICLOCS_StirredTank_Mex('eval_DJPpDp_pattern', self.objectHandle );
+    function res = DLTDxpu_pattern( self )
+      res = ICLOCS_StirredTank_Mex('eval_DLTDxpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DLTpDp_pattern( self )
-      res = ICLOCS_StirredTank_Mex('eval_DLTpDp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DJUpDp_pattern( self )
-      res = ICLOCS_StirredTank_Mex('eval_DJUpDp_pattern', self.objectHandle );
+    function res = DJUDxpu_pattern( self )
+      res = ICLOCS_StirredTank_Mex('eval_DJUDxpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DLTargsDxup_pattern( self )

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Data.lua                                    |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 18/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-epsi_T     = 0.01
-tol_ctrl0  = 0.1
 x_tol      = 0.01
-x_epsi     = 0.01
+tol_ctrl0  = 0.1
 tol_ctrl   = tol_ctrl0
+epsi_T     = 0.01
+x_epsi     = 0.01
 w_time_max = 1
 w_time     = w_time_max
-tol_T      = 1
 epsi_ctrl0 = 0.1
+tol_T      = 1
 epsi_ctrl  = epsi_ctrl0
 
 content = {
@@ -358,8 +358,8 @@ content = {
     segments = {
       
       {
-        length = 1,
         n      = 400,
+        length = 1,
       },
     },
   },

@@ -145,6 +145,16 @@ task :all do
   Rake::Task[:run].invoke
 end
 
+task :matlab do
+  cd ROOT+'/generated_code/ocp-interfaces/Matlab'
+  FileUtils.mkdir_p "build"
+  cd "build"
+  sh "cmake .."
+  sh "cmake --build ."
+  cd ".."
+  cd ROOT
+end
+
 desc "Remove all the ingnored files and reset the commit"
 task :cleanup do
   #sh "git clean -d -x -f"

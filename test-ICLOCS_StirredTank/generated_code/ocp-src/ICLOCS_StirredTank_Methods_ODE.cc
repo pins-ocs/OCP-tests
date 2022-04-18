@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_ODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 18/4/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -187,6 +187,104 @@ namespace ICLOCS_StirredTankDefine {
     result__[ 1   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 2, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_StirredTank::eta_numEqns() const { return 2; }
+
+  void
+  ICLOCS_StirredTank::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_StirredTank::DetaDxp_numRows() const { return 2; }
+  integer ICLOCS_StirredTank::DetaDxp_numCols() const { return 3; }
+  integer ICLOCS_StirredTank::DetaDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_StirredTank::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_StirredTank::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_StirredTank::nu_numEqns() const { return 2; }
+
+  void
+  ICLOCS_StirredTank::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[0];
+    result__[ 1   ] = V__[1];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_StirredTank::DnuDxp_numRows() const { return 2; }
+  integer ICLOCS_StirredTank::DnuDxp_numCols() const { return 3; }
+  integer ICLOCS_StirredTank::DnuDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_StirredTank::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_StirredTank::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }
